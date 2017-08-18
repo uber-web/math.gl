@@ -1,0 +1,12 @@
+# CHANGELOG
+
+## v1
+
+### 1.0.0-alpha.2
+- Docs
+- Fix to Vector* add, subtract, multiply, divide
+- Three-shaking test example
+
+
+### 1.0.0-alpha.1
+- Initial source code copy from luma.gl v4.1-alpha branch
