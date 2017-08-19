@@ -19,6 +19,9 @@ import vec3_normalize from 'gl-vec3/normalize';
 import vec3_dot from 'gl-vec3/dot';
 import vec3_cross from 'gl-vec3/cross';
 import vec3_lerp from 'gl-vec3/lerp';
+import vec3_rotateX from 'gl-vec3/rotateX';
+import vec3_rotateY from 'gl-vec3/rotateY';
+import vec3_rotateZ from 'gl-vec3/rotateZ';
 
 export function validateVector3(v) {
   return v.length === 3 &&
@@ -152,6 +155,24 @@ export default class Vector3 extends MathArray {
 
   lerp(vector, coeff) {
     vec3_lerp(this, this, vector, coeff);
+    this.check();
+    return this;
+  }
+
+  rotateX(vector, radians) {
+    vec3_rotateX(this, this, radians);
+    this.check();
+    return this;
+  }
+
+  rotateY(vector, radians) {
+    vec3_rotateY(this, this, radians);
+    this.check();
+    return this;
+  }
+
+  rotateZ(vector, radians) {
+    vec3_rotateZ(this, this, radians);
     this.check();
     return this;
   }

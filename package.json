@@ -2,7 +2,7 @@
   "name": "math.gl",
   "description": "Class wrappers for gl-matrix",
   "license": "MIT",
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.0-alpha.3",
   "keywords": [
     "webgl",
     "javascript",

@@ -16,3 +16,6 @@ export {default as vec3_normalize} from 'gl-vec3/normalize';
 export {default as vec3_dot} from 'gl-vec3/dot';
 export {default as vec3_cross} from 'gl-vec3/cross';
 export {default as vec3_lerp} from 'gl-vec3/lerp';
+export {default as vec3_rotateX} from 'gl-vec3/rotateX';
+export {default as vec3_rotateY} from 'gl-vec3/rotateY';
+export {default as vec3_rotateZ} from 'gl-vec3/rotateZ';

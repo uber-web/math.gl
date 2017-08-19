@@ -60,4 +60,25 @@ Scale component wise with a scalar or another `Vector3`.
 
 ### lerp(vector, coeff)
 
+### rotateX(radians)
+
+Rotate a 3D vector around the x-axis
+
+* `radians` (Number) - angle to rotate.
+
+
+### rotateY(radians)
+
+Rotate a 3D vector around the y-axis
+
+* `radians` (Number) - angle to rotate.
+
+
+### rotateZ(radians)
+
+Rotate a 3D vector around the z-axis
+
+* `radians` (Number) - angle to rotate.
+
+
 ### operation(operation, ...args)
