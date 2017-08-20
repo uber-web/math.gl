@@ -21,6 +21,15 @@ function checkOrder(value) {
 
 export default class Euler extends MathArray {
 
+  // static XYZ = 0;
+  // static YZX = 1;
+  // static ZXY = 2;
+  // static XZY = 3;
+  // static YXZ = 4;
+  // static ZYX = 5;
+  // static RollPitchYaw = 0;
+  // static DefaultOrder = 0;
+
   // Constants
   /* eslint-disable no-multi-spaces, brace-style, no-return-assign */
   static get ZYX() { return 0; }

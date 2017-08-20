@@ -1,6 +1,13 @@
 # MathArray
 
+```js
 class MathArray extends Array
+```
+
+## Usage
+
+This is a base class, that should not be instantiated directly.
+
 
 ## Methods
 

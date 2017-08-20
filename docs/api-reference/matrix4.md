@@ -1,6 +1,41 @@
 # Matrix4
 
+A 4x4 matrix. Any arguments can be plain JavaScript arrays or other `math.gl` objects.
+
 ## Usage
+
+```js
+import {Matrix4} from `math.gl`;
+```
+
+Copy a matrix to a `Matrix4` so that it can be manipulated (and mutated) with `Matrix4` methods:
+```js
+const IDENTITY = [1, 0, ..., 1];
+const m = new Matrix4(IDENTITY).translate([1, 0, 0]);
+```
+
+Create a perspective projection matrix
+```js
+const projectionMatrix = new Matrix4().perspective({fov, aspect, near, far})
+```
+
+Create an orthograhic projection matrix
+```js
+```
+
+Invert a matrix
+```js
+const inverse = matrix.invert();
+```
+
+Transform a vector
+```
+const transform = new Matrix4()...;
+const vector2 = transform.transformVector([0, 0]);
+const vector3 = transform.transformVector([0, 1, 2]);
+const vector4 = transform.transformVector([0, 1, 2, 1]);
+```
+
 
 ## Methods
 
@@ -113,3 +148,7 @@ Rotates a matrix by the given angle around the Z axis.
 
 Transforms any 2, 3 or 4 element vector
 returns a newly minted Vector2, Vector3 or Vector4
+
+## Remarks
+
+* stored in column major format (per WebGL conventions). This only matters when you read out the matrix to use it with other software.

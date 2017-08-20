@@ -23,6 +23,8 @@ import vec3_rotateX from 'gl-vec3/rotateX';
 import vec3_rotateY from 'gl-vec3/rotateY';
 import vec3_rotateZ from 'gl-vec3/rotateZ';
 
+const ORIGIN = [0, 0, 0];
+
 export function validateVector3(v) {
   return v.length === 3 &&
     Number.isFinite(v[0]) && Number.isFinite(v[1]) && Number.isFinite(v[2]);
@@ -159,20 +161,20 @@ export default class Vector3 extends MathArray {
     return this;
   }
 
-  rotateX(vector, radians) {
-    vec3_rotateX(this, this, radians);
+  rotateX({radians, origin = ORIGIN}) {
+    vec3_rotateX(this, this, origin, radians);
     this.check();
     return this;
   }
 
-  rotateY(vector, radians) {
-    vec3_rotateY(this, this, radians);
+  rotateY({radians, origin = ORIGIN}) {
+    vec3_rotateY(this, this, origin, radians);
     this.check();
     return this;
   }
 
-  rotateZ(vector, radians) {
-    vec3_rotateZ(this, this, radians);
+  rotateZ({radians, origin = ORIGIN}) {
+    vec3_rotateZ(this, this, origin, radians);
     this.check();
     return this;
   }

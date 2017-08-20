@@ -2,7 +2,7 @@
   "name": "math.gl",
   "description": "Class wrappers for gl-matrix",
   "license": "MIT",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.4",
   "keywords": [
     "webgl",
     "javascript",
@@ -14,6 +14,9 @@
     "vector3",
     "vector4",
     "quaternion",
+    "euler",
+    "spherical",
+    "coordinates",
     "3d"
   ],
   "repository": {
