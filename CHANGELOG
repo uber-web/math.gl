@@ -2,6 +2,9 @@
 
 ## v1
 
+### 1.0.0-alpha.5
+- Add roll/pitch/yaw getters/setters to `Euler`
+
 ### 1.0.0-alpha.4
 - Vector3.rotate{X,Y,Z} now takes named arguments
 - Doc overhaul

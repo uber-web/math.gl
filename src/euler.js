@@ -138,6 +138,14 @@ export default class Euler extends MathArray {
   get psi()        { return this[2]; }
   set psi(value)   { return this[2] = checkNumber(value); }
 
+  // roll, pitch, yaw angle notation
+  get roll()       { return this[0]; }
+  set roll(value)  { return this[0] = checkNumber(value); }
+  get pitch()      { return this[1]; }
+  set pitch(value) { return this[1] = checkNumber(value); }
+  get yaw()        { return this[2]; }
+  set yaw(value)   { return this[2] = checkNumber(value); }
+
   // rotation order, in all three angle notations
   get order()      { return this[3]; }
   set order(value) { return this[3] = checkOrder(value); }
