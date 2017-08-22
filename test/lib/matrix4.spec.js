@@ -1,7 +1,20 @@
 /* eslint-disable max-statements */
-import {Vector2, Vector3, Vector4, Matrix4, Quaternion} from './index';
-import {tapeEquals} from './index';
+import {Matrix4} from 'math.gl';
 import test from 'tape-catch';
+
+// FOR TAPE TESTING
+// Use tape assert to compares using a.equals(b)
+// Usage test(..., t => { tapeEquals(t, a, b, ...); });
+export function tapeEquals(t, a, b, msg, extra) {
+  /* eslint-disable no-invalid-this */
+  t._assert(a.equals(b), {
+    message: msg || 'should be equal',
+    operator: 'equal',
+    actual: a,
+    expected: b,
+    extra
+  });
+}
 
 const IDENTITY_MATRIX = [
   1, 0, 0, 0,
@@ -33,60 +46,13 @@ const TRANSPOSED_INDICES_MATRIX = [
 //   set: {}
 // };
 
-test('Math#types', t => {
-  t.equals(typeof Vector2, 'function');
-  t.equals(typeof Vector3, 'function');
-  t.equals(typeof Vector4, 'function');
+test('Matrix4#types', t => {
   t.equals(typeof Matrix4, 'function');
-  t.equals(typeof Quaternion, 'function');
   t.end();
 });
 
-test('Math#construct and Array.isArray check', t => {
-  t.ok(Array.isArray(new Vector2()));
-  t.ok(Array.isArray(new Vector3()));
-  t.ok(Array.isArray(new Vector4()));
+test('Matrix4#construct and Array.isArray check', t => {
   t.ok(Array.isArray(new Matrix4()));
-  t.ok(Array.isArray(new Quaternion()));
-  t.end();
-});
-
-// ['add', 'cross'];
-const VECTOR_METHODS = ['clone'];
-
-test('Vector2#members and methods', t => {
-  const v = new Vector2();
-  t.equals(v.x, 0);
-  t.equals(v.y, 0);
-
-  for (const method of VECTOR_METHODS) {
-    t.equals(typeof v[method], 'function');
-  }
-  t.end();
-});
-
-test('Vector3#members and methods', t => {
-  const v = new Vector3();
-  t.equals(v.x, 0);
-  t.equals(v.y, 0);
-  t.equals(v.z, 0);
-
-  for (const method of VECTOR_METHODS) {
-    t.equals(typeof v[method], 'function');
-  }
-  t.end();
-});
-
-test('Vector4#members and methods', t => {
-  const v = new Vector4();
-  t.equals(v.x, 0);
-  t.equals(v.y, 0);
-  t.equals(v.z, 0);
-  t.equals(v.w, 0);
-
-  for (const method of VECTOR_METHODS) {
-    t.equals(typeof v[method], 'function');
-  }
   t.end();
 });
 
@@ -137,21 +103,21 @@ test('Matrix4.transpose', t => {
   t.end();
 });
 
-test('Matrix4.add', t => {
-  const RESULT = [
-    2, 0, 0, 0,
-    0, 2, 0, 0,
-    0, 0, 2, 0,
-    0, 0, 0, 2
-  ];
+// test('Matrix4.add', t => {
+//   const RESULT = [
+//     2, 0, 0, 0,
+//     0, 2, 0, 0,
+//     0, 0, 2, 0,
+//     0, 0, 0, 2
+//   ];
 
-  t.equals(typeof Matrix4.prototype.add, 'function');
-  let m = new Matrix4().identity();
-  m = m.add(m);
+//   t.equals(typeof Matrix4.prototype.add, 'function');
+//   let m = new Matrix4().identity();
+//   m = m.add(m);
 
-  tapeEquals(t, m, RESULT, 'add gave the right result');
-  t.end();
-});
+//   tapeEquals(t, m, RESULT, 'add gave the right result');
+//   t.end();
+// });
 
 test('Matrix4.scale', t => {
   const RESULT = [
@@ -355,57 +321,5 @@ test('Matrix4.translate', t => {
 //   t.ok(abs(ans.n42 - 0) < delta);
 //   t.ok(abs(ans.n43 - 0) < delta);
 //   t.ok(abs(ans.n44 - 1) < delta);
-//   t.end();
-// });
-
-test('Quaternion#methods', t => {
-  const q = new Quaternion();
-  t.equals(q[0], 0);
-  t.equals(q[1], 0);
-  t.equals(q[2], 0);
-  t.equals(q[3], 1);
-  t.equals(typeof q.add, 'function');
-  t.equals(typeof q.clone, 'function');
-  t.equals(typeof q.conjugate, 'function');
-  // t.equals(typeof q.divQuaternion, 'function');
-  t.equals(typeof q.invert, 'function');
-  t.equals(typeof q.multiply, 'function');
-  // t.equals(typeof q.negate, 'function');
-  // t.equals(typeof q.norm, 'function');
-  // t.equals(typeof q.normSq, 'function');
-  t.equals(typeof q.scale, 'function');
-  t.equals(typeof q.set, 'function');
-  // t.equals(typeof q.setQuaternion, 'function');
-  // t.equals(typeof q.sub, 'function');
-  // t.equals(typeof q.unit, 'function');
-  t.end();
-});
-
-// test('Quaternion.fromAxisRotation', t => {
-//   let q = Quaternion.fromAxisRotation(new Vector3(0, 0, 1), Math.PI);
-//   t.equals(q[0], 0);
-//   t.equals(q[1], 0);
-//   t.equals(q[2], 1);
-//   t.equals(q[3], Math.cos(Math.PI / 2));
-
-//   q = Quaternion.fromAxisRotation(new Vector3(0, 1, 0), Math.PI);
-//   t.equals(q[0], 0);
-//   t.equals(q[1], 1);
-//   t.equals(q[2], 0);
-//   t.equals(q[3], Math.cos(Math.PI / 2));
-
-//   q = Quaternion.fromAxisRotation(new Vector3(1, 0, 0), Math.PI);
-//   t.equals(q[0], 1);
-//   t.equals(q[1], 0);
-//   t.equals(q[2], 0);
-//   t.equals(q[3], Math.cos(Math.PI / 2));
-
-//   const q1 = Quaternion.fromAxisRotation(new Vector3(5, 0, -2), Math.PI / 3);
-//   const q2 = Quaternion.fromAxisRotation(new Vector3(1, 3, 0), Math.PI / 4);
-//   q1.$mulQuaternion(q2);
-//   t.equals(q1[0], 0.6011183144537015);
-//   t.equals(q1[1], 0.29193457751898655);
-//   t.equals(q1[2], -0.0030205353559888126);
-//   t.equals(q1[3], 0.7439232829017486);
 //   t.end();
 // });

@@ -2,9 +2,30 @@
 
 See [Wikipedia](https://en.wikipedia.org/wiki/Spherical_coordinate_system)
 
-Under construction
+ * The poles (phi) are at the positive and negative y axis.
+ * The equator starts at positive z.
+
 
 ## Usage
+
+Creating a SphericalCoordinates object
+```js
+const spherical = new SphericalCoordinates({phi: 0, theta: 0});
+const spherical = new SphericalCoordinates({pitch: 0, bearing: 0});
+const spherical = new SphericalCoordinates({longitude: 0, latitude: 0});
+```
+
+Converting to a direction `Vector3`
+```js
+const direction = new SphericalCoordinates().toVector3();
+```
+
+Manipulating spherical coordinates;
+```js
+spherical.bearing += 3; // Add three degrees to bearing
+spherical.theta -= Math.PI / 4; // Subtract PI/4 radians from theta.
+```
+
 
 ## Members
 
@@ -22,9 +43,13 @@ Under construction
 
 ## Methods
 
-### constructor(phi = 0, theta = 0, radius = 1.0, radiusScale = EARTH_RADIUS_METERS)
- * The poles (phi) are at the positive and negative y axis.
- * The equator starts at positive z.
+### constructor
+
+```js
+SphericalCoordinates({phi = 0, theta = 0, radius = 1.0})
+SphericalCoordinates({bearing = 0, pitch = 0, altitude = 1.0})
+SphericalCoordinates({longitude = 0, latitude = 0, z = 1.0})
+```
 
 * phi=0 - rotation around X (latitude)
 * theta=0 - rotation around Y (longitude)

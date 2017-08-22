@@ -3,6 +3,10 @@
 ## v1
 
 ### 1.0.0-alpha.5
+- SphericalCoordinates overhaul
+- Test cases
+
+### 1.0.0-alpha.5
 - Add roll/pitch/yaw getters/setters to `Euler`
 
 ### 1.0.0-alpha.4

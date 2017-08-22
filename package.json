@@ -2,7 +2,7 @@
   "name": "math.gl",
   "description": "Class wrappers for gl-matrix",
   "license": "MIT",
-  "version": "1.0.0-alpha.5",
+  "version": "1.0.0-alpha.6",
   "keywords": [
     "webgl",
     "javascript",
@@ -42,7 +42,7 @@
     "publish-prod": "npm run build && npm run test && npm run test-dist && npm publish",
     "publish-beta": "npm run build && npm run test && npm run test-dist && npm publish --tag beta",
     "test": "npm run lint && npm run build && npm run test-node",
-    "test-fast": "npm run test-node",
+    "test-fast": "npm run test-node | faucet",
     "test-cover": "NODE_ENV=test tape -r babel-register test/node.js && nyc report",
     "test-node": "node test/node.js",
     "test-dist": "node test/node-dist.js",

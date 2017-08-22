@@ -1,4 +1,4 @@
-import {isArray} from '../';
+import {isArray} from 'math.gl';
 // import {tapeEquals} from './index';
 import test from 'tape-catch';
 
