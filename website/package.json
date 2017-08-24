@@ -1,0 +1,16 @@
+{
+  "name": "mathgl-website",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "ocular start",
+    "build": "ocular build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "ocular": "^0.1.5"
+  }
+}
