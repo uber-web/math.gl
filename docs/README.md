@@ -31,6 +31,10 @@ The provided Math library is based on [`gl-matrix`](http://glmatrix.net/) and us
     - GLSL math functions (radians, sin etc) made available in JavaScript
       and work both on scalars and vectors / math objects.
 
+- **Size Conscious**
+    - A math library can easily get fairly big, gl-matrix is a good example, there are a number of modules on npm that contain subsets of gl-matrix to work around its size.
+    - Focus on functions that are likely to be most important in WebGL applications.
+
 
 ## Documentation
 

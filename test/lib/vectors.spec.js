@@ -44,18 +44,6 @@ test('Vector2#members and methods', t => {
   t.end();
 });
 
-test('Vector3#members and methods', t => {
-  const v = new Vector3();
-  t.equals(v.x, 0);
-  t.equals(v.y, 0);
-  t.equals(v.z, 0);
-
-  for (const method of VECTOR_METHODS) {
-    t.equals(typeof v[method], 'function');
-  }
-  t.end();
-});
-
 test('Vector4#members and methods', t => {
   const v = new Vector4();
   t.equals(v.x, 0);
@@ -68,16 +56,3 @@ test('Vector4#members and methods', t => {
   }
   t.end();
 });
-
-test('Vector3#rotates', t => {
-  const TEST_CASES = [
-    {input: [0, 0, 1], radians: Math.PI, rotateX: [0, 0, -1]},
-    {input: [0, 0, 1], radians: Math.PI / 2, rotateX: [0, -1, 0]}
-  ];
-  for (const tc of TEST_CASES) {
-    const v = new Vector3(...tc.input);
-    tapeEquals(t, v.rotateX({radians: tc.radians}), tc.rotateX);
-  }
-  t.end();
-});
-

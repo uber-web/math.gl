@@ -119,7 +119,7 @@ export default class Vector3 extends MathArray {
     if (Number.isFinite(scale)) {
       vec3_scale(this, this, scale);
     } else {
-      vec3_dot(this, this, scale);
+      vec3_multiply(this, this, scale);
     }
     this.check();
     return this;

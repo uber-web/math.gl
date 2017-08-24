@@ -34,11 +34,15 @@ export default class MathArray extends Array {
   }
 
   toString() {
+    return `${this.constructor.name}${this.format()}`;
+  }
+
+  format() {
     let string = '';
     for (let i = 0; i < this.ELEMENTS; ++i) {
       string += (i > 0 ? ', ' : '') + formatValue(this[i]);
     }
-    return `${this.constructor.name}(${string})`;
+    return `[${string}]`;
   }
 
   toArray(array = [], offset = 0) {

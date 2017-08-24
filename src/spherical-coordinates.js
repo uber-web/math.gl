@@ -1,4 +1,5 @@
 // Adaptation of THREE.js Spherical class, under MIT license
+import {formatValue, equals} from './common';
 import {degrees, radians, clamp} from './common';
 import Vector3 from './vector3';
 
@@ -47,7 +48,20 @@ export default class SphericalCoordinates {
   /* eslint-enable complexity */
 
   toString() {
-    return `[rho:${this.radius},theta:${this.theta},phi:${this.phi}]`;
+    const f = formatValue;
+    return `[rho:${f(this.radius)},theta:${f(this.theta)},phi:${f(this.phi)}]`;
+  }
+
+  equals(other) {
+    return equals(this.radius, other.radius) &&
+      equals(this.theta, other.theta) &&
+      equals(this.phi, other.phi);
+  }
+
+  exactEquals(other) {
+    return this.radius === other.radius &&
+      this.theta === other.theta &&
+      this.phi === other.phi;
   }
 
   /* eslint-disable brace-style */
@@ -106,8 +120,8 @@ export default class SphericalCoordinates {
 
   toVector3() {
     return new Vector3(0, 0, this.radius)
-      .rotateX({radians: -this.theta})
-      .rotateZ({radians: -this.phi});
+      .rotateX({radians: this.theta})
+      .rotateZ({radians: this.phi});
   }
 
   // restrict phi to be betwee EPS and PI-EPS

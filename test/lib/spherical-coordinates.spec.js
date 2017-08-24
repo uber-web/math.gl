@@ -27,10 +27,17 @@ const REPRESENTATION_TEST_CASES = [
   },
   {
     representations: [
+      {theta: Math.PI / 2, phi: Math.PI, radius: 1},
+      {pitch: 90, bearing: 0, radius: 1}
+    ],
+    vector: [0, 1, 0]
+  },
+  {
+    representations: [
       {theta: Math.PI / 2, phi: 0, radius: 1},
       {pitch: 90, bearing: 180, altitude: 1}
     ],
-    vector: [0, 1, 0]
+    vector: [0, -1, 0]
   },
   {
     representations: [

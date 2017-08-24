@@ -24,7 +24,12 @@ export function checkNumber(value) {
   return value;
 }
 
+function round(value) {
+  return Math.round(value / config.EPSILON) * config.EPSILON;
+}
+
 export function formatValue(value, precision = config.precision || 4) {
+  value = round(value);
   return parseFloat(value.toPrecision(precision));
 }
 
