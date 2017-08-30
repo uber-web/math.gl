@@ -1,5 +1,5 @@
 // Adaptation of THREE.js Spherical class, under MIT license
-import {formatValue, equals} from './common';
+import {formatValue, equals, config} from './common';
 import {degrees, radians, clamp} from './common';
 import Vector3 from './vector3';
 
@@ -48,8 +48,13 @@ export default class SphericalCoordinates {
   /* eslint-enable complexity */
 
   toString() {
+    return this.formatString(config);
+  }
+
+  formatString({printTypes, printDegrees}) {
     const f = formatValue;
-    return `[rho:${f(this.radius)},theta:${f(this.theta)},phi:${f(this.phi)}]`;
+    return `${printTypes ? 'Spherical' : ''}\
+[rho:${f(this.radius)},theta:${f(this.theta)},phi:${f(this.phi)}]`;
   }
 
   equals(other) {

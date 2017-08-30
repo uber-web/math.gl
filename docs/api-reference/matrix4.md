@@ -147,8 +147,37 @@ Rotates a matrix by the given angle around the Z axis.
 ### transformVector(vector, out)
 
 Transforms any 2, 3 or 4 element vector
-returns a newly minted Vector2, Vector3 or Vector4
+
+`transformVector(vector, out)`
+
+* `vector` (`Array`|`Vector2`|`Vector3`|`Vector4`)
+* `out` - unless supplied, will be a Vector2, Vector3 or Vector4, matching the length of input vector.
+Returns `out`, or a newly minted `Vector2`, `Vector3` or `Vector4`
+
+
+### transformPoint
+
+Transforms a point by multiplying it with this matrix. `Point` here means that the returned vector will i.e. includes translations, if any, in this matrix.
+
+`transformPoint(vector, out)`
+* `vector` (`Array`|`Vector2`|`Vector3`|`Vector4`)
+* `out` - unless supplied, will be a Vector2, Vector3 or Vector4, matching the length of input vector.
+Returns `out`, or a newly minted `Vector2`, `Vector3` or `Vector4`
+
+
+* If `vector` is specified in homogenous coordinates, `w` coordinate must not be `0`.
+* If `vector` is specified in homogenous coordinates the returned vector will be `w` adjusted, (i.e. `w` coordinate will be `1`, even if the supplied vector was not normalized).
+
+
+### transformDirection
+
+Transforms a vector (i.e. does not includes any translations)
+
+`transformDirection(vector, out)`
+
+
 
 ## Remarks
 
-* stored in column major format (per WebGL conventions). This only matters when you read out the matrix to use it with other software.
+* All transforms are effectively "right multiplied" onto the matrix (meaning that during transform they will be applied in opposite order).
+* `Matrix4` is stored internally in column major format (per WebGL conventions). This only matters when you read out the matrix to use it with other software.

@@ -3,8 +3,11 @@
 const config = {};
 config.EPSILON = 1e-12;
 config.debug = true;
-config.printRowMajor = true;
 config.precision = 4;
+config.printTypes = false;
+config.printDegrees = false;
+config.printRowMajor = true;
+
 export {config};
 
 export function configure(options) {
@@ -28,9 +31,20 @@ function round(value) {
   return Math.round(value / config.EPSILON) * config.EPSILON;
 }
 
-export function formatValue(value, precision = config.precision || 4) {
+export function formatValue(value, {
+  precision = config.precision || 4
+} = {}) {
   value = round(value);
   return parseFloat(value.toPrecision(precision));
+}
+
+export function formatAngle(value, {
+  precision = config.precision || 4,
+  printDegrees = config.printAngles
+} = {}) {
+  value = printDegrees ? degrees(value) : value;
+  value = round(value);
+  return `${parseFloat(value.toPrecision(precision))}${printDegrees ? '°' : ''}`;
 }
 
 // Returns true if value is either an array or a typed array

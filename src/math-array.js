@@ -34,15 +34,15 @@ export default class MathArray extends Array {
   }
 
   toString() {
-    return `${this.constructor.name}${this.format()}`;
+    return this.formatString(config);
   }
 
-  format() {
+  formatString(opts) {
     let string = '';
     for (let i = 0; i < this.ELEMENTS; ++i) {
-      string += (i > 0 ? ', ' : '') + formatValue(this[i]);
+      string += (i > 0 ? ', ' : '') + formatValue(this[i], opts);
     }
-    return `[${string}]`;
+    return `${opts.printTypes ? this.constructor.name : ''}[${string}]`;
   }
 
   toArray(array = [], offset = 0) {
@@ -92,6 +92,7 @@ export default class MathArray extends Array {
     if (config.debug && !this.validate(array)) {
       throw new Error(`Invalid ${this.constructor.name}`);
     }
+    return this;
   }
 
   normalize() {

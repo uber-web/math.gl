@@ -50,8 +50,7 @@ export default class Vector3 extends MathArray {
 
   set(x, y, z) {
     vec3_set(this, x, y, z);
-    this.check();
-    return this;
+    return this.check();
   }
 
   // Getters/setters
@@ -87,32 +86,21 @@ export default class Vector3 extends MathArray {
     for (const vector of vectors) {
       vec3_add(this, this, vector);
     }
-    this.check();
-    return this;
+    return this.check();
   }
 
   subtract(...vectors) {
     for (const vector of vectors) {
       vec3_subtract(this, this, vector);
     }
-    this.check();
-    return this;
+    return this.check();
   }
 
   multiply(...vectors) {
     for (const vector of vectors) {
       vec3_multiply(this, this, vector);
     }
-    this.check();
-    return this;
-  }
-
-  divide(...vectors) {
-    for (const vector of vectors) {
-      vec3_divide(this, this, vector);
-    }
-    this.check();
-    return this;
+    return this.check();
   }
 
   scale(scale) {
@@ -121,67 +109,64 @@ export default class Vector3 extends MathArray {
     } else {
       vec3_multiply(this, this, scale);
     }
-    this.check();
-    return this;
-  }
-
-  scaleAndAdd(vector, scale) {
-    vec3_scaleAndAdd(this, this, vector, scale);
-    this.check();
-    return this;
+    return this.check();
   }
 
   negate() {
     vec3_negate(this, this);
-    this.check();
-    return this;
+    return this.check();
   }
 
   inverse() {
     vec3_inverse(this, this);
-    this.check();
-    return this;
+    return this.check();
   }
 
   normalize() {
     vec3_normalize(this, this);
-    this.check();
-    return this;
+    return this.check();
   }
 
   cross(vector) {
     vec3_cross(this, this, vector);
-    this.check();
-    return this;
+    return this.check();
   }
 
   lerp(vector, coeff) {
     vec3_lerp(this, this, vector, coeff);
-    this.check();
-    return this;
+    return this.check();
   }
 
   rotateX({radians, origin = ORIGIN}) {
     vec3_rotateX(this, this, origin, radians);
-    this.check();
-    return this;
+    return this.check();
   }
 
   rotateY({radians, origin = ORIGIN}) {
     vec3_rotateY(this, this, origin, radians);
-    this.check();
-    return this;
+    return this.check();
   }
 
   rotateZ({radians, origin = ORIGIN}) {
     vec3_rotateZ(this, this, origin, radians);
-    this.check();
-    return this;
+    return this.check();
   }
 
   operation(operation, ...args) {
     operation(this, this, ...args);
-    this.check();
-    return this;
+    return this.check();
+  }
+
+  // TBD - do we really need these?
+  divide(...vectors) {
+    for (const vector of vectors) {
+      vec3_divide(this, this, vector);
+    }
+    return this.check();
+  }
+
+  scaleAndAdd(vector, scale) {
+    vec3_scaleAndAdd(this, this, vector, scale);
+    return this.check();
   }
 }

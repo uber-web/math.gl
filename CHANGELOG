@@ -2,6 +2,11 @@
 
 ## v1
 
+### 1.0.0-alpha.6
+- Matrix4 transforms
+- Improved print functions
+- Docs (coordinates etc)
+
 ### 1.0.0-alpha.5
 - SphericalCoordinates overhaul
 - Test cases

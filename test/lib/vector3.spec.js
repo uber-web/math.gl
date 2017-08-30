@@ -55,7 +55,7 @@ test('Vector3#rotates', t => {
 
 test('Vector3#toString', t => {
   const TEST_CASES = [
-    {input: [0, 0, 1], precision: 5, string: 'Vector3[0, 0, 1]'}
+    {input: [0, 0, 1], precision: 5, string: '[0, 0, 1]'}
   ];
   for (const tc of TEST_CASES) {
     const v = new Vector3(...tc.input);

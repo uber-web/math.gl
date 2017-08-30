@@ -40,6 +40,8 @@ export function validateMatrix4(m) {
     Number.isFinite(m[14]) && Number.isFinite(m[15]);
 }
 
+const tempVector4 = [0, 0, 0, 0];
+
 export default class Matrix4 extends MathArray {
   constructor(...args) {
     super();
@@ -334,5 +336,53 @@ export default class Matrix4 extends MathArray {
     case 4: return this.transformVector4(vector, out);
     default: throw new Error('Illegal vector');
     }
+  }
+
+  transformDirection(vector, out) {
+    switch (vector.length) {
+    case 2:
+      vec4_transformMat4(tempVector4, [vector[0], vector[1], 0, 0], this);
+      out = out || new Vector2();
+      [out[0], out[1]] = tempVector4;
+      break;
+    case 3:
+      vec4_transformMat4(tempVector4, [vector[0], vector[1], vector[2], 0], this);
+      out = out || new Vector3();
+      [out[0], out[1], out[2]] = tempVector4;
+      break;
+    case 4:
+      assert(vector[3] === 0);
+      out = out || new Vector4();
+      vec4_transformMat4(out, vector, this);
+      break;
+    default: throw new Error('Illegal vector');
+    }
+    return out;
+  }
+
+  transformPoint(vector, out) {
+    switch (vector.length) {
+    case 2:
+      out = out || new Vector2();
+      vec4_transformMat4(out, [vector[0], vector[1], 0, 1], this);
+      out.length = 2;
+      assert(validateVector2(out));
+      break;
+    case 3:
+      out = out || new Vector3();
+      vec4_transformMat4(out, [vector[0], vector[1], vector[2], 1], this);
+      out.length = 3;
+      assert(validateVector3(out));
+      break;
+    case 4:
+      assert(vector[3] !== 0);
+      out = out || new Vector4();
+      vec4_transformMat4(out, vector, this);
+      assert(validateVector4(out));
+      break;
+    default:
+      throw new Error('Illegal vector');
+    }
+    return out;
   }
 }
