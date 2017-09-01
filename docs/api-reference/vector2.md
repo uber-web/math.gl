@@ -1,22 +1,46 @@
 # Vector2
 
-`class Vector2 extends MathArray`
+A two dimensional vector
 
-###  Members
+```js
+class Vector2 extends MathArray extends Array
+```
 
-get ELEMENTS() { return 2; }
-get x()      { return this[0]; }
-set x(value) { return this[0] = checkNumber(value); }
-get y()      { return this[1]; }
-set y(value) { return this[1] = checkNumber(value); }
-/* eslint-disable no-multi-spaces, brace-style, no-return-assign */
+## Usage
+
+```js
+import {Vector2} from 'math.gl';
+```
+
+##  Members
+
+### x, y
+
+Gets or sets element 0 or 1 respectively
 
 
 ## Methods
 
+Many of the most commonly used `Vector2` methods are inherited from [`MathArray`](./docs/api-reference/math-array.md):
+
+* `vector2.clone()`
+* `vector2.copy(array)`
+* `vector2.set(...args)`
+* `vector2.fromArray(array, offset = 0)`
+* `vector2.toString()`
+* `vector2.toArray(array = [], offset = 0)`
+* `vector2.equals(array)`
+* `vector2.exactEquals(array)`
+* `vector2.validate(array = this)`
+* `vector2.check(array = this)`
+* `vector2.normalize()`
+
+Note that `Vector2` is a subclass of the built in JavaScript `Array` and can thus e.g. be supplied as a parameter to any function expecting an `Array`.
+
+
 ### constructor
 
-Creates a new, empty vec2, or copies an existing vec2
+Creates a new, empty `Vector2`, or copies an existing `Vector2`
 
 ```js
 constructor(x = 0, y = 0)
@@ -85,8 +109,3 @@ Divide zero or more vectors with current vector
 ### lerp
 
 `lerp(vector, coeff)`
-
-
-### operation
-
-`operation(operation, ...args)`

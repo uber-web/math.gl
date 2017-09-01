@@ -4,7 +4,7 @@ module.exports = {
 
   meta: [{
     name: 'description',
-    content: 'ES6 modules and classes for gl-matrix',
-  }],
+    content: 'ES6 Math classes optimized for WebGL applications'
+  }]
 
 };

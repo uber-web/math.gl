@@ -1,92 +1,201 @@
 # Quaternion
 
-A class to handle Quaternions. More information on quternions can be
-found [here](http://en.wikipedia.org/wiki/Quaternion). The quaternion
-will be represented by an instance with `x`, `y`, `z`, `w` components
-that make a quaternion like: `xi + yj + zk + w`.
+```js
+class Quaternion extends MathArray extends Array
+```
+
+A class to handle Quaternions. More information on quternions can be found [here](http://en.wikipedia.org/wiki/Quaternion). The quaternion will be represented by an instance with `x`, `y`, `z`, `w` components that make a quaternion like: `xi + yj + zk + w`.
 
 ## Usage
+
+```js
+import {Quaternion} from 'math.gl';
+```
+
+## Members
+
+### x, y, z, w
+
+Gets or sets element 0, 1, 2 or 3 respectively
 
 
 ## Methods
 
-### constructor(x = 0, y = 0, z = 0, w = 1) {
+Many of the most commonly used methods are inherited from [`MathArray`](./docs/api-reference/math-array.md):
 
-### fromMatrix3(m)
-// Creates a quaternion from the given 3x3 rotation matrix.
-// NOTE: The resultant quaternion is not normalized, so you should
-// be sure to renormalize the quaternion yourself where necessary.
+* `quaternion.clone()`
+* `quaternion.copy(array)`
+* `quaternion.set(...args)`
+* `quaternion.fromArray(array, offset = 0)`
+* `quaternion.toString()`
+* `quaternion.toArray(array = [], offset = 0)`
+* `quaternion.equals(array)`
+* `quaternion.exactEquals(array)`
+* `quaternion.validate(array = this)`
+* `quaternion.check(array = this)`
+* `quaternion.normalize()`
 
-### fromValues(x, y, z, w)
-// Creates a new quat initialized with the given values
+Note that `Quaternion` is a subclass of the built in JavaScript `Array` and can thus technically be supplied as a parameter to any function expecting an `Array`.
 
-### identity()
-// Set a quat to the identity quaternion
 
-### length()
-// Calculates the length of a quat
+### constructor
 
-### squaredLength(a)
-// Calculates the squared length of a quat
+`constructor(x = 0, y = 0, z = 0, w = 1)`
 
-### // @returnNumber}
-// Calculates the dot product of two quat's
 
-### dot(a, b)
+### fromMatrix3
 
-### // getAxisAngle()
-  // Gets the rotation axis and angle for a given quaternion.
-  // If a quaternion is created with setAxisAngle, this method will
-  // return the same values as providied in the original parameter
-  // list OR functionally equivalent values.
-  // Example: The quaternion formed by axis [0, 0, 1] and angle -90
-  // is the same as the quaternion formed by [0, 0, 1] and 270.
-  // This method favors the latter.
+Creates a quaternion from the given 3x3 rotation matrix. NOTE: The resultant quaternion is not normalized, so you should be sure to renormalize the quaternion yourself where necessary.
 
-### rotationTo(vectorA, vectorB)
-// Sets a quaternion to represent the shortest rotation from one vector
-// to another. Both vectors are assumed to be unit length.
+`fromMatrix3(m)`
 
-### add(a, b)
-// Adds two quat's
 
-### calculateW()
-// Calculates the W component of a quat from the X, Y, and Z components.
-// Any existing W component will be ignored.
+### fromValues
 
-### conjugate()
-// Calculates the conjugate of a quat If the quaternion is normalized,
-// this function is faster than quat_inverse and produces the same result.
+Creates a new quat initialized with the given values
 
-### invert()
-// Calculates the inverse of a quat
+`fromValues(x, y, z, w)`
 
-### lerp(a, b, t)
-// Performs a linear interpolation between two quat's
 
-### multiply(a, b)
-// Multiplies two quat's
+### identity
 
-### normalize()
-// Normalize a quat
+Set a quat to the identity quaternion
 
-### rotateX(rad)
-// Rotates a quaternion by the given angle about the X axis
+`identity()`
 
-### rotateY(rad)
-// Rotates a quaternion by the given angle about the Y axis
 
-### rotateZ(rad)
-// Rotates a quaternion by the given angle about the Z axis
+### length
 
-### scale(b)
-// Scales a quat by a scalar number
+Calculates the length of a quaternion
 
-### set(i, j, k, l)
-// Set the components of a quat to the given values
+`length()`
 
-### setAxisAngle(axis, rad)
-// Sets a quat from the given angle and rotation axis, then returns it.
 
-### slerp(a, b, t)
-// Performs a spherical linear interpolation between two quat
+### squaredLength
+
+Calculates the squared length of a quaternion
+
+`squaredLength(a)`
+
+@returnNumber}
+
+
+### dot
+
+Calculates the dot product of two quat's
+
+`quaternion.dot(a, b)`
+
+
+### getAxisAngle
+
+Gets the rotation axis and angle for a given quaternion.
+
+`quaternion.getAxisAngle()`
+
+If a quaternion is created with setAxisAngle, this method will return the same values as providied in the original parameter list OR functionally equivalent values.
+
+Example: The quaternion formed by axis [0, 0, 1] and angle -90 is the same as the quaternion formed by [0, 0, 1] and 270. This method favors the latter.
+
+
+### rotationTo
+
+Sets a quaternion to represent the shortest rotation from one vector to another. Both vectors are assumed to be unit length.
+
+`quaternion.rotationTo(vectorA, vectorB)`
+
+
+### add
+
+Adds two quaternions
+
+`quaternion.add(a, b)`
+
+
+### calculateW
+
+Calculates the W component of a quat from the X, Y, and Z components. Any existing W component will be ignored.
+
+`quaternion.calculateW()`
+
+
+### conjugate
+
+Calculates the conjugate of a quat If the quaternion is normalized, this function is faster than quat_inverse and produces the same result.
+
+`quaternion.conjugate()`
+
+
+### invert
+
+Calculates the inverse of a quat
+
+`quaternion.invert()`
+
+
+### lerp
+
+Performs a linear interpolation between two quat's
+
+`quaternion.lerp(a, b, t)`
+
+
+### multiply
+
+Multiplies two quat's
+
+`multiply(a, b)`
+
+
+### normalize
+
+Normalize a quat
+
+
+### rotateX
+
+Rotates a quaternion by the given angle about the X axis
+
+`rotateX(rad)`
+
+
+### rotateY
+
+Rotates a quaternion by the given angle about the Y axis
+
+`rotateY(rad)`
+
+
+### rotateZ
+
+Rotates a quaternion by the given angle about the Z axis
+
+`rotateZ(rad)`
+
+
+### scale
+
+Scales a quat by a scalar number
+
+`scale(b)`
+
+
+### set
+
+Set the components of a quat to the given values
+
+`set(i, j, k, l)`
+
+
+### setAxisAngle
+
+Sets a quat from the given angle and rotation axis, then returns it.
+
+`setAxisAngle(axis, rad)`
+
+
+### slerp
+
+Performs a spherical linear interpolation between two quat
+
+`slerp(a, b, t)`

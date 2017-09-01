@@ -22,8 +22,7 @@ THE SOFTWARE.
 
 ---
 
-math.gl builds on "gl-matrix", which is MIT licensed as follows:
-
+math.gl builds on docs and code from "gl-matrix", which is MIT licensed as follows:
 
 Copyright (c) 2015, Brandon Jones, Colin MacKenzie IV.
 
@@ -47,7 +46,7 @@ THE SOFTWARE.
 
 --
 
-math.gl builds on math code from THREE.js, which is MIT licensed as follows:
+math.gl builds on docs and code from THREE.js, which is MIT licensed as follows:
 
 The MIT License
 

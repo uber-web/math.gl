@@ -1,6 +1,11 @@
 # Euler
 
+```js
+class Euler extends MathArray extends Array
+```
+
 A class to handle Euler rotation. More information on rotation using a Euler vector can be found [here](https://en.wikipedia.org/wiki/Euler%27s_rotation_theorem). Generally speaking the three components of the Euler object represents the roll, pitch and yaw angles and the rotation is applied according to a specific rotation order.
+
 
 ## Usage
 
@@ -8,29 +13,20 @@ A class to handle Euler rotation. More information on rotation using a Euler vec
 import {Euler} from 'math.gl';
 ```
 
-
 ## Constants
 
-* Euler.ZYX
-* Euler.YXZ
-* Euler.XZY
-* Euler.ZXY
-* Euler.YZX
-* Euler.XYZ
-* Euler.RollPitchYaw
+* `Euler.ZYX`
+* `Euler.YXZ`
+* `Euler.XZY`
+* `Euler.ZXY`
+* `Euler.YZX`
+* `Euler.XYZ`
+* `Euler.RollPitchYaw`
 
-* Euler.DefaultOrder // Euler.ZYX;
-
-### Euler.RotationOrders
-['ZYX', 'YXZ', 'XZY', 'ZXY', 'YZX', 'XYZ'];
-  static rotationOrder(order) return Euler.RotationOrders[order]; }
-
+* `Euler.DefaultOrder` (= `Euler.ZYX`)
+* `Euler.RotationOrders` =  `['ZYX', 'YXZ', 'XZY', 'ZXY', 'YZX', 'XYZ']`;
 
 ## Members
-
-### ELEMENTS
-
-Constant always returns 4
 
 ### x, y z
 
@@ -55,62 +51,84 @@ rotation order in all notations
 
 ## Methods
 
-
-export default class Euler extends MathArray {
-
 ### constructor
 
 (x = 0, y = 0, z = 0, order = Euler.DefaultOrder)
  * Number|Number[], Number, Number, Number
 
 
-### copy(array)
+### copy
 
-// If copied array does contain fourth element, preserves currently set order
+If copied array does contain fourth element, preserves currently set order.
 
-
-### set(x = 0, y = 0, z = 0, order)
-
-// Sets the three angles, and optionally sets the rotation order
-// If order is not specified, preserves currently set order
+`euler.copy(array)`
 
 
-### toArray(array = [], offset = 0)
+### set
 
-// Does not copy the orientation element
+Sets the three angles, and optionally sets the rotation order. If order is not specified, preserves currently set order.
 
-
-### toArray4(array = [], offset = 0)
-
-// Copies the orientation element
+`euler.set(x = 0, y = 0, z = 0, order)`
 
 
-### toVector3(optionalResult)
+### toArray
+
+Does not copy the orientation element
+
+`euler.toArray(array = [], offset = 0)`
 
 
-### fromVector3(v, order)
+### toArray4
 
-// Constructors
+Copies the orientation element
 
-### fromArray(array, offset = 0)
-
-// TODO - with and without 4th element
+`euler.toArray4(array = [], offset = 0)`
 
 
-### fromRollPitchYaw(roll, pitch, yaw)
+### toVector3
 
-// Common ZYX rotation order
-
-
-### fromQuaternion(q, order)
+`euler.toVector3(optionalResult)`
 
 
-### fromRotationMatrix(m, order = Euler.DefaultOrder)
+### fromVector3
+
+`euler.fromVector3(v, order)`
 
 
-### getRotationMatrix(m = new Matrix4())
+### fromArray
 
-// @return {Matrix4} a rotation matrix corresponding to rotations
-//   per the specified euler angles
+`euler.fromArray(array, offset = 0)`
 
-### getQuaternion()
+
+### fromRollPitchYaw
+
+Common ZYX rotation order
+
+`euler.fromRollPitchYaw(roll, pitch, yaw)`
+
+
+### fromQuaternion
+
+`euler.fromQuaternion(q, order)`
+
+
+### fromRotationMatrix
+
+`euler.fromRotationMatrix(m, order = Euler.DefaultOrder)`
+
+
+### getRotationMatrix
+
+`euler.getRotationMatrix(m = new Matrix4())`
+
+Returns `Matrix4` - a rotation matrix corresponding to rotations per the specified euler angles
+
+
+### getQuaternion
+
+`euler.getQuaternion()`
+
+
+## Remarks
+
+* Attribution: inspired by THREE.js `THREE.Euler` class

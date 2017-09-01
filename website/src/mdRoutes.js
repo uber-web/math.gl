@@ -16,63 +16,67 @@ import floating from '../../docs/get-started/floating-point.md';
 import homogenous from '../../docs/get-started/homogenous-coordinates.md';
 import transformations from '../../docs/get-started/transformations.md';
 import viewproj from '../../docs/get-started/view-and-projection.md';
+import vectors from '../../docs/get-started/vectors.md';
 
 export default [{
   name: 'Documentation',
   path: '/documentation',
   data: [{
     name: 'Overview',
-    markdown: overview,
+    markdown: overview
   }, {
     name: 'Get started',
     children: [{
       name: 'Installation',
-      markdown: install,
+      markdown: install
     }, {
       name: 'Debugging',
-      markdown: debugging,
+      markdown: debugging
     }, {
       name: 'Floating Point',
-      markdown: floating,
+      markdown: floating
     }, {
       name: 'Homogenous Coordinates',
-      markdown: homogenous,
+      markdown: homogenous
     }, {
       name: 'Transformations',
-      markdown: transformations,
+      markdown: transformations
     }, {
       name: 'View and Projection Matrices',
-      markdown: viewproj,
-    }],
+      markdown: viewproj
+    }, {
+      name: 'Vectors',
+      markdown: vectors
+    }]
   }, {
     name: 'API Reference',
     children: [{
       name: 'Euler',
-      markdown: euler,
+      markdown: euler
     }, {
       name: 'MathArray',
-      markdown: mathArray,
+      markdown: mathArray
     }, {
       name: 'Matrix4',
-      markdown: matrix4,
+      markdown: matrix4
     }, {
       name: 'Quaternion',
-      markdown: quaternion,
+      markdown: quaternion
     }, {
       name: 'SphericalCoordinates',
-      markdown: spherical,
+      markdown: spherical
     }, {
       name: 'Vector2',
-      markdown: vector2,
+      markdown: vector2
     }, {
       name: 'Vector3',
-      markdown: vector3,
+      markdown: vector3
     }, {
       name: 'Vector4',
-      markdown: vector4,
+      markdown: vector4
     }, {
       name: 'Utilities',
-      markdown: utilities,
-    }],
+      markdown: utilities
+    }]
   }]
-}]
+}];

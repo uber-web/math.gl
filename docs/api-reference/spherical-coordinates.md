@@ -1,5 +1,9 @@
 # SphericalCoordinates
 
+```js
+class SphericalCoordinates
+```
+
 See [Wikipedia](https://en.wikipedia.org/wiki/Spherical_coordinate_system)
 
  * The poles (phi) are at the positive and negative y axis.
@@ -7,6 +11,10 @@ See [Wikipedia](https://en.wikipedia.org/wiki/Spherical_coordinate_system)
 
 
 ## Usage
+
+```js
+import {SphericalCoordinates} from 'math.gl';
+```
 
 Creating a SphericalCoordinates object
 ```js
@@ -55,22 +63,36 @@ SphericalCoordinates({longitude = 0, latitude = 0, z = 1.0})
 * theta=0 - rotation around Y (longitude)
 * radius=1 - Distance from center
 
-### set(radius, phi, theta)
+### set
 
-### clone()
+`set(radius, phi, theta)`
 
-### copy(other)
+### clone
 
-### fromLngLatZ([lng, lat, z])
+`clone()`
 
-### fromVector3(v)
+### copy
 
-### makeSafe()
+`copy(other)`
+
+### fromLngLatZ
+
+`fromLngLatZ([lng, lat, z])`
+
+### fromVector3
+
+`fromVector3(v)`
+
+### makeSafe
+
+`makeSafe()`
 
 // restrict phi to be betwee EPS and PI-EPS
 
 
-### toVector3(center = [0, 0, 0])
+### toVector3
+
+`toVector3(center = [0, 0, 0])`
 
 // TODO - add parameter for orientation of sphere? up vector etc?
 
@@ -79,4 +101,4 @@ SphericalCoordinates({longitude = 0, latitude = 0, z = 1.0})
 
 ## Remarks
 
-* Inspired by THREE.js Spherical class
+* Inspired by THREE.js `THREE.Spherical` class
