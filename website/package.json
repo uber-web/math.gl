@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ocular start",
+    "start": "ocular start open",
     "build": "ocular build"
   },
   "keywords": [],

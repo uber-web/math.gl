@@ -140,6 +140,14 @@ export default class Vector2 extends MathArray {
     return this;
   }
 
+  horizontalAngle() {
+    return Math.atan2(this.y, this.x);
+  }
+
+  verticalAngle() {
+    return Math.atan2(this.x, this.y);
+  }
+
   operation(operation, ...args) {
     operation(this, this, ...args);
     this.check();

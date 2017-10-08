@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import {formatValue, equals, config} from './common';
+import {config, formatValue, equals, checkNumber} from './common';
 
 export default class MathArray extends Array {
 
@@ -100,6 +100,46 @@ export default class MathArray extends Array {
     return true;
   }
 
+  length() {
+    return Math.sqrt(this.lengthSquared());
+  }
+
+  lengthSquared() {
+    let length = 0;
+    if (length !== 0) {
+      for (let i = 0; i < this.ELEMENTS; ++i) {
+        length += this[i] * this[i];
+      }
+    }
+    return checkNumber(this);
+  }
+
+  distance(mathArray) {
+    return Math.sqrt(this.distanceSquared(mathArray));
+  }
+
+  distanceSquared(mathArray) {
+    let length = 0;
+    for (let i = 0; i < this.ELEMENTS; ++i) {
+      const dist = this[i] - mathArray[i];
+      length += dist * dist;
+    }
+    return checkNumber(length);
+  }
+
+  normalize() {
+    const length = this.length();
+    if (length !== 0) {
+      for (let i = 0; i < this.ELEMENTS; ++i) {
+        this[i] /= length;
+      }
+    }
+    this.check();
+    return this;
+  }
+
+  // Debug checks
+
   validate(array = this) {
     let valid = array && array.length === this.ELEMENTS;
     for (let i = 0; i < this.ELEMENTS; ++i) {
@@ -112,17 +152,6 @@ export default class MathArray extends Array {
     if (config.debug && !this.validate(array)) {
       throw new Error(`Invalid ${this.constructor.name}`);
     }
-    return this;
-  }
-
-  normalize() {
-    const length = this.len();
-    if (length !== 0) {
-      for (let i = 0; i < this.ELEMENTS; ++i) {
-        this[i] /= length;
-      }
-    }
-    this.check();
     return this;
   }
 }

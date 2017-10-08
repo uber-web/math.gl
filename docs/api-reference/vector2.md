@@ -23,17 +23,17 @@ Gets or sets element 0 or 1 respectively
 
 Many of the most commonly used `Vector2` methods are inherited from [`MathArray`](./docs/api-reference/math-array.md):
 
-* `vector2.clone()`
-* `vector2.copy(array)`
-* `vector2.set(...args)`
-* `vector2.fromArray(array, offset = 0)`
-* `vector2.toString()`
-* `vector2.toArray(array = [], offset = 0)`
-* `vector2.equals(array)`
-* `vector2.exactEquals(array)`
-* `vector2.validate(array = this)`
-* `vector2.check(array = this)`
-* `vector2.normalize()`
+* `Vector2.clone()`
+* `Vector2.copy(array)`
+* `Vector2.set(...args)`
+* `Vector2.fromArray(array, offset = 0)`
+* `Vector2.toString()`
+* `Vector2.toArray(array = [], offset = 0)`
+* `Vector2.equals(array)`
+* `Vector2.exactEquals(array)`
+* `Vector2.validate(array = this)`
+* `Vector2.check(array = this)`
+* `Vector2.normalize()`
 
 Note that `Vector2` is a subclass of the built in JavaScript `Array` and can thus e.g. be supplied as a parameter to any function expecting an `Array`.
 
@@ -109,3 +109,21 @@ Divide zero or more vectors with current vector
 ### lerp
 
 `lerp(vector, coeff)`
+
+
+### horizontalAngle
+
+Calculates counterclockwise angle in radians starting from positive x axis
+
+`horizontalAngle()`
+
+Note: returns `Math.atan2(this.y, this.x)`
+
+
+### verticalAngle
+
+Calculates clockwise angle in radians starting from positive y axis
+
+`verticalAngle()`
+
+Note: returns `Math.atan2(this.x, this.y)`

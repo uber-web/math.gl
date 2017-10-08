@@ -45,17 +45,17 @@ Gets or sets element 0, 1 or 2 respectively
 
 Many of the most commonly used `Vector3` methods are inherited from [`MathArray`](./docs/api-reference/math-array.md):
 
-* `vector2.clone()`
-* `vector2.copy(array)`
-* `vector2.set(...args)`
-* `vector2.fromArray(array, offset = 0)`
-* `vector2.toString()`
-* `vector2.toArray(array = [], offset = 0)`
-* `vector2.equals(array)`
-* `vector2.exactEquals(array)`
-* `vector2.validate(array = this)`
-* `vector2.check(array = this)`
-* `vector2.normalize()`
+* `Vector3.clone()`
+* `Vector3.copy(array)`
+* `Vector3.set(...args)`
+* `Vector3.fromArray(array, offset = 0)`
+* `Vector3.toString()`
+* `Vector3.toArray(array = [], offset = 0)`
+* `Vector3.equals(array)`
+* `Vector3.exactEquals(array)`
+* `Vector3.validate(array = this)`
+* `Vector3.check(array = this)`
+* `Vector3.normalize()`
 
 Note that `Vector3` is a subclass of the built in JavaScript `Array` and can thus e.g. be supplied as a parameter to any function expecting an `Array`.
 

@@ -30,17 +30,17 @@ Gets or sets element 0, 1, 2 or 3 respectively
 
 Many of the most commonly used `Vector2` methods are inherited from [`MathArray`](./docs/api-reference/math-array.md):
 
-* `vector2.clone()`
-* `vector2.copy(array)`
-* `vector2.set(...args)`
-* `vector2.fromArray(array, offset = 0)`
-* `vector2.toString()`
-* `vector2.toArray(array = [], offset = 0)`
-* `vector2.equals(array)`
-* `vector2.exactEquals(array)`
-* `vector2.validate(array = this)`
-* `vector2.check(array = this)`
-* `vector2.normalize()`
+* `Vector4.clone()`
+* `Vector4.copy(array)`
+* `Vector4.set(...args)`
+* `Vector4.fromArray(array, offset = 0)`
+* `Vector4.toString()`
+* `Vector4.toArray(array = [], offset = 0)`
+* `Vector4.equals(array)`
+* `Vector4.exactEquals(array)`
+* `Vector4.validate(array = this)`
+* `Vector4.check(array = this)`
+* `Vector4.normalize()`
 
 Note that `Vector2` is a subclass of the built in JavaScript `Array` and can thus e.g. be supplied as a parameter to any function expecting an `Array`.
 

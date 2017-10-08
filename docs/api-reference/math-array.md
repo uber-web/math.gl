@@ -67,14 +67,24 @@ Calls `formatString` with the global math.gl config.
 `array.exactEquals(array)`
 
 
-### validate
+### length
 
-`array.validate(array = this)`
+`array.length()`
 
 
-### check
+### lengthSquared
 
-`array.check(array = this)`
+`array.lengthSquared()`
+
+
+### distance
+
+`array.distance(mathArray)`
+
+
+### distanceSquared
+
+`array.distanceSquared(mathArray)`
 
 
 ### normalize
@@ -82,3 +92,19 @@ Calls `formatString` with the global math.gl config.
 `array.normalize()`
 
 
+### validate
+
+Checks if a `MathArray` contains valid values.
+
+`array.validate(array = this)`
+
+Returns `false` if any value fails `Number.isFinite` test.
+
+
+### check
+
+If `config.debug` is true, validates the `MathArray` and throws an error if it does not contains valid values.
+
+`array.check(array = this)`
+
+Mote: This method is called by all mutating methods.
