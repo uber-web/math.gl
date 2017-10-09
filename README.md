@@ -1,13 +1,29 @@
+<p align="right">
+  <a href="https://npmjs.org/package/math.gl">
+    <img src="https://img.shields.io/npm/v/math.gl.svg?style=flat-square" alt="version" />
+  </a>
+  <a href="https://travis-ci.org/uber-web/math.gl">
+    <img src="https://img.shields.io/travis/uber-web/math.gl/master.svg?style=flat-square" alt="build" />
+  </a>
+  <a href="https://npmjs.org/package/math.gl">
+    <img src="https://img.shields.io/npm/dm/math.gl.svg?style=flat-square" alt="downloads" />
+  </a>
+  <a href="http://starveller.sigsev.io/uber-web/math.gl">
+    <img src="http://starveller.sigsev.io/api/repos/uber-web/math.gl/badge" alt="stars" />
+  </a>
+</p>
+
 [![Build Status](https://travis-ci.org/ibgreen/math.gl.svg)](https://travis-ci.org/ibgreen/math.gl)
 
-# math.gl
 
-ES6 Classes for the amazing [gl-matrix](http://glmatrix.net/) library.
+<h1 align="center">math.gl | <a href="https://uber-web.github.io/math.gl">Docs</a></h1>
+
+Array-based ES6 math classes built on the amazing [gl-matrix](http://glmatrix.net/) and THREE.js math libraries.
 
 
 ## Overview
 
-math.gl is a JavaScript math library primarily intended to support WebGL applications. It is a generic library but was developed as a companion for [luma.gl](http://uber.github.io/luma.gl/).
+math.gl is a JavaScript math library primarily intended to support WebGL applications. It is a generic library but was developed as a companion for [luma.gl](http://uber.github.io/luma.gl/) and [deck.gl](http://uber.github.io/deck.gl/).
 
 math.gl contains a set of classes (Matrix4 etc) to complement the procedural interface of gl-matrix. It also imports a limited subset of the standard `gl-matrix` functions (to keep bundle size down), these can be used in parallel with the classes.
 
