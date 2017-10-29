@@ -1,6 +1,6 @@
 {
   "name": "math.gl",
-  "description": "Class wrappers for gl-matrix",
+  "description": "Array-based 3D Math Classes optimized for WebGL applications",
   "license": "MIT",
   "version": "1.0.0-alpha.8",
   "keywords": [

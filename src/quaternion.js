@@ -45,6 +45,8 @@ import quat_set from 'gl-quat/set';
 import quat_setAxisAngle from 'gl-quat/setAxisAngle';
 import quat_slerp from 'gl-quat/slerp';
 
+const IDENTITY_QUATERNION = [0, 0, 0, 1];
+
 export function validateQuaternion(q) {
   return q.length === 4 &&
     Number.isFinite(q[0]) && Number.isFinite(q[1]) &&
@@ -251,8 +253,8 @@ export default class Quaternion extends MathArray {
   }
 
   // Performs a spherical linear interpolation between two quat
-  slerp(a, b, t) {
-    quat_slerp(this, a, b, t);
+  slerp({start = IDENTITY_QUATERNION, target, ratio}) {
+    quat_slerp(this, start, target, ratio);
     this.check();
     return this;
   }

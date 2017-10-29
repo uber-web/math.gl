@@ -19,28 +19,41 @@
 // THE SOFTWARE.
 
 export const PROJECT_TYPE = 'github';
-
 export const PROJECT_NAME = 'math.gl';
-export const PROJECT_ORG = 'ibgreen';
+export const PROJECT_ORG = 'uber-web';
 export const PROJECT_URL = `https://github.com/${PROJECT_ORG}/${PROJECT_NAME}`;
-export const PROJECT_DESC = 'ES6 Math classes optimized for WebGL applications';
+export const PROJECT_DESC = 'Array-based 3D Math Classes optimized for WebGL applications';
 
 export const PROJECTS = {
   'deck.gl': 'https://uber.github.io/deck.gl',
   'luma.gl': 'https://uber.github.io/luma.gl',
   'react-map-gl': 'https://uber.github.io/react-map-gl',
-  'react-vis': 'https://uber.github.io/react-vis'
+  'vis.gl': 'https://uber-web.github.io/vis.gl'
 };
 
 export const HOME_HEADING =
   'A JavaScript math library optimized for WebGL applications.';
 
+/* eslint-disable quotes */
 export const HOME_BULLETS = [{
-  text: 'Designed for WebGL',
-  desc: 'Companion of luma.gl',
-  img: 'images/icon-react.svg'
+  text: 'A modern Array-based JavaScript math library',
+  desc: `math.gl leverages modern JavaScript to derive its 'Vector' and 'Matrix' classes \
+from the built-in 'Array' class, enabling a more natural and composable API.`,
+  img: 'images/icon-layers.svg'
+}, {
+  text: 'Optimized for WebGL and 3D Programming',
+  desc: `A selection of classes for typical 3D programming tasks, \
+optimized for use with WebGL where it makes sense.`,
+  img: 'images/icon-layers.svg'
 }, {
   text: 'Strong Documentation and Debug Support',
+  desc: `math.gl offers both reference documentation and articles, \
+as well as facilities for quicklydetecting errors and debugging math code.`,
+  img: 'images/icon-layers.svg'
+}, {
+  text: 'Built on Strong Foundations',
+  desc: `math.gl incorporates techniques from the most used JavaScript 3D math libraries, \
+like gl-matrix and the math classes from THREE.js`,
   img: 'images/icon-layers.svg'
 }];
 

@@ -14,6 +14,19 @@ const clone = vector.clone();
 ```
 
 
+Scaling with constants
+```js
+const u = v.scale(-1); // Reverse direction vector
+```
+
+Scaling with vectors is very flexible, you can e.g. set a component to zero, or flip a component's sign.
+```js
+const u = v.scale([1, 1, 0]); // Set z component to zero
+const w = v.scale([1, -1, 1]); // Flip y component
+```
+
+
+
 ## Methods
 
 ### clone

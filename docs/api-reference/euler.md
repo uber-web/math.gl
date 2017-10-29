@@ -1,5 +1,7 @@
 # Euler
 
+> Note this class is experimental and must be imported from the `experimental` namespace.
+
 ```js
 class Euler extends MathArray extends Array
 ```
@@ -10,7 +12,8 @@ A class to handle Euler rotation. More information on rotation using a Euler vec
 ## Usage
 
 ```js
-import {Euler} from 'math.gl';
+import {experimental} from 'math.gl';
+const {Euler} = experimental;
 ```
 
 ## Constants

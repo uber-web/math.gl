@@ -1,5 +1,7 @@
 # About the Vector Classes
 
+This document is Work-In-Progress.
+
 Two, three and four dimensional vector classes
 
 ## Vector2, Vector3, Vector4 Methods

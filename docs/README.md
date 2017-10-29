@@ -1,110 +1,42 @@
-# Math.gl
+# math.gl
 
-A JavaScript math library primarily intended to support WebGL applications.
+math.gl is an `Array`-based JavaScript 3D math library. In spite of its name it has no hard WebGL dependencies, but however both API and design are focused on focused on the needs of typical WebGL applications
 
-Note that luma.gl works directly with JavaScript arrays (a `Vector3` is just a 3 element array) and you can use any math library as long as you convert objects to arrays before passing data to luma.gl.
-
-The provided Math library is based on [`gl-matrix`](http://glmatrix.net/) and uses Array subclassing so that objects are directly usable with luma.gl.
 
 ## Features
 
-- **Array-based**
-    - All math objects can be used directly with any Javascript
-      function that expects array arguments. No need to call `toArray`
-      or similar.
-    - Math objects are `Arrays` - All math objects are subclasses of the built-in
-      JavaScript `Array` class, which means that class instances can be used
-      wherever an array is expected. I.e. these classes are not wrappers of
-      `Array`s, they **are** `Array`s, just with additional methods.
+This is a short list of feature high-lights to show what math.gl is about.
 
-- **Error checking**
-    - Assists in debugging.
-    - Only minor performance impact, and can be disabled when performance is critical.
+- **Array-based Classes** - All math.gl classes (like `Vector3`, `Matrix4`) are subclasses of the built-in JavaScript `Array` class. This means that they can be used directly with any Javascript function that e.g. expects plain JavaScript `Array` arguments for Vectors, which is increasingly common.
 
-- **WebGL-friendly**
-    - Matrices: while all accessors, `toString()` etc are row-major.
-      matrices are organized internally in the layout expected
-      by WebGL (an array of contiguous floats in column-major order),
-    - `toArray` and `fromArray` functions take optional offsets allowing
-      copying directly to and from vertex attribute array.
-    - GLSL math functions (radians, sin etc) made available in JavaScript
-      and work both on scalars and vectors / math objects.
+- **Debug Friendly** - JavaScript math can be frustrating to code and debug. math.gl offers **optional** error checking after every math operation which makes quick work of locating coding errors and bad data. Also, strong "printing support" (`toString`) simplifies debugging.
 
-- **Size Conscious**
-    - A math library can easily get fairly big, gl-matrix is a good example, there are a number of modules on npm that contain subsets of gl-matrix to work around its size.
-    - Focus on functions that are likely to be most important in WebGL applications.
+- **WebGL Support** - Matrices are stored internally in the format required by WebGL (array of contiguous values in column-major order), while exposing the more "natural" row-major API to the JavaScript programmer (e.g. through accessors, printing using `toString()` etc).
+
+- **Documentation** - Most JavaScript 3D math libraries come with reference documentation only. If you are new to 3D programming it can be hard to know where to start. math.gl contains articles that try to show the user the big picture and get him or her quickly up-to-speed on the mathematical concepts and the math.gl classes that support them.
+
+- **Size Conscious** - A math library can quickly get big as a various utilities and variations keep getting added. math.gl has made choices to restrict itself to a set of classes and functions that are likely to be most important in WebGL applications. We'd like to think of math.gl as a "mid-size" 3D math library: reasonably full featured, but small enought that unless you are targeting a very small final bundle its size should not be a big concern.
 
 
-## Documentation
+## Supported Browsers and Node Versions
 
-The [gl-matrix docs](http://glmatrix.net/docs/) are a good start.
-Additionally, source code is partially updated with JSDoc.
+math.gl is only supported on "evergreen" browsers, such as Chrome, Safari, Firefox, Edge etc. While not evergreen, IE11 should support the math.gl distribution's transpiled code, but Internet Explorer < 10 will not work. math.gl also works on recent versions of Node.js (tested on v6+).
 
-The class API is intentionally designed to remain intuitively similar
-to the wrapped `gl-matrix` procedures, usually just removing the first one
-or two parameters from each function (the out argument and the first
-input arguments, both are implictly set to this), and exposes the remaining
-arguments in the same order as the gl-matrix api.
-
-Only in a few cases where `gl-matrix` methods take a long list arguments
-(e.g. `Matrix4.perspective`, `Matrix4.ortho` etc) or return multiple values
-(e.g. `quat.getAxisRotation`) do methods provide a modified API
-that is more natural for modern ES6 applications to use, e.g. using named
-parameters, or collecting all results in one returned object.
-
-Also, for transforming vectors with matrices, the `transformVector*` methods
-are offered in the matrix classes, instead of on the vector classes. They
-also (optionally) auto allocate the result vectors.
+> Disclaimer: These restrictions are both due to real technical limitations with math.gl's `Array`subclassing approach, as well as a conscious decision by the maintainers to limit the support matrix for the library. So, if your application needs to support non-evergreen browsers, math.gl is unlikely to be the right choice for you. A good alternative option could be to use e.g. `gl-matrix` directly.
 
 
-## Caveats
+## History
 
-A technical caveat is that JavaScript `Array` subclassing, which is
-fundamental to the design of this library, is only supported on "evergreen"
-browsers, such as Chrome, Safari, Firefox, Edge etc,
-i.e. no Internet Explorer < 10
-([details](https://github.com/loganfsmyth/babel-plugin-transform-builtin-extend)).
-If this is not acceptable, this library is not the right choice for you.
-As a fallback, you can always use `gl-matrix` directly.
+math.gl was developed as a companion 3D math library for the luma.gl and deck.gl WebGL frameworks, and the precursors of the math.gl classes were in fact part of luma.gl v4.0, but have now been broken out in this separate library.
+
+In spite of its roots, the intention is that math.gl should be able to serve a general purpose 3D math library, and be used either directly or as a "starting point" by other projects with similar needs.
 
 
-Script: Math {#Math}
-===========================
+## Attribution
 
-The Math script provides `Vec3`, `Mat4` and `Quat` classes to manage three dimensional vectors, four by four matrices and quaternions respectively.
+math.gl heavily inspired by, and includes code, documentation and ideas from some of the most proven open source JavaScript math libraries, the awesome [`gl-matrix`](http://glmatrix.net/) and the THREE.js math library. Those libraries encouraged reuse which enabled math.gl to be built, and naturally math.gl does the same!
 
-### Generics:
 
-One very interesting thing to point about the Math script is that all `Vec3`, `Mat4` and `Quat` methods are generics. This means that all
-instance methods of `Vec3`, `Mat4`, and `Quat` can also be accessed as static methods in which the first parameter of the static method is the receiver.
-The receiver does not *have to be* an instance of the class but can instead be a `Vec3`-like, `Mat4`-like or `Quat`-like object.
-This means that a simple array (i.e `[]`) can be used as the receiver for these methods.
+## License
 
-Although the *syntax* section for each method will include the generic and non-generic one, the arguments for each method will be described as with the instance
-method syntax.
-
-### Chainable Methods:
-
-All methods that do not return something in particular in the math package are chainable.
-
-### Conventions:
-
-Say you want to add two `Vec3` vectors, `v1` and `v2`. Then there are three ways of performing this operation:
-
-1. `v1.add(v2)` Returns a new instance with the result of adding `v1` and `v2`. This operation does not modify `v1` or `v2`.
-2. `v1.$add(v2)` Returns the result of adding `v1` to `v2`, but it alters `v1` updating it with the result.
-3. `vResult.add2(v1, v2)` Stores the result of adding `v1` to `v2` in `vResult`, another `Vec3` instance.
-
-These are the conventions we will be using for method naming. Methods altering the receiver will have a dollar sign (i.e. `$`), as opposed to
-methods creating a new instance with the result. Methods requiring a receiver *and* the instances involved in the operation as formal parameters
-will be suffixed with the number `2`.
-
-### Notes:
-
-All classes extend from `Array` or some
-`DataView` class (i.e. some typed array). This means that `Vector3`, `Matrix4`
-and `Quaternion`-like objects are plain arrays and not plain objects. Getters
-have been added for all properties in `Vector3`, `Matrix4` and `Quaternion`
-classes so you can still access them via `vec.x`, etc, but remember
-that the inner implementation is an array, so `vec3[0]` will also
-work.
+MIT license. The libraries that math.gl are built on are also all open source and MIT licensed.

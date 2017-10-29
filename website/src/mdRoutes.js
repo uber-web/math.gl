@@ -32,11 +32,12 @@ import vector4 from '../../docs/api-reference/vector4.md';
 
 import install from '../../docs/get-started/README.md';
 import debugging from '../../docs/get-started/debugging.md';
-import floating from '../../docs/get-started/floating-point.md';
-import homogenous from '../../docs/get-started/homogenous-coordinates.md';
-import transformations from '../../docs/get-started/transformations.md';
-import viewproj from '../../docs/get-started/view-and-projection.md';
-import vectors from '../../docs/get-started/vectors.md';
+import floating from '../../docs/articles/floating-point.md';
+import homogenous from '../../docs/articles/homogenous-coordinates.md';
+import performance from '../../docs/articles/performance.md';
+import transformations from '../../docs/articles/using-transformations.md';
+import viewproj from '../../docs/articles/view-and-projection.md';
+// import vectors from '../../docs/get-started/using-vectors.md';
 
 export default [{
   name: 'Documentation',
@@ -52,28 +53,31 @@ export default [{
     }, {
       name: 'Debugging',
       markdown: debugging
-    }, {
+    }]
+  }, {
+    name: 'Articles',
+    children: [{
       name: 'Floating Point',
       markdown: floating
     }, {
       name: 'Homogenous Coordinates',
       markdown: homogenous
     }, {
+      name: 'Performance',
+      markdown: performance
+    }, {
       name: 'Transformations',
       markdown: transformations
     }, {
       name: 'View and Projection Matrices',
       markdown: viewproj
-    }, {
-      name: 'Vectors',
-      markdown: vectors
+    // }, {
+    //   name: 'Vectors',
+    //   markdown: vectors
     }]
   }, {
     name: 'API Reference',
     children: [{
-      name: 'Euler',
-      markdown: euler
-    }, {
       name: 'MathArray',
       markdown: mathArray
     }, {
@@ -82,9 +86,6 @@ export default [{
     }, {
       name: 'Quaternion',
       markdown: quaternion
-    }, {
-      name: 'SphericalCoordinates',
-      markdown: spherical
     }, {
       name: 'Vector2',
       markdown: vector2
@@ -97,6 +98,15 @@ export default [{
     }, {
       name: 'Utilities',
       markdown: utilities
+    }]
+  }, {
+    name: 'Experimental API',
+    children: [{
+      name: 'Euler',
+      markdown: euler
+    }, {
+      name: 'SphericalCoordinates',
+      markdown: spherical
     }]
   }]
 }];

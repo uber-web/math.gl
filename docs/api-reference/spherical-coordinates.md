@@ -1,5 +1,7 @@
 # SphericalCoordinates
 
+> Note this class is experimental and must be imported from the `experimental` namespace.
+
 ```js
 class SphericalCoordinates
 ```
@@ -13,7 +15,8 @@ See [Wikipedia](https://en.wikipedia.org/wiki/Spherical_coordinate_system)
 ## Usage
 
 ```js
-import {SphericalCoordinates} from 'math.gl';
+import {experimental} from 'math.gl';
+const {SphericalCoordinates} = experimental;
 ```
 
 Creating a SphericalCoordinates object

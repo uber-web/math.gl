@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import {config, formatValue, equals, checkNumber} from './common';
+import {config, formatValue, equals} from './common';
 
 export default class MathArray extends Array {
 
@@ -33,24 +33,21 @@ export default class MathArray extends Array {
     for (let i = 0; i < this.ELEMENTS; ++i) {
       this[i] = array[i];
     }
-    this.check();
-    return this;
+    return this.check();
   }
 
   set(...args) {
     for (let i = 0; i < this.ELEMENTS; ++i) {
       this[i] = args[i] || 0;
     }
-    this.check();
-    return this;
+    return this.check();
   }
 
   fromArray(array, offset = 0) {
     for (let i = 0; i < this.ELEMENTS; ++i) {
       this[i] = array[i + offset];
     }
-    this.check();
-    return this;
+    return this.check();
   }
 
   toString() {
@@ -100,42 +97,28 @@ export default class MathArray extends Array {
     return true;
   }
 
-  length() {
-    return Math.sqrt(this.lengthSquared());
-  }
+  // Modifiers
 
-  lengthSquared() {
-    let length = 0;
-    if (length !== 0) {
-      for (let i = 0; i < this.ELEMENTS; ++i) {
-        length += this[i] * this[i];
-      }
-    }
-    return checkNumber(this);
-  }
-
-  distance(mathArray) {
-    return Math.sqrt(this.distanceSquared(mathArray));
-  }
-
-  distanceSquared(mathArray) {
-    let length = 0;
+  negate() {
     for (let i = 0; i < this.ELEMENTS; ++i) {
-      const dist = this[i] - mathArray[i];
-      length += dist * dist;
+      this[i] = -this[i];
     }
-    return checkNumber(length);
+    return this.check();
   }
 
-  normalize() {
-    const length = this.length();
-    if (length !== 0) {
-      for (let i = 0; i < this.ELEMENTS; ++i) {
-        this[i] /= length;
-      }
+  inverse() {
+    for (let i = 0; i < this.ELEMENTS; ++i) {
+      this[i] = 1 / this[i];
     }
-    this.check();
-    return this;
+    return this.check();
+  }
+
+  lerp(vector, coeff) {
+    for (let i = 0; i < this.ELEMENTS; ++i) {
+      const coord = this[i];
+      this[i] = coord + coeff * (vector[0] - coord);
+    }
+    return this.check();
   }
 
   // Debug checks

@@ -196,6 +196,8 @@ Sets a quat from the given angle and rotation axis, then returns it.
 
 ### slerp
 
-Performs a spherical linear interpolation between two quat
+Performs a spherical linear interpolation between two quaternions
 
-`slerp(a, b, t)`
+`slerp({start = [0, 0, 0, 1], target, ratio})`
+
+s

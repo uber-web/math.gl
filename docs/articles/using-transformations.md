@@ -1,6 +1,11 @@
-# Transformations
+# Using Transformations
 
-In math.gl transformations are managed by the `Matrix4` class. This is an overview of how that works. Note that while there is an [additional article](./'homogenous-coordinates.md') that provides more background about the additional transformations enabled when using 4x4 matrices, those transformations work in the same way from an API perspective as the ones described here.
+> Note: This article is a work in progress. It has been included in the documentation in spite of not being completed, since it does provide some additional context for math.gl users.
+
+
+In math.gl transformations are usually managed by creating instances of `Matrix4` class, and this article is intended to be an overview of how that works in an application.
+
+There are additional articles [](./'homogenous-coordinates.md') that provides more background about the additional transformations enabled when using 4x4 matrices, those transformations work in the same way from an API perspective as the ones described here.
 
 
 # Types of Transformations
@@ -40,23 +45,15 @@ const v = fullTransform.transformVector(new Vector4(...));
 
 ## About Rotations
 
+For more in-depth background about rotations, see the separate article on [rotations](./rotations.md).
+
 If you have a vector with 3 elements you can rotate it around an axis and a point like so:
 ```js
 const v = new Vector3([1, 2, 3]).rotateZ({radians: ..., origin: [1, 1, 0]});
 ```
 
 
-
 ## Remarks
 
-About "Order Matters"
-* The usual way to mathematically express the fact that order of transformations matter is that matrix multiplication is *non-commutative* (stress on the "u"), i.e. `A * B != B * A`.
-
-
-
-## TBA
-* Show same operations with `Euler`, `Quaternion`, `Matrix4` methods.
-* Show how to convert between them.
-* Should be separate article or even blog post...
-* The ability to compose transformations naturally raises the question whether it is possible to decompose transformations into constituent parts. This is possible under certain circumstances, TBA.
+* Decomposition - The ability to compose transformations raises the question whether it is possible to decompose a composite transformations into constituent parts. This is possible under certain circumstances, TBA.
 

@@ -24,8 +24,6 @@ import {checkNumber} from './common';
 // gl-matrix is too big. Cherry-pick individual imports from stack.gl version
 /* eslint-disable camelcase */
 import vec3_set from 'gl-vec3/set';
-import vec3_length from 'gl-vec3/length';
-import vec3_distance from 'gl-vec3/distance';
 import vec3_angle from 'gl-vec3/angle';
 import vec3_add from 'gl-vec3/add';
 import vec3_subtract from 'gl-vec3/subtract';
@@ -33,12 +31,7 @@ import vec3_multiply from 'gl-vec3/multiply';
 import vec3_divide from 'gl-vec3/divide';
 import vec3_scale from 'gl-vec3/scale';
 import vec3_scaleAndAdd from 'gl-vec3/scaleAndAdd';
-import vec3_negate from 'gl-vec3/negate';
-import vec3_inverse from 'gl-vec3/inverse';
-import vec3_normalize from 'gl-vec3/normalize';
-import vec3_dot from 'gl-vec3/dot';
 import vec3_cross from 'gl-vec3/cross';
-import vec3_lerp from 'gl-vec3/lerp';
 import vec3_rotateX from 'gl-vec3/rotateX';
 import vec3_rotateY from 'gl-vec3/rotateY';
 import vec3_rotateZ from 'gl-vec3/rotateZ';
@@ -61,13 +54,6 @@ export default class Vector3 extends MathArray {
     }
   }
 
-  // fromArray(array) {
-  //   if (array instanceof Vector3) {
-  //     return array;
-  //   }
-  //   return new Vector3(...array);
-  // }
-
   set(x, y, z) {
     vec3_set(this, x, y, z);
     return this.check();
@@ -84,20 +70,8 @@ export default class Vector3 extends MathArray {
   set z(value) { return this[2] = checkNumber(value); }
   /* eslint-enable no-multi-spaces, brace-style, no-return-assign */
 
-  length() {
-    return vec3_length(this);
-  }
-
-  distance(vector) {
-    return vec3_distance(this, vector);
-  }
-
   angle(vector) {
     return vec3_angle(this, vector);
-  }
-
-  dot(vector) {
-    return vec3_dot(this, vector);
   }
 
   // MODIFIERS
@@ -132,28 +106,8 @@ export default class Vector3 extends MathArray {
     return this.check();
   }
 
-  negate() {
-    vec3_negate(this, this);
-    return this.check();
-  }
-
-  inverse() {
-    vec3_inverse(this, this);
-    return this.check();
-  }
-
-  normalize() {
-    vec3_normalize(this, this);
-    return this.check();
-  }
-
   cross(vector) {
     vec3_cross(this, this, vector);
-    return this.check();
-  }
-
-  lerp(vector, coeff) {
-    vec3_lerp(this, this, vector, coeff);
     return this.check();
   }
 

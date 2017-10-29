@@ -11,6 +11,6 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "ocular": "^0.1.5"
+    "ocular": "^0.3.2"
   }
 }
