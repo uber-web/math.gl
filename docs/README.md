@@ -13,9 +13,9 @@ This is a short list of feature high-lights to show what math.gl is about.
 
 - **WebGL Support** - Matrices are stored internally in the format required by WebGL (array of contiguous values in column-major order), while exposing the more "natural" row-major API to the JavaScript programmer (e.g. through accessors, printing using `toString()` etc).
 
-- **Documentation** - Most JavaScript 3D math libraries come with reference documentation only. If you are new to 3D programming it can be hard to know where to start. math.gl contains articles that try to show the user the big picture and get him or her quickly up-to-speed on the mathematical concepts and the math.gl classes that support them.
+- **Documentation** - Some JavaScript 3D math libraries come with reference documentation only. If you are new to 3D programming it can be hard to know where to start. math.gl comes with articles that try to show you the big picture and get you quickly up-to-speed on the mathematical concepts and the math.gl classes that support them.
 
-- **Size Conscious** - A math library can quickly get big as a various utilities and variations keep getting added. math.gl has made choices to restrict itself to a set of classes and functions that are likely to be most important in WebGL applications. We'd like to think of math.gl as a "mid-size" 3D math library: reasonably full featured, but small enought that unless you are targeting a very small final bundle its size should not be a big concern.
+- **Size Conscious** - A math library can quickly get big as a various classed and functions keep getting added. But for many 3D applications, only a few basic operations are necessary. math.gl has made a choices to restrict itself to a set of classes and functions that are likely to be most important in WebGL applications. The intention is to position math.gl as a "mid-size" 3D math library: reasonably full featured, but small enough that unless you are targeting a very small final bundle for your application, its size should not be a big concern.
 
 
 ## Supported Browsers and Node Versions

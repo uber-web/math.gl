@@ -32,7 +32,7 @@ export const PROJECTS = {
 };
 
 export const HOME_HEADING =
-  'A JavaScript math library optimized for WebGL applications.';
+  'A JavaScript 3D math library optimized for WebGL applications.';
 
 /* eslint-disable quotes */
 export const HOME_BULLETS = [{
@@ -52,7 +52,7 @@ as well as facilities for quicklydetecting errors and debugging math code.`,
   img: 'images/icon-layers.svg'
 }, {
   text: 'Built on Strong Foundations',
-  desc: `math.gl incorporates techniques from the most used JavaScript 3D math libraries, \
+  desc: `math.gl incorporates techniques from some of the most used JavaScript 3D math libraries, \
 like gl-matrix and the math classes from THREE.js`,
   img: 'images/icon-layers.svg'
 }];
