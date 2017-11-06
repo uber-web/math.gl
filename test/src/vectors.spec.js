@@ -71,8 +71,20 @@ test('Vector4#members and methods', t => {
   t.equals(v.z, 0);
   t.equals(v.w, 0);
 
+<<<<<<< HEAD:test/src/vectors.spec.js
   for (const method of VECTOR_METHODS) {
     t.equals(typeof v[method], 'function');
+=======
+test('Vector3#scale', t => {
+  const TEST_CASES = [
+    {input: [1, 2, 3], scale: 5, result: [5, 10, 15]},
+    {input: [1, 2, 3], scale: [2, 0, -1], result: [2, 0, -3]}
+  ];
+  for (const tc of TEST_CASES) {
+    const v = new Vector3(...tc.input);
+    const result = v.scale(tc.scale);
+    tapeEquals(t, result, tc.result);
+>>>>>>> Reduce library dist size. Use shared base-class methods rather than gl-matrix for trivial tasks:test/lib/vector3.spec.js
   }
   t.end();
 });

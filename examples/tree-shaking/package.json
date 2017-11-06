@@ -24,8 +24,8 @@
     "rollup-plugin-uglify": "^1.0.2",
     "uglify-js": "git+https://github.com/mishoo/UglifyJS2.git#harmony",
     "uglify-js-harmony": "^2.7.5",
-    "webpack": "^2.4.0",
-    "webpack-bundle-analyzer": "^2.4.0",
-    "webpack-dev-server": "^2.4.0"
+    "webpack": "^3.8.0",
+    "webpack-bundle-analyzer": "^2.9.0",
+    "webpack-dev-server": "^3.8.0"
   }
 }
