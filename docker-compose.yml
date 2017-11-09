@@ -1,0 +1,7 @@
+version: '2'
+services:
+  mathgl:
+    build: .
+    volumes:
+      - .:/mathgl
+      - /mathgl/node_modules/
