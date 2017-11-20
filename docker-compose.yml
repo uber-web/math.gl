@@ -1,7 +1,7 @@
 version: '2'
 services:
-  mathgl:
+  math-gl:
     build: .
     volumes:
-      - .:/mathgl
-      - /mathgl/node_modules/
+      - .:/math-gl
+      - /math-gl/node_modules/

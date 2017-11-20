@@ -1,7 +1,7 @@
 FROM node:8.9.0
 
-WORKDIR /mathgl
+WORKDIR /math-gl
 
-COPY package.json yarn.lock /mathgl/
+COPY package.json yarn.lock /math-gl/
 
 RUN yarn
