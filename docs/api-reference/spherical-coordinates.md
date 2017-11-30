@@ -1,15 +1,58 @@
 # SphericalCoordinates
 
-> Note this class is experimental and must be imported from the `experimental` namespace.
+> Note this class is considered experimental and must be imported from the `experimental` namespace.
+
+> This documentation is incomplete and may be incorrect
 
 ```js
 class SphericalCoordinates
 ```
 
-See [Wikipedia](https://en.wikipedia.org/wiki/Spherical_coordinate_system)
+See also [Wikipedia](https://en.wikipedia.org/wiki/Spherical_coordinate_system), [Wolfram MathWorld](http://mathworld.wolfram.com/SphericalCoordinates.html) or 
 
- * The poles (phi) are at the positive and negative y axis.
- * The equator starts at positive z.
+* The poles (phi) are at the positive and negative y axis.
+* The equator starts at positive z.
+
+Conversion from spherical to Cartesian (rectilinear) coordinates:
+
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mfenced open="{" close="">
+<mtable columnalign="left">
+  <mtr><mrow><mi>x</mi><mo>=</mo><mn>ρ</mn><mi>cos</mi><mn>θφ</mn></mrow></mtr>
+  <mtr><mrow><mi>y</mi><mo>=</mo><mn>ρ</mn><mi>cos</mi><mn>θφ</mn></mrow></mtr>
+  <mtr><mrow><mi>z</mi><mo>=</mo><mn>ρ</mn><mi>cos</mi><mn>θφ</mn></mrow></mtr>
+</mtable>
+</mfenced>
+</math>
+
+
+Conversion from Cartesian (rectilinear) to spherical coordinates:
+
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mfenced open="{" close="">
+<mtable columnalign="left">
+  <mtr><mrow><mi>r</mi><mo>=</mo><msqrt>
+    <msup><mi>x</mi><mn>2</mn></msup><mo>+</mo>
+    <msup><mi>y</mi><mn>2</mn></msup><mo>+</mo>
+    <msup><mi>z</mi><mn>2</mn></msup>
+  </msqrt></mrow></mtr>
+  <mtr><mrow><mi>θ</mi><mo>=</mo><mo>arccos</mo><mfrac><mi>z</mi><mi>r</mi></mfrac></mrow></mtr>
+  <mtr><mrow><mi>φ</mi><mo>=</mo><mo>arctan</mo><mfrac><mi>y</mi><mi>x</mi></mfrac></mrow></mtr>
+</mtable>
+</mfenced>
+</math>
+
+Ranges
+
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+<mfenced open="{" close="">
+<mtable columnalign="left">
+  <mtr><mrow><mi>r</mi><mo>≥<mn>0</mn></mtr>
+  <mtr><mrow><mi>θ</mi><mo>≥<mn>0</mn></mtr>
+  <mtr><mrow><mi>φ</mi><mo>≥<mn>0</mn></mtr>
+</mtable>
+</mfenced>
+</math>
 
 
 ## Usage

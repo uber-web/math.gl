@@ -10,7 +10,7 @@ There are additional articles [](./'homogenous-coordinates.md') that provides mo
 
 # Types of Transformations
 
-Rotating, Scaling, Translating,
+The basic transformations are rotations, scalings, and translations.
 
 
 ## Composing Transformations
