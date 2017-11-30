@@ -1,0 +1,7 @@
+version: '2'
+services:
+  math-gl:
+    build: .
+    volumes:
+      - .:/math-gl
+      - /math-gl/node_modules/
