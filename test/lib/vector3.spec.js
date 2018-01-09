@@ -97,3 +97,13 @@ test('Vector3#scale', t => {
   t.end();
 });
 
+test('Vector3#distance', t => {
+  const TEST_CASES = [
+    {start: [0, 0, 0], end: [3, 4, 0], result: 5}
+  ];
+  for (const tc of TEST_CASES) {
+    const result = new Vector3(...tc.start).distance(tc.end);
+    t.equals(result, tc.result);
+  }
+  t.end();
+});

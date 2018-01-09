@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import MathArray from './math-array';
+import Vector from './vector';
 import {checkNumber} from './common';
 
 // gl-matrix is too big. Cherry-pick individual imports from stack.gl version
@@ -43,7 +43,7 @@ export function validateVector3(v) {
     Number.isFinite(v[0]) && Number.isFinite(v[1]) && Number.isFinite(v[2]);
 }
 
-export default class Vector3 extends MathArray {
+export default class Vector3 extends Vector {
   // Creates a new vec3, either empty, or from an array or from values
   constructor(x = 0, y = 0, z = 0) {
     super();
