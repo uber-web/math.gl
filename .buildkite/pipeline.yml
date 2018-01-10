@@ -3,15 +3,21 @@ steps:
     plugins:
       docker-compose#v1.5.2:
         build: math-gl
-        image-repository: 296822479253.dkr.ecr.us-east-2.amazonaws.com/fusionjs
+        image-repository: 027047743804.dkr.ecr.us-east-2.amazonaws.com/uber
+    agents:
+      queue: builders
   - wait
   - name: ":eslint:"
     command: "npm run lint"
     plugins:
       docker-compose#v1.5.2:
         run: math-gl
+    agents:
+      queue: workers
   - name: ":node:"
     command: ".buildkite/nodeTests"
     plugins:
       docker-compose#v1.5.2:
         run: math-gl
+    agents:
+      queue: workers
