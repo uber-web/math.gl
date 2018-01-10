@@ -1,6 +1,9 @@
 # CHANGELOG
 
-### v1.0.0 (Jan 9, 2018)
+## v1.0.0
+
+### 1.0.1 (Jan 9, 2018)
+- FIX: missing Vector3.distance
 
 ### v1.0.0-alpha.7
 - Website overhaul
