@@ -107,3 +107,38 @@ test('Vector3#distance', t => {
   }
   t.end();
 });
+
+test('Vector3#len', t => {
+  const TEST_CASES = [
+    {input: [0, 0, 0], result: 0},
+    {input: [3, 4, 0], result: 5}
+  ];
+  for (const tc of TEST_CASES) {
+    const result = new Vector3(...tc.input).len();
+    t.equals(result, tc.result);
+  }
+  t.end();
+});
+
+test('Vector3#dot', t => {
+  const TEST_CASES = [
+    {input1: [1, 3, -5], input2: [4, -2, -1], result: 3}
+  ];
+  for (const tc of TEST_CASES) {
+    const result = new Vector3(...tc.input1).dot(tc.input2);
+    t.equals(result, tc.result);
+  }
+  t.end();
+});
+
+test('Vector3#normalize', t => {
+  const TEST_CASES = [
+    {input: [0, 0, 0], result: [0, 0, 0]},
+    {input: [3, 4, 0], result: [0.6, 0.8, 0]}
+  ];
+  for (const tc of TEST_CASES) {
+    const result = new Vector3(...tc.input).normalize();
+    t.ok(result.equals(tc.result));
+  }
+  t.end();
+});
