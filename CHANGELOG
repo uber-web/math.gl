@@ -2,6 +2,11 @@
 
 ## v1.0.0
 
+### 1.0.2 (Jan 11, 2018)
+- FIX: Vector3.len throws error
+- FIX: Vector3.normalize throws error
+- FIX: Vector3.dot
+
 ### 1.0.1 (Jan 9, 2018)
 - FIX: missing Vector3.distance
 
