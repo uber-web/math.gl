@@ -18,12 +18,10 @@ export default class Vector extends MathArray {
 
   lengthSquared() {
     let length = 0;
-    if (length !== 0) {
-      for (let i = 0; i < this.ELEMENTS; ++i) {
-        length += this[i] * this[i];
-      }
+    for (let i = 0; i < this.ELEMENTS; ++i) {
+      length += this[i] * this[i];
     }
-    return checkNumber(this);
+    return length;
   }
 
   distance(mathArray) {
@@ -39,12 +37,12 @@ export default class Vector extends MathArray {
     return checkNumber(length);
   }
 
-  dot() {
+  dot(mathArray) {
     let product = 0;
     for (let i = 0; i < this.ELEMENTS; ++i) {
-      product += this[i] * this[i];
+      product += this[i] * mathArray[i];
     }
-    return product;
+    return checkNumber(product);
   }
 
   // MODIFIERS
