@@ -39,7 +39,7 @@ import mat4_multiply from 'gl-mat4/multiply';
 import mat4_rotateX from 'gl-mat4/rotateX';
 import mat4_rotateY from 'gl-mat4/rotateY';
 import mat4_rotateZ from 'gl-mat4/rotateZ';
-import mat4_rotate from 'gl-mat4/rotateZ';
+import mat4_rotate from 'gl-mat4/rotate';
 import mat4_scale from 'gl-mat4/scale';
 import mat4_translate from 'gl-mat4/translate';
 import vec2_transformMat4 from 'gl-vec2/transformMat4';
