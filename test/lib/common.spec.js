@@ -18,12 +18,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import {isArray} from 'math.gl';
+import {isArray, radians, equals, config} from 'math.gl';
 // import {tapeEquals} from './index';
 import test from 'tape-catch';
 
 test('Math#types', t => {
   t.equals(typeof isArray, 'function');
+  t.equals(typeof radians, 'function');
+  t.equals(typeof equals, 'function');
+  t.equals(typeof config.EPSILON, 'number');
   t.end();
 });
 
@@ -44,3 +47,16 @@ test('Math#construct and isArray check', t => {
 
   t.end();
 });
+
+test('math.equals', t => {
+  t.notOk(equals(1.0, 0.0), 'should return false for different numbers');
+  t.ok(equals(1.0, 1.0), 'should return true for the same number');
+  t.ok(equals(1.0 + config.EPSILON / 2, 1.0), 'should return true for numbers that are close');
+  t.end();
+});
+
+test('math#radians', t => {
+  t.ok(equals(radians(180), Math.PI), 'should return a value of 3.141592654(Math.PI)');
+  t.end();
+});
+

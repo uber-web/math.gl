@@ -19,8 +19,10 @@
 // THE SOFTWARE.
 
 /* eslint-disable max-statements */
-import {Matrix4} from 'math.gl';
+import {Matrix4, Vector3, config} from 'math.gl';
 import test from 'tape-catch';
+
+config.EPSILON = 1e-6;
 
 // FOR TAPE TESTING
 // Use tape assert to compares using a.equals(b)
@@ -289,58 +291,34 @@ test('Matrix4.translate', t => {
 //   t.end();
 // });
 
-// test('Matrix4.rotateAxis', t => {
-//   t.equals(typeof Matrix4.prototype.rotateAxis, 'function');
-//   const v = [1, 2, 3];
-//   const len = Math.sqrt(1 * 1 + 2 * 2 + 3 * 3);
-//   const theta = Math.PI / 4;
-//   const m = new Matrix4();
+test('Matrix4.rotateAxis', t => {
+  t.equals(typeof Matrix4.prototype.rotateAxis, 'function');
+  const v = new Vector3(1, 2, 3).normalize();
+  const theta = Math.PI / 4;
+  const m = new Matrix4();
 
-//   v[0] /= len;
-//   v[1] /= len;
-//   v[2] /= len;
-
-//   const ans = m.rotateAxis(theta, v);
-//   t.ok(abs(ans.n11 - 0.7280277013778687) < delta);
-//   t.ok(abs(ans.n12 - -0.525104820728302) < delta);
-//   t.ok(abs(ans.n13 - 0.4407272934913635) < delta);
-//   t.ok(abs(ans.n14 - 0) < delta);
-//   t.ok(abs(ans.n21 - 0.6087885979157627) < delta);
-//   t.ok(abs(ans.n22 - 0.7907905578613281) < delta);
-//   t.ok(abs(ans.n23 - -0.06345657259225845) < delta);
-//   t.ok(abs(ans.n24 - 0) < delta);
-//   t.ok(abs(ans.n31 - -0.3152016404063445) < delta);
-//   t.ok(abs(ans.n32 - 0.3145079017103789) < delta);
-//   t.ok(abs(ans.n33 - 0.8953952789306641) < delta);
-//   t.ok(abs(ans.n34 - 0) < delta);
-//   t.ok(abs(ans.n41 - 0) < delta);
-//   t.ok(abs(ans.n42 - 0) < delta);
-//   t.ok(abs(ans.n43 - 0) < delta);
-//   t.ok(abs(ans.n44 - 1) < delta);
-//   t.end();
-// });
+  const result = m.rotateAxis(theta, v);
+  const reference = new Matrix4([
+    0.7280277013778687, -0.525104820728302, 0.4407272934913635, 0,
+    0.6087885979157627, 0.7907905578613281, -0.06345657259225845, 0,
+    -0.3152016404063445, 0.3145079017103789, 0.8953952789306641, 0,
+    0, 0, 0, 1
+  ]).transpose();
+  t.assert(result.equals(reference), 'rotateAxis generated expected matrix');
+  t.end();
+});
 
 // test('Matrix4.rotateXYZ', t => {
 //   t.equals(typeof Matrix4.prototype.rotateXYZ, 'function');
 //   const m = new Matrix4();
-//   m.identity();
-//   const ans = m.rotateXYZ(1, 2, 3);
-//   t.ok(abs(ans.n11 - 0.411982245665683) < delta);
-//   t.ok(abs(ans.n12 - -0.8337376517741568) < delta);
-//   t.ok(abs(ans.n13 - -0.36763046292489926) < delta);
-//   t.ok(abs(ans.n14 - 0) < delta);
-//   t.ok(abs(ans.n21 - -0.05872664492762098) < delta);
-//   t.ok(abs(ans.n22 - -0.42691762127620736) < delta);
-//   t.ok(abs(ans.n23 - 0.9023815854833308) < delta);
-//   t.ok(abs(ans.n24 - 0) < delta);
-//   t.ok(abs(ans.n31 - -0.9092974268256817) < delta);
-//   t.ok(abs(ans.n32 - -0.35017548837401463) < delta);
-//   t.ok(abs(ans.n33 - -0.2248450953661529) < delta);
-//   t.ok(abs(ans.n34 - 0) < delta);
-//   t.ok(abs(ans.n41 - 0) < delta);
-//   t.ok(abs(ans.n42 - 0) < delta);
-//   t.ok(abs(ans.n43 - 0) < delta);
-//   t.ok(abs(ans.n44 - 1) < delta);
+//   const result = m.rotateXYZ([1, 2, 3]);
+//   const reference = new Matrix4([
+//     0.411982245665683, -0.8337376517741568, -0.36763046292489926, 0,
+//     -0.05872664492762098, -0.42691762127620736, 0.9023815854833308, 0,
+//     -0.9092974268256817, -0.35017548837401463, -0.2248450953661529, 0,
+//     0, 0, 0, 1
+//   ]).transpose();
+//   t.assert(result.equals(reference), 'rotateXYZ generated expected matrix');
 //   t.end();
 // });
 
