@@ -1,6 +1,10 @@
 # CHANGELOG
 
-## v1.0.0
+## v1.0
+
+### 1.0.3 (Jan 17, 2018)
+- FIX: Matrix4.rotateAxis
+- FIX: github URL
 
 ### 1.0.2 (Jan 11, 2018)
 - FIX: Vector3.len throws error
