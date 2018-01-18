@@ -134,11 +134,44 @@ test('Vector3#dot', t => {
 test('Vector3#normalize', t => {
   const TEST_CASES = [
     {input: [0, 0, 0], result: [0, 0, 0]},
-    {input: [3, 4, 0], result: [0.6, 0.8, 0]}
+    {input: [1, 0, 0], result: [1, 0, 0]},
+    {input: [3, 4, 0], result: [0.6, 0.8, 0]},
+    {input: [1, 1, 1], result: [1 / Math.sqrt(3), 1 / Math.sqrt(3), 1 / Math.sqrt(3)]}
   ];
   for (const tc of TEST_CASES) {
-    const result = new Vector3(...tc.input).normalize();
+    const v = new Vector3(...tc.input);
+    const result = v.normalize();
     t.ok(result.equals(tc.result));
   }
+  t.end();
+});
+
+test('Vector3.rotateX', t => {
+  let result = new Vector3([0, 1, 0]).rotateX({radians: Math.PI});
+  t.ok(result.equals([0, -1, 0]), 'rotation around [0, 0, 0] should return rotated vector');
+
+  result = new Vector3([2, 7, 0]).rotateX({radians: Math.PI, origin: [2, 5, 0]});
+  t.ok(result.equals([2, 3, 0]), 'rotation around arbitrary origin should return rotated vector');
+
+  t.end();
+});
+
+test('Vector3.rotateY', t => {
+  let result = new Vector3([1, 1, 0]).rotateY({radians: Math.PI});
+  t.ok(result.equals([-1, 1, 0]), 'rotation around [0, 0, 0] should return rotated vector');
+
+  result = new Vector3([-2, 3, 10]).rotateY({radians: Math.PI, origin: [-4, 3, 10]});
+  t.ok(result.equals([-6, 3, 10]), 'rotation around arbitrary origin should return rotated vector');
+
+  t.end();
+});
+
+test('Vector3.rotateZ', t => {
+  let result = new Vector3([0, 1, 0]).rotateZ({radians: Math.PI});
+  t.ok(result.equals([0, -1, 0]), 'rotation around [0, 0, 0] should return rotated vector');
+
+  result = new Vector3([0, 6, -5]).rotateZ({radians: Math.PI, origin: [0, 0, -5]});
+  t.ok(result.equals([0, -6, -5]), 'rotation around arbitrary origin should return rotated vector');
+
   t.end();
 });
