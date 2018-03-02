@@ -2,6 +2,9 @@
 
 ## v1.0
 
+### 1.0.4 (Mar 2, 2018)
+- FIX: github url link on npmjs.org
+
 ### 1.0.3 (Jan 17, 2018)
 - FIX: Matrix4.rotateAxis
 - FIX: github URL
