@@ -133,6 +133,23 @@ Generates a orthogonal projection matrix with the given bounds
 * `near` (`Number`) - Near bound of the frustum
 * `far` (`Number`) - Far bound of the frustum
 
+
+### orthographic
+
+Generates an orthogonal projection matrix with the same parameters
+as a perspective matrix (plus `focalDistance`).
+
+* Matrix4.orthographic({fovY, aspect, focalDistance, near, far})
+
+* `fovy` (`Number`) - Vertical field of view in radians
+* `aspect` (`Number`) - Aspect ratio. typically viewport width/height
+* `focalDistance` (`Number`) - selects which plane in the perspective view frustum should be used to calculate the size of the orthographic view box.
+* `near` (`Number`) - Near bound of the frustum
+* `far` (`Nmber`) - Far bound of the frustum
+
+> In applications it is not unusual to want to offer both perspective and orthographic views and this method is supplied to make this as simple as possible.
+
+
 ### perspective
 
 Generates a perspective projection matrix with the given bounds

@@ -25,7 +25,11 @@ To create a view matrix
 Normally positions are transformed by the view matrix. If doing work (e.g. lighting) in view space you will also want to transform other geometry such as normals.
 
 
-### Creating a Perspective Projection Matrix
+## Projection Matrices
+
+Projection matrices typically show everything inside a frustum (truncated pyramid) or a cube in the view space. Their job is to "scale" or "skew" the geometry inside this virtual shape into the clipspace cube, which is the coordinate system the GPU takes as input.
+
+### Perspective Projection Matrix
 
 To create a projection matrix use:
 * `Matrix4.perspective({fov, aspect, near, far})`
@@ -33,11 +37,23 @@ To create a projection matrix use:
 
 ### Creating an Orthographic Projection Matrix
 
-To create an orhtographic projection matrix, use:
+math.gl provides the traditional function create an orhtographic projection matrix by providing the "box" extents:
 
 * `Matrix4.ortho({right, left, top, bottom, near, far})`
 
-The ortograhic projection matrix essentially just scales your view to show everything within a box. As can easily be seen in the matrix below, it just centers your view between the bounds of the box, and scales your positions so that the box limits fall on -1 and +1 in each direction. It also does an inversion of the X and Y coordinates.
+The extents are specified in "view space" (which is typically translated and rotated, but not scaled, world space).
+
+
+### Switching between Perspective and Orthographic Views
+
+In applications it is not unusual to want to offer both perspective and orthographic views. To support this case, math.gl offers an additional method for creating orthographic projection matrix, that takes the same parameters as `Matrix4.perspective()`, with the addition of one additional parameter, `focalDistance` that selects which plane in the perspective view frustum should be used to calculate the size of the orthographic view box.
+
+* `Matrix4.orthographic({fovY, aspect, focalDistance, near, far})`
+
+
+## About Projection Matrices
+
+An ortograhic projection matrix essentially just scales your view to show everything within a box. As can be seen in the matrix below, it just centers your view between the bounds of the box, and scales your positions so that the box limits fall on -1 and +1 in each direction. It also does an inversion of the X and Y coordinates.
 
 <math display="block">
   <mrow>
