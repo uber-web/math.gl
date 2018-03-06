@@ -144,8 +144,8 @@ as a perspective matrix (plus `focalDistance`).
 * `fovy` (`Number`) - Vertical field of view in radians
 * `aspect` (`Number`) - Aspect ratio. typically viewport width/height
 * `focalDistance` (`Number`) - selects which plane in the perspective view frustum should be used to calculate the size of the orthographic view box.
-* `near` (`Number`) - Near bound of the frustum
-* `far` (`Nmber`) - Far bound of the frustum
+* `near`=`0.1` (`Number`) - Near bound of the frustum
+* `far`=`500` (`Nmber`) - Far bound of the frustum
 
 > In applications it is not unusual to want to offer both perspective and orthographic views and this method is supplied to make this as simple as possible.
 
@@ -155,15 +155,15 @@ as a perspective matrix (plus `focalDistance`).
 Generates a perspective projection matrix with the given bounds
 
 `matrix4.perspective({
-  fov = 45 * Math.PI - / 180,
+  fovY = 45 * Math.PI - / 180,
   aspect = 1,
   near = 0.1,
   far = 500
 })`
-* `fovy` (`Number`) - Vertical field of view in radians
-* `aspect` (`Number`) - Aspect ratio. typically viewport width/height
-* `near` (`Number`) - Near bound of the frustum
-* `far` (`Number`) - Far bound of the frustum
+* `fovY`=`45` (`Number`) - Vertical field of view in radians (default is 45 degrees specified in radians)
+* `aspect`=`1` (`Number`) - Aspect ratio. typically viewport width/height
+* `near`=`0.1` (`Number`) - Near bound of the frustum
+* `far`=`500` (`Number`) - Far bound of the frustum
 
 
 ### determinant()
