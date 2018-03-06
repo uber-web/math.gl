@@ -205,6 +205,7 @@ export default class Matrix4 extends MathArray {
   }
 
   // Generates a orthogonal projection matrix with the given bounds
+  // from "traditional" view space parameters
   // left  number  Left bound of the frustum
   // right number  Right bound of the frustum
   // bottom  number  Bottom bound of the frustum
@@ -216,16 +217,54 @@ export default class Matrix4 extends MathArray {
     return this.check();
   }
 
+  // Generates an orthogonal projection matrix with the same parameters
+  // as a perspective matrix (plus focalDistance)
+  // fovy  number  Vertical field of view in radians
+  // aspect  number  Aspect ratio. typically viewport width/height
+  // focalDistance distance in the view frustum used for extent calculations
+  // near  number  Near bound of the frustum
+  // far number  Far bound of the frustum
+  orthographic({
+    fovy = 45 * Math.PI / 180,
+    aspect = 1,
+    focalDistance = 1,
+    near = 0.1,
+    far = 500
+  }) {
+    if (fovy > Math.PI * 2) {
+      throw Error('radians');
+    }
+    const halfY = fovy / 2;
+    const top = focalDistance * Math.tan(halfY); // focus_plane is the distance from the camera
+    const right = top * aspect;
+
+    return new Matrix4().ortho({
+      left: -right,
+      right,
+      bottom: -top,
+      top,
+      near,
+      far
+    });
+  }
+
   // Generates a perspective projection matrix with the given bounds
   // fovy  number  Vertical field of view in radians
   // aspect  number  Aspect ratio. typically viewport width/height
   // near  number  Near bound of the frustum
   // far number  Far bound of the frustum
-  perspective({fov = 45 * Math.PI / 180, aspect = 1, near = 0.1, far = 500} = {}) {
-    if (fov > Math.PI * 2) {
+  perspective({
+    fovy,
+    fov = 45 * Math.PI / 180, // DEPRECATED
+    aspect = 1,
+    near = 0.1,
+    far = 500
+  } = {}) {
+    fovy = fovy || fov;
+    if (fovy > Math.PI * 2) {
       throw Error('radians');
     }
-    mat4_perspective(this, fov, aspect, near, far);
+    mat4_perspective(this, fovy, aspect, near, far);
     return this.check();
   }
 
