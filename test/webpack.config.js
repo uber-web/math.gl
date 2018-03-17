@@ -19,7 +19,12 @@
 // THE SOFTWARE.
 
 const {resolve} = require('path');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 // const webpack = require('webpack');
+
+const ALIASES = require(resolve(__dirname, '../aliases'));
 
 const COMMON_CONFIG = {
   stats: {
@@ -36,30 +41,6 @@ const COMMON_CONFIG = {
     fs: 'empty'
   }
 };
-
-const LIBRARY_BUNDLE_CONFIG = Object.assign({}, COMMON_CONFIG, {
-  // Bundle the transpiled code in dist
-  entry: {
-    lib: resolve('./src/index.js')
-  },
-
-  // Generate a bundle in dist folder
-  output: {
-    path: resolve('./dist'),
-    filename: '[name]-bundle.js',
-    library: 'math.gl',
-    libraryTarget: 'umd'
-  },
-
-  // Exclude any non-relative imports from resulting bundle
-  externals: [
-    /^[a-z\.\-0-9]+$/
-  ],
-
-  plugins: [
-    // new webpack.optimize.UglifyJsPlugin({comments: false})
-  ]
-});
 
 const TEST_CONFIG = Object.assign({}, COMMON_CONFIG, {
   devServer: {
@@ -83,9 +64,7 @@ const TEST_CONFIG = Object.assign({}, COMMON_CONFIG, {
   devtool: '#source-maps',
 
   resolve: {
-    alias: {
-      'math.gl': resolve('./src')
-    }
+    alias: ALIASES
   }
 });
 
@@ -101,6 +80,13 @@ BENCH_CONFIG.module.noParse = [
   /benchmark/
 ];
 
+function getFirstKey(object) {
+  for (const key in object) {
+    return key;
+  }
+  return null;
+}
+
 module.exports = env => {
   env = env || {};
   if (env.bench) {
@@ -109,5 +95,17 @@ module.exports = env => {
   if (env.test) {
     return TEST_CONFIG;
   }
-  return LIBRARY_BUNDLE_CONFIG;
-}
+  return Object.assign({}, TEST_CONFIG, {
+    entry: {
+      'test-browser': resolve(__dirname, 'size', `${getFirstKey(env)}.js`)
+    },
+    output: {
+      path: resolve('./dist'),
+      filename: '[name]-bundle.js'
+    },
+    plugins: [
+      new UglifyJsPlugin(),
+      new BundleAnalyzerPlugin()
+    ]
+  });
+};
