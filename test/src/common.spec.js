@@ -42,8 +42,8 @@ test('Math#construct and isArray check', t => {
   t.notOk(isArray({length: 0}), 'isArray({...})');
   t.notOk(isArray(1), 'isArray(1)');
   t.notOk(isArray(NaN), 'isArray(NaN)');
-  t.notOk(isArray('NaN'), 'isArray(\'NaN\')');
-  t.notOk(isArray(''), 'isArray(\'\')');
+  t.notOk(isArray('NaN'), "isArray('NaN')");
+  t.notOk(isArray(''), "isArray('')");
 
   t.end();
 });
@@ -59,4 +59,3 @@ test('math#radians', t => {
   t.ok(equals(radians(180), Math.PI), 'should return a value of 3.141592654(Math.PI)');
   t.end();
 });
-
