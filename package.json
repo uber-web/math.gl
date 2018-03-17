@@ -46,11 +46,13 @@
     "test-cover": "NODE_ENV=test tape -r babel-register test/node.js && nyc report",
     "test-node": "node test/node.js",
     "test-dist": "node test/node-dist.js",
-    "test-browser": "webpack-dev-server --env.test --progress --hot --open",
+    "test-browser": "webpack-dev-server --config test/webpack.config.js --env.test --progress --hot --open",
+    "test-size": "webpack --config test/webpack.config.js --env.import-vec4-mat4-explicit",
     "bench": "node test/bench/node.js",
-    "bench-browser": "webpack-dev-server --env.bench --progress --hot --open"
+    "bench-browser": "webpack-dev-server --config test/webpack.config.js --env.bench --progress --hot --open"
   },
   "dependencies": {
+    "D": "^1.0.0",
     "gl-mat4": "^1.1.4",
     "gl-quat": "^1.0.0",
     "gl-vec2": "^1.0.0",
@@ -82,8 +84,10 @@
     "tape-catch": "^1.0.4",
     "transform-loader": "^0.2.3",
     "uglify-js": "^2.6.1",
+    "uglifyjs-webpack-plugin": "^1.2.4",
     "webpack": "^2.4.0",
-    "webpack-dev-server": "^2.4.0"
+    "webpack-dev-server": "^2.4.0",
+    "webpack-bundle-analyzer": "^2.11.1"
   },
   "nyc": {
     "sourceMap": false,

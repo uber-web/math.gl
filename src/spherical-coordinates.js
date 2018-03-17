@@ -25,7 +25,7 @@ import Vector3 from './vector3';
 
 /* eslint-disable camelcase */
 import vec3_length from 'gl-vec3/length';
-import assert from 'assert';
+// import assert from 'assert';
 
 // TODO - import epsilon
 const EPSILON = 0.000001;
@@ -156,7 +156,9 @@ export default class SphericalCoordinates {
 
   check() {
     // this.makeSafe();
-    assert(Number.isFinite(this.phi) && Number.isFinite(this.theta) && this.radius > 0);
+    if (!Number.isFinite(this.phi) || !Number.isFinite(this.theta) || !(this.radius > 0)) {
+      throw new Error('Invalid SphericalCoordinates');
+    }
     return this;
   }
 }
