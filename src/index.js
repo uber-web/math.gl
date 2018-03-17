@@ -18,8 +18,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-// TODO export raw gl-matrix
-
 // math.gl classes
 export {default as Vector2} from './vector2';
 export {default as Vector3} from './vector3';
@@ -45,9 +43,9 @@ export {
   atan,
   clamp,
   equals
-} from './common';
+} from './lib/common';
 
-// Experimental exports
-import {default as Euler} from './euler';
 import {default as SphericalCoordinates} from './spherical-coordinates';
-export const experimental = {Euler, SphericalCoordinates};
+export const experimental = {
+  SphericalCoordinates
+};
