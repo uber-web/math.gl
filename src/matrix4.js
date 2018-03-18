@@ -272,6 +272,7 @@ export default class Matrix4 extends MathArray {
 
   transpose() {
     mat4_transpose(this, this);
+    return this.check();
   }
 
   invert() {
