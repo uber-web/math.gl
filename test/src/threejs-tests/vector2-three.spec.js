@@ -22,7 +22,6 @@ test('Vector2#Instancing', assert => {
   assert.end();
 });
 
-
 test('Vector2#properties', assert => {
   var a = new Vector2(0, 0);
   var width = 100;
@@ -52,7 +51,6 @@ test.skip('Vector2#Vector2#isVector2', assert => {
   assert.ok(false, "everything's gonna be alright");
   assert.end();
 });
-
 
 test('Vector2#set', assert => {
   var a = new Vector2();
@@ -95,7 +93,6 @@ test.skip('Vector2#Vector2#clone', assert => {
   assert.end();
 });
 
-
 test('Vector2#copy', assert => {
   var a = new Vector2(x, y);
   var b = new Vector2().copy(a);
@@ -109,7 +106,6 @@ test('Vector2#copy', assert => {
   assert.ok(b.y === y, 'Passed!');
   assert.end();
 });
-
 
 test('Vector2#add', assert => {
   var a = new Vector2(x, y);
@@ -135,7 +131,6 @@ test.skip('Vector2#Vector2#addVectors', assert => {
   assert.end();
 });
 
-
 test('Vector2#addScaledVector', assert => {
   var a = new Vector2(x, y);
   var b = new Vector2(2, 3);
@@ -146,7 +141,6 @@ test('Vector2#addScaledVector', assert => {
   assert.strictEqual(a.y, y + b.y * s, 'Check y');
   assert.end();
 });
-
 
 test('Vector2#sub', assert => {
   var a = new Vector2(x, y);
@@ -248,7 +242,6 @@ test.skip('Vector2#Vector2#roundToZero', assert => {
   assert.end();
 });
 
-
 test('Vector2#negate', assert => {
   var a = new Vector2(x, y);
 
@@ -257,7 +250,6 @@ test('Vector2#negate', assert => {
   assert.ok(a.y === -y, 'Passed!');
   assert.end();
 });
-
 
 test('Vector2#dot', assert => {
   var a = new Vector2(x, y);
@@ -295,7 +287,6 @@ test.skip('Vector2#manhattanLength', assert => {
   assert.strictEqual(a.manhattanLength(), Math.abs(x) + Math.abs(y), 'Two components');
   assert.end();
 });
-
 
 test('Vector2#normalize', assert => {
   var a = new Vector2(x, 0);
@@ -357,7 +348,6 @@ test.skip('Vector2#Vector2#lerpVectors', assert => {
   assert.end();
 });
 
-
 test('Vector2#equals', assert => {
   var a = new Vector2(x, 0);
   var b = new Vector2(0, -y);
@@ -377,7 +367,6 @@ test('Vector2#equals', assert => {
   assert.end();
 });
 
-
 test('Vector2#fromArray', assert => {
   var a = new Vector2();
   var array = [1, 2, 3, 4];
@@ -391,7 +380,6 @@ test('Vector2#fromArray', assert => {
   assert.strictEqual(a.y, 4, 'With offset: check y');
   assert.end();
 });
-
 
 test('Vector2#toArray', assert => {
   var a = new Vector2(x, y);
