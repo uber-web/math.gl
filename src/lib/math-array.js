@@ -21,12 +21,8 @@
 import {config, formatValue, equals} from './common';
 
 export default class MathArray extends Array {
-
   clone() {
-    const Subclass = this.constructor;
-    const clone = new Subclass().copy(this);
-    clone.check();
-    return clone;
+    return new this.constructor().copy(this).check();
   }
 
   copy(array) {
@@ -113,10 +109,36 @@ export default class MathArray extends Array {
     return this.check();
   }
 
-  lerp(vector, coeff) {
+  lerp(a, b, t) {
+    if (t === undefined) {
+      t = b;
+      b = a;
+      a = this; // eslint-disable-line
+    }
     for (let i = 0; i < this.ELEMENTS; ++i) {
-      const coord = this[i];
-      this[i] = coord + coeff * (vector[0] - coord);
+      const ai = a[i];
+      this[i] = ai + t * (b[i] - ai);
+    }
+    return this.check();
+  }
+
+  min(vector) {
+    for (let i = 0; i < this.ELEMENTS; ++i) {
+      this[i] = Math.min(vector[i], this[i]);
+    }
+    return this.check();
+  }
+
+  max(vector) {
+    for (let i = 0; i < this.ELEMENTS; ++i) {
+      this[i] = Math.max(vector[i], this[i]);
+    }
+    return this.check();
+  }
+
+  clamp(minVector, maxVector) {
+    for (let i = 0; i < this.ELEMENTS; ++i) {
+      this[i] = Math.min(Math.max(this[i], minVector[i]), maxVector[i]);
     }
     return this.check();
   }
@@ -133,8 +155,47 @@ export default class MathArray extends Array {
 
   check(array = this) {
     if (config.debug && !this.validate(array)) {
-      throw new Error(`Invalid ${this.constructor.name}`);
+      throw new Error(`math.gl: invalid ${this.constructor.name}`);
     }
     return this;
+  }
+
+  // three.js compatibility
+
+  sub(a) {
+    return this.subtract(a);
+  }
+
+  setScalar(a) {
+    for (let i = 0; i < this.ELEMENTS; ++i) {
+      this[i] = a;
+    }
+    return this.check();
+  }
+
+  addScalar(a) {
+    for (let i = 0; i < this.ELEMENTS; ++i) {
+      this[i] += a;
+    }
+    return this.check();
+  }
+
+  subScalar(a) {
+    return this.addScalar(-a);
+  }
+
+  multiplyScalar(a) {
+    return this.scale(a);
+  }
+
+  divideScalar(a) {
+    return this.scale(1 / a);
+  }
+
+  clampScalar(min, max) {
+    for (let i = 0; i < this.ELEMENTS; ++i) {
+      this[i] = Math.min(Math.max(this[i], min), max);
+    }
+    return this.check();
   }
 }

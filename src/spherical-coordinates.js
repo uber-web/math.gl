@@ -19,8 +19,8 @@
 // THE SOFTWARE.
 
 // Adaptation of THREE.js Spherical class, under MIT license
-import {formatValue, equals, config} from './common';
-import {degrees, radians, clamp} from './common';
+import {formatValue, equals, config} from './lib/common';
+import {degrees, radians, clamp} from './lib/common';
 import Vector3 from './vector3';
 
 /* eslint-disable camelcase */
@@ -34,7 +34,6 @@ const EARTH_RADIUS_METERS = 6.371e6;
 
 // Todo [rho, theta, phi] ?
 export default class SphericalCoordinates {
-
   /**
    * Ref: https://en.wikipedia.org/wiki/Spherical_coordinate_system
    * The poles (phi) are at the positive and negative y axis.
@@ -46,8 +45,12 @@ export default class SphericalCoordinates {
    */
   /* eslint-disable complexity */
   constructor({
-    phi, theta, radius,
-    bearing, pitch, altitude,
+    phi,
+    theta,
+    radius,
+    bearing,
+    pitch,
+    altitude,
     radiusScale = EARTH_RADIUS_METERS
   } = {}) {
     if (arguments.length === 0) {
@@ -55,13 +58,13 @@ export default class SphericalCoordinates {
       this.theta = 0;
       this.radius = 1;
     } else if (Number.isFinite(phi) || Number.isFinite(theta)) {
-      this.phi = phi || 0;         // up / down towards top and bottom pole
-      this.theta = theta || 0;     // around the equator of the sphere
+      this.phi = phi || 0; // up / down towards top and bottom pole
+      this.theta = theta || 0; // around the equator of the sphere
     } else if (Number.isFinite(bearing) || Number.isFinite(pitch)) {
-      this.bearing = bearing || 0;         // up / down towards top and bottom pole
-      this.pitch = pitch || 0;     // around the equator of the sphere
+      this.bearing = bearing || 0; // up / down towards top and bottom pole
+      this.pitch = pitch || 0; // around the equator of the sphere
     }
-    this.radius = radius || 1;   // radial distance from center
+    this.radius = radius || 1; // radial distance from center
     this.radiusScale = radiusScale || 1; // Used by lngLatZ
     this.check();
   }
@@ -78,33 +81,51 @@ export default class SphericalCoordinates {
   }
 
   equals(other) {
-    return equals(this.radius, other.radius) &&
+    return (
+      equals(this.radius, other.radius) &&
       equals(this.theta, other.theta) &&
-      equals(this.phi, other.phi);
+      equals(this.phi, other.phi)
+    );
   }
 
   exactEquals(other) {
-    return this.radius === other.radius &&
-      this.theta === other.theta &&
-      this.phi === other.phi;
+    return this.radius === other.radius && this.theta === other.theta && this.phi === other.phi;
   }
 
   /* eslint-disable brace-style */
   // Cartographic (bearing 0 north, pitch 0 look from above)
-  get bearing() { return 180 - degrees(this.phi); }
-  set bearing(v) { this.phi = Math.PI - radians(v); }
-  get pitch() { return degrees(this.theta); }
-  set pitch(v) { this.theta = radians(v); }
+  get bearing() {
+    return 180 - degrees(this.phi);
+  }
+  set bearing(v) {
+    this.phi = Math.PI - radians(v);
+  }
+  get pitch() {
+    return degrees(this.theta);
+  }
+  set pitch(v) {
+    this.theta = radians(v);
+  }
   // get pitch() { return 90 - degrees(this.phi); }
   // set pitch(v) { this.phi = radians(v) + Math.PI / 2; }
   // get altitude() { return this.radius - 1; } // relative altitude
 
   // lnglatZ coordinates
-  get longitude() { return degrees(this.phi); }
-  get latitude() { return degrees(this.theta); }
-  get lng() { return degrees(this.phi); }
-  get lat() { return degrees(this.theta); }
-  get z() { return (this.radius - 1) * this.radiusScale; }
+  get longitude() {
+    return degrees(this.phi);
+  }
+  get latitude() {
+    return degrees(this.theta);
+  }
+  get lng() {
+    return degrees(this.phi);
+  }
+  get lat() {
+    return degrees(this.theta);
+  }
+  get z() {
+    return (this.radius - 1) * this.radiusScale;
+  }
   /* eslint-enable brace-style */
 
   set(radius, phi, theta) {
