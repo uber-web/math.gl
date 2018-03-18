@@ -28,6 +28,9 @@ export default [{
     name: 'What\'s New',
     markdown: require('../../docs/whats-new.md')
   }, {
+    name: 'Upgrade Guide',
+    markdown: require('../../docs/upgrade-guide.md')
+  }, {
     name: 'Roadmap',
     markdown: require('../../docs/roadmap.md')
   }, {
