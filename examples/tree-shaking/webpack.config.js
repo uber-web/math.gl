@@ -44,32 +44,28 @@ module.exports = {
     ]
   },
   plugins: [
-    // new BabiliWebpackPlugin({}, {verbose: true, warn: true, warnings: true}),
-    /* eslint-disable camelcase */
-    // new webpack.LoaderOptionsPlugin({
-    //   minimize: true,
-    //   debug: false
+    // new webpack.optimize.UglifyJsPlugin({
+    //   test: /\.js/,
+    //   exclude: /node_modules/,
+    //   compress: {
+    //     warnings: true,
+    //     screw_ie8: true,
+    //     conditionals: true,
+    //     unused: true,
+    //     comparisons: true,
+    //     sequences: true,
+    //     dead_code: true,
+    //     evaluate: true,
+    //     join_vars: true,
+    //     if_return: true
+    //   },
+    //   output: {
+    //     comments: false
+    //   }
     // }),
-    new webpack.optimize.UglifyJsPlugin({
-      test: /\.js/,
-      exclude: /node_modules/,
-      compress: {
-        warnings: true,
-        screw_ie8: true,
-        conditionals: true,
-        unused: true,
-        comparisons: true,
-        sequences: true,
-        dead_code: true,
-        evaluate: true,
-        join_vars: true,
-        if_return: true
-      },
-      output: {
-        comments: false
-      }
-    }),
-    new BundleAnalyzerPlugin()
+    new BundleAnalyzerPlugin({
+      defaultSizes: 'parsed'
+    })
   ]
 };
 

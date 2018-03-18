@@ -4,6 +4,7 @@
     "minify"
   ],
   "plugins": [
+    "version-inline",
     ["transform-builtin-extend", {"globals": ["Array"]}]
   ]
 }
