@@ -1,5 +1,8 @@
 # Using with gl-matrix
 
+> Note: This article is a work in progress and may contain incorrect information.
+
+
 # API comparison
 
 The math.gl API is intentionally designed to remain intuitively similar to the wrapped `gl-matrix` procedures, usually just removing the first one or two parameters from each function (the out argument and the first input arguments, both are implictly set to `this`), and exposes the remaining arguments in the same order as the gl-matrix api.

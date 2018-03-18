@@ -1,6 +1,6 @@
 # Debugging
 
-> Note: This article is a work in progress. It has been included in the documentation in spite of not being completed, since it does provide some additional context for math.gl users.
+> Note: This article is a work in progress and may contain incorrect information.
 
 
 ## About Validation and Debug Support

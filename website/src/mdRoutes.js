@@ -18,95 +18,86 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import overview from '../../docs/README.md';
-
-import euler from '../../docs/api-reference/euler.md';
-import mathArray from '../../docs/api-reference/math-array.md';
-import matrix4 from '../../docs/api-reference/matrix4.md';
-import quaternion from '../../docs/api-reference/quaternion.md';
-import spherical from '../../docs/api-reference/spherical-coordinates.md';
-import utilities from '../../docs/api-reference/utilities.md';
-import vector2 from '../../docs/api-reference/vector2.md';
-import vector3 from '../../docs/api-reference/vector3.md';
-import vector4 from '../../docs/api-reference/vector4.md';
-
-import install from '../../docs/get-started/README.md';
-import debugging from '../../docs/get-started/debugging.md';
-import floating from '../../docs/articles/floating-point.md';
-import homogenous from '../../docs/articles/homogenous-coordinates.md';
-import performance from '../../docs/articles/performance.md';
-import transformations from '../../docs/articles/using-transformations.md';
-import viewproj from '../../docs/articles/view-and-projection.md';
-// import vectors from '../../docs/get-started/using-vectors.md';
-
 export default [{
   name: 'Documentation',
   path: '/documentation',
   data: [{
     name: 'Overview',
-    markdown: overview
+    markdown: require('../../docs/README.md')
+  }, {
+    name: 'What\'s New',
+    markdown: require('../../docs/whats-new.md')
+  }, {
+    name: 'Roadmap',
+    markdown: require('../../docs/roadmap.md')
   }, {
     name: 'Get started',
     children: [{
       name: 'Installation',
-      markdown: install
+      markdown: require('../../docs/get-started/README.md')
     }, {
-      name: 'Debugging',
-      markdown: debugging
+      name: 'Using with three.js',
+      markdown: require('../../docs/get-started/using-with-three-js.md')
+    }, {
+      name: 'Using with gl-matrix',
+      markdown: require('../../docs/get-started/using-with-gl-matrix.md')
     }]
   }, {
-    name: 'Articles',
+    name: 'Developer Guide',
     children: [{
+      name: 'Debugging',
+      markdown: require('../../docs/developer-guide/debugging.md')
+    }, {
       name: 'Floating Point',
-      markdown: floating
+      markdown: require('../../docs/developer-guide/floating-point.md')
     }, {
       name: 'Homogenous Coordinates',
-      markdown: homogenous
+      markdown: require('../../docs/developer-guide/homogenous-coordinates.md')
     }, {
       name: 'Performance',
-      markdown: performance
+      markdown: require('../../docs/developer-guide/performance.md')
     }, {
       name: 'Transformations',
-      markdown: transformations
+      markdown: require('../../docs/developer-guide/using-transformations.md')
     }, {
       name: 'View and Projection Matrices',
-      markdown: viewproj
+      markdown: require('../../docs/developer-guide/view-and-projection.md')
     // }, {
     //   name: 'Vectors',
-    //   markdown: vectors
+    //   markdown: require('../../docs/get-started/using-vectors.md')
     }]
   }, {
     name: 'API Reference',
     children: [{
       name: 'MathArray',
-      markdown: mathArray
+      markdown: require('../../docs/api-reference/math-array.md')
     }, {
       name: 'Matrix4',
-      markdown: matrix4
+      markdown: require('../../docs/api-reference/matrix4.md')
     }, {
       name: 'Quaternion',
-      markdown: quaternion
+      markdown: require('../../docs/api-reference/quaternion.md')
     }, {
       name: 'Vector2',
-      markdown: vector2
+      markdown: require('../../docs/api-reference/vector2.md')
     }, {
       name: 'Vector3',
-      markdown: vector3
+      markdown: require('../../docs/api-reference/vector3.md')
     }, {
       name: 'Vector4',
-      markdown: vector4
+      markdown: require('../../docs/api-reference/vector4.md')
     }, {
       name: 'Utilities',
-      markdown: utilities
+      markdown: require('../../docs/api-reference/utilities.md')
     }]
   }, {
     name: 'Experimental API',
     children: [{
       name: 'Euler',
-      markdown: euler
+      markdown: require('../../docs/api-reference/euler.md')
     }, {
       name: 'SphericalCoordinates',
-      markdown: spherical
+      markdown: require('../../docs/api-reference/spherical-coordinates.md')
     }]
   }]
 }];

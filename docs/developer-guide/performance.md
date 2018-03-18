@@ -1,6 +1,6 @@
 # Performance
 
-> Note: This article is a work in progress. It has been included in the documentation in spite of not being completed, since it does provide some additional context for math.gl users.
+> This article is a work in progress and may contain incorrect information.
 
 
 The code vector and matrix operations in math.gl are based on gl-matrix which makes a credible claim at being the most performant 3D math library available for JavaScript. However, the relentless focus on performance means that gl-matrix offers a procedural API, which doesn't always provide the programming experience. Also there are no error checks which is great in production code.

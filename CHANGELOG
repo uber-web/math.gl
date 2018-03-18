@@ -1,10 +1,11 @@
 # CHANGELOG
 
 ## v1.1
-- Size reduction: Shared code moved from vector* to vector
-- Size tests
-- three.js compatibility stubs (experimental)
-- experimental Euler class no longer exported in index.js
+- Size reduction: Shared code moved from `Vector*` to `Vector` etc.
+- Size reduction: Experimental Euler class no longer exported in index.js
+- Size reduction: yarn test-size command
+- THREE.js Compatibility - doc and mew methods (experimental)
+- THREE.js Compability - add test suites, run "unmodified" on math.gl classes
 
 ## v1.0
 
