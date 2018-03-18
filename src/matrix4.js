@@ -254,7 +254,8 @@ export default class Matrix4 extends MathArray {
   // near  number  Near bound of the frustum
   // far number  Far bound of the frustum
   perspective({
-    fovy = 45 * Math.PI / 180,
+    fovy,
+    fov = 45 * Math.PI / 180, // DEPRECATED
     aspect = 1,
     near = 0.1,
     far = 500

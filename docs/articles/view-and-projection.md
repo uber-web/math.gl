@@ -48,7 +48,7 @@ The extents are specified in "view space" (which is typically translated and rot
 
 In applications it is not unusual to want to offer both perspective and orthographic views. To support this case, math.gl offers an additional method for creating orthographic projection matrix, that takes the same parameters as `Matrix4.perspective()`, with the addition of one additional parameter, `focalDistance` that selects which plane in the perspective view frustum should be used to calculate the size of the orthographic view box.
 
-* `Matrix4.orthographic({fovY, aspect, focalDistance, near, far})`
+* `Matrix4.orthographic({fovy, aspect, focalDistance, near, far})`
 
 
 ## About Projection Matrices

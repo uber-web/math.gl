@@ -139,7 +139,7 @@ Generates a orthogonal projection matrix with the given bounds
 Generates an orthogonal projection matrix with the same parameters
 as a perspective matrix (plus `focalDistance`).
 
-* Matrix4.orthographic({fovY, aspect, focalDistance, near, far})
+* Matrix4.orthographic({fovy, aspect, focalDistance, near, far})
 
 * `fovy` (`Number`) - Vertical field of view in radians
 * `aspect` (`Number`) - Aspect ratio. typically viewport width/height
@@ -155,12 +155,12 @@ as a perspective matrix (plus `focalDistance`).
 Generates a perspective projection matrix with the given bounds
 
 `matrix4.perspective({
-  fovY = 45 * Math.PI - / 180,
+  fovy = 45 * Math.PI - / 180,
   aspect = 1,
   near = 0.1,
   far = 500
 })`
-* `fovY`=`45` (`Number`) - Vertical field of view in radians (default is 45 degrees specified in radians)
+* `fovy`=`45` (`Number`) - Vertical field of view in radians (default is 45 degrees specified in radians)
 * `aspect`=`1` (`Number`) - Aspect ratio. typically viewport width/height
 * `near`=`0.1` (`Number`) - Near bound of the frustum
 * `far`=`500` (`Number`) - Far bound of the frustum
