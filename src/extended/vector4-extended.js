@@ -42,4 +42,4 @@ export default class Vector4Extended extends Vector4 {
     return this.check();
   }
   */
-};
+}

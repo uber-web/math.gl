@@ -1,6 +1,7 @@
 # Using with THREE.js
 
-> This article is a work in progress.
+> Note: This article is a work in progress and may contain incorrect information.
+
 
 math.gl makes efforts to be compatible with the THREE.js math API.
 

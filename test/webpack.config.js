@@ -63,8 +63,27 @@ const TEST_CONFIG = Object.assign({}, COMMON_CONFIG, {
 
   devtool: '#source-maps',
 
+  module: {
+    rules: [
+      {
+        // Unfortunately, webpack doesn't import library sourcemaps on its own...
+        test: /\.js$/,
+        use: ['source-map-loader'],
+        enforce: 'pre'
+      }
+    ]
+  },
+
   resolve: {
-    alias: ALIASES
+    alias: Object.assign({}, ALIASES)
+  }
+});
+
+const SIZE_CONFIG = Object.assign({}, TEST_CONFIG, {
+  resolve: {
+    alias: Object.assign({}, ALIASES, {
+      'math.gl': resolve(__dirname, '../dist')
+    })
   }
 });
 
@@ -76,9 +95,7 @@ const BENCH_CONFIG = Object.assign({}, TEST_CONFIG, {
 
 // Replace the entry point for webpack-dev-server
 
-BENCH_CONFIG.module.noParse = [
-  /benchmark/
-];
+BENCH_CONFIG.module.noParse = [/benchmark/];
 
 function getFirstKey(object) {
   for (const key in object) {
@@ -95,7 +112,7 @@ module.exports = env => {
   if (env.test) {
     return TEST_CONFIG;
   }
-  return Object.assign({}, TEST_CONFIG, {
+  return Object.assign({}, SIZE_CONFIG, {
     entry: {
       'test-browser': resolve(__dirname, 'size', `${getFirstKey(env)}.js`)
     },
@@ -103,9 +120,6 @@ module.exports = env => {
       path: resolve('./dist'),
       filename: '[name]-bundle.js'
     },
-    plugins: [
-      new UglifyJsPlugin(),
-      new BundleAnalyzerPlugin()
-    ]
+    plugins: [new UglifyJsPlugin(), new BundleAnalyzerPlugin()]
   });
 };

@@ -38,26 +38,11 @@ export function tapeEquals(t, a, b, msg, extra) {
   });
 }
 
-const IDENTITY_MATRIX = [
-  1, 0, 0, 0,
-  0, 1, 0, 0,
-  0, 0, 1, 0,
-  0, 0, 0, 1
-];
+const IDENTITY_MATRIX = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
 
-const INDICES_MATRIX = [
-  1, 2, 3, 4,
-  5, 6, 7, 8,
-  9, 10, 11, 12,
-  13, 14, 15, 16
-];
+const INDICES_MATRIX = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
 
-const TRANSPOSED_INDICES_MATRIX = [
-  1, 5, 9, 13,
-  2, 6, 10, 14,
-  3, 7, 11, 15,
-  4, 8, 12, 16
-];
+const TRANSPOSED_INDICES_MATRIX = [1, 5, 9, 13, 2, 6, 10, 14, 3, 7, 11, 15, 4, 8, 12, 16];
 
 // const MATRIX_TEST_CASES = {
 //   identity: {
@@ -103,8 +88,7 @@ test('Matrix4#set', t => {
   const INPUT = INDICES_MATRIX;
   const RESULT = INDICES_MATRIX;
 
-  const m = new Matrix4()
-    .set(...INPUT);
+  const m = new Matrix4().set(...INPUT);
 
   tapeEquals(t, m, RESULT, 'set gave the right result');
   t.end();
@@ -116,8 +100,7 @@ test('Matrix4.transpose', t => {
   const INPUT = INDICES_MATRIX;
   const RESULT = TRANSPOSED_INDICES_MATRIX;
 
-  const m = new Matrix4()
-    .set(...INPUT);
+  const m = new Matrix4().set(...INPUT);
 
   const result = m.transpose();
 
@@ -142,12 +125,7 @@ test('Matrix4.transpose', t => {
 // });
 
 test('Matrix4.scale', t => {
-  const RESULT = [
-    1, 0, 0, 0,
-    0, 2, 0, 0,
-    0, 0, 3, 0,
-    0, 0, 0, 1
-  ];
+  const RESULT = [1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 3, 0, 0, 0, 0, 1];
 
   t.equals(typeof Matrix4.prototype.scale, 'function');
   const m = new Matrix4().identity();
@@ -158,12 +136,7 @@ test('Matrix4.scale', t => {
 });
 
 test('Matrix4.translate', t => {
-  const RESULT = [
-    1, 0, 0, 0,
-    0, 1, 0, 0,
-    0, 0, 1, 0,
-    1, 2, 3, 1
-  ];
+  const RESULT = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 2, 3, 1];
 
   t.equals(typeof Matrix4.prototype.translate, 'function');
   const m = new Matrix4().identity();
@@ -299,10 +272,22 @@ test('Matrix4.rotateAxis', t => {
 
   const result = m.rotateAxis(theta, v);
   const reference = new Matrix4([
-    0.7280277013778687, -0.525104820728302, 0.4407272934913635, 0,
-    0.6087885979157627, 0.7907905578613281, -0.06345657259225845, 0,
-    -0.3152016404063445, 0.3145079017103789, 0.8953952789306641, 0,
-    0, 0, 0, 1
+    0.7280277013778687,
+    -0.525104820728302,
+    0.4407272934913635,
+    0,
+    0.6087885979157627,
+    0.7907905578613281,
+    -0.06345657259225845,
+    0,
+    -0.3152016404063445,
+    0.3145079017103789,
+    0.8953952789306641,
+    0,
+    0,
+    0,
+    0,
+    1
   ]).transpose();
   t.assert(result.equals(reference), 'rotateAxis generated expected matrix');
   t.end();
@@ -322,7 +307,7 @@ test('Matrix4.rotateAxis', t => {
 //   t.end();
 // });
 
-test('Matrix4#transform***', t => {
+test('Matrix4#transform', t => {
   const matrix = new Matrix4().translate([1, 2, 3]).scale([2, 2, 2]);
 
   const direction = [2, 2, 0, 0];
@@ -359,4 +344,3 @@ test('Matrix4#transform***', t => {
 
   t.end();
 });
-

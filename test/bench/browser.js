@@ -21,7 +21,7 @@
 require('babel-polyfill');
 
 /* eslint-disable */
-(function () {
+(function() {
   const old = console.log;
   const logger = document.createElement('div');
   document.body.appendChild(logger);
@@ -31,7 +31,7 @@ require('babel-polyfill');
     } else {
       logger.innerHTML += message + '<br />';
     }
-  }
+  };
 })();
 
 require('./index');

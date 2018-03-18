@@ -74,9 +74,7 @@ test('Vector3#rotates', t => {
 });
 
 test('Vector3#toString', t => {
-  const TEST_CASES = [
-    {input: [0, 0, 1], precision: 5, string: '[0, 0, 1]'}
-  ];
+  const TEST_CASES = [{input: [0, 0, 1], precision: 5, string: '[0, 0, 1]'}];
   for (const tc of TEST_CASES) {
     const v = new Vector3(...tc.input);
     t.equals(String(v), tc.string);
@@ -98,9 +96,7 @@ test('Vector3#scale', t => {
 });
 
 test('Vector3#distance', t => {
-  const TEST_CASES = [
-    {start: [0, 0, 0], end: [3, 4, 0], result: 5}
-  ];
+  const TEST_CASES = [{start: [0, 0, 0], end: [3, 4, 0], result: 5}];
   for (const tc of TEST_CASES) {
     const result = new Vector3(...tc.start).distance(tc.end);
     t.equals(result, tc.result);
@@ -109,10 +105,7 @@ test('Vector3#distance', t => {
 });
 
 test('Vector3#len', t => {
-  const TEST_CASES = [
-    {input: [0, 0, 0], result: 0},
-    {input: [3, 4, 0], result: 5}
-  ];
+  const TEST_CASES = [{input: [0, 0, 0], result: 0}, {input: [3, 4, 0], result: 5}];
   for (const tc of TEST_CASES) {
     const result = new Vector3(...tc.input).len();
     t.equals(result, tc.result);
@@ -121,9 +114,7 @@ test('Vector3#len', t => {
 });
 
 test('Vector3#dot', t => {
-  const TEST_CASES = [
-    {input1: [1, 3, -5], input2: [4, -2, -1], result: 3}
-  ];
+  const TEST_CASES = [{input1: [1, 3, -5], input2: [4, -2, -1], result: 3}];
   for (const tc of TEST_CASES) {
     const result = new Vector3(...tc.input1).dot(tc.input2);
     t.equals(result, tc.result);

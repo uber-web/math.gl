@@ -19,8 +19,7 @@
 // THE SOFTWARE.
 
 /* eslint-disable max-statements, max-depth */
-import {experimental} from 'math.gl';
-const {SphericalCoordinates} = experimental;
+import SphericalCoordinates from 'math.gl/spherical-coordinates';
 import test from 'tape-catch';
 
 // FOR TAPE TESTING
@@ -39,10 +38,7 @@ export function tapeEquals(t, a, b, msg, extra) {
 
 const REPRESENTATION_TEST_CASES = [
   {
-    representations: [
-      {theta: 0, phi: 0, radius: 1},
-      {pitch: 0, bearing: 180, radius: 1}
-    ],
+    representations: [{theta: 0, phi: 0, radius: 1}, {pitch: 0, bearing: 180, radius: 1}],
     vector: [0, 0, 1]
   },
   {
@@ -74,10 +70,7 @@ const REPRESENTATION_TEST_CASES = [
     vector: [-1, 0, 0]
   },
   {
-    representations: [
-      {theta: Math.PI, phi: 0, radius: 1},
-      {pitch: 180, bearing: 180, altitude: 1}
-    ],
+    representations: [{theta: Math.PI, phi: 0, radius: 1}, {pitch: 180, bearing: 180, altitude: 1}],
     vector: [0, 0, -1]
   }
 ];

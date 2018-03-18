@@ -224,13 +224,7 @@ export default class Matrix4 extends MathArray {
   // focalDistance distance in the view frustum used for extent calculations
   // near  number  Near bound of the frustum
   // far number  Far bound of the frustum
-  orthographic({
-    fovy = 45 * Math.PI / 180,
-    aspect = 1,
-    focalDistance = 1,
-    near = 0.1,
-    far = 500
-  }) {
+  orthographic({fovy = 45 * Math.PI / 180, aspect = 1, focalDistance = 1, near = 0.1, far = 500}) {
     if (fovy > Math.PI * 2) {
       throw Error('radians');
     }
@@ -359,57 +353,62 @@ export default class Matrix4 extends MathArray {
   // returns a newly minted Vector2, Vector3 or Vector4
   transformVector(vector, out) {
     switch (vector.length) {
-    case 2: return this.transformVector2(vector, out);
-    case 3: return this.transformVector3(vector, out);
-    case 4: return this.transformVector4(vector, out);
-    default: throw new Error('Illegal vector');
+      case 2:
+        return this.transformVector2(vector, out);
+      case 3:
+        return this.transformVector3(vector, out);
+      case 4:
+        return this.transformVector4(vector, out);
+      default:
+        throw new Error('Illegal vector');
     }
   }
 
   transformDirection(vector, out) {
     switch (vector.length) {
-    case 2:
-      vec4_transformMat4(tempVector4, [vector[0], vector[1], 0, 0], this);
-      out = out || new Vector2();
-      [out[0], out[1]] = tempVector4;
-      break;
-    case 3:
-      vec4_transformMat4(tempVector4, [vector[0], vector[1], vector[2], 0], this);
-      out = out || new Vector3();
-      [out[0], out[1], out[2]] = tempVector4;
-      break;
-    case 4:
-      // assert(vector[3] === 0);
-      out = out || new Vector4();
-      vec4_transformMat4(out, vector, this);
-      break;
-    default: throw new Error('Illegal vector');
+      case 2:
+        vec4_transformMat4(tempVector4, [vector[0], vector[1], 0, 0], this);
+        out = out || new Vector2();
+        [out[0], out[1]] = tempVector4;
+        break;
+      case 3:
+        vec4_transformMat4(tempVector4, [vector[0], vector[1], vector[2], 0], this);
+        out = out || new Vector3();
+        [out[0], out[1], out[2]] = tempVector4;
+        break;
+      case 4:
+        // assert(vector[3] === 0);
+        out = out || new Vector4();
+        vec4_transformMat4(out, vector, this);
+        break;
+      default:
+        throw new Error('Illegal vector');
     }
     return out;
   }
 
   transformPoint(vector, out) {
     switch (vector.length) {
-    case 2:
-      out = out || new Vector2();
-      vec4_transformMat4(out, [vector[0], vector[1], 0, 1], this);
-      out.length = 2;
-      // assert(validateVector2(out));
-      break;
-    case 3:
-      out = out || new Vector3();
-      vec4_transformMat4(out, [vector[0], vector[1], vector[2], 1], this);
-      out.length = 3;
-      // assert(validateVector3(out));
-      break;
-    case 4:
-      // assert(vector[3] !== 0);
-      out = out || new Vector4();
-      vec4_transformMat4(out, vector, this);
-      // assert(validateVector4(out));
-      break;
-    default:
-      throw new Error('Illegal vector');
+      case 2:
+        out = out || new Vector2();
+        vec4_transformMat4(out, [vector[0], vector[1], 0, 1], this);
+        out.length = 2;
+        // assert(validateVector2(out));
+        break;
+      case 3:
+        out = out || new Vector3();
+        vec4_transformMat4(out, [vector[0], vector[1], vector[2], 1], this);
+        out.length = 3;
+        // assert(validateVector3(out));
+        break;
+      case 4:
+        // assert(vector[3] !== 0);
+        out = out || new Vector4();
+        vec4_transformMat4(out, vector, this);
+        // assert(validateVector4(out));
+        break;
+      default:
+        throw new Error('Illegal vector');
     }
     return out;
   }

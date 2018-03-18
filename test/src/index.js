@@ -25,3 +25,6 @@ import './matrix4.spec';
 import './quaternion.spec';
 import './euler.spec';
 import './spherical-coordinates.spec';
+
+// Run the three.js math test suites on math.gl classes
+import './threejs-tests';
