@@ -20,6 +20,9 @@
 
 import MathArray from './lib/math-array';
 import {checkNumber} from './lib/common';
+import Vector2 from './vector2';
+import Vector3 from './vector3';
+import Vector4 from './vector4';
 // import Vector2, {validateVector2} from './vector2';
 // import Vector3, {validateVector3} from './vector3';
 // import Vector4, {validateVector4} from './vector4';
@@ -293,21 +296,21 @@ export default class Matrix4 extends MathArray {
   }
 
   transformVector2(vector, out) {
-    out = out || (vector.clone && vector.clone()) || [];
+    out = out || new Vector2();
     vec2_transformMat4(out, vector, this);
     // assert(validateVector2(out));
     return out;
   }
 
-  transformVector3(vector, out) {
-    out = out || (vector.clone && vector.clone()) || [];
+  transformVector3(vector, out = new Vector3()) {
+    out = out || new Vector3();
     vec3_transformMat4(out, vector, this);
     // assert(validateVector3(out));
     return out;
   }
 
-  transformVector4(vector, out) {
-    out = out || (vector.clone && vector.clone()) || [];
+  transformVector4(vector, out = new Vector4()) {
+    out = out || new Vector4();
     vec4_transformMat4(out, vector, this);
     // assert(validateVector4(out));
     return out.check();
@@ -317,62 +320,57 @@ export default class Matrix4 extends MathArray {
   // returns a newly minted Vector2, Vector3 or Vector4
   transformVector(vector, out) {
     switch (vector.length) {
-      case 2:
-        return this.transformVector2(vector, out);
-      case 3:
-        return this.transformVector3(vector, out);
-      case 4:
-        return this.transformVector4(vector, out);
-      default:
-        throw new Error('Illegal vector');
+    case 2: return this.transformVector2(vector, out);
+    case 3: return this.transformVector3(vector, out);
+    case 4: return this.transformVector4(vector, out);
+    default: throw new Error('Illegal vector');
     }
   }
 
   transformDirection(vector, out) {
     switch (vector.length) {
-      case 2:
-        vec4_transformMat4(tempVector4, [vector[0], vector[1], 0, 0], this);
-        out = out || (vector.clone && vector.clone()) || [];
-        [out[0], out[1]] = tempVector4;
-        break;
-      case 3:
-        vec4_transformMat4(tempVector4, [vector[0], vector[1], vector[2], 0], this);
-        out = out || (vector.clone && vector.clone()) || [];
-        [out[0], out[1], out[2]] = tempVector4;
-        break;
-      case 4:
-        // assert(vector[3] === 0);
-        out = out || (vector.clone && vector.clone()) || [];
-        vec4_transformMat4(out, vector, this);
-        break;
-      default:
-        throw new Error('Illegal vector');
+    case 2:
+      vec4_transformMat4(tempVector4, [vector[0], vector[1], 0, 0], this);
+      out = out || new Vector2();
+      [out[0], out[1]] = tempVector4;
+      break;
+    case 3:
+      vec4_transformMat4(tempVector4, [vector[0], vector[1], vector[2], 0], this);
+      out = out || new Vector3();
+      [out[0], out[1], out[2]] = tempVector4;
+      break;
+    case 4:
+      // assert(vector[3] === 0);
+      out = out || new Vector4();
+      vec4_transformMat4(out, vector, this);
+      break;
+    default: throw new Error('Illegal vector');
     }
     return out;
   }
 
   transformPoint(vector, out) {
     switch (vector.length) {
-      case 2:
-        out = out || (vector.clone && vector.clone()) || [];
-        vec4_transformMat4(out, [vector[0], vector[1], 0, 1], this);
-        out.length = 2;
-        // assert(validateVector2(out));
-        break;
-      case 3:
-        out = out || (vector.clone && vector.clone()) || [];
-        vec4_transformMat4(out, [vector[0], vector[1], vector[2], 1], this);
-        out.length = 3;
-        // assert(validateVector3(out));
-        break;
-      case 4:
-        // assert(vector[3] !== 0);
-        out = out || (vector.clone && vector.clone()) || [];
-        vec4_transformMat4(out, vector, this);
-        // assert(validateVector4(out));
-        break;
-      default:
-        throw new Error('Illegal vector');
+    case 2:
+      out = out || new Vector2();
+      vec4_transformMat4(out, [vector[0], vector[1], 0, 1], this);
+      out.length = 2;
+      // assert(validateVector2(out));
+      break;
+    case 3:
+      out = out || new Vector3();
+      vec4_transformMat4(out, [vector[0], vector[1], vector[2], 1], this);
+      out.length = 3;
+      // assert(validateVector3(out));
+      break;
+    case 4:
+      // assert(vector[3] !== 0);
+      out = out || new Vector4();
+      vec4_transformMat4(out, vector, this);
+      // assert(validateVector4(out));
+      break;
+    default:
+      throw new Error('Illegal vector');
     }
     return out;
   }

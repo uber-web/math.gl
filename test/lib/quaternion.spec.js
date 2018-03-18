@@ -19,7 +19,7 @@
 // THE SOFTWARE.
 
 /* eslint-disable max-statements */
-import {Quaternion} from 'math.gl';
+import Quaternion from 'math.gl/quaternion';
 import test from 'tape-catch';
 
 test('Quaternion#import', t => {
