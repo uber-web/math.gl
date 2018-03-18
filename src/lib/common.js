@@ -51,17 +51,15 @@ function round(value) {
   return Math.round(value / config.EPSILON) * config.EPSILON;
 }
 
-export function formatValue(value, {
-  precision = config.precision || 4
-} = {}) {
+export function formatValue(value, {precision = config.precision || 4} = {}) {
   value = round(value);
   return parseFloat(value.toPrecision(precision));
 }
 
-export function formatAngle(value, {
-  precision = config.precision || 4,
-  printDegrees = config.printAngles
-} = {}) {
+export function formatAngle(
+  value,
+  {precision = config.precision || 4, printDegrees = config.printAngles} = {}
+) {
   value = printDegrees ? degrees(value) : value;
   value = round(value);
   return `${parseFloat(value.toPrecision(precision))}${printDegrees ? '°' : ''}`;

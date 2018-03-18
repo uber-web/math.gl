@@ -18,11 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import MathArray from './math-array';
-import {checkNumber} from './common';
-import Vector2 from './vector2';
-import Vector3 from './vector3';
-import Vector4 from './vector4';
+import MathArray from './lib/math-array';
+import {checkNumber} from './lib/common';
 // import Vector2, {validateVector2} from './vector2';
 // import Vector3, {validateVector3} from './vector3';
 // import Vector4, {validateVector4} from './vector4';
@@ -38,9 +35,6 @@ import mat4_perspective from 'gl-mat4/perspective';
 import mat4_transpose from 'gl-mat4/transpose';
 import mat4_invert from 'gl-mat4/invert';
 import mat4_multiply from 'gl-mat4/multiply';
-import mat4_rotateX from 'gl-mat4/rotateX';
-import mat4_rotateY from 'gl-mat4/rotateY';
-import mat4_rotateZ from 'gl-mat4/rotateZ';
 import mat4_rotate from 'gl-mat4/rotate';
 import mat4_scale from 'gl-mat4/scale';
 import mat4_translate from 'gl-mat4/translate';
@@ -48,18 +42,32 @@ import vec2_transformMat4 from 'gl-vec2/transformMat4';
 import vec3_transformMat4 from 'gl-vec3/transformMat4';
 import vec4_transformMat4 from 'gl-vec4/transformMat4';
 
+// import mat4_rotateX from 'gl-mat4/rotateX';
+// import mat4_rotateY from 'gl-mat4/rotateY';
+// import mat4_rotateZ from 'gl-mat4/rotateZ';
+
 const IDENTITY = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
 
 export function validateMatrix4(m) {
-  return m.length === 16 &&
-    Number.isFinite(m[0]) && Number.isFinite(m[1]) &&
-    Number.isFinite(m[2]) && Number.isFinite(m[3]) &&
-    Number.isFinite(m[4]) && Number.isFinite(m[5]) &&
-    Number.isFinite(m[6]) && Number.isFinite(m[7]) &&
-    Number.isFinite(m[8]) && Number.isFinite(m[9]) &&
-    Number.isFinite(m[10]) && Number.isFinite(m[11]) &&
-    Number.isFinite(m[12]) && Number.isFinite(m[13]) &&
-    Number.isFinite(m[14]) && Number.isFinite(m[15]);
+  return (
+    m.length === 16 &&
+    Number.isFinite(m[0]) &&
+    Number.isFinite(m[1]) &&
+    Number.isFinite(m[2]) &&
+    Number.isFinite(m[3]) &&
+    Number.isFinite(m[4]) &&
+    Number.isFinite(m[5]) &&
+    Number.isFinite(m[6]) &&
+    Number.isFinite(m[7]) &&
+    Number.isFinite(m[8]) &&
+    Number.isFinite(m[9]) &&
+    Number.isFinite(m[10]) &&
+    Number.isFinite(m[11]) &&
+    Number.isFinite(m[12]) &&
+    Number.isFinite(m[13]) &&
+    Number.isFinite(m[14]) &&
+    Number.isFinite(m[15])
+  );
 }
 
 const tempVector4 = [0, 0, 0, 0];
@@ -79,35 +87,29 @@ export default class Matrix4 extends MathArray {
   }
 
   /* eslint-disable max-params */
-  setRowMajor(
-    m00 = 1, m10 = 0, m20 = 0, m30 = 0,
-    m01 = 0, m11 = 1, m21 = 0, m31 = 0,
-    m02 = 0, m12 = 0, m22 = 1, m32 = 0,
-    m03 = 0, m13 = 0, m23 = 0, m33 = 1
-  ) {
-    return this.set(
-      m00, m01, m02, m03,
-      m10, m11, m12, m13,
-      m20, m21, m22, m23,
-      m30, m31, m32, m33
-    );
+  // accepts row major order, stores as column major
+  setRowMajor(m00, m10, m20, m30, m01, m11, m21, m31, m02, m12, m22, m32, m03, m13, m23, m33) {
+    this[0] = m00;
+    this[1] = m10;
+    this[2] = m20;
+    this[3] = m30;
+    this[4] = m01;
+    this[5] = m11;
+    this[6] = m21;
+    this[7] = m31;
+    this[8] = m02;
+    this[9] = m12;
+    this[10] = m22;
+    this[11] = m32;
+    this[12] = m03;
+    this[13] = m13;
+    this[14] = m23;
+    this[15] = m33;
+    return this.check();
   }
 
-  setColumnMajor(
-    m00 = 1, m01 = 0, m02 = 0, m03 = 0,
-    m10 = 0, m11 = 1, m12 = 0, m13 = 0,
-    m20 = 0, m21 = 0, m22 = 1, m23 = 0,
-    m30 = 0, m31 = 0, m32 = 0, m33 = 1
-  ) {
-    return this.set(
-      m00, m01, m02, m03,
-      m10, m11, m12, m13,
-      m20, m21, m22, m23,
-      m30, m31, m32, m33
-    );
-  }
-
-  set(m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33) {
+  // accepts row major order and stores in row major order
+  setColumnMajor(m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33) {
     this[0] = m00;
     this[1] = m01;
     this[2] = m02;
@@ -124,9 +126,30 @@ export default class Matrix4 extends MathArray {
     this[13] = m31;
     this[14] = m32;
     this[15] = m33;
-    this.check();
+    return this.check();
+  }
+  /* eslint-enable no-multi-spaces, brace-style, no-return-assign */
+
+  // Assumes row major format
+  set(...args) {
+    return this.setRowMajor(...args);
+  }
+
+  // By default assumes row major indices
+  getElement(i, j, columnMajor = false) {
+    return columnMajor ? this[i][j] : this[j][i];
+  }
+
+  // By default assumes row major indices
+  setElement(i, j, value, columnMajor = false) {
+    if (columnMajor) {
+      this[j][i] = checkNumber(value);
+    } else {
+      this[j][i] = checkNumber(value);
+    }
     return this;
   }
+
   /* eslint-enable max-params */
 
   // toString() {
@@ -137,42 +160,6 @@ export default class Matrix4 extends MathArray {
   //   }
   // }
 
-  // Row major setters and getters
-  /* eslint-disable no-multi-spaces, brace-style, no-return-assign */
-  get m00()      { return this[0]; }
-  set m00(value) { return this[0] = checkNumber(value); }
-  get m01()      { return this[4]; }
-  set m01(value) { return this[4] = checkNumber(value); }
-  get m02()      { return this[8]; }
-  set m02(value) { return this[8] = checkNumber(value); }
-  get m03()      { return this[12]; }
-  set m03(value) { return this[12] = checkNumber(value); }
-  get m10()      { return this[1]; }
-  set m10(value) { return this[1] = checkNumber(value); }
-  get m11()      { return this[5]; }
-  set m11(value) { return this[5] = checkNumber(value); }
-  get m12()      { return this[9]; }
-  set m12(value) { return this[9] = checkNumber(value); }
-  get m13()      { return this[13]; }
-  set m13(value) { return this[13] = checkNumber(value); }
-  get m20()      { return this[2]; }
-  set m20(value) { return this[2] = checkNumber(value); }
-  get m21()      { return this[6]; }
-  set m21(value) { return this[6] = checkNumber(value); }
-  get m22()      { return this[10]; }
-  set m22(value) { return this[10] = checkNumber(value); }
-  get m23()      { return this[14]; }
-  set m23(value) { return this[14] = checkNumber(value); }
-  get m30()      { return this[3]; }
-  set m30(value) { return this[3] = checkNumber(value); }
-  get m31()      { return this[7]; }
-  set m31(value) { return this[7] = checkNumber(value); }
-  get m32()      { return this[11]; }
-  set m32(value) { return this[11] = checkNumber(value); }
-  get m33()      { return this[15]; }
-  set m33(value) { return this[15] = checkNumber(value); }
-  /* eslint-enable no-multi-spaces, brace-style, no-return-assign */
-
   // Accessors
 
   determinant() {
@@ -182,19 +169,14 @@ export default class Matrix4 extends MathArray {
   // Constructors
 
   identity() {
-    for (let i = 0; i < IDENTITY.length; ++i) {
-      this[i] = IDENTITY[i];
-    }
-    this.check();
-    return this;
+    return this.copy(IDENTITY);
   }
 
   // Calculates a 4x4 matrix from the given quaternion
   // q quat  Quaternion to create matrix from
   fromQuaternion(q) {
     mat4_fromQuat(this, q);
-    this.check();
-    return this;
+    return this.check();
   }
 
   // Generates a frustum matrix with the given bounds
@@ -206,8 +188,7 @@ export default class Matrix4 extends MathArray {
   // far Number  Far bound of the frustum
   frustum({left, right, bottom, top, near, far}) {
     mat4_frustum(this, left, right, bottom, top, near, far);
-    this.check();
-    return this;
+    return this.check();
   }
 
   // Generates a look-at matrix with the given eye position, focal point,
@@ -215,14 +196,9 @@ export default class Matrix4 extends MathArray {
   // eye vec3  Position of the viewer
   // center  vec3  Point the viewer is looking at
   // up  vec3  vec3 pointing up
-  lookAt({
-    eye,
-    center = [0, 0, 0],
-    up = [0, 1, 0]
-  } = {}) {
+  lookAt({eye, center = [0, 0, 0], up = [0, 1, 0]}) {
     mat4_lookAt(this, eye, center, up);
-    this.check();
-    return this;
+    return this.check();
   }
 
   // Generates a orthogonal projection matrix with the given bounds
@@ -234,8 +210,7 @@ export default class Matrix4 extends MathArray {
   // far number  Far bound of the frustum
   ortho({left, right, bottom, top, near = 0.1, far = 500}) {
     mat4_ortho(this, left, right, bottom, top, near, far);
-    this.check();
-    return this;
+    return this.check();
   }
 
   // Generates a perspective projection matrix with the given bounds
@@ -243,107 +218,96 @@ export default class Matrix4 extends MathArray {
   // aspect  number  Aspect ratio. typically viewport width/height
   // near  number  Near bound of the frustum
   // far number  Far bound of the frustum
-  perspective({
-    fov = 45 * Math.PI / 180,
-    aspect = 1,
-    near = 0.1,
-    far = 500
-  } = {}) {
+  perspective({fov = 45 * Math.PI / 180, aspect = 1, near = 0.1, far = 500} = {}) {
     if (fov > Math.PI * 2) {
       throw Error('radians');
     }
     mat4_perspective(this, fov, aspect, near, far);
-    this.check();
-    return this;
+    return this.check();
   }
 
   // Modifiers
 
   transpose() {
     mat4_transpose(this, this);
-    this.check();
-    return this;
+    return this.check();
   }
 
   invert() {
     mat4_invert(this, this);
-    this.check();
-    return this;
+    return this.check();
   }
 
   // Operations
 
   multiplyLeft(a) {
     mat4_multiply(this, a, this);
-    this.check();
-    return this;
+    return this.check();
   }
 
   multiplyRight(a) {
     mat4_multiply(this, this, a);
-    this.check();
-    return this;
+    return this.check();
   }
 
   // Rotates a matrix by the given angle around the X axis
   rotateX(radians) {
-    mat4_rotateX(this, this, radians);
-    this.check();
-    return this;
+    // mat4_rotateX(this, this, radians);
+    mat4_rotate(this, this, radians, [1, 0, 0]);
+    return this.check();
   }
 
   // Rotates a matrix by the given angle around the Y axis.
   rotateY(radians) {
-    mat4_rotateY(this, this, radians);
-    this.check();
-    return this;
+    // mat4_rotateY(this, this, radians);
+    mat4_rotate(this, this, radians, [0, 1, 0]);
+    return this.check();
   }
 
   // Rotates a matrix by the given angle around the Z axis.
   rotateZ(radians) {
-    mat4_rotateZ(this, this, radians);
-    this.check();
-    return this;
+    // mat4_rotateZ(this, this, radians);
+    mat4_rotate(this, this, radians, [0, 0, 1]);
+    return this.check();
   }
 
   rotateXYZ([rx, ry, rz]) {
-    return this.rotateX(rx).rotateY(ry).rotateZ(rz);
+    return this.rotateX(rx)
+      .rotateY(ry)
+      .rotateZ(rz);
   }
 
   rotateAxis(radians, axis) {
     mat4_rotate(this, this, radians, axis);
-    this.check();
-    return this;
+    return this.check();
   }
 
   scale(vec) {
     mat4_scale(this, this, vec);
-    this.check();
-    return this;
+    return this.check();
   }
 
   translate(vec) {
     mat4_translate(this, this, vec);
-    this.check();
-    return this;
+    return this.check();
   }
 
   transformVector2(vector, out) {
-    out = out || new Vector2();
+    out = out || (vector.clone && vector.clone()) || [];
     vec2_transformMat4(out, vector, this);
     // assert(validateVector2(out));
     return out;
   }
 
-  transformVector3(vector, out = new Vector3()) {
-    out = out || new Vector3();
+  transformVector3(vector, out) {
+    out = out || (vector.clone && vector.clone()) || [];
     vec3_transformMat4(out, vector, this);
     // assert(validateVector3(out));
     return out;
   }
 
-  transformVector4(vector, out = new Vector4()) {
-    out = out || new Vector4();
+  transformVector4(vector, out) {
+    out = out || (vector.clone && vector.clone()) || [];
     vec4_transformMat4(out, vector, this);
     // assert(validateVector4(out));
     return out.check();
@@ -353,58 +317,72 @@ export default class Matrix4 extends MathArray {
   // returns a newly minted Vector2, Vector3 or Vector4
   transformVector(vector, out) {
     switch (vector.length) {
-    case 2: return this.transformVector2(vector, out);
-    case 3: return this.transformVector3(vector, out);
-    case 4: return this.transformVector4(vector, out);
-    default: throw new Error('Illegal vector');
+      case 2:
+        return this.transformVector2(vector, out);
+      case 3:
+        return this.transformVector3(vector, out);
+      case 4:
+        return this.transformVector4(vector, out);
+      default:
+        throw new Error('Illegal vector');
     }
   }
 
   transformDirection(vector, out) {
     switch (vector.length) {
-    case 2:
-      vec4_transformMat4(tempVector4, [vector[0], vector[1], 0, 0], this);
-      out = out || new Vector2();
-      [out[0], out[1]] = tempVector4;
-      break;
-    case 3:
-      vec4_transformMat4(tempVector4, [vector[0], vector[1], vector[2], 0], this);
-      out = out || new Vector3();
-      [out[0], out[1], out[2]] = tempVector4;
-      break;
-    case 4:
-      // assert(vector[3] === 0);
-      out = out || new Vector4();
-      vec4_transformMat4(out, vector, this);
-      break;
-    default: throw new Error('Illegal vector');
+      case 2:
+        vec4_transformMat4(tempVector4, [vector[0], vector[1], 0, 0], this);
+        out = out || (vector.clone && vector.clone()) || [];
+        [out[0], out[1]] = tempVector4;
+        break;
+      case 3:
+        vec4_transformMat4(tempVector4, [vector[0], vector[1], vector[2], 0], this);
+        out = out || (vector.clone && vector.clone()) || [];
+        [out[0], out[1], out[2]] = tempVector4;
+        break;
+      case 4:
+        // assert(vector[3] === 0);
+        out = out || (vector.clone && vector.clone()) || [];
+        vec4_transformMat4(out, vector, this);
+        break;
+      default:
+        throw new Error('Illegal vector');
     }
     return out;
   }
 
   transformPoint(vector, out) {
     switch (vector.length) {
-    case 2:
-      out = out || new Vector2();
-      vec4_transformMat4(out, [vector[0], vector[1], 0, 1], this);
-      out.length = 2;
-      // assert(validateVector2(out));
-      break;
-    case 3:
-      out = out || new Vector3();
-      vec4_transformMat4(out, [vector[0], vector[1], vector[2], 1], this);
-      out.length = 3;
-      // assert(validateVector3(out));
-      break;
-    case 4:
-      // assert(vector[3] !== 0);
-      out = out || new Vector4();
-      vec4_transformMat4(out, vector, this);
-      // assert(validateVector4(out));
-      break;
-    default:
-      throw new Error('Illegal vector');
+      case 2:
+        out = out || (vector.clone && vector.clone()) || [];
+        vec4_transformMat4(out, [vector[0], vector[1], 0, 1], this);
+        out.length = 2;
+        // assert(validateVector2(out));
+        break;
+      case 3:
+        out = out || (vector.clone && vector.clone()) || [];
+        vec4_transformMat4(out, [vector[0], vector[1], vector[2], 1], this);
+        out.length = 3;
+        // assert(validateVector3(out));
+        break;
+      case 4:
+        // assert(vector[3] !== 0);
+        out = out || (vector.clone && vector.clone()) || [];
+        vec4_transformMat4(out, vector, this);
+        // assert(validateVector4(out));
+        break;
+      default:
+        throw new Error('Illegal vector');
     }
     return out;
+  }
+
+  // three.js compatibility
+  makeRotationX(radians) {
+    return this.identity().rotateX(radians);
+  }
+
+  makeTranslation(x, y, z) {
+    return this.identity().translate([x, y, z]);
   }
 }

@@ -32,7 +32,6 @@ const SRC_DIR = resolve(LIB_DIR, './src');
 
 // Support for hot reloading changes to the library:
 const LOCAL_DEVELOPMENT_CONFIG = {
-
   devtool: 'source-map',
 
   // suppress warnings about bundle size
