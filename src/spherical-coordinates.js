@@ -25,7 +25,7 @@ import Vector3 from './vector3';
 
 /* eslint-disable camelcase */
 import vec3_length from 'gl-vec3/length';
-import assert from 'assert';
+import assert from './lib/assert';
 
 // TODO - import epsilon
 const EPSILON = 0.000001;

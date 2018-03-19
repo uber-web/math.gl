@@ -23,7 +23,7 @@ import {checkNumber} from './common';
 import Vector2, {validateVector2} from './vector2';
 import Vector3, {validateVector3} from './vector3';
 import Vector4, {validateVector4} from './vector4';
-import assert from 'assert';
+import assert from './lib/assert';
 
 // gl-matrix is too big. Cherry-pick individual imports from stack.gl version
 /* eslint-disable camelcase */
