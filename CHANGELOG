@@ -2,6 +2,11 @@
 
 ## v1.0
 
+### 1.0.5 (Mar 19, 2018)
+- Remove use of external `assert` to reduce bundle size.
+- Use babel-minify
+- No longer inline source maps
+
 ### 1.0.4 (Mar 2, 2018)
 - FIX: github url link on npmjs.org
 
