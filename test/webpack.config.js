@@ -79,10 +79,18 @@ const TEST_CONFIG = Object.assign({}, COMMON_CONFIG, {
   }
 });
 
-const SIZE_CONFIG = Object.assign({}, TEST_CONFIG, {
+const SIZE_ESM_CONFIG = Object.assign({}, TEST_CONFIG, {
   resolve: {
     alias: Object.assign({}, ALIASES, {
-      'math.gl': resolve(__dirname, '../dist')
+      'math.gl': resolve(__dirname, '../dist/esm')
+    })
+  }
+});
+
+const SIZE_ES6_CONFIG = Object.assign({}, TEST_CONFIG, {
+  resolve: {
+    alias: Object.assign({}, ALIASES, {
+      'math.gl': resolve(__dirname, '../dist/es6')
     })
   }
 });
@@ -106,20 +114,35 @@ function getFirstKey(object) {
 
 module.exports = env => {
   env = env || {};
-  if (env.bench) {
-    return BENCH_CONFIG;
+
+  let config = COMMON_CONFIG;
+  const key = getFirstKey(env);
+  switch (key) {
+  case 'bench':
+    config = BENCH_CONFIG;
+    break;
+
+  case 'test':
+    config = TEST_CONFIG;
+    break;
+
+  default:
+    config = Object.assign({}, env.es6 ? SIZE_ES6_CONFIG : SIZE_ESM_CONFIG, {
+      // Replace the entry point for webpack-dev-server
+      entry: {
+        'test-browser': resolve(__dirname, './size', `${key}.js`)
+      },
+      output: {
+        path: resolve('./dist'),
+        filename: '[name]-bundle.js'
+      },
+      plugins: [new UglifyJsPlugin(), new BundleAnalyzerPlugin()]
+    });
   }
-  if (env.test) {
-    return TEST_CONFIG;
-  }
-  return Object.assign({}, SIZE_CONFIG, {
-    entry: {
-      'test-browser': resolve(__dirname, 'size', `${getFirstKey(env)}.js`)
-    },
-    output: {
-      path: resolve('./dist'),
-      filename: '[name]-bundle.js'
-    },
-    plugins: [new UglifyJsPlugin(), new BundleAnalyzerPlugin()]
-  });
+
+  // console.log('webpack env', JSON.stringify(env));
+  // console.log('webpack config', JSON.stringify(config));
+
+  return config;
 };
+
