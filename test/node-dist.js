@@ -24,7 +24,7 @@ require('../aliases');
 // Registers an alias for this module
 const path = require('path');
 const moduleAlias = require('module-alias');
-moduleAlias.addAlias('math.gl', path.resolve('./dist'));
+moduleAlias.addAlias('math.gl', path.resolve('./dist/es6'));
 
 // Run the tests
 require('./index');
