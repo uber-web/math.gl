@@ -46,6 +46,8 @@ export {
 } from './lib/common';
 
 import {default as SphericalCoordinates} from './spherical-coordinates';
+import {default as Euler} from './euler';
 export const experimental = {
-  SphericalCoordinates
+  SphericalCoordinates,
+  Euler
 };
