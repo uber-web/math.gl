@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.1.0-alpha.2
+- Experimental Euler class added back to index.js
+
+
 ## v1.1.0-alpha.1
 - Size reduction: Shared code moved from `Vector*` to `Vector` etc.
 - Size reduction: Experimental Euler class no longer exported in index.js
