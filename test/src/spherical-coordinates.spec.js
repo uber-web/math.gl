@@ -19,7 +19,8 @@
 // THE SOFTWARE.
 
 /* eslint-disable max-statements, max-depth */
-import SphericalCoordinates from 'math.gl/spherical-coordinates';
+import {experimental} from 'math.gl';
+const {SphericalCoordinates} = experimental;
 import test from 'tape-catch';
 
 // FOR TAPE TESTING

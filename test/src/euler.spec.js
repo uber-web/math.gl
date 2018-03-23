@@ -1,4 +1,6 @@
-import Euler from 'math.gl/euler';
+import {experimental} from 'math.gl';
+const {Euler} = experimental;
+
 import test from 'tape-catch';
 
 test('Euler#import', t => {
