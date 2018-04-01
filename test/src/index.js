@@ -23,8 +23,11 @@ import './vectors.spec';
 import './vector3.spec';
 import './matrix4.spec';
 import './quaternion.spec';
+
 import './euler.spec';
 import './spherical-coordinates.spec';
+
+import './addons/polygon.spec';
 
 // Run the three.js math test suites on math.gl classes
 import './threejs-tests';

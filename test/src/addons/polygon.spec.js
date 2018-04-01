@@ -18,38 +18,41 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-// math.gl classes
-export {default as Vector2} from './vector2';
-export {default as Vector3} from './vector3';
-export {default as Vector4} from './vector4';
-export {default as Matrix4} from './matrix4';
-export {default as Quaternion} from './quaternion';
+/* eslint-disable max-statements */
+import test from 'tape-catch';
 
-// math.gl "GLSL" functions
-export {
-  config,
-  checkNumber,
-  configure,
-  formatValue,
-  isArray,
-  clone,
-  radians,
-  degrees,
-  sin,
-  cos,
-  tan,
-  asin,
-  acos,
-  atan,
-  clamp,
-  equals
-} from './lib/common';
+import {experimental} from 'math.gl';
+const {Polygon} = experimental;
 
-import {default as SphericalCoordinates} from './spherical-coordinates';
-import {default as Euler} from './euler';
-import {default as Polygon} from './addons/polygon';
-export const experimental = {
-  SphericalCoordinates,
-  Euler,
-  Polygon
-};
+const TEST_CASES = [
+  {
+    title: 'simple poly',
+    polygon: [[5, 0], [6, 4], [4, 5], [1, 5], [1, 0]],
+    area: 22,
+    sign: -1
+  }
+];
+
+test('Polygon#import', t => {
+  t.equals(typeof Polygon, 'function');
+  t.end();
+});
+
+test('Polygon#construct', t => {
+  t.ok(new Polygon([[0, 0], [1, 1]]));
+  t.end();
+});
+
+test('Polygon#methods', t => {
+  for (const tc of TEST_CASES) {
+    const polygon = new Polygon(tc.polygon);
+    t.ok(polygon, `${tc.title}: Created polygon`);
+    t.equals(polygon.getSignedArea(), tc.area * tc.sign,
+      `${tc.title}: getSignedArea() returned expected result`);
+    t.comment(polygon.getArea(), tc.area,
+      `${tc.title}: getArea() returned expected result`);
+    t.comment(polygon.getWindingDirection(), tc.sign,
+      `${tc.title}: getWindingDirection() returned expected result`);
+  }
+  t.end();
+});
