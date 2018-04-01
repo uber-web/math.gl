@@ -1,30 +1,10 @@
-const DEFAULT_COMPARE_POINTS = (p1, p2) => {
-  return p1[0] === p2[0] && p1[1] === p2[1];
-}
-
-const DEFAULT_DISTANCE = (p1, p2) => p1.distance(p2); // TODO - assumes Vector2
+import {equals} from '../lib/common';
 
 export default class Polygon {
-  constructor(points, {
-    isPolygon = true,
-    comparePoints = DEFAULT_COMPARE_POINTS
-  } = {}) {
+  constructor(points) {
     this.points = points;
-    this.comparePoints = comparePoints;
-    this.isPolygon = isPolygon || this.isClosed();
-  }
-
-  isClosed() {
-    const length = this.points.length;
-    return this.comparePoints(this.points[length - 1], this.points[0]);
-  }
-
-  getPathLength(distance = DEFAULT_DISTANCE) {
-    let pathLength = 0;
-    this.forEachSegment((p1, p2) => {
-      pathLength += distance(this, p1, p2);
-    });
-    return pathLength;
+    this.isClosed = equals(this.points[this.points.length - 1], this.points[0]);
+    Object.freeze(this);
   }
 
   // https://en.wikipedia.org/wiki/Shoelace_formula

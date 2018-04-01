@@ -16,15 +16,6 @@ Creates a new Polygon object.
 > The polygon object will reference the provided points, assuming them to not be modified for the lifetime of the Polygon object.
 
 
-#### isClosed()
-
-```
-polygon.isClosed()
-``
-
-Whether the points array provided to Polygon is closed (last and first vertex are the same).
-
-
 #### getSignedArea
 
 Returns the area with a sign indicating the winding direction.

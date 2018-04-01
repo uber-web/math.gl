@@ -20,14 +20,27 @@
 
 /* eslint-disable max-statements */
 import test from 'tape-catch';
+import {tapeEquals} from 'math.gl/test/utils/tape-equals';
 
-import {experimental} from 'math.gl';
+import {configure, experimental} from 'math.gl';
 const {Polygon} = experimental;
 
 const TEST_CASES = [
   {
-    title: 'simple poly',
+    title: 'non-closed poly',
     polygon: [[5, 0], [6, 4], [4, 5], [1, 5], [1, 0]],
+    area: 22,
+    sign: -1
+  },
+  {
+    title: 'exactly closed poly',
+    polygon: [[5, 0], [6, 4], [4, 5], [1, 5], [1, 0], [5, 0]],
+    area: 22,
+    sign: -1
+  },
+  {
+    title: 'EPSILON closed poly',
+    polygon: [[5, 0], [6, 4], [4, 5], [1, 5], [1, 0], [5, 0.0000001]],
     area: 22,
     sign: -1
   }
@@ -44,15 +57,19 @@ test('Polygon#construct', t => {
 });
 
 test('Polygon#methods', t => {
+  configure({EPSILON: 1e-4});
+
   for (const tc of TEST_CASES) {
     const polygon = new Polygon(tc.polygon);
     t.ok(polygon, `${tc.title}: Created polygon`);
-    t.equals(polygon.getSignedArea(), tc.area * tc.sign,
+    tapeEquals(t, polygon.getSignedArea(), tc.area * tc.sign,
       `${tc.title}: getSignedArea() returned expected result`);
-    t.comment(polygon.getArea(), tc.area,
+    tapeEquals(t, polygon.getArea(), tc.area,
       `${tc.title}: getArea() returned expected result`);
-    t.comment(polygon.getWindingDirection(), tc.sign,
+    tapeEquals(t, polygon.getWindingDirection(), tc.sign,
       `${tc.title}: getWindingDirection() returned expected result`);
   }
+
+  configure({EPSILON: 1e-12});
   t.end();
 });
