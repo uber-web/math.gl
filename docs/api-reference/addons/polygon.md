@@ -1,7 +1,5 @@
 # Polygon (Experimental)
 
-> This class can handle both Paths and Polygons. Maybe it should be called `Path`
-
 Allows an array of points (whether closed or non-closed) to be treated as a Polygon.
 
 Implements the [Shoelace formula](https://en.wikipedia.org/wiki/Shoelace_formula) for determining the area and winding direction of an arbitrary polygon.

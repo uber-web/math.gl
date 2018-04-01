@@ -101,6 +101,9 @@ export default [{
     }, {
       name: 'SphericalCoordinates',
       markdown: require('../../docs/api-reference/spherical-coordinates.md')
+    }, {
+      name: 'Polygon',
+      markdown: require('../../docs/api-reference/addons/polygon.md')
     }]
   }]
 }];
