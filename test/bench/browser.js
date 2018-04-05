@@ -18,8 +18,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-require('babel-polyfill');
-
 /* eslint-disable */
 (function() {
   const old = console.log;

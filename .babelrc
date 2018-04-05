@@ -1,33 +1,33 @@
 {
   "env": {
     "es5": {
+      "presets": [
+        [ "@babel/es2015", {
+          "modules": "commonjs"
+        }]
+      ],
       "plugins": [
         ["transform-builtin-extend", {"globals": ["Array"]}],
         "version-inline"
-      ],
-      "presets": [
-        ["es2015", {modules: 'commonjs'}]
       ]
     },
     "esm": {
-      "plugins": [
-        ["transform-builtin-extend", {"globals": ["Array"]}],
-        "version-inline"
-      ],
       "presets": [
-        ["es2015", {modules: false}],
+        [ "@babel/es2015", {
+          "modules": false
+        }],
         [ "minify", {
           "mangle": false
         }]
-      ]
-    },
-    "es6": {
+      ],
       "plugins": [
         ["transform-builtin-extend", {"globals": ["Array"]}],
         "version-inline"
-      ],
+      ]
+    },
+    "es6": {
       "presets": [
-        [ "env", {
+        [ "@babel/env", {
           "targets": {
             "chrome": "60",
             "edge": "15",
@@ -36,12 +36,15 @@
             "safari": "10.1",
             "node": "8"
           },
-          "modules": false,
-          "debug": true
+          "modules": false
         }],
         [ "minify", {
           "mangle": false
         }]
+      ],
+      "plugins": [
+        ["transform-builtin-extend", {"globals": ["Array"]}],
+        "version-inline"
       ]
     },
     "test": {

@@ -28,11 +28,8 @@ const ALIASES = {
 if (module.require) {
   // Enables ES2015 import/export in Node.js
   module.require('reify');
-
   const moduleAlias = module.require('module-alias');
   moduleAlias.addAliases(ALIASES);
-
-  module.require('babel-polyfill');
 }
 
 module.exports = ALIASES;
