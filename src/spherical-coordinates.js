@@ -178,7 +178,7 @@ export default class SphericalCoordinates {
   check() {
     // this.makeSafe();
     if (!Number.isFinite(this.phi) || !Number.isFinite(this.theta) || !(this.radius > 0)) {
-      throw new Error('Invalid SphericalCoordinates');
+      throw new Error('SphericalCoordinates: some fields set to invalid numbers');
     }
     return this;
   }

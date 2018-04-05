@@ -155,7 +155,7 @@ export default class MathArray extends Array {
 
   check(array = this) {
     if (config.debug && !this.validate(array)) {
-      throw new Error(`math.gl: invalid ${this.constructor.name}`);
+      throw new Error(`math.gl: ${this.constructor.name} some fields set to invalid numbers'`);
     }
     return this;
   }
