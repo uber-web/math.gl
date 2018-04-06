@@ -19,7 +19,6 @@
 // THE SOFTWARE.
 
 const {resolve} = require('path');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 // const webpack = require('webpack');
@@ -27,6 +26,8 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 const ALIASES = require(resolve(__dirname, '../aliases'));
 
 const COMMON_CONFIG = {
+  mode: 'development',
+
   stats: {
     warnings: false
   },
@@ -58,7 +59,7 @@ const TEST_CONFIG = Object.assign({}, COMMON_CONFIG, {
   // Generate a bundle in dist folder
   output: {
     path: resolve('./dist'),
-    filename: '[name]-bundle.js'
+    filename: 'bundle.js'
   },
 
   devtool: '#source-maps',
@@ -126,18 +127,29 @@ module.exports = env => {
     config = TEST_CONFIG;
     break;
 
+  case 'analyze':
+    config = Object.assign({}, SIZE_ES6_CONFIG, {
+      mode: 'production',
+
+      // Replace the entry point for webpack-dev-server
+      entry: {
+        'test-browser': resolve(__dirname, './size/import-nothing.js')
+      },
+      plugins: [new BundleAnalyzerPlugin()]
+    });
+    delete config.devtool;
+    break;
+
   default:
     config = Object.assign({}, env.es6 ? SIZE_ES6_CONFIG : SIZE_ESM_CONFIG, {
+      mode: 'production',
+
       // Replace the entry point for webpack-dev-server
       entry: {
         'test-browser': resolve(__dirname, './size', `${key}.js`)
-      },
-      output: {
-        path: resolve('./dist'),
-        filename: '[name]-bundle.js'
-      },
-      plugins: [new UglifyJsPlugin(), new BundleAnalyzerPlugin()]
+      }
     });
+    delete config.devtool;
   }
 
   // console.log('webpack env', JSON.stringify(env));

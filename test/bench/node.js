@@ -27,6 +27,4 @@ const moduleAlias = require('module-alias');
 moduleAlias.addAlias('math.gl/test', path.resolve('./test'));
 moduleAlias.addAlias('math.gl', path.resolve('./src'));
 
-require('babel-polyfill');
-
 require('./index');

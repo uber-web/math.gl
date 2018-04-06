@@ -31,31 +31,25 @@
     "src"
   ],
   "scripts": {
-    "start": "(cd examples/layer-browser && (path-exists node_modules || npm i) && npm run start-local)",
     "clean": "rm -fr dist && mkdir -p dist/es5 dist/esm dist/es6",
-    "build-es6": "BABEL_ENV=es6 babel src --out-dir dist/es6 --source-maps",
-    "build-esm": "BABEL_ENV=esm babel src --out-dir dist/esm --source-maps",
-    "build-es5": "BABEL_ENV=es5 babel src --out-dir dist/es5 --source-maps",
-    "build": "npm run clean && npm run build-es6 && npm run build-esm && npm run build-es5",
+    "build": "./scripts/build.sh && ./scripts/collect-metrics.sh",
     "cover": "NODE_ENV=test nyc --reporter html --reporter cobertura --reporter=lcov npm run test-cover",
     "lint": "eslint src test examples && npm run lint-yarn",
     "lint-yarn": "!(grep -q unpm.u yarn.lock) || (echo 'Please rebuild yarn file using public npmrc' && false)",
     "pretty": "prettier --write \"{src,examples,test}/**/*.js\" --loglevel warn",
     "publish-prod": "npm run build && npm run test && npm run test-dist && npm publish",
     "publish-beta": "npm run build && npm run test && npm run test-dist && npm publish --tag beta",
-    "test": "npm run lint && npm run build && npm run test-node",
+    "test": "npm run lint && npm run test-node && ./scripts/build.sh",
     "test-fast": "npm run test-node | faucet",
     "test-cover": "NODE_ENV=test tape -r babel-register test/node.js && nyc report",
     "test-node": "node test/node.js",
     "test-dist": "node test/node-dist.js",
     "test-browser": "webpack-dev-server --config test/webpack.config.js --env.test --progress --hot --open",
-    "test-size-es6": "npm run build-es6 && webpack --config test/webpack.config.js --env.import-nothing --env.es6",
-    "test-size-esm": "npm run build-esm && webpack --config test/webpack.config.js --env.import-nothing",
+    "test-bundle-size": "./scripts/build.sh && webpack --config test/webpack.config.js --env.analyze --env.import-nothing --env.es6",
     "bench": "node test/bench/node.js",
     "bench-browser": "webpack-dev-server --config test/webpack.config.js --env.bench --progress --hot --open"
   },
   "dependencies": {
-    "babel-plugin-version-inline": "^1.0.0",
     "gl-mat3": "^1.0.0",
     "gl-mat4": "^1.1.4",
     "gl-quat": "^1.0.0",
@@ -64,16 +58,16 @@
     "gl-vec4": "^1.0.1"
   },
   "devDependencies": {
-    "babel-cli": "^6.22.2",
-    "babel-core": "^6.22.1",
-    "babel-loader": "^7.1.4",
+    "@babel/cli": "7.0.0-beta.44",
+    "@babel/core": "^7.0.0-beta.44",
+    "@babel/polyfill": "7.0.0-beta.44",
+    "@babel/preset-env": "7.0.0-beta.44",
+    "@babel/preset-es2015": "7.0.0-beta.44",
+    "babel-loader": "^8.0.0-beta.2",
     "babel-plugin-istanbul": "^4.1.1",
     "babel-plugin-transform-builtin-extend": "^1.1.2",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.22.0",
-    "babel-polyfill": "^6.20.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-es2015": "^6.4.3",
-    "babel-preset-minify": "^0.3.0",
+    "babel-plugin-version-inline": "^1.0.0",
+    "babel-preset-minify": "0.4.0-alpha.caaefb4c",
     "benchmark": "^2.1.3",
     "coveralls": "^2.13.0",
     "eslint": "^3.0.0",
@@ -84,18 +78,15 @@
     "nyc": "^10.2.0",
     "pre-commit": "^1.2.2",
     "prettier": "^1.11.1",
-    "raw-loader": "^0.5.1",
     "reify": "^0.4.4",
     "source-map-loader": "^0.2.3",
     "tap-browser-color": "^0.1.2",
     "tape": "^4.5.1",
     "tape-catch": "^1.0.4",
-    "transform-loader": "^0.2.3",
-    "uglify-js": "^2.6.1",
-    "uglifyjs-webpack-plugin": "^1.2.4",
-    "webpack": "^2.6",
+    "webpack": "^4.3.0",
     "webpack-bundle-analyzer": "^2.11.1",
-    "webpack-dev-server": "^2.6"
+    "webpack-cli": "^2.0.13",
+    "webpack-dev-server": "^3.1.1"
   },
   "nyc": {
     "sourceMap": false,
@@ -107,22 +98,5 @@
       "test/**/*.js",
       "src/layers/deprecated"
     ]
-  },
-  "babel": {
-    "presets": [
-      [
-        "es2015",
-        {
-          "modules": false
-        }
-      ]
-    ],
-    "env": {
-      "test": {
-        "plugins": [
-          "istanbul"
-        ]
-      }
-    }
   }
 }
