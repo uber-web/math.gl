@@ -1,16 +1,18 @@
 # CHANGELOG
 
-## v1.1.0-alpha.2
-- Add back Euler as experimental export
+## v1.1.0
 
-## v1.1.0-alpha.1
+- Upgrade to babel 7 (#19)
+- Add Polygon class implementing Shoelace algorithm (#18)
+- Improve error messages (#17)
+- Add back Euler as experimental export
 - Size reduction: Shared code moved from `Vector*` to `Vector` etc.
 - Size reduction: Experimental Euler class no longer exported in index.js
 - Size reduction: yarn test-size command
 - Size reduction: new esnext main field, with untranspiled code.
-
 - THREE.js Compatibility - doc and mew methods (experimental)
 - THREE.js Compability - add test suites, run "unmodified" on math.gl classes
+
 
 ## v1.0
 
@@ -28,6 +30,25 @@
 
 ### 1.0.1 (Jan 9, 2018)
 - FIX: missing Vector3.distance
+
+
+
+# OLDER PRERELEASES
+
+### v1.1.0-alpha.2
+- Add back Euler as experimental export
+
+### v1.1.0-alpha.1
+- Size reduction: Shared code moved from `Vector*` to `Vector` etc.
+- Size reduction: Experimental Euler class no longer exported in index.js
+- Size reduction: yarn test-size command
+- Size reduction: new esnext main field, with untranspiled code.
+
+- THREE.js Compatibility - doc and mew methods (experimental)
+- THREE.js Compability - add test suites, run "unmodified" on math.gl classes
+
+
+## v1.0
 
 ### v1.0.0-alpha.7
 - Website overhaul
@@ -60,3 +81,4 @@
 
 ### 1.0.0-alpha.1
 - Initial source code copy from luma.gl v4.1-alpha branch
+

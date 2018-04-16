@@ -2,7 +2,7 @@
   "name": "math.gl",
   "description": "Array-based 3D Math Classes optimized for WebGL applications",
   "license": "MIT",
-  "version": "1.1.0-alpha.2",
+  "version": "1.1.0",
   "keywords": [
     "webgl",
     "javascript",
