@@ -23,9 +23,6 @@ import {checkNumber} from './lib/common';
 import Vector2 from './vector2';
 import Vector3 from './vector3';
 import Vector4 from './vector4';
-// import Vector2, {validateVector2} from './vector2';
-// import Vector3, {validateVector3} from './vector3';
-// import Vector4, {validateVector4} from './vector4';
 
 // gl-matrix is too big. Cherry-pick individual imports from stack.gl version
 /* eslint-disable camelcase */
@@ -45,9 +42,9 @@ import vec2_transformMat4 from 'gl-vec2/transformMat4';
 import vec3_transformMat4 from 'gl-vec3/transformMat4';
 import vec4_transformMat4 from 'gl-vec4/transformMat4';
 
-// import mat4_rotateX from 'gl-mat4/rotateX';
-// import mat4_rotateY from 'gl-mat4/rotateY';
-// import mat4_rotateZ from 'gl-mat4/rotateZ';
+import mat4_rotateX from 'gl-mat4/rotateX';
+import mat4_rotateY from 'gl-mat4/rotateY';
+import mat4_rotateZ from 'gl-mat4/rotateZ';
 
 const IDENTITY = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
 
@@ -73,7 +70,12 @@ export function validateMatrix4(m) {
   );
 }
 
-const tempVector4 = [0, 0, 0, 0];
+function validateVector(v, length) {
+  if (v.length !== length) {
+    return false;
+  }
+  return v.every(Number.isFinite);
+}
 
 export default class Matrix4 extends MathArray {
   constructor(...args) {
@@ -91,7 +93,7 @@ export default class Matrix4 extends MathArray {
 
   /* eslint-disable max-params */
   // accepts row major order, stores as column major
-  setRowMajor(m00, m10, m20, m30, m01, m11, m21, m31, m02, m12, m22, m32, m03, m13, m23, m33) {
+  setRowMajor(m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33) {
     this[0] = m00;
     this[1] = m10;
     this[2] = m20;
@@ -112,30 +114,35 @@ export default class Matrix4 extends MathArray {
   }
 
   // accepts row major order and stores in row major order
-  setColumnMajor(m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33) {
+  setColumnMajor(m00, m10, m20, m30, m01, m11, m21, m31, m02, m12, m22, m32, m03, m13, m23, m33) {
+  // setColumnMajor(m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33) {
     this[0] = m00;
-    this[1] = m01;
-    this[2] = m02;
-    this[3] = m03;
-    this[4] = m10;
+    this[1] = m10;
+    this[2] = m20;
+    this[3] = m30;
+    this[4] = m01;
     this[5] = m11;
-    this[6] = m12;
-    this[7] = m13;
-    this[8] = m20;
-    this[9] = m21;
+    this[6] = m21;
+    this[7] = m31;
+    this[8] = m02;
+    this[9] = m12;
     this[10] = m22;
-    this[11] = m23;
-    this[12] = m30;
-    this[13] = m31;
-    this[14] = m32;
+    this[11] = m32;
+    this[12] = m03;
+    this[13] = m13;
+    this[14] = m23;
     this[15] = m33;
     return this.check();
   }
   /* eslint-enable no-multi-spaces, brace-style, no-return-assign */
 
-  // Assumes row major format
+  copy(array) {
+    return this.setColumnMajor(...array);
+  }
+
+  // Sets exact values (column major)
   set(...args) {
-    return this.setRowMajor(...args);
+    return this.setColumnMajor(...args);
   }
 
   // By default assumes row major indices
@@ -288,22 +295,22 @@ export default class Matrix4 extends MathArray {
 
   // Rotates a matrix by the given angle around the X axis
   rotateX(radians) {
-    // mat4_rotateX(this, this, radians);
-    mat4_rotate(this, this, radians, [1, 0, 0]);
+    mat4_rotateX(this, this, radians);
+    // mat4_rotate(this, this, radians, [1, 0, 0]);
     return this.check();
   }
 
   // Rotates a matrix by the given angle around the Y axis.
   rotateY(radians) {
-    // mat4_rotateY(this, this, radians);
-    mat4_rotate(this, this, radians, [0, 1, 0]);
+    mat4_rotateY(this, this, radians);
+    // mat4_rotate(this, this, radians, [0, 1, 0]);
     return this.check();
   }
 
   // Rotates a matrix by the given angle around the Z axis.
   rotateZ(radians) {
-    // mat4_rotateZ(this, this, radians);
-    mat4_rotate(this, this, radians, [0, 0, 1]);
+    mat4_rotateZ(this, this, radians);
+    // mat4_rotate(this, this, radians, [0, 0, 1]);
     return this.check();
   }
 
@@ -329,23 +336,26 @@ export default class Matrix4 extends MathArray {
   }
 
   transformVector2(vector, out) {
+    // out = out || [0, 0];
     out = out || new Vector2();
     vec2_transformMat4(out, vector, this);
-    // assert(validateVector2(out));
+    validateVector(out, 2);
     return out;
   }
 
-  transformVector3(vector, out = new Vector3()) {
+  transformVector3(vector, out) {
+    // out = out || [0, 0, 0];
     out = out || new Vector3();
     vec3_transformMat4(out, vector, this);
-    // assert(validateVector3(out));
+    validateVector(out, 3);
     return out;
   }
 
-  transformVector4(vector, out = new Vector4()) {
+  transformVector4(vector, out) {
+    // out = out || [0, 0, 0, 0];
     out = out || new Vector4();
     vec4_transformMat4(out, vector, this);
-    // assert(validateVector4(out));
+    validateVector(out, 4);
     return out.check();
   }
 
@@ -365,47 +375,37 @@ export default class Matrix4 extends MathArray {
   }
 
   transformDirection(vector, out) {
-    switch (vector.length) {
-      case 2:
-        vec4_transformMat4(tempVector4, [vector[0], vector[1], 0, 0], this);
-        out = out || new Vector2();
-        [out[0], out[1]] = tempVector4;
-        break;
-      case 3:
-        vec4_transformMat4(tempVector4, [vector[0], vector[1], vector[2], 0], this);
-        out = out || new Vector3();
-        [out[0], out[1], out[2]] = tempVector4;
-        break;
-      case 4:
-        // assert(vector[3] === 0);
-        out = out || new Vector4();
-        vec4_transformMat4(out, vector, this);
-        break;
-      default:
-        throw new Error('Illegal vector');
-    }
-    return out;
+    return this._transformVector(vector, out, 0);
   }
 
   transformPoint(vector, out) {
+    return this._transformVector(vector, out, 1);
+  }
+
+  _transformVector(vector, out, w) {
     switch (vector.length) {
       case 2:
         out = out || new Vector2();
-        vec4_transformMat4(out, [vector[0], vector[1], 0, 1], this);
+        // out = out || [0, 0];
+        vec4_transformMat4(out, [vector[0], vector[1], 0, w], this);
         out.length = 2;
-        // assert(validateVector2(out));
+        validateVector(out, 2);
         break;
       case 3:
         out = out || new Vector3();
-        vec4_transformMat4(out, [vector[0], vector[1], vector[2], 1], this);
+        // out = out || [0, 0, 0];
+        vec4_transformMat4(out, [vector[0], vector[1], vector[2], w], this);
         out.length = 3;
-        // assert(validateVector3(out));
+        validateVector(out, 3);
         break;
       case 4:
-        // assert(vector[3] !== 0);
+        if (Boolean(w) !== Boolean(vector[3])) {
+          throw new Error('math.gl: Matrix4.transformPoint - invalid vector')
+        }
         out = out || new Vector4();
+        // out = out || [0, 0, 0, 0];
         vec4_transformMat4(out, vector, this);
-        // assert(validateVector4(out));
+        validateVector(out, 4);
         break;
       default:
         throw new Error('Illegal vector');

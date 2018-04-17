@@ -31,10 +31,6 @@ import vec3_rotateZ from 'gl-vec3/rotateZ';
 
 const ORIGIN = [0, 0, 0];
 
-export function validateVector3(v) {
-  return v.length === 3 && Number.isFinite(v[0]) && Number.isFinite(v[1]) && Number.isFinite(v[2]);
-}
-
 export default class Vector3 extends Vector {
   // Creates a new vec3, either empty, or from an array or from values
   constructor(x = 0, y = 0, z = 0) {

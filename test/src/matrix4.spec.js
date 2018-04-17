@@ -82,6 +82,19 @@ test('Matrix4#identity (identity matrix)', t => {
   t.end();
 });
 
+test('Matrix4#copy', t => {
+  t.equals(typeof Matrix4.prototype.copy, 'function');
+
+  const INPUT = INDICES_MATRIX;
+  const RESULT = INDICES_MATRIX;
+
+  const m = new Matrix4().copy(INPUT);
+
+  tapeEquals(t, m, RESULT, 'copy gave the right result');
+
+  t.end();
+});
+
 test('Matrix4#set', t => {
   t.equals(typeof Matrix4.prototype.set, 'function');
 
@@ -91,6 +104,33 @@ test('Matrix4#set', t => {
   const m = new Matrix4().set(...INPUT);
 
   tapeEquals(t, m, RESULT, 'set gave the right result');
+
+  t.end();
+});
+
+test('Matrix4#setRowMajor', t => {
+  t.equals(typeof Matrix4.prototype.setRowMajor, 'function');
+
+  const INPUT = INDICES_MATRIX;
+  const RESULT = TRANSPOSED_INDICES_MATRIX;
+
+  const m = new Matrix4().setRowMajor(...INPUT);
+
+  tapeEquals(t, m, RESULT, 'setRowMajor gave the right result');
+
+  t.end();
+});
+
+test('Matrix4#setColumnMajor', t => {
+  t.equals(typeof Matrix4.prototype.setColumnMajor, 'function');
+
+  const INPUT = INDICES_MATRIX;
+  const RESULT = INDICES_MATRIX;
+
+  const m = new Matrix4().setColumnMajor(...INPUT);
+
+  tapeEquals(t, m, RESULT, 'set gave the right result');
+
   t.end();
 });
 

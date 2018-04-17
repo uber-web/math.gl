@@ -20,6 +20,7 @@
 
 const {resolve} = require('path');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 // const webpack = require('webpack');
 
@@ -124,7 +125,9 @@ module.exports = env => {
     break;
 
   case 'test':
-    config = TEST_CONFIG;
+    config = Object.assign({}, TEST_CONFIG, {
+      plugins: [new HtmlWebpackPlugin()]
+    });
     break;
 
   case 'analyze':
