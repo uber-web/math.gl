@@ -93,7 +93,12 @@ export default class Matrix4 extends MathArray {
 
   /* eslint-disable max-params */
   // accepts row major order, stores as column major
-  setRowMajor(m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33) {
+  setRowMajor(
+    m00 = 1, m01 = 0, m02 = 0, m03 = 0,
+    m10 = 0, m11 = 1, m12 = 0, m13 = 0,
+    m20 = 0, m21 = 0, m22 = 1, m23 = 0,
+    m30 = 0, m31 = 0, m32 = 0, m33 = 1
+  ) {
     this[0] = m00;
     this[1] = m10;
     this[2] = m20;
@@ -113,9 +118,13 @@ export default class Matrix4 extends MathArray {
     return this.check();
   }
 
-  // accepts row major order and stores in row major order
-  setColumnMajor(m00, m10, m20, m30, m01, m11, m21, m31, m02, m12, m22, m32, m03, m13, m23, m33) {
-  // setColumnMajor(m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33) {
+  // accepts column major order, stores in column major order
+  setColumnMajor(
+    m00 = 1, m10 = 0, m20 = 0, m30 = 0,
+    m01 = 0, m11 = 1, m21 = 0, m31 = 0,
+    m02 = 0, m12 = 0, m22 = 1, m32 = 0,
+    m03 = 0, m13 = 0, m23 = 0, m33 = 1
+  ) {
     this[0] = m00;
     this[1] = m10;
     this[2] = m20;
