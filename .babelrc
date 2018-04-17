@@ -15,9 +15,6 @@
       "presets": [
         [ "@babel/es2015", {
           "modules": false
-        }],
-        [ "minify", {
-          "mangle": false
         }]
       ],
       "plugins": [
@@ -37,9 +34,6 @@
             "node": "8"
           },
           "modules": false
-        }],
-        [ "minify", {
-          "mangle": false
         }]
       ],
       "plugins": [
