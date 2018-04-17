@@ -74,6 +74,7 @@
     "eslint-config-prettier": "^2.9.0",
     "eslint-config-uber-es2015": "^3.0.0",
     "faucet": "0.0.1",
+    "html-webpack-plugin": "^3.2.0",
     "module-alias": "^2.0.0",
     "nyc": "^10.2.0",
     "pre-commit": "^1.2.2",

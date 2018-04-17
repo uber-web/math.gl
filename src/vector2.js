@@ -25,10 +25,6 @@ import {checkNumber} from './lib/common';
 /* eslint-disable camelcase */
 import vec2_cross from 'gl-vec2/cross';
 
-export function validateVector2(v) {
-  return v.length === 2 && Number.isFinite(v[0]) && Number.isFinite(v[1]);
-}
-
 export default class Vector2 extends Vector {
   // Creates a new, empty vec2
   constructor(x = 0, y = 0) {

@@ -21,16 +21,6 @@
 import Vector from './lib/vector';
 import {checkNumber} from './lib/common';
 
-export function validateVector4(v) {
-  return (
-    v.length === 4 &&
-    Number.isFinite(v[0]) &&
-    Number.isFinite(v[1]) &&
-    Number.isFinite(v[2]) &&
-    Number.isFinite(v[3])
-  );
-}
-
 export default class Vector4 extends Vector {
   // Creates a new, empty vec4
   constructor(x = 0, y = 0, z = 0, w = 0) {
