@@ -114,9 +114,19 @@ test('Matrix4#setRowMajor', t => {
   const INPUT = INDICES_MATRIX;
   const RESULT = TRANSPOSED_INDICES_MATRIX;
 
-  const m = new Matrix4().setRowMajor(...INPUT);
+  let m = new Matrix4().setRowMajor(...INPUT);
 
   tapeEquals(t, m, RESULT, 'setRowMajor gave the right result');
+
+  m = new Matrix4().setRowMajor(1, 2, 3, 4, 5, 6, 7, 8);
+
+  tapeEquals(t, m, [1, 5, 0, 0, 2, 6, 0, 0, 3, 7, 1, 0, 4, 8, 0, 1],
+    'setRowMajor with missing params gave the right result');
+
+  m = new Matrix4().setRowMajor();
+
+  tapeEquals(t, m, IDENTITY_MATRIX,
+    'setRowMajor with no params gave the right result');
 
   t.end();
 });
@@ -127,9 +137,19 @@ test('Matrix4#setColumnMajor', t => {
   const INPUT = INDICES_MATRIX;
   const RESULT = INDICES_MATRIX;
 
-  const m = new Matrix4().setColumnMajor(...INPUT);
+  let m = new Matrix4().setColumnMajor(...INPUT);
 
   tapeEquals(t, m, RESULT, 'set gave the right result');
+
+  m = new Matrix4().setColumnMajor(1, 2, 3, 4, 5, 6, 7, 8);
+
+  tapeEquals(t, m, [1, 2, 3, 4, 5, 6, 7, 8, 0, 0, 1, 0, 0, 0, 0, 1],
+    'setColumnMajor with missing params gave the right result');
+
+  m = new Matrix4().setColumnMajor();
+
+  tapeEquals(t, m, IDENTITY_MATRIX,
+    'setColumnMajor with no params gave the right result');
 
   t.end();
 });

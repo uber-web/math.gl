@@ -1,10 +1,15 @@
 # CHANGELOG
 
 
+## v1.1.3 - Apr 16, 2018
+
+- Matrix4 restore default arguments to setters 
+
 
 ## v1.1.2 - Apr 16, 2018
 
 - Matrix4 fixes to regressions caused by code size reduction
+
 
 ## v1.1.1 - Apr 16, 2018
 
