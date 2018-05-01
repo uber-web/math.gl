@@ -1,22 +1,20 @@
 import test from 'tape-catch';
-import {Matrix4, Pose} from 'math.gl';
+import {Pose, Matrix4, Vector3, experimental, equals} from 'math.gl';
+const {Euler} = experimental;
 
-const degreesToRadians = x => x * Math.PI / 180;
-
-const MATRIX_TEST_CASES = [
-  {
+const MATRIX_TEST_CASES = [{
     TRANSFORM_A_TO_B: {
-      yaw: degreesToRadians(-0.02654189269390347),
-      pitch: degreesToRadians(0.0901926853084437),
-      roll: degreesToRadians(-0.024046609819298202),
+      yaw: -0.000463243417219643,
+      pitch: 0.0015741593198474598,
+      roll: -0.0004196925152891523,
       x: -80.6282262740399,
       y: -50.38973468180131,
       z: 0.07585273316544758
     },
     TRANSFORM_B_TO_A: {
-      yaw: degreesToRadians(0.026504070024467537),
-      pitch: degreesToRadians(-0.09020380713443667),
-      roll: degreesToRadians(0.02400485583924729),
+      yaw: 0.00046258328710609256,
+      pitch: -0.0015743534323298712,
+      roll: 0.0004189637708614518,
       x: 80.60489444652502,
       y: 50.42705390985001,
       z: 0.07219608630932267
@@ -24,17 +22,17 @@ const MATRIX_TEST_CASES = [
   },
   {
     TRANSFORM_A_TO_B: {
-      yaw: degreesToRadians(-0.018724244720763915),
-      pitch: degreesToRadians(0.10026389745262923),
-      roll: degreesToRadians(0.03699120918519741),
+      yaw: -0.00032679972032649654,
+      pitch: 0.0017499351314303354,
+      roll: 0.0006456183945756637,
       x: -29.95600959142378,
       y: 33.72513623131151,
       z: -0.40325097780902214
     },
     TRANSFORM_B_TO_A: {
-      yaw: degreesToRadians(0.018789001758967153),
-      pitch: degreesToRadians(-0.10025178246818622),
-      roll: degreesToRadians(-0.03702403008138641),
+      yaw: 0.0003279299438569828,
+      pitch: -0.001749723685062977,
+      roll: -0.000646191227277617,
       x: 29.966277810401277,
       y: -33.71504358610052,
       z: 0.47745784137700187
@@ -42,17 +40,17 @@ const MATRIX_TEST_CASES = [
   },
   {
     TRANSFORM_A_TO_B: {
-      yaw: degreesToRadians(0.014019389879357809),
-      pitch: degreesToRadians(-0.16693666223685782),
-      roll: degreesToRadians(-0.08180457065575204),
+      yaw: 0.0002446845125155644,
+      pitch: -0.0029135943983228507,
+      roll: -0.0014277591011232099,
       x: 18.109576472225825,
       y: -56.07962629397971,
       z: -0.23393909544671745
     },
     TRANSFORM_B_TO_A: {
-      yaw: degreesToRadians(-0.013781089177543813),
-      pitch: degreesToRadians(0.1669565034787033),
-      roll: degreesToRadians(0.08176406858071145),
+      yaw: -0.00024052538065909691,
+      pitch: 0.002913940693320739,
+      roll: 0.0014270522065598617,
       x: -18.09509570346161,
       y: 56.08358930036468,
       z: 0.3667362087106386
@@ -60,22 +58,44 @@ const MATRIX_TEST_CASES = [
   }
 ];
 
-const TOLERANCE = 1e-9;
+test('Pose#import', t => {
+  t.equals(typeof Pose, 'function');
+  t.end();
+});
+
+test('Pose#getPosition, getOrientation', t => {
+  const pose = new Pose({});
+  t.ok(pose.getPosition() instanceof Vector3, 'position is Vector3');
+  t.ok(pose.getOrientation() instanceof Euler, 'orientation is Euler');
+  t.end();
+});
 
 test('Pose#transformationMatrix', t => {
-  MATRIX_TEST_CASES.forEach((testCase, testCaseIndex) => {
+  MATRIX_TEST_CASES.forEach((testCase) => {
     const poseAToB = new Pose(testCase.TRANSFORM_A_TO_B);
     const poseBToA = new Pose(testCase.TRANSFORM_B_TO_A);
 
     const transformAToB = poseAToB.getTransformationMatrix();
+    t.ok(transformAToB instanceof Matrix4, `getTransformationMatrix returns Matrix4`);
+
     const transformBToA = poseBToA.getTransformationMatrix();
+    t.ok(equals(transformAToB, transformBToA.invert()), `transformation matrices match`);
+  });
 
-    const result = transformAToB.multiplyRight(transformBToA);
-    const expected = new Matrix4().identity();
+  t.end();
+});
 
-    t.ok(
-      expected.every((x, i) => Math.abs(x - result[i]) < TOLERANCE),
-      `Sample #${testCaseIndex}: transformation matrices match`);
+test('Pose#getTransformationMatrixFromPose, getTransformationMatrixToPose', t => {
+  MATRIX_TEST_CASES.forEach((testCase) => {
+    const poseA = new Pose(testCase.TRANSFORM_A_TO_B);
+    const poseB = new Pose(testCase.TRANSFORM_B_TO_A);
+
+    const transformAToB = poseA.getTransformationMatrixToPose(poseB);
+    t.ok(transformAToB instanceof Matrix4, `getTransformationMatrixToPose returns Matrix4`);
+    const transformBToA = poseA.getTransformationMatrixFromPose(poseB);
+    t.ok(transformBToA instanceof Matrix4, `getTransformationMatrixFromPose returns Matrix4`);
+
+    t.ok(equals(transformAToB, transformBToA.invert()), `transformation matrices match`);
   });
 
   t.end();
