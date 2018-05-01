@@ -63,6 +63,19 @@ test('Pose#import', t => {
   t.end();
 });
 
+test('Pose#setters, getters', t => {
+  const SAMPLE = MATRIX_TEST_CASES[0].TRANSFORM_A_TO_B;
+  const pose = new Pose({});
+
+  for (const key in SAMPLE) {
+    t.equals(pose[key], 0, `gets initial ${key} value`);
+    pose[key] = SAMPLE[key];
+    t.equals(pose[key], SAMPLE[key], `sets ${key} value`);
+  }
+
+  t.end();
+});
+
 test('Pose#getPosition, getOrientation', t => {
   const pose = new Pose({});
   t.ok(pose.getPosition() instanceof Vector3, 'position is Vector3');
@@ -76,10 +89,10 @@ test('Pose#transformationMatrix', t => {
     const poseBToA = new Pose(testCase.TRANSFORM_B_TO_A);
 
     const transformAToB = poseAToB.getTransformationMatrix();
-    t.ok(transformAToB instanceof Matrix4, `getTransformationMatrix returns Matrix4`);
+    t.ok(transformAToB instanceof Matrix4, 'getTransformationMatrix returns Matrix4');
 
     const transformBToA = poseBToA.getTransformationMatrix();
-    t.ok(equals(transformAToB, transformBToA.invert()), `transformation matrices match`);
+    t.ok(equals(transformAToB, transformBToA.invert()), 'transformation matrices match');
   });
 
   t.end();
@@ -91,11 +104,11 @@ test('Pose#getTransformationMatrixFromPose, getTransformationMatrixToPose', t =>
     const poseB = new Pose(testCase.TRANSFORM_B_TO_A);
 
     const transformAToB = poseA.getTransformationMatrixToPose(poseB);
-    t.ok(transformAToB instanceof Matrix4, `getTransformationMatrixToPose returns Matrix4`);
+    t.ok(transformAToB instanceof Matrix4, 'getTransformationMatrixToPose returns Matrix4');
     const transformBToA = poseA.getTransformationMatrixFromPose(poseB);
-    t.ok(transformBToA instanceof Matrix4, `getTransformationMatrixFromPose returns Matrix4`);
+    t.ok(transformBToA instanceof Matrix4, 'getTransformationMatrixFromPose returns Matrix4');
 
-    t.ok(equals(transformAToB, transformBToA.invert()), `transformation matrices match`);
+    t.ok(equals(transformAToB, transformBToA.invert()), 'transformation matrices match');
   });
 
   t.end();
