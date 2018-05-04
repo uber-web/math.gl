@@ -23,7 +23,6 @@ export {default as Vector2} from './vector2';
 export {default as Vector3} from './vector3';
 export {default as Vector4} from './vector4';
 export {default as Matrix4} from './matrix4';
-export {default as Pose} from './pose';
 export {default as Quaternion} from './quaternion';
 
 // math.gl "GLSL" functions
@@ -47,10 +46,12 @@ export {
 } from './lib/common';
 
 import {default as SphericalCoordinates} from './spherical-coordinates';
+import {default as Pose} from './pose';
 import {default as Euler} from './euler';
 import {default as Polygon} from './addons/polygon';
 export const experimental = {
   SphericalCoordinates,
   Euler,
+  Pose,
   Polygon
 };

@@ -1,6 +1,6 @@
 import test from 'tape-catch';
-import {Pose, Matrix4, Vector3, experimental, equals} from 'math.gl';
-const {Euler} = experimental;
+import {Matrix4, Vector3, experimental, equals} from 'math.gl';
+const {Euler, Pose} = experimental;
 
 const MATRIX_TEST_CASES = [{
     TRANSFORM_A_TO_B: {
