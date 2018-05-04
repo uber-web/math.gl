@@ -46,10 +46,12 @@ export {
 } from './lib/common';
 
 import {default as SphericalCoordinates} from './spherical-coordinates';
+import {default as Pose} from './pose';
 import {default as Euler} from './euler';
 import {default as Polygon} from './addons/polygon';
 export const experimental = {
   SphericalCoordinates,
   Euler,
+  Pose,
   Polygon
 };

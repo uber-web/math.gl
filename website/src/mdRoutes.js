@@ -99,6 +99,9 @@ export default [{
       name: 'Euler',
       markdown: require('../../docs/api-reference/euler.md')
     }, {
+      name: 'Pose',
+      markdown: require('../../docs/api-reference/pose.md')
+    }, {
       name: 'SphericalCoordinates',
       markdown: require('../../docs/api-reference/spherical-coordinates.md')
     }, {
