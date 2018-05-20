@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import {isArray, radians, equals, config} from 'math.gl';
+import {isArray, radians, equals, lerp, config} from 'math.gl';
 // import {tapeEquals} from './index';
 import test from 'tape-catch';
 
@@ -57,5 +57,11 @@ test('math.equals', t => {
 
 test('math#radians', t => {
   t.ok(equals(radians(180), Math.PI), 'should return a value of 3.141592654(Math.PI)');
+  t.end();
+});
+
+test('math#lerp', t => {
+  t.ok(equals(lerp(1.0, 2.0, 0.2), 1.2), 'interpolate between numbers');
+  t.ok(equals(lerp([1.0, 0.0], [2.0, -1.0], 0.2), [1.2, -0.2]), 'interpolate between arrays');
   t.end();
 });
