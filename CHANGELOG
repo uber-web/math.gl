@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.2.1 - May 21, 2018
+
+- Add `lerp` utility function
+
 ## v1.2.0 - May 4, 2018
 
 - Add experimental Pose class
