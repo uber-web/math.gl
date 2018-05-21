@@ -42,6 +42,7 @@ export {
   acos,
   atan,
   clamp,
+  lerp,
   equals
 } from './lib/common';
 
