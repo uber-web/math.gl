@@ -1,7 +1,6 @@
 # SphericalCoordinates
 
 > Note this class is considered experimental and must be imported from the `experimental` namespace.
-
 > This documentation is incomplete and may be incorrect
 
 ```js

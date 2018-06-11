@@ -96,16 +96,16 @@ export default [{
   }, {
     name: 'Experimental API',
     children: [{
-      name: 'Euler',
+      name: '_Euler',
       markdown: require('../../docs/api-reference/euler.md')
     }, {
-      name: 'Pose',
+      name: '_Pose',
       markdown: require('../../docs/api-reference/pose.md')
     }, {
-      name: 'SphericalCoordinates',
+      name: '_SphericalCoordinates',
       markdown: require('../../docs/api-reference/spherical-coordinates.md')
     }, {
-      name: 'Polygon',
+      name: '_Polygon',
       markdown: require('../../docs/api-reference/addons/polygon.md')
     }]
   }]
