@@ -47,6 +47,6 @@ export {
 } from './lib/common';
 
 export {default as _SphericalCoordinates} from './spherical-coordinates';
-import {default as _Pose} from './pose';
-import {default as _Euler} from './euler';
-import {default as _Polygon} from './addons/polygon';
+export {default as _Pose} from './pose';
+export {default as _Euler} from './euler';
+export {default as _Polygon} from './addons/polygon';

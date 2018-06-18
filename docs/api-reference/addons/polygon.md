@@ -1,10 +1,16 @@
-# \_Polygon (Experimental)
+# Polygon (Experimental)
 
 > Note this class is experimental and may change or be removed in minor math.gl versions.
 
 Allows an array of points (whether closed or non-closed) to be treated as a Polygon.
 
 Implements the [Shoelace formula](https://en.wikipedia.org/wiki/Shoelace_formula) for determining the area and winding direction of an arbitrary polygon.
+
+## Usage
+
+```js
+import {_Polygon as Polygon} from 'math.gl';
+```
 
 
 ## Methods

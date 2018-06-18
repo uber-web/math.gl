@@ -1,4 +1,4 @@
-# \_Pose (Experimental)
+# Pose (Experimental)
 
 > Note this class is experimental and may change or be removed in minor math.gl versions.
 
@@ -12,8 +12,7 @@ class Pose
 ## Usage
 
 ```js
-import {experimental} from 'math.gl';
-const {Pose} = experimental;
+import {_Pose as Pose} from 'math.gl';
 ```
 
 ##  Members
