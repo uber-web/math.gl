@@ -1,5 +1,4 @@
-import {experimental} from 'math.gl';
-const {Euler} = experimental;
+import {_Euler as Euler} from 'math.gl';
 
 import test from 'tape-catch';
 

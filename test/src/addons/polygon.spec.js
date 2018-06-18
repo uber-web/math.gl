@@ -22,8 +22,7 @@
 import test from 'tape-catch';
 import {tapeEquals} from 'math.gl/test/utils/tape-equals';
 
-import {configure, experimental} from 'math.gl';
-const {Polygon} = experimental;
+import {configure, _Polygon as Polygon} from 'math.gl';
 
 const TEST_CASES = [
   {

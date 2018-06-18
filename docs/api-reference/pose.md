@@ -1,4 +1,6 @@
-# Vector2
+# Pose (Experimental)
+
+> Note this class is experimental and may change or be removed in minor math.gl versions.
 
 A 6-degree-freedom pose (3D position and 3D rotation).
 See [Tait–Bryan angles](https://en.wikipedia.org/wiki/Euler_angles): z-y'-x"
@@ -10,8 +12,7 @@ class Pose
 ## Usage
 
 ```js
-import {experimental} from 'math.gl';
-const {Pose} = experimental;
+import {_Pose as Pose} from 'math.gl';
 ```
 
 ##  Members

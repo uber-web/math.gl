@@ -1,14 +1,13 @@
-# SphericalCoordinates
+# SphericalCoordinates (Experimental)
 
 > Note this class is considered experimental and must be imported from the `experimental` namespace.
-
 > This documentation is incomplete and may be incorrect
 
 ```js
 class SphericalCoordinates
 ```
 
-See also [Wikipedia](https://en.wikipedia.org/wiki/Spherical_coordinate_system), [Wolfram MathWorld](http://mathworld.wolfram.com/SphericalCoordinates.html) or 
+See also [Wikipedia](https://en.wikipedia.org/wiki/Spherical_coordinate_system), [Wolfram MathWorld](http://mathworld.wolfram.com/SphericalCoordinates.html).
 
 * The poles (phi) are at the positive and negative y axis.
 * The equator starts at positive z.
@@ -58,8 +57,7 @@ Ranges
 ## Usage
 
 ```js
-import {experimental} from 'math.gl';
-const {SphericalCoordinates} = experimental;
+import {_SphericalCoordinates as SphericalCoordinates} from 'math.gl';
 ```
 
 Creating a SphericalCoordinates object
