@@ -1,11 +1,27 @@
 # What's New
 
-Always check the [Upgrade Guide](docs/upgrade-guide) when considering a new math.gl release.
+
+## v2.0
+
+Date: June 25, 2018
+
+### New Naming Convention for Experimental Exports
+
+Experimental exports are now exported with a leading underscore (\_), instead of as members of the `experimental` namespace.
+
+The change was made to make it possible for tree-shaking bundlers to remove unused experimental exports from applications.
+
+
+## v1.2
+
+Date: May 4, 2018
+- New `lerp` utility
+- Experimental `Pose` class
 
 
 ## v1.1
 
-Date: TBD
+Date: April 16, 2018
 
 ### Matrix4 Improvements
 
@@ -14,7 +30,7 @@ Date: TBD
 
 ### Bundle Size Reduction
 
-math.gl has been tuned to have ~20% smaller footprint when bundled in applications.
+math.gl has been tuned to have approximately 20% smaller footprint when bundled in applications.
 
 
 ### THREE.js Compatibility
