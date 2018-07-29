@@ -10,9 +10,22 @@ const assert = (x, m) => {
 export default class Vector extends MathArray {
   // ACCESSORS
 
+  get x() {
+    return this[0];
+  }
+  set x(value) {
+    return (this[0] = checkNumber(value));
+  }
+
+  get y() {
+    return this[1];
+  }
+  set y(value) {
+    return (this[1] = checkNumber(value));
+  }
+
   // NOTE: `length` is a reserved word for Arrays, so we can't use `v.length()`
   // Offer `len` and `magnitude`
-
   len() {
     return Math.sqrt(this.lengthSquared());
   }

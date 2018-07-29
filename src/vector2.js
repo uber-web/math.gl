@@ -19,7 +19,6 @@
 // THE SOFTWARE.
 
 import Vector from './lib/vector';
-import {checkNumber} from './lib/common';
 
 // gl-matrix is too big. Cherry-pick individual imports from stack.gl version
 /* eslint-disable camelcase */
@@ -37,23 +36,11 @@ export default class Vector2 extends Vector {
   }
 
   // Getters/setters
-  /* eslint-disable no-multi-spaces, brace-style, no-return-assign */
   get ELEMENTS() {
     return 2;
   }
-  get x() {
-    return this[0];
-  }
-  set x(value) {
-    return (this[0] = checkNumber(value));
-  }
-  get y() {
-    return this[1];
-  }
-  set y(value) {
-    return (this[1] = checkNumber(value));
-  }
-  /* eslint-disable no-multi-spaces, brace-style, no-return-assign */
+
+  // x,y inherited from Vector
 
   cross(vector) {
     vec2_cross(this, this, vector);

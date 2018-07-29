@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v2.1.0-alpha.1 - July 29
+
+- Enable "sideEffects" in package.json to improve tree-shaking
+- Delete comments in generated code
+- Reuse x,y accessors in Vector
+
 ## v2.0.0 - June 25
 
 - Rename experimental classes to use underscore (_).
