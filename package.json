@@ -30,6 +30,9 @@
     "dist",
     "src"
   ],
+  "sideEffects":[
+    "./src/lib/common.js"
+  ],
   "scripts": {
     "clean": "rm -fr dist && mkdir -p dist/es5 dist/esm dist/es6",
     "build": "./scripts/build.sh && ./scripts/collect-metrics.sh",
@@ -60,7 +63,6 @@
   "devDependencies": {
     "@babel/cli": "7.0.0-beta.44",
     "@babel/core": "^7.0.0-beta.44",
-    "@babel/polyfill": "7.0.0-beta.44",
     "@babel/preset-env": "7.0.0-beta.44",
     "@babel/preset-es2015": "7.0.0-beta.44",
     "babel-loader": "^8.0.0-beta.2",

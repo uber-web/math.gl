@@ -136,7 +136,7 @@ module.exports = env => {
 
       // Replace the entry point for webpack-dev-server
       entry: {
-        'test-browser': resolve(__dirname, './size/import-nothing.js')
+        'test-browser': resolve(__dirname, './size/import-vec4-mat4.js')
       },
       plugins: [new BundleAnalyzerPlugin()]
     });

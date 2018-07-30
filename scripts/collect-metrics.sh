@@ -32,7 +32,7 @@ print_size() {
 
 build_bundle() {
   ENV=$1
-  NODE_ENV=production webpack --config test/webpack.config.js --hide-modules --env.import-nothing --env.bundle --env.$ENV > /dev/null
+  NODE_ENV=production webpack --config test/webpack.config.js --hide-modules --env.import-vec4-mat4 --env.bundle --env.$ENV
   cp dist/bundle.js /tmp/bundle.js
 }
 

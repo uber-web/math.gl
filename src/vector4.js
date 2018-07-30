@@ -38,21 +38,7 @@ export default class Vector4 extends Vector {
     return 4;
   }
 
-  get x() {
-    return this[0];
-  }
-
-  set x(value) {
-    return (this[0] = checkNumber(value));
-  }
-
-  get y() {
-    return this[1];
-  }
-
-  set y(value) {
-    return (this[1] = checkNumber(value));
-  }
+  // x,y inherited from Vector
 
   get z() {
     return this[2];
