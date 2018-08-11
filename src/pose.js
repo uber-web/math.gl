@@ -31,9 +31,11 @@ export default class Pose {
    * pose's position and with with the defining pose's orientation
    * aligned with axis.
    */
-  constructor({x = 0, y = 0, z = 0, roll = 0, pitch = 0, yaw = 0}) {
-    this.position = new Vector3(x, y, z);
-    this.orientation = new Euler(roll, pitch, yaw, Euler.RollPitchYaw);
+  constructor({x = 0, y = 0, z = 0, roll = 0, pitch = 0, yaw = 0, position, orientation}) {
+    this.position = position ? new Vector3(position) : new Vector3(x, y, z);
+    this.orientation = orientation
+      ? new Euler(orientation, Euler.RollPitchYaw)
+      : new Euler(roll, pitch, yaw, Euler.RollPitchYaw);
   }
 
   /* eslint-disable no-multi-spaces, brace-style, no-return-assign */
