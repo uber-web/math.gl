@@ -31,9 +31,17 @@ export default class Pose {
    * pose's position and with with the defining pose's orientation
    * aligned with axis.
    */
-  constructor({x = 0, y = 0, z = 0, roll = 0, pitch = 0, yaw = 0}) {
-    this.position = new Vector3(x, y, z);
-    this.orientation = new Euler(roll, pitch, yaw, Euler.RollPitchYaw);
+  constructor({x = 0, y = 0, z = 0, roll = 0, pitch = 0, yaw = 0, position, orientation}) {
+    if (Array.isArray(position) && position.length === 3) {
+      this.position = new Vector3(position);
+    } else {
+      this.position = new Vector3(x, y, z);
+    }
+    if (Array.isArray(orientation) && orientation.length === 4) {
+      this.orientation = new Euler(orientation, orientation[3]);
+    } else {
+      this.orientation = new Euler(roll, pitch, yaw, Euler.RollPitchYaw);
+    }
   }
 
   /* eslint-disable no-multi-spaces, brace-style, no-return-assign */
@@ -57,6 +65,20 @@ export default class Pose {
 
   getOrientation() {
     return this.orientation;
+  }
+
+  equals(pose) {
+    if (!pose) {
+      return false;
+    }
+    return this.position.equals(pose.position) && this.orientation.equals(pose.orientation);
+  }
+
+  exactEquals(pose) {
+    if (!pose) {
+      return false;
+    }
+    return this.position.exactEquals(pose.position) && this.orientation.exactEquals(pose.orientation);
   }
 
   /*

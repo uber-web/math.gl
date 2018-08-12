@@ -63,6 +63,27 @@ test('Pose#import', t => {
   t.end();
 });
 
+test('Pose#constructor', t => {
+  let pose1;
+  let pose2;
+
+  pose1 = new Pose({});
+  t.ok(pose1, 'constructed from empty props');
+
+  pose1 = new Pose(MATRIX_TEST_CASES[0].TRANSFORM_A_TO_B);
+  t.ok(pose1, 'constructed from x y z pitch roll yaw');
+
+  pose2 = new Pose(pose1);
+  t.ok(pose1.equals(pose2), 'reconstructed from another pose');
+
+  const flattenProps = JSON.parse(JSON.stringify(pose1));
+  pose2 = new Pose(flattenProps);
+
+  t.ok(pose1.equals(pose2), 'reconstructed from flatten props');
+
+  t.end();
+});
+
 test('Pose#setters, getters', t => {
   const SAMPLE = MATRIX_TEST_CASES[0].TRANSFORM_A_TO_B;
   const pose = new Pose({});
