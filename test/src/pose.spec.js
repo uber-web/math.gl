@@ -58,10 +58,6 @@ const MATRIX_TEST_CASES = [{
   }
 ];
 
-function arePosesEqual(pose1, pose2) {
-  return equals(pose1.position, pose2.position) & equals(pose1.orientation, pose2.orientation);
-}
-
 test('Pose#import', t => {
   t.equals(typeof Pose, 'function');
   t.end();
@@ -78,12 +74,12 @@ test('Pose#constructor', t => {
   t.ok(pose1, 'constructed from x y z pitch roll yaw');
 
   pose2 = new Pose(pose1);
-  t.ok(arePosesEqual(pose1, pose2), 'reconstructed from another pose');
+  t.ok(pose1.equals(pose2), 'reconstructed from another pose');
 
   const flattenProps = JSON.parse(JSON.stringify(pose1));
   pose2 = new Pose(flattenProps);
 
-  t.ok(arePosesEqual(pose1, pose2), 'reconstructed from flatten props');
+  t.ok(pose1.equals(pose2), 'reconstructed from flatten props');
 
   t.end();
 });

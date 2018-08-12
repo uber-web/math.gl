@@ -31,11 +31,14 @@ Gets or sets rotation components respectively
 ### constructor
 
 ```
-new Pose({x, y, z, roll, pitch, yaw})
+new Pose({x, y, z, roll, pitch, yaw});
+new Pose({position, orientation});
 ```
 
  * `x`, `y`, `z` - position
  * `roll`, `pitch`, `yaw` - rotation in radians
+ * `position` - `Vector3` or array of 3 that represents the position
+ * `orientation` - `Euler` or array of 4 that represents the rotation
 
 ### getPosition
 
@@ -48,6 +51,14 @@ Returns `Vector3`.
 `pose.getOrientation()`
 
 Returns `Euler`.
+
+### equals
+
+`pose.equals(otherPose)`
+
+### exactEquals
+
+`pose.exactEquals(otherPose)`
 
 ### getTransformationMatrix
 
