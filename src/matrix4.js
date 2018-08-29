@@ -162,7 +162,7 @@ export default class Matrix4 extends MathArray {
   // By default assumes row major indices
   setElement(i, j, value, columnMajor = false) {
     if (columnMajor) {
-      this[j][i] = checkNumber(value);
+      this[i][j] = checkNumber(value);
     } else {
       this[j][i] = checkNumber(value);
     }
