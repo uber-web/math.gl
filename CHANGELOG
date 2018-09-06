@@ -1,6 +1,11 @@
 # CHANGELOG
 
-## v2.1.0-alpha.1 - July 29
+## v2.1.0 - Sep 6, 2018 
+
+- Support reconstructing Pose from serialized/deserialized props (#27)
+- Fix Matrix4.setElement() when columnMajor = true.
+
+## v2.1.0-alpha.1 - July 29, 2018
 
 - Enable "sideEffects" in package.json to improve tree-shaking
 - Delete comments in generated code
