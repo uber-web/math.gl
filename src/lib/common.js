@@ -139,14 +139,14 @@ export function clamp(value, min, max) {
 
 // Interpolate between two numbers or two arrays
 export function lerp(a, b, t) {
-  if (Array.isArray(a)) {
+  if (isArray(a)) {
     return a.map((ai, i) => lerp(ai, b[i], t));
   }
   return t * b + (1 - t) * a;
 }
 
 export function equals(a, b) {
-  if (Array.isArray(a) && Array.isArray(b)) {
+  if (isArray(a) && isArray(b)) {
     if (a === b) {
       return true;
     }
