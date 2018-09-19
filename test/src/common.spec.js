@@ -52,6 +52,8 @@ test('math.equals', t => {
   t.notOk(equals(1.0, 0.0), 'should return false for different numbers');
   t.ok(equals(1.0, 1.0), 'should return true for the same number');
   t.ok(equals(1.0 + config.EPSILON / 2, 1.0), 'should return true for numbers that are close');
+  t.ok(equals([1.0, 2.0], new Float32Array([1.0, 2.0])), 'should return true for Array and TypedArray with same values');
+  t.notOk(equals([1.0, 2.0], new Float32Array([1.0, 3.0])), 'should return false for Array and TypedArray with same values');
   t.end();
 });
 
@@ -63,5 +65,6 @@ test('math#radians', t => {
 test('math#lerp', t => {
   t.ok(equals(lerp(1.0, 2.0, 0.2), 1.2), 'interpolate between numbers');
   t.ok(equals(lerp([1.0, 0.0], [2.0, -1.0], 0.2), [1.2, -0.2]), 'interpolate between arrays');
+  t.ok(equals(lerp( new Float32Array([1.0, 0.0]), [2.0, -1.0], 0.2), [1.2, -0.2]), 'interpolate between arrays');
   t.end();
 });
