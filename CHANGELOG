@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v2.2.0 - Sep 20, 2018 
+
+- Use `@babel/runtime`
+- Use babel 7
+- FIX: `isArray` handles typed arrays correctly
+
 ## v2.1.0 - Sep 6, 2018 
 
 - Support reconstructing Pose from serialized/deserialized props (#27)
