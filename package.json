@@ -30,7 +30,7 @@
     "dist",
     "src"
   ],
-  "sideEffects":[
+  "sideEffects": [
     "./src/lib/common.js"
   ],
   "scripts": {
@@ -53,6 +53,7 @@
     "bench-browser": "webpack-dev-server --config test/webpack.config.js --env.bench --progress --hot --open"
   },
   "dependencies": {
+    "@babel/runtime": "^7.0.0",
     "gl-mat3": "^1.0.0",
     "gl-mat4": "^1.1.4",
     "gl-quat": "^1.0.0",
@@ -61,12 +62,13 @@
     "gl-vec4": "^1.0.1"
   },
   "devDependencies": {
-    "@babel/cli": "7.0.0-beta.44",
-    "@babel/core": "^7.0.0-beta.44",
-    "@babel/preset-env": "7.0.0-beta.44",
-    "@babel/preset-es2015": "7.0.0-beta.44",
-    "babel-loader": "^8.0.0-beta.2",
-    "babel-plugin-istanbul": "^4.1.1",
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/register": "^7.0.0",
+    "babel-eslint": "^9.0.0",
+    "babel-plugin-istanbul": "^5.0.0",
     "babel-plugin-transform-builtin-extend": "^1.1.2",
     "babel-plugin-version-inline": "^1.0.0",
     "coveralls": "^2.13.0",
