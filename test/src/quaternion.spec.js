@@ -20,6 +20,7 @@
 
 /* eslint-disable max-statements */
 import Quaternion from 'math.gl/quaternion';
+import Euler from 'math.gl/euler';
 import test from 'tape-catch';
 
 test('Quaternion#import', t => {
@@ -49,6 +50,7 @@ test('Quaternion#methods', t => {
   // t.equals(typeof q.normSq, 'function');
   t.equals(typeof q.scale, 'function');
   t.equals(typeof q.set, 'function');
+  t.equals(typeof q.toEuler, 'function');
   // t.equals(typeof q.setQuaternion, 'function');
   // t.equals(typeof q.sub, 'function');
   // t.equals(typeof q.unit, 'function');
@@ -83,3 +85,15 @@ test('Quaternion#methods', t => {
 //   t.equals(q1[3], 0.7439232829017486);
 //   t.end();
 // });
+
+test('Quaternion.toEuler', t => {
+  const q = new Quaternion(1, 1, 1, 1);
+
+  const euler = q.toEuler();
+  t.ok(euler.order === Euler.RollPitchYaw, 'Order should RollPitchYaw.');
+
+  t.ok(euler.roll === euler.yaw);
+  t.ok(euler.pitch === 0);
+
+  t.end();
+});
