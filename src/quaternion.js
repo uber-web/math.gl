@@ -93,30 +93,39 @@ export default class Quaternion extends MathArray {
   get ELEMENTS() {
     return 4;
   }
+
   get x() {
     return this[0];
   }
+
   set x(value) {
     return (this[0] = checkNumber(value));
   }
+
   get y() {
     return this[1];
   }
+
   set y(value) {
     return (this[1] = checkNumber(value));
   }
+
   get z() {
     return this[2];
   }
+
   set z(value) {
     return (this[2] = checkNumber(value));
   }
+
   get w() {
     return this[3];
   }
+
   set w(value) {
     return (this[3] = checkNumber(value));
   }
+
   /* eslint-enable no-multi-spaces, brace-style, no-return-assign */
 
   // Calculates the length of a quat
@@ -260,13 +269,13 @@ export default class Quaternion extends MathArray {
   }
 
   // Performs a spherical linear interpolation between two quat
-  slerp({start = IDENTITY_QUATERNION, target, ratio}) {
+  slerp({ start = IDENTITY_QUATERNION, target, ratio }) {
     quat_slerp(this, start, target, ratio);
     return this.check();
   }
 
   toEuler() {
-    const {w, x, y, z} = this;
+    const { w, x, y, z } = this;
     const ysqr = y * y;
     const t0 = -2.0 * (ysqr + z * z) + 1.0;
     const t1 = +2.0 * (x * y + w * z);

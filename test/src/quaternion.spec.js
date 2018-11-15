@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-/* eslint-disable */
+/* eslint-disable max-statements */
 import Quaternion from 'math.gl/quaternion';
 import Pose from 'math.gl/pose';
 import test from 'tape-catch';
@@ -91,7 +91,7 @@ test('Quaternion#methods', t => {
 test('Quaternion.toEuler', t => {
   const q = new Quaternion(0, 0, 0.7071067811865475, 0.7071067811865476);
   const e = q.toEuler();
-  const pose = new Pose({yaw: e.yaw, pitch: e.pitch, roll: e.roll});
+  const pose = new Pose({ yaw: e.yaw, pitch: e.pitch, roll: e.roll });
   const rMatrix = pose.getTransformationMatrix();
 
   // result from https://www.wolframalpha.com/input/?i=quaternion:+0.7071067811865475+%2B+0.7071067811865475i

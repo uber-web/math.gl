@@ -1,4 +1,4 @@
-import { equals } from "math.gl";
+import {equals} from 'math.gl';
 
 // FOR TAPE TESTING
 // Use tape assert to compares using a.equals(b)
@@ -6,8 +6,8 @@ import { equals } from "math.gl";
 export function tapeEquals(t, a, b, msg, extra) {
   /* eslint-disable no-invalid-this */
   t._assert(Number.isFinite(a) ? equals(a, b) : a.equals(b), {
-    message: msg || "should be equal",
-    operator: "equal",
+    message: msg || 'should be equal',
+    operator: 'equal',
     actual: a,
     expected: b,
     extra

@@ -18,14 +18,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import MathArray from "./lib/math-array";
-import { checkNumber, clamp } from "./lib/common";
-import Matrix4 from "./matrix4";
-import Quaternion from "./quaternion";
-import Vector3 from "./vector3";
+import MathArray from './lib/math-array';
+import {checkNumber, clamp} from './lib/common';
+import Matrix4 from './matrix4';
+import Quaternion from './quaternion';
+import Vector3 from './vector3';
 
 // Internal constants
-const ERR_UNKNOWN_ORDER = "Unknown Euler angle order";
+const ERR_UNKNOWN_ORDER = 'Unknown Euler angle order';
 const ALMOST_ONE = 0.99999;
 
 function validateOrder(value) {
@@ -50,7 +50,7 @@ export default class Euler extends MathArray {
   // static DefaultOrder = 0;
 
   // Constants
-  /* eslint-disable */
+  /* eslint-disable no-multi-spaces, brace-style, no-return-assign */
   static get ZYX() {
     return 0;
   }
@@ -84,7 +84,7 @@ export default class Euler extends MathArray {
   }
 
   static get RotationOrders() {
-    return ["ZYX", "YXZ", "XZY", "ZXY", "YZX", "XYZ"];
+    return ['ZYX', 'YXZ', 'XZY', 'ZXY', 'YZX', 'XYZ'];
   }
 
   static rotationOrder(order) {
