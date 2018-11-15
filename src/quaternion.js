@@ -269,13 +269,13 @@ export default class Quaternion extends MathArray {
   }
 
   // Performs a spherical linear interpolation between two quat
-  slerp({ start = IDENTITY_QUATERNION, target, ratio }) {
+  slerp({start = IDENTITY_QUATERNION, target, ratio}) {
     quat_slerp(this, start, target, ratio);
     return this.check();
   }
 
   toEuler() {
-    const { w, x, y, z } = this;
+    const {w, x, y, z} = this;
     const ysqr = y * y;
     const t0 = -2.0 * (ysqr + z * z) + 1.0;
     const t1 = +2.0 * (x * y + w * z);
