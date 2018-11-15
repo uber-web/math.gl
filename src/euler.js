@@ -18,14 +18,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import MathArray from './lib/math-array';
-import {checkNumber, clamp} from './lib/common';
-import Matrix4 from './matrix4';
-import Quaternion from './quaternion';
-import Vector3 from './vector3';
+import MathArray from "./lib/math-array";
+import { checkNumber, clamp } from "./lib/common";
+import Matrix4 from "./matrix4";
+import Quaternion from "./quaternion";
+import Vector3 from "./vector3";
 
 // Internal constants
-const ERR_UNKNOWN_ORDER = 'Unknown Euler angle order';
+const ERR_UNKNOWN_ORDER = "Unknown Euler angle order";
 const ALMOST_ONE = 0.99999;
 
 function validateOrder(value) {
@@ -50,25 +50,31 @@ export default class Euler extends MathArray {
   // static DefaultOrder = 0;
 
   // Constants
-  /* eslint-disable no-multi-spaces, brace-style, no-return-assign */
+  /* eslint-disable */
   static get ZYX() {
     return 0;
   }
+
   static get YXZ() {
     return 1;
   }
+
   static get XZY() {
     return 2;
   }
+
   static get ZXY() {
     return 3;
   }
+
   static get YZX() {
     return 4;
   }
+
   static get XYZ() {
     return 5;
   }
+
   static get RollPitchYaw() {
     return 0;
   }
@@ -76,9 +82,11 @@ export default class Euler extends MathArray {
   static get DefaultOrder() {
     return Euler.ZYX;
   }
+
   static get RotationOrders() {
-    return ['ZYX', 'YXZ', 'XZY', 'ZXY', 'YZX', 'XYZ'];
+    return ["ZYX", "YXZ", "XZY", "ZXY", "YZX", "XYZ"];
   }
+
   static rotationOrder(order) {
     return Euler.RotationOrders[order];
   }
@@ -86,6 +94,7 @@ export default class Euler extends MathArray {
   get ELEMENTS() {
     return 4;
   }
+
   /* eslint-enable no-multi-spaces, brace-style, no-return-assign */
 
   /*
@@ -153,22 +162,28 @@ export default class Euler extends MathArray {
   }
 
   /* eslint-disable no-multi-spaces, brace-style, no-return-assign */
+
   // x, y, z angle notation (note: only corresponds to axis in XYZ orientation)
   get x() {
     return this[0];
   }
+
   set x(value) {
     return (this[0] = checkNumber(value));
   }
+
   get y() {
     return this[1];
   }
+
   set y(value) {
     return (this[1] = checkNumber(value));
   }
+
   get z() {
     return this[2];
   }
+
   set z(value) {
     return (this[2] = checkNumber(value));
   }
@@ -177,18 +192,23 @@ export default class Euler extends MathArray {
   get alpha() {
     return this[0];
   }
+
   set alpha(value) {
     return (this[0] = checkNumber(value));
   }
+
   get beta() {
     return this[1];
   }
+
   set beta(value) {
     return (this[1] = checkNumber(value));
   }
+
   get gamma() {
     return this[2];
   }
+
   set gamma(value) {
     return (this[2] = checkNumber(value));
   }
@@ -197,18 +217,23 @@ export default class Euler extends MathArray {
   get phi() {
     return this[0];
   }
+
   set phi(value) {
     return (this[0] = checkNumber(value));
   }
+
   get theta() {
     return this[1];
   }
+
   set theta(value) {
     return (this[1] = checkNumber(value));
   }
+
   get psi() {
     return this[2];
   }
+
   set psi(value) {
     return (this[2] = checkNumber(value));
   }
@@ -217,18 +242,23 @@ export default class Euler extends MathArray {
   get roll() {
     return this[0];
   }
+
   set roll(value) {
     return (this[0] = checkNumber(value));
   }
+
   get pitch() {
     return this[1];
   }
+
   set pitch(value) {
     return (this[1] = checkNumber(value));
   }
+
   get yaw() {
     return this[2];
   }
+
   set yaw(value) {
     return (this[2] = checkNumber(value));
   }
@@ -237,9 +267,11 @@ export default class Euler extends MathArray {
   get order() {
     return this[3];
   }
+
   set order(value) {
     return (this[3] = checkOrder(value));
   }
+
   /* eslint-disable no-multi-spaces, brace-style, no-return-assign */
 
   // Constructors
@@ -580,5 +612,23 @@ export default class Euler extends MathArray {
 
     return this;
   }
+
+  toQuaternion() {
+    // Abbreviations for the various angular functions
+    const cy = Math.cos(this.yaw * 0.5);
+    const sy = Math.sin(this.yaw * 0.5);
+    const cr = Math.cos(this.roll * 0.5);
+    const sr = Math.sin(this.roll * 0.5);
+    const cp = Math.cos(this.pitch * 0.5);
+    const sp = Math.sin(this.pitch * 0.5);
+
+    const w = cy * cr * cp + sy * sr * sp;
+    const x = cy * sr * cp - sy * cr * sp;
+    const y = cy * cr * sp + sy * sr * cp;
+    const z = sy * cr * cp - cy * sr * sp;
+
+    return new Quaternion(x, y, z, w);
+  }
+
   /* eslint-enable complexity, max-statements, one-var */
 }

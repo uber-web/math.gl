@@ -18,10 +18,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-/* eslint-disable max-statements */
+/* eslint-disable */
 import Quaternion from 'math.gl/quaternion';
-import Euler from 'math.gl/euler';
+import Pose from 'math.gl/pose';
 import test from 'tape-catch';
+
+import {almostEqual} from '../utils/tape-equals';
 
 test('Quaternion#import', t => {
   t.equals(typeof Quaternion, 'function');
@@ -87,13 +89,31 @@ test('Quaternion#methods', t => {
 // });
 
 test('Quaternion.toEuler', t => {
-  const q = new Quaternion(1, 1, 1, 1);
+  const q = new Quaternion(0, 0, 0.7071067811865475, 0.7071067811865476);
+  const e = q.toEuler();
+  const pose = new Pose({yaw: e.yaw, pitch: e.pitch, roll: e.roll});
+  const rMatrix = pose.getTransformationMatrix();
 
-  const euler = q.toEuler();
-  t.ok(euler.order === Euler.RollPitchYaw, 'Order should RollPitchYaw.');
+  // result from https://www.wolframalpha.com/input/?i=quaternion:+0.7071067811865475+%2B+0.7071067811865475i
+  const expected = [
+    1.0e-16,
+    1,
+    -0,
+    0,
+    -1,
+    1.0e-16,
+    0,
+    0,
+    0,
+    0,
+    1,
+    0,
+    0,
+    0,
+    0,
+    1
+  ];
 
-  t.ok(euler.roll === euler.yaw);
-  t.ok(euler.pitch === 0);
-
+  t.ok(almostEqual(rMatrix, expected));
   t.end();
 });
