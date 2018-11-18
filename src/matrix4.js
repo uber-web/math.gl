@@ -24,27 +24,10 @@ import Vector2 from './vector2';
 import Vector3 from './vector3';
 import Vector4 from './vector4';
 
-// gl-matrix is too big. Cherry-pick individual imports from stack.gl version
-/* eslint-disable camelcase */
-import mat4_determinant from 'gl-mat4/determinant';
-import mat4_fromQuat from 'gl-mat4/fromQuat';
-import mat4_frustum from 'gl-mat4/frustum';
-import mat4_lookAt from 'gl-mat4/lookAt';
-import mat4_ortho from 'gl-mat4/ortho';
-import mat4_perspective from 'gl-mat4/perspective';
-import mat4_transpose from 'gl-mat4/transpose';
-import mat4_invert from 'gl-mat4/invert';
-import mat4_multiply from 'gl-mat4/multiply';
-import mat4_rotate from 'gl-mat4/rotate';
-import mat4_scale from 'gl-mat4/scale';
-import mat4_translate from 'gl-mat4/translate';
-import vec2_transformMat4 from 'gl-vec2/transformMat4';
-import vec3_transformMat4 from 'gl-vec3/transformMat4';
-import vec4_transformMat4 from 'gl-vec4/transformMat4';
-
-import mat4_rotateX from 'gl-mat4/rotateX';
-import mat4_rotateY from 'gl-mat4/rotateY';
-import mat4_rotateZ from 'gl-mat4/rotateZ';
+import * as mat4 from 'gl-matrix/mat4';
+import * as vec2 from 'gl-matrix/vec2';
+import * as vec3 from 'gl-matrix/vec3';
+import * as vec4 from 'gl-matrix/vec4';
 
 const IDENTITY = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
 
@@ -173,16 +156,16 @@ export default class Matrix4 extends MathArray {
 
   // toString() {
   //   if (config.printRowMajor) {
-  //     mat4_str(this);
+  //     mat4.str(this);
   //   } else {
-  //     mat4_str(this);
+  //     mat4.str(this);
   //   }
   // }
 
   // Accessors
 
   determinant() {
-    return mat4_determinant(this);
+    return mat4.determinant(this);
   }
 
   // Constructors
@@ -194,7 +177,7 @@ export default class Matrix4 extends MathArray {
   // Calculates a 4x4 matrix from the given quaternion
   // q quat  Quaternion to create matrix from
   fromQuaternion(q) {
-    mat4_fromQuat(this, q);
+    mat4.fromQuat(this, q);
     return this.check();
   }
 
@@ -206,7 +189,7 @@ export default class Matrix4 extends MathArray {
   // near  Number  Near bound of the frustum
   // far Number  Far bound of the frustum
   frustum({left, right, bottom, top, near, far}) {
-    mat4_frustum(this, left, right, bottom, top, near, far);
+    mat4.frustum(this, left, right, bottom, top, near, far);
     return this.check();
   }
 
@@ -216,7 +199,7 @@ export default class Matrix4 extends MathArray {
   // center  vec3  Point the viewer is looking at
   // up  vec3  vec3 pointing up
   lookAt({eye, center = [0, 0, 0], up = [0, 1, 0]}) {
-    mat4_lookAt(this, eye, center, up);
+    mat4.lookAt(this, eye, center, up);
     return this.check();
   }
 
@@ -229,7 +212,7 @@ export default class Matrix4 extends MathArray {
   // near  number  Near bound of the frustum
   // far number  Far bound of the frustum
   ortho({left, right, bottom, top, near = 0.1, far = 500}) {
-    mat4_ortho(this, left, right, bottom, top, near, far);
+    mat4.ortho(this, left, right, bottom, top, near, far);
     return this.check();
   }
 
@@ -274,52 +257,52 @@ export default class Matrix4 extends MathArray {
     if (fovy > Math.PI * 2) {
       throw Error('radians');
     }
-    mat4_perspective(this, fovy, aspect, near, far);
+    mat4.perspective(this, fovy, aspect, near, far);
     return this.check();
   }
 
   // Modifiers
 
   transpose() {
-    mat4_transpose(this, this);
+    mat4.transpose(this, this);
     return this.check();
   }
 
   invert() {
-    mat4_invert(this, this);
+    mat4.invert(this, this);
     return this.check();
   }
 
   // Operations
 
   multiplyLeft(a) {
-    mat4_multiply(this, a, this);
+    mat4.multiply(this, a, this);
     return this.check();
   }
 
   multiplyRight(a) {
-    mat4_multiply(this, this, a);
+    mat4.multiply(this, this, a);
     return this.check();
   }
 
   // Rotates a matrix by the given angle around the X axis
   rotateX(radians) {
-    mat4_rotateX(this, this, radians);
-    // mat4_rotate(this, this, radians, [1, 0, 0]);
+    mat4.rotateX(this, this, radians);
+    // mat4.rotate(this, this, radians, [1, 0, 0]);
     return this.check();
   }
 
   // Rotates a matrix by the given angle around the Y axis.
   rotateY(radians) {
-    mat4_rotateY(this, this, radians);
-    // mat4_rotate(this, this, radians, [0, 1, 0]);
+    mat4.rotateY(this, this, radians);
+    // mat4.rotate(this, this, radians, [0, 1, 0]);
     return this.check();
   }
 
   // Rotates a matrix by the given angle around the Z axis.
   rotateZ(radians) {
-    mat4_rotateZ(this, this, radians);
-    // mat4_rotate(this, this, radians, [0, 0, 1]);
+    mat4.rotateZ(this, this, radians);
+    // mat4.rotate(this, this, radians, [0, 0, 1]);
     return this.check();
   }
 
@@ -330,24 +313,24 @@ export default class Matrix4 extends MathArray {
   }
 
   rotateAxis(radians, axis) {
-    mat4_rotate(this, this, radians, axis);
+    mat4.rotate(this, this, radians, axis);
     return this.check();
   }
 
   scale(vec) {
-    mat4_scale(this, this, vec);
+    mat4.scale(this, this, vec);
     return this.check();
   }
 
   translate(vec) {
-    mat4_translate(this, this, vec);
+    mat4.translate(this, this, vec);
     return this.check();
   }
 
   transformVector2(vector, out) {
     // out = out || [0, 0];
     out = out || new Vector2();
-    vec2_transformMat4(out, vector, this);
+    vec2.transformMat4(out, vector, this);
     validateVector(out, 2);
     return out;
   }
@@ -355,7 +338,7 @@ export default class Matrix4 extends MathArray {
   transformVector3(vector, out) {
     // out = out || [0, 0, 0];
     out = out || new Vector3();
-    vec3_transformMat4(out, vector, this);
+    vec3.transformMat4(out, vector, this);
     validateVector(out, 3);
     return out;
   }
@@ -363,7 +346,7 @@ export default class Matrix4 extends MathArray {
   transformVector4(vector, out) {
     // out = out || [0, 0, 0, 0];
     out = out || new Vector4();
-    vec4_transformMat4(out, vector, this);
+    vec4.transformMat4(out, vector, this);
     validateVector(out, 4);
     return out.check();
   }
@@ -396,14 +379,14 @@ export default class Matrix4 extends MathArray {
       case 2:
         out = out || new Vector2();
         // out = out || [0, 0];
-        vec4_transformMat4(out, [vector[0], vector[1], 0, w], this);
+        vec4.transformMat4(out, [vector[0], vector[1], 0, w], this);
         out.length = 2;
         validateVector(out, 2);
         break;
       case 3:
         out = out || new Vector3();
         // out = out || [0, 0, 0];
-        vec4_transformMat4(out, [vector[0], vector[1], vector[2], w], this);
+        vec4.transformMat4(out, [vector[0], vector[1], vector[2], w], this);
         out.length = 3;
         validateVector(out, 3);
         break;
@@ -413,7 +396,7 @@ export default class Matrix4 extends MathArray {
         }
         out = out || new Vector4();
         // out = out || [0, 0, 0, 0];
-        vec4_transformMat4(out, vector, this);
+        vec4.transformMat4(out, vector, this);
         validateVector(out, 4);
         break;
       default:

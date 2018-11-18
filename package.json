@@ -54,12 +54,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "gl-mat3": "^1.0.0",
-    "gl-mat4": "^1.1.4",
-    "gl-quat": "^1.0.0",
-    "gl-vec2": "^1.0.0",
-    "gl-vec3": "^1.0.3",
-    "gl-vec4": "^1.0.1"
+    "gl-matrix": "^3.0.0-0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
