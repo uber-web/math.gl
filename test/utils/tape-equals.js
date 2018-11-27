@@ -13,14 +13,3 @@ export function tapeEquals(t, a, b, msg, extra) {
     extra
   });
 }
-
-export function almostEqual(actual, expected) {
-  if (Array.isArray(actual)) {
-    if (Array.isArray(expected)) {
-      return actual.every((number, i) => (number - expected[i]) < Number.EPSILON);
-    }
-    return false;
-  }
-
-  return actual - expected < Number.EPSILON;
-}
