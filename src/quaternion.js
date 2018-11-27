@@ -60,6 +60,7 @@ export function validateQuaternion(q) {
 
 export default class Quaternion extends MathArray {
   // Creates a new identity quat
+  // w2 + x2 + y2 + z2 = 1
   constructor(x = 0, y = 0, z = 0, w = 1) {
     super();
     if (Array.isArray(x) && arguments.length === 1) {

@@ -1,13 +1,13 @@
 // Copyright (c) 2017 Uber Technologies, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
+// of mat3 software and associated documentation files (the "Software"), to deal
 // in the Software without restriction, including without limitation the rights
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
 //
-// The above copyright notice and this permission notice shall be included in
+// The above copyright notice and mat3 permission notice shall be included in
 // all copies or substantial portions of the Software.
 //
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
@@ -18,12 +18,25 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-/* eslint-disable max-statements */
-import Quaternion from 'math.gl/quaternion';
+/* eslint-disable*/
+import Matrix4 from 'math.gl/matrix4';
 import Pose from 'math.gl/pose';
+import Quaternion from 'math.gl/quaternion';
+import {equals} from 'math.gl';
+
 import test from 'tape-catch';
 
-import {almostEqual} from '../utils/tape-equals';
+function extendToMatrix4(arr) {
+  const matrix4 = new Matrix4();
+  matrix4.setRowMajor(
+    arr[0], arr[1], arr[2], 0,
+    arr[3], arr[4], arr[5], 0,
+    arr[6], arr[7], arr[8], 0,
+    0, 0, 0, 1
+  );
+
+  return matrix4;
+}
 
 test('Quaternion#import', t => {
   t.equals(typeof Quaternion, 'function');
@@ -89,31 +102,45 @@ test('Quaternion#methods', t => {
 // });
 
 test('Quaternion.toEuler', t => {
-  const q = new Quaternion(0, 0, 0.7071067811865475, 0.7071067811865476);
-  const e = q.toEuler();
-  const pose = new Pose({ yaw: e.yaw, pitch: e.pitch, roll: e.roll });
-  const rMatrix = pose.getTransformationMatrix();
-
-  // result from https://www.wolframalpha.com/input/?i=quaternion:+0.7071067811865475+%2B+0.7071067811865475i
-  const expected = [
-    1.0e-16,
-    1,
-    -0,
-    0,
-    -1,
-    1.0e-16,
-    0,
-    0,
-    0,
-    0,
-    1,
-    0,
-    0,
-    0,
-    0,
-    1
+  const quaternions = [
+    new Quaternion(
+      -0.09229595564125728,
+      0.4304593345768794,
+      0.560985526796931,
+      0.7010573846499779
+    ),
+    new Quaternion(
+      -0.13640420781001386,
+      0.5381614474482503,
+      0.2687711688270994,
+      0.7871074941705494
+    )
   ];
 
-  t.ok(almostEqual(rMatrix, expected));
+  const eulers = quaternions.map(q => q.toEuler());
+
+  const rMatrices = eulers.map(e => {
+    const pose = new Pose({yaw: e.yaw, pitch: e.pitch, roll: e.roll});
+    return pose.getTransformationMatrix();
+  });
+
+  // result from https://www.wolframalpha.com/input/?i=quaternion:
+  const resultsFromWolframe = [
+    [
+      0.1e-14, -0.86602540378444, 0.50000000000000,
+      0.70710678118655, 0.35355339059327, 0.61237243569579,
+      -0.70710678118655, 0.35355339059327, 0.61237243569579
+    ],
+    [
+      0.27628863057544 , -0.56991857422771,  0.77385877998831,
+      0.27628863057544 , 0.81831190179808 , 0.50401411090402,
+      -0.92050485345244,  0.07455501408938,  0.38355229714425
+    ]
+  ];
+
+  const expected = resultsFromWolframe.map(result => extendToMatrix4(result));
+
+  t.ok(rMatrices.every((mat, i) => equals(mat, expected[i])));
+
   t.end();
 });

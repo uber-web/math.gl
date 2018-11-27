@@ -1,7 +1,5 @@
-import {_Euler as Euler} from 'math.gl';
+import {_Euler as Euler, equals} from 'math.gl';
 import test from 'tape-catch';
-
-import {almostEqual} from '../utils/tape-equals';
 
 test('Euler#import', t => {
   t.equals(typeof Euler, 'function');
@@ -14,9 +12,12 @@ test('Euler#construct and Array.isArray check', t => {
 });
 
 test('Euler.toQuaternion', t => {
-  const e = new Euler(0, 0, 90 / 180 * Math.PI, Euler.RollPitchYaw);
-  const q = e.toQuaternion();
-  t.ok(almostEqual(q.toEuler(), e));
+  const eulers = [
+    new Euler(30 / 180 * Math.PI, 45 / 180 * Math.PI, 90 / 180 * Math.PI, Euler.RollPitchYaw),
+    new Euler(11 / 180 * Math.PI, 67 / 180 * Math.PI, 45 / 180 * Math.PI, Euler.RollPitchYaw),
+  ];
+  const quaternions = eulers.map(e => e.toQuaternion());
+  t.ok(quaternions.every((q, i) => equals(q.toEuler(), eulers[i])));
   t.end();
 });
 
