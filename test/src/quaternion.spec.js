@@ -102,56 +102,52 @@ test('Quaternion#methods', t => {
 // });
 
 test('Quaternion.toEuler', t => {
-  const quaternions = [
-    new Quaternion(
+  // transformMatrix result from https://www.wolframalpha.com/input/?i=quaternion:
+  const testCases = [{
+    quaternion: new Quaternion(
       -0.49561769378289866,
       -0.5043442292812725,
       -0.5043442292812726,
       0.49561769378289866
     ),
-    new Quaternion(
+    transformMatrix: extendToMatrix4([
+      -0.017452406437283, 0.999847695156391, 10e-15,
+      10e-15, 10e-15, 1.00000000000000,
+      0.999847695156391, 0.017452406437283, 10e-15
+    ])
+  }, {
+    quaternion: new Quaternion(
       -0.09229595564125728,
       0.4304593345768794,
       0.560985526796931,
       0.7010573846499779
     ),
-    new Quaternion(
+    transformMatrix: extendToMatrix4([
+      0.1e-14, -0.86602540378444, 0.50000000000000,
+      0.70710678118655, 0.35355339059327, 0.61237243569579,
+      -0.70710678118655, 0.35355339059327, 0.61237243569579
+    ])
+  }, {
+    quaternion: new Quaternion(
       -0.13640420781001386,
       0.5381614474482503,
       0.2687711688270994,
       0.7871074941705494
-    )
-  ];
+    ),
+    transformMatrix: extendToMatrix4([
+      0.27628863057544, -0.56991857422771, 0.77385877998831,
+      0.27628863057544, 0.81831190179808, 0.50401411090402,
+      -0.92050485345244, 0.07455501408938, 0.38355229714425
+    ])
+  }];
 
-  const eulers = quaternions.map(q => q.toEuler());
-
-  const rMatrices = eulers.map(e => {
+  const eulers = testCases.map(t => t.quaternion.toEuler());
+  const results = eulers.map(e => {
     const pose = new Pose({yaw: e.yaw, pitch: e.pitch, roll: e.roll});
     return pose.getTransformationMatrix();
   });
 
-  // result from https://www.wolframalpha.com/input/?i=quaternion:
-  const resultsFromWolframe = [
-    [
-      -0.017452406437283, 0.999847695156391, 10e-15,
-      10e-15, 10e-15, 1.00000000000000,
-      0.999847695156391, 0.017452406437283, 10e-15
-    ],
-    [
-      0.1e-14, -0.86602540378444, 0.50000000000000,
-      0.70710678118655, 0.35355339059327, 0.61237243569579,
-      -0.70710678118655, 0.35355339059327, 0.61237243569579
-    ],
-    [
-      0.27628863057544, -0.56991857422771, 0.77385877998831,
-      0.27628863057544, 0.81831190179808, 0.50401411090402,
-      -0.92050485345244, 0.07455501408938, 0.38355229714425
-    ]
-  ];
-
-  const expected = resultsFromWolframe.map(result => extendToMatrix4(result));
-
-  t.ok(rMatrices.every((mat, i) => equals(mat, expected[i])));
+  t.ok(results.every((result, i) => equals(result, testCases[i].transformMatrix)));
 
   t.end();
 });
