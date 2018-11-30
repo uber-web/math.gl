@@ -26,21 +26,10 @@ import Vector3 from './vector3';
 // import Vector3, {validateVector3} from './vector3';
 // import assert from 'assert';
 
-// gl-matrix is too big. Cherry-pick individual imports from stack.gl version
-/* eslint-disable camelcase */
-import mat3_determinant from 'gl-mat3/determinant';
-import mat3_transpose from 'gl-mat3/transpose';
-import mat3_invert from 'gl-mat3/invert';
-import mat3_multiply from 'gl-mat3/multiply';
-// import mat3_rotateX from 'gl-mat3/rotateX';
-// import mat3_rotateY from 'gl-mat3/rotateY';
-// import mat3_rotateZ from 'gl-mat3/rotateZ';
-import mat3_rotate from 'gl-mat3/rotate';
-import mat3_scale from 'gl-mat3/scale';
-import mat3_translate from 'gl-mat3/translate';
-import vec2_transformMat4 from 'gl-vec2/transformMat4';
-import vec3_transformMat4 from 'gl-vec3/transformMat4';
-import vec4_transformMat4 from 'gl-vec4/transformMat4';
+import * as mat3 from 'gl-matrix/mat3';
+import * as vec2 from 'gl-matrix/vec2';
+import * as vec3 from 'gl-matrix/vec3';
+import * as vec4 from 'gl-matrix/vec4';
 
 const IDENTITY = [1, 0, 0, 0, 1, 0, 0, 0, 1];
 
@@ -110,9 +99,9 @@ export default class Matrix3 extends MathArray {
 
   // toString() {
   //   if (config.printRowMajor) {
-  //     mat3_str(this);
+  //     mat3.str(this);
   //   } else {
-  //     mat3_str(this);
+  //     mat3.str(this);
   //   }
   // }
 
@@ -121,7 +110,7 @@ export default class Matrix3 extends MathArray {
   // Accessors
 
   determinant() {
-    return mat3_determinant(this);
+    return mat3.determinant(this);
   }
 
   // Constructors
@@ -136,44 +125,44 @@ export default class Matrix3 extends MathArray {
   // Modifiers
 
   transpose() {
-    mat3_transpose(this, this);
+    mat3.transpose(this, this);
     return this.check();
   }
 
   invert() {
-    mat3_invert(this, this);
+    mat3.invert(this, this);
     return this.check();
   }
 
   // Operations
 
   multiplyLeft(a) {
-    mat3_multiply(this, a, this);
+    mat3.multiply(this, a, this);
     return this.check();
   }
 
   multiplyRight(a) {
-    mat3_multiply(this, this, a);
+    mat3.multiply(this, this, a);
     return this.check();
   }
 
   // Rotates a matrix by the given angle around the X axis
   // rotateX(radians) {
-  //   mat3_rotateX(this, this, radians);
+  //   mat3.rotateX(this, this, radians);
   //   this.check();
   //   return this;
   // }
 
   // Rotates a matrix by the given angle around the Y axis.
   // rotateY(radians) {
-  //   mat3_rotateY(this, this, radians);
+  //   mat3.rotateY(this, this, radians);
   //   this.check();
   //   return this;
   // }
 
   // Rotates a matrix by the given angle around the Z axis.
   // rotateZ(radians) {
-  //   mat3_rotateZ(this, this, radians);
+  //   mat3.rotateZ(this, this, radians);
   //   this.check();
   //   return this;
   // }
@@ -185,37 +174,37 @@ export default class Matrix3 extends MathArray {
   // }
 
   rotateAxis(radians, axis) {
-    mat3_rotate(this, this, radians, axis);
+    mat3.rotate(this, this, radians, axis);
     return this.check();
   }
 
   scale(vec) {
-    mat3_scale(this, this, vec);
+    mat3.scale(this, this, vec);
     return this.check();
   }
 
   translate(vec) {
-    mat3_translate(this, this, vec);
+    mat3.translate(this, this, vec);
     return this.check();
   }
 
   transformVector2(vector, out) {
     out = out || new Vector2();
-    vec2_transformMat4(out, vector, this);
+    vec2.transformMat4(out, vector, this);
     // assert(validateVector2(out));
     return out;
   }
 
   transformVector3(vector, out = new Vector3()) {
     out = out || new Vector3();
-    vec3_transformMat4(out, vector, this);
+    vec3.transformMat4(out, vector, this);
     // assert(validateVector3(out));
     return out;
   }
 
   // transformVector4(vector, out = new Vector4()) {
   //   out = out || new Vector4();
-  //   vec4_transformMat4(out, vector, this);
+  //   vec4.transformMat4(out, vector, this);
   //   assert(validateVector4(out));
   //   return out;
   // }
@@ -238,19 +227,19 @@ export default class Matrix3 extends MathArray {
   transformDirection(vector, out) {
     switch (vector.length) {
       case 2:
-        vec4_transformMat4(tempVector4, [vector[0], vector[1], 0, 0], this);
+        vec4.transformMat4(tempVector4, [vector[0], vector[1], 0, 0], this);
         out = out || new Vector2();
         [out[0], out[1]] = tempVector4;
         break;
       case 3:
-        vec4_transformMat4(tempVector4, [vector[0], vector[1], vector[2], 0], this);
+        vec4.transformMat4(tempVector4, [vector[0], vector[1], vector[2], 0], this);
         out = out || new Vector3();
         [out[0], out[1], out[2]] = tempVector4;
         break;
       // case 4:
       //   assert(vector[3] === 0);
       //   out = out || new Vector4();
-      //   vec4_transformMat4(out, vector, this);
+      //   vec4.transformMat4(out, vector, this);
       //   break;
       default:
         throw new Error('Illegal vector');
@@ -262,20 +251,20 @@ export default class Matrix3 extends MathArray {
   //   switch (vector.length) {
   //     case 2:
   //       out = out || new Vector2();
-  //       vec4_transformMat4(out, [vector[0], vector[1], 0, 1], this);
+  //       vec4.transformMat4(out, [vector[0], vector[1], 0, 1], this);
   //       out.length = 2;
   //       assert(validateVector2(out));
   //       break;
   //     case 3:
   //       out = out || new Vector3();
-  //       vec4_transformMat4(out, [vector[0], vector[1], vector[2], 1], this);
+  //       vec4.transformMat4(out, [vector[0], vector[1], vector[2], 1], this);
   //       out.length = 3;
   //       assert(validateVector3(out));
   //       break;
   //     case 4:
   //       assert(vector[3] !== 0);
   //       out = out || new Vector4();
-  //       vec4_transformMat4(out, vector, this);
+  //       vec4.transformMat4(out, vector, this);
   //       assert(validateVector4(out));
   //       break;
   //     default:

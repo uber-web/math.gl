@@ -3552,33 +3552,9 @@ github-username@^4.0.0:
   dependencies:
     gh-got "^6.0.0"
 
-gl-mat3@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/gl-mat3/-/gl-mat3-1.0.0.tgz#89633219ca429379a16b9185d95d41713453b912"
-
-gl-mat4@^1.1.4:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/gl-mat4/-/gl-mat4-1.2.0.tgz#49d8a7636b70aa00819216635f4a3fd3f4669b26"
-
-gl-quat@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/gl-quat/-/gl-quat-1.0.0.tgz#0945ec923386f45329be5dc357b1c8c2d47586c5"
-  dependencies:
-    gl-mat3 "^1.0.0"
-    gl-vec3 "^1.0.3"
-    gl-vec4 "^1.0.0"
-
-gl-vec2@^1.0.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/gl-vec2/-/gl-vec2-1.3.0.tgz#83d472ed46034de8e09cbc857123fb6c81c51199"
-
-gl-vec3@^1.0.3:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/gl-vec3/-/gl-vec3-1.1.3.tgz#a47c62f918774a06cbed1b65bcd0288ecbb03826"
-
-gl-vec4@^1.0.0, gl-vec4@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/gl-vec4/-/gl-vec4-1.0.1.tgz#97d96878281b14b532cbce101785dfd1cb340964"
+gl-matrix@^3.0.0-0:
+  version "3.0.0-0"
+  resolved "https://registry.yarnpkg.com/gl-matrix/-/gl-matrix-3.0.0-0.tgz#0add17f60a2b4929e48f2543d31072188d874969"
 
 glob-all@^3.1.0:
   version "3.1.0"

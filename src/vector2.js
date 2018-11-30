@@ -19,10 +19,7 @@
 // THE SOFTWARE.
 
 import Vector from './lib/vector';
-
-// gl-matrix is too big. Cherry-pick individual imports from stack.gl version
-/* eslint-disable camelcase */
-import vec2_cross from 'gl-vec2/cross';
+import * as vec2 from 'gl-matrix/vec2';
 
 export default class Vector2 extends Vector {
   // Creates a new, empty vec2
@@ -43,7 +40,7 @@ export default class Vector2 extends Vector {
   // x,y inherited from Vector
 
   cross(vector) {
-    vec2_cross(this, this, vector);
+    vec2.cross(this, this, vector);
     return this.check();
   }
 

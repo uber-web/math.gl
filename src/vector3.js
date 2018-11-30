@@ -21,13 +21,7 @@
 import Vector from './lib/vector';
 import {checkNumber} from './lib/common';
 
-// gl-matrix is too big. Cherry-pick individual imports from stack.gl version
-/* eslint-disable camelcase */
-import vec3_angle from 'gl-vec3/angle';
-import vec3_cross from 'gl-vec3/cross';
-import vec3_rotateX from 'gl-vec3/rotateX';
-import vec3_rotateY from 'gl-vec3/rotateY';
-import vec3_rotateZ from 'gl-vec3/rotateZ';
+import * as vec3 from 'gl-matrix/vec3';
 
 const ORIGIN = [0, 0, 0];
 
@@ -59,28 +53,28 @@ export default class Vector3 extends Vector {
   /* eslint-enable no-multi-spaces, brace-style, no-return-assign */
 
   angle(vector) {
-    return vec3_angle(this, vector);
+    return vec3.angle(this, vector);
   }
 
   // MODIFIERS
 
   cross(vector) {
-    vec3_cross(this, this, vector);
+    vec3.cross(this, this, vector);
     return this.check();
   }
 
   rotateX({radians, origin = ORIGIN}) {
-    vec3_rotateX(this, this, origin, radians);
+    vec3.rotateX(this, this, origin, radians);
     return this.check();
   }
 
   rotateY({radians, origin = ORIGIN}) {
-    vec3_rotateY(this, this, origin, radians);
+    vec3.rotateY(this, this, origin, radians);
     return this.check();
   }
 
   rotateZ({radians, origin = ORIGIN}) {
-    vec3_rotateZ(this, this, origin, radians);
+    vec3.rotateZ(this, this, origin, radians);
     return this.check();
   }
 

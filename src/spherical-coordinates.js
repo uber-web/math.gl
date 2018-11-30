@@ -23,9 +23,7 @@ import {formatValue, equals, config} from './lib/common';
 import {degrees, radians, clamp} from './lib/common';
 import Vector3 from './vector3';
 
-/* eslint-disable camelcase */
-import vec3_length from 'gl-vec3/length';
-// import assert from 'assert';
+import * as vec3 from 'gl-matrix/vec3';
 
 // TODO - import epsilon
 const EPSILON = 0.000001;
@@ -153,7 +151,7 @@ export default class SphericalCoordinates {
   }
 
   fromVector3(v) {
-    this.radius = vec3_length(v);
+    this.radius = vec3.length(v);
     if (this.radius === 0) {
       this.theta = 0;
       this.phi = 0;
