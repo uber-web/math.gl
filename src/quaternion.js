@@ -20,6 +20,7 @@
 
 import MathArray from './lib/math-array';
 import {checkNumber} from './lib/common';
+import Euler from './euler';
 
 import * as quat from 'gl-matrix/quat';
 
@@ -36,7 +37,8 @@ export function validateQuaternion(q) {
 }
 
 export default class Quaternion extends MathArray {
-  // Creates a new identity quat
+  // Creates a new identity quaternion
+  // w^2 + x^2 + y^2 + z^2 = 1
   constructor(x = 0, y = 0, z = 0, w = 1) {
     super();
     if (Array.isArray(x) && arguments.length === 1) {
@@ -70,30 +72,39 @@ export default class Quaternion extends MathArray {
   get ELEMENTS() {
     return 4;
   }
+
   get x() {
     return this[0];
   }
+
   set x(value) {
     return (this[0] = checkNumber(value));
   }
+
   get y() {
     return this[1];
   }
+
   set y(value) {
     return (this[1] = checkNumber(value));
   }
+
   get z() {
     return this[2];
   }
+
   set z(value) {
     return (this[2] = checkNumber(value));
   }
+
   get w() {
     return this[3];
   }
+
   set w(value) {
     return (this[3] = checkNumber(value));
   }
+
   /* eslint-enable no-multi-spaces, brace-style, no-return-assign */
 
   // Calculates the length of a quat
@@ -240,5 +251,24 @@ export default class Quaternion extends MathArray {
   slerp({start = IDENTITY_QUATERNION, target, ratio}) {
     quat.slerp(this, start, target, ratio);
     return this.check();
+  }
+
+  toEuler() {
+    const {w, x, y, z} = this;
+    const ysqr = y * y;
+    const t0 = -2.0 * (ysqr + z * z) + 1.0;
+    const t1 = +2.0 * (x * y + w * z);
+    let t2 = -2.0 * (x * z - w * y);
+    const t3 = +2.0 * (y * z + w * x);
+    const t4 = -2.0 * (x * x + ysqr) + 1.0;
+
+    t2 = t2 > 1.0 ? 1.0 : t2;
+    t2 = t2 < -1.0 ? -1.0 : t2;
+
+    const roll = Math.atan2(t3, t4);
+    const pitch = Math.asin(t2);
+    const yaw = Math.atan2(t1, t0);
+
+    return new Euler(roll, pitch, yaw, Euler.RollPitchYaw);
   }
 }
