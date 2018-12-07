@@ -201,7 +201,7 @@ export default class Quaternion extends MathArray {
     if (b !== undefined) {
       throw new Error('Quaternion.multiply only takes one argument');
     }
-    quat.multiply(this, this, b);
+    quat.multiply(this, this, a);
     return this.check();
   }
 
