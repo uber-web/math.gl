@@ -155,8 +155,8 @@ module.exports = env => {
     delete config.devtool;
   }
 
-  console.log('webpack env', JSON.stringify(env));
-  console.log('webpack config', JSON.stringify(config));
+  // console.log('webpack env', JSON.stringify(env));
+  // console.log('webpack config', JSON.stringify(config));
 
   return config;
 };
