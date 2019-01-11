@@ -11,12 +11,14 @@ version=$(jq '.version' ./package.json | awk '{ gsub(/"/,"",$1); printf "%-14s",
 # Helper functions
 
 print_size_header() {
-  echo "| Version        | Dist | Bundle Size        | Compressed     |"
-  echo "| ---            | ---  | ---                | ---            |"
+  echo "| Version        | Dist | Bundle Size      | Compressed     | Imports   |"
+  echo "| ---            | ---  | ---              | ---            | ---       |"
 }
 
 print_size() {
   DIST=$1
+  EXAMPLE=$2
+
   # Size it
   size=$(wc -c /tmp/bundle.js | awk '{ print int($1 / 1024) "KB (" $1 ")" }')
   # Zip it
@@ -27,13 +29,19 @@ print_size() {
   rm /tmp/bundle.js.gz
   # Print version, size, compressed size with markdown
 
-  echo "| $version | $DIST  | $size KB  | $zipsize KB     |"
+  echo "| $version | $DIST  | $size KB  | $zipsize KB     | $EXAMPLE "
 }
 
 build_bundle() {
-  ENV=$1
-  NODE_ENV=production webpack --config test/webpack.config.js --hide-modules --env.import-vec4-mat4 --env.bundle --env.$ENV > /dev/null
+  DIST=$1
+  EXAMPLE=$2
+  NODE_ENV=production webpack --config test/webpack.config.js --hide-modules --env.$EXAMPLE --env.bundle --env.$DIST > /dev/null
   cp dist/bundle.js /tmp/bundle.js
+}
+
+print_bundle_size() {
+  build_bundle $1 $2
+  print_size $1 $2
 }
 
 # Main Script
@@ -44,14 +52,17 @@ echo
 
 print_size_header
 
-build_bundle es6
-print_size ES6
+print_bundle_size es6 nothing
+print_bundle_size es6 vector2
+print_bundle_size es6 vector3
+print_bundle_size es6 vector4
+print_bundle_size es6 matrix4
+print_bundle_size es6 quaternion
+print_bundle_size es6 euler
 
-build_bundle esm
-print_size ESM
-
-build_bundle es5
-print_size ES5
+print_bundle_size es6 all
+print_bundle_size esm all
+print_bundle_size es5 all
 
 # Disable bold terminal font
 echo "\033[0m"

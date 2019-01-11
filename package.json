@@ -42,19 +42,16 @@
     "pretty": "prettier --write \"{src,examples,test}/**/*.js\" --loglevel warn",
     "publish-prod": "npm run build && npm run test && npm run test-dist && npm publish",
     "publish-beta": "npm run build && npm run test && npm run test-dist && npm publish --tag beta",
-    "test": "npm run lint && npm run test-node && ./scripts/build.sh && npm run test-dist",
-    "test-fast": "npm run test-node | faucet",
+    "test": "npm run lint && npm run tester node && ./scripts/build.sh && npm run tester dist",
+    "tester": "node test/start.js",
     "test-cover": "NODE_ENV=test tape -r babel-register test/node.js && nyc report",
-    "test-node": "node test/node.js",
-    "test-dist": "node test/node-dist.js",
     "test-browser": "webpack-dev-server --config test/webpack.config.js --env.test --progress --hot --open",
-    "test-bundle-size": "./scripts/build.sh && webpack --config test/webpack.config.js --env.analyze --env.import-nothing --env.es6",
-    "bench": "node test/bench/node.js",
-    "bench-browser": "webpack-dev-server --config test/webpack.config.js --env.bench --progress --hot --open"
+    "test-size": "./scripts/build.sh && webpack --config test/webpack.config.js --env.analyze --env.import-nothing --env.es6"
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "gl-matrix": "^3.0.0-0"
+    "gl-matrix": "^3.0.0-0",
+    "puppeteer": "^1.11.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0",
@@ -76,15 +73,16 @@
     "nyc": "^10.2.0",
     "pre-commit": "^1.2.2",
     "prettier": "^1.11.1",
+    "probe.gl": "^2.0.1",
     "reify": "^0.4.4",
     "source-map-loader": "^0.2.3",
     "tap-browser-color": "^0.1.2",
-    "tape": "^4.5.1",
+    "tape": "^4.9.2",
     "tape-catch": "^1.0.4",
-    "webpack": "^4.3.0",
-    "webpack-bundle-analyzer": "^2.11.1",
-    "webpack-cli": "^2.0.13",
-    "webpack-dev-server": "^3.1.1"
+    "webpack": "^4.28.4",
+    "webpack-bundle-analyzer": "^3.0.3",
+    "webpack-cli": "^3.2.1",
+    "webpack-dev-server": "^3.1.14"
   },
   "nyc": {
     "sourceMap": false,
@@ -93,8 +91,7 @@
       "src/**/*.js"
     ],
     "exclude": [
-      "test/**/*.js",
-      "src/layers/deprecated"
+      "test/**/*.js"
     ]
   }
 }
