@@ -21,22 +21,29 @@
 /* eslint-disable no-console, no-invalid-this */
 import {Bench} from 'probe.gl/bench';
 
-// import {Vector3, Matrix4} from 'deck.gl';
+import {Vector3, Matrix4} from 'math.gl';
 // import * as vec3 from 'gl-matrix/vec3';
 // import * as mat4 from 'gl-matrix/mat4';
 
 const suite = new Bench()
 
-// // add tests
-// .add('color#parseColor (string)', () => {
-//   return parseColor(COLOR_STRING);
-// })
-// .add('color#parseColor (3 element array)', () => {
-//   return parseColor(COLOR_ARRAY);
-// })
+// add tests
+.group('Object construction')
+.add('[0, 0, 0]#create', () => {
+  return [0, 0, 0];
+})
+.add('Vector3#new', () => {
+  return new Vector3();
+})
+.add('[matrix4]#create', () => {
+  return [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1];
+})
+.add('Matrix4#new', () => {
+  return new Matrix4();
+})
 
-// // Calibrate performance
-// .calibrate()
+// Calibrate performance
+.calibrate()
 
-// // Run tests
+// Run tests
 suite.run();

@@ -124,8 +124,18 @@ module.exports = env => {
     config = BENCH_CONFIG;
     break;
 
+  case 'benchBrowser':
+    config = BENCH_CONFIG;
+    config = Object.assign(config, {
+      plugins: [new HtmlWebpackPlugin()]
+    });
+    break;
+
+  case 'testBrowser':
+  case 'browser':
   case 'test':
-    config = Object.assign({}, TEST_CONFIG, {
+    config = TEST_CONFIG;
+    config = Object.assign({
       plugins: [new HtmlWebpackPlugin()]
     });
     break;
