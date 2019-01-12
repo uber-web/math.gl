@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v2.3.0 - Jan 11, 2018
+
+- Quaternion multiplication: b would be undefined (#35)
+- Support quaternion to euler conversion (#31)
+- Migrate to original gl-matrix package (#34)
+
 ## v2.2.0 - Sep 20, 2018 
 
 - Use `@babel/runtime`

@@ -2,7 +2,7 @@
   "name": "math.gl",
   "description": "Array-based 3D Math Classes optimized for WebGL applications",
   "license": "MIT",
-  "version": "2.2.0",
+  "version": "2.3.0-beta.1",
   "keywords": [
     "webgl",
     "javascript",
@@ -40,8 +40,8 @@
     "lint": "eslint src test examples && npm run lint-yarn",
     "lint-yarn": "!(grep -q unpm.u yarn.lock) || (echo 'Please rebuild yarn file using public npmrc' && false)",
     "pretty": "prettier --write \"{src,examples,test}/**/*.js\" --loglevel warn",
-    "publish-prod": "npm run build && npm run test && npm run test-dist && npm publish",
-    "publish-beta": "npm run build && npm run test && npm run test-dist && npm publish --tag beta",
+    "publish-prod": "npm run build && npm run test && npm run tester dist && npm publish",
+    "publish-beta": "npm run build && npm run test && npm run tester dist && npm publish --tag beta",
     "test": "npm run lint && npm run tester node && ./scripts/build.sh && npm run tester dist",
     "tester": "node test/start.js",
     "test-cover": "NODE_ENV=test tape -r babel-register test/node.js && nyc report",
@@ -50,7 +50,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.0.0",
-    "gl-matrix": "^3.0.0-0",
+    "gl-matrix": "^3.0.0",
     "puppeteer": "^1.11.0"
   },
   "devDependencies": {
