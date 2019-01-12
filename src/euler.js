@@ -128,6 +128,10 @@ export default class Euler extends MathArray {
     return new Euler(roll, pitch, yaw, Euler.RollPitchYaw);
   }
 
+  // fromQuaternion(q, order) {
+  //   this._fromRotationMatrix(Matrix4.fromQuaternion(q), order);
+  //   return this.check();
+  // }
 
   // If copied array does contain fourth element, preserves currently set order
   copy(array) {
@@ -313,11 +317,6 @@ export default class Euler extends MathArray {
   // Common ZYX rotation order
   fromRollPitchYaw(roll, pitch, yaw) {
     return this.set(roll, pitch, yaw, Euler.ZYX);
-  }
-
-  fromQuaternion(q, order) {
-    this._fromRotationMatrix(Matrix4.fromQuaternion(q), order);
-    return this.check();
   }
 
   fromRotationMatrix(m, order = Euler.DefaultOrder) {

@@ -13,7 +13,7 @@ test('Euler#construct and Array.isArray check', t => {
   t.end();
 });
 
-test('Euler.toQuaternion', t => {
+test('Euler#toQuaternion', t => {
   const eulers = [
     new Euler(
       90 * DEGREE_TO_RADIANS,
@@ -35,6 +35,6 @@ test('Euler.toQuaternion', t => {
     )
   ];
   const quaternions = eulers.map(e => e.toQuaternion());
-  t.ok(quaternions.every((q, i) => equals(q.toEuler(), eulers[i])));
+  t.ok(quaternions.every((q, i) => equals(new Euler().fromQuaternion(q), eulers[i])));
   t.end();
 });
