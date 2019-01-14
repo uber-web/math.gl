@@ -51,6 +51,7 @@
     "gl-matrix": "^3.0.0"
   },
   "devDependencies": {
+    "npx": "^10.2.0",
     "ocular-dev-tools": "0.0.4",
     "reify": "^0.18.1"
   },
