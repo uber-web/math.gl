@@ -28,8 +28,7 @@ export default class Polygon {
   forEachSegment(visitor) {
     const length = this.points.length;
     for (let i = 0; i < length - 1; i++) {
-      visitor(this.points[i], this.points[i + 1], i, i + 1)
-
+      visitor(this.points[i], this.points[i + 1], i, i + 1);
     }
     if (this.isPolygon && !this.isClosed()) {
       // Call function with points and indices

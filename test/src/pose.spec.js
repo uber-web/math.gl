@@ -2,7 +2,8 @@ import test from 'tape-catch';
 import {Matrix4, Vector3, equals} from 'math.gl';
 import {_Euler as Euler, _Pose as Pose} from 'math.gl';
 
-const MATRIX_TEST_CASES = [{
+const MATRIX_TEST_CASES = [
+  {
     TRANSFORM_A_TO_B: {
       yaw: -0.000463243417219643,
       pitch: 0.0015741593198474598,
@@ -105,7 +106,7 @@ test('Pose#getPosition, getOrientation', t => {
 });
 
 test('Pose#transformationMatrix', t => {
-  MATRIX_TEST_CASES.forEach((testCase) => {
+  MATRIX_TEST_CASES.forEach(testCase => {
     const poseAToB = new Pose(testCase.TRANSFORM_A_TO_B);
     const poseBToA = new Pose(testCase.TRANSFORM_B_TO_A);
 
@@ -120,7 +121,7 @@ test('Pose#transformationMatrix', t => {
 });
 
 test('Pose#getTransformationMatrixFromPose, getTransformationMatrixToPose', t => {
-  MATRIX_TEST_CASES.forEach((testCase) => {
+  MATRIX_TEST_CASES.forEach(testCase => {
     const poseA = new Pose(testCase.TRANSFORM_A_TO_B);
     const poseB = new Pose(testCase.TRANSFORM_B_TO_A);
 

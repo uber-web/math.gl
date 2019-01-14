@@ -22,7 +22,6 @@ import Vector3 from './vector3';
 import Euler from './euler';
 
 export default class Pose {
-
   /**
    * A pose contains both rotation and rotations.
    * Note that every single pose defines its own coordinate system
@@ -45,18 +44,42 @@ export default class Pose {
   }
 
   /* eslint-disable no-multi-spaces, brace-style, no-return-assign */
-  get x()      { return this.position.x; }
-  set x(value) { return this.position.x = value; }
-  get y()      { return this.position.y; }
-  set y(value) { return this.position.y = value; }
-  get z()      { return this.position.z; }
-  set z(value) { return this.position.z = value; }
-  get roll()       { return this.orientation.roll; }
-  set roll(value)  { return this.orientation.roll = value; }
-  get pitch()      { return this.orientation.pitch; }
-  set pitch(value) { return this.orientation.pitch = value; }
-  get yaw()        { return this.orientation.yaw; }
-  set yaw(value)   { return this.orientation.yaw = value; }
+  get x() {
+    return this.position.x;
+  }
+  set x(value) {
+    return (this.position.x = value);
+  }
+  get y() {
+    return this.position.y;
+  }
+  set y(value) {
+    return (this.position.y = value);
+  }
+  get z() {
+    return this.position.z;
+  }
+  set z(value) {
+    return (this.position.z = value);
+  }
+  get roll() {
+    return this.orientation.roll;
+  }
+  set roll(value) {
+    return (this.orientation.roll = value);
+  }
+  get pitch() {
+    return this.orientation.pitch;
+  }
+  set pitch(value) {
+    return (this.orientation.pitch = value);
+  }
+  get yaw() {
+    return this.orientation.yaw;
+  }
+  set yaw(value) {
+    return (this.orientation.yaw = value);
+  }
   /* eslint-enable no-multi-spaces, brace-style, no-return-assign */
 
   getPosition() {
@@ -78,7 +101,9 @@ export default class Pose {
     if (!pose) {
       return false;
     }
-    return this.position.exactEquals(pose.position) && this.orientation.exactEquals(pose.orientation);
+    return (
+      this.position.exactEquals(pose.position) && this.orientation.exactEquals(pose.orientation)
+    );
   }
 
   /*
@@ -99,20 +124,20 @@ export default class Pose {
     const cw = Math.cos(this.yaw);
 
     const matrix = new Matrix4().setRowMajor(
-      cw * cp,                  // 0,0
-      -sw * cr + cw * sp * sr,  // 0,1
-      sw * sr + cw * sp * cr,   // 0,2
-      this.x,                   // 0,3
+      cw * cp, // 0,0
+      -sw * cr + cw * sp * sr, // 0,1
+      sw * sr + cw * sp * cr, // 0,2
+      this.x, // 0,3
 
-      sw * cp,                  // 1,0
-      cw * cr + sw * sp * sr,   // 1,1
-      -cw * sr + sw * sp * cr,  // 1,2
-      this.y,                   // 1,3
+      sw * cp, // 1,0
+      cw * cr + sw * sp * sr, // 1,1
+      -cw * sr + sw * sp * cr, // 1,2
+      this.y, // 1,3
 
-      -sp,                      // 2,0
-      cp * sr,                  // 2,1
-      cp * cr,                  // 2,2
-      this.z,                   // 2,3
+      -sp, // 2,0
+      cp * sr, // 2,1
+      cp * cr, // 2,2
+      this.z, // 2,3
 
       0,
       0,
@@ -147,5 +172,4 @@ export default class Pose {
       .multiplyRight(pose.getTransformationMatrix())
       .multiplyRight(this.getTransformationMatrix().invert());
   }
-
 }

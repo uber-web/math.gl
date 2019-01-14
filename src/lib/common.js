@@ -95,12 +95,12 @@ function map(value, func) {
 //
 
 export function radians(degrees) {
-  return map(degrees, degrees => degrees / 180 * Math.PI);
+  return map(degrees, degrees => (degrees / 180) * Math.PI);
 }
 
 // GLSL equivalent: Works on single values and vectors
 export function degrees(radians) {
-  return map(radians, radians => radians * 180 / Math.PI);
+  return map(radians, radians => (radians * 180) / Math.PI);
 }
 
 // GLSL equivalent: Works on single values and vectors

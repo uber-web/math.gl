@@ -18,6 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+const {callExposedFunction} = require('probe.gl/test-utils');
+
 /* eslint-disable */
 (function() {
   const old = console.log;
@@ -33,3 +35,5 @@
 })();
 
 require('./index');
+
+callExposedFunction('testDone', {success: true});

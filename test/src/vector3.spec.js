@@ -24,7 +24,6 @@ import {tapeEquals} from 'math.gl/test/utils/tape-equals';
 
 import {Vector3} from 'math.gl';
 
-
 test('Vector3#import', t => {
   t.equals(typeof Vector3, 'function');
   t.end();

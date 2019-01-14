@@ -61,12 +61,19 @@ test('Polygon#methods', t => {
   for (const tc of TEST_CASES) {
     const polygon = new Polygon(tc.polygon);
     t.ok(polygon, `${tc.title}: Created polygon`);
-    tapeEquals(t, polygon.getSignedArea(), tc.area * tc.sign,
-      `${tc.title}: getSignedArea() returned expected result`);
-    tapeEquals(t, polygon.getArea(), tc.area,
-      `${tc.title}: getArea() returned expected result`);
-    tapeEquals(t, polygon.getWindingDirection(), tc.sign,
-      `${tc.title}: getWindingDirection() returned expected result`);
+    tapeEquals(
+      t,
+      polygon.getSignedArea(),
+      tc.area * tc.sign,
+      `${tc.title}: getSignedArea() returned expected result`
+    );
+    tapeEquals(t, polygon.getArea(), tc.area, `${tc.title}: getArea() returned expected result`);
+    tapeEquals(
+      t,
+      polygon.getWindingDirection(),
+      tc.sign,
+      `${tc.title}: getWindingDirection() returned expected result`
+    );
   }
 
   configure({EPSILON: 1e-12});

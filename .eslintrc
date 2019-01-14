@@ -1,12 +1,6 @@
 {
   "extends": [
-    "eslint-config-uber-es2015",
-    "prettier",
-  ],
-  "rules": {
-    "guard-for-in": 0,
-    "no-inline-comments": 0,
-    "camelcase": 0
-  }
+    "./node_modules/ocular-dev-tools/templates/.eslintrc"
+  ]
 }
 

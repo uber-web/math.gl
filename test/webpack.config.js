@@ -18,156 +18,17 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-const {resolve} = require('path');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+// NOTE: Webpack is used to bundle tests for running in browser, not to bundle the dist libraries
+const getWebpackConfigFromEnv = require('ocular-dev-tools/config/webpack.config.js');
 
-// const webpack = require('webpack');
-
-const ALIASES = require(resolve(__dirname, '../aliases'));
-
-const COMMON_CONFIG = {
-  mode: 'development',
-
-  stats: {
-    warnings: false
-  },
-
-  module: {
-    rules: []
-  },
-
-  plugins: [],
-
-  node: {
-    fs: 'empty'
-  }
-};
-
-const TEST_CONFIG = Object.assign({}, COMMON_CONFIG, {
-  devServer: {
-    stats: {
-      warnings: false
-    },
-    quiet: true
-  },
-
-  // Bundle the tests for running in the browser
-  entry: {
-    'test-browser': resolve('./test/browser.js')
-  },
-
-  // Generate a bundle in dist folder
-  output: {
-    path: resolve('./dist'),
-    filename: 'bundle.js'
-  },
-
-  devtool: '#source-maps',
-
-  module: {
-    rules: [
-      {
-        // Unfortunately, webpack doesn't import library sourcemaps on its own...
-        test: /\.js$/,
-        use: ['source-map-loader'],
-        enforce: 'pre'
-      }
-    ]
-  },
-
-  resolve: {
-    alias: Object.assign({}, ALIASES)
-  }
-});
-
-const SIZE_ESM_CONFIG = Object.assign({}, TEST_CONFIG, {
-  resolve: {
-    alias: Object.assign({}, ALIASES, {
-      'math.gl': resolve(__dirname, '../dist/esm')
-    })
-  }
-});
-
-const SIZE_ES6_CONFIG = Object.assign({}, TEST_CONFIG, {
-  resolve: {
-    alias: Object.assign({}, ALIASES, {
-      'math.gl': resolve(__dirname, '../dist/es6')
-    })
-  }
-});
-
-const BENCH_CONFIG = Object.assign({}, TEST_CONFIG, {
-  entry: {
-    'test-browser': resolve('./test/bench/browser.js')
-  }
-});
-
-// Replace the entry point for webpack-dev-server
-
-BENCH_CONFIG.module.noParse = [/benchmark/];
-
-function getFirstKey(object) {
-  for (const key in object) {
-    return key;
-  }
-  return null;
-}
+const getAliases = require('../aliases');
 
 module.exports = env => {
-  env = env || {};
-
-  let config = COMMON_CONFIG;
-  const key = getFirstKey(env);
-  switch (key) {
-  case 'bench':
-    config = BENCH_CONFIG;
-    break;
-
-  case 'benchBrowser':
-    config = BENCH_CONFIG;
-    config = Object.assign(config, {
-      plugins: [new HtmlWebpackPlugin()]
-    });
-    break;
-
-  case 'testBrowser':
-  case 'browser':
-  case 'test':
-    config = TEST_CONFIG;
-    config = Object.assign({
-      plugins: [new HtmlWebpackPlugin()]
-    });
-    break;
-
-  case 'analyze':
-    config = Object.assign({}, SIZE_ES6_CONFIG, {
-      mode: 'production',
-
-      // Replace the entry point for webpack-dev-server
-      entry: {
-        'test-browser': resolve(__dirname, './size/import-vec4-mat4.js')
-      },
-      plugins: [new BundleAnalyzerPlugin()]
-    });
-    delete config.devtool;
-    break;
-
-  default:
-    config = Object.assign({}, env.es6 ? SIZE_ES6_CONFIG : SIZE_ESM_CONFIG, {
-      mode: 'production',
-
-      // Replace the entry point for webpack-dev-server
-      entry: {
-        'test-browser': resolve(__dirname, './size', `${key}.js`)
-      }
-    });
-    delete config.devtool;
-  }
-
+  const config = getWebpackConfigFromEnv(env, {
+    rootDir: `${__dirname}/..`,
+    getAliases
+  });
   // console.log('webpack env', JSON.stringify(env));
-  // console.log('webpack config', JSON.stringify(config));
-
+  // console.log('webpack config', JSON.stringify(config, null, 2));
   return config;
 };
-
