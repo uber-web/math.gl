@@ -52,7 +52,7 @@
   },
   "devDependencies": {
     "npx": "^10.2.0",
-    "ocular-dev-tools": "0.0.4",
+    "ocular-dev-tools": "0.0.5",
     "reify": "^0.18.1"
   },
   "nyc": {

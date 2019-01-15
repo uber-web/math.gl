@@ -16,6 +16,7 @@ const arg = process.argv.length >= 4 ? process.argv[3] : 'default';
 console.log(`Running test suite in "${mode}" mode...`); // eslint-disable-line
 
 switch (mode) {
+  case 'ci':
   case 'src':
   case 'node':
   case 'fast':
