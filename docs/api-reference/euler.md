@@ -59,6 +59,23 @@ rotation order in all notations
  * Number|Number[], Number, Number, Number
 
 
+### fromRollPitchYaw
+
+Common ZYX rotation order
+
+`euler.fromRollPitchYaw(roll, pitch, yaw)`
+
+
+### fromRotationMatrix
+
+`euler.fromRotationMatrix(m, order = Euler.DefaultOrder)`
+
+
+### fromQuaternion
+
+`euler.fromQuaternion(q, order)`
+
+
 ### copy
 
 If copied array does contain fourth element, preserves currently set order.
@@ -100,23 +117,6 @@ Copies the orientation element
 ### fromArray
 
 `euler.fromArray(array, offset = 0)`
-
-
-### fromRollPitchYaw
-
-Common ZYX rotation order
-
-`euler.fromRollPitchYaw(roll, pitch, yaw)`
-
-
-### fromQuaternion
-
-`euler.fromQuaternion(q, order)`
-
-
-### fromRotationMatrix
-
-`euler.fromRotationMatrix(m, order = Euler.DefaultOrder)`
 
 
 ### getRotationMatrix

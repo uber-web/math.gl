@@ -110,7 +110,7 @@ export default class Euler extends MathArray {
   }
 
   fromQuaternion(quaternion) {
-    const [w, x, y, z] = quaternion;
+    const [x, y, z, w] = quaternion;
     const ysqr = y * y;
     const t0 = -2.0 * (ysqr + z * z) + 1.0;
     const t1 = +2.0 * (x * y + w * z);

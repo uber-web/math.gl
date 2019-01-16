@@ -21,22 +21,9 @@
 /* eslint-disable max-statements */
 import {Matrix4, Vector3, config} from 'math.gl';
 import test from 'tape-catch';
+import {tapeEquals} from '../utils/tape-equals';
 
 config.EPSILON = 1e-6;
-
-// FOR TAPE TESTING
-// Use tape assert to compares using a.equals(b)
-// Usage test(..., t => { tapeEquals(t, a, b, ...); });
-export function tapeEquals(t, a, b, msg, extra) {
-  /* eslint-disable no-invalid-this */
-  t._assert(a.equals(b), {
-    message: msg || 'should be equal',
-    operator: 'equal',
-    actual: a,
-    expected: b,
-    extra
-  });
-}
 
 const IDENTITY_MATRIX = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
 
