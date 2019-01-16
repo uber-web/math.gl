@@ -33,6 +33,7 @@ import * as vec4 from 'gl-matrix/vec4';
 
 const IDENTITY = [1, 0, 0, 0, 1, 0, 0, 0, 1];
 
+// eslint-disable-next-line complexity
 export function validateMatrix3(m) {
   return (
     m.length === 16 &&

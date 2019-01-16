@@ -27,23 +27,23 @@ import {Vector3, Matrix4} from 'math.gl';
 
 const suite = new Bench()
 
-// add tests
-.group('Object construction')
-.add('[0, 0, 0]#create', () => {
-  return [0, 0, 0];
-})
-.add('Vector3#new', () => {
-  return new Vector3();
-})
-.add('[matrix4]#create', () => {
-  return [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1];
-})
-.add('Matrix4#new', () => {
-  return new Matrix4();
-})
+  // add tests
+  .group('Object construction')
+  .add('[0, 0, 0]#create', () => {
+    return [0, 0, 0];
+  })
+  .add('Vector3#new', () => {
+    return new Vector3();
+  })
+  .add('[matrix4]#create', () => {
+    return [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1];
+  })
+  .add('Matrix4#new', () => {
+    return new Matrix4();
+  })
 
-// Calibrate performance
-.calibrate()
+  // Calibrate performance
+  .calibrate();
 
 // Run tests
 suite.run();

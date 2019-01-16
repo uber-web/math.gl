@@ -31,6 +31,7 @@ import * as vec4 from 'gl-matrix/vec4';
 
 const IDENTITY = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
 
+// eslint-disable-next-line complexity
 export function validateMatrix4(m) {
   return (
     m.length === 16 &&
@@ -77,10 +78,22 @@ export default class Matrix4 extends MathArray {
   /* eslint-disable max-params */
   // accepts row major order, stores as column major
   setRowMajor(
-    m00 = 1, m01 = 0, m02 = 0, m03 = 0,
-    m10 = 0, m11 = 1, m12 = 0, m13 = 0,
-    m20 = 0, m21 = 0, m22 = 1, m23 = 0,
-    m30 = 0, m31 = 0, m32 = 0, m33 = 1
+    m00 = 1,
+    m01 = 0,
+    m02 = 0,
+    m03 = 0,
+    m10 = 0,
+    m11 = 1,
+    m12 = 0,
+    m13 = 0,
+    m20 = 0,
+    m21 = 0,
+    m22 = 1,
+    m23 = 0,
+    m30 = 0,
+    m31 = 0,
+    m32 = 0,
+    m33 = 1
   ) {
     this[0] = m00;
     this[1] = m10;
@@ -103,10 +116,22 @@ export default class Matrix4 extends MathArray {
 
   // accepts column major order, stores in column major order
   setColumnMajor(
-    m00 = 1, m10 = 0, m20 = 0, m30 = 0,
-    m01 = 0, m11 = 1, m21 = 0, m31 = 0,
-    m02 = 0, m12 = 0, m22 = 1, m32 = 0,
-    m03 = 0, m13 = 0, m23 = 0, m33 = 1
+    m00 = 1,
+    m10 = 0,
+    m20 = 0,
+    m30 = 0,
+    m01 = 0,
+    m11 = 1,
+    m21 = 0,
+    m31 = 0,
+    m02 = 0,
+    m12 = 0,
+    m22 = 1,
+    m32 = 0,
+    m03 = 0,
+    m13 = 0,
+    m23 = 0,
+    m33 = 1
   ) {
     this[0] = m00;
     this[1] = m10;
@@ -223,7 +248,13 @@ export default class Matrix4 extends MathArray {
   // focalDistance distance in the view frustum used for extent calculations
   // near  number  Near bound of the frustum
   // far number  Far bound of the frustum
-  orthographic({fovy = 45 * Math.PI / 180, aspect = 1, focalDistance = 1, near = 0.1, far = 500}) {
+  orthographic({
+    fovy = (45 * Math.PI) / 180,
+    aspect = 1,
+    focalDistance = 1,
+    near = 0.1,
+    far = 500
+  }) {
     if (fovy > Math.PI * 2) {
       throw Error('radians');
     }
@@ -248,7 +279,7 @@ export default class Matrix4 extends MathArray {
   // far number  Far bound of the frustum
   perspective({
     fovy,
-    fov = 45 * Math.PI / 180, // DEPRECATED
+    fov = (45 * Math.PI) / 180, // DEPRECATED
     aspect = 1,
     near = 0.1,
     far = 500
@@ -392,7 +423,7 @@ export default class Matrix4 extends MathArray {
         break;
       case 4:
         if (Boolean(w) !== Boolean(vector[3])) {
-          throw new Error('math.gl: Matrix4.transformPoint - invalid vector')
+          throw new Error('math.gl: Matrix4.transformPoint - invalid vector');
         }
         out = out || new Vector4();
         // out = out || [0, 0, 0, 0];

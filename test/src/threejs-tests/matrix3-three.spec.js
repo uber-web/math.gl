@@ -350,8 +350,7 @@ test('Matrix3#setUvTransform', assert => {
     params.centerY
   );
 
-  b
-    .identity()
+  b.identity()
     .translate(-params.centerX, -params.centerY)
     .rotate(params.rotation)
     .scale(params.repeatX, params.repeatY)

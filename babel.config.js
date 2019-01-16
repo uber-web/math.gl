@@ -1,58 +1,15 @@
-const TARGETS = {
-  chrome: '60',
-  edge: '15',
-  firefox: '53',
-  ios: '10.3',
-  safari: '10.1',
-  node: '8'
-};
+const config = require('ocular-dev-tools/config/babel.config.js');
 
-module.exports = {
-  comments: false,
-  env: {
-    es5: {
-      presets: [
-        [ '@babel/env', {
-          forceAllTransforms: true,
-          modules: 'commonjs'
-        }]
-      ],
-      plugins: [
-        ['transform-builtin-extend', {globals: ['Array']}],
-        '@babel/transform-runtime',
-        'version-inline'
-      ]
-    },
-    esm: {
-      presets: [
-        [ '@babel/env', {
-          forceAllTransforms: true,
-          modules: false
-        }]
-      ],
-      plugins: [
-        ['transform-builtin-extend', {globals: ['Array']}],
-        ['@babel/transform-runtime', {useESModules: true}],
-        'version-inline'
-      ]
-    },
-    es6: {
-      presets: [
-        [ '@babel/env', {
-          targets: TARGETS,
-          modules: false
-        }]
-      ],
-      plugins: [
-        ['transform-builtin-extend', {globals: ['Array']}],
-        ['@babel/transform-runtime', {useESModules: true}],
-        'version-inline'
-      ]
-    },
-    test: {
-      plugins: [
-        'istanbul'
-      ]
-    }
-  }
-};
+
+const DISTS = ['es5', 'esm', 'es6'];
+const PLUGIN = ['transform-builtin-extend', {globals: ['Array']}];
+
+DISTS.forEach(distName => {
+  const dist = config.env[distName];
+  dist.plugins = dist.plugins || [];
+
+  // Push repo-specific plugin to front of list
+  dist.plugins.unshift(PLUGIN);
+});
+
+module.exports = config;

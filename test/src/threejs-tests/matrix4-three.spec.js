@@ -564,14 +564,22 @@ test('Matrix4#compose/decompose', assert => {
         var s = sValues[si];
         var r = rValues[ri];
 
-        var m = new Matrix4().compose(t, r, s);
+        var m = new Matrix4().compose(
+          t,
+          r,
+          s
+        );
         var t2 = new Vector3();
         var r2 = new Quaternion();
         var s2 = new Vector3();
 
         m.decompose(t2, r2, s2);
 
-        var m2 = new Matrix4().compose(t2, r2, s2);
+        var m2 = new Matrix4().compose(
+          t2,
+          r2,
+          s2
+        );
 
         /*
 				// debug code

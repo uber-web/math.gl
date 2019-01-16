@@ -29,9 +29,9 @@ export const UNIFORMS = {
   uView: new Matrix4().lookAt({
     center: [0, 0, 0],
     eye: [
-      Math.cos(0.005) * SIDE / 2,
-      Math.sin(0.006) * SIDE / 2,
-      (Math.sin(0.0035) + 1) * SIDE / 4 + 32
+      (Math.cos(0.005) * SIDE) / 2,
+      (Math.sin(0.006) * SIDE) / 2,
+      ((Math.sin(0.0035) + 1) * SIDE) / 4 + 32
     ]
   }),
   uProjection: new Matrix4().perspective({fov: radians(60), aspect: 0.75, near: 1, far: 2048.0})

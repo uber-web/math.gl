@@ -20,16 +20,19 @@
 
 const path = require('path');
 
-const ALIASES = {
-  'math.gl/test': path.resolve(__dirname, './test'),
-  'math.gl': path.resolve(__dirname, './src')
-};
+function getAliases(dist = 'src') {
+  return {
+	'math.gl/test': path.resolve(__dirname, './test'),
+    'math.gl': path.resolve(__dirname, `./${dist}`)
+  };
+}
 
 if (module.require) {
   // Enables ES2015 import/export in Node.js
   module.require('reify');
+  // Set up default src aliases
   const moduleAlias = module.require('module-alias');
-  moduleAlias.addAliases(ALIASES);
+  moduleAlias.addAliases(getAliases());
 }
 
-module.exports = ALIASES;
+module.exports = getAliases;
