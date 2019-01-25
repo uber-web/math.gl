@@ -1,6 +1,7 @@
 import test from 'tape-catch';
 import {Matrix4, Vector3, equals} from 'math.gl';
 import {_Euler as Euler, _Pose as Pose} from 'math.gl';
+import {tapeEquals} from 'math.gl/test/utils/tape-equals';
 
 const MATRIX_TEST_CASES = [
   {
@@ -133,5 +134,32 @@ test('Pose#getTransformationMatrixFromPose, getTransformationMatrixToPose', t =>
     t.ok(equals(transformAToB, transformBToA.invert()), 'transformation matrices match');
   });
 
+  t.end();
+});
+
+test('Pose#toPose', t => {
+  const A = new Pose({
+    yaw: 0,
+    pitch: 0,
+    roll: 0,
+    x: 10,
+    y: 10,
+    z: 0
+  });
+
+  const B = new Pose({
+    yaw: 0,
+    pitch: 0,
+    roll: 0,
+    x: 20,
+    y: 20,
+    z: 0
+  });
+
+  const transformAtoB = A.getTransformationMatrixToPose(B);
+
+  const originAInB = transformAtoB.transformVector([0, 0, 0]);
+  tapeEquals(t, originAInB, [10, 10, 0], `originInB should match resultOriginInB`);
+  // t.notOk(equals([0, 0, 0], resultOriginInB), `[0, 0, 0] represents AfromB`);
   t.end();
 });
