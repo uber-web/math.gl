@@ -1,5 +1,7 @@
 # CHANGELOG
 
+## v2.3.0 - Jan 29, 2019
+
 ## v2.3.0-beta.2 - Jan 24, 2019
 
 - Test coordinate transforms between poses (#39)
