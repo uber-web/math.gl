@@ -54,7 +54,7 @@ export function validateMatrix4(m) {
   );
 }
 
-function validateVector(v, length) {
+export function validateVector(v, length) {
   if (v.length !== length) {
     return false;
   }
