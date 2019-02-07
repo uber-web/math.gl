@@ -187,7 +187,7 @@ During vector transformation the given translation values are added to each comp
 
 Transforms any 2 or 3 element vector as a "point" by multiplying it (from the right) with this matrix. `Point` here means that the returned vector will include any translations in this matrix.
 
-`const vector = matrix3.transformPoint(vector, out=)`
+`const vector = matrix3.transformPoint(vector, out)`
 
 * `vector` (`Array`|`Vector2`|`Vector3`)
 * `out` - unless supplied, will be a `Vector2` or `Vector3`, matching the length of input vector.

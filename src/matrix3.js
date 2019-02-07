@@ -74,15 +74,15 @@ export default class Matrix3 extends MathArray {
     return this.check();
   }
 
-  setColumnMajor(m00 = 1, m10 = 0, m20 = 0, m01 = 0, m11 = 1, m21 = 0, m02 = 0, m12 = 0, m22 = 1) {
+  setColumnMajor(m00 = 1, m01 = 0, m02 = 0, m10 = 0, m11 = 1, m12 = 0, m20 = 0, m21 = 0, m22 = 1) {
     this[0] = m00;
-    this[1] = m10;
-    this[2] = m20;
-    this[3] = m01;
+    this[1] = m01;
+    this[2] = m02;
+    this[3] = m10;
     this[4] = m11;
-    this[5] = m21;
-    this[6] = m02;
-    this[7] = m12;
+    this[5] = m12;
+    this[6] = m20;
+    this[7] = m21;
     this[8] = m22;
     return this.check();
   }
