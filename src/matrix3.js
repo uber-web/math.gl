@@ -20,6 +20,7 @@
 
 import MathArray from './lib/math-array';
 import {validateVector} from './lib/validators';
+import {checkNumber} from './lib/common';
 import Vector2 from './vector2';
 import Vector3 from './vector3';
 
