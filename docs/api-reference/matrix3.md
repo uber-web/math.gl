@@ -183,33 +183,7 @@ Equivalent to right multiplying the new transform into the matrix but more perfo
 During vector transformation the given translation values are added to each component of the vector being transformed.
 
 
-### transformPoint
-
-Transforms any 2 or 3 element vector as a "point" by multiplying it (from the right) with this matrix. `Point` here means that the returned vector will include any translations in this matrix.
-
-`const vector = matrix3.transformPoint(vector, out)`
-
-* `vector` (`Array`|`Vector2`|`Vector3`)
-* `out` - unless supplied, will be a `Vector2` or `Vector3`, matching the length of input vector.
-Returns `out`, or a newly minted `Vector2` or `Vector3`.
-
-
-* If `vector` is specified in homogenous coordinates, `w` coordinate must NOT be `0`.
-* If `vector` is specified in homogenous coordinates the returned vector will be `w` adjusted, (i.e. `w` coordinate will be `1`, even if the supplied vector was not normalized).
-
-
-### transformDirection
-
-Transforms any 2 or 3 element vector interpreted as a direction (i.e. all vectors are based in the origin so the transformation not pick up any translations from the matrix).
-
-`const vector = matrix3.transformDirection(vector, out)`
-
-* If `vector` is specified in homogenous coordinates, `w` coordinate must be `0`.
-
-
-### transformVector (DEPRECATED)
-
-Confusingly corresponds to `transformPoint`.
+### transformVector
 
 `transformVector(vector, out)`
 

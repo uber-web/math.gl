@@ -19,10 +19,9 @@
 // THE SOFTWARE.
 
 import MathArray from './lib/math-array';
-import {checkNumber} from './lib/common';
+import {validateVector} from './lib/validators';
 import Vector2 from './vector2';
 import Vector3 from './vector3';
-import {validateVector} from './matrix4';
 
 import * as mat3 from 'gl-matrix/mat3';
 import * as vec2 from 'gl-matrix/vec2';
@@ -194,35 +193,5 @@ export default class Matrix3 extends MathArray {
       default:
         throw new Error('Illegal vector');
     }
-  }
-
-  transformDirection(vector, out) {
-    return this._transformVector(vector, out, 0);
-  }
-
-  transformPoint(vector, out) {
-    return this._transformVector(vector, out, 1);
-  }
-
-  _transformVector(vector, out, w) {
-    switch (vector.length) {
-      case 2:
-        out = out || new Vector2();
-        vec3.transformMat3(out, [vector[0], vector[1], w], this);
-        out.length = 2;
-        validateVector(out, 2);
-        break;
-      case 3:
-        if (Boolean(w) !== Boolean(vector[2])) {
-          throw new Error('math.gl: Matrix3.transformPoint - invalid vector');
-        }
-        out = out || new Vector3();
-        vec3.transformMat3(out, vector, this);
-        validateVector(out, 3);
-        break;
-      default:
-        throw new Error('Illegal vector');
-    }
-    return out;
   }
 }

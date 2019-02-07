@@ -281,32 +281,3 @@ test('Matrix3#translate', t => {
   tapeEquals(t, result, RESULT, 'translate gave the right result');
   t.end();
 });
-
-test('Matrix3#transform', t => {
-  const matrix = new Matrix3().translate([1, 2]).scale([2, 2]);
-
-  const direction = [2, 2, 0];
-  const result = [4, 4, 0];
-
-  const point = [2, 2, 1];
-  const resultPoint = [5, 6, 1];
-
-  let p3 = matrix.transformDirection(direction);
-  tapeEquals(t, p3, result, 'transform gave the right result');
-
-  p3 = matrix.transformPoint(point);
-  tapeEquals(t, p3, resultPoint, 'transform gave the right result');
-
-  direction.length = 2;
-  point.length = 2;
-  result.length = 2;
-  resultPoint.length = 2;
-
-  let p2 = matrix.transformDirection(direction);
-  tapeEquals(t, p2, result, 'transform gave the right result');
-
-  p2 = matrix.transformPoint(point);
-  tapeEquals(t, p2, resultPoint, 'transform gave the right result');
-
-  t.end();
-});
