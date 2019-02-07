@@ -54,7 +54,7 @@ Many of the most commonly used methods are inherited from [`MathArray`](./docs/a
 * `matrix3.check(array = this)`
 * `matrix3.normalize()`
 
-Note that `Matrix4` is a subclass of the built in JavaScript `Array` and can thus e.g. be supplied as a parameter to any function expecting an `Array`.
+Note that `Matrix3` is a subclass of the built in JavaScript `Array` and can thus e.g. be supplied as a parameter to any function expecting an `Array`.
 
 
 ### constructor
@@ -76,6 +76,29 @@ Sets the matrix to the multiplicative identity matrix.
 Sets the elements of the matrix.
 
 `matrix3.set(m00, m01, m02, m10, m11, m12, m20, m21, m22)`
+
+
+### setElement
+
+Sets the element at position m[i][j], row major indices by default
+
+`matrix3.set(i, j, value, columnMajor = false)`
+
+
+### getElement
+
+Gets the element at position m[i][j], row major indices by default
+
+`matrix3.get(i, j, columnMajor = false)`
+
+
+### fromQuaternion
+
+Sets the matrix to a transformation corresponding to the rotations represented by the given quaternion.
+
+`matrix3.fromQuaternion(quaternion)`
+
+* `quaternion` (`Quaternion`) - the quaternion  to create matrix from
 
 
 ### determinant()

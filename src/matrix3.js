@@ -19,6 +19,7 @@
 // THE SOFTWARE.
 
 import MathArray from './lib/math-array';
+import {checkNumber} from './lib/common';
 import Vector2 from './vector2';
 import Vector3 from './vector3';
 import {validateVector} from './matrix4';
@@ -60,25 +61,53 @@ export default class Matrix3 extends MathArray {
   }
 
   /* eslint-disable max-params */
-  setRowMajor(m00 = 1, m10 = 0, m20 = 0, m01 = 0, m11 = 1, m21 = 0, m02 = 0, m12 = 0, m22 = 1) {
-    return this.set(m00, m01, m02, m10, m11, m12, m20, m21, m22);
-  }
-
-  setColumnMajor(m00 = 1, m01 = 0, m02 = 0, m10 = 0, m11 = 1, m12 = 0, m20 = 0, m21 = 0, m22 = 1) {
-    return this.set(m00, m01, m02, m10, m11, m12, m20, m21, m22);
-  }
-
-  set(m00, m01, m02, m10, m11, m12, m20, m21, m22) {
+  setRowMajor(m00 = 1, m01 = 0, m02 = 0, m10 = 0, m11 = 1, m12 = 0, m20 = 0, m21 = 0, m22 = 1) {
     this[0] = m00;
-    this[1] = m01;
-    this[2] = m02;
-    this[3] = m10;
+    this[1] = m10;
+    this[2] = m20;
+    this[3] = m01;
     this[4] = m11;
-    this[5] = m12;
-    this[6] = m20;
-    this[7] = m21;
+    this[5] = m21;
+    this[6] = m02;
+    this[7] = m12;
     this[8] = m22;
     return this.check();
+  }
+
+  setColumnMajor(m00 = 1, m10 = 0, m20 = 0, m01 = 0, m11 = 1, m21 = 0, m02 = 0, m12 = 0, m22 = 1) {
+    this[0] = m00;
+    this[1] = m10;
+    this[2] = m20;
+    this[3] = m01;
+    this[4] = m11;
+    this[5] = m21;
+    this[6] = m02;
+    this[7] = m12;
+    this[8] = m22;
+    return this.check();
+  }
+
+  copy(array) {
+    return this.setColumnMajor(...array);
+  }
+
+  set(...args) {
+    return this.setColumnMajor(...args);
+  }
+
+  // By default assumes row major indices
+  getElement(i, j, columnMajor = false) {
+    return columnMajor ? this[i * 3 + j] : this[j * 3 + i];
+  }
+
+  // By default assumes row major indices
+  setElement(i, j, value, columnMajor = false) {
+    if (columnMajor) {
+      this[i * 3 + j] = checkNumber(value);
+    } else {
+      this[j * 3 + i] = checkNumber(value);
+    }
+    return this;
   }
 
   // Accessors
@@ -93,6 +122,13 @@ export default class Matrix3 extends MathArray {
     for (let i = 0; i < IDENTITY.length; ++i) {
       this[i] = IDENTITY[i];
     }
+    return this.check();
+  }
+
+  // Calculates a 3x3 matrix from the given quaternion
+  // q quat  Quaternion to create matrix from
+  fromQuaternion(q) {
+    mat3.fromQuat(this, q);
     return this.check();
   }
 

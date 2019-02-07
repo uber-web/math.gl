@@ -114,6 +114,27 @@ test('Matrix3#set', t => {
   t.end();
 });
 
+test('Matrix3#getElement and setElement', t => {
+  t.equals(typeof Matrix3.prototype.setElement, 'function');
+  t.equals(typeof Matrix3.prototype.getElement, 'function');
+
+  const INPUT = INDICES_MATRIX;
+
+  const m = new Matrix3().set(...INPUT);
+
+  const VALUE = 10;
+
+  m.setElement(2, 1, VALUE);
+  let result = m.getElement(2, 1);
+  tapeEquals(t, result, VALUE, 'getElement gave the right result');
+
+  m.setElement(2, 1, VALUE, true);
+  result = m.getElement(2, 1, true);
+  tapeEquals(t, result, VALUE, 'getElement gave the right result');
+
+  t.end();
+});
+
 test('Matrix3#determinant', t => {
   const RESULT = 5;
 
@@ -146,6 +167,31 @@ test('Matrix3#copy', t => {
 
   tapeEquals(t, m, RESULT, 'copy gave the right result');
 
+  t.end();
+});
+
+test('Matrix3#fromQuaternion', t => {
+  t.equals(typeof Matrix3.prototype.fromQuaternion, 'function');
+
+  const RESULT = [
+    -0.7238737,
+    0.4321177,
+    0.5378486,
+    0.3953417,
+    -0.379099,
+    0.8366534,
+    0.5654306,
+    0.8182654,
+    0.1035857
+  ];
+
+  const q = [0.3713622, 0.5570433, 0.7427244, 0.0123787];
+
+  const m = new Matrix3().identity();
+
+  const result = m.fromQuaternion(q);
+
+  tapeEquals(t, result, RESULT, 'fromQuaternion gave the right result');
   t.end();
 });
 
