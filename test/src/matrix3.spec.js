@@ -170,6 +170,9 @@ test('Matrix3#copy', t => {
   t.end();
 });
 
+// calculation from the website below
+// https://www.andre-gaschler.com/rotationconverter/
+
 test('Matrix3#fromQuaternion', t => {
   t.equals(typeof Matrix3.prototype.fromQuaternion, 'function');
 
