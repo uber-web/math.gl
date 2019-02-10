@@ -63,7 +63,7 @@ function validateVector(v, length) {
 
 export default class Matrix4 extends MathArray {
   constructor(...args) {
-    super();
+    super(16);
     if (Array.isArray(args[0]) && arguments.length === 1) {
       this.copy(args[0]);
     } else {
@@ -153,9 +153,9 @@ export default class Matrix4 extends MathArray {
   }
   /* eslint-enable no-multi-spaces, brace-style, no-return-assign */
 
-  copy(array) {
-    return this.setColumnMajor(...array);
-  }
+  // copy(array) {
+  //   // return this.setColumnMajor(...array);
+  // }
 
   // Sets exact values (column major)
   set(...args) {

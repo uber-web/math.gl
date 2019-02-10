@@ -101,7 +101,7 @@ export default class Euler extends MathArray {
    * Number|Number[], Number, Number, Number
    */
   constructor(x = 0, y = 0, z = 0, order = Euler.DefaultOrder) {
-    super();
+    super(4);
     if (arguments.length > 0 && Array.isArray(arguments[0])) {
       this.fromVector3(...arguments);
     } else {

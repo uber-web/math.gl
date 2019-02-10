@@ -24,7 +24,7 @@ import {checkNumber} from './lib/common';
 export default class Vector4 extends Vector {
   // Creates a new, empty vec4
   constructor(x = 0, y = 0, z = 0, w = 0) {
-    super();
+    super(4);
     if (Array.isArray(x) && arguments.length === 1) {
       this.copy(x);
     } else {

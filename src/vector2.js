@@ -24,7 +24,7 @@ import * as vec2 from 'gl-matrix/vec2';
 export default class Vector2 extends Vector {
   // Creates a new, empty vec2
   constructor(x = 0, y = 0) {
-    super();
+    super(2);
     if (Array.isArray(x) && arguments.length === 1) {
       this.copy(x);
     } else {

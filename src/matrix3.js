@@ -60,7 +60,7 @@ const tempVector4 = [0, 0, 0, 0];
 
 export default class Matrix3 extends MathArray {
   constructor(...args) {
-    super();
+    super(9);
     if (Array.isArray(args[0]) && arguments.length === 1) {
       this.copy(args[0]);
     } else {

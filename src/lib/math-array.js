@@ -145,16 +145,16 @@ export default class MathArray extends Array {
 
   // Debug checks
 
-  validate(array = this) {
-    let valid = array && array.length === this.ELEMENTS;
+  validate() {
+    let valid = this.length === this.ELEMENTS;
     for (let i = 0; i < this.ELEMENTS; ++i) {
-      valid = valid && Number.isFinite(array[i]);
+      valid = valid && Number.isFinite(this[i]);
     }
     return valid;
   }
 
-  check(array = this) {
-    if (config.debug && !this.validate(array)) {
+  check() {
+    if (config.debug && !this.validate(this)) {
       throw new Error(`math.gl: ${this.constructor.name} some fields set to invalid numbers'`);
     }
     return this;
