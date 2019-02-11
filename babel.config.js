@@ -9,7 +9,7 @@ DISTS.forEach(distName => {
   dist.plugins = dist.plugins || [];
 
   // Push repo-specific plugin to front of list
-  if (distname !== 'es6') {
+  if (distName !== 'es6') {
 	dist.plugins.unshift(PLUGIN);
   }
 });
