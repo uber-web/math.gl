@@ -30,6 +30,5 @@ module.exports = env => {
   });
   // console.log('webpack env', JSON.stringify(env));
   // console.log('webpack config', JSON.stringify(config, null, 2));
-  require('fs').writeFileSync('webpack.log', JSON.stringify(config, null, 2));
   return config;
 };
