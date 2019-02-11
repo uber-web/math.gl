@@ -20,6 +20,7 @@
 
 import MathArray from './lib/math-array';
 import {checkNumber} from './lib/common';
+import {validateVector} from './lib/validators';
 import Vector2 from './vector2';
 import Vector3 from './vector3';
 import Vector4 from './vector4';
@@ -52,13 +53,6 @@ export function validateMatrix4(m) {
     Number.isFinite(m[14]) &&
     Number.isFinite(m[15])
   );
-}
-
-function validateVector(v, length) {
-  if (v.length !== length) {
-    return false;
-  }
-  return v.every(Number.isFinite);
 }
 
 export default class Matrix4 extends MathArray {
