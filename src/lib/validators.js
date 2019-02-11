@@ -18,36 +18,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-// math.gl classes
-export {default as Vector2} from './vector2';
-export {default as Vector3} from './vector3';
-export {default as Vector4} from './vector4';
-export {default as Matrix3} from './matrix3';
-export {default as Matrix4} from './matrix4';
-export {default as Quaternion} from './quaternion';
-
-// math.gl "GLSL" functions
-export {
-  config,
-  checkNumber,
-  configure,
-  formatValue,
-  isArray,
-  clone,
-  radians,
-  degrees,
-  sin,
-  cos,
-  tan,
-  asin,
-  acos,
-  atan,
-  clamp,
-  lerp,
-  equals
-} from './lib/common';
-
-export {default as _SphericalCoordinates} from './spherical-coordinates';
-export {default as _Pose} from './pose';
-export {default as _Euler} from './euler';
-export {default as _Polygon} from './addons/polygon';
+export function validateVector(v, length) {
+  if (v.length !== length) {
+    return false;
+  }
+  return v.every(Number.isFinite);
+}
