@@ -21,6 +21,7 @@
 import './common.spec';
 import './vectors.spec';
 import './vector3.spec';
+import './matrix3.spec';
 import './matrix4.spec';
 import './pose.spec';
 import './quaternion.spec';
