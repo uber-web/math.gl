@@ -39,7 +39,7 @@ export default class Quaternion extends MathArray {
   // Creates a new identity quaternion
   // w^2 + x^2 + y^2 + z^2 = 1
   constructor(x = 0, y = 0, z = 0, w = 1) {
-    super();
+    super(4);
     if (Array.isArray(x) && arguments.length === 1) {
       this.copy(x);
     } else {
