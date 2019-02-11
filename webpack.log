@@ -1,0 +1,55 @@
+{
+  "mode": "development",
+  "stats": {
+    "warnings": false
+  },
+  "module": {
+    "rules": [
+      {
+        "test": {},
+        "use": [
+          "source-map-loader"
+        ],
+        "enforce": "pre"
+      }
+    ]
+  },
+  "plugins": [
+    {
+      "options": {
+        "template": "/Users/ib/Documents/math.gl/node_modules/html-webpack-plugin/default_index.ejs",
+        "filename": "index.html",
+        "hash": false,
+        "inject": true,
+        "compile": true,
+        "favicon": false,
+        "minify": false,
+        "cache": true,
+        "showErrors": true,
+        "chunks": "all",
+        "excludeChunks": [],
+        "chunksSortMode": "auto",
+        "meta": {},
+        "title": "Webpack App",
+        "xhtml": false
+      }
+    }
+  ],
+  "node": {
+    "fs": "empty"
+  },
+  "entry": {
+    "test-browser": "/Users/ib/Documents/math.gl/test/bench/browser.js"
+  },
+  "output": {
+    "path": "/Users/ib/Documents/math.gl/dist",
+    "filename": "bundle.js"
+  },
+  "devtool": "#source-maps",
+  "resolve": {
+    "alias": {
+      "math.gl/test": "/Users/ib/Documents/math.gl/test",
+      "math.gl": "/Users/ib/Documents/math.gl/src"
+    }
+  }
+}

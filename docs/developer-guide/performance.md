@@ -1,7 +1,5 @@
 # Performance
 
-> This article is a work in progress and may contain incorrect information.
-
 
 The code vector and matrix operations in math.gl are based on gl-matrix which makes a credible claim at being the most performant 3D math library available for JavaScript. However, the relentless focus on performance means that gl-matrix offers a procedural API, which doesn't always provide the programming experience. Also there are no error checks which is great in production code.
 
@@ -14,10 +12,15 @@ It is worth noting that math.gl has been designed so that in cases where javascr
 
 In debug mode, math.gl does error checks after every operation. It has a modest impact. Verifying that error checks are not being enable could be a simple first step.
 
+```js
+import {configure} from 'math.gl';
+configure({debug: false});
+```
+
 
 ## Minimizing Object Creation
 
-The typical performance issue in math.gl is in object creation. Creating new `Vector` and `Matrix` instances is the slowest part of math.gl. Therefore, reusing objects where possible is an important technique to optimize performance.
+One of the most typical performance issue in math.gl (including most other JavaScript math libraries) is object creation. Creating new `Vector` and `Matrix` instances has significant overhead. Therefore, reusing objects where possible is an important technique to optimize performance.
 
 ```js
 for (...) {
@@ -35,6 +38,11 @@ for (...) {
 Note that some methods, like `Matrix4.transformVector`, allocate new objects as return values. By providing an optional `target` argument you can prevent this allocation and reuse an object you have already allocated. This technique is borrowed the THREE.js math library where it is a commonly availble optimization.
 
 
-## Remarks
+## Browser, OS version etc
 
-* **SIMD support** - A nice performance related feature that gl-matrix offers is optional SIMD support, which can potentially further speed up math operations. However, due to this feature mainly being available in a single browser (Firefox), and the amount of extra code (directly affecing math.gl library size) that would be involved in supporting it, SIMD support is not included in math.gl. If browser support increases, math.gl woulc likely start including SIMD support for a few selected `Matrix4` operations.
+The JavaScript engine powering Chrome and Node is still improving. The performance difference between e.g. Node 8 and Node 11 is rather staggering.
+
+
+## Benchmarking
+
+The math.gl repository comes with a benchmark suite that you can run in your environment to see what operations peform well and shich do not.
