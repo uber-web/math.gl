@@ -163,8 +163,13 @@ export default class Matrix3 extends MathArray {
     return this.check();
   }
 
-  scale(vec) {
-    mat3.scale(this, this, vec);
+  scale(scale) {
+    if (Array.isArray(scale)) {
+      mat3.scale(this, this, scale);
+    } else {
+      mat3.scale(this, this, [scale, scale, scale]);
+    }
+
     return this.check();
   }
 

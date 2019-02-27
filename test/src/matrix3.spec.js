@@ -264,13 +264,20 @@ test('Matrix3#rotate', t => {
 });
 
 test('Matrix3#scale', t => {
-  const RESULT = [1, 0, 0, 0, 2, 0, 0, 0, 1];
+  const M1_RESULT = [1, 0, 0, 0, 2, 0, 0, 0, 1];
+  const M2_RESULT = [2, 0, 0, 0, 2, 0, 0, 0, 1];
 
   t.equals(typeof Matrix3.prototype.scale, 'function');
-  const m = new Matrix3().identity();
-  const result = m.scale([1, 2]);
+  const m1 = new Matrix3().identity();
+  const m1_result = m1.scale([1, 2]);
 
-  tapeEquals(t, result, RESULT, 'scale gave the right result');
+  tapeEquals(t, m1_result, M1_RESULT, 'scale gave the right result');
+
+  const m2 = new Matrix3().identity();
+  const m2Result = m2.scale(2);
+
+  tapeEquals(t, m2Result, M2_RESULT, 'scale gave the right result');
+
   t.end();
 });
 
