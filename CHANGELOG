@@ -1,12 +1,17 @@
 # CHANGELOG
 
+## v2.3.1 - Feb 27, 2019
+
+- Add scale factor support to Matrix3 and Matrix4 (#44)
+- Implement matrix3 (#41)
+
 ## v2.3.0 - Jan 29, 2019
 
 ## v2.3.0-beta.2 - Jan 24, 2019
 
 - Test coordinate transforms between poses (#39)
 - Decouple Quaternion from Euler to optimize tree-shaking (#38)
-- Use ocular-dev-tools instead of local dev scripts. (#37)- 
+- Use ocular-dev-tools instead of local dev scripts. (#37)-
 
 ## v2.3.0-beta.1 - Jan 11, 2019
 
@@ -14,13 +19,13 @@
 - Support quaternion to euler conversion (#31)
 - Migrate to original gl-matrix package (#34)
 
-## v2.2.0 - Sep 20, 2018 
+## v2.2.0 - Sep 20, 2018
 
 - Use `@babel/runtime`
 - Use babel 7
 - FIX: `isArray` handles typed arrays correctly
 
-## v2.1.0 - Sep 6, 2018 
+## v2.1.0 - Sep 6, 2018
 
 - Support reconstructing Pose from serialized/deserialized props (#27)
 - Fix Matrix4.setElement() when columnMajor = true.
@@ -45,7 +50,7 @@
 
 ## v1.1.3 - Apr 16, 2018
 
-- Matrix4 restore default arguments to setters 
+- Matrix4 restore default arguments to setters
 
 
 ## v1.1.2 - Apr 16, 2018
