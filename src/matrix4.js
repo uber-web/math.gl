@@ -342,8 +342,13 @@ export default class Matrix4 extends MathArray {
     return this.check();
   }
 
-  scale(vec) {
-    mat4.scale(this, this, vec);
+  scale(factor) {
+    if (Array.isArray(factor)) {
+      mat4.scale(this, this, factor);
+    } else {
+      mat4.scale(this, this, [factor, factor, factor]);
+    }
+
     return this.check();
   }
 
