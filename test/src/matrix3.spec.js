@@ -269,9 +269,9 @@ test('Matrix3#scale', t => {
 
   t.equals(typeof Matrix3.prototype.scale, 'function');
   const m1 = new Matrix3().identity();
-  const m1_result = m1.scale([1, 2]);
+  const m1Result = m1.scale([1, 2]);
 
-  tapeEquals(t, m1_result, M1_RESULT, 'scale gave the right result');
+  tapeEquals(t, m1Result, M1_RESULT, 'scale gave the right result');
 
   const m2 = new Matrix3().identity();
   const m2Result = m2.scale(2);
