@@ -167,7 +167,8 @@ const suite = new Bench()
   // Calibrate performance
   .calibrate();
 
-suite.run()
+suite
+  .run()
   // when running in browser, notify test the driver that it's done
   .then(() => {
     /* global window */
