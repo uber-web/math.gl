@@ -19,7 +19,7 @@
 // THE SOFTWARE.
 
 /* eslint-disable no-console, no-invalid-this */
-import {Bench} from 'probe.gl/bench';
+import {Bench} from '@probe.gl/bench';
 
 import {configure, Vector2, Vector3, Vector4, Matrix3, Matrix4} from 'math.gl';
 // import * as vec3 from 'gl-matrix/vec3';
@@ -167,5 +167,12 @@ const suite = new Bench()
   // Calibrate performance
   .calibrate();
 
-// Run tests
-suite.run();
+suite
+  .run()
+  // when running in browser, notify test the driver that it's done
+  .then(() => {
+    /* global window */
+    if (typeof window !== 'undefined' && window.browserTestDriver_finish) {
+      window.browserTestDriver_finish();
+    }
+  });
