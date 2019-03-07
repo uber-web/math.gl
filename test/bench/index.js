@@ -55,7 +55,7 @@ const float32Array = new Float32Array([1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0,
 const float64Array = new Float64Array([1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
 const mathglArray = new Matrix4();
 
-export default new Bench()
+const suite = new Bench()
 
   .group('debug validation cost')
   .add('Matrix4#validate', () => {
@@ -166,3 +166,12 @@ export default new Bench()
 
   // Calibrate performance
   .calibrate();
+
+suite.run()
+  // when running in browser, notify test the driver that it's done
+  .then(() => {
+    /* global window */
+    if (typeof window !== 'undefined' && window.browserTestDriver_finish) {
+      window.browserTestDriver_finish();
+    }
+  });

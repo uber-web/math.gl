@@ -16,6 +16,8 @@ module.exports = {
 
   entry: {
     'test-node': 'test/index.js',
+    'bench-node': 'test/bench/index.js',
+    'bench-browser': 'test/bench/index.js',
     size: {
       all: 'test/size/all.js',
       euler: 'test/size/euler.js',
