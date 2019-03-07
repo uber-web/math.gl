@@ -39,8 +39,7 @@
     "cover": "ocular-test cover",
     "lint": "ocular-lint",
     "metrics": "ocular-metrics",
-    "publish-prod": "ocular-publish prod",
-    "publish-beta": "ocular-publish beta",
+    "publish": "ocular-publish",
     "bench": "ocular-test bench",
     "bench-browser": "ocular-test bench-browser",
     "test": "ocular-test",
@@ -55,7 +54,7 @@
     "@probe.gl/test-utils": "^3.0.0-alpha.5",
     "babel-plugin-transform-builtin-extend": "^1.1.2",
     "npx": "^10.2.0",
-    "ocular-dev-tools": "0.0.10",
+    "ocular-dev-tools": "0.0.11",
     "pre-commit": "^1.2.2",
     "reify": "^0.18.1"
   }
