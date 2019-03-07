@@ -21,7 +21,6 @@
 
 math.gl is an `Array`-based JavaScript 3D math library. In spite of its name it has no hard WebGL dependencies, but however both API and design are focused on focused on the needs of typical WebGL applications
 
-
 ## Features
 
 This is a short list of feature high-lights to show what math.gl is about.
@@ -36,13 +35,11 @@ This is a short list of feature high-lights to show what math.gl is about.
 
 - **Size Conscious** - A math library can quickly get big as a various classed and functions keep getting added. But for many 3D applications, only a few basic operations are necessary. math.gl has made a choices to restrict itself to a set of classes and functions that are likely to be most important in WebGL applications. The intention is to position math.gl as a "mid-size" 3D math library: reasonably full featured, but small enough that unless you are targeting a very small final bundle for your application, its size should not be a big concern.
 
-
 ## Supported Browsers and Node Versions
 
 math.gl is only supported on "evergreen" browsers, such as Chrome, Safari, Firefox, Edge etc. While not evergreen, IE11 should support the math.gl distribution's transpiled code, but Internet Explorer < 10 will not work. math.gl also works on recent versions of Node.js (tested on v6+).
 
 > Disclaimer: These restrictions are both due to real technical limitations with math.gl's `Array`subclassing approach, as well as a conscious decision by the maintainers to limit the support matrix for the library. So, if your application needs to support non-evergreen browsers, math.gl is unlikely to be the right choice for you. A good alternative option could be to use e.g. `gl-matrix` directly.
-
 
 ## History
 
@@ -50,11 +47,9 @@ math.gl was developed as a companion 3D math library for the luma.gl and deck.gl
 
 In spite of its roots, the intention is that math.gl should be able to serve a general purpose 3D math library, and be used either directly or as a "starting point" by other projects with similar needs.
 
-
 ## Attribution
 
 math.gl heavily inspired by, and includes code, documentation and ideas from some of the most proven open source JavaScript math libraries, the awesome [`gl-matrix`](http://glmatrix.net/) and the THREE.js math library. Those libraries encouraged reuse which enabled math.gl to be built, and naturally math.gl does the same!
-
 
 ## License
 

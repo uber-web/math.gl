@@ -18,22 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-const {callExposedFunction} = require('probe.gl/test-utils');
-
 /* eslint-disable */
-(function() {
-  const old = console.log;
-  const logger = document.createElement('div');
-  document.body.appendChild(logger);
-  console.log = function f(message) {
-    if (typeof message === 'object') {
-      logger.innerHTML += (JSON && JSON.stringify ? JSON.stringify(message) : message) + '<br />';
-    } else {
-      logger.innerHTML += message + '<br />';
-    }
-  };
-})();
-
-require('./index');
-
-callExposedFunction('testDone', {success: true});
+require('./index')
+  .default.run()
+  .then(window.browserTestDriver_finish);

@@ -19,7 +19,7 @@
 // THE SOFTWARE.
 
 /* eslint-disable no-console, no-invalid-this */
-import {Bench} from 'probe.gl/bench';
+import {Bench} from '@probe.gl/bench';
 
 import {configure, Vector2, Vector3, Vector4, Matrix3, Matrix4} from 'math.gl';
 // import * as vec3 from 'gl-matrix/vec3';
@@ -55,7 +55,7 @@ const float32Array = new Float32Array([1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0,
 const float64Array = new Float64Array([1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
 const mathglArray = new Matrix4();
 
-const suite = new Bench()
+export default new Bench()
 
   .group('debug validation cost')
   .add('Matrix4#validate', () => {
@@ -166,6 +166,3 @@ const suite = new Bench()
 
   // Calibrate performance
   .calibrate();
-
-// Run tests
-suite.run();
