@@ -9,11 +9,12 @@
     "start": "yarn clean && yarn develop",
     "clean": "rm -rf ./.cache ./public",
     "develop": "gatsby develop",
-    "build": "gatsby develop",
+    "build": "gatsby build",
     "serve": "gatsby serve"
   },
   "dependencies": {
     "gatsby": "2.2.0-rc.2",
+    "gatsby-plugin-styletron": "^3.0.5",
     "ocular-gatsby": "1.0.0-alpha.16"
   },
   "devDependencies": {}

@@ -7,6 +7,7 @@ module.exports = {
   ROOT_FOLDER: '..',
   DIR_NAME: __dirname,
 
+  EXAMPLES: [],
   DOCS,
 
   PROJECTS: [], // Other linked projects
