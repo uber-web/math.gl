@@ -62,7 +62,7 @@ module.exports = {
 
   // TODO/ib - from gatsby starter, clean up
   siteUrl: "https://ocular", // Domain of your website without pathPrefix.
-  pathPrefix: "/math", // Prefixes all links. For cases when deployed to example.github.io/gatsby-advanced-starter/.
+  pathPrefix: "/math.gl/", // Prefixes all links. For cases when deployed to example.github.io/gatsby-advanced-starter/.
   siteRss: "/rss.xml", // Path to the RSS file.
   dateFromFormat: "YYYY-MM-DD", // Date format used in the frontmatter.
   dateFormat: "DD/MM/YYYY", // Date format for display.
