@@ -40,4 +40,102 @@
         }
       }
     })
-  </script><link as="script" rel="preload" href="/math/component---ocular-modules-gatsby-src-templates-index-jsx-b7b9793a2ee783a3275b.js"/><link as="script" rel="preload" href="/math/app-7172d15c9d7c393440c4.js"/><link as="script" rel="preload" href="/math/webpack-runtime-e52b03cd2d2e0f0f04ad.js"/><link as="fetch" rel="preload" href="/math/static/d/173/path---index-6a9-NZuapzHg3X9TaN1iIixfv1W23E.json" crossorigin="use-credentials"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" role="group"><main><div class="fg"><section class="banner"><div class="f hero"></div><div class="container"><h1></h1><p></p><a class="btn" href="/math/docs/get-started">GET STARTED</a></div></section><div class="fg p4"><div class="container f fw"><div class="f1 p" style="min-width:10rem"><h2></h2><hr class="short"/></div><div class="f1 p" style="min-width:10rem">...</div></div></div></div></main></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.page={"componentChunkName":"component---ocular-modules-gatsby-src-templates-index-jsx","jsonName":"index","path":"/"};window.dataPath="173/path---index-6a9-NZuapzHg3X9TaN1iIixfv1W23E";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"app":["/app.1c76b3141dc16775ce64.css","/app-7172d15c9d7c393440c4.js"],"component---ocular-modules-gatsby-src-templates-index-jsx":["/component---ocular-modules-gatsby-src-templates-index-jsx-b7b9793a2ee783a3275b.js"],"component---ocular-modules-gatsby-src-templates-doc-n-jsx":["/component---ocular-modules-gatsby-src-templates-doc-n-jsx-ec26d881f5ca198daf59.js"],"component---ocular-modules-gatsby-src-templates-search-jsx":["/component---ocular-modules-gatsby-src-templates-search-jsx-247a330bcb851dd2f4ce.js"],"pages-manifest":["/pages-manifest-970c65f4c7e5f7f85877.js"]};/*]]>*/</script><script src="/math/webpack-runtime-e52b03cd2d2e0f0f04ad.js" async=""></script><script src="/math/app-7172d15c9d7c393440c4.js" async=""></script><script src="/math/component---ocular-modules-gatsby-src-templates-index-jsx-b7b9793a2ee783a3275b.js" async=""></script></body></html>
+  </script><link as="script" rel="preload" href="/math/component---ocular-modules-gatsby-src-templates-doc-n-jsx-ec26d881f5ca198daf59.js"/><link as="script" rel="preload" href="/math/app-7172d15c9d7c393440c4.js"/><link as="script" rel="preload" href="/math/webpack-runtime-e52b03cd2d2e0f0f04ad.js"/><link as="fetch" rel="preload" href="/math/static/d/272/path---docs-developer-guide-homogenous-coordinates-0-f-8-2ce-wRgWyQTs0Z7QBfBXanGpkZMQspM.json" crossorigin="use-credentials"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" role="group"><div><div class="markdown-body"><h1 id="about-homogenous-coordinates"><a href="#about-homogenous-coordinates" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>About Homogenous Coordinates</h1>
+<blockquote>
+<p>This article is a work in progress and may contain incorrect information.</p>
+</blockquote>
+<p>The math.gl <code class="language-text">Vector4</code> class is not normally used to represent four dimensonal points. Instead it is intended to be used to calculate with 3 dimensonal <strong>homogenous coordinates</strong>, as defined by projective geometry.</p>
+<p>Mathematically, in projective geometry, each <code class="language-text">Vector4</code> is interpreted as a point on a 3D line through the origin. And it is this line that is the primary object, in the sense that the point is only considered to be one of infinintely many "representatives" of that a line through the origin. Dividing <code class="language-text">xyz</code> with the same number will generate another point, or 'representative' of the same line</p>
+<p>The main reason homogenous coordinates and projective geometry are used in 3D graphics programming is that they allow perspective projection and translations to be represented as linear transformations using 4x4 matrices.</p>
+<h3 id="the-w-coordinate"><a href="#the-w-coordinate" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>The W Coordinate</h3>
+<p>Mathematically, homogenous coordinates add one extra dimension to represent a number. In the 3 dimensional computer graphics case, it is customary to refer to the extra (4th) components as <code class="language-text">w</code>. Mathematically, the <code class="language-text">w</code> coordinate indicates which representative along the projective line.</p>
+<p>There is a straightforward graphical interpretation of the <code class="language-text">w</code> coordinate: During projection of a set of homogenous vectors onto a plane at distance 1 from the origin, all the vectors are normalized so that their <code class="language-text">w</code> coordinates are <code class="language-text">1</code> by dividing <code class="language-text">xyz</code> with <code class="language-text">w</code>. which leads to the following graphical interpretation:</p>
+<table>
+<thead>
+<tr>
+<th><code class="language-text">w</code></th>
+<th>Graphical Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>> <code class="language-text">1</code></td>
+<td>your object will look smaller</td>
+</tr>
+<tr>
+<td>&#x3C; <code class="language-text">1</code></td>
+<td>your object will look bigger</td>
+</tr>
+<tr>
+<td>= <code class="language-text">0</code></td>
+<td>will cause a crash or undefined behavior</td>
+</tr>
+<tr>
+<td>&#x3C; <code class="language-text">0</code></td>
+<td>will flip your object (upside-down, back-to-front, ...)</td>
+</tr>
+</tbody>
+</table>
+<p>Both math.gl and typical GPUs do not support calculations on homogenous coordinates with a <code class="language-text">w</code> component of zero. (However, zero <code class="language-text">w</code>coordinates play a very important role in general projective geometry, see "Background" below).</p>
+<h2 id="practical-usage"><a href="#practical-usage" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Practical Usage</h2>
+<h3 id="projective-transformation"><a href="#projective-transformation" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Projective Transformation</h3>
+<p>A general projective transformation matrix has the following format</p>
+<math display="block">
+  <mrow>
+    <mfenced open="[" close="]">
+      <mtable>
+        <mtr>
+          <mtd columnalign="center"><msub><mi>c</mi><mn>0</mn></msub></mtd>
+          <mtd columnalign="center"><msub><mi>c</mi><mn>1</mn></msub></mtd>
+          <mtd columnalign="center"><msub><mi>c</mi><mn>2</mn></msub></mtd>
+          <mtd columnalign="center"><msub><mi>proj</mi><mi>x</mi></msub></mtd>
+        </mtr>
+        <mtr>
+          <mtd columnalign="center"><msub><mi>c</mi><mn>1</mn></msub></mtd>
+          <mtd columnalign="center"><msub><mi>c</mi><mn>2</mn></msub></mtd>
+          <mtd columnalign="center"><msub><mi>c</mi><mn>3</mn></msub></mtd>
+          <mtd columnalign="center"><msub><mi>proj</mi><mi>y</mi></msub></mtd>
+        </mtr>
+        <mtr>
+          <mtd columnalign="center"><msub><mi>c</mi><mn>2</mn></msub></mtd>
+          <mtd columnalign="center"><msub><mi>c</mi><mn>3</mn></msub></mtd>
+          <mtd columnalign="center"><msub><mi>c</mi><mn>4</mn></msub></mtd>
+          <mtd columnalign="center"><msub><mi>proj</mi><mi>z</mi></msub></mtd>
+        </mtr>
+        <mtr>
+          <mtd columnalign="center"><msub><mi>trans</mi><mi>x</mi></msub></mtd>
+          <mtd columnalign="center"><msub><mi>trans</mi><mi>y</mi></msub></mtd>
+          <mtd columnalign="center"><msub><mi>trans</mi><mi>z</mi></msub></mtd>
+          <mtd columnalign="center"><msub><mi>scale</mi><mi>global</mi></msub></mtd>
+        </mtr>
+      </mtable>
+    </mfenced>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">&lt;mo&gt;.&lt;/mo&gt;
+
+&lt;mfenced open=&quot;[&quot; close=&quot;]&quot;&gt;
+  &lt;mtable&gt;
+    &lt;mtr&gt;&lt;mtd columnalign=&quot;center&quot;&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;/mtd&gt;&lt;/mtr&gt;
+    &lt;mtr&gt;&lt;mtd columnalign=&quot;center&quot;&gt;&lt;mi&gt;y&lt;/mi&gt;&lt;/mtd&gt;&lt;/mtr&gt;
+    &lt;mtr&gt;&lt;mtd columnalign=&quot;center&quot;&gt;&lt;mi&gt;z&lt;/mi&gt;&lt;/mtd&gt;&lt;/mtr&gt;
+    &lt;mtr&gt;&lt;mtd columnalign=&quot;center&quot;&gt;&lt;mi&gt;w&lt;/mi&gt;&lt;/mtd&gt;&lt;/mtr&gt;
+  &lt;/mtable&gt;
+&lt;/mfenced&gt;</code></pre></div>
+  </mrow>
+</math>
+<h3 id="translation-of-3d-coordinates"><a href="#translation-of-3d-coordinates" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Translation of 3D coordinates</h3>
+<p>Linear transformations on a vector space can not move the origin, they can only scale and rotate.</p>
+<p>Translations leave the <code class="language-text">w</code> coordinate unchanged.</p>
+<p>As can be seen in the general format of the projection matrix, setting <code class="language-text">w</code> to 0 prevents a vector from picking up the translations when multiplied with a 4x4 matrix. (easy to see as the translations are stored in the final column of the transposed matrix)</p>
+<h3 id="perspective-transformation"><a href="#perspective-transformation" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Perspective Transformation</h3>
+<p>Note that in general, a perspective transformation (i.e. multipliying) do change the <code class="language-text">w</code> coordinate of the <code class="language-text">Vector4</code>, so vectors must be "scaled" after transformation when used in JavaScript.</p>
+<p>GPU Note: the GPU automatically divides <code class="language-text">vec4</code> <code class="language-text">xyz</code> components with <code class="language-text">w</code> when they are returned from the vertex shader (when homogenous coordinates are returned from the vertex shader (typically by assigning a <code class="language-text">vec4</code> to <code class="language-text">gl_Position</code>). This can be an important detail to be aware of when comparing JavaScript and GLSL code, and also when working in screen space (post-projection) in the vertex shader, in which case you typically do need to perform the <code class="language-text">w</code> scaling yourself.</p>
+<h2 id="background-information"><a href="#background-information" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Background Information</h2>
+<p>Some fun facts to provide additional context around homogenous coordinates.</p>
+<p>Projective geometry was coordinatized (in the form or homogenous coordinates) in the early 1800s by Plücker and Möbius, almost 200 years after the coordinatization of "affine" geometry by Descartes.</p>
+<p>There is a special <strong>notation</strong> for homogenous coordinate vectors that emphasizes the relative aspect of the values:</p>
+<math>
+  <mfenced open="[" close="]" separators=":::">
+    <mi>x</mi><mi>y</mi><mi>z</mi>
+  </mfenced>
+</math>
+<p>However, in mathematics, one of the most important aspects of projective geometry is that it can be used to avoid handling of <strong>special cases</strong> (this aspect is not used in math.gl). Essentially, in contrast to line equations in affine geometry, projective geometry allows parallel lines to be represented by adding a set of additional points in the form of a "plane at infinity" (which is represented by <code class="language-text">w</code>=<code class="language-text">0</code>). This is powerful as it makes it possible to e.g. make statements about geometry (such as two lines always meet in one point) without having to make tedious exceptions for parallel lines.</p></div></div></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.page={"componentChunkName":"component---ocular-modules-gatsby-src-templates-doc-n-jsx","jsonName":"docs-developer-guide-homogenous-coordinates-0f8","path":"/docs/developer-guide/homogenous-coordinates"};window.dataPath="272/path---docs-developer-guide-homogenous-coordinates-0-f-8-2ce-wRgWyQTs0Z7QBfBXanGpkZMQspM";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"app":["/app.1c76b3141dc16775ce64.css","/app-7172d15c9d7c393440c4.js"],"component---ocular-modules-gatsby-src-templates-index-jsx":["/component---ocular-modules-gatsby-src-templates-index-jsx-b7b9793a2ee783a3275b.js"],"component---ocular-modules-gatsby-src-templates-doc-n-jsx":["/component---ocular-modules-gatsby-src-templates-doc-n-jsx-ec26d881f5ca198daf59.js"],"component---ocular-modules-gatsby-src-templates-search-jsx":["/component---ocular-modules-gatsby-src-templates-search-jsx-247a330bcb851dd2f4ce.js"],"pages-manifest":["/pages-manifest-970c65f4c7e5f7f85877.js"]};/*]]>*/</script><script src="/math/webpack-runtime-e52b03cd2d2e0f0f04ad.js" async=""></script><script src="/math/app-7172d15c9d7c393440c4.js" async=""></script><script src="/math/component---ocular-modules-gatsby-src-templates-doc-n-jsx-ec26d881f5ca198daf59.js" async=""></script></body></html>

@@ -40,4 +40,107 @@
         }
       }
     })
-  </script><link as="script" rel="preload" href="/math/component---ocular-modules-gatsby-src-templates-index-jsx-b7b9793a2ee783a3275b.js"/><link as="script" rel="preload" href="/math/app-7172d15c9d7c393440c4.js"/><link as="script" rel="preload" href="/math/webpack-runtime-e52b03cd2d2e0f0f04ad.js"/><link as="fetch" rel="preload" href="/math/static/d/173/path---index-6a9-NZuapzHg3X9TaN1iIixfv1W23E.json" crossorigin="use-credentials"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" role="group"><main><div class="fg"><section class="banner"><div class="f hero"></div><div class="container"><h1></h1><p></p><a class="btn" href="/math/docs/get-started">GET STARTED</a></div></section><div class="fg p4"><div class="container f fw"><div class="f1 p" style="min-width:10rem"><h2></h2><hr class="short"/></div><div class="f1 p" style="min-width:10rem">...</div></div></div></div></main></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.page={"componentChunkName":"component---ocular-modules-gatsby-src-templates-index-jsx","jsonName":"index","path":"/"};window.dataPath="173/path---index-6a9-NZuapzHg3X9TaN1iIixfv1W23E";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"app":["/app.1c76b3141dc16775ce64.css","/app-7172d15c9d7c393440c4.js"],"component---ocular-modules-gatsby-src-templates-index-jsx":["/component---ocular-modules-gatsby-src-templates-index-jsx-b7b9793a2ee783a3275b.js"],"component---ocular-modules-gatsby-src-templates-doc-n-jsx":["/component---ocular-modules-gatsby-src-templates-doc-n-jsx-ec26d881f5ca198daf59.js"],"component---ocular-modules-gatsby-src-templates-search-jsx":["/component---ocular-modules-gatsby-src-templates-search-jsx-247a330bcb851dd2f4ce.js"],"pages-manifest":["/pages-manifest-970c65f4c7e5f7f85877.js"]};/*]]>*/</script><script src="/math/webpack-runtime-e52b03cd2d2e0f0f04ad.js" async=""></script><script src="/math/app-7172d15c9d7c393440c4.js" async=""></script><script src="/math/component---ocular-modules-gatsby-src-templates-index-jsx-b7b9793a2ee783a3275b.js" async=""></script></body></html>
+  </script><link as="script" rel="preload" href="/math/component---ocular-modules-gatsby-src-templates-doc-n-jsx-ec26d881f5ca198daf59.js"/><link as="script" rel="preload" href="/math/app-7172d15c9d7c393440c4.js"/><link as="script" rel="preload" href="/math/webpack-runtime-e52b03cd2d2e0f0f04ad.js"/><link as="fetch" rel="preload" href="/math/static/d/583/path---docs-developer-guide-view-and-projection-4-f-7-1f3-2mQ8RWaTXk7XUxlyiyfSwNVgio.json" crossorigin="use-credentials"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" role="group"><div><div class="markdown-body"><h2 id="view-and-projection-matrices"><a href="#view-and-projection-matrices" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>View and Projection Matrices</h2>
+<blockquote>
+<p>Note: This article is a work in progress and may contain incorrect information.</p>
+</blockquote>
+<p>Projections in math.gl are concerned with projecting 3D coordinates to a 2D plane (the screen).</p>
+<h2 id="view-and-projection-matrices-1"><a href="#view-and-projection-matrices-1" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>View and Projection Matrices</h2>
+<p>To set up a 4x4 view projection matrix you need a view matrix (specifying the position, direction and orientation of the camera) and a projection matrix (specifying the characteristics of the camera such as its field of view etc).</p>
+<p>The purpose of the view matrix is to translate and rotate your world coordinates so that the eye is located in the origin <code class="language-text">[0, 0, 0]</code>, looking down the positive <code class="language-text">Z</code> axis, rotated so that the right direction is <code class="language-text">up</code>. This is called the "view coordinate system".</p>
+<p>The purpose of the projection matrix is to transform from view coordinates to "clipspace" coordinates (which is the only coordinate system that the GPU can work directly with). If a point is between <code class="language-text">-1</code> and <code class="language-text">1</code> (after <code class="language-text">w</code> scaling) in clipspace, it will be rendered. The <code class="language-text">z</code> coordinate in clipspace is also scaled (using 'near' and 'far' planes) and if between <code class="language-text">-1</code> and <code class="language-text">1</code> it is used for depth test.</p>
+<p>Note: while a projection matrix may generate coordinates with <code class="language-text">w !== 1</code>, the GPU will automatically divide the <code class="language-text">xyzw</code> coordinates with the <code class="language-text">w</code> coordinateof any positions it receives thus and "normalize" the <code class="language-text">w</code> coordinate. Thus, there is no need to do this scaling manually in shaders unless doing additional arithmetic in clipspace.</p>
+<h3 id="creating-a-view-matrix"><a href="#creating-a-view-matrix" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Creating a View Matrix</h3>
+<p>To create a view matrix</p>
+<ul>
+<li><code class="language-text">Matrix4.lookAt({...})</code></li>
+</ul>
+<p>Normally positions are transformed by the view matrix. If doing work (e.g. lighting) in view space you will also want to transform other geometry such as normals.</p>
+<h2 id="projection-matrices"><a href="#projection-matrices" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Projection Matrices</h2>
+<p>Projection matrices typically show everything inside a frustum (truncated pyramid) or a cube in the view space. Their job is to "scale" or "skew" the geometry inside this virtual shape into the clipspace cube, which is the coordinate system the GPU takes as input.</p>
+<h3 id="perspective-projection-matrix"><a href="#perspective-projection-matrix" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Perspective Projection Matrix</h3>
+<p>To create a projection matrix use:</p>
+<ul>
+<li><code class="language-text">Matrix4.perspective({fov, aspect, near, far})</code></li>
+</ul>
+<h3 id="creating-an-orthographic-projection-matrix"><a href="#creating-an-orthographic-projection-matrix" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Creating an Orthographic Projection Matrix</h3>
+<p>math.gl provides the traditional function create an orhtographic projection matrix by providing the "box" extents:</p>
+<ul>
+<li><code class="language-text">Matrix4.ortho({right, left, top, bottom, near, far})</code></li>
+</ul>
+<p>The extents are specified in "view space" (which is typically translated and rotated, but not scaled, world space).</p>
+<h3 id="switching-between-perspective-and-orthographic-views"><a href="#switching-between-perspective-and-orthographic-views" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Switching between Perspective and Orthographic Views</h3>
+<p>In applications it is not unusual to want to offer both perspective and orthographic views. To support this case, math.gl offers an additional method for creating orthographic projection matrix, that takes the same parameters as <code class="language-text">Matrix4.perspective()</code>, with the addition of one additional parameter, <code class="language-text">focalDistance</code> that selects which plane in the perspective view frustum should be used to calculate the size of the orthographic view box.</p>
+<ul>
+<li><code class="language-text">Matrix4.orthographic({fovy, aspect, focalDistance, near, far})</code></li>
+</ul>
+<h2 id="about-projection-matrices"><a href="#about-projection-matrices" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>About Projection Matrices</h2>
+<p>An ortograhic projection matrix essentially just scales your view to show everything within a box. As can be seen in the matrix below, it just centers your view between the bounds of the box, and scales your positions so that the box limits fall on -1 and +1 in each direction. It also does an inversion of the X and Y coordinates.</p>
+<math display="block">
+  <mrow>
+    <mfenced open="[" close="]">
+    <mtable>
+      <mtr>
+        <mtd columnalign="center"><msub><mi>scale</mi><mn>x</mn></msub></mtd>
+        <mtd columnalign="center"><mi>...</mi></mtd>
+        <mtd columnalign="center"><mi>...</mi></mtd>
+        <mtd columnalign="center"><msub><mi>translate</mi><mi>x</mi></msub></mtd>
+      </mtr>
+      <mtr>
+        <mtd columnalign="center"><mi>...</mi></mtd>
+        <mtd columnalign="center"><msub><mi>scale</mi><mn>y</mn></msub></mtd>
+        <mtd columnalign="center"><mi>...</mi></mtd>
+        <mtd columnalign="center"><msub><mi>translate</mi><mi>y</mi></msub></mtd>
+      </mtr>
+      <mtr>
+        <mtd columnalign="center"><mi>...</mi></mtd>
+        <mtd columnalign="center"><mi>...</mi></mtd>
+        <mtd columnalign="center"><msub><mi>scale</mi><mn>z</mn></msub></mtd>
+        <mtd columnalign="center"><msub><mi>translate</mi><mi>z</mi></msub></mtd>
+      </mtr>
+      <mtr>
+        <mtd columnalign="center"><mi>...</mi></mtd>
+        <mtd columnalign="center"><mi>...</mi></mtd>
+        <mtd columnalign="center"><mi>...</mi></mtd>
+        <mtd columnalign="center"><msub><mi>scale</mi><mi>global</mi></msub></mtd>
+      </mtr>
+    </mtable>
+    </mfenced>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">&lt;mo&gt;=&lt;/mo&gt;
+
+&lt;mfenced open=&quot;[&quot; close=&quot;]&quot;&gt;
+&lt;mtable&gt;
+  &lt;mtr&gt;
+    &lt;mtd columnalign=&quot;center&quot;&gt;&lt;mfrac&gt;&lt;mn&gt;-2&lt;/mn&gt;&lt;mi&gt;left - right&lt;/mi&gt;&lt;/mfrac&gt;&lt;/mtd&gt;
+    &lt;mtd columnalign=&quot;center&quot;&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;/mtd&gt;
+    &lt;mtd columnalign=&quot;center&quot;&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;/mtd&gt;
+    &lt;mtd columnalign=&quot;center&quot;&gt;&lt;mfrac&gt;&lt;mi&gt;left + right&lt;/mi&gt;&lt;mi&gt;left - right&lt;/mi&gt;&lt;/mfrac&gt;&lt;/mtd&gt;
+  &lt;/mtr&gt;
+  &lt;mtr&gt;
+    &lt;mtd columnalign=&quot;center&quot;&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;/mtd&gt;
+    &lt;mtd columnalign=&quot;center&quot;&gt;&lt;mfrac&gt;&lt;mn&gt;-2&lt;/mn&gt;&lt;mi&gt;bottom - top&lt;/mi&gt;&lt;/mfrac&gt;&lt;/mtd&gt;
+    &lt;mtd columnalign=&quot;center&quot;&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;/mtd&gt;
+    &lt;mtd columnalign=&quot;center&quot;&gt;&lt;mfrac&gt;&lt;mi&gt;bottom + top&lt;/mi&gt;&lt;mi&gt;bottom - top&lt;/mi&gt;&lt;/mfrac&gt;&lt;/mtd&gt;
+  &lt;/mtr&gt;
+  &lt;mtr&gt;
+    &lt;mtd columnalign=&quot;center&quot;&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;/mtd&gt;
+    &lt;mtd columnalign=&quot;center&quot;&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;/mtd&gt;
+    &lt;mtd columnalign=&quot;center&quot;&gt;&lt;mfrac&gt;&lt;mn&gt;2&lt;/mn&gt;&lt;mi&gt;near - far&lt;/mi&gt;&lt;/mfrac&gt;&lt;/mtd&gt;
+    &lt;mtd columnalign=&quot;center&quot;&gt;&lt;mfrac&gt;&lt;mi&gt;near + far&lt;/mi&gt;&lt;mi&gt;near - far&lt;/mi&gt;&lt;/mfrac&gt;&lt;/mtd&gt;
+  &lt;/mtr&gt;
+  &lt;mtr&gt;
+    &lt;mtd columnalign=&quot;center&quot;&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;/mtd&gt;
+    &lt;mtd columnalign=&quot;center&quot;&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;/mtd&gt;
+    &lt;mtd columnalign=&quot;center&quot;&gt;&lt;mn&gt;0&lt;/mn&gt;&lt;/mtd&gt;
+    &lt;mtd columnalign=&quot;center&quot;&gt;&lt;mn&gt;1&lt;/mn&gt;&lt;/mtd&gt;
+  &lt;/mtr&gt;
+&lt;/mtable&gt;
+&lt;/mfenced&gt;</code></pre></div>
+  </mrow>
+</math>
+<h2 id="decomposing-a-viewprojection-matrix"><a href="#decomposing-a-viewprojection-matrix" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Decomposing a ViewProjection Matrix</h2>
+<p>TBA</p>
+<h2 id="remarks"><a href="#remarks" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Remarks</h2>
+<ul>
+<li>As always, matrices are presented here in row major notation, however math.gl stores them internally in column major format to match WebGL requirements.</li>
+</ul></div></div></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.page={"componentChunkName":"component---ocular-modules-gatsby-src-templates-doc-n-jsx","jsonName":"docs-developer-guide-view-and-projection-4f7","path":"/docs/developer-guide/view-and-projection"};window.dataPath="583/path---docs-developer-guide-view-and-projection-4-f-7-1f3-2mQ8RWaTXk7XUxlyiyfSwNVgio";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"app":["/app.1c76b3141dc16775ce64.css","/app-7172d15c9d7c393440c4.js"],"component---ocular-modules-gatsby-src-templates-index-jsx":["/component---ocular-modules-gatsby-src-templates-index-jsx-b7b9793a2ee783a3275b.js"],"component---ocular-modules-gatsby-src-templates-doc-n-jsx":["/component---ocular-modules-gatsby-src-templates-doc-n-jsx-ec26d881f5ca198daf59.js"],"component---ocular-modules-gatsby-src-templates-search-jsx":["/component---ocular-modules-gatsby-src-templates-search-jsx-247a330bcb851dd2f4ce.js"],"pages-manifest":["/pages-manifest-970c65f4c7e5f7f85877.js"]};/*]]>*/</script><script src="/math/webpack-runtime-e52b03cd2d2e0f0f04ad.js" async=""></script><script src="/math/app-7172d15c9d7c393440c4.js" async=""></script><script src="/math/component---ocular-modules-gatsby-src-templates-doc-n-jsx-ec26d881f5ca198daf59.js" async=""></script></body></html>

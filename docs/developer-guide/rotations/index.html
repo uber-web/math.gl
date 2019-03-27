@@ -40,4 +40,140 @@
         }
       }
     })
-  </script><link as="script" rel="preload" href="/math/component---ocular-modules-gatsby-src-templates-index-jsx-b7b9793a2ee783a3275b.js"/><link as="script" rel="preload" href="/math/app-7172d15c9d7c393440c4.js"/><link as="script" rel="preload" href="/math/webpack-runtime-e52b03cd2d2e0f0f04ad.js"/><link as="fetch" rel="preload" href="/math/static/d/173/path---index-6a9-NZuapzHg3X9TaN1iIixfv1W23E.json" crossorigin="use-credentials"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" role="group"><main><div class="fg"><section class="banner"><div class="f hero"></div><div class="container"><h1></h1><p></p><a class="btn" href="/math/docs/get-started">GET STARTED</a></div></section><div class="fg p4"><div class="container f fw"><div class="f1 p" style="min-width:10rem"><h2></h2><hr class="short"/></div><div class="f1 p" style="min-width:10rem">...</div></div></div></div></main></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.page={"componentChunkName":"component---ocular-modules-gatsby-src-templates-index-jsx","jsonName":"index","path":"/"};window.dataPath="173/path---index-6a9-NZuapzHg3X9TaN1iIixfv1W23E";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"app":["/app.1c76b3141dc16775ce64.css","/app-7172d15c9d7c393440c4.js"],"component---ocular-modules-gatsby-src-templates-index-jsx":["/component---ocular-modules-gatsby-src-templates-index-jsx-b7b9793a2ee783a3275b.js"],"component---ocular-modules-gatsby-src-templates-doc-n-jsx":["/component---ocular-modules-gatsby-src-templates-doc-n-jsx-ec26d881f5ca198daf59.js"],"component---ocular-modules-gatsby-src-templates-search-jsx":["/component---ocular-modules-gatsby-src-templates-search-jsx-247a330bcb851dd2f4ce.js"],"pages-manifest":["/pages-manifest-970c65f4c7e5f7f85877.js"]};/*]]>*/</script><script src="/math/webpack-runtime-e52b03cd2d2e0f0f04ad.js" async=""></script><script src="/math/app-7172d15c9d7c393440c4.js" async=""></script><script src="/math/component---ocular-modules-gatsby-src-templates-index-jsx-b7b9793a2ee783a3275b.js" async=""></script></body></html>
+  </script><link as="script" rel="preload" href="/math/component---ocular-modules-gatsby-src-templates-doc-n-jsx-ec26d881f5ca198daf59.js"/><link as="script" rel="preload" href="/math/app-7172d15c9d7c393440c4.js"/><link as="script" rel="preload" href="/math/webpack-runtime-e52b03cd2d2e0f0f04ad.js"/><link as="fetch" rel="preload" href="/math/static/d/547/path---docs-developer-guide-rotations-13-b-14d-RPufjpTUhl4CGITfdF6sgJJTU.json" crossorigin="use-credentials"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" role="group"><div><div class="markdown-body"><h1 id="3d-rotations"><a href="#3d-rotations" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>3D Rotations</h1>
+<blockquote>
+<p>Note: This article is a work in progress and may contain incorrect information.</p>
+</blockquote>
+<p>math.gl provides a "standard 3D library complement" of mathematical classes for handling rotations in 2D and 3D, such as classes for manipulating <code class="language-text">Euler</code> angles and <code class="language-text">Quaternion</code>s. As in any 3D math library, the key goals are enabling applications to easily and intuitively specify (parametrize) rotations, combine them with other rotations and other transformations, and ultimately transform points with the rotations or resulting transformations.</p>
+<p>While math.gl is intended to help programmers' implement the typical 3D application's rotation functionality with a minimum amount of knowledge, and does not even attempt to support rotations in more than 3 dimensions, it should be pointed out that the mathematical treatment of rotations can be very complicated. For some context on this see the background section at the end of this article.</p>
+<h3 id="properties-of-3d-rotations"><a href="#properties-of-3d-rotations" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Properties of 3D Rotations</h3>
+<ul>
+<li>In contrast to 2D rotations, 3D rotations are not order-independent, meaning that applying the same two rotations in different order will often yield different results.</li>
+<li>However, by <a href="https://en.wikipedia.org/wiki/Euler%27s_rotation_theorem">Euler's Rotation Theorem</a>, two 3D rotations around the origin can always be expressed as (combined into) another single 3D rotation around the origin.</li>
+<li>A 3D rotation requires a minimum of three values to be fully specified (and even then can require careful definitions of which conventions are used).</li>
+</ul>
+<p>Also, a simple observation: Rotations around arbitrary points can be treated as rotations around the origin simply by applying a translation before the rotation, and the inverse translation after the rotation. Therefore, for simplicity, this discussion focuses solely on rotations around the origin.</p>
+<h2 id="parametrizing-3d-rotations"><a href="#parametrizing-3d-rotations" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Parametrizing 3D Rotations</h2>
+<p>A minimum of three values are required to fully specify a 3D rotation (another result of Euler's), e.g, Euler angles or unit quaternions.</p>
+<p>However in many cases the best way to specify a rotation is to use four parameters: an axis and an angle.</p>
+<table>
+<thead>
+<tr>
+<th>Representation</th>
+<th>Interpolation</th>
+<th>Addition</th>
+<th>Transforming points</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Vector/Angle</td>
+<td>-</td>
+<td>-</td>
+<td>Good</td>
+</tr>
+<tr>
+<td>Quaternion</td>
+<td>Excellent</td>
+<td>Excellent</td>
+<td>Good</td>
+</tr>
+<tr>
+<td>4x4 Matrix</td>
+<td>-</td>
+<td>Excellent</td>
+<td>Excellent</td>
+</tr>
+<tr>
+<td>Euler angle</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<h3 id="rotation-axis-and-angle"><a href="#rotation-axis-and-angle" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Rotation Axis and Angle</h3>
+<p>Per the Euler Rotation Theorem, any two 3D rotations can be combined into a single 3D rotation. A single 3D rotation happens around an axis, and the rotation is a certain angle. This means that it is possible to specify a rotation using four very understanable values: an axis and an angle.</p>
+<h3 id="euler-angles"><a href="#euler-angles" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Euler Angles</h3>
+<p>One of the more "human readable" representation of a 3D rotation is the "Euler angle", simplistically, an "Euler angle" completely specifies a rotation using only 3 values, which are all "human readable" angles around the three coordinate axes, which is very appealing.</p>
+<p>However, the conventions for <a href="https://en.wikipedia.org/wiki/Euler_angles">Euler angle values</a> can vary in a number of ways. Following three.js, the math.gl <code class="language-text">Euler</code> class uses intrinsic Tait-Bryan angles.</p>
+<p>Note that the large number of representations means that Euler angles exchanged between e.g. different software systems may not be directly compatible (and in addition, converting between the various representations is not exactly easy), so unless care is taken this can cause "mind-numbing" confusion.</p>
+<p>Because of the variability, a good approach is often to be extremely careful when importing and exporting Euler angles from your code, and convert angle Euler angles to Matrix or Quaternion representations (which are much less ambiguous) for further manipulation.</p>
+<h3 id="unit-quaternions"><a href="#unit-quaternions" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Unit Quaternions</h3>
+<p>"Unit quaternions" are normally the best representation for "manipulation" of 3D rotations. Manpulation here mainly refers to the "composition" or "addition" and interpolation of rotations.</p>
+<p>Note that unit quaternions are simply quaternions of norm (or length) equal to <code class="language-text">1</code>, and while a general quaternion (as the name suggests) contains four components, a unit quaternion needs only three values to be fully specified.</p>
+<p>Unit quaternions can be used to model 3 dimensional rotations.</p>
+<p>qr<em>v</em>qr-1</p>
+<p>Interpolation of quaternions is done using Spherical Linear intERPolation (aka SLERP).</p>
+<h2 id="rotation-matrices"><a href="#rotation-matrices" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Rotation Matrices</h2>
+<p>When combining rotations with other transformations (translations, scalings, projections etc), 4x4 matrices are the representation of choice.</p>
+<h2 id="properties-of-rotation-matrices"><a href="#properties-of-rotation-matrices" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Properties of Rotation Matrices</h2>
+<p>A rotation matrix</p>
+<p>  T
+RR  = I</p>
+<p>Note that a matrix R satisfying this can also include an inversion (improper rotation matrix)</p>
+<h2 id="converting-between-rotation-representations"><a href="#converting-between-rotation-representations" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Converting between Rotation Representations</h2>
+<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js"><span class="token keyword">new</span> <span class="token class-name">Euler</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">new</span> <span class="token class-name">Euler</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre></div>
+<h2 id="executing-rotation-transformations"><a href="#executing-rotation-transformations" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Executing Rotation Transformations</h2>
+<p>While Euler angles are often a good way to specify 3D rotations, they can not directly be used to transfor points or vectors. To do that, they have to be converted to . </p>
+<h2 id="rotations-using-rotation-matrices"><a href="#rotations-using-rotation-matrices" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Rotations using Rotation Matrices</h2>
+<p>A rotation matrix</p>
+<p>  T
+RR  = I</p>
+<h2 id="combining-rotations"><a href="#combining-rotations" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Combining Rotations</h2>
+<p>The fact that rotations. They can either be combined as w</p>
+<p>Math with Euler Angles</p>
+<p>Math with Quaternions</p>
+<h2 id="interpolating-rotations"><a href="#interpolating-rotations" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Interpolating Rotations</h2>
+<p>To avoid issues with gimbal locks and flips, it is recommended to use quaternions when interpolating rotations.</p>
+<p>Calculate the quaternion that represents the rotation you want to apply (e.g. moves the start rotation to the target rotation), and then just interpolate q with the identity quaternion using <code class="language-text">slerp()</code>. The resulting quaternion can then be used directly to transform <code class="language-text">Vector</code>s or it can be transformed into a <code class="language-text">Matrix4</code> transformation matrix.</p>
+<div class="gatsby-highlight" data-language="js"><pre class="language-js"><code class="language-js">  <span class="token keyword">const</span> qUnit <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Quaternion</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">const</span> qTarget <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Quaternion</span><span class="token punctuation">(</span><span class="token operator">...</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> ratio <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> ratio <span class="token operator">&lt;</span> <span class="token number">1.0</span><span class="token punctuation">;</span> ratio <span class="token operator">+=</span> <span class="token number">0.1</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  	<span class="token keyword">const</span> qInterpolated <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Quaternion</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">slerp</span><span class="token punctuation">(</span>qUnit<span class="token punctuation">,</span> qTarget<span class="token punctuation">,</span> ratio<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span></code></pre></div>
+<h2 id="background-rotations-are-complicated"><a href="#background-rotations-are-complicated" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Background: Rotations are Complicated</h2>
+<p>If you are new to working with rotations and the amount of complications outlined in this article seem overwhelming, take some comfort in the fact that rotations in three and higher dimensional spaces are indeed quite complicated to treat mathematically.</p>
+<p>As an example, several fundamental properties of rotations are highly dependent on the number of dimensions involved. To help the reader who has not worked extensively with rotations build some "intuition" for the fact that 3D rotations are non-trivial, the following summary shows how the nice, structured properties of 2D rotations gradually disappear as the number of dimensions increase:</p>
+<ul>
+<li>
+<p>In two dimensions, rotations are highly structured and intuitive:</p>
+<ul>
+<li>A series of 2D rotations can be applied in any order (they commute).</li>
+<li>Any 2D rotation can be fully parametrized by a single value (the "angle").
+The combination of two 2D rotations can always be expressed as another single rotation (simply by taking the sum of the angles of the two rotations).</li>
+</ul>
+</li>
+<li>
+<p>In three dimensions rotation start to loose some structure:</p>
+<ul>
+<li>In 3D, rotations are no longer order-independent (they are not commutative), meaning that applying the same two rotations in different order will often yield different results.</li>
+<li>However, by <a href="https://en.wikipedia.org/wiki/Euler%27s_rotation_theorem">Euler's Rotation Theorem</a>, two 3D rotations around the origin can still always be expressed as (combined into) another single 3D rotation around the origin.</li>
+<li>Also, a 3D rotation requires not two, but a minimum of three values to be fully specified.</li>
+</ul>
+</li>
+<li>
+<p>To give some contrast, in four and higher dimensions:</p>
+<ul>
+<li>Naturally, rotations still no longer commutative.</li>
+<li>And worse: Euler's Rotation Theorem no longer holds. There are now two different types of basic rotations, and the combination of two rotations will in general not result in another "rotation", but another, more complex transformation.</li>
+<li>In addition, the number of parameters (degrees of freedom) required to fully specify a rotation grows with mind-boggling rapidity, as 2^(n-1) - 1, meaning that e.g. a "21 dimensional rotation" would require over one million values to be fully specified!</li>
+</ul>
+</li>
+</ul>
+<h2 id="background-more-on-euler-angles"><a href="#background-more-on-euler-angles" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Background: More on Euler Angles</h2>
+<p><a href="https://en.wikipedia.org/wiki/Euler_angles">Euler angle values</a></p>
+<ul>
+<li><strong>Axis Order</strong> - the order of rotations needs to be defined. There are 6 ways to order rotations around the three axis.</li>
+<li><strong>Choice of Axes</strong> - "Classic Euler" angles follow a Z-Y-Z, convention, rotating around the same angle first and last. However, in modern applications (e.g. Aerospace and Nautical), the "Tait-Brya"</li>
+<li><strong>Intrinsic or Extrinsic</strong> - One one also needs to define whether the angles are intrinsic or extrinsic.
+As a comparison:</li>
+<li>three.js <code class="language-text">Euler</code> class uses intrinsic Tait-Bryan angles. "Intrinsic" means that rotations are performed with respect to the local coordinate system. That is, for order 'XYZ', the rotation is first around the local-X axis (which is the same as the world-X axis), then around local-Y (which may now be different from the world Y-axis), then local-Z (which may be different from the world Z-axis).</li>
+</ul>
+<h2 id="remarks"><a href="#remarks" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Remarks</h2>
+<ul>
+<li>In this article, the word "axes" represents the plural of a (coordinate) "axis" (normally, the word "axes" refers to the X, Y and Z coordinate axes).</li>
+<li><strong>Note</strong> that one of the most efficient way to specify rotations is to use the Euler-Rodrigues parameters, which has some of the quaternion representation without requiring the introduction of quaternion algebra. math.gl does not directly support this representation though although the vector/angle can easily be converted.</li>
+</ul></div></div></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.page={"componentChunkName":"component---ocular-modules-gatsby-src-templates-doc-n-jsx","jsonName":"docs-developer-guide-rotations-13b","path":"/docs/developer-guide/rotations"};window.dataPath="547/path---docs-developer-guide-rotations-13-b-14d-RPufjpTUhl4CGITfdF6sgJJTU";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"app":["/app.1c76b3141dc16775ce64.css","/app-7172d15c9d7c393440c4.js"],"component---ocular-modules-gatsby-src-templates-index-jsx":["/component---ocular-modules-gatsby-src-templates-index-jsx-b7b9793a2ee783a3275b.js"],"component---ocular-modules-gatsby-src-templates-doc-n-jsx":["/component---ocular-modules-gatsby-src-templates-doc-n-jsx-ec26d881f5ca198daf59.js"],"component---ocular-modules-gatsby-src-templates-search-jsx":["/component---ocular-modules-gatsby-src-templates-search-jsx-247a330bcb851dd2f4ce.js"],"pages-manifest":["/pages-manifest-970c65f4c7e5f7f85877.js"]};/*]]>*/</script><script src="/math/webpack-runtime-e52b03cd2d2e0f0f04ad.js" async=""></script><script src="/math/app-7172d15c9d7c393440c4.js" async=""></script><script src="/math/component---ocular-modules-gatsby-src-templates-doc-n-jsx-ec26d881f5ca198daf59.js" async=""></script></body></html>

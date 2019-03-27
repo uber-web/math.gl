@@ -40,4 +40,116 @@
         }
       }
     })
-  </script><link as="script" rel="preload" href="/math/component---ocular-modules-gatsby-src-templates-index-jsx-b7b9793a2ee783a3275b.js"/><link as="script" rel="preload" href="/math/app-7172d15c9d7c393440c4.js"/><link as="script" rel="preload" href="/math/webpack-runtime-e52b03cd2d2e0f0f04ad.js"/><link as="fetch" rel="preload" href="/math/static/d/173/path---index-6a9-NZuapzHg3X9TaN1iIixfv1W23E.json" crossorigin="use-credentials"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" role="group"><main><div class="fg"><section class="banner"><div class="f hero"></div><div class="container"><h1></h1><p></p><a class="btn" href="/math/docs/get-started">GET STARTED</a></div></section><div class="fg p4"><div class="container f fw"><div class="f1 p" style="min-width:10rem"><h2></h2><hr class="short"/></div><div class="f1 p" style="min-width:10rem">...</div></div></div></div></main></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.page={"componentChunkName":"component---ocular-modules-gatsby-src-templates-index-jsx","jsonName":"index","path":"/"};window.dataPath="173/path---index-6a9-NZuapzHg3X9TaN1iIixfv1W23E";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"app":["/app.1c76b3141dc16775ce64.css","/app-7172d15c9d7c393440c4.js"],"component---ocular-modules-gatsby-src-templates-index-jsx":["/component---ocular-modules-gatsby-src-templates-index-jsx-b7b9793a2ee783a3275b.js"],"component---ocular-modules-gatsby-src-templates-doc-n-jsx":["/component---ocular-modules-gatsby-src-templates-doc-n-jsx-ec26d881f5ca198daf59.js"],"component---ocular-modules-gatsby-src-templates-search-jsx":["/component---ocular-modules-gatsby-src-templates-search-jsx-247a330bcb851dd2f4ce.js"],"pages-manifest":["/pages-manifest-970c65f4c7e5f7f85877.js"]};/*]]>*/</script><script src="/math/webpack-runtime-e52b03cd2d2e0f0f04ad.js" async=""></script><script src="/math/app-7172d15c9d7c393440c4.js" async=""></script><script src="/math/component---ocular-modules-gatsby-src-templates-index-jsx-b7b9793a2ee783a3275b.js" async=""></script></body></html>
+  </script><link as="script" rel="preload" href="/math/component---ocular-modules-gatsby-src-templates-doc-n-jsx-ec26d881f5ca198daf59.js"/><link as="script" rel="preload" href="/math/app-7172d15c9d7c393440c4.js"/><link as="script" rel="preload" href="/math/webpack-runtime-e52b03cd2d2e0f0f04ad.js"/><link as="fetch" rel="preload" href="/math/static/d/57/path---docs-wip-features-bc-8-079-rPHfTxO5h2aBMi6q1O38e8Lia0U.json" crossorigin="use-credentials"/></head><body><div id="___gatsby"><div style="outline:none" tabindex="-1" role="group"><div><div class="markdown-body"><h1 id="features"><a href="#features" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Features</h1>
+<p>See <a href="undefined">features</a> for more details.</p>
+<p>This document is Work-In-Progress.</p>
+<h2 id="array-based"><a href="#array-based" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Array-based</h2>
+<div class="gatsby-highlight" data-language="text"><pre class="language-text"><code class="language-text">- All math objects can be used directly with any Javascript
+  function that expects array arguments. No need to call `toArray`
+  or similar.
+- Math objects are `Arrays` - All math objects are subclasses of the built-in
+  JavaScript `Array` class, which means that class instances can be used
+  wherever an array is expected. I.e. these classes are not wrappers of
+  `Array`s, they **are** `Array`s, just with additional methods.</code></pre></div>
+<p>This allows you to keep your API functions general (the accept general arrays and so are not tied to a specific math library).</p>
+<ul>
+<li>
+<p><strong>Debugging</strong></p>
+<ul>
+<li>Optional error checking after every math operation makes quick work of locating coding errors and bad data.</li>
+<li>Printing support simplifies debugging</li>
+<li>Only minor performance impact, and can be disabled when performance is critical.</li>
+</ul>
+</li>
+<li>
+<p><strong>WebGL-friendly</strong></p>
+<ul>
+<li>Column Major atrices: while all accessors, <code class="language-text">toString()</code> etc are row-major.
+matrices are organized internally in the layout expected
+by WebGL (an array of contiguous floats in column-major order),</li>
+<li><code class="language-text">toArray</code> and <code class="language-text">fromArray</code> functions take optional offsets allowing
+copying directly to and from vertex attribute array.</li>
+<li>GLSL math functions (radians, sin etc) made available in JavaScript
+and work both on scalars and vectors / math objects.</li>
+</ul>
+</li>
+<li>
+<p><strong>Documentation</strong></p>
+<ul>
+<li>Most JavaScript 3D math libraries come with a reference documentation only. It can be a </li>
+</ul>
+</li>
+<li>
+<p><strong>Size Conscious</strong></p>
+<ul>
+<li>A math library can quickly get big as a various , gl-matrix is a good example, there are a number of modules on npm that contain subsets of gl-matrix to work around its size.</li>
+<li>Focus on functions that are likely to be most important in WebGL applications.</li>
+</ul>
+</li>
+</ul>
+<h2 id="supported-browsers"><a href="#supported-browsers" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Supported Browsers</h2>
+<p>Some background:</p>
+<ul>
+<li>math.gl classes are subclasses of the built-in JavaScript <code class="language-text">Array</code>. <code class="language-text">Array</code> subclassing is an ES6/JS2015 feature. This feature (even after being transpiled to ES5) does not work with older browsers.</li>
+<li>For details of the technical complication, see (<a href="https://github.com/loganfsmyth/babel-plugin-transform-builtin-extend">babel-plugin-transform-builtin-extend</a>).</li>
+</ul>
+<h2 id="overview"><a href="#overview" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Overview</h2>
+<p>math.gl is a JavaScript math library primarily intended to support WebGL applications. It is a generic library but was developed as a companion for <a href="http://uber.github.io/luma.gl/">luma.gl</a> and <a href="http://uber.github.io/deck.gl/">deck.gl</a>.</p>
+<p>math.gl contains a set of classes (Matrix4 etc) to complement the procedural interface of gl-matrix. It also imports a limited subset of the standard <code class="language-text">gl-matrix</code> functions (to keep bundle size down), these can be used in parallel with the classes.</p>
+<h2 id="who-is-this-for"><a href="#who-is-this-for" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Who is this for?</h2>
+<p>JavaScript WebGL programmers who:</p>
+<ul>
+<li>Need a great JavaScript math library for basic computional geometry purposes.</li>
+<li>like the functionality offered by the gl-matrix library</li>
+<li>need tree-shaking support</li>
+<li>want to use object orientated math programming style (ability to chain operations).</li>
+<li>want optional extra error checking</li>
+<li>do not need to support old (pre-IE10) browsers.</li>
+</ul>
+<h2 id="features-1"><a href="#features-1" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Features</h2>
+<ul>
+<li>
+<p><strong>Array-based</strong></p>
+<ul>
+<li>All math objects can be used directly with any Javascript function that expects array arguments. No need to call <code class="language-text">toArray</code> or similar.</li>
+</ul>
+</li>
+<li>
+<p><strong>Error checking</strong> to assist in debugging.</p>
+<ul>
+<li>Can be disabled when performance is critical.</li>
+</ul>
+</li>
+<li>
+<p><strong>WebGL-friendly</strong></p>
+<ul>
+<li>Matrices: while all accessors, <code class="language-text">toString()</code> etc are row-major. Matrices are organized internally in the layout expected by WebGL (an array of contiguous floats in column-major order),</li>
+<li><code class="language-text">toArray</code> and <code class="language-text">fromArray</code> functions take optional offsets allowing copying directly to and from vertex attribute arrays.</li>
+<li>GLSL math functions (radians, sin etc) made available in JavaScript and work both on scalars and vectors / math objects.</li>
+</ul>
+</li>
+</ul>
+<h1 id="design-notes"><a href="#design-notes" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Design Notes</h1>
+<ul>
+<li>
+<p>Math objects are <code class="language-text">Arrays</code> - All math objects are subclasses of the built-in JavaScript <code class="language-text">Array</code> class, which means that class instances can be used wherever an array is expected. I.e. these classes are not wrappers of <code class="language-text">Array</code>s, they <strong>are</strong> <code class="language-text">Array</code>s, just with additional methods.</p>
+</li>
+<li>
+<p>Focuses on needs of WebGL based applications and basic computational geometry, which includes 4x4 matrices, 2, 3 and 4 dimensional vectors and quaternions. May grow to include other classes, but is not intended to become a general math library.</p>
+</li>
+</ul>
+<h1 id="history"><a href="#history" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>History</h1>
+<ul>
+<li>Started out as a set of object oriented wrappers for the procedural <a href="http://glmatrix.net/">gl-matrix</a> library.</li>
+</ul>
+<h1 id="roadmap"><a href="#roadmap" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Roadmap</h1>
+<ul>
+<li>Additional classes and functions. This library might grow beyond just providing <code class="language-text">gl-matrix</code> wrappers if additional classes are deemed valuable for the target user group.</li>
+</ul>
+<h2 id="api-differences-with-gl-matrix"><a href="#api-differences-with-gl-matrix" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>API differences with gl-matrix</h2>
+<p>The class API is intentionally designed to remain intuitively similar to the wrapped <code class="language-text">gl-matrix</code> procedures, usually just removing the first one or two parameters from each function (the out argument and the first input arguments, both are implictly set to this), and exposes the remaining arguments in the same order as the gl-matrix api.</p>
+<p>Only in a few cases where <code class="language-text">gl-matrix</code> methods take a long list arguments (e.g. <code class="language-text">mat4.perspective</code>, <code class="language-text">mat4.ortho</code> etc) or return multiple values (e.g. <code class="language-text">quat.getAxisRotation</code>) do methods provide a modified API that is more natural for modern ES6 applications to use, e.g. using named parameters, or collecting all results in one returned object.</p>
+<p>Also, for transforming vectors with matrices, the <code class="language-text">transformVector*</code> methods are offered in the matrix classes, instead of on the vector classes. They also (optionally) auto allocate the result vectors.</p>
+<h2 id="caveats"><a href="#caveats" aria-hidden class="anchor"><svg aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Caveats</h2>
+<p>A technical caveat is that JavaScript <code class="language-text">Array</code> subclassing, which is fundamental to the design of this library, is only supported on "evergreen" browsers, such as Chrome, Safari, Firefox, Edge etc, i.e. no Internet Explorer &#x3C; 10 (<a href="https://github.com/loganfsmyth/babel-plugin-transform-builtin-extend">details</a>).</p>
+<p>If this is not acceptable, math.gl is not the right choice for you. As a fallback, you can always use <code class="language-text">gl-matrix</code> directly.</p></div></div></div></div><script id="gatsby-script-loader">/*<![CDATA[*/window.page={"componentChunkName":"component---ocular-modules-gatsby-src-templates-doc-n-jsx","jsonName":"docs-wip-features-bc8","path":"/docs/wip/features"};window.dataPath="57/path---docs-wip-features-bc-8-079-rPHfTxO5h2aBMi6q1O38e8Lia0U";/*]]>*/</script><script id="gatsby-chunk-mapping">/*<![CDATA[*/window.___chunkMapping={"app":["/app.1c76b3141dc16775ce64.css","/app-7172d15c9d7c393440c4.js"],"component---ocular-modules-gatsby-src-templates-index-jsx":["/component---ocular-modules-gatsby-src-templates-index-jsx-b7b9793a2ee783a3275b.js"],"component---ocular-modules-gatsby-src-templates-doc-n-jsx":["/component---ocular-modules-gatsby-src-templates-doc-n-jsx-ec26d881f5ca198daf59.js"],"component---ocular-modules-gatsby-src-templates-search-jsx":["/component---ocular-modules-gatsby-src-templates-search-jsx-247a330bcb851dd2f4ce.js"],"pages-manifest":["/pages-manifest-970c65f4c7e5f7f85877.js"]};/*]]>*/</script><script src="/math/webpack-runtime-e52b03cd2d2e0f0f04ad.js" async=""></script><script src="/math/app-7172d15c9d7c393440c4.js" async=""></script><script src="/math/component---ocular-modules-gatsby-src-templates-doc-n-jsx-ec26d881f5ca198daf59.js" async=""></script></body></html>
