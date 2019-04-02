@@ -49,25 +49,19 @@ module.exports = {
       text: 'Size Conscious',
       desc: 'A math library can quickly get big as a various classed and functions keep getting added. But for many 3D applications, only a few basic operations are necessary. math.gl has made a choices to restrict itself to a set of classes and functions that are likely to be most important in WebGL applications. The intention is to position math.gl as a "mid-size" 3D math library: reasonably full featured, but small enough that unless you are targeting a very small final bundle for your application, its size should not be a big concern.',
       img: 'images/icon-layers.svg'
-    }  
+    }
   ],
 
   ADDITIONAL_LINKS: [],
- 
+
   GA_TRACKING: null,
 
   // For showing star counts and contributors.
   // Should be like btoa('YourUsername:YourKey') and should be readonly.
   GITHUB_KEY: null,
 
-  // TODO/ib - from gatsby starter, clean up
+  // TODO - from gatsby starter, remove once ocular is updated
   siteUrl: "https://ocular", // Domain of your website without pathPrefix.
   pathPrefix: "/math.gl/", // Prefixes all links. For cases when deployed to example.github.io/gatsby-advanced-starter/.
-  siteRss: "/rss.xml", // Path to the RSS file.
-  dateFromFormat: "YYYY-MM-DD", // Date format used in the frontmatter.
-  dateFormat: "DD/MM/YYYY", // Date format for display.
-  userName: "WebGL User", // Username to display in the author segment.
-  copyright: "Copyright © 2019 Uber. MIT Licensed", // Copyright string for the footer of the website and RSS feed.
-  themeColor: "#c62828", // Used for setting manifest and progress theme colors.
-  backgroundColor: "#e0e0e0" // Used for setting manifest background color.
+  siteRss: "/rss.xml" // Path to the RSS file.
 };
