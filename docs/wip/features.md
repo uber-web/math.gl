@@ -1,6 +1,5 @@
-See [features](./doc/get-started/features.md) for more details.
-
 # Features
+See [features](./doc/get-started/features.md) for more details.
 
 This document is Work-In-Progress.
 
