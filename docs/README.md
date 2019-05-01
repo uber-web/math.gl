@@ -1,4 +1,4 @@
-# math.gl
+# Introduction
 
 math.gl is a JavaScript class library for 3D math. It provides the traditional 3D classes (vectors, matrices etc).
 

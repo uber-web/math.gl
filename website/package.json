@@ -10,12 +10,18 @@
     "clean": "rm -rf ./.cache ./public",
     "develop": "gatsby develop",
     "build": "gatsby build",
-    "serve": "gatsby serve"
+    "serve": "gatsby serve",
+    "deploy": "NODE_DEBUG=gh-pages gh-pages -d public"
   },
   "dependencies": {
-    "gatsby": "2.2.0-rc.2",
-    "gatsby-plugin-styletron": "^3.0.5",
-    "ocular-gatsby": "1.0.0-alpha.16"
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "gatsby": "^2.3.0",
+    "gatsby-plugin-styletron": "^3.0.5",
+    "gh-pages": "^2.0.1",
+    "ocular-gatsby": "1.0.0-alpha.21",
+    "sharp": "0.22"
+  }
 }
