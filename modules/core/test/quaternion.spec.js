@@ -19,9 +19,9 @@
 // THE SOFTWARE.
 
 /* eslint-disable*/
-import Matrix4 from 'math.gl/matrix4';
-import Pose from 'math.gl/pose';
-import Quaternion from 'math.gl/quaternion';
+import {Matrix4} from 'math.gl';
+import {Pose} from 'math.gl';
+import {Quaternion} from 'math.gl';
 import {equals} from 'math.gl';
 
 import test from 'tape-catch';

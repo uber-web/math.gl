@@ -1,5 +1,5 @@
-export default function assert(condition, message) {
-  if (!condition) {
-    throw new Error(`Assertion failed. ${message}`);
+export default function assert(x, m) {
+  if (!x) {
+    throw new Error(m);
   }
 }

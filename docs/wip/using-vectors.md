@@ -1,6 +1,6 @@
-# About the Vector Classes
+# About the Vector Classes (WIP)
 
-This document is Work-In-Progress.
+> This document is Work-In-Progress.
 
 Two, three and four dimensional vector classes
 

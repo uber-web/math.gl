@@ -19,23 +19,11 @@
       ]
     },
     {
-      "title": "Getting Started",
-      "entries": [
-        {
-          "name": "Overview",
-          "entry": "docs/get-started/README"
-        },
-        {
-          "entry": "docs/get-started/using-with-gl-matrix"
-        },
-        {
-          "entry": "docs/get-started/using-with-three-js"
-        }
-      ]
-    },
-    {
       "title": "Developer Guide",
       "entries": [
+        {
+          "entry": "docs/developer-guide/get-started"
+        },
         {
           "entry": "docs/developer-guide/coordinate-systems"
         },
@@ -65,6 +53,12 @@
         },
         {
           "entry": "docs/wip/using-vectors"
+        },
+        {
+          "entry": "docs/developer-guide/using-with-gl-matrix"
+        },
+        {
+          "entry": "docs/developer-guide/using-with-three-js"
         }
       ]
     },
@@ -79,6 +73,12 @@
             },
             {
               "entry": "docs/api-reference/math-array"
+            },
+            {
+              "entry": "docs/api-reference/matrix"
+            },
+            {
+              "entry": "docs/api-reference/matrix3"
             },
             {
               "entry": "docs/api-reference/matrix4"
@@ -96,6 +96,9 @@
               "entry": "docs/api-reference/utilities"
             },
             {
+              "entry": "docs/api-reference/vector"
+            },
+            {
               "entry": "docs/api-reference/vector2"
             },
             {
@@ -110,7 +113,7 @@
           "title": "Add-ons",
           "entries": [
             {
-              "entry": "docs/api-reference/addons/polygon.md"
+              "entry": "docs/api-reference/addons/polygon"
             }
           ]
         }

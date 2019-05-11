@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import {isArray, radians, equals, lerp, config} from 'math.gl';
+import {isArray, radians, equals, exactEquals, lerp, config, Vector2} from 'math.gl';
 // import {tapeEquals} from './index';
 import test from 'tape-catch';
 
@@ -58,7 +58,34 @@ test('math.equals', t => {
   );
   t.notOk(
     equals([1.0, 2.0], new Float32Array([1.0, 3.0])),
+    'should return false for Array and TypedArray with different values'
+  );
+  t.ok(
+    equals([1.0, 2.0], new Vector2([1.0, 2.0])),
+    'should return true for Array and Vector2 with same values'
+  );
+  t.end();
+});
+
+test('math.exactEquals', t => {
+  t.notOk(exactEquals(1.0, 0.0), 'should return false for different numbers');
+  t.ok(exactEquals(1.0, 1.0), 'should return true for the same number');
+  t.notOk(
+    exactEquals(1.0 + config.EPSILON / 2, 1.0),
+    'should return false for numbers that are close'
+  );
+  t.ok(exactEquals([1.0, 2.0], [1.0, 2.0]), 'should return true for Arrays  with same values');
+  t.notOk(
+    exactEquals([1.0, 2.0], new Float32Array([1.0, 2.0])),
     'should return false for Array and TypedArray with same values'
+  );
+  t.notOk(
+    exactEquals([1.0, 2.0], new Float32Array([1.0, 3.0])),
+    'should return false for Array and TypedArray with different values'
+  );
+  t.notOk(
+    exactEquals([1.0, 2.0], new Vector2([1.0, 2.0])),
+    'should return false for Array and Vector2 with same values'
   );
   t.end();
 });

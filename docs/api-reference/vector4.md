@@ -17,7 +17,12 @@ Setting `w` to 0 prevents translation when multiplied with a 4x4 matrix.
 
 ```js
 import {Vector4} from 'math.gl';
+const vector = new Vector4(1, 1, 1, 0);
 ```
+
+## Inheritance
+
+`class Vector4 extends [Vector](./docs/api-reference/vector) extends [MathArray](./docs/api-reference/math-array) extends [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)`
 
 ## Members
 

@@ -1,8 +1,5 @@
 ## View and Projection Matrices
 
-> Note: This article is a work in progress and may contain incorrect information.
-
-
 Projections in math.gl are concerned with projecting 3D coordinates to a 2D plane (the screen).
 
 

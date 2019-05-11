@@ -20,22 +20,22 @@ config.precision = 4;
 
 ## Functions
 
-### configure
+#### configure
 
 `configure(options)`
 
 
-### checkNumber
+#### checkNumber
 
 `checkNumber(value)`
 
 
-### formatValue
+#### formatValue
 
 `formatValue(value, precision = config.precision || 4)`
 
 
-### isArray
+#### isArray
 
 Returns true if value is either an array or a typed array
 
@@ -44,73 +44,102 @@ Returns true if value is either an array or a typed array
 Note: does not return true for ArrayBuffers and DataViews
 
 
-### clone
+#### clone
 
 `clone(array)If the array has a clone function, calls it, otherwise returns a copy`
 
 
-### radians
+#### toRadians
+
+`toRadians(degrees)`
+
+Works on single values and vectors
+
+
+#### toDegrees
+
+`toDegrees(radians)`
+
+Works on single values and vectors
+
+
+#### equals
+
+`equals(a, b, epsilon)`
+
+- Works on single values and vectors
+- Numeric values need to be closer than `config.EPSILON`
+- Objects will be compared with their `.equals()` method if present.
+
+
+#### exactEquals
+
+`exactEquals(a, b)`
+
+- Works on single values and vectors.
+- Numeric values need to be exactly identical
+- Objects will be compared with their `.exactEquals()` method if present.
+
+
+## GLSL equivalents
+
+#### radians
 
 `radians(degrees)`
 
 GLSL equivalent: Works on single values and vectors
 
 
-### degrees
+#### degrees
 
 `degrees(radians)`
 
 GLSL equivalent: Works on single values and vectors
 
 
-### sin
+#### sin
 
 `sin(radians)`
 
 GLSL equivalent: Works on single values and vectors
 
 
-### cos
+#### cos
 
 `cos(radians)`
 
 GLSL equivalent: Works on single values and vectors
 
 
-### tan
+#### tan
 
 `tan(radians)`
 
 GLSL equivalent: Works on single values and vectors
 
 
-### asin
+#### asin
 
 `asin(radians)`
 
 GLSL equivalent: Works on single values and vectors
 
 
-### acos
+#### acos
 
 `acos(radians)`
 
 GLSL equivalent: Works on single values and vectors
 
 
-### atan
+#### atan
 
 `atan(radians)`
 
 
-### clamp
+#### clamp
 
 `clamp(value, min, max)`
-
-
-### equals
-
-`equals(a, b)`
 
 
 ## Remarks

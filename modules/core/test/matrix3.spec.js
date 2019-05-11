@@ -115,8 +115,8 @@ test('Matrix3#set', t => {
 });
 
 test('Matrix3#getElement and setElement', t => {
-  t.equals(typeof Matrix3.prototype.setElement, 'function');
-  t.equals(typeof Matrix3.prototype.getElement, 'function');
+  t.equals(typeof new Matrix3().setElement, 'function');
+  t.equals(typeof new Matrix3().getElement, 'function');
 
   const INPUT = INDICES_MATRIX;
 
@@ -131,6 +131,27 @@ test('Matrix3#getElement and setElement', t => {
   m.setElement(2, 1, VALUE, true);
   result = m.getElement(2, 1, true);
   tapeEquals(t, result, VALUE, 'getElement gave the right result');
+
+  t.end();
+});
+
+test('Matrix3#getColumn and setColumn', t => {
+  t.equals(typeof new Matrix3().setColumn, 'function');
+  t.equals(typeof new Matrix3().getColumn, 'function');
+
+  const INPUT = INDICES_MATRIX;
+
+  const m = new Matrix3().set(...INPUT);
+
+  tapeEquals(t, m.getColumn(0), [1, 2, 3]);
+  tapeEquals(t, m.getColumn(1), [4, 5, 6]);
+  tapeEquals(t, m.getColumn(2), [7, 8, 9]);
+
+  m.setColumn(1, [6, -5, 4]);
+
+  tapeEquals(t, m.getColumn(0), [1, 2, 3]);
+  tapeEquals(t, m.getColumn(1), [6, -5, 4]);
+  tapeEquals(t, m.getColumn(2), [7, 8, 9]);
 
   t.end();
 });
