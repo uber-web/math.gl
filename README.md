@@ -2,18 +2,18 @@
   <a href="https://npmjs.org/package/math.gl">
     <img src="https://img.shields.io/npm/v/math.gl.svg?style=flat-square" alt="version" />
   </a>
-  <a href="https://travis-ci.org/uber-web/math.gl">
-    <img src="https://img.shields.io/travis/uber-web/math.gl/master.svg?style=flat-square" alt="build" />
+  <a href="https://travis-ci.com/uber-web/math.gl">
+    <img src="https://api.travis-ci.com/uber-web/math.gl.svg?branch=master" alt="build" />
   </a>
   <a href="https://npmjs.org/package/math.gl">
     <img src="https://img.shields.io/npm/dm/math.gl.svg?style=flat-square" alt="downloads" />
   </a>
-  <a href="http://starveller.sigsev.io/uber-web/math.gl">
-    <img src="http://starveller.sigsev.io/api/repos/uber-web/math.gl/badge" alt="stars" />
+  <!--
+  <a href='https://coveralls.io/github/uber-web/math.gl?branch=master'>
+    <img src='https://img.shields.io/coveralls/uber-web/math.gl.svg?style=flat-square' alt='Coverage Status' />
   </a>
+  -->
 </p>
-
-[![Build Status](https://travis-ci.org/ibgreen/math.gl.svg)](https://travis-ci.org/ibgreen/math.gl)
 
 <h1 align="center">math.gl | <a href="https://math.gl">Docs</a></h1>
 
