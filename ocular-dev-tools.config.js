@@ -2,12 +2,13 @@ const {resolve} = require('path');
 
 module.exports = {
   lint: {
-    paths: ['src', 'test', 'examples'],
+    paths: ['modules', 'test', 'examples'],
     extensions: ['js']
   },
 
   aliases: {
-    'math.gl/test': resolve(__dirname, './test')
+    // TEST
+    test: resolve(__dirname, './test')
   },
 
   entry: {

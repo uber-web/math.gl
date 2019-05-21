@@ -1,11 +1,6 @@
 import MathArray from './math-array';
 import {checkNumber} from './common';
-// import assert from 'assert';
-const assert = (x, m) => {
-  if (!x) {
-    throw new Error(m);
-  }
-};
+import assert from './assert';
 
 export default class Vector extends MathArray {
   // ACCESSORS
