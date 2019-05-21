@@ -31,7 +31,7 @@ import {Matrix4} from 'math.gl';
 import {x, y, z, w, eps} from './constants';
 
 // INSTANCING
-test('Vector4#Instancing', assert => {
+test('three.js#Vector4#Instancing', assert => {
   let a = new Vector4();
   assert.ok(a.x === 0, 'Passed!');
   assert.ok(a.y === 0, 'Passed!');
@@ -46,7 +46,7 @@ test('Vector4#Instancing', assert => {
   assert.end();
 });
 
-test('Vector4#set', assert => {
+test('three.js#Vector4#set', assert => {
   const a = new Vector4();
   assert.ok(a.x === 0, 'Passed!');
   assert.ok(a.y === 0, 'Passed!');
@@ -61,47 +61,47 @@ test('Vector4#set', assert => {
   assert.end();
 });
 
-test('Vector4#setScalar', assert => {
+test('three.js#Vector4#setScalar', assert => {
   assert.pass("everything's gonna be alright");
   assert.end();
 });
 
-test('Vector4#setX', assert => {
+test('three.js#Vector4#setX', assert => {
   assert.pass("everything's gonna be alright");
   assert.end();
 });
 
-test('Vector4#setY', assert => {
+test('three.js#Vector4#setY', assert => {
   assert.pass("everything's gonna be alright");
   assert.end();
 });
 
-test('Vector4#setZ', assert => {
+test('three.js#Vector4#setZ', assert => {
   assert.pass("everything's gonna be alright");
   assert.end();
 });
 
-test('Vector4#setW', assert => {
+test('three.js#Vector4#setW', assert => {
   assert.pass("everything's gonna be alright");
   assert.end();
 });
 
-test('Vector4#setComponent', assert => {
+test('three.js#Vector4#setComponent', assert => {
   assert.pass("everything's gonna be alright");
   assert.end();
 });
 
-test('Vector4#getComponent', assert => {
+test('three.js#Vector4#getComponent', assert => {
   assert.pass("everything's gonna be alright");
   assert.end();
 });
 
-test('Vector4#clone', assert => {
+test('three.js#Vector4#clone', assert => {
   assert.pass("everything's gonna be alright");
   assert.end();
 });
 
-test('Vector4#copy', assert => {
+test('three.js#Vector4#copy', assert => {
   const a = new Vector4(x, y, z, w);
   const b = new Vector4().copy(a);
   assert.ok(b.x === x, 'Passed!');
@@ -121,7 +121,7 @@ test('Vector4#copy', assert => {
   assert.end();
 });
 
-test('Vector4#add', assert => {
+test('three.js#Vector4#add', assert => {
   const a = new Vector4(x, y, z, w);
   const b = new Vector4(-x, -y, -z, -w);
 
@@ -139,17 +139,17 @@ test('Vector4#add', assert => {
   assert.end();
 });
 
-test('Vector4#addScalar', assert => {
+test('three.js#Vector4#addScalar', assert => {
   assert.pass("everything's gonna be alright");
   assert.end();
 });
 
-test('Vector4#addVectors', assert => {
+test('three.js#Vector4#addVectors', assert => {
   assert.pass("everything's gonna be alright");
   assert.end();
 });
 
-test('Vector4#addScaledVector', assert => {
+test('three.js#Vector4#addScaledVector', assert => {
   const a = new Vector4(x, y, z, w);
   const b = new Vector4(6, 7, 8, 9);
   const s = 3;
@@ -162,7 +162,7 @@ test('Vector4#addScaledVector', assert => {
   assert.end();
 });
 
-test('Vector4#sub', assert => {
+test('three.js#Vector4#sub', assert => {
   const a = new Vector4(x, y, z, w);
   const b = new Vector4(-x, -y, -z, -w);
 
@@ -180,22 +180,22 @@ test('Vector4#sub', assert => {
   assert.end();
 });
 
-test('Vector4#subScalar', assert => {
+test('three.js#Vector4#subScalar', assert => {
   assert.pass("everything's gonna be alright");
   assert.end();
 });
 
-test('Vector4#subVectors', assert => {
+test('three.js#Vector4#subVectors', assert => {
   assert.pass("everything's gonna be alright");
   assert.end();
 });
 
-test('Vector4#multiplyScalar', assert => {
+test('three.js#Vector4#multiplyScalar', assert => {
   assert.pass("everything's gonna be alright");
   assert.end();
 });
 
-test('Vector4#applyMatrix4', assert => {
+test('three.js#Vector4#applyMatrix4', assert => {
   var a = new Vector4(x, y, z, w);
   var m = new Matrix4().makeRotationX(Math.PI);
   var expected = new Vector4(2, -3, -4, 5);
@@ -241,37 +241,37 @@ test('Vector4#applyMatrix4', assert => {
   assert.end();
 });
 
-test('Vector4#divideScalar', assert => {
+test('three.js#Vector4#divideScalar', assert => {
   assert.pass("everything's gonna be alright");
   assert.end();
 });
 
-test('Vector4#setAxisAngleFromQuaternion', assert => {
+test('three.js#Vector4#setAxisAngleFromQuaternion', assert => {
   assert.pass("everything's gonna be alright");
   assert.end();
 });
 
-test('Vector4#setAxisAngleFromRotationMatrix', assert => {
+test('three.js#Vector4#setAxisAngleFromRotationMatrix', assert => {
   assert.pass("everything's gonna be alright");
   assert.end();
 });
 
-test('Vector4#min', assert => {
+test('three.js#Vector4#min', assert => {
   assert.pass("everything's gonna be alright");
   assert.end();
 });
 
-test('Vector4#max', assert => {
+test('three.js#Vector4#max', assert => {
   assert.pass("everything's gonna be alright");
   assert.end();
 });
 
-test('Vector4#clamp', assert => {
+test('three.js#Vector4#clamp', assert => {
   assert.pass("everything's gonna be alright");
   assert.end();
 });
 
-test('Vector4#clampScalar', assert => {
+test('three.js#Vector4#clampScalar', assert => {
   var a = new Vector4(-0.1, 0.01, 0.5, 1.5);
   var clamped = new Vector4(0.1, 0.1, 0.5, 1.0);
 
@@ -283,32 +283,32 @@ test('Vector4#clampScalar', assert => {
   assert.end();
 });
 
-test('Vector4#clampLength', assert => {
+test('three.js#Vector4#clampLength', assert => {
   assert.pass("everything's gonna be alright");
   assert.end();
 });
 
-test('Vector4#floor', assert => {
+test('three.js#Vector4#floor', assert => {
   assert.pass("everything's gonna be alright");
   assert.end();
 });
 
-test('Vector4#ceil', assert => {
+test('three.js#Vector4#ceil', assert => {
   assert.pass("everything's gonna be alright");
   assert.end();
 });
 
-test('Vector4#round', assert => {
+test('three.js#Vector4#round', assert => {
   assert.pass("everything's gonna be alright");
   assert.end();
 });
 
-test('Vector4#roundToZero', assert => {
+test('three.js#Vector4#roundToZero', assert => {
   assert.pass("everything's gonna be alright");
   assert.end();
 });
 
-test('Vector4#negate', assert => {
+test('three.js#Vector4#negate', assert => {
   var a = new Vector4(x, y, z, w);
 
   a.negate();
@@ -319,7 +319,7 @@ test('Vector4#negate', assert => {
   assert.end();
 });
 
-test('Vector4#dot', assert => {
+test('three.js#Vector4#dot', assert => {
   const a = new Vector4(x, y, z, w);
   const b = new Vector4(-x, -y, -z, -w);
   const c = new Vector4(0, 0, 0, 0);
@@ -332,17 +332,17 @@ test('Vector4#dot', assert => {
   assert.end();
 });
 
-test('Vector4#lengthSq', assert => {
+test('three.js#Vector4#lengthSq', assert => {
   assert.pass("everything's gonna be alright");
   assert.end();
 });
 
-test('Vector4#length', assert => {
+test('three.js#Vector4#length', assert => {
   assert.pass("everything's gonna be alright");
   assert.end();
 });
 
-test.skip('Vector4#manhattanLength', assert => {
+test.skip('three.js#Vector4#manhattanLength', assert => {
   const a = new Vector4(x, 0, 0, 0);
   const b = new Vector4(0, -y, 0, 0);
   const c = new Vector4(0, 0, z, 0);
@@ -363,7 +363,7 @@ test.skip('Vector4#manhattanLength', assert => {
   assert.end();
 });
 
-test('Vector4#normalize', assert => {
+test('three.js#Vector4#normalize', assert => {
   const a = new Vector4(x, 0, 0, 0);
   const b = new Vector4(0, -y, 0, 0);
   const c = new Vector4(0, 0, z, 0);
@@ -387,7 +387,7 @@ test('Vector4#normalize', assert => {
   assert.end();
 });
 
-test.skip('Vector4#setLength', assert => {
+test.skip('three.js#Vector4#setLength', assert => {
   let a = new Vector4(x, 0, 0, 0);
 
   assert.ok(a.len() === x, 'Passed!');
@@ -403,17 +403,17 @@ test.skip('Vector4#setLength', assert => {
   assert.end();
 });
 
-test('Vector4#lerp', assert => {
+test('three.js#Vector4#lerp', assert => {
   assert.pass("everything's gonna be alright");
   assert.end();
 });
 
-test('Vector4#lerpVectors', assert => {
+test('three.js#Vector4#lerpVectors', assert => {
   assert.pass("everything's gonna be alright");
   assert.end();
 });
 
-test('Vector4#equals', assert => {
+test('three.js#Vector4#equals', assert => {
   const a = new Vector4(x, 0, z, 0);
   const b = new Vector4(0, -y, 0, -w);
 
@@ -436,7 +436,7 @@ test('Vector4#equals', assert => {
   assert.end();
 });
 
-test('Vector4#fromArray', assert => {
+test('three.js#Vector4#fromArray', assert => {
   const a = new Vector4();
   const array = [1, 2, 3, 4, 5, 6, 7, 8];
 
@@ -454,7 +454,7 @@ test('Vector4#fromArray', assert => {
   assert.end();
 });
 
-test('Vector4#toArray', assert => {
+test('three.js#Vector4#toArray', assert => {
   const a = new Vector4(x, y, z, w);
 
   let array = a.toArray();
@@ -481,7 +481,7 @@ test('Vector4#toArray', assert => {
 });
 
 /*
-test.skip('Vector4#fromBufferAttribute', assert => {
+test.skip('three.js#Vector4#fromBufferAttribute', assert => {
   var a = new Vector4();
   var attr = new BufferAttribute(new Float32Array([1, 2, 3, 4, 5, 6, 7, 8]), 4);
 
@@ -500,7 +500,7 @@ test.skip('Vector4#fromBufferAttribute', assert => {
 */
 
 // TODO (Itee) refactor/split
-test.skip('Vector4#setX,setY,setZ,setW', assert => {
+test.skip('three.js#Vector4#setX,setY,setZ,setW', assert => {
   var a = new Vector4();
   assert.ok(a.x === 0, 'Passed!');
   assert.ok(a.y === 0, 'Passed!');
@@ -519,7 +519,7 @@ test.skip('Vector4#setX,setY,setZ,setW', assert => {
   assert.end();
 });
 
-test('Vector4#setComponent,getComponent', assert => {
+test('three.js#Vector4#setComponent,getComponent', assert => {
   var a = new Vector4();
   assert.ok(a.x === 0, 'Passed!');
   assert.ok(a.y === 0, 'Passed!');
@@ -537,7 +537,7 @@ test('Vector4#setComponent,getComponent', assert => {
   assert.end();
 });
 
-test('Vector4#setComponent/getComponent exceptions', assert => {
+test('three.js#Vector4#setComponent/getComponent exceptions', assert => {
   var a = new Vector4();
 
   assert.throws(
@@ -553,7 +553,7 @@ test('Vector4#setComponent/getComponent exceptions', assert => {
   assert.end();
 });
 
-test('Vector4#setScalar/addScalar/subScalar', assert => {
+test('three.js#Vector4#setScalar/addScalar/subScalar', assert => {
   var a = new Vector4();
   var s = 3;
 
@@ -577,7 +577,7 @@ test('Vector4#setScalar/addScalar/subScalar', assert => {
   assert.end();
 });
 
-test('Vector4#multiply/divide', assert => {
+test('three.js#Vector4#multiply/divide', assert => {
   var a = new Vector4(x, y, z, w);
   var b = new Vector4(-x, -y, -z, -w);
 
@@ -607,7 +607,7 @@ test('Vector4#multiply/divide', assert => {
   assert.end();
 });
 
-test('Vector4#min/max/clamp', assert => {
+test('three.js#Vector4#min/max/clamp', assert => {
   const a = new Vector4(x, y, z, w);
   const b = new Vector4(-x, -y, -z, -w);
   const c = new Vector4();
@@ -633,7 +633,7 @@ test('Vector4#min/max/clamp', assert => {
   assert.end();
 });
 
-test('Vector4#length/lengthSq', assert => {
+test('three.js#Vector4#length/lengthSq', assert => {
   const a = new Vector4(x, 0, 0, 0);
   const b = new Vector4(0, -y, 0, 0);
   const c = new Vector4(0, 0, z, 0);
@@ -657,7 +657,7 @@ test('Vector4#length/lengthSq', assert => {
   assert.end();
 });
 
-test('Vector4#lerp/clone', assert => {
+test('three.js#Vector4#lerp/clone', assert => {
   const a = new Vector4(x, 0, z, 0);
   const b = new Vector4(0, -y, 0, -w);
 

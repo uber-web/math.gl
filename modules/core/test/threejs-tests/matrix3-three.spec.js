@@ -64,7 +64,7 @@ function toMatrix4(m3) {
 }
 
 // INSTANCING
-test('Matrix3#Instancing', assert => {
+test('three.js#Matrix3#Instancing', assert => {
   var a = new Matrix3();
   assert.ok(a.determinant() === 1, 'Passed!');
 
@@ -83,11 +83,11 @@ test('Matrix3#Instancing', assert => {
 });
 
 // PUBLIC STUFF
-test.skip('Matrix3#isMatrix3', assert => {
+test.skip('three.js#Matrix3#isMatrix3', assert => {
   assert.ok(false, "everything's gonna be alright");
 });
 
-test('Matrix3#set', assert => {
+test('three.js#Matrix3#set', assert => {
   var b = new Matrix3();
   assert.ok(b.determinant() === 1, 'Passed!');
 
@@ -103,7 +103,7 @@ test('Matrix3#set', assert => {
   assert.ok(b.elements[8] === 8);
 });
 
-test('Matrix3#identity', assert => {
+test('three.js#Matrix3#identity', assert => {
   var b = new Matrix3().set(0, 1, 2, 3, 4, 5, 6, 7, 8);
   assert.ok(b.elements[0] === 0);
   assert.ok(b.elements[1] === 3);
@@ -122,7 +122,7 @@ test('Matrix3#identity', assert => {
   assert.ok(matrixEquals3(a, b), 'Passed!');
 });
 
-test('Matrix3#clone', assert => {
+test('three.js#Matrix3#clone', assert => {
   var a = new Matrix3().set(0, 1, 2, 3, 4, 5, 6, 7, 8);
   var b = a.clone();
 
@@ -133,7 +133,7 @@ test('Matrix3#clone', assert => {
   assert.ok(!matrixEquals3(a, b), 'Passed!');
 });
 
-test('Matrix3#copy', assert => {
+test('three.js#Matrix3#copy', assert => {
   var a = new Matrix3().set(0, 1, 2, 3, 4, 5, 6, 7, 8);
   var b = new Matrix3().copy(a);
 
@@ -144,12 +144,12 @@ test('Matrix3#copy', assert => {
   assert.ok(!matrixEquals3(a, b), 'Passed!');
 });
 
-test.skip('Matrix3#setFromMatrix4', assert => {
+test.skip('three.js#Matrix3#setFromMatrix4', assert => {
   assert.ok(false, "everything's gonna be alright");
 });
 
 /*
-test('Matrix3#applyToBufferAttribute', assert => {
+test('three.js#Matrix3#applyToBufferAttribute', assert => {
   var a = new Matrix3().set(1, 2, 3, 4, 5, 6, 7, 8, 9);
   var attr = new Float32BufferAttribute([1, 2, 1, 3, 0, 3], 3);
   var expected = new Float32Array([8, 20, 32, 12, 30, 48]);
@@ -160,7 +160,7 @@ test('Matrix3#applyToBufferAttribute', assert => {
 });
 */
 
-test('Matrix3#multiply/premultiply', assert => {
+test('three.js#Matrix3#multiply/premultiply', assert => {
   // both simply just wrap multiplyMatrices
   var a = new Matrix3().set(2, 3, 5, 7, 11, 13, 17, 19, 23);
   var b = new Matrix3().set(29, 31, 37, 41, 43, 47, 53, 59, 61);
@@ -175,7 +175,7 @@ test('Matrix3#multiply/premultiply', assert => {
   assert.deepEqual(a.elements, expectedPremultiply, 'premultiply: check result');
 });
 
-test('Matrix3#multiplyMatrices', assert => {
+test('three.js#Matrix3#multiplyMatrices', assert => {
   // Reference:
   //
   // #!/usr/bin/env python
@@ -208,7 +208,7 @@ test('Matrix3#multiplyMatrices', assert => {
   assert.ok(ans.elements[8] === 2925);
 });
 
-test('Matrix3#multiplyScalar', assert => {
+test('three.js#Matrix3#multiplyScalar', assert => {
   var b = new Matrix3().set(0, 1, 2, 3, 4, 5, 6, 7, 8);
   assert.ok(b.elements[0] === 0);
   assert.ok(b.elements[1] === 3);
@@ -232,7 +232,7 @@ test('Matrix3#multiplyScalar', assert => {
   assert.ok(b.elements[8] === 8 * 2);
 });
 
-test('Matrix3#determinant', assert => {
+test('three.js#Matrix3#determinant', assert => {
   var a = new Matrix3();
   assert.ok(a.determinant() === 1, 'Passed!');
 
@@ -247,7 +247,7 @@ test('Matrix3#determinant', assert => {
   assert.ok(a.determinant() === -73, 'Passed!');
 });
 
-test('Matrix3#getInverse', assert => {
+test('three.js#Matrix3#getInverse', assert => {
   var identity = new Matrix3();
   var identity4 = new Matrix4();
   var a = new Matrix3();
@@ -293,7 +293,7 @@ test('Matrix3#getInverse', assert => {
   }
 });
 
-test('Matrix3#transpose', assert => {
+test('three.js#Matrix3#transpose', assert => {
   var a = new Matrix3();
   let b = a.clone().transpose();
   assert.ok(matrixEquals3(a, b), 'Passed!');
@@ -305,7 +305,7 @@ test('Matrix3#transpose', assert => {
   assert.ok(matrixEquals3(b, c), 'Passed!');
 });
 
-test('Matrix3#getNormalMatrix', assert => {
+test('three.js#Matrix3#getNormalMatrix', assert => {
   var a = new Matrix3();
   var b = new Matrix4().set(2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 57);
   var expected = new Matrix3().set(
@@ -324,11 +324,11 @@ test('Matrix3#getNormalMatrix', assert => {
   assert.ok(matrixEquals3(a, expected), 'Check resulting Matrix3');
 });
 
-test.skip('Matrix3#transposeIntoArray', assert => {
+test.skip('three.js#Matrix3#transposeIntoArray', assert => {
   assert.ok(false, "everything's gonna be alright");
 });
 
-test('Matrix3#setUvTransform', assert => {
+test('three.js#Matrix3#setUvTransform', assert => {
   var a = new Matrix3().set(
     0.1767766952966369,
     0.17677669529663687,
@@ -383,7 +383,7 @@ test('Matrix3#setUvTransform', assert => {
   assert.ok(matrixEquals3(b, expected), 'Check indirect method');
 });
 
-test('Matrix3#scale', assert => {
+test('three.js#Matrix3#scale', assert => {
   var a = new Matrix3().set(1, 2, 3, 4, 5, 6, 7, 8, 9);
   var expected = new Matrix3().set(0.25, 0.5, 0.75, 1, 1.25, 1.5, 7, 8, 9);
 
@@ -391,7 +391,7 @@ test('Matrix3#scale', assert => {
   assert.ok(matrixEquals3(a, expected), 'Check scaling result');
 });
 
-test('Matrix3#rotate', assert => {
+test('three.js#Matrix3#rotate', assert => {
   var a = new Matrix3().set(1, 2, 3, 4, 5, 6, 7, 8, 9);
   var expected = new Matrix3().set(
     3.5355339059327373,
@@ -409,7 +409,7 @@ test('Matrix3#rotate', assert => {
   assert.ok(matrixEquals3(a, expected), 'Check rotated result');
 });
 
-test('Matrix3#translate', assert => {
+test('three.js#Matrix3#translate', assert => {
   var a = new Matrix3().set(1, 2, 3, 4, 5, 6, 7, 8, 9);
   var expected = new Matrix3().set(22, 26, 30, 53, 61, 69, 7, 8, 9);
 
@@ -417,7 +417,7 @@ test('Matrix3#translate', assert => {
   assert.ok(matrixEquals3(a, expected), 'Check translation result');
 });
 
-test('Matrix3#equals', assert => {
+test('three.js#Matrix3#equals', assert => {
   var a = new Matrix3().set(0, 1, 2, 3, 4, 5, 6, 7, 8);
   var b = new Matrix3().set(0, -1, 2, 3, 4, 5, 6, 7, 8);
 
@@ -429,11 +429,11 @@ test('Matrix3#equals', assert => {
   assert.ok(b.equals(a), 'Check that b equals a after copy()');
 });
 
-test.skip('Matrix3#fromArray', assert => {
+test.skip('three.js#Matrix3#fromArray', assert => {
   assert.ok(false, "everything's gonna be alright");
 });
 
-test('Matrix3#toArray', assert => {
+test('three.js#Matrix3#toArray', assert => {
   var a = new Matrix3().set(1, 2, 3, 4, 5, 6, 7, 8, 9);
   var noOffset = [1, 4, 7, 2, 5, 8, 3, 6, 9];
   var withOffset = [undefined, 1, 4, 7, 2, 5, 8, 3, 6, 9];
