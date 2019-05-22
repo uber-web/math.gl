@@ -4,9 +4,9 @@ sudo: required
 dist: trusty
 addons:
 node_js:
-  - '6'
   - '8'
   - '10'
+  - '12'
 before_script:
   - npm run build
 script:

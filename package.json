@@ -30,11 +30,11 @@
     "gl-matrix": "^3.0.0"
   },
   "devDependencies": {
-    "@probe.gl/bench": "^3.0.0",
-    "@probe.gl/test-utils": "^3.0.0",
+    "@probe.gl/bench": "^3.0.2",
+    "@probe.gl/test-utils": "^3.0.2",
     "babel-plugin-transform-builtin-extend": "^1.1.2",
     "npx": "^10.2.0",
-    "ocular-dev-tools": "0.0.19",
+    "ocular-dev-tools": "0.0.24",
     "pre-commit": "^1.2.2",
     "reify": "^0.18.1",
     "prettier": "^1.11.1",
@@ -44,12 +44,7 @@
     "tap-browser-color": "^0.1.2",
     "tape": "^4.5.1",
     "tape-catch": "^1.0.4",
-    "transform-loader": "^0.2.3",
-    "uglify-js": "^2.6.1",
-    "uglifyjs-webpack-plugin": "^1.2.4",
-    "webpack": "^2.6",
-    "webpack-bundle-analyzer": "^2.11.1",
-    "webpack-dev-server": "^2.6"
+    "transform-loader": "^0.2.3"
   },
   "nyc": {
     "sourceMap": false,
