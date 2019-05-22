@@ -11,7 +11,7 @@
     "modules/*"
   ],
   "scripts": {
-    "bootstrap": "yarn && ocular-bootstrap",
+    "bootstrap": "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true yarn && ocular-bootstrap",
     "clean": "ocular-clean",
     "build": "ocular-build",
     "cover": "ocular-test cover",
