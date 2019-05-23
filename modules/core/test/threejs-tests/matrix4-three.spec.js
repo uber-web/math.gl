@@ -27,10 +27,10 @@
 /* eslint-disable */
 import test from 'tape-catch';
 
-import Matrix4 from 'math.gl/matrix4';
-import Vector3 from 'math.gl/vector3';
-import Euler from 'math.gl/euler';
-import Quaternion from 'math.gl/quaternion';
+import {Matrix4} from 'math.gl';
+import {Vector3} from 'math.gl';
+import {Euler} from 'math.gl';
+import {Quaternion} from 'math.gl';
 
 import {_Math} from 'math.gl';
 import {eps} from './constants';

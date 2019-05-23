@@ -1,9 +1,5 @@
 # Matrix4
 
-```js
-class Matrix4 extends MathArray extends Array
-```
-
 A 4x4 matrix. Any arguments can be plain JavaScript arrays or other `math.gl` objects.
 
 ## Usage
@@ -33,21 +29,24 @@ const inverse = matrix.invert();
 ```
 
 Transform a vector as a point (including translations)
-```
-const transform = new Matrix4()...;
+```js
+const transform = new Matrix4();
 const vector2 = transform.transformPoint([0, 0]);
 const vector3 = transform.transformPoint([0, 1, 2]);
 const vector4 = transform.transformPoint([0, 1, 2, 1]);
 ```
 
 Transform a vector as a direction (NOT including translations)
-```
-const transform = new Matrix4()...;
+```js
+const transform = new Matrix4();
 const vector2 = transform.transformDirection([0, 0]);
 const vector3 = transform.transformDirection([0, 1, 2]);
 const vector4 = transform.transformDirection([0, 1, 2, 1]);
 ```
 
+## Inheritance
+
+`class Matrix4 extends [Matrix](./docs/api-reference/matrix) extends [MathArray](./docs/api-reference/math-array) extends [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)`
 
 ## Methods
 

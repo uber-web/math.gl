@@ -2,26 +2,19 @@
 
 A two dimensional vector
 
-```js
-class Vector2 extends MathArray extends Array
-```
 
 ## Usage
 
 ```js
 import {Vector2} from 'math.gl';
+const vector = new Vector2(1, 1);
 ```
 
-##  Members
+## Inheritance
 
-### x, y
+`class Vector2 extends [Vector](./docs/api-reference/vector) extends [MathArray](./docs/api-reference/math-array) extends [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)`
 
-Gets or sets element 0 or 1 respectively
-
-
-## Methods
-
-Many of the most commonly used `Vector2` methods are inherited from [`MathArray`](./docs/api-reference/math-array.md):
+Many commonly used `Vector2` methods are inherited from `Vector` and `MathArray` :
 
 * `Vector2.clone()`
 * `Vector2.copy(array)`
@@ -35,8 +28,14 @@ Many of the most commonly used `Vector2` methods are inherited from [`MathArray`
 * `Vector2.check(array = this)`
 * `Vector2.normalize()`
 
-Note that `Vector2` is a subclass of the built in JavaScript `Array` and can thus e.g. be supplied as a parameter to any function expecting an `Array`.
+Also note that `Vector2` is a subclass of the built in JavaScript `Array` and can thus be used wherever an Array is expected. It can e.g. supplied as a parameter to any function expecting an `Array`.
 
+
+##  Members
+
+### x, y
+
+Gets or sets element 0 or 1 respectively
 
 ### constructor
 

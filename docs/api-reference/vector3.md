@@ -8,6 +8,7 @@ class Vector3 extends MathArray extends Array
 
 ```js
 import {Vector3} from 'math.gl';
+const vector = new Vector3(1, 1, 1);
 ```
 
 Accessors
@@ -33,6 +34,10 @@ Scaling with vectors is very flexible, you can e.g. set a component to zero, or 
 const u = v.scale([1, 1, 0]); // Set z component to zero
 const w = v.scale([1, -1, 1]); // Flip y component
 ```
+
+## Inheritance
+
+`class Vector3 extends [Vector](./docs/api-reference/vector) extends [MathArray](./docs/api-reference/math-array) extends [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)`
 
 ## Members
 

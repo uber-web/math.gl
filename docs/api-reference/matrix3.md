@@ -1,9 +1,5 @@
 # Matrix3
 
-```js
-class Matrix3 extends MathArray extends Array
-```
-
 A 3x3 matrix. Any arguments can be plain JavaScript arrays or other `math.gl` objects.
 
 ## Usage
@@ -24,19 +20,22 @@ const inverse = matrix.invert();
 ```
 
 Transform a vector as a point (including translations)
-```
-const transform = new Matrix3()...;
+```js
+const transform = new Matrix3();
 const vector2 = transform.transformPoint([1, 2]);
 const vector3 = transform.transformPoint([1, 2, 1]);
 ```
 
 Transform a vector as a direction (NOT including translations)
-```
-const transform = new Matrix3()...;
+```js
+const transform = new Matrix3();
 const vector2 = transform.transformDirection([1, 2]);
 const vector3 = transform.transformDirection([1, 2, 1]);
 ```
 
+## Inheritance
+
+`class Matrix3 extends [Matrix](./docs/api-reference/matrix) extends [MathArray](./docs/api-reference/math-array) extends [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)`
 
 ## Methods
 
@@ -76,20 +75,6 @@ Sets the matrix to the multiplicative identity matrix.
 Sets the elements of the matrix.
 
 `matrix3.set(m00, m01, m02, m10, m11, m12, m20, m21, m22)`
-
-
-### setElement
-
-Sets the element at position m[i][j], row major indices by default
-
-`matrix3.set(i, j, value, columnMajor = false)`
-
-
-### getElement
-
-Gets the element at position m[i][j], row major indices by default
-
-`matrix3.get(i, j, columnMajor = false)`
 
 
 ### fromQuaternion

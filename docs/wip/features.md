@@ -1,7 +1,9 @@
-# Features
+# Features (WIP)
+
+> This document is Work-In-Progress.
+
 See [features](./doc/get-started/features.md) for more details.
 
-This document is Work-In-Progress.
 
 ## Array-based
     - All math objects can be used directly with any Javascript

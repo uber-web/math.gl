@@ -18,8 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import MathArray from './lib/math-array';
-import {checkNumber} from './lib/common';
+import Matrix from './lib/matrix';
+// import {checkNumber} from './lib/common';
 import {validateVector} from './lib/validators';
 import Vector2 from './vector2';
 import Vector3 from './vector3';
@@ -55,7 +55,19 @@ export function validateMatrix4(m) {
   );
 }
 
-export default class Matrix4 extends MathArray {
+export default class Matrix4 extends Matrix {
+  get ELEMENTS() {
+    return 16;
+  }
+
+  get RANK() {
+    return 4;
+  }
+
+  get Vector() {
+    return Vector4;
+  }
+
   constructor(...args) {
     super(16);
     if (Array.isArray(args[0]) && arguments.length === 1) {
@@ -63,10 +75,6 @@ export default class Matrix4 extends MathArray {
     } else {
       this.identity();
     }
-  }
-
-  get ELEMENTS() {
-    return 16;
   }
 
   /* eslint-disable max-params */
@@ -156,30 +164,7 @@ export default class Matrix4 extends MathArray {
     return this.setColumnMajor(...args);
   }
 
-  // By default assumes row major indices
-  getElement(i, j, columnMajor = false) {
-    return columnMajor ? this[i][j] : this[j][i];
-  }
-
-  // By default assumes row major indices
-  setElement(i, j, value, columnMajor = false) {
-    if (columnMajor) {
-      this[i][j] = checkNumber(value);
-    } else {
-      this[j][i] = checkNumber(value);
-    }
-    return this;
-  }
-
   /* eslint-enable max-params */
-
-  // toString() {
-  //   if (config.printRowMajor) {
-  //     mat4.str(this);
-  //   } else {
-  //     mat4.str(this);
-  //   }
-  // }
 
   // Accessors
 

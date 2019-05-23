@@ -1,5 +1,30 @@
 # What's New
 
+## v2.4 (In Development)
+
+Date: TBD, target June 2019
+
+- New: `Matrix` base class for `Matrix3` and `Matrix4` with common methods to minimize bundle size.
+- New: `Matrix.setColumn()` and `Matrix.getColumn()` methods
+- New: `Matrix.toString()` method
+- New: `toRadians` and `toDegrees` functions
+- New: `exactEqual` function
+
+## v2.3
+
+Date: Jan 29, 2019
+
+- New: `Matrix3` class
+- New: Add `scale` factor support to `Matrix3` and `Matrix4`
+- Support quaternion to euler conversion
+- Uses the official `gl-matrix@3.0.0` package as dependency instead of forked packages.
+
+## v2.2
+
+Date: Sep 20, 2018
+
+- Use `@babel/runtime` to reduce bundle size
+- `equals` function fix on arrays
 
 ## v2.0
 

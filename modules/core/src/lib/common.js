@@ -89,18 +89,25 @@ function map(value, func) {
   return func(value);
 }
 
+export function toRadians(degrees) {
+  return map(degrees, degrees => (degrees / 180) * Math.PI);
+}
+
+export function toDegrees(radians) {
+  return map(radians, radians => (radians * 180) / Math.PI);
+}
+
 //
 // GLSL math function equivalents
 // Works on both single values and vectors
 //
 
 export function radians(degrees) {
-  return map(degrees, degrees => (degrees / 180) * Math.PI);
+  return toRadians(degrees);
 }
 
-// GLSL equivalent: Works on single values and vectors
 export function degrees(radians) {
-  return map(radians, radians => (radians * 180) / Math.PI);
+  return toDegrees(radians);
 }
 
 // GLSL equivalent: Works on single values and vectors
@@ -145,20 +152,63 @@ export function lerp(a, b, t) {
   return t * b + (1 - t) * a;
 }
 
-export function equals(a, b) {
-  if (isArray(a) && isArray(b)) {
+// eslint-disable-next-line complexity
+export function equals(a, b, epsilon) {
+  const oldEpsilon = config.EPSILON;
+  if (epsilon) {
+    config.EPSILON = epsilon;
+  }
+  try {
     if (a === b) {
       return true;
     }
+    if (isArray(a) && isArray(b)) {
+      if (a.length !== b.length) {
+        return false;
+      }
+      for (let i = 0; i < a.length; ++i) {
+        // eslint-disable-next-line max-depth
+        if (!equals(a[i], b[i])) {
+          return false;
+        }
+      }
+      return true;
+    }
+    if (a && typeof a === 'object' && a.equals) {
+      return a.equals(b);
+    }
+    if (b && typeof b === 'object' && b.equals) {
+      return b.equals(a);
+    }
+    return Math.abs(a - b) <= config.EPSILON * Math.max(1.0, Math.abs(a), Math.abs(b));
+  } finally {
+    config.EPSILON = oldEpsilon;
+  }
+}
+
+// eslint-disable-next-line complexity
+export function exactEquals(a, b) {
+  if (a === b) {
+    return true;
+  }
+  if (a && typeof a === 'object' && b && typeof b === 'object') {
+    if (a.constructor !== b.constructor) {
+      return false;
+    }
+    if (a.exactEquals) {
+      return a.exactEquals(b);
+    }
+  }
+  if (isArray(a) && isArray(b)) {
     if (a.length !== b.length) {
       return false;
     }
     for (let i = 0; i < a.length; ++i) {
-      if (!equals(a[i], b[i])) {
+      if (!exactEquals(a[i], b[i])) {
         return false;
       }
     }
     return true;
   }
-  return Math.abs(a - b) <= config.EPSILON * Math.max(1.0, Math.abs(a), Math.abs(b));
+  return false;
 }

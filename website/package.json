@@ -21,7 +21,7 @@
     "gatsby": "^2.3.0",
     "gatsby-plugin-styletron": "^3.0.5",
     "gh-pages": "^2.0.1",
-    "ocular-gatsby": "1.0.0-alpha.21",
-    "sharp": "0.22"
+    "ocular-gatsby": "1.0.0-alpha.32",
+    "sharp": "^0.22.0"
   }
 }

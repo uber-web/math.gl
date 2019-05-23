@@ -34,6 +34,8 @@ export {
   formatValue,
   isArray,
   clone,
+  toRadians,
+  toDegrees,
   radians,
   degrees,
   sin,
@@ -44,7 +46,8 @@ export {
   atan,
   clamp,
   lerp,
-  equals
+  equals,
+  exactEquals
 } from './lib/common';
 
 export {default as _SphericalCoordinates} from './spherical-coordinates';
