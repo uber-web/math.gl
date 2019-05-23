@@ -36,16 +36,5 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "gl-matrix": "^3.0.0"
-  },
-  "nyc": {
-    "sourceMap": false,
-    "instrument": false,
-    "include": [
-      "src/**/*.js"
-    ],
-    "exclude": [
-      "test/**/*.js",
-      "src/layers/deprecated"
-    ]
   }
 }
