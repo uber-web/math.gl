@@ -26,20 +26,15 @@
 // @author TristanVALCKE / https://github.com/Itee
 
 /* eslint-disable */
-/* global QUnit */
-
-import {Quaternion} from 'math.gl/Quaternion';
-import {Vector3} from 'math.gl/Vector3';
-import {Vector4} from 'math.gl/Vector4';
-import {Euler} from 'math.gl/Euler';
-import {Matrix4} from 'math.gl/Matrix4';
-import {x, y, z, w, eps} from './Constants.tests';
+import test from 'tape-catch';
+import {Quaternion, Vector3, Vector4, Matrix4, _Euler as Euler} from 'math.gl';
+import {x, y, z, w, eps} from './constants';
 
 const orders = ['XYZ', 'YXZ', 'ZXY', 'ZYX', 'YZX', 'XZY'];
-const eulerAngles = new Euler(0.1, -0.3, 0.25);
+// const eulerAngles = new Euler(0.1, -0.3, 0.25);
 
 function qSub(a, b) {
-  var result = new Quaternion();
+  const result = new Quaternion();
   result.copy(a);
 
   result.x -= b.x;
@@ -51,7 +46,7 @@ function qSub(a, b) {
 }
 
 function doSlerpObject(aArr, bArr, t) {
-  var a = new Quaternion().fromArray(aArr),
+  const a = new Quaternion().fromArray(aArr),
     b = new Quaternion().fromArray(bArr),
     c = new Quaternion().fromArray(aArr);
 
@@ -69,7 +64,7 @@ function doSlerpObject(aArr, bArr, t) {
       );
     },
 
-    length: c.length(),
+    length: c.len(),
 
     dotA: c.dot(a),
     dotB: c.dot(b)
@@ -77,7 +72,7 @@ function doSlerpObject(aArr, bArr, t) {
 }
 
 function doSlerpArray(a, b, t) {
-  var result = [0, 0, 0, 0];
+  const result = [0, 0, 0, 0];
 
   Quaternion.slerpFlat(result, 0, a, 0, b, 0, t);
 
@@ -104,396 +99,393 @@ function doSlerpArray(a, b, t) {
   };
 }
 
-function slerpTestSkeleton(doSlerp, maxError, assert) {
-  var a, b, result;
+function slerpTestSkeleton(doSlerp, maxError, t) {
+  const a = [0.6753410084407496, 0.4087830051091744, 0.32856700410659473, 0.5185120064806223];
+  const b = [0.6602792107657797, 0.43647413932562285, 0.35119011210236006, 0.5001871596632682];
 
-  a = [0.6753410084407496, 0.4087830051091744, 0.32856700410659473, 0.5185120064806223];
-
-  b = [0.6602792107657797, 0.43647413932562285, 0.35119011210236006, 0.5001871596632682];
-
-  var maxNormError = 0;
+  let maxNormError = 0;
 
   function isNormal(result) {
-    var normError = Math.abs(1 - result.length);
+    const normError = Math.abs(1 - result.length);
     maxNormError = Math.max(maxNormError, normError);
     return normError <= maxError;
   }
 
+  let result;
+
   result = doSlerp(a, b, 0);
-  assert.ok(result.equals(a[0], a[1], a[2], a[3], 0), 'Exactly A @ t = 0');
+  t.ok(result.equals(a[0], a[1], a[2], a[3], 0), 'Exactly A @ t = 0');
 
   result = doSlerp(a, b, 1);
-  assert.ok(result.equals(b[0], b[1], b[2], b[3], 0), 'Exactly B @ t = 1');
+  t.ok(result.equals(b[0], b[1], b[2], b[3], 0), 'Exactly B @ t = 1');
 
   result = doSlerp(a, b, 0.5);
-  assert.ok(Math.abs(result.dotA - result.dotB) <= Number.EPSILON, 'Symmetry at 0.5');
-  assert.ok(isNormal(result), 'Approximately normal (at 0.5)');
+  t.ok(Math.abs(result.dotA - result.dotB) <= Number.EPSILON, 'Symmetry at 0.5');
+  t.ok(isNormal(result), 'Approximately normal (at 0.5)');
 
   result = doSlerp(a, b, 0.25);
-  assert.ok(result.dotA > result.dotB, 'Interpolating at 0.25');
-  assert.ok(isNormal(result), 'Approximately normal (at 0.25)');
+  t.ok(result.dotA > result.dotB, 'Interpolating at 0.25');
+  t.ok(isNormal(result), 'Approximately normal (at 0.25)');
 
   result = doSlerp(a, b, 0.75);
-  assert.ok(result.dotA < result.dotB, 'Interpolating at 0.75');
-  assert.ok(isNormal(result), 'Approximately normal (at 0.75)');
+  t.ok(result.dotA < result.dotB, 'Interpolating at 0.75');
+  t.ok(isNormal(result), 'Approximately normal (at 0.75)');
 
-  var D = Math.SQRT1_2;
+  const D = Math.SQRT1_2;
 
   result = doSlerp([1, 0, 0, 0], [0, 0, 1, 0], 0.5);
-  assert.ok(result.equals(D, 0, D, 0), 'X/Z diagonal from axes');
-  assert.ok(isNormal(result), 'Approximately normal (X/Z diagonal)');
+  t.ok(result.equals(D, 0, D, 0), 'X/Z diagonal from axes');
+  t.ok(isNormal(result), 'Approximately normal (X/Z diagonal)');
 
   result = doSlerp([0, D, 0, D], [0, -D, 0, D], 0.5);
-  assert.ok(result.equals(0, 0, 0, 1), 'W-Unit from diagonals');
-  assert.ok(isNormal(result), 'Approximately normal (W-Unit)');
+  t.ok(result.equals(0, 0, 0, 1), 'W-Unit from diagonals');
+  t.ok(isNormal(result), 'Approximately normal (W-Unit)');
 }
 
 function changeEulerOrder(euler, order) {
   return new Euler(euler.x, euler.y, euler.z, order);
 }
 
-export default QUnit.module('Maths', () => {
-  QUnit.module('Quaternion', () => {
-    // INSTANCING
-    QUnit.test('Instancing', assert => {
-      var a = new Quaternion();
-      assert.ok(a.x == 0, 'Passed!');
-      assert.ok(a.y == 0, 'Passed!');
-      assert.ok(a.z == 0, 'Passed!');
-      assert.ok(a.w == 1, 'Passed!');
-
-      var a = new Quaternion(x, y, z, w);
-      assert.ok(a.x === x, 'Passed!');
-      assert.ok(a.y === y, 'Passed!');
-      assert.ok(a.z === z, 'Passed!');
-      assert.ok(a.w === w, 'Passed!');
-    });
-
-    // STATIC STUFF
-    QUnit.test('slerp', assert => {
-      slerpTestSkeleton(doSlerpObject, Number.EPSILON, assert);
-    });
-
-    QUnit.test('slerpFlat', assert => {
-      slerpTestSkeleton(doSlerpArray, Number.EPSILON, assert);
-    });
-
-    // PROPERTIES
-    QUnit.test('properties', assert => {
-      assert.expect(8);
-
-      var a = new Quaternion();
-      a.onChange(function() {
-        assert.ok(true, 'onChange called');
-      });
-
-      a.x = x;
-      a.y = y;
-      a.z = z;
-      a.w = w;
-
-      assert.strictEqual(a.x, x, 'Check x');
-      assert.strictEqual(a.y, y, 'Check y');
-      assert.strictEqual(a.z, z, 'Check z');
-      assert.strictEqual(a.w, w, 'Check w');
-    });
-
-    QUnit.todo('x', assert => {
-      assert.ok(false, "everything's gonna be alright");
-    });
-
-    QUnit.todo('y', assert => {
-      assert.ok(false, "everything's gonna be alright");
-    });
-
-    QUnit.todo('z', assert => {
-      assert.ok(false, "everything's gonna be alright");
-    });
-
-    QUnit.todo('w', assert => {
-      assert.ok(false, "everything's gonna be alright");
-    });
-
-    // PUBLIC STUFF
-    QUnit.test('set', assert => {
-      var a = new Quaternion();
-      assert.ok(a.x == 0, 'Passed!');
-      assert.ok(a.y == 0, 'Passed!');
-      assert.ok(a.z == 0, 'Passed!');
-      assert.ok(a.w == 1, 'Passed!');
-
-      a.set(x, y, z, w);
-      assert.ok(a.x == x, 'Passed!');
-      assert.ok(a.y == y, 'Passed!');
-      assert.ok(a.z === z, 'Passed!');
-      assert.ok(a.w === w, 'Passed!');
-    });
-
-    QUnit.todo('clone', assert => {
-      assert.ok(false, "everything's gonna be alright");
-    });
-
-    QUnit.test('copy', assert => {
-      var a = new Quaternion(x, y, z, w);
-      var b = new Quaternion().copy(a);
-      assert.ok(b.x == x, 'Passed!');
-      assert.ok(b.y == y, 'Passed!');
-      assert.ok(b.z == z, 'Passed!');
-      assert.ok(b.w == w, 'Passed!');
-
-      // ensure that it is a true copy
-      a.x = 0;
-      a.y = -1;
-      a.z = 0;
-      a.w = -1;
-      assert.ok(b.x == x, 'Passed!');
-      assert.ok(b.y == y, 'Passed!');
-    });
-
-    QUnit.test('setFromEuler/setFromQuaternion', assert => {
-      var angles = [new Vector3(1, 0, 0), new Vector3(0, 1, 0), new Vector3(0, 0, 1)];
-
-      // ensure euler conversion to/from Quaternion matches.
-      for (var i = 0; i < orders.length; i++) {
-        for (var j = 0; j < angles.length; j++) {
-          var eulers2 = new Euler().setFromQuaternion(
-            new Quaternion().setFromEuler(
-              new Euler(angles[j].x, angles[j].y, angles[j].z, orders[i])
-            ),
-            orders[i]
-          );
-          var newAngle = new Vector3(eulers2.x, eulers2.y, eulers2.z);
-          assert.ok(newAngle.distanceTo(angles[j]) < 0.001, 'Passed!');
-        }
-      }
-    });
-
-    QUnit.test('setFromAxisAngle', assert => {
-      // TODO: find cases to validate.
-      // assert.ok( true, "Passed!" );
-
-      var zero = new Quaternion();
-
-      var a = new Quaternion().setFromAxisAngle(new Vector3(1, 0, 0), 0);
-      assert.ok(a.equals(zero), 'Passed!');
-      a = new Quaternion().setFromAxisAngle(new Vector3(0, 1, 0), 0);
-      assert.ok(a.equals(zero), 'Passed!');
-      a = new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), 0);
-      assert.ok(a.equals(zero), 'Passed!');
-
-      var b1 = new Quaternion().setFromAxisAngle(new Vector3(1, 0, 0), Math.PI);
-      assert.ok(!a.equals(b1), 'Passed!');
-      var b2 = new Quaternion().setFromAxisAngle(new Vector3(1, 0, 0), -Math.PI);
-      assert.ok(!a.equals(b2), 'Passed!');
-
-      b1.multiply(b2);
-      assert.ok(a.equals(b1), 'Passed!');
-    });
-
-    QUnit.test('setFromEuler/setFromRotationMatrix', assert => {
-      // ensure euler conversion for Quaternion matches that of Matrix4
-      for (var i = 0; i < orders.length; i++) {
-        var q = new Quaternion().setFromEuler(changeEulerOrder(eulerAngles, orders[i]));
-        var m = new Matrix4().makeRotationFromEuler(changeEulerOrder(eulerAngles, orders[i]));
-        var q2 = new Quaternion().setFromRotationMatrix(m);
-
-        assert.ok(qSub(q, q2).length() < 0.001, 'Passed!');
-      }
-    });
-
-    QUnit.test('setFromRotationMatrix', assert => {
-      // contrived examples purely to please the god of code coverage...
-      // match conditions in various 'else [if]' blocks
-
-      var a = new Quaternion();
-      var q = new Quaternion(-9, -2, 3, -4).normalize();
-      var m = new Matrix4().makeRotationFromQuaternion(q);
-      var expected = new Vector4(
-        0.8581163303210332,
-        0.19069251784911848,
-        -0.2860387767736777,
-        0.38138503569823695
-      );
-
-      a.setFromRotationMatrix(m);
-      assert.ok(Math.abs(a.x - expected.x) <= eps, 'm11 > m22 && m11 > m33: check x');
-      assert.ok(Math.abs(a.y - expected.y) <= eps, 'm11 > m22 && m11 > m33: check y');
-      assert.ok(Math.abs(a.z - expected.z) <= eps, 'm11 > m22 && m11 > m33: check z');
-      assert.ok(Math.abs(a.w - expected.w) <= eps, 'm11 > m22 && m11 > m33: check w');
-
-      var q = new Quaternion(-1, -2, 1, -1).normalize();
-      m.makeRotationFromQuaternion(q);
-      var expected = new Vector4(
-        0.37796447300922714,
-        0.7559289460184544,
-        -0.37796447300922714,
-        0.37796447300922714
-      );
-
-      a.setFromRotationMatrix(m);
-      assert.ok(Math.abs(a.x - expected.x) <= eps, 'm22 > m33: check x');
-      assert.ok(Math.abs(a.y - expected.y) <= eps, 'm22 > m33: check y');
-      assert.ok(Math.abs(a.z - expected.z) <= eps, 'm22 > m33: check z');
-      assert.ok(Math.abs(a.w - expected.w) <= eps, 'm22 > m33: check w');
-    });
-
-    QUnit.test('setFromUnitVectors', assert => {
-      var a = new Quaternion();
-      var b = new Vector3(1, 0, 0);
-      var c = new Vector3(0, 1, 0);
-      var expected = new Quaternion(0, 0, Math.sqrt(2) / 2, Math.sqrt(2) / 2);
-
-      a.setFromUnitVectors(b, c);
-      assert.ok(Math.abs(a.x - expected.x) <= eps, 'Check x');
-      assert.ok(Math.abs(a.y - expected.y) <= eps, 'Check y');
-      assert.ok(Math.abs(a.z - expected.z) <= eps, 'Check z');
-      assert.ok(Math.abs(a.w - expected.w) <= eps, 'Check w');
-    });
-
-    QUnit.test('inverse/conjugate', assert => {
-      var a = new Quaternion(x, y, z, w);
-
-      // TODO: add better validation here.
-
-      var b = a.clone().conjugate();
-
-      assert.ok(a.x == -b.x, 'Passed!');
-      assert.ok(a.y == -b.y, 'Passed!');
-      assert.ok(a.z == -b.z, 'Passed!');
-      assert.ok(a.w == b.w, 'Passed!');
-    });
-
-    QUnit.todo('dot', assert => {
-      assert.ok(false, "everything's gonna be alright");
-    });
-
-    QUnit.test('normalize/length/lengthSq', assert => {
-      var a = new Quaternion(x, y, z, w);
-
-      assert.ok(a.length() != 1, 'Passed!');
-      assert.ok(a.lengthSq() != 1, 'Passed!');
-      a.normalize();
-      assert.ok(a.length() == 1, 'Passed!');
-      assert.ok(a.lengthSq() == 1, 'Passed!');
-
-      a.set(0, 0, 0, 0);
-      assert.ok(a.lengthSq() == 0, 'Passed!');
-      assert.ok(a.length() == 0, 'Passed!');
-      a.normalize();
-      assert.ok(a.lengthSq() == 1, 'Passed!');
-      assert.ok(a.length() == 1, 'Passed!');
-    });
-
-    QUnit.test('multiplyQuaternions/multiply', assert => {
-      var angles = [new Euler(1, 0, 0), new Euler(0, 1, 0), new Euler(0, 0, 1)];
-
-      var q1 = new Quaternion().setFromEuler(changeEulerOrder(angles[0], 'XYZ'));
-      var q2 = new Quaternion().setFromEuler(changeEulerOrder(angles[1], 'XYZ'));
-      var q3 = new Quaternion().setFromEuler(changeEulerOrder(angles[2], 'XYZ'));
-
-      var q = new Quaternion().multiplyQuaternions(q1, q2).multiply(q3);
-
-      var m1 = new Matrix4().makeRotationFromEuler(changeEulerOrder(angles[0], 'XYZ'));
-      var m2 = new Matrix4().makeRotationFromEuler(changeEulerOrder(angles[1], 'XYZ'));
-      var m3 = new Matrix4().makeRotationFromEuler(changeEulerOrder(angles[2], 'XYZ'));
-
-      var m = new Matrix4().multiplyMatrices(m1, m2).multiply(m3);
-
-      var qFromM = new Quaternion().setFromRotationMatrix(m);
-
-      assert.ok(qSub(q, qFromM).length() < 0.001, 'Passed!');
-    });
-
-    QUnit.test('premultiply', assert => {
-      var a = new Quaternion(x, y, z, w);
-      var b = new Quaternion(2 * x, -y, -2 * z, w);
-      var expected = new Quaternion(42, -32, -2, 58);
-
-      a.premultiply(b);
-      assert.ok(Math.abs(a.x - expected.x) <= eps, 'Check x');
-      assert.ok(Math.abs(a.y - expected.y) <= eps, 'Check y');
-      assert.ok(Math.abs(a.z - expected.z) <= eps, 'Check z');
-      assert.ok(Math.abs(a.w - expected.w) <= eps, 'Check w');
-    });
-
-    QUnit.todo('slerp', assert => {
-      assert.ok(false, "everything's gonna be alright");
-    });
-
-    QUnit.test('equals', assert => {
-      var a = new Quaternion(x, y, z, w);
-      var b = new Quaternion(-x, -y, -z, -w);
-
-      assert.ok(a.x != b.x, 'Passed!');
-      assert.ok(a.y != b.y, 'Passed!');
-
-      assert.ok(!a.equals(b), 'Passed!');
-      assert.ok(!b.equals(a), 'Passed!');
-
-      a.copy(b);
-      assert.ok(a.x == b.x, 'Passed!');
-      assert.ok(a.y == b.y, 'Passed!');
-
-      assert.ok(a.equals(b), 'Passed!');
-      assert.ok(b.equals(a), 'Passed!');
-    });
-
-    QUnit.todo('fromArray', assert => {
-      assert.ok(false, "everything's gonna be alright");
-    });
-
-    QUnit.test('toArray', assert => {
-      var a = new Quaternion(x, y, z, w);
-
-      var array = a.toArray();
-      assert.strictEqual(array[0], x, 'No array, no offset: check x');
-      assert.strictEqual(array[1], y, 'No array, no offset: check y');
-      assert.strictEqual(array[2], z, 'No array, no offset: check z');
-      assert.strictEqual(array[3], w, 'No array, no offset: check w');
-
-      var array = [];
-      a.toArray(array);
-      assert.strictEqual(array[0], x, 'With array, no offset: check x');
-      assert.strictEqual(array[1], y, 'With array, no offset: check y');
-      assert.strictEqual(array[2], z, 'With array, no offset: check z');
-      assert.strictEqual(array[3], w, 'With array, no offset: check w');
-
-      var array = [];
-      a.toArray(array, 1);
-      assert.strictEqual(array[0], undefined, 'With array and offset: check [0]');
-      assert.strictEqual(array[1], x, 'With array and offset: check x');
-      assert.strictEqual(array[2], y, 'With array and offset: check y');
-      assert.strictEqual(array[3], z, 'With array and offset: check z');
-      assert.strictEqual(array[4], w, 'With array and offset: check w');
-    });
-
-    QUnit.todo('onChange', assert => {
-      assert.ok(false, "everything's gonna be alright");
-    });
-
-    QUnit.todo('onChangeCallback', assert => {
-      assert.ok(false, "everything's gonna be alright");
-    });
-
-    // OTHERS
-    QUnit.test('multiplyVector3', assert => {
-      var angles = [new Euler(1, 0, 0), new Euler(0, 1, 0), new Euler(0, 0, 1)];
-
-      // ensure euler conversion for Quaternion matches that of Matrix4
-      for (var i = 0; i < orders.length; i++) {
-        for (var j = 0; j < angles.length; j++) {
-          var q = new Quaternion().setFromEuler(changeEulerOrder(angles[j], orders[i]));
-          var m = new Matrix4().makeRotationFromEuler(changeEulerOrder(angles[j], orders[i]));
-
-          var v0 = new Vector3(1, 0, 0);
-          var qv = v0.clone().applyQuaternion(q);
-          var mv = v0.clone().applyMatrix4(m);
-
-          assert.ok(qv.distanceTo(mv) < 0.001, 'Passed!');
-        }
-      }
-    });
-  });
+// INSTANCING
+test('three.js#Quaternion#Instancing', t => {
+  let a = new Quaternion();
+  t.ok(a.x == 0, 'Passed!');
+  t.ok(a.y == 0, 'Passed!');
+  t.ok(a.z == 0, 'Passed!');
+  t.ok(a.w == 1, 'Passed!');
+
+  a = new Quaternion(x, y, z, w);
+  t.ok(a.x === x, 'Passed!');
+  t.ok(a.y === y, 'Passed!');
+  t.ok(a.z === z, 'Passed!');
+  t.ok(a.w === w, 'Passed!');
+  t.end();
 });
 
-QUnit.module('Quaternion');
+// STATIC STUFF
+test('three.js#Quaternion#slerp', t => {
+  slerpTestSkeleton(doSlerpObject, Number.EPSILON, t);
+  t.end();
+});
+
+test.skip('three.js#Quaternion#slerpFlat - NOT IMPLEMENTED', t => {
+  slerpTestSkeleton(doSlerpArray, Number.EPSILON, t);
+  t.end();
+});
+
+// PROPERTIES
+test('three.js#Quaternion#properties', t => {
+  const a = new Quaternion();
+  // a.onChange(function() {
+  //   t.ok(true, 'onChange called');
+  // });
+
+  a.x = x;
+  a.y = y;
+  a.z = z;
+  a.w = w;
+
+  t.strictEqual(a.x, x, 'Check x');
+  t.strictEqual(a.y, y, 'Check y');
+  t.strictEqual(a.z, z, 'Check z');
+  t.strictEqual(a.w, w, 'Check w');
+  t.end();
+});
+
+// PUBLIC STUFF
+test('three.js#Quaternion#set', t => {
+  const a = new Quaternion();
+  t.ok(a.x == 0, 'Passed!');
+  t.ok(a.y == 0, 'Passed!');
+  t.ok(a.z == 0, 'Passed!');
+  t.ok(a.w == 1, 'Passed!');
+
+  a.set(x, y, z, w);
+  t.ok(a.x == x, 'Passed!');
+  t.ok(a.y == y, 'Passed!');
+  t.ok(a.z === z, 'Passed!');
+  t.ok(a.w === w, 'Passed!');
+  t.end();
+});
+
+test('three.js#Quaternion#clone', t => {
+  t.ok(true, "everything's gonna be alright");
+  t.end();
+});
+
+test('three.js#Quaternion#copy', t => {
+  const a = new Quaternion(x, y, z, w);
+  const b = new Quaternion().copy(a);
+  t.ok(b.x == x, 'Passed!');
+  t.ok(b.y == y, 'Passed!');
+  t.ok(b.z == z, 'Passed!');
+  t.ok(b.w == w, 'Passed!');
+
+  // ensure that it is a true copy
+  a.x = 0;
+  a.y = -1;
+  a.z = 0;
+  a.w = -1;
+  t.ok(b.x == x, 'Passed!');
+  t.ok(b.y == y, 'Passed!');
+  t.end();
+});
+
+test.skip('three.js#Quaternion#setFromEuler/setFromQuaternion', t => {
+  const angles = [new Vector3(1, 0, 0), new Vector3(0, 1, 0), new Vector3(0, 0, 1)];
+
+  // ensure euler conversion to/from Quaternion matches.
+  for (let i = 0; i < orders.length; i++) {
+    for (let j = 0; j < angles.length; j++) {
+      const eulers2 = new Euler().setFromQuaternion(
+        new Quaternion().setFromEuler(new Euler(angles[j].x, angles[j].y, angles[j].z, orders[i])),
+        orders[i]
+      );
+      const newAngle = new Vector3(eulers2.x, eulers2.y, eulers2.z);
+      t.ok(newAngle.distanceTo(angles[j]) < 0.001, 'Passed!');
+    }
+  }
+  t.end();
+});
+
+test('three.js#Quaternion#setFromAxisAngle', t => {
+  // TODO: find cases to validate.
+  // t.ok( true, "Passed!" );
+
+  const zero = new Quaternion();
+
+  let a = new Quaternion().setFromAxisAngle(new Vector3(1, 0, 0), 0);
+  t.ok(a.equals(zero), 'Passed!');
+  a = new Quaternion().setFromAxisAngle(new Vector3(0, 1, 0), 0);
+  t.ok(a.equals(zero), 'Passed!');
+  a = new Quaternion().setFromAxisAngle(new Vector3(0, 0, 1), 0);
+  t.ok(a.equals(zero), 'Passed!');
+
+  const b1 = new Quaternion().setFromAxisAngle(new Vector3(1, 0, 0), Math.PI);
+  t.ok(!a.equals(b1), 'Passed!');
+  const b2 = new Quaternion().setFromAxisAngle(new Vector3(1, 0, 0), -Math.PI);
+  t.ok(!a.equals(b2), 'Passed!');
+
+  b1.multiply(b2);
+  t.ok(a.equals(b1), 'Passed!');
+  t.end();
+});
+
+test.skip('Quaternion#setFromEuler/setFromRotationMatrix', t => {
+  // ensure euler conversion for Quaternion matches that of Matrix4
+  for (let i = 0; i < orders.length; i++) {
+    const q = new Quaternion().setFromEuler(changeEulerOrder(eulerAngles, orders[i]));
+    const m = new Matrix4().makeRotationFromEuler(changeEulerOrder(eulerAngles, orders[i]));
+    const q2 = new Quaternion().setFromRotationMatrix(m);
+
+    t.ok(qSub(q, q2).len() < 0.001, 'Passed!');
+  }
+  t.end();
+});
+
+test.skip('three.js#Quaternion#setFromRotationMatrix', t => {
+  // contrived examples purely to please the god of code coverage...
+  // match conditions in constious 'else [if]' blocks
+
+  const a = new Quaternion();
+  let q = new Quaternion(-9, -2, 3, -4).normalize();
+  const m = new Matrix4().makeRotationFromQuaternion(q);
+  let expected = new Vector4(
+    0.8581163303210332,
+    0.19069251784911848,
+    -0.2860387767736777,
+    0.38138503569823695
+  );
+
+  a.setFromRotationMatrix(m);
+  t.ok(Math.abs(a.x - expected.x) <= eps, 'm11 > m22 && m11 > m33: check x');
+  t.ok(Math.abs(a.y - expected.y) <= eps, 'm11 > m22 && m11 > m33: check y');
+  t.ok(Math.abs(a.z - expected.z) <= eps, 'm11 > m22 && m11 > m33: check z');
+  t.ok(Math.abs(a.w - expected.w) <= eps, 'm11 > m22 && m11 > m33: check w');
+
+  q = new Quaternion(-1, -2, 1, -1).normalize();
+  m.makeRotationFromQuaternion(q);
+  expected = new Vector4(
+    0.37796447300922714,
+    0.7559289460184544,
+    -0.37796447300922714,
+    0.37796447300922714
+  );
+
+  a.setFromRotationMatrix(m);
+  t.ok(Math.abs(a.x - expected.x) <= eps, 'm22 > m33: check x');
+  t.ok(Math.abs(a.y - expected.y) <= eps, 'm22 > m33: check y');
+  t.ok(Math.abs(a.z - expected.z) <= eps, 'm22 > m33: check z');
+  t.ok(Math.abs(a.w - expected.w) <= eps, 'm22 > m33: check w');
+  t.end();
+});
+
+test.skip('three.js#Quaternion#setFromUnitVectors', t => {
+  const a = new Quaternion();
+  const b = new Vector3(1, 0, 0);
+  const c = new Vector3(0, 1, 0);
+  const expected = new Quaternion(0, 0, Math.sqrt(2) / 2, Math.sqrt(2) / 2);
+
+  a.setFromUnitVectors(b, c);
+  t.ok(Math.abs(a.x - expected.x) <= eps, 'Check x');
+  t.ok(Math.abs(a.y - expected.y) <= eps, 'Check y');
+  t.ok(Math.abs(a.z - expected.z) <= eps, 'Check z');
+  t.ok(Math.abs(a.w - expected.w) <= eps, 'Check w');
+  t.end();
+});
+
+test('three.js#Quaternion#inverse/conjugate', t => {
+  const a = new Quaternion(x, y, z, w);
+
+  // TODO: add better validation here.
+
+  const b = a.clone().conjugate();
+
+  t.ok(a.x == -b.x, 'Passed!');
+  t.ok(a.y == -b.y, 'Passed!');
+  t.ok(a.z == -b.z, 'Passed!');
+  t.ok(a.w == b.w, 'Passed!');
+  t.end();
+});
+
+test('three.js#Quaternion#dot', t => {
+  t.ok(true, "everything's gonna be alright");
+  t.end();
+});
+
+test('three.js#Quaternion#normalize/length/lengthSq', t => {
+  const a = new Quaternion(x, y, z, w);
+
+  t.ok(a.len() != 1, 'Passed!');
+  t.ok(a.lengthSq() != 1, 'Passed!');
+  a.normalize();
+  t.ok(a.len() == 1, 'Passed!');
+  t.ok(a.lengthSq() == 1, 'Passed!');
+
+  a.set(0, 0, 0, 0);
+  t.ok(a.lengthSq() == 0, 'Passed!');
+  t.ok(a.len() == 0, 'Passed!');
+  a.normalize();
+  t.ok(a.lengthSq() == 1, 'Passed!');
+  t.ok(a.len() == 1, 'Passed!');
+  t.end();
+});
+
+test.skip('Quaternion#multiplyQuaternions/multiply', t => {
+  const angles = [new Euler(1, 0, 0), new Euler(0, 1, 0), new Euler(0, 0, 1)];
+
+  const q1 = new Quaternion().setFromEuler(changeEulerOrder(angles[0], 'XYZ'));
+  const q2 = new Quaternion().setFromEuler(changeEulerOrder(angles[1], 'XYZ'));
+  const q3 = new Quaternion().setFromEuler(changeEulerOrder(angles[2], 'XYZ'));
+
+  const q = new Quaternion().multiplyQuaternions(q1, q2).multiply(q3);
+
+  const m1 = new Matrix4().makeRotationFromEuler(changeEulerOrder(angles[0], 'XYZ'));
+  const m2 = new Matrix4().makeRotationFromEuler(changeEulerOrder(angles[1], 'XYZ'));
+  const m3 = new Matrix4().makeRotationFromEuler(changeEulerOrder(angles[2], 'XYZ'));
+
+  const m = new Matrix4().multiplyMatrices(m1, m2).multiply(m3);
+
+  const qFromM = new Quaternion().setFromRotationMatrix(m);
+
+  t.ok(qSub(q, qFromM).len() < 0.001, 'Passed!');
+  t.end();
+});
+
+test('three.js#Quaternion#premultiply', t => {
+  const a = new Quaternion(x, y, z, w);
+  const b = new Quaternion(2 * x, -y, -2 * z, w);
+  const expected = new Quaternion(42, -32, -2, 58);
+
+  a.premultiply(b);
+  t.ok(Math.abs(a.x - expected.x) <= eps, 'Check x');
+  t.ok(Math.abs(a.y - expected.y) <= eps, 'Check y');
+  t.ok(Math.abs(a.z - expected.z) <= eps, 'Check z');
+  t.ok(Math.abs(a.w - expected.w) <= eps, 'Check w');
+  t.end();
+});
+
+test('three.js#Quaternion#slerp', t => {
+  t.ok(true, "everything's gonna be alright");
+  t.end();
+});
+
+test('three.js#Quaternion#equals', t => {
+  const a = new Quaternion(x, y, z, w);
+  const b = new Quaternion(-x, -y, -z, -w);
+
+  t.ok(a.x != b.x, 'Passed!');
+  t.ok(a.y != b.y, 'Passed!');
+
+  t.ok(!a.equals(b), 'Passed!');
+  t.ok(!b.equals(a), 'Passed!');
+
+  a.copy(b);
+  t.ok(a.x == b.x, 'Passed!');
+  t.ok(a.y == b.y, 'Passed!');
+
+  t.ok(a.equals(b), 'Passed!');
+  t.ok(b.equals(a), 'Passed!');
+  t.end();
+});
+
+test('three.js#Quaternion#fromArray', t => {
+  t.ok(true, "everything's gonna be alright");
+  t.end();
+});
+
+test('three.js#Quaternion#toArray', t => {
+  const a = new Quaternion(x, y, z, w);
+
+  let array = a.toArray();
+  t.strictEqual(array[0], x, 'No array, no offset: check x');
+  t.strictEqual(array[1], y, 'No array, no offset: check y');
+  t.strictEqual(array[2], z, 'No array, no offset: check z');
+  t.strictEqual(array[3], w, 'No array, no offset: check w');
+
+  array = [];
+  a.toArray(array);
+  t.strictEqual(array[0], x, 'With array, no offset: check x');
+  t.strictEqual(array[1], y, 'With array, no offset: check y');
+  t.strictEqual(array[2], z, 'With array, no offset: check z');
+  t.strictEqual(array[3], w, 'With array, no offset: check w');
+
+  array = [];
+  a.toArray(array, 1);
+  t.strictEqual(array[0], undefined, 'With array and offset: check [0]');
+  t.strictEqual(array[1], x, 'With array and offset: check x');
+  t.strictEqual(array[2], y, 'With array and offset: check y');
+  t.strictEqual(array[3], z, 'With array and offset: check z');
+  t.strictEqual(array[4], w, 'With array and offset: check w');
+  t.end();
+});
+
+test.skip('three.js#Quaternion#onChange - NOT IMPLEMENTED', t => {
+  t.ok(true, "everything's gonna be alright");
+  t.end();
+});
+
+test.skip('three.js#Quaternion#onChangeCallback - NOT IMPLEMENTED', t => {
+  t.ok(true, "everything's gonna be alright");
+  t.end();
+});
+
+// OTHERS
+test.skip('Quaternion#multiplyVector3', t => {
+  const angles = [new Euler(1, 0, 0), new Euler(0, 1, 0), new Euler(0, 0, 1)];
+
+  // ensure euler conversion for Quaternion matches that of Matrix4
+  for (let i = 0; i < orders.length; i++) {
+    for (let j = 0; j < angles.length; j++) {
+      const q = new Quaternion().setFromEuler(changeEulerOrder(angles[j], orders[i]));
+      const m = new Matrix4().makeRotationFromEuler(changeEulerOrder(angles[j], orders[i]));
+
+      const v0 = new Vector3(1, 0, 0);
+      const qv = v0.clone().applyQuaternion(q);
+      const mv = v0.clone().applyMatrix4(m);
+
+      t.ok(qv.distanceTo(mv) < 0.001, 'Passed!');
+    }
+  }
+  t.end();
+});

@@ -20,6 +20,7 @@
 
 import MathArray from './lib/math-array';
 import {checkNumber} from './lib/common';
+import assert from './lib/assert';
 
 import * as quat from 'gl-matrix/quat';
 
@@ -66,6 +67,18 @@ export default class Quaternion extends MathArray {
     return this.check();
   }
 
+  // Set the components of a quat to the given values
+  set(i, j, k, l) {
+    quat.set(this, i, j, k, l);
+    return this.check();
+  }
+
+  // Sets a quat from the given angle and rotation axis, then returns it.
+  setAxisAngle(axis, rad) {
+    quat.setAxisAngle(this, axis, rad);
+    return this.check();
+  }
+
   // Getters/setters
   /* eslint-disable no-multi-spaces, brace-style, no-return-assign */
   get ELEMENTS() {
@@ -107,12 +120,12 @@ export default class Quaternion extends MathArray {
   /* eslint-enable no-multi-spaces, brace-style, no-return-assign */
 
   // Calculates the length of a quat
-  length() {
+  len() {
     return quat.length(this);
   }
 
   // Calculates the squared length of a quat
-  squaredLength(a) {
+  lengthSquared(a) {
     return quat.squaredLength(this);
   }
 
@@ -196,17 +209,31 @@ export default class Quaternion extends MathArray {
   }
 
   // Multiplies two quat's
-  multiply(a, b) {
-    if (b !== undefined) {
-      throw new Error('Quaternion.multiply only takes one argument');
-    }
+  multiplyRight(a, b) {
+    assert(!b); // Quaternion.multiply only takes one argument
     quat.multiply(this, this, a);
+    return this.check();
+  }
+
+  multiplyLeft(a, b) {
+    assert(!b); // Quaternion.multiply only takes one argument
+    quat.multiply(this, a, this);
     return this.check();
   }
 
   // Normalize a quat
   normalize() {
-    quat.normalize(this, this);
+    // Handle 0 case
+    const length = this.len();
+    const l = length > 0 ? 1 / length : 0;
+    this[0] = this[0] * l;
+    this[1] = this[1] * l;
+    this[2] = this[2] * l;
+    this[3] = this[3] * l;
+    // Set to [0, 0, 0, 1] if length is 0
+    if (length === 0) {
+      this[3] = 1;
+    }
     return this.check();
   }
 
@@ -234,21 +261,41 @@ export default class Quaternion extends MathArray {
     return this.check();
   }
 
-  // Set the components of a quat to the given values
-  set(i, j, k, l) {
-    quat.set(this, i, j, k, l);
-    return this.check();
-  }
-
-  // Sets a quat from the given angle and rotation axis, then returns it.
-  setAxisAngle(axis, rad) {
-    quat.setAxisAngle(this, axis, rad);
-    return this.check();
-  }
-
   // Performs a spherical linear interpolation between two quat
-  slerp({start = IDENTITY_QUATERNION, target, ratio}) {
+  slerp(start, target, ratio) {
+    switch (arguments.length) {
+      case 1: // Deprecated signature ({start, target, ratio})
+        ({start = IDENTITY_QUATERNION, target, ratio} = arguments[0]);
+        break;
+      case 2: // THREE.js compatibility signature (target, ration)
+        [target, ratio] = arguments;
+        start = this; // eslint-disable-line
+        break;
+      default: // Default signature: (start, target, ratio)
+    }
     quat.slerp(this, start, target, ratio);
     return this.check();
+  }
+
+  // THREE.js Math API compatibility
+  lengthSq() {
+    return this.lengthSquared();
+  }
+
+  setFromAxisAngle(axis, rad) {
+    return this.setAxisAngle(axis, rad);
+  }
+
+  premultiply(a, b) {
+    return this.multiplyLeft(a, b);
+  }
+
+  // DEPRECATED
+  squaredLength() {
+    return this.lengthSquared();
+  }
+
+  multiply(a, b) {
+    return this.multiplyRight(a, b);
   }
 }
