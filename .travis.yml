@@ -4,10 +4,14 @@ sudo: required
 dist: trusty
 addons:
 node_js:
-  - '6'
   - '8'
   - '10'
+  - '12'
+install:
+  - yarn bootstrap
 before_script:
   - npm run build
 script:
   - npm run test ci
+after_success:
+  - cat coverage/lcov.info | coveralls

@@ -21,7 +21,7 @@
 /* eslint-disable max-statements */
 import {Matrix3, config} from 'math.gl';
 import test from 'tape-catch';
-import {tapeEquals} from '../utils/tape-equals';
+import {tapeEquals} from 'test/utils/tape-equals';
 
 config.EPSILON = 1e-6;
 
