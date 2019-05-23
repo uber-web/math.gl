@@ -36,25 +36,6 @@
     "npx": "^10.2.0",
     "ocular-dev-tools": "0.0.24",
     "pre-commit": "^1.2.2",
-    "reify": "^0.18.1",
-    "prettier": "^1.11.1",
-    "raw-loader": "^0.5.1",
-    "reify": "^0.18.1",
-    "source-map-loader": "^0.2.3",
-    "tap-browser-color": "^0.1.2",
-    "tape": "^4.5.1",
-    "tape-catch": "^1.0.4",
-    "transform-loader": "^0.2.3"
-  },
-  "nyc": {
-    "sourceMap": false,
-    "instrument": false,
-    "include": [
-      "src/**/*.js"
-    ],
-    "exclude": [
-      "test/**/*.js",
-      "src/layers/deprecated"
-    ]
+    "reify": "^0.18.1"
   }
 }

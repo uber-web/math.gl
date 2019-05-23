@@ -13,3 +13,5 @@ before_script:
   - npm run build
 script:
   - npm run test ci
+after_success:
+  - cat coverage/lcov.info | coveralls
