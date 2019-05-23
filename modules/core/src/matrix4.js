@@ -420,12 +420,16 @@ export default class Matrix4 extends Matrix {
     return out;
   }
 
-  // three.js compatibility
+  // three.js math API compatibility
   makeRotationX(radians) {
     return this.identity().rotateX(radians);
   }
 
   makeTranslation(x, y, z) {
     return this.identity().translate([x, y, z]);
+  }
+
+  makeRotationFromQuaternion(q) {
+    return this.fromQuaternion(q);
   }
 }
