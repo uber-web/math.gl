@@ -12,8 +12,9 @@ module.exports = {
   },
 
   entry: {
-    'test-node': 'test/index.js',
-    'bench-node': 'test/bench/index.js',
+    test: 'test/index.js',
+    'test-browser': 'test/browser.js',
+    bench: 'test/bench/index.js',
     'bench-browser': 'test/bench/index.js'
   }
 };
