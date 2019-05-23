@@ -33,6 +33,7 @@
     "@probe.gl/bench": "^3.0.2",
     "@probe.gl/test-utils": "^3.0.2",
     "babel-plugin-transform-builtin-extend": "^1.1.2",
+    "coveralls": "^3.0.0",
     "npx": "^10.2.0",
     "ocular-dev-tools": "0.0.24",
     "pre-commit": "^1.2.2",
