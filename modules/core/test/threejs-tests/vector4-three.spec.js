@@ -26,8 +26,7 @@
 /* eslint-disable quotes, no-var */
 import test from 'tape-catch';
 
-import {Vector4} from 'math.gl';
-import {Matrix4} from 'math.gl';
+import {Vector4, Matrix4} from 'math.gl';
 import {x, y, z, w, eps} from './constants';
 
 // INSTANCING

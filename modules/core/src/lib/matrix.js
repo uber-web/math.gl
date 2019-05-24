@@ -51,4 +51,10 @@ export default class Matrix extends MathArray {
     }
     return this;
   }
+
+  // three.js compatibility
+
+  multiplyMatrices(a, b) {
+    return this.copy(a).multiplyRight(b);
+  }
 }

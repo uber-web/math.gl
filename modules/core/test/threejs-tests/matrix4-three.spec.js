@@ -26,7 +26,7 @@
 
 /* eslint-disable */
 import test from 'tape-catch';
-import {Matrix4, Vector3, Euler, Quaternion, toRadians} from 'math.gl';
+import {Matrix4, Vector3, Quaternion, _Euler as Euler, toRadians} from 'math.gl';
 import {eps} from './constants';
 
 function matrixEquals4(a, b, tolerance) {
@@ -35,8 +35,8 @@ function matrixEquals4(a, b, tolerance) {
     return false;
   }
 
-  for (var i = 0, il = a.elements.length; i < il; i++) {
-    var delta = a.elements[i] - b.elements[i];
+  for (let i = 0, il = a.elements.length; i < il; i++) {
+    const delta = a.elements[i] - b.elements[i];
     if (delta > tolerance) {
       return false;
     }
@@ -48,157 +48,181 @@ function matrixEquals4(a, b, tolerance) {
 // from Euler.js
 function eulerEquals(a, b, tolerance) {
   tolerance = tolerance || 0.0001;
-  var diff = Math.abs(a.x - b.x) + Math.abs(a.y - b.y) + Math.abs(a.z - b.z);
+  const diff = Math.abs(a.x - b.x) + Math.abs(a.y - b.y) + Math.abs(a.z - b.z);
   return diff < tolerance;
 }
 
 // INSTANCING
-test('three.js#Matrix4#Instancing', assert => {
-  var a = new Matrix4();
-  assert.ok(a.determinant() == 1, 'Passed!');
+test('three.js#Matrix4#Instancing', t => {
+  const a = new Matrix4();
+  t.ok(a.determinant() == 1, 'Passed!');
 
-  var b = new Matrix4().set(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
-  assert.ok(b.elements[0] == 0);
-  assert.ok(b.elements[1] == 4);
-  assert.ok(b.elements[2] == 8);
-  assert.ok(b.elements[3] == 12);
-  assert.ok(b.elements[4] == 1);
-  assert.ok(b.elements[5] == 5);
-  assert.ok(b.elements[6] == 9);
-  assert.ok(b.elements[7] == 13);
-  assert.ok(b.elements[8] == 2);
-  assert.ok(b.elements[9] == 6);
-  assert.ok(b.elements[10] == 10);
-  assert.ok(b.elements[11] == 14);
-  assert.ok(b.elements[12] == 3);
-  assert.ok(b.elements[13] == 7);
-  assert.ok(b.elements[14] == 11);
-  assert.ok(b.elements[15] == 15);
+  const b = new Matrix4().set(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
 
-  assert.ok(!matrixEquals4(a, b), 'Passed!');
+  // NOTE THREE.js is row-major
+  b.transpose()
+  // NOTE
+
+  t.ok(b.elements[0] == 0);
+  t.ok(b.elements[1] == 4);
+  t.ok(b.elements[2] == 8);
+  t.ok(b.elements[3] == 12);
+  t.ok(b.elements[4] == 1);
+  t.ok(b.elements[5] == 5);
+  t.ok(b.elements[6] == 9);
+  t.ok(b.elements[7] == 13);
+  t.ok(b.elements[8] == 2);
+  t.ok(b.elements[9] == 6);
+  t.ok(b.elements[10] == 10);
+  t.ok(b.elements[11] == 14);
+  t.ok(b.elements[12] == 3);
+  t.ok(b.elements[13] == 7);
+  t.ok(b.elements[14] == 11);
+  t.ok(b.elements[15] == 15);
+
+  t.ok(!matrixEquals4(a, b), 'Passed!');
+  t.end();
 });
 
 // PUBLIC STUFF
-test.skip('three.js#Matrix4#isMatrix4', assert => {
-  assert.ok(false, "everything's gonna be alright");
+test.skip('three.js#Matrix4#isMatrix4', t => {
+  t.ok(false, "everything's gonna be alright");
+  t.end();
 });
 
-test('three.js#Matrix4#set', assert => {
-  var b = new Matrix4();
-  assert.ok(b.determinant() == 1, 'Passed!');
+test('three.js#Matrix4#set', t => {
+  const b = new Matrix4();
+  t.ok(b.determinant() == 1, 'Passed!');
 
   b.set(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
-  assert.ok(b.elements[0] == 0);
-  assert.ok(b.elements[1] == 4);
-  assert.ok(b.elements[2] == 8);
-  assert.ok(b.elements[3] == 12);
-  assert.ok(b.elements[4] == 1);
-  assert.ok(b.elements[5] == 5);
-  assert.ok(b.elements[6] == 9);
-  assert.ok(b.elements[7] == 13);
-  assert.ok(b.elements[8] == 2);
-  assert.ok(b.elements[9] == 6);
-  assert.ok(b.elements[10] == 10);
-  assert.ok(b.elements[11] == 14);
-  assert.ok(b.elements[12] == 3);
-  assert.ok(b.elements[13] == 7);
-  assert.ok(b.elements[14] == 11);
-  assert.ok(b.elements[15] == 15);
+
+  // NOTE THREE.js is row-major
+  b.transpose()
+  // NOTE
+
+  t.ok(b.elements[0] == 0);
+  t.ok(b.elements[1] == 4);
+  t.ok(b.elements[2] == 8);
+  t.ok(b.elements[3] == 12);
+  t.ok(b.elements[4] == 1);
+  t.ok(b.elements[5] == 5);
+  t.ok(b.elements[6] == 9);
+  t.ok(b.elements[7] == 13);
+  t.ok(b.elements[8] == 2);
+  t.ok(b.elements[9] == 6);
+  t.ok(b.elements[10] == 10);
+  t.ok(b.elements[11] == 14);
+  t.ok(b.elements[12] == 3);
+  t.ok(b.elements[13] == 7);
+  t.ok(b.elements[14] == 11);
+  t.ok(b.elements[15] == 15);
+  t.end();
 });
 
-test('three.js#Matrix4#identity', assert => {
-  var b = new Matrix4().set(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
-  assert.ok(b.elements[0] == 0);
-  assert.ok(b.elements[1] == 4);
-  assert.ok(b.elements[2] == 8);
-  assert.ok(b.elements[3] == 12);
-  assert.ok(b.elements[4] == 1);
-  assert.ok(b.elements[5] == 5);
-  assert.ok(b.elements[6] == 9);
-  assert.ok(b.elements[7] == 13);
-  assert.ok(b.elements[8] == 2);
-  assert.ok(b.elements[9] == 6);
-  assert.ok(b.elements[10] == 10);
-  assert.ok(b.elements[11] == 14);
-  assert.ok(b.elements[12] == 3);
-  assert.ok(b.elements[13] == 7);
-  assert.ok(b.elements[14] == 11);
-  assert.ok(b.elements[15] == 15);
+test('three.js#Matrix4#identity', t => {
+  const b = new Matrix4().set(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
 
-  var a = new Matrix4();
-  assert.ok(!matrixEquals4(a, b), 'Passed!');
+  // NOTE THREE.js is row-major
+  b.transpose()
+  // NOTE
+
+  t.ok(b.elements[0] == 0);
+  t.ok(b.elements[1] == 4);
+  t.ok(b.elements[2] == 8);
+  t.ok(b.elements[3] == 12);
+  t.ok(b.elements[4] == 1);
+  t.ok(b.elements[5] == 5);
+  t.ok(b.elements[6] == 9);
+  t.ok(b.elements[7] == 13);
+  t.ok(b.elements[8] == 2);
+  t.ok(b.elements[9] == 6);
+  t.ok(b.elements[10] == 10);
+  t.ok(b.elements[11] == 14);
+  t.ok(b.elements[12] == 3);
+  t.ok(b.elements[13] == 7);
+  t.ok(b.elements[14] == 11);
+  t.ok(b.elements[15] == 15);
+
+  const a = new Matrix4();
+  t.ok(!matrixEquals4(a, b), 'Passed!');
 
   b.identity();
-  assert.ok(matrixEquals4(a, b), 'Passed!');
+  t.ok(matrixEquals4(a, b), 'Passed!');
+  t.end();
 });
 
-test('three.js#Matrix4#clone', assert => {
-  var a = new Matrix4().set(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
-  var b = a.clone();
+test('three.js#Matrix4#clone', t => {
+  const a = new Matrix4().set(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
+  const b = a.clone();
 
-  assert.ok(matrixEquals4(a, b), 'Passed!');
+  t.ok(matrixEquals4(a, b), 'Passed!');
 
   // ensure that it is a true copy
   a.elements[0] = 2;
-  assert.ok(!matrixEquals4(a, b), 'Passed!');
+  t.ok(!matrixEquals4(a, b), 'Passed!');
+  t.end();
 });
 
-test('three.js#Matrix4#copy', assert => {
-  var a = new Matrix4().set(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
-  var b = new Matrix4().copy(a);
+test('three.js#Matrix4#copy', t => {
+  const a = new Matrix4().set(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
+  const b = new Matrix4().copy(a);
 
-  assert.ok(matrixEquals4(a, b), 'Passed!');
+  t.ok(matrixEquals4(a, b), 'Passed!');
 
   // ensure that it is a true copy
   a.elements[0] = 2;
-  assert.ok(!matrixEquals4(a, b), 'Passed!');
+  t.ok(!matrixEquals4(a, b), 'Passed!');
+  t.end();
 });
 
-test('three.js#Matrix4#copyPosition', assert => {
-  var a = new Matrix4().set(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
-  var b = new Matrix4().set(1, 2, 3, 0, 5, 6, 7, 0, 9, 10, 11, 0, 13, 14, 15, 16);
+test.skip('three.js#Matrix4#copyPosition', t => {
+  const a = new Matrix4().set(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+  const b = new Matrix4().set(1, 2, 3, 0, 5, 6, 7, 0, 9, 10, 11, 0, 13, 14, 15, 16);
 
-  assert.notOk(matrixEquals4(a, b), 'a and b initially not equal');
+  t.notOk(matrixEquals4(a, b), 'a and b initially not equal');
 
   b.copyPosition(a);
-  assert.ok(matrixEquals4(a, b), 'a and b equal after copyPosition()');
+  t.ok(matrixEquals4(a, b), 'a and b equal after copyPosition()');
+  t.end();
 });
 
-test('three.js#Matrix4#makeBasis/extractBasis', assert => {
-  var identityBasis = [new Vector3(1, 0, 0), new Vector3(0, 1, 0), new Vector3(0, 0, 1)];
-  var a = new Matrix4().makeBasis(identityBasis[0], identityBasis[1], identityBasis[2]);
-  var identity = new Matrix4();
-  assert.ok(matrixEquals4(a, identity), 'Passed!');
+test.skip('three.js#Matrix4#makeBasis/extractBasis', t => {
+  const identityBasis = [new Vector3(1, 0, 0), new Vector3(0, 1, 0), new Vector3(0, 0, 1)];
+  const a = new Matrix4().makeBasis(identityBasis[0], identityBasis[1], identityBasis[2]);
+  const identity = new Matrix4();
+  t.ok(matrixEquals4(a, identity), 'Passed!');
 
-  var testBases = [[new Vector3(0, 1, 0), new Vector3(-1, 0, 0), new Vector3(0, 0, 1)]];
-  for (var i = 0; i < testBases.length; i++) {
-    var testBasis = testBases[i];
-    var b = new Matrix4().makeBasis(testBasis[0], testBasis[1], testBasis[2]);
-    var outBasis = [new Vector3(), new Vector3(), new Vector3()];
+  const testBases = [[new Vector3(0, 1, 0), new Vector3(-1, 0, 0), new Vector3(0, 0, 1)]];
+  for (let i = 0; i < testBases.length; i++) {
+    const testBasis = testBases[i];
+    const b = new Matrix4().makeBasis(testBasis[0], testBasis[1], testBasis[2]);
+    const outBasis = [new Vector3(), new Vector3(), new Vector3()];
     b.extractBasis(outBasis[0], outBasis[1], outBasis[2]);
     // check what goes in, is what comes out.
-    for (var j = 0; j < outBasis.length; j++) {
-      assert.ok(outBasis[j].equals(testBasis[j]), 'Passed!');
+    for (let j = 0; j < outBasis.length; j++) {
+      t.ok(outBasis[j].equals(testBasis[j]), 'Passed!');
     }
 
     // get the basis out the hard war
-    for (var j = 0; j < identityBasis.length; j++) {
+    for (let j = 0; j < identityBasis.length; j++) {
       outBasis[j].copy(identityBasis[j]);
       outBasis[j].applyMatrix4(b);
     }
     // did the multiply method of basis extraction work?
-    for (var j = 0; j < outBasis.length; j++) {
-      assert.ok(outBasis[j].equals(testBasis[j]), 'Passed!');
+    for (let j = 0; j < outBasis.length; j++) {
+      t.ok(outBasis[j].equals(testBasis[j]), 'Passed!');
     }
   }
+  t.end();
 });
 
-test.skip('three.js#Matrix4#extractRotation', assert => {
-  assert.ok(false, "everything's gonna be alright");
+test.skip('three.js#Matrix4#extractRotation', t => {
+  t.ok(false, "everything's gonna be alright");
+  t.end();
 });
 
-test('three.js#Matrix4#makeRotationFromEuler/extractRotation', assert => {
-  var testValues = [
+test.skip('three.js#Matrix4#makeRotationFromEuler/extractRotation', t => {
+  const testValues = [
     new Euler(0, 0, 0, 'XYZ'),
     new Euler(1, 0, 0, 'XYZ'),
     new Euler(0, 1, 0, 'ZYX'),
@@ -206,70 +230,74 @@ test('three.js#Matrix4#makeRotationFromEuler/extractRotation', assert => {
     new Euler(0, 0, -0.5, 'YZX')
   ];
 
-  for (var i = 0; i < testValues.length; i++) {
-    var v = testValues[i];
+  for (let i = 0; i < testValues.length; i++) {
+    const v = testValues[i];
 
-    var m = new Matrix4().makeRotationFromEuler(v);
+    const m = new Matrix4().makeRotationFromEuler(v);
 
-    var v2 = new Euler().setFromRotationMatrix(m, v.order);
-    var m2 = new Matrix4().makeRotationFromEuler(v2);
+    const v2 = new Euler().setFromRotationMatrix(m, v.order);
+    const m2 = new Matrix4().makeRotationFromEuler(v2);
 
-    assert.ok(
+    t.ok(
       matrixEquals4(m, m2, eps),
       'makeRotationFromEuler #' + i + ': original and Euler-derived matrices are equal'
     );
-    assert.ok(
+    t.ok(
       eulerEquals(v, v2, eps),
       'makeRotationFromEuler #' + i + ': original and matrix-derived Eulers are equal'
     );
 
-    var m3 = new Matrix4().extractRotation(m2);
-    var v3 = new Euler().setFromRotationMatrix(m3, v.order);
+    const m3 = new Matrix4().extractRotation(m2);
+    const v3 = new Euler().setFromRotationMatrix(m3, v.order);
 
-    assert.ok(
+    t.ok(
       matrixEquals4(m, m3, eps),
       'extractRotation #' + i + ': original and extracted matrices are equal'
     );
-    assert.ok(
+    t.ok(
       eulerEquals(v, v3, eps),
       'extractRotation #' + i + ': original and extracted Eulers are equal'
     );
   }
+  t.end();
 });
 
-test('three.js#Matrix4#lookAt', assert => {
-  var a = new Matrix4();
-  var expected = new Matrix4().identity();
-  var eye = new Vector3(0, 0, 0);
-  var target = new Vector3(0, 1, -1);
-  var up = new Vector3(0, 1, 0);
+test.skip('three.js#Matrix4#lookAt', t => {
+  const a = new Matrix4();
+  const expected = new Matrix4().identity();
+  const eye = new Vector3(0, 0, 0);
+  const target = new Vector3(0, 1, -1);
+  const up = new Vector3(0, 1, 0);
 
   a.lookAt(eye, target, up);
-  var rotation = new Euler().setFromRotationMatrix(a);
-  assert.numEqual(rotation.x * (180 / Math.PI), 45, 'Check the rotation');
+  const rotation = new Euler().setFromRotationMatrix(a);
+  t.numEqual(rotation.x * (180 / Math.PI), 45, 'Check the rotation');
 
   // eye and target are in the same position
   eye.copy(target);
   a.lookAt(eye, target, up);
-  assert.ok(matrixEquals4(a, expected), 'Check the result for eye == target');
+  t.ok(matrixEquals4(a, expected), 'Check the result for eye == target');
 
   // up and z are parallel
   eye.set(0, 1, 0);
   target.set(0, 0, 0);
   a.lookAt(eye, target, up);
   expected.set(1, 0, 0, 0, 0, 0.0001, 1, 0, 0, -1, 0.0001, 0, 0, 0, 0, 1);
-  assert.ok(matrixEquals4(a, expected), 'Check the result for when up and z are parallel');
+  t.ok(matrixEquals4(a, expected), 'Check the result for when up and z are parallel');
+  t.end();
 });
 
-test.skip('three.js#Matrix4#multiply', assert => {
-  assert.ok(false, "everything's gonna be alright");
+test.skip('three.js#Matrix4#multiply', t => {
+  t.ok(false, "everything's gonna be alright");
+  t.end();
 });
 
-test.skip('three.js#Matrix4#premultiply', assert => {
-  assert.ok(false, "everything's gonna be alright");
+test.skip('three.js#Matrix4#premultiply', t => {
+  t.ok(false, "everything's gonna be alright");
+  t.end();
 });
 
-test('three.js#Matrix4#multiplyMatrices', assert => {
+test.skip('three.js#Matrix4#multiplyMatrices', t => {
   // Reference:
   //
   // #!/usr/bin/env python
@@ -286,8 +314,8 @@ test('three.js#Matrix4#multiplyMatrices', assert => {
   //  [ 5318  5562  5980  6246]
   //  [10514 11006 11840 12378]
   //  [15894 16634 17888 18710]]
-  var lhs = new Matrix4().set(2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53);
-  var rhs = new Matrix4().set(
+  const lhs = new Matrix4().set(2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53);
+  const rhs = new Matrix4().set(
     59,
     61,
     67,
@@ -305,70 +333,77 @@ test('three.js#Matrix4#multiplyMatrices', assert => {
     127,
     131
   );
-  var ans = new Matrix4();
+  const ans = new Matrix4();
 
   ans.multiplyMatrices(lhs, rhs);
 
-  assert.ok(ans.elements[0] == 1585);
-  assert.ok(ans.elements[1] == 5318);
-  assert.ok(ans.elements[2] == 10514);
-  assert.ok(ans.elements[3] == 15894);
-  assert.ok(ans.elements[4] == 1655);
-  assert.ok(ans.elements[5] == 5562);
-  assert.ok(ans.elements[6] == 11006);
-  assert.ok(ans.elements[7] == 16634);
-  assert.ok(ans.elements[8] == 1787);
-  assert.ok(ans.elements[9] == 5980);
-  assert.ok(ans.elements[10] == 11840);
-  assert.ok(ans.elements[11] == 17888);
-  assert.ok(ans.elements[12] == 1861);
-  assert.ok(ans.elements[13] == 6246);
-  assert.ok(ans.elements[14] == 12378);
-  assert.ok(ans.elements[15] == 18710);
+  t.equals(ans.elements[0], 1585);
+  t.equals(ans.elements[1], 5318);
+  t.equals(ans.elements[2], 10514);
+  t.equals(ans.elements[3], 15894);
+  t.equals(ans.elements[4], 1655);
+  t.equals(ans.elements[5], 5562);
+  t.equals(ans.elements[6], 11006);
+  t.equals(ans.elements[7], 16634);
+  t.equals(ans.elements[8], 1787);
+  t.equals(ans.elements[9], 5980);
+  t.equals(ans.elements[10], 11840);
+  t.equals(ans.elements[11], 17888);
+  t.equals(ans.elements[12], 1861);
+  t.equals(ans.elements[13], 6246);
+  t.equals(ans.elements[14], 12378);
+  t.equals(ans.elements[15], 18710);
+  t.end();
 });
 
-test('three.js#Matrix4#multiplyScalar', assert => {
-  var b = new Matrix4().set(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
-  assert.ok(b.elements[0] == 0);
-  assert.ok(b.elements[1] == 4);
-  assert.ok(b.elements[2] == 8);
-  assert.ok(b.elements[3] == 12);
-  assert.ok(b.elements[4] == 1);
-  assert.ok(b.elements[5] == 5);
-  assert.ok(b.elements[6] == 9);
-  assert.ok(b.elements[7] == 13);
-  assert.ok(b.elements[8] == 2);
-  assert.ok(b.elements[9] == 6);
-  assert.ok(b.elements[10] == 10);
-  assert.ok(b.elements[11] == 14);
-  assert.ok(b.elements[12] == 3);
-  assert.ok(b.elements[13] == 7);
-  assert.ok(b.elements[14] == 11);
-  assert.ok(b.elements[15] == 15);
+test('three.js#Matrix4#multiplyScalar', t => {
+  const b = new Matrix4().set(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
+
+  // NOTE THREE.js is row-major
+  b.transpose();
+  // NOTE
+
+  t.equals(b.elements[0], 0);
+  t.equals(b.elements[1], 4);
+  t.equals(b.elements[2], 8);
+  t.equals(b.elements[3], 12);
+  t.equals(b.elements[4], 1);
+  t.equals(b.elements[5], 5);
+  t.equals(b.elements[6], 9);
+  t.equals(b.elements[7], 13);
+  t.equals(b.elements[8], 2);
+  t.equals(b.elements[9], 6);
+  t.equals(b.elements[10], 10);
+  t.equals(b.elements[11], 14);
+  t.equals(b.elements[12], 3);
+  t.equals(b.elements[13], 7);
+  t.equals(b.elements[14], 11);
+  t.equals(b.elements[15], 15);
 
   b.multiplyScalar(2);
-  assert.ok(b.elements[0] == 0 * 2);
-  assert.ok(b.elements[1] == 4 * 2);
-  assert.ok(b.elements[2] == 8 * 2);
-  assert.ok(b.elements[3] == 12 * 2);
-  assert.ok(b.elements[4] == 1 * 2);
-  assert.ok(b.elements[5] == 5 * 2);
-  assert.ok(b.elements[6] == 9 * 2);
-  assert.ok(b.elements[7] == 13 * 2);
-  assert.ok(b.elements[8] == 2 * 2);
-  assert.ok(b.elements[9] == 6 * 2);
-  assert.ok(b.elements[10] == 10 * 2);
-  assert.ok(b.elements[11] == 14 * 2);
-  assert.ok(b.elements[12] == 3 * 2);
-  assert.ok(b.elements[13] == 7 * 2);
-  assert.ok(b.elements[14] == 11 * 2);
-  assert.ok(b.elements[15] == 15 * 2);
+  t.equals(b.elements[0], 0 * 2);
+  t.equals(b.elements[1], 4 * 2);
+  t.equals(b.elements[2], 8 * 2);
+  t.equals(b.elements[3], 12 * 2);
+  t.equals(b.elements[4], 1 * 2);
+  t.equals(b.elements[5], 5 * 2);
+  t.equals(b.elements[6], 9 * 2);
+  t.equals(b.elements[7], 13 * 2);
+  t.equals(b.elements[8], 2 * 2);
+  t.equals(b.elements[9], 6 * 2);
+  t.equals(b.elements[10], 10 * 2);
+  t.equals(b.elements[11], 14 * 2);
+  t.equals(b.elements[12], 3 * 2);
+  t.equals(b.elements[13], 7 * 2);
+  t.equals(b.elements[14], 11 * 2);
+  t.equals(b.elements[15], 15 * 2);
+  t.end();
 });
 
-test('three.js#Matrix4#applyToBufferAttribute', assert => {
-  var a = new Matrix4().set(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
-  var attr = new Float32BufferAttribute([1, 2, 1, 3, 0, 3], 3);
-  var expected = new Float32BufferAttribute(
+test.skip('three.js#Matrix4#applyToBufferAttribute', t => {
+  const a = new Matrix4().set(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+  const attr = new Float32BufferAttribute([1, 2, 1, 3, 0, 3], 3);
+  const expected = new Float32BufferAttribute(
     [
       0.1666666716337204,
       0.4444444477558136,
@@ -380,71 +415,75 @@ test('three.js#Matrix4#applyToBufferAttribute', assert => {
     3
   );
 
-  var applied = a.applyToBufferAttribute(attr);
+  const applied = a.applyToBufferAttribute(attr);
 
-  assert.strictEqual(
+  t.strictEqual(
     expected.count,
     applied.count,
     'Applied buffer and expected buffer have the same number of entries'
   );
 
-  for (var i = 0, l = expected.count; i < l; i++) {
-    assert.ok(Math.abs(applied.getX(i) - expected.getX(i)) <= eps, 'Check x');
-    assert.ok(Math.abs(applied.getY(i) - expected.getY(i)) <= eps, 'Check y');
-    assert.ok(Math.abs(applied.getZ(i) - expected.getZ(i)) <= eps, 'Check z');
+  for (let i = 0, l = expected.count; i < l; i++) {
+    t.ok(Math.abs(applied.getX(i) - expected.getX(i)) <= eps, 'Check x');
+    t.ok(Math.abs(applied.getY(i) - expected.getY(i)) <= eps, 'Check y');
+    t.ok(Math.abs(applied.getZ(i) - expected.getZ(i)) <= eps, 'Check z');
   }
+  t.end();
 });
 
-test('three.js#Matrix4#determinant', assert => {
-  var a = new Matrix4();
-  assert.ok(a.determinant() == 1, 'Passed!');
+test('three.js#Matrix4#determinant', t => {
+  const a = new Matrix4();
+  t.ok(a.determinant() == 1, 'Passed!');
 
   a.elements[0] = 2;
-  assert.ok(a.determinant() == 2, 'Passed!');
+  t.ok(a.determinant() == 2, 'Passed!');
 
   a.elements[0] = 0;
-  assert.ok(a.determinant() == 0, 'Passed!');
+  t.ok(a.determinant() == 0, 'Passed!');
 
   // calculated via http://www.euclideanspace.com/maths/algebra/matrix/functions/determinant/fourD/index.htm
   a.set(2, 3, 4, 5, -1, -21, -3, -4, 6, 7, 8, 10, -8, -9, -10, -12);
-  assert.ok(a.determinant() == 76, 'Passed!');
+  t.ok(a.determinant() == 76, 'Passed!');
+  t.end();
 });
 
-test('three.js#Matrix4#transpose', assert => {
-  var a = new Matrix4();
-  var b = a.clone().transpose();
-  assert.ok(matrixEquals4(a, b), 'Passed!');
+test('three.js#Matrix4#transpose', t => {
+  const a = new Matrix4();
+  let b = a.clone().transpose();
+  t.ok(matrixEquals4(a, b), 'Passed!');
 
-  var b = new Matrix4().set(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
-  var c = b.clone().transpose();
-  assert.ok(!matrixEquals4(b, c), 'Passed!');
+  b = new Matrix4().set(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
+  const c = b.clone().transpose();
+  t.ok(!matrixEquals4(b, c), 'Passed!');
   c.transpose();
-  assert.ok(matrixEquals4(b, c), 'Passed!');
+  t.ok(matrixEquals4(b, c), 'Passed!');
+  t.end();
 });
 
-test.skip('three.js#Matrix4#setPosition', assert => {
-  assert.ok(false, "everything's gonna be alright");
+test.skip('three.js#Matrix4#setPosition', t => {
+  t.ok(false, "everything's gonna be alright");
+  t.end();
 });
 
-test('three.js#Matrix4#getInverse', assert => {
-  var identity = new Matrix4();
+test.skip('three.js#Matrix4#getInverse', t => {
+  const identity = new Matrix4();
 
-  var a = new Matrix4();
-  var b = new Matrix4().set(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
-  var c = new Matrix4().set(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+  const a = new Matrix4();
+  const b = new Matrix4().set(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+  const c = new Matrix4().set(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
-  assert.ok(!matrixEquals4(a, b), 'Passed!');
+  t.ok(!matrixEquals4(a, b), 'Passed!');
   b.getInverse(a, false);
-  assert.ok(matrixEquals4(b, new Matrix4()), 'Passed!');
+  t.ok(matrixEquals4(b, new Matrix4()), 'Passed!');
 
   try {
     b.getInverse(c, true);
-    assert.ok(false, 'Passed!'); // should never get here.
+    t.ok(false, 'Passed!'); // should never get here.
   } catch (err) {
-    assert.ok(true, 'Passed!');
+    t.ok(true, 'Passed!');
   }
 
-  var testMatrices = [
+  const testMatrices = [
     new Matrix4().makeRotationX(0.3),
     new Matrix4().makeRotationX(-0.3),
     new Matrix4().makeRotationY(0.3),
@@ -458,60 +497,67 @@ test('three.js#Matrix4#getInverse', assert => {
     new Matrix4().makeTranslation(1, 2, 3)
   ];
 
-  for (var i = 0, il = testMatrices.length; i < il; i++) {
-    var m = testMatrices[i];
+  for (let i = 0, il = testMatrices.length; i < il; i++) {
+    const m = testMatrices[i];
 
-    var mInverse = new Matrix4().getInverse(m);
-    var mSelfInverse = m.clone();
+    const mInverse = new Matrix4().getInverse(m);
+    const mSelfInverse = m.clone();
     mSelfInverse.getInverse(mSelfInverse);
 
     // self-inverse should the same as inverse
-    assert.ok(matrixEquals4(mSelfInverse, mInverse), 'Passed!');
+    t.ok(matrixEquals4(mSelfInverse, mInverse), 'Passed!');
 
     // the determinant of the inverse should be the reciprocal
-    assert.ok(Math.abs(m.determinant() * mInverse.determinant() - 1) < 0.0001, 'Passed!');
+    t.ok(Math.abs(m.determinant() * mInverse.determinant() - 1) < 0.0001, 'Passed!');
 
-    var mProduct = new Matrix4().multiplyMatrices(m, mInverse);
+    const mProduct = new Matrix4().multiplyMatrices(m, mInverse);
 
     // the determinant of the identity matrix is 1
-    assert.ok(Math.abs(mProduct.determinant() - 1) < 0.0001, 'Passed!');
-    assert.ok(matrixEquals4(mProduct, identity), 'Passed!');
+    t.ok(Math.abs(mProduct.determinant() - 1) < 0.0001, 'Passed!');
+    t.ok(matrixEquals4(mProduct, identity), 'Passed!');
   }
+  t.end();
 });
 
-test.skip('three.js#Matrix4#scale', assert => {
-  assert.ok(false, "everything's gonna be alright");
+test.skip('three.js#Matrix4#scale', t => {
+  t.ok(false, "everything's gonna be alright");
+  t.end();
 });
 
-test('three.js#Matrix4#getMaxScaleOnAxis', assert => {
-  var a = new Matrix4().set(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
-  var expected = Math.sqrt(3 * 3 + 7 * 7 + 11 * 11);
+test.skip('three.js#Matrix4#getMaxScaleOnAxis', t => {
+  const a = new Matrix4().set(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+  const expected = Math.sqrt(3 * 3 + 7 * 7 + 11 * 11);
 
-  assert.ok(Math.abs(a.getMaxScaleOnAxis() - expected) <= eps, 'Check result');
+  t.ok(Math.abs(a.getMaxScaleOnAxis() - expected) <= eps, 'Check result');
+  t.end();
 });
 
-test.skip('three.js#Matrix4#makeTranslation', assert => {
-  assert.ok(false, "everything's gonna be alright");
+test.skip('three.js#Matrix4#makeTranslation', t => {
+  t.ok(false, "everything's gonna be alright");
+  t.end();
 });
 
-test.skip('three.js#Matrix4#makeRotationX', assert => {
-  assert.ok(false, "everything's gonna be alright");
+test.skip('three.js#Matrix4#makeRotationX', t => {
+  t.ok(false, "everything's gonna be alright");
+  t.end();
 });
 
-test.skip('three.js#Matrix4#makeRotationY', assert => {
-  assert.ok(false, "everything's gonna be alright");
+test.skip('three.js#Matrix4#makeRotationY', t => {
+  t.ok(false, "everything's gonna be alright");
+  t.end();
 });
 
-test.skip('three.js#Matrix4#makeRotationZ', assert => {
-  assert.ok(false, "everything's gonna be alright");
+test.skip('three.js#Matrix4#makeRotationZ', t => {
+  t.ok(false, "everything's gonna be alright");
+  t.end();
 });
 
-test('three.js#Matrix4#makeRotationAxis', assert => {
-  var axis = new Vector3(1.5, 0.0, 1.0).normalize();
-  var radians = toRadians(45);
-  var a = new Matrix4().makeRotationAxis(axis, radians);
+test.skip('three.js#Matrix4#makeRotationAxis', t => {
+  const axis = new Vector3(1.5, 0.0, 1.0).normalize();
+  const radians = toRadians(45);
+  const a = new Matrix4().makeRotationAxis(axis, radians);
 
-  var expected = new Matrix4().set(
+  const expected = new Matrix4().set(
     0.9098790095958609,
     -0.39223227027636803,
     0.13518148560620882,
@@ -530,19 +576,22 @@ test('three.js#Matrix4#makeRotationAxis', assert => {
     1
   );
 
-  assert.ok(matrixEquals4(a, expected), 'Check numeric result');
+  t.ok(matrixEquals4(a, expected), 'Check numeric result');
+  t.end();
 });
 
-test.skip('three.js#Matrix4#makeScale', assert => {
-  assert.ok(false, "everything's gonna be alright");
+test.skip('three.js#Matrix4#makeScale', t => {
+  t.ok(false, "everything's gonna be alright");
+  t.end();
 });
 
-test.skip('three.js#Matrix4#makeShear', assert => {
-  assert.ok(false, "everything's gonna be alright");
+test.skip('three.js#Matrix4#makeShear', t => {
+  t.ok(false, "everything's gonna be alright");
+  t.end();
 });
 
-test('three.js#Matrix4#compose/decompose', assert => {
-  var tValues = [
+test.skip('three.js#Matrix4#compose/decompose', t => {
+  const tValues = [
     new Vector3(),
     new Vector3(3, 0, 0),
     new Vector3(0, 4, 0),
@@ -554,7 +603,7 @@ test('three.js#Matrix4#compose/decompose', assert => {
     new Vector3(-2, -5, -9)
   ];
 
-  var sValues = [
+  const sValues = [
     new Vector3(1, 1, 1),
     new Vector3(2, 2, 2),
     new Vector3(1, -1, 1),
@@ -566,32 +615,32 @@ test('three.js#Matrix4#compose/decompose', assert => {
     new Vector3(-2, -2, -2)
   ];
 
-  var rValues = [
+  const rValues = [
     new Quaternion(),
     new Quaternion().setFromEuler(new Euler(1, 1, 0)),
     new Quaternion().setFromEuler(new Euler(1, -1, 1)),
     new Quaternion(0, 0.9238795292366128, 0, 0.38268342717215614)
   ];
 
-  for (var ti = 0; ti < tValues.length; ti++) {
-    for (var si = 0; si < sValues.length; si++) {
-      for (var ri = 0; ri < rValues.length; ri++) {
-        var t = tValues[ti];
-        var s = sValues[si];
-        var r = rValues[ri];
+  for (let ti = 0; ti < tValues.length; ti++) {
+    for (let si = 0; si < sValues.length; si++) {
+      for (let ri = 0; ri < rValues.length; ri++) {
+        const t = tValues[ti];
+        const s = sValues[si];
+        const r = rValues[ri];
 
-        var m = new Matrix4().compose(
+        const m = new Matrix4().compose(
           t,
           r,
           s
         );
-        var t2 = new Vector3();
-        var r2 = new Quaternion();
-        var s2 = new Vector3();
+        const t2 = new Vector3();
+        const r2 = new Quaternion();
+        const s2 = new Vector3();
 
         m.decompose(t2, r2, s2);
 
-        var m2 = new Matrix4().compose(
+        const m2 = new Matrix4().compose(
           t2,
           r2,
           s2
@@ -599,7 +648,7 @@ test('three.js#Matrix4#compose/decompose', assert => {
 
         /*
 				// debug code
-				var matrixIsSame = matrixEquals4( m, m2 );
+				const matrixIsSame = matrixEquals4( m, m2 );
 				if ( ! matrixIsSame ) {
 
 					console.log( t, s, r );
@@ -609,52 +658,62 @@ test('three.js#Matrix4#compose/decompose', assert => {
 				}
 				*/
 
-        assert.ok(matrixEquals4(m, m2), 'Passed!');
+        t.ok(matrixEquals4(m, m2), 'Passed!');
       }
     }
   }
+  t.end();
 });
 
-test.skip('three.js#Matrix4#makePerspective', assert => {
-  assert.ok(false, "everything's gonna be alright");
+test.skip('three.js#Matrix4#makePerspective', t => {
+  t.ok(false, "everything's gonna be alright");
+  t.end();
 });
 
-test('three.js#Matrix4#makeOrthographic', assert => {
-  var a = new Matrix4().makeOrthographic(-1, 1, -1, 1, 1, 100);
-  var expected = new Matrix4().set(1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -2 / 99, -101 / 99, 0, 0, 0, 1);
+test.skip('three.js#Matrix4#makeOrthographic', t => {
+  const a = new Matrix4().makeOrthographic(-1, 1, -1, 1, 1, 100);
+  const expected = new Matrix4().set(1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -2 / 99, -101 / 99, 0, 0, 0, 1);
 
-  assert.ok(matrixEquals4(a, expected), 'Check result');
+  t.ok(matrixEquals4(a, expected), 'Check result');
+  t.end();
 });
 
-test('three.js#Matrix4#equals', assert => {
-  var a = new Matrix4().set(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
-  var b = new Matrix4().set(0, -1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+test('three.js#Matrix4#equals', t => {
+  const a = new Matrix4().set(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+  const b = new Matrix4().set(0, -1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
 
-  assert.notOk(a.equals(b), 'Check that a does not equal b');
-  assert.notOk(b.equals(a), 'Check that b does not equal a');
+  t.notOk(a.equals(b), 'Check that a does not equal b');
+  t.notOk(b.equals(a), 'Check that b does not equal a');
 
   a.copy(b);
-  assert.ok(a.equals(b), 'Check that a equals b after copy()');
-  assert.ok(b.equals(a), 'Check that b equals a after copy()');
+  t.ok(a.equals(b), 'Check that a equals b after copy()');
+  t.ok(b.equals(a), 'Check that b equals a after copy()');
+  t.end();
 });
 
-test.skip('three.js#Matrix4#fromArray', assert => {
-  assert.ok(false, "everything's gonna be alright");
+test.skip('three.js#Matrix4#fromArray', t => {
+  t.ok(false, "everything's gonna be alright");
+  t.end();
 });
 
-test('three.js#Matrix4#toArray', assert => {
-  var a = new Matrix4().set(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
-  var noOffset = [1, 5, 9, 13, 2, 6, 10, 14, 3, 7, 11, 15, 4, 8, 12, 16];
-  var withOffset = [undefined, 1, 5, 9, 13, 2, 6, 10, 14, 3, 7, 11, 15, 4, 8, 12, 16];
+test('three.js#Matrix4#toArray', t => {
+  const a = new Matrix4().set(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+  // NOTE THREE.js is row-major
+  a.transpose()
+  // NOTE
 
-  var array = a.toArray();
-  assert.deepEqual(array, noOffset, 'No array, no offset');
+  const noOffset = [1, 5, 9, 13, 2, 6, 10, 14, 3, 7, 11, 15, 4, 8, 12, 16];
+  const withOffset = [undefined, 1, 5, 9, 13, 2, 6, 10, 14, 3, 7, 11, 15, 4, 8, 12, 16];
 
-  var array = [];
+  let array = a.toArray();
+  t.deepEqual(array, noOffset, 'No array, no offset');
+
+  array = [];
   a.toArray(array);
-  assert.deepEqual(array, noOffset, 'With array, no offset');
+  t.deepEqual(array, noOffset, 'With array, no offset');
 
-  var array = [];
+  array = [undefined];
   a.toArray(array, 1);
-  assert.deepEqual(array, withOffset, 'With array, with offset');
+  t.deepEqual(array, withOffset, 'With array, with offset');
+  t.end();
 });
