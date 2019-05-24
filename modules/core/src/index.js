@@ -29,13 +29,16 @@ export {default as Quaternion} from './quaternion';
 // math.gl "GLSL" functions
 export {
   config,
-  checkNumber,
   configure,
+  checkNumber,
   formatValue,
   isArray,
   clone,
+  equals,
+  exactEquals,
   toRadians,
   toDegrees,
+  // math.gl "GLSL"-style functions
   radians,
   degrees,
   sin,
@@ -45,12 +48,12 @@ export {
   acos,
   atan,
   clamp,
-  lerp,
-  equals,
-  exactEquals
+  lerp
 } from './lib/common';
 
 export {default as _SphericalCoordinates} from './spherical-coordinates';
 export {default as _Pose} from './pose';
 export {default as _Euler} from './euler';
 export {default as _Polygon} from './addons/polygon';
+
+export {default as assert} from './lib/assert';
