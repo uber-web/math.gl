@@ -45,8 +45,12 @@ export default function commonBench(suite, addReferenceBenchmarks) {
   suite
     .group('toRadians/toDegrees')
     .add('toRadians(Number)', () => toRadians(100))
-    .add('toRadians(Vector3)', () => toRadians(mathglArray))
-    .add('toRadians(array)', () => toRadians(classicArray))
-    .add('toRadians(Float32Array)', () => toRadians(float32Array))
-    .add('toRadians(Float64Array)', () => toRadians(float64Array));
+    .add('toRadians(Vector3)', () => toRadians(mathglArray));
+
+  if (addReferenceBenchmarks) {
+    suite
+      .add('toRadians(array)', () => toRadians(classicArray))
+      .add('toRadians(Float32Array)', () => toRadians(float32Array))
+      .add('toRadians(Float64Array)', () => toRadians(float64Array));
+  }
 }

@@ -33,11 +33,5 @@ import {Vector3} from 'math.gl';
 // const mathglArray = new Matrix4();
 
 export default function classesBench(suite) {
-  return suite
-
-    .group('Vector3 construction')
-    .add('new Vector3', () => new Vector3())
-    .add('new Array(3)', () => new Array(3))
-    .add('Array(3)', () => Array(3))
-    .add('[0, 0, 0]', () => [0, 0, 0]);
+  return suite.group('Vector3 construction').add('Vector3#new Vector3', () => new Vector3());
 }
