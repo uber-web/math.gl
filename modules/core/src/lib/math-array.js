@@ -46,9 +46,19 @@ export default class MathArray extends Array {
     return this;
   }
 
+  from(arrayOrObject) {
+    return Array.isArray(arrayOrObject) ? this.copy(arrayOrObject) : this.fromObject(arrayOrObject);
+  }
+
+  to(arrayOrObject) {
+    return Array.isArray(arrayOrObject)
+      ? this.toArray(arrayOrObject)
+      : this.toObject(arrayOrObject);
+  }
+
   fromArray(array, offset = 0) {
     for (let i = 0; i < this.ELEMENTS; ++i) {
-      this[i] = array[i + offset] | 0;
+      this[i] = array[i + offset];
     }
     return this.check();
   }

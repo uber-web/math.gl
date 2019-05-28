@@ -23,14 +23,9 @@ import {config, isArray} from '../lib/common';
 import {checkNumber} from '../lib/validators';
 
 export default class Vector4 extends Vector {
-  // Creates a new, empty vec4
   constructor(x = 0, y = 0, z = 0, w = 0) {
+    // PERF NOTE: initialize elements as double precision numbers
     super(-0, -0, -0, -0);
-    // PERF: Force fields to double precision numbers
-    this[0] = -0;
-    this[1] = -0;
-    this[2] = -0;
-    this[3] = -0;
     if (isArray(x) && arguments.length === 1) {
       this.copy(x);
     } else {

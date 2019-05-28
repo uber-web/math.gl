@@ -27,6 +27,7 @@ import {checkNumber} from '../lib/validators';
 export default class Vector2 extends Vector {
   // Creates a new, empty vec2
   constructor(x = 0, y = 0) {
+    // PERF NOTE: initialize elements as double precision numbers
     super(-0, -0);
     if (isArray(x) && arguments.length === 1) {
       this.copy(x);
@@ -35,7 +36,6 @@ export default class Vector2 extends Vector {
         checkNumber(x);
         checkNumber(y);
       }
-      // PERF NOTE: bitwise or operator ensures JIT-compiler knows we assign only numbers
       this[0] = x;
       this[1] = y;
     }

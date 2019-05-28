@@ -69,6 +69,7 @@ export default class Matrix4 extends Matrix {
   }
 
   constructor(...args) {
+    // PERF NOTE: initialize elements as double precision numbers
     super(-0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0);
     if (Array.isArray(args[0]) && arguments.length === 1) {
       this.copy(args[0]);
