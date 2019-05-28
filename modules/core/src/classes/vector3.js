@@ -19,7 +19,8 @@
 // THE SOFTWARE.
 
 import Vector from '../lib/vector';
-import {checkNumber, isArray} from '../lib/common';
+import {config, isArray} from '../lib/common';
+import {checkNumber, checkVector} from '../lib/validators';
 
 import * as vec3 from 'gl-matrix/vec3';
 
@@ -28,20 +29,36 @@ const ORIGIN = [0, 0, 0];
 export default class Vector3 extends Vector {
   // Creates a new vec3, either empty, or from an array or from values
   constructor(x = 0, y = 0, z = 0) {
-    super(3);
-    if (Array.isArray(x) && arguments.length === 1) {
+    super(-0, -0, -0);
+    if (isArray(x) && arguments.length === 1) {
       this.copy(x);
     } else {
-      this.set(x, y, z);
+      if (config.debug) {
+        checkNumber(x);
+        checkNumber(y);
+        checkNumber(z);
+      }
+      // PERF NOTE: bitwise or operator ensures JIT-compiler knows we assign only numbers
+      this[0] = x;
+      this[1] = y;
+      this[2] = z;
     }
   }
 
   from(arrayOrObject) {
     if (isArray(arrayOrObject)) {
-      this[0] = arrayOrObject.x;
-      this[1] = arrayOrObject.y;
-      this[2] = arrayOrObject.z;
+      if (config.debug) {
+        checkVector(arrayOrObject, 3);
+      }
+      this[0] = arrayOrObject[0];
+      this[1] = arrayOrObject[1];
+      this[2] = arrayOrObject[2];
     } else {
+      if (config.debug) {
+        checkNumber(arrayOrObject.x);
+        checkNumber(arrayOrObject.y);
+        checkNumber(arrayOrObject.z);
+      }
       this[0] = arrayOrObject.x;
       this[1] = arrayOrObject.y;
       this[2] = arrayOrObject.z;

@@ -33,26 +33,6 @@ const mathglArray = new Matrix4();
 export default function classesBench(suite) {
   return (
     suite
-      .group('debug validation cost')
-      .add('Matrix4#validate', () => mathglArray.validate())
-
-      .group('4x4 multiplication')
-      .add('Matrix4#multiplyRight(Matrix4)', () => {
-        mathglArray.multiplyRight(mathglArray);
-      })
-      .add('gl-matrix#multiply(Matrix4)', () => {
-        mat4.multiply(mathglArray, mathglArray, mathglArray);
-      })
-      .add('gl-matrix#multiply(array)', () => {
-        mat4.multiply(classicArray, classicArray, classicArray);
-      })
-      .add('gl-matrix#multiply(float32Array)', () => {
-        mat4.multiply(float32Array, float32Array, float32Array);
-      })
-      .add('gl-matrix#multiply(float64Array)', () => {
-        mat4.multiply(float64Array, float64Array, float64Array);
-      })
-
       // add tests
       .group('Vector2 construction')
       .add('new Vector2', () => {
@@ -66,26 +46,15 @@ export default function classesBench(suite) {
       })
 
       .group('Vector3 Construction')
-      .add('Vector3#new Vector3', () => {
-        return new Vector3();
-      })
-      .add('Vector3#Array(3)', () => {
-        return Array(3);
-      })
-      .add('Vector3#[0, 0, 0]', () => {
-        return [0, 0, 0];
-      })
+      .add('Vector3#new Vector3', () => new Vector3())
+      .add('Vector3#Array(0.1, 0.2, 0.3)', () => new Array(3))
+      .add('Vector3#Array(3)', () => new Array(3))
+      .add('Vector3#[0.1, 0.2, 0.3]', () => [0.1, 0.2, 0.3])
 
       .group('Vector4 construction')
-      .add('new Vector4', () => {
-        return new Vector4();
-      })
-      .add('Array(4)', () => {
-        return Array(4);
-      })
-      .add('[0, 0, 0, 1]', () => {
-        return [0, 0, 0, 1];
-      })
+      .add('new Vector4', () => new Vector4())
+      .add('Array(4)', () => new Array(4))
+      .add('[0, 0, 0, 1]', () => [0, 0, 0, 1])
 
       .group('Matrix3 construction')
       .add('new Matrix3', () => {
@@ -119,6 +88,26 @@ export default function classesBench(suite) {
       })
       .add('new Float64Array(IDENTITY)', () => {
         return new Float64Array(IDENTITY);
+      })
+
+      .group('debug validation cost')
+      .add('Matrix4#validate', () => mathglArray.validate())
+
+      .group('4x4 multiplication')
+      .add('Matrix4#multiplyRight(Matrix4)', () => {
+        mathglArray.multiplyRight(mathglArray);
+      })
+      .add('gl-matrix#multiply(Matrix4)', () => {
+        mat4.multiply(mathglArray, mathglArray, mathglArray);
+      })
+      .add('gl-matrix#multiply(array)', () => {
+        mat4.multiply(classicArray, classicArray, classicArray);
+      })
+      .add('gl-matrix#multiply(float32Array)', () => {
+        mat4.multiply(float32Array, float32Array, float32Array);
+      })
+      .add('gl-matrix#multiply(float64Array)', () => {
+        mat4.multiply(float64Array, float64Array, float64Array);
       })
   );
 }

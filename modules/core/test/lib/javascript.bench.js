@@ -25,16 +25,6 @@ class ArrayExtender extends Array {
   }
 }
 
-function classInheritanceBench(suite) {
-  return suite
-    .group('Class/Array inheritance construction cost')
-    .add('new ArrayExtender', () => new ArrayExtender())
-    .add('new ArrayExtenderEmptyConstructor', () => new ArrayExtenderEmptyConstructor())
-    .add('new ArrayExtenderNoConstructor', () => new ArrayExtenderNoConstructor())
-    .add('new ClassWithConstructor', () => new ClassWithConstructor())
-    .add('new ClassNoConstructor', () => new ClassNoConstructor());
-}
-
 // DEFAULT PARAMETERS
 
 class XYZVector {
@@ -55,24 +45,30 @@ class XYZVectorLogicalOr {
 
 class XYZVectorBitwiseOr {
   constructor(x, y, z) {
-    this.x = x | 0;
-    this.y = y | 0;
-    this.z = z | 0;
+    this.x = x || 0;
+    this.y = y || 0;
+    this.z = z || 0;
   }
-}
-
-function defaultParameterBench(suite) {
-  return suite
-    .group('Default parameter cost')
-    .add('new XYZVector#default params', () => new XYZVector())
-    .add('new XYZVector#logical or', () => new XYZVectorLogicalOr())
-    .add('new XYZVector#bitwise or', () => new XYZVectorBitwiseOr());
 }
 
 // COMBINED BENCH
 
-export default function javascriptBench(suite) {
-  classInheritanceBench(suite);
-  defaultParameterBench(suite);
+export default function javascriptBench(suite, addReferenceBenchmarks) {
+  if (addReferenceBenchmarks) {
+    suite
+      .group('Class/Array inheritance construction cost')
+      .add('new ArrayExtender', () => new ArrayExtender())
+      .add('new ArrayExtenderEmptyConstructor', () => new ArrayExtenderEmptyConstructor())
+      .add('new ArrayExtenderNoConstructor', () => new ArrayExtenderNoConstructor())
+      .add('new ClassWithConstructor', () => new ClassWithConstructor())
+      .add('new ClassNoConstructor', () => new ClassNoConstructor());
+
+    suite
+      .group('Default parameter cost')
+      .add('new XYZVector#default params', () => new XYZVector())
+      .add('new XYZVector#logical or', () => new XYZVectorLogicalOr())
+      .add('new XYZVector#bitwise or', () => new XYZVectorBitwiseOr());
+  }
+
   return suite;
 }

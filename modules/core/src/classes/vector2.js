@@ -21,14 +21,23 @@
 import Vector from '../lib/vector';
 import * as vec2 from 'gl-matrix/vec2';
 
+import {config, isArray} from '../lib/common';
+import {checkNumber} from '../lib/validators';
+
 export default class Vector2 extends Vector {
   // Creates a new, empty vec2
   constructor(x = 0, y = 0) {
-    super(2);
-    if (Array.isArray(x) && arguments.length === 1) {
+    super(-0, -0);
+    if (isArray(x) && arguments.length === 1) {
       this.copy(x);
     } else {
-      this.set(x, y);
+      if (config.debug) {
+        checkNumber(x);
+        checkNumber(y);
+      }
+      // PERF NOTE: bitwise or operator ensures JIT-compiler knows we assign only numbers
+      this[0] = x;
+      this[1] = y;
     }
   }
 

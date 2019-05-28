@@ -20,23 +20,39 @@ configure({debug: false});
 
 ## Minimizing Object Creation
 
-One of the most typical performance issue in math.gl (including most other JavaScript math libraries) is object creation. Creating new `Vector` and `Matrix` instances has significant overhead. Therefore, reusing objects where possible is an important technique to optimize performance.
+One of the most typical performance issue in math.gl (and most other JavaScript math libraries) is excessive object creation. Creating new `Vector` and `Matrix` instances every time a calculation is made incurs significant overhead. Therefore, reusing objects where possible is an important technique to optimize performance.
 
 ```js
 for (...) {
-	const v = new Vector3(...);
+	const v = new Vector3(x, y, z);
 }
 ```
 vs.
-```
+
+```js
 const tempVector = new Vector3();
 for (...) {
-	v.set(...);
+	v.set(x, y, z);
 }
 ```
 
-Note that some methods, like `Matrix4.transformVector`, allocate new objects as return values. By providing an optional `target` argument you can prevent this allocation and reuse an object you have already allocated. This technique is borrowed the THREE.js math library where it is a commonly availble optimization.
+Note that a number of methods, such as `Matrix4.transformVector()`, allocate new objects as return values. These methods typically accept an optional `result` argument which can be populated and returned. By providing a `result` value, you revent the allocation of a new object and instead reuse an object you have already allocated.
 
+```js
+for (...) {
+  const v = matrix4.transformVector([x, y, z]);
+  // v now contains a reference to a newly allocated `Vector3` which was updated with the result of the `tranformVector` operation.
+}
+```
+vs.
+
+```js
+const tempVector = new Vector3();
+for (...) {
+  const v = matrix4.transformVector([x, y, z], tempVector);
+  // v now contains a reference to `tempVector` which was updated with the result of the `tranformVector` operation.
+}
+```
 
 ## Browser, OS version etc
 
@@ -45,4 +61,22 @@ The JavaScript engine powering Chrome and Node is still improving. The performan
 
 ## Benchmarking
 
-The math.gl repository comes with a benchmark suite that you can run in your environment to see what operations peform well and shich do not.
+The math.gl repository comes with a benchmark suite that you can run to see what operations are fast and which take more time in your environment.
+
+You can run the benchmarks both in Node.js and in the browser
+
+```bash
+yarn bench
+yarn bench browser
+```
+
+
+## JavaScript Engine Optimizations
+
+> This section should be considered advanced, and is not required reading for the normal math.gl user. However if you are writing your own math code it can be useful to have an understanding.
+
+To get good performance it is important to structure code so that it can be compiled and optimized by the JavaScript engine in use. math.gl focuses on optimizing for the V8 engine, since it is used both by Chrome and Node.js, however the optimizations are general and should also be relevant to other optimizing JavaScript engines.
+
+In particular, math.gl makes efforts to ensure that the engine knows that fields in math classes contain numbers, which allows for important optimizations that can result in a \~5x performance difference for simple operations.
+
+A good introduction to the topic can be found in [JavaScript Performance Pitfalls in V8](https://ponyfoo.com/articles/javascript-performance-pitfalls-v8).

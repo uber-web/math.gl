@@ -19,7 +19,8 @@
 // THE SOFTWARE.
 
 import MathArray from '../lib/math-array';
-import {checkNumber, clamp} from '../lib/common';
+import {clamp} from '../lib/common';
+import {checkNumber} from '../lib/validators';
 import Matrix4 from './matrix4';
 import Quaternion from './quaternion';
 import Vector3 from './vector3';

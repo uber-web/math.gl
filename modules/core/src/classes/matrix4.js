@@ -19,8 +19,8 @@
 // THE SOFTWARE.
 
 import Matrix from '../lib/matrix';
-// import {checkNumber} from '../lib/common';
 import {validateVector} from '../lib/validators';
+// import {checkNumber} from '../lib/validators';
 import Vector2 from './vector2';
 import Vector3 from './vector3';
 import Vector4 from './vector4';
@@ -69,7 +69,7 @@ export default class Matrix4 extends Matrix {
   }
 
   constructor(...args) {
-    super(16);
+    super(-0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0);
     if (Array.isArray(args[0]) && arguments.length === 1) {
       this.copy(args[0]);
     } else {
