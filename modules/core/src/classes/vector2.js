@@ -18,48 +18,42 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import Vector from './lib/vector';
-import {checkNumber} from './lib/common';
+import Vector from '../lib/vector';
+import * as vec2 from 'gl-matrix/vec2';
 
-export default class Vector4 extends Vector {
-  // Creates a new, empty vec4
-  constructor(x = 0, y = 0, z = 0, w = 0) {
-    super(4);
+export default class Vector2 extends Vector {
+  // Creates a new, empty vec2
+  constructor(x = 0, y = 0) {
+    super(2);
     if (Array.isArray(x) && arguments.length === 1) {
       this.copy(x);
     } else {
-      this.set(x, y, z, w);
+      this.set(x, y);
     }
   }
 
   // Getters/setters
-  /* eslint-disable no-multi-spaces, brace-style, no-return-assign */
   get ELEMENTS() {
-    return 4;
+    return 2;
   }
 
   // x,y inherited from Vector
 
-  get z() {
-    return this[2];
+  cross(vector) {
+    vec2.cross(this, this, vector);
+    return this.check();
   }
 
-  set z(value) {
-    return (this[2] = checkNumber(value));
+  horizontalAngle() {
+    return Math.atan2(this.y, this.x);
   }
 
-  get w() {
-    return this[3];
+  verticalAngle() {
+    return Math.atan2(this.x, this.y);
   }
 
-  set w(value) {
-    return (this[3] = checkNumber(value));
-  }
-  /* eslint-enable no-multi-spaces, brace-style, no-return-assign */
-
-  // three.js compatibility
-  applyMatrix4(m) {
-    m.transformVector(this, this);
-    return this;
+  operation(operation, ...args) {
+    operation(this, this, ...args);
+    return this.check();
   }
 }

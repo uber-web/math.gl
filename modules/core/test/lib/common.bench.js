@@ -1,4 +1,4 @@
-// Copyright (c) 2017 Uber Technologies, Inc.
+// Copyright (c) 2015 - 2017 Uber Technologies, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -18,42 +18,23 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import Vector from './lib/vector';
-import * as vec2 from 'gl-matrix/vec2';
+import {Vector3} from 'math.gl';
+import {isArray} from 'math.gl';
 
-export default class Vector2 extends Vector {
-  // Creates a new, empty vec2
-  constructor(x = 0, y = 0) {
-    super(2);
-    if (Array.isArray(x) && arguments.length === 1) {
-      this.copy(x);
-    } else {
-      this.set(x, y);
-    }
-  }
+const classicArray = [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1];
+const float32Array = new Float32Array([1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
+const float64Array = new Float64Array([1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
+const mathglArray = new Vector3();
 
-  // Getters/setters
-  get ELEMENTS() {
-    return 2;
-  }
-
-  // x,y inherited from Vector
-
-  cross(vector) {
-    vec2.cross(this, this, vector);
-    return this.check();
-  }
-
-  horizontalAngle() {
-    return Math.atan2(this.y, this.x);
-  }
-
-  verticalAngle() {
-    return Math.atan2(this.x, this.y);
-  }
-
-  operation(operation, ...args) {
-    operation(this, this, ...args);
-    return this.check();
-  }
+export default function commonBench(suite) {
+  return suite
+    .group('array test cost')
+    .add('Array#isArray(Vector3)', () => Array.isArray(mathglArray))
+    .add('Array#isArray(array)', () => Array.isArray(classicArray))
+    .add('Array#isArray(Float32Array)', () => Array.isArray(float32Array))
+    .add('Array#isArray(Float64Array)', () => Array.isArray(float64Array))
+    .add('math.gl#isArray(Vector3)', () => isArray(mathglArray))
+    .add('math.gl#isArray(array)', () => isArray(classicArray))
+    .add('math.gl#isArray(Float32Array)', () => isArray(float32Array))
+    .add('math.gl#isArray(Float64Array)', () => isArray(float64Array));
 }

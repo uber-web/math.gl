@@ -1,4 +1,4 @@
-// Copyright (c) 2017 Uber Technologies, Inc.
+// Copyright (c) 2015 - 2017 Uber Technologies, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -18,19 +18,15 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import './lib/common.spec';
+import javascriptBench from './lib/javascript.bench';
+import commonBench from './lib/common.bench';
+import classesBench from './classes/classes.bench';
+import vector3Bench from './classes/vector3.bench';
 
-import './classes/vectors.spec';
-import './classes/vector3.spec';
-import './classes/matrix3.spec';
-import './classes/matrix4.spec';
-import './classes/pose.spec';
-import './classes/quaternion.spec';
-
-import './classes/euler.spec';
-import './classes/spherical-coordinates.spec';
-
-import './addons/polygon.spec';
-
-// Run the three.js math test suites on math.gl classes
-import './threejs-tests';
+export default function coreBench(suite) {
+  javascriptBench(suite);
+  commonBench(suite);
+  classesBench(suite);
+  vector3Bench(suite);
+  return suite;
+}

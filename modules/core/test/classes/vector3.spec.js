@@ -20,7 +20,7 @@
 
 /* eslint-disable max-statements */
 import test from 'tape-catch';
-import {tapeEquals} from 'test/utils/tape-equals';
+import {tapeEquals} from 'test/utils/tape-assertions';
 
 import {Vector3} from 'math.gl';
 

@@ -18,28 +18,24 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import Vector from './lib/vector';
-import {checkNumber} from './lib/common';
+import Vector from '../lib/vector';
+import {checkNumber} from '../lib/common';
 
-import * as vec3 from 'gl-matrix/vec3';
-
-const ORIGIN = [0, 0, 0];
-
-export default class Vector3 extends Vector {
-  // Creates a new vec3, either empty, or from an array or from values
-  constructor(x = 0, y = 0, z = 0) {
-    super(3);
+export default class Vector4 extends Vector {
+  // Creates a new, empty vec4
+  constructor(x = 0, y = 0, z = 0, w = 0) {
+    super(4);
     if (Array.isArray(x) && arguments.length === 1) {
       this.copy(x);
     } else {
-      this.set(x, y, z);
+      this.set(x, y, z, w);
     }
   }
 
   // Getters/setters
   /* eslint-disable no-multi-spaces, brace-style, no-return-assign */
   get ELEMENTS() {
-    return 3;
+    return 4;
   }
 
   // x,y inherited from Vector
@@ -47,39 +43,23 @@ export default class Vector3 extends Vector {
   get z() {
     return this[2];
   }
+
   set z(value) {
     return (this[2] = checkNumber(value));
   }
+
+  get w() {
+    return this[3];
+  }
+
+  set w(value) {
+    return (this[3] = checkNumber(value));
+  }
   /* eslint-enable no-multi-spaces, brace-style, no-return-assign */
 
-  angle(vector) {
-    return vec3.angle(this, vector);
-  }
-
-  // MODIFIERS
-
-  cross(vector) {
-    vec3.cross(this, this, vector);
-    return this.check();
-  }
-
-  rotateX({radians, origin = ORIGIN}) {
-    vec3.rotateX(this, this, origin, radians);
-    return this.check();
-  }
-
-  rotateY({radians, origin = ORIGIN}) {
-    vec3.rotateY(this, this, origin, radians);
-    return this.check();
-  }
-
-  rotateZ({radians, origin = ORIGIN}) {
-    vec3.rotateZ(this, this, origin, radians);
-    return this.check();
-  }
-
-  operation(operation, ...args) {
-    operation(this, this, ...args);
-    return this.check();
+  // three.js compatibility
+  applyMatrix4(m) {
+    m.transformVector(this, this);
+    return this;
   }
 }
