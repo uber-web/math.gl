@@ -4,62 +4,28 @@
     {
       "title": "Overview",
       "entries": [
-        {
-          "entry": "docs/README"
-        },
-        {
-          "entry": "docs/whats-new"
-        },
-        {
-          "entry": "docs/roadmap"
-        },
-        {
-          "entry": "docs/upgrade-guide"
-        }
+        {"entry": "docs/README"},
+        {"entry": "docs/whats-new"},
+        {"entry": "docs/roadmap"},
+        {"entry": "docs/upgrade-guide"}
       ]
     },
     {
       "title": "Developer Guide",
       "entries": [
-        {
-          "entry": "docs/developer-guide/get-started"
-        },
-        {
-          "entry": "docs/developer-guide/coordinate-systems"
-        },
-        {
-          "entry": "docs/developer-guide/debugging"
-        },
-        {
-          "entry": "docs/developer-guide/floating-point"
-        },
-        {
-          "entry": "docs/developer-guide/homogenous-coordinates"
-        },
-        {
-          "entry": "docs/developer-guide/performance"
-        },
-        {
-          "entry": "docs/developer-guide/rotations"
-        },
-        {
-          "entry": "docs/developer-guide/using-transformations"
-        },
-        {
-          "entry": "docs/developer-guide/view-and-projection"
-        },
-        {
-          "entry": "docs/wip/features"
-        },
-        {
-          "entry": "docs/wip/using-vectors"
-        },
-        {
-          "entry": "docs/developer-guide/using-with-gl-matrix"
-        },
-        {
-          "entry": "docs/developer-guide/using-with-three-js"
-        }
+        {"entry": "docs/developer-guide/get-started"},
+        {"entry": "docs/developer-guide/coordinate-systems"},
+        {"entry": "docs/developer-guide/debugging"},
+        {"entry": "docs/developer-guide/floating-point"},
+        {"entry": "docs/developer-guide/homogenous-coordinates"},
+        {"entry": "docs/developer-guide/performance"},
+        {"entry": "docs/developer-guide/rotations"},
+        {"entry": "docs/developer-guide/using-transformations"},
+        {"entry": "docs/developer-guide/view-and-projection"},
+        {"entry": "docs/wip/features"},
+        {"entry": "docs/wip/using-vectors"},
+        {"entry": "docs/developer-guide/using-with-gl-matrix"},
+        {"entry": "docs/developer-guide/using-with-three-js"}
       ]
     },
     {
@@ -68,53 +34,25 @@
         {
           "title": "Core Classes",
           "entries": [
-            {
-              "entry": "docs/api-reference/euler"
-            },
-            {
-              "entry": "docs/api-reference/math-array"
-            },
-            {
-              "entry": "docs/api-reference/matrix"
-            },
-            {
-              "entry": "docs/api-reference/matrix3"
-            },
-            {
-              "entry": "docs/api-reference/matrix4"
-            },
-            {
-              "entry": "docs/api-reference/pose"
-            },
-            {
-              "entry": "docs/api-reference/quaternion"
-            },
-            {
-              "entry": "docs/api-reference/spherical-coordinates"
-            },
-            {
-              "entry": "docs/api-reference/utilities"
-            },
-            {
-              "entry": "docs/api-reference/vector"
-            },
-            {
-              "entry": "docs/api-reference/vector2"
-            },
-            {
-              "entry": "docs/api-reference/vector3"
-            },
-            {
-              "entry": "docs/api-reference/vector4"
-            }
+            {"entry": "docs/api-reference/euler"},
+            {"entry": "docs/api-reference/math-array"},
+            {"entry": "docs/api-reference/matrix"},
+            {"entry": "docs/api-reference/matrix3"},
+            {"entry": "docs/api-reference/matrix4"},
+            {"entry": "docs/api-reference/pose"},
+            {"entry": "docs/api-reference/quaternion"},
+            {"entry": "docs/api-reference/spherical-coordinates"},
+            {"entry": "docs/api-reference/utilities"},
+            {"entry": "docs/api-reference/vector"},
+            {"entry": "docs/api-reference/vector2"},
+            {"entry": "docs/api-reference/vector3"},
+            {"entry": "docs/api-reference/vector4"}
           ]
         },
         {
           "title": "Add-ons",
           "entries": [
-            {
-              "entry": "docs/api-reference/addons/polygon"
-            }
+            {"entry": "docs/api-reference/addons/polygon"}
           ]
         }
       ]

@@ -18,8 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import MathArray from './lib/math-array';
-import {checkNumber, clamp} from './lib/common';
+import MathArray from '../lib/math-array';
+import {checkNumber, clamp} from '../lib/common';
 import Matrix4 from './matrix4';
 import Quaternion from './quaternion';
 import Vector3 from './vector3';

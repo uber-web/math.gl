@@ -18,9 +18,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import Matrix from './lib/matrix';
-// import {checkNumber} from './lib/common';
-import {validateVector} from './lib/validators';
+import Matrix from '../lib/matrix';
+// import {checkNumber} from '../lib/common';
+import {validateVector} from '../lib/validators';
 import Vector2 from './vector2';
 import Vector3 from './vector3';
 import Vector4 from './vector4';

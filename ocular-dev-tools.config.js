@@ -14,7 +14,7 @@ module.exports = {
   entry: {
     test: 'test/index.js',
     'test-browser': 'test/browser.js',
-    bench: 'test/bench/index.js',
-    'bench-browser': 'test/bench/index.js'
+    bench: 'test/bench.js',
+    'bench-browser': 'test/bench.js'
   }
 };

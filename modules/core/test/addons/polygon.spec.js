@@ -20,7 +20,7 @@
 
 /* eslint-disable max-statements */
 import test from 'tape-catch';
-import {tapeEquals} from 'test/utils/tape-equals';
+import {tapeEquals} from 'test/utils/tape-assertions';
 
 import {configure, _Polygon as Polygon} from 'math.gl';
 

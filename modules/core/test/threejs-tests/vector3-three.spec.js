@@ -27,12 +27,7 @@
 /* eslint-disable quotes, no-var */
 import test from 'tape-catch';
 
-import {Vector3} from 'math.gl';
-import {Vector4} from 'math.gl';
-import {Matrix3} from 'math.gl';
-import {Matrix4} from 'math.gl';
-import {Quaternion} from 'math.gl';
-import {Euler} from 'math.gl';
+import {Vector3, Vector4, Matrix3, Matrix4, Quaternion, _Euler as Euler} from 'math.gl';
 // import Spherical from 'math.gl/spherical';
 import {x, y, z, w, eps} from './constants';
 

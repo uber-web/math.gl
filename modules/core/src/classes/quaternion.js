@@ -18,9 +18,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import MathArray from './lib/math-array';
-import {checkNumber} from './lib/common';
-import assert from './lib/assert';
+import MathArray from '../lib/math-array';
+import {checkNumber} from '../lib/common';
+import assert from '../lib/assert';
 
 import * as quat from 'gl-matrix/quat';
 

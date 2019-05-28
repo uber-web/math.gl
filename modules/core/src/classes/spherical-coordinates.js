@@ -19,8 +19,8 @@
 // THE SOFTWARE.
 
 // Adaptation of THREE.js Spherical class, under MIT license
-import {formatValue, equals, config} from './lib/common';
-import {degrees, radians, clamp} from './lib/common';
+import {formatValue, equals, config} from '../lib/common';
+import {degrees, radians, clamp} from '../lib/common';
 import Vector3 from './vector3';
 
 import * as vec3 from 'gl-matrix/vec3';
