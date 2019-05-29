@@ -208,7 +208,7 @@ export default class MathArray extends Array {
   get elements() {
     return this;
   }
-  
+
   // Debug checks
 
   check() {
