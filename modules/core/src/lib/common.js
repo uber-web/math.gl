@@ -69,7 +69,7 @@ export function isArray(value) {
 
 // If the array has a clone function, calls it, otherwise returns a copy
 export function clone(array) {
-  return array.clone ? array.clone() : new Array(array);
+  return array.clone ? array.clone() : new Array(...array);
 }
 
 // If the argument value is an array, applies the func element wise,

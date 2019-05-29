@@ -18,9 +18,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import {isArray, radians, equals, exactEquals, lerp, config, Vector2} from 'math.gl';
-// import {tapeEquals} from './index';
 import test from 'tape-catch';
+import {tapeEquals} from 'test/utils/tape-assertions';
+import {config, isArray, toRadians, toDegrees, equals, exactEquals, lerp, Vector2} from 'math.gl';
+import {radians, degrees} from 'math.gl';
 
 test('Math#types', t => {
   t.equals(typeof isArray, 'function');
@@ -50,18 +51,16 @@ test('Math#construct and isArray check', t => {
 
 test('math.equals', t => {
   t.notOk(equals(1.0, 0.0), 'should return false for different numbers');
-  t.ok(equals(1.0, 1.0), 'should return true for the same number');
-  t.ok(equals(1.0 + config.EPSILON / 2, 1.0), 'should return true for numbers that are close');
-  t.ok(
-    equals([1.0, 2.0], new Float32Array([1.0, 2.0])),
+  tapeEquals(t, 1.0, 1.0, 'should return true for the same number');
+  tapeEquals(t, 1.0 + config.EPSILON / 2, 1.0, 'should return true for numbers that are close');
+  tapeEquals(t, [1.0, 2.0], new Float32Array([1.0, 2.0]),
     'should return true for Array and TypedArray with same values'
   );
   t.notOk(
     equals([1.0, 2.0], new Float32Array([1.0, 3.0])),
     'should return false for Array and TypedArray with different values'
   );
-  t.ok(
-    equals([1.0, 2.0], new Vector2([1.0, 2.0])),
+  tapeEquals(t, [1.0, 2.0], new Vector2([1.0, 2.0]),
     'should return true for Array and Vector2 with same values'
   );
   t.end();
@@ -90,16 +89,35 @@ test('math.exactEquals', t => {
   t.end();
 });
 
+test('math#toRadians', t => {
+  tapeEquals(t, toRadians(180), Math.PI, 'should return a value of 3.141592654(Math.PI)');
+  tapeEquals(t, toRadians([180, 90]), [Math.PI, Math.PI /2], 'should return a value of 3.141592654(Math.PI)');
+  t.end();
+});
+
+test('math#toDegrees', t => {
+  tapeEquals(t, toDegrees(Math.PI), 180, 'should return a value of 180');
+  tapeEquals(t, toDegrees([Math.PI, Math.PI /2]), [180, 90], 'should return a value of 180');
+  t.end();
+});
+
+
 test('math#radians', t => {
-  t.ok(equals(radians(180), Math.PI), 'should return a value of 3.141592654(Math.PI)');
+  tapeEquals(t, radians(180), Math.PI, 'should return a value of 3.141592654(Math.PI)');
+  tapeEquals(t, radians([180, 90]), [Math.PI, Math.PI /2], 'should return a value of 3.141592654(Math.PI)');
+  t.end();
+});
+
+test('math#degrees', t => {
+  tapeEquals(t, degrees(Math.PI), 180, 'should return a value of 180');
+  tapeEquals(t, degrees([Math.PI, Math.PI /2]), [180, 90], 'should return a value of 180');
   t.end();
 });
 
 test('math#lerp', t => {
-  t.ok(equals(lerp(1.0, 2.0, 0.2), 1.2), 'interpolate between numbers');
-  t.ok(equals(lerp([1.0, 0.0], [2.0, -1.0], 0.2), [1.2, -0.2]), 'interpolate between arrays');
-  t.ok(
-    equals(lerp(new Float32Array([1.0, 0.0]), [2.0, -1.0], 0.2), [1.2, -0.2]),
+  tapeEquals(t, lerp(1.0, 2.0, 0.2), 1.2, 'interpolate between numbers');
+  tapeEquals(t, lerp([1.0, 0.0], [2.0, -1.0], 0.2), [1.2, -0.2], 'interpolate between arrays');
+  tapeEquals(t, lerp(new Float32Array([1.0, 0.0]), [2.0, -1.0], 0.2), [1.2, -0.2],
     'interpolate between arrays'
   );
   t.end();

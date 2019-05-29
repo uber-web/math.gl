@@ -14,9 +14,9 @@ export function fromCartographic(cartographic, vector, map = noop) {
     vector[1] = map(cartographic.latitude);
     vector[2] = cartographic.height;
   } else {
-    vector[0] = map(cartographic.longitude);
-    vector[1] = map(cartographic.latitude);
-    vector[2] = cartographic.height;
+    vector[0] = map(cartographic.x);
+    vector[1] = map(cartographic.y);
+    vector[2] = cartographic.z;
   }
   return vector;
 }
