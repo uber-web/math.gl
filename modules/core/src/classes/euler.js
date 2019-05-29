@@ -19,7 +19,8 @@
 // THE SOFTWARE.
 
 import MathArray from '../lib/math-array';
-import {checkNumber, clamp} from '../lib/common';
+import {clamp} from '../lib/common';
+import {checkNumber} from '../lib/validators';
 import Matrix4 from './matrix4';
 import Quaternion from './quaternion';
 import Vector3 from './vector3';
@@ -101,7 +102,8 @@ export default class Euler extends MathArray {
    * Number|Number[], Number, Number, Number
    */
   constructor(x = 0, y = 0, z = 0, order = Euler.DefaultOrder) {
-    super(4);
+    // PERF NOTE: initialize elements as double precision numbers
+    super(-0, -0, -0, -0);
     if (arguments.length > 0 && Array.isArray(arguments[0])) {
       this.fromVector3(...arguments);
     } else {

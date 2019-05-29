@@ -19,7 +19,8 @@
 // THE SOFTWARE.
 
 import Vector from '../lib/vector';
-import {checkNumber, isArray} from '../lib/common';
+import {config, isArray} from '../lib/common';
+import {checkNumber} from '../lib/validators';
 
 import * as vec3 from 'gl-matrix/vec3';
 
@@ -28,38 +29,40 @@ const ORIGIN = [0, 0, 0];
 export default class Vector3 extends Vector {
   // Creates a new vec3, either empty, or from an array or from values
   constructor(x = 0, y = 0, z = 0) {
-    super(3);
-    if (Array.isArray(x) && arguments.length === 1) {
+    // PERF NOTE: initialize elements as double precision numbers
+    super(-0, -0, -0);
+    if (isArray(x) && arguments.length === 1) {
       this.copy(x);
     } else {
-      this.set(x, y, z);
+      // this.set(x, y, z);
+      if (config.debug) {
+        checkNumber(x);
+        checkNumber(y);
+        checkNumber(z);
+      }
+      this[0] = x;
+      this[1] = y;
+      this[2] = z;
     }
   }
 
-  from(arrayOrObject) {
-    if (isArray(arrayOrObject)) {
-      this[0] = arrayOrObject.x;
-      this[1] = arrayOrObject.y;
-      this[2] = arrayOrObject.z;
-    } else {
-      this[0] = arrayOrObject.x;
-      this[1] = arrayOrObject.y;
-      this[2] = arrayOrObject.z;
+  fromObject(object) {
+    if (config.debug) {
+      checkNumber(object.x);
+      checkNumber(object.y);
+      checkNumber(object.z);
     }
+    this[0] = object.x;
+    this[1] = object.y;
+    this[2] = object.z;
     return this;
   }
 
-  to(arrayOrObject) {
-    if (isArray(arrayOrObject)) {
-      arrayOrObject[0] = this[0];
-      arrayOrObject[1] = this[1];
-      arrayOrObject[2] = this[2];
-    } else {
-      arrayOrObject.x = this[0];
-      arrayOrObject.y = this[1];
-      arrayOrObject.z = this[2];
-    }
-    return arrayOrObject;
+  toObject(object) {
+    object.x = this[0];
+    object.y = this[1];
+    object.z = this[2];
+    return object;
   }
 
   // Getters/setters

@@ -18,8 +18,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-/* eslint-disable no-shadow */
+const RADIANS_TO_DEGREES = (1 / Math.PI) * 180;
+const DEGREES_TO_RADIANS = (1 / 180) * Math.PI;
+
 // TODO - remove
+/* eslint-disable no-shadow */
 const config = {};
 config.EPSILON = 1e-12;
 config.debug = true;
@@ -38,13 +41,6 @@ export function configure(options) {
   if ('debug' in options) {
     config.debug = options.debug;
   }
-}
-
-export function checkNumber(value) {
-  if (!Number.isFinite(value)) {
-    throw new Error(`Invalid number ${value}`);
-  }
-  return value;
 }
 
 function round(value) {
@@ -90,11 +86,11 @@ function map(value, func) {
 }
 
 export function toRadians(degrees) {
-  return map(degrees, degrees => (degrees / 180) * Math.PI);
+  return map(degrees, degrees => degrees * DEGREES_TO_RADIANS);
 }
 
 export function toDegrees(radians) {
-  return map(radians, radians => (radians * 180) / Math.PI);
+  return map(radians, radians => radians * RADIANS_TO_DEGREES);
 }
 
 //

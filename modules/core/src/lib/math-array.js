@@ -19,24 +19,41 @@
 // THE SOFTWARE.
 
 import {config, formatValue, equals} from './common';
+import {checkVector} from './validators';
 
 export default class MathArray extends Array {
   clone() {
-    return new this.constructor().copy(this).check();
+    return new this.constructor().copy(this);
   }
 
   copy(array) {
+    if (config.debug) {
+      checkVector(array, this.ELEMENTS, this.constructor.name);
+    }
     for (let i = 0; i < this.ELEMENTS; ++i) {
       this[i] = array[i];
     }
-    return this.check();
+    return this;
   }
 
   set(...args) {
-    for (let i = 0; i < this.ELEMENTS; ++i) {
-      this[i] = args[i] || 0;
+    if (config.debug) {
+      checkVector(args, this.ELEMENTS, this.constructor.name);
     }
-    return this.check();
+    for (let i = 0; i < this.ELEMENTS; ++i) {
+      this[i] = args[i];
+    }
+    return this;
+  }
+
+  from(arrayOrObject) {
+    return Array.isArray(arrayOrObject) ? this.copy(arrayOrObject) : this.fromObject(arrayOrObject);
+  }
+
+  to(arrayOrObject) {
+    return Array.isArray(arrayOrObject)
+      ? this.toArray(arrayOrObject)
+      : this.toObject(arrayOrObject);
   }
 
   fromArray(array, offset = 0) {
@@ -143,23 +160,6 @@ export default class MathArray extends Array {
     return this.check();
   }
 
-  // Debug checks
-
-  validate() {
-    let valid = this.length === this.ELEMENTS;
-    for (let i = 0; i < this.ELEMENTS; ++i) {
-      valid = valid && Number.isFinite(this[i]);
-    }
-    return valid;
-  }
-
-  check() {
-    if (config.debug && !this.validate(this)) {
-      throw new Error(`math.gl: ${this.constructor.name} some fields set to invalid numbers'`);
-    }
-    return this;
-  }
-
   // three.js compatibility
 
   sub(a) {
@@ -197,5 +197,22 @@ export default class MathArray extends Array {
       this[i] = Math.min(Math.max(this[i], min), max);
     }
     return this.check();
+  }
+
+  // Debug checks
+
+  check() {
+    if (config.debug && !this.validate(this)) {
+      throw new Error(`math.gl: ${this.constructor.name} some fields set to invalid numbers'`);
+    }
+    return this;
+  }
+
+  validate() {
+    let valid = this.length === this.ELEMENTS;
+    for (let i = 0; i < this.ELEMENTS; ++i) {
+      valid = valid && Number.isFinite(this[i]);
+    }
+    return valid;
   }
 }

@@ -1,5 +1,5 @@
 import MathArray from './math-array';
-import {checkNumber} from './common';
+import {checkNumber} from './validators';
 import assert from './assert';
 
 export default class Vector extends MathArray {

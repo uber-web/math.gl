@@ -20,7 +20,7 @@
 
 import Matrix from '../lib/matrix';
 import {validateVector} from '../lib/validators';
-// import {checkNumber} from '../lib/common';
+// import {checkNumber} from '../lib/validators';
 import Vector2 from './vector2';
 import Vector3 from './vector3';
 
@@ -60,7 +60,8 @@ export default class Matrix3 extends Matrix {
   }
 
   constructor(...args) {
-    super(9);
+    // PERF NOTE: initialize elements as double precision numbers
+    super(-0, -0, -0, -0, -0, -0, -0, -0, -0);
     if (Array.isArray(args[0]) && arguments.length === 1) {
       this.copy(args[0]);
     } else {

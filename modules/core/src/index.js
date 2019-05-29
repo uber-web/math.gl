@@ -26,11 +26,10 @@ export {default as Matrix3} from './classes/matrix3';
 export {default as Matrix4} from './classes/matrix4';
 export {default as Quaternion} from './classes/quaternion';
 
-// math.gl "GLSL" functions
 export {
+  // math.gl global utility methods
   config,
   configure,
-  checkNumber,
   formatValue,
   isArray,
   clone,
@@ -50,6 +49,8 @@ export {
   clamp,
   lerp
 } from './lib/common';
+
+export {checkNumber} from './lib/validators';
 
 export {default as _SphericalCoordinates} from './classes/spherical-coordinates';
 export {default as _Pose} from './classes/pose';

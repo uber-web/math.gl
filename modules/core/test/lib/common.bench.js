@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import {Vector3} from 'math.gl';
+import {Vector3, toRadians} from 'math.gl';
 import {isArray} from 'math.gl';
 
 const classicArray = [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1];
@@ -26,15 +26,31 @@ const float32Array = new Float32Array([1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0,
 const float64Array = new Float64Array([1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
 const mathglArray = new Vector3();
 
-export default function commonBench(suite) {
-  return suite
+export default function commonBench(suite, addReferenceBenchmarks) {
+  suite
     .group('array test cost')
     .add('Array#isArray(Vector3)', () => Array.isArray(mathglArray))
     .add('Array#isArray(array)', () => Array.isArray(classicArray))
     .add('Array#isArray(Float32Array)', () => Array.isArray(float32Array))
-    .add('Array#isArray(Float64Array)', () => Array.isArray(float64Array))
-    .add('math.gl#isArray(Vector3)', () => isArray(mathglArray))
-    .add('math.gl#isArray(array)', () => isArray(classicArray))
-    .add('math.gl#isArray(Float32Array)', () => isArray(float32Array))
-    .add('math.gl#isArray(Float64Array)', () => isArray(float64Array));
+    .add('Array#isArray(Float64Array)', () => Array.isArray(float64Array));
+
+  if (addReferenceBenchmarks) {
+    suite
+      .add('math.gl#isArray(Vector3)', () => isArray(mathglArray))
+      .add('math.gl#isArray(array)', () => isArray(classicArray))
+      .add('math.gl#isArray(Float32Array)', () => isArray(float32Array))
+      .add('math.gl#isArray(Float64Array)', () => isArray(float64Array));
+  }
+
+  suite
+    .group('toRadians/toDegrees')
+    .add('toRadians(Number)', () => toRadians(100))
+    .add('toRadians(Vector3)', () => toRadians(mathglArray));
+
+  if (addReferenceBenchmarks) {
+    suite
+      .add('toRadians(array)', () => toRadians(classicArray))
+      .add('toRadians(Float32Array)', () => toRadians(float32Array))
+      .add('toRadians(Float64Array)', () => toRadians(float64Array));
+  }
 }
