@@ -27,7 +27,6 @@ import * as vec3 from 'gl-matrix/vec3';
 const ORIGIN = [0, 0, 0];
 
 export default class Vector3 extends Vector {
-  // Creates a new vec3, either empty, or from an array or from values
   constructor(x = 0, y = 0, z = 0) {
     // PERF NOTE: initialize elements as double precision numbers
     super(-0, -0, -0);

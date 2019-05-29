@@ -29,6 +29,7 @@ export default class Vector4 extends Vector {
     if (isArray(x) && arguments.length === 1) {
       this.copy(x);
     } else {
+      // this.set(x, y, z, w);
       if (config.debug) {
         checkNumber(x);
         checkNumber(y);

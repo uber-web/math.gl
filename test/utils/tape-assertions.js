@@ -1,4 +1,4 @@
-import {equals} from 'math.gl';
+import {equals, _withEpsilon} from 'math.gl';
 
 // FOR TAPE TESTING
 // Use tape assert to compares using a.equals(b)
@@ -21,3 +21,13 @@ export function tapeEquals(t, a, b, msg, extra) {
     extra
   });
 }
+
+// eslint-disable-next-line max-params
+export function tapeEqualsEpsilon(t, a, b, epsilon, msg, extra) {
+  return _withEpsilon(epsilon, () => tapeEquals(t, a, b, msg, extra));
+}
+
+// eslint-disable-next-line max-params
+// export function tapeEqualsExact(t, a, b, msg, extra) {
+//   return t.deepE;
+// }

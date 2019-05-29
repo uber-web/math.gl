@@ -57,11 +57,6 @@ export default class Quaternion extends MathArray {
     return this.check();
   }
 
-  // Creates a new quat initialized with the given values
-  fromValues(x, y, z, w) {
-    return this.set(x, y, z, w);
-  }
-
   // Set a quat to the identity quaternion
   identity() {
     quat.identity(this);
@@ -69,10 +64,10 @@ export default class Quaternion extends MathArray {
   }
 
   // Set the components of a quat to the given values
-  set(i, j, k, l) {
-    quat.set(this, i, j, k, l);
-    return this.check();
-  }
+  // set(i, j, k, l) {
+  //   quat.set(this, i, j, k, l);
+  //   return this.check();
+  // }
 
   // Sets a quat from the given angle and rotation axis, then returns it.
   setAxisAngle(axis, rad) {
@@ -292,6 +287,11 @@ export default class Quaternion extends MathArray {
   }
 
   // DEPRECATED
+
+  fromValues(x, y, z, w) {
+    return this.set(x, y, z, w);
+  }
+
   squaredLength() {
     return this.lengthSquared();
   }

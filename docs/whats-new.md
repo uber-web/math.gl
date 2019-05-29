@@ -4,20 +4,27 @@
 
 Date: TBD, target June 2019
 
-- New: `Matrix` base class for `Matrix3` and `Matrix4` with common methods to minimize bundle size.
-- New: `Matrix.setColumn()` and `Matrix.getColumn()` methods
-- New: `Matrix.toString()` method
-- New: `toRadians` and `toDegrees` functions
-- New: `exactEqual` function
+#### `@math.gl/geospatial` - New module with geospatial math
+
+- New class `Ellipsoid` for working with WSG84 coordinates
+
+#### `math.gl` - Core module additions
+
+- New class `Matrix`. Base class for `Matrix3` and `Matrix4` with common methods to minimize bundle size
+- New methods `Matrix.setColumn()` and `Matrix.getColumn()`
+- New method `Matrix.toString()`
+
+- New: global functions `toRadians` and `toDegrees`
+- New: global function `exactEqual`
 
 ## v2.3
 
 Date: Jan 29, 2019
 
-- New: `Matrix3` class
+- New class: `Matrix3`
 - New: Add `scale` factor support to `Matrix3` and `Matrix4`
 - Support quaternion to euler conversion
-- Uses the official `gl-matrix@3.0.0` package as dependency instead of forked packages.
+- Now uses the official `gl-matrix@3.0.0` package as dependency instead of forked gl-matrix packages.
 
 ## v2.2
 
