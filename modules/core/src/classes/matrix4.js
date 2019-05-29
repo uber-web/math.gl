@@ -203,7 +203,15 @@ export default class Matrix4 extends Matrix {
   // eye vec3  Position of the viewer
   // center  vec3  Point the viewer is looking at
   // up  vec3  vec3 pointing up
-  lookAt({eye, center = [0, 0, 0], up = [0, 1, 0]}) {
+  lookAt(eye, center, up) {
+    // Signature: lookAt({eye, center = [0, 0, 0], up = [0, 1, 0]}))
+    if (arguments.length === 1) {
+      ({eye, center, up} = eye);
+    }
+
+    center = center || [0, 0, 0];
+    up = up || [0, 1, 0];
+
     mat4.lookAt(this, eye, center, up);
     return this.check();
   }

@@ -184,8 +184,13 @@ export default class MathArray extends Array {
     return this.addScalar(-a);
   }
 
-  multiplyScalar(a) {
-    return this.scale(a);
+  multiplyScalar(scalar) {
+    // Multiplies all elements
+    // `Matrix4.scale` only scales its 3x3 "minor"
+    for (let i = 0; i < this.ELEMENTS; ++i) {
+      this[i] *= scalar;
+    }
+    return this.check();
   }
 
   divideScalar(a) {
@@ -197,6 +202,11 @@ export default class MathArray extends Array {
       this[i] = Math.min(Math.max(this[i], min), max);
     }
     return this.check();
+  }
+
+  // THREE.js compatibility
+  get elements() {
+    return this;
   }
 
   // Debug checks
