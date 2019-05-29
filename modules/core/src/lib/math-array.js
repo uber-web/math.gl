@@ -52,7 +52,7 @@ export default class MathArray extends Array {
 
   fromArray(array, offset = 0) {
     for (let i = 0; i < this.ELEMENTS; ++i) {
-      this[i] = array[i + offset] | 0;
+      this[i] = array[i + offset];
     }
     return this.check();
   }
