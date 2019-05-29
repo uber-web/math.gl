@@ -15,7 +15,6 @@ const {Euler} = experimental;
 
 The `experimental` name space export has been removed.
 
-
 ## Upgrading to v1.1
 
 ### Removed Functionality

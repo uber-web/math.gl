@@ -50,17 +50,28 @@ export default class MathArray extends Array {
     return Array.isArray(arrayOrObject) ? this.copy(arrayOrObject) : this.fromObject(arrayOrObject);
   }
 
+  fromArray(array, offset = 0) {
+    for (let i = 0; i < this.ELEMENTS; ++i) {
+      this[i] = array[i + offset] | 0;
+    }
+    return this.check();
+  }
+
   to(arrayOrObject) {
     return Array.isArray(arrayOrObject)
       ? this.toArray(arrayOrObject)
       : this.toObject(arrayOrObject);
   }
 
-  fromArray(array, offset = 0) {
+  toArray(array = [], offset = 0) {
     for (let i = 0; i < this.ELEMENTS; ++i) {
-      this[i] = array[i + offset];
+      array[offset + i] = this[i];
     }
-    return this.check();
+    return array;
+  }
+
+  toFloat32Array() {
+    return new Float32Array(this);
   }
 
   toString() {
@@ -73,17 +84,6 @@ export default class MathArray extends Array {
       string += (i > 0 ? ', ' : '') + formatValue(this[i], opts);
     }
     return `${opts.printTypes ? this.constructor.name : ''}[${string}]`;
-  }
-
-  toArray(array = [], offset = 0) {
-    for (let i = 0; i < this.ELEMENTS; ++i) {
-      array[offset + i] = this[i];
-    }
-    return array;
-  }
-
-  toFloat32Array() {
-    return new Float32Array(this);
   }
 
   equals(array) {
