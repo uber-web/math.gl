@@ -7,7 +7,6 @@ import {
   toCartographicFromDegrees
 } from '@math.gl/geospatial/type-utils';
 
-const degreeVector = [45, 45, 10];
 const radianVector = [toRadians(45), toRadians(45), 10];
 
 test('type-utils#fromCartographic', t => {
