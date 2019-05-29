@@ -1,0 +1,35 @@
+{
+  "name": "@math.gl/geospatial",
+  "description": "Geospatial classes",
+  "license": "MIT",
+  "version": "2.3.0",
+  "keywords": [
+    "webgl",
+    "javascript",
+    "math",
+    "geospatial",
+    "WGS84",
+    "ellipsoid",
+    "cartographic",
+    "cartesian",
+    "projection",
+    "web mercator",
+    "geographic"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/uber-web/math.gl.git"
+  },
+  "main": "dist/es5/index.js",
+  "module": "dist/esm/index.js",
+  "esnext": "dist/es6/index.js",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.0.0",
+    "gl-matrix": "^3.0.0",
+    "math.gl": "^2.3.0"
+  }
+}
