@@ -1,5 +1,5 @@
 /* eslint-disable */
-import {Vector3, Matrix4, toRadians, toDegrees, assert, _MathUtils} from 'math.gl';
+import {Vector3, Matrix4, toRadians, toDegrees, assert, equals, _MathUtils} from 'math.gl';
 import * as vec3 from 'gl-matrix/vec3';
 
 import {WGS84_RADIUS_X, WGS84_RADIUS_Y, WGS84_RADIUS_Z} from '../constants';
@@ -36,90 +36,45 @@ export default class Ellipsoid {
     assert(y >= 0.0);
     assert(z >= 0.0);
 
-    this._radii = new Vector3(x, y, z);
+    this.radii = new Vector3(x, y, z);
 
-    this._radiiSquared = new Vector3(x * x, y * y, z * z);
+    this.radiiSquared = new Vector3(x * x, y * y, z * z);
 
-    this._radiiToTheFourth = new Vector3(x * x * x * x, y * y * y * y, z * z * z * z);
+    this.radiiToTheFourth = new Vector3(x * x * x * x, y * y * y * y, z * z * z * z);
 
-    this._oneOverRadii = new Vector3(
+    this.oneOverRadii = new Vector3(
       x === 0.0 ? 0.0 : 1.0 / x,
       y === 0.0 ? 0.0 : 1.0 / y,
       z === 0.0 ? 0.0 : 1.0 / z
     );
 
-    this._oneOverRadiiSquared = new Vector3(
+    this.oneOverRadiiSquared = new Vector3(
       x === 0.0 ? 0.0 : 1.0 / (x * x),
       y === 0.0 ? 0.0 : 1.0 / (y * y),
       z === 0.0 ? 0.0 : 1.0 / (z * z)
     );
 
-    this._minimumRadius = Math.min(x, y, z);
+    this.minimumRadius = Math.min(x, y, z);
 
-    this._maximumRadius = Math.max(x, y, z);
+    this.maximumRadius = Math.max(x, y, z);
 
-    this._centerToleranceSquared = _MathUtils.EPSILON1;
+    this.centerToleranceSquared = _MathUtils.EPSILON1;
 
-    if (this._radiiSquared.z !== 0) {
-      this._squaredXOverSquaredZ = this._radiiSquared.x / this._radiiSquared.z;
+    if (this.radiiSquared.z !== 0) {
+      this.squaredXOverSquaredZ = this.radiiSquared.x / this.radiiSquared.z;
     }
 
     Object.freeze(this);
   }
 
-  // Gets the radii of the ellipsoid.
-  get radii() {
-    return this._radii;
-  }
-
-  // Gets the squared radii of the ellipsoid.
-  get radiiSquared() {
-    return this._radiiSquared;
-  }
-
-  // Gets the radii of the ellipsoid raise to the fourth power.
-  get radiiToTheFourth() {
-    return this._radiiToTheFourth;
-  }
-
-  // Gets one over the radii of the ellipsoid.
-  get oneOverRadii() {
-    return this._oneOverRadii;
-  }
-
-  // Gets one over the squared radii of the ellipsoid.
-  get oneOverRadiiSquared() {
-    return this._oneOverRadiiSquared;
-  }
-
-  get centerToleranceSquared() {
-    return this._centerToleranceSquared;
-  }
-
-  // Gets the minimum radius of the ellipsoid.
-  get minimumRadius() {
-    return this._minimumRadius;
-  }
-
-  // Gets the maximum radius of the ellipsoid.
-  get maximumRadius() {
-    return this._maximumRadius;
-  }
-
-  // Duplicates an Ellipsoid instance.
-  clone(ellipsoid) {
-    const radii = ellipsoid._radii;
-    return new Ellipsoid(radii.x, radii.y, radii.z);
-  }
-
   // Compares this Ellipsoid against the provided Ellipsoid componentwise and returns
   equals(right) {
-    return this === right || Boolean(right && this._radii.equals(right._radii));
+    return this === right || Boolean(right && this.radii.equals(right.radii));
   }
 
   // Creates a string representing this Ellipsoid in the format '(radii.x, radii.y, radii.z)'.
   toString() {
-    return this._radii.toString();
+    return this.radii.toString();
   }
 
   // Converts the provided cartographic to Cartesian representation.
@@ -129,7 +84,7 @@ export default class Ellipsoid {
 
     const [, , height] = cartographic;
     this.geodeticSurfaceNormalCartographic(cartographic, normal);
-    k.copy(this._radiiSquared).scale(normal);
+    k.copy(this.radiiSquared).scale(normal);
 
     const gamma = Math.sqrt(normal.dot(k));
     k.scale(1 / gamma);
@@ -200,7 +155,7 @@ export default class Ellipsoid {
   geodeticSurfaceNormal(cartesian, result = new Vector3()) {
     return scratchVector
       .from(cartesian)
-      .scale(this._oneOverRadiiSquared)
+      .scale(this.oneOverRadiiSquared)
       .normalize()
       .to(result);
   }
@@ -220,7 +175,7 @@ export default class Ellipsoid {
     const positionX = scratchPosition.x;
     const positionY = scratchPosition.y;
     const positionZ = scratchPosition.z;
-    const oneOverRadiiSquared = this._oneOverRadiiSquared;
+    const oneOverRadiiSquared = this.oneOverRadiiSquared;
 
     const beta =
       1.0 /
@@ -238,7 +193,7 @@ export default class Ellipsoid {
   transformPositionToScaledSpace(position, result = new Vector3()) {
     return scratchPosition
       .from(position)
-      .scale(this._oneOverRadii)
+      .scale(this.oneOverRadii)
       .to(result);
   }
 
@@ -247,23 +202,23 @@ export default class Ellipsoid {
   transformPositionFromScaledSpace(position, result = new Vector3()) {
     return scratchPosition
       .from(position)
-      .scale(this._radii)
+      .scale(this.radii)
       .to(result);
   }
 
   // Computes a point which is the intersection of the surface normal with the z-axis.
   getSurfaceNormalIntersectionWithZAxis(position, buffer = 0.0, result = new Vector3()) {
     // Ellipsoid must be an ellipsoid of revolution (radii.x == radii.y)
-    assert(equalsEpsilon(this._radii.x, this._radii.y, _MathUtils.EPSILON15));
-    assert(this._radii.z > 0);
+    assert(equals(this.radii.x, this.radii.y, _MathUtils.EPSILON15));
+    assert(this.radii.z > 0);
 
     scratchPosition.from(position);
-    const z = scratchPosition.z * (1 - this._squaredXOverSquaredZ);
+    const z = scratchPosition.z * (1 - this.squaredXOverSquaredZ);
 
-    if (Math.abs(z) >= this._radii.z - buffer) {
+    if (Math.abs(z) >= this.radii.z - buffer) {
       return undefined;
     }
 
-    scratchPosition.set(0.0, 0.0, z).to(result);
+    return scratchPosition.set(0.0, 0.0, z).to(result);
   }
 }

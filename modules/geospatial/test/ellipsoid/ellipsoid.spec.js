@@ -427,44 +427,6 @@ test('Ellipsoid#scaleToGeocentricSurface throws with no cartesian', t => {
   t.end();
 });
 
-/*
-test('Ellipsoid#clone copies any object with the proper structure', t => {
-  const myEllipsoid = {
-    _radii: {x: 1.0, y: 2.0, z: 3.0},
-    _radiiSquared: {x: 4.0, y: 5.0, z: 6.0},
-    _radiiToTheFourth: {x: 7.0, y: 8.0, z: 9.0},
-    _oneOverRadii: {x: 10.0, y: 11.0, z: 12.0},
-    _oneOverRadiiSquared: {x: 13.0, y: 14.0, z: 15.0},
-    _minimumRadius: 16.0,
-    _maximumRadius: 17.0,
-    _centerToleranceSquared: 18.0
-  };
-
-  const cloned = Ellipsoid.clone(myEllipsoid);
-  t.ok(cloned instanceof Ellipsoid);
-  t.equals(cloned, myEllipsoid);
-  t.end();
-});
-
-test('Ellipsoid#clone uses result parameter if provided', t => {
-  const myEllipsoid = {
-    _radii: {x: 1.0, y: 2.0, z: 3.0},
-    _radiiSquared: {x: 4.0, y: 5.0, z: 6.0},
-    _radiiToTheFourth: {x: 7.0, y: 8.0, z: 9.0},
-    _oneOverRadii: {x: 10.0, y: 11.0, z: 12.0},
-    _oneOverRadiiSquared: {x: 13.0, y: 14.0, z: 15.0},
-    _minimumRadius: 16.0,
-    _maximumRadius: 17.0,
-    _centerToleranceSquared: 18.0
-  };
-
-  const result = new Ellipsoid();
-  const cloned = Ellipsoid.clone(myEllipsoid, result);
-  t.ok(cloned === result);
-  t.equals(cloned, myEllipsoid);
-  t.end();
-});
-
 test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis throws with no position', t => {
   t.throws(() => Ellipsoid.WGS84.getSurfaceNormalIntersectionWithZAxis(undefined));
   t.end();
@@ -486,7 +448,7 @@ test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis throws if the ellipsoid ha
 
 test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis works without a result parameter', t => {
   const ellipsoid = Ellipsoid.WGS84;
-  const cartographic = Cartographic.fromDegrees(35.23, 33.23);
+  const cartographic = [35.23, 33.23, 0]; // Cartographic.fromDegrees(35.23, 33.23);
   const cartesianOnTheSurface = ellipsoid.cartographicToCartesian(cartographic);
   const returnedResult = ellipsoid.getSurfaceNormalIntersectionWithZAxis(cartesianOnTheSurface);
   t.ok(returnedResult instanceof Vector3);
@@ -495,7 +457,7 @@ test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis works without a result par
 
 test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis works with a result parameter', t => {
   const ellipsoid = Ellipsoid.WGS84;
-  const cartographic = Cartographic.fromDegrees(35.23, 33.23);
+  const cartographic = [35.23, 33.23, 0]; // Cartographic.fromDegrees(35.23, 33.23);
   const cartesianOnTheSurface = ellipsoid.cartographicToCartesian(cartographic);
   const returnedResult = ellipsoid.getSurfaceNormalIntersectionWithZAxis(
     cartesianOnTheSurface,
@@ -508,7 +470,7 @@ test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis works with a result parame
 
 test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis returns undefined if the result is outside the ellipsoid with buffer parameter', t => {
   const ellipsoid = Ellipsoid.WGS84;
-  const cartographic = Cartographic.fromDegrees(35.23, 33.23);
+  const cartographic = [35.23, 33.23, 0]; // Cartographic.fromDegrees(35.23, 33.23);
   const cartesianOnTheSurface = ellipsoid.cartographicToCartesian(cartographic);
   const returnedResult = ellipsoid.getSurfaceNormalIntersectionWithZAxis(
     cartesianOnTheSurface,
@@ -522,7 +484,7 @@ test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis returns undefined if the r
   const majorAxis = 10;
   const minorAxis = 1;
   const ellipsoid = new Ellipsoid(majorAxis, majorAxis, minorAxis);
-  const cartographic = Cartographic.fromDegrees(45.0, 90.0);
+  const cartographic = [45.0, 90.0, 0]; // Cartographic.fromDegrees(45.0, 90.0);
   const cartesianOnTheSurface = ellipsoid.cartographicToCartesian(cartographic);
   const returnedResult = ellipsoid.getSurfaceNormalIntersectionWithZAxis(
     cartesianOnTheSurface,
@@ -532,9 +494,10 @@ test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis returns undefined if the r
   t.end();
 });
 
+/*
 test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis returns a result that is equal to a value that computed in a different way', t => {
   const ellipsoid = Ellipsoid.WGS84;
-  const cartographic = Cartographic.fromDegrees(35.23, 33.23);
+  const cartographic = [35.23, 33.23, 0]; // Cartographic.fromDegrees(35.23, 33.23);
   let cartesianOnTheSurface = ellipsoid.cartographicToCartesian(cartographic);
   const surfaceNormal = ellipsoid.geodeticSurfaceNormal(cartesianOnTheSurface);
   const magnitude = cartesianOnTheSurface.x / surfaceNormal.x;
@@ -587,12 +550,12 @@ test("getSurfaceNormalIntersectionWithZAxis returns a result that when it's used
 
   t.end();
 });
+*/
 
-test('Ellipsoid#ellipsoid is initialized with _squaredXOverSquaredZ property', t => {
+test('Ellipsoid#ellipsoid is initialized with squaredXOverSquaredZ property', t => {
   const ellipsoid = new Ellipsoid(4, 4, 3);
 
   const squaredXOverSquaredZ = ellipsoid.radiiSquared.x / ellipsoid.radiiSquared.z;
-  t.equals(ellipsoid._squaredXOverSquaredZ, squaredXOverSquaredZ);
+  t.equals(ellipsoid.squaredXOverSquaredZ, squaredXOverSquaredZ);
   t.end();
 });
-*/
