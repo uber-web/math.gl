@@ -34,20 +34,23 @@ const xyzVector = new XYZVector();
 const vector = new Vector3();
 const vector3 = new Vector3();
 
-export default function classesBench(suite) {
+export default function classesBench(suite, addReferenceBenchmarks) {
   suite.group('Vector3 construction').add('Vector3#new Vector3', () => new Vector3());
 
   suite
     .group('Vector3 Type Conversion Cost')
     .add('Vector3.from#Vector3', () => vector3.from(vector))
     .add('Vector3.from#XYZVector', () => vector3.from(xyzVector))
-    .add('Vector3.from#Array', () => vector3.from(array))
-    .add('Vector3.from#Float32Array', () => vector3.from(float32Array))
-
     .add('Vector3.to#Vector3', () => vector3.to(vector))
-    .add('Vector3.to#XYZVector', () => vector3.to(xyzVector))
-    .add('Vector3.to#Array', () => vector3.to(array))
-    .add('Vector3.to#Float32Array', () => vector3.to(float32Array));
+    .add('Vector3.to#XYZVector', () => vector3.to(xyzVector));
+
+  if (addReferenceBenchmarks) {
+    suite
+      .add('Vector3.from#Array', () => vector3.from(array))
+      .add('Vector3.from#Float32Array', () => vector3.from(float32Array))
+      .add('Vector3.to#Array', () => vector3.to(array))
+      .add('Vector3.to#Float32Array', () => vector3.to(float32Array));
+  }
 
   return suite;
 }
