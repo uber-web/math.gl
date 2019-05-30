@@ -2,7 +2,7 @@
   "name": "math.gl",
   "description": "Array-based 3D Math Classes optimized for WebGL applications",
   "license": "MIT",
-  "version": "2.3.0",
+  "version": "2.3.2",
   "keywords": [
     "webgl",
     "javascript",
@@ -54,7 +54,8 @@
     "@probe.gl/test-utils": "^3.0.0",
     "babel-plugin-transform-builtin-extend": "^1.1.2",
     "npx": "^10.2.0",
-    "ocular-dev-tools": "0.0.19",
+    "coveralls": "^3.0.0",
+    "ocular-dev-tools": "0.0.25",
     "pre-commit": "^1.2.2",
     "reify": "^0.18.1"
   }
