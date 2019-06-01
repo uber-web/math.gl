@@ -1,52 +1,43 @@
-// Copyright (c) 2017 Uber Technologies, Inc.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
 // This file contains webpack configuration settings that allow
 // examples to be built against the source code in this repo instead
 // of building against their installed version.
 //
 // This enables using the examples to debug the main library source
 // without publishing or npm linking, with conveniences such hot reloading etc.
+const webpack = require('webpack');
+const resolve = require('path').resolve;
+// eslint-disable-next-line import/no-extraneous-dependencies
+const ALIASES = require('ocular-dev-tools/config/ocular.config')({
+  root: resolve(__dirname, '..')
+}).aliases;
 
-const {resolve} = require('path');
-
-const LIB_DIR = resolve(__dirname, '..');
-const SRC_DIR = resolve(LIB_DIR, './src');
+// eslint-disable-next-line import/no-extraneous-dependencies
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 // Support for hot reloading changes to the library:
 const LOCAL_DEVELOPMENT_CONFIG = {
+  mode: 'development',
+
   devtool: 'source-map',
 
   // suppress warnings about bundle size
   devServer: {
     stats: {
       warnings: false
-    }
+    },
+    contentBase: [resolve('.'), resolve('../../')]
+  },
+
+  // this is required by draco
+  node: {
+    fs: 'empty'
   },
 
   resolve: {
-    alias: {
-      // Imports the luma.gl library from the src directory in this repo
-      'math.gl': SRC_DIR
-    }
+    // Imports the library from its src directory in this repo
+    alias: ALIASES
   },
+
   module: {
     rules: [
       {
@@ -56,29 +47,51 @@ const LOCAL_DEVELOPMENT_CONFIG = {
         enforce: 'pre'
       }
     ]
-  }
+  },
+
+  plugins: [new webpack.EnvironmentPlugin(['MapboxAccessToken'])]
 };
 
-function addLocalDevSettings(config, {libAlias}) {
+function addLocalDevSettings(config) {
+  config = Object.assign({}, LOCAL_DEVELOPMENT_CONFIG, config);
   config.resolve = config.resolve || {};
   config.resolve.alias = config.resolve.alias || {};
   Object.assign(config.resolve.alias, LOCAL_DEVELOPMENT_CONFIG.resolve.alias);
-  if (libAlias) {
-    config.resolve.alias['math.gl'] = libAlias;
-  }
 
   config.module = config.module || {};
   config.module.rules = config.module.rules || [];
   config.module.rules = config.module.rules.concat(LOCAL_DEVELOPMENT_CONFIG.module.rules);
+
+  config.plugins = config.plugins || [];
+  config.plugins = config.plugins.concat(LOCAL_DEVELOPMENT_CONFIG.plugins);
+
+  return config;
+}
+
+function addAnalyzerSettings(config) {
+  config.mode = 'production';
+
+  config.resolve = config.resolve || {};
+  // 'esnext' picks up ES6 dist for smaller bundles
+  config.resolve.mainFields = ['esnext', 'browser', 'module', 'main'];
+
+  config.plugins = config.plugins || [];
+  config.plugins.push(new BundleAnalyzerPlugin());
   return config;
 }
 
 module.exports = (baseConfig, opts = {}) => env => {
-  const config = baseConfig;
-  if (env && env.local) {
-    addLocalDevSettings(config, opts);
+  let config = baseConfig;
+
+  if (env && env.analyze) {
+    config = addAnalyzerSettings(config);
   }
-  // Uncomment to debug webpack options
+
+  if (env && env.local) {
+    config = addLocalDevSettings(config, opts);
+  }
+
+  // uncomment to debug
   // console.warn(JSON.stringify(config, null, 2));
   return config;
 };

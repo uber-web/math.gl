@@ -1,5 +1,11 @@
 # Upgrade Guide
 
+## Upgrading to v3.0
+
+| Method | Status | Replacement | Reason |
+| --- | --- | --- | --- |
+| `Vector2.cross` | Removed | `Vector3.cross` | Cross product by definition work on 3 dimensional vectors |
+
 ## Upgrading to v2.0
 
 Experimental exports are now exported with a leading underscore (\_), instead of as members of the `experimental` namespace:

@@ -161,21 +161,15 @@ test('Matrix4.transpose', t => {
   t.end();
 });
 
-// test('Matrix4.add', t => {
-//   const RESULT = [
-//     2, 0, 0, 0,
-//     0, 2, 0, 0,
-//     0, 0, 2, 0,
-//     0, 0, 0, 2
-//   ];
+test('Matrix4.add', t => {
+  const RESULT = [2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2];
 
-//   t.equals(typeof Matrix4.prototype.add, 'function');
-//   let m = new Matrix4().identity();
-//   m = m.add(m);
+  let m = new Matrix4().identity();
+  m = m.add(m);
 
-//   tapeEquals(t, m, RESULT, 'add gave the right result');
-//   t.end();
-// });
+  tapeEquals(t, m, RESULT, 'add gave the right result');
+  t.end();
+});
 
 test('Matrix4.scale', t => {
   const M1_RESULT = [1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 3, 0, 0, 0, 0, 1];

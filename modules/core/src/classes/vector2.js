@@ -19,7 +19,7 @@
 // THE SOFTWARE.
 
 import Vector from '../lib/vector';
-import * as vec2 from 'gl-matrix/vec2';
+// import * as vec2 from 'gl-matrix/vec2';
 
 import {config, isArray} from '../lib/common';
 import {checkNumber} from '../lib/validators';
@@ -28,7 +28,7 @@ export default class Vector2 extends Vector {
   // Creates a new, empty vec2
   constructor(x = 0, y = 0) {
     // PERF NOTE: initialize elements as double precision numbers
-    super(-0, -0);
+    super(2); // -0, -0);
     if (isArray(x) && arguments.length === 1) {
       this.copy(x);
     } else {
@@ -41,6 +41,22 @@ export default class Vector2 extends Vector {
     }
   }
 
+  fromObject(object) {
+    if (config.debug) {
+      checkNumber(object.x);
+      checkNumber(object.y);
+    }
+    this[0] = object.x;
+    this[1] = object.y;
+    return this.check();
+  }
+
+  toObject(object) {
+    object.x = this[0];
+    object.y = this[1];
+    return object;
+  }
+
   // Getters/setters
   get ELEMENTS() {
     return 2;
@@ -48,21 +64,11 @@ export default class Vector2 extends Vector {
 
   // x,y inherited from Vector
 
-  cross(vector) {
-    vec2.cross(this, this, vector);
-    return this.check();
-  }
-
   horizontalAngle() {
     return Math.atan2(this.y, this.x);
   }
 
   verticalAngle() {
     return Math.atan2(this.x, this.y);
-  }
-
-  operation(operation, ...args) {
-    operation(this, this, ...args);
-    return this.check();
   }
 }

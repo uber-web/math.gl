@@ -18,9 +18,9 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+import {config} from '../lib/common';
+import {validateVector, checkVector} from '../lib/validators';
 import Matrix from '../lib/matrix';
-import {validateVector} from '../lib/validators';
-// import {checkNumber} from '../lib/validators';
 import Vector2 from './vector2';
 import Vector3 from './vector3';
 import Vector4 from './vector4';
@@ -68,109 +68,79 @@ export default class Matrix4 extends Matrix {
     return Vector4;
   }
 
-  constructor(...args) {
+  constructor() {
     // PERF NOTE: initialize elements as double precision numbers
     super(-0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0);
-    if (Array.isArray(args[0]) && arguments.length === 1) {
-      this.copy(args[0]);
+    if (arguments.length === 1 && Array.isArray(arguments[0])) {
+      this.copy(arguments[0]);
     } else {
       this.identity();
     }
   }
 
-  /* eslint-disable max-params */
-  // accepts row major order, stores as column major
-  setRowMajor(
-    m00 = 1,
-    m01 = 0,
-    m02 = 0,
-    m03 = 0,
-    m10 = 0,
-    m11 = 1,
-    m12 = 0,
-    m13 = 0,
-    m20 = 0,
-    m21 = 0,
-    m22 = 1,
-    m23 = 0,
-    m30 = 0,
-    m31 = 0,
-    m32 = 0,
-    m33 = 1
-  ) {
-    this[0] = m00;
-    this[1] = m10;
-    this[2] = m20;
-    this[3] = m30;
-    this[4] = m01;
-    this[5] = m11;
-    this[6] = m21;
-    this[7] = m31;
-    this[8] = m02;
-    this[9] = m12;
-    this[10] = m22;
-    this[11] = m32;
-    this[12] = m03;
-    this[13] = m13;
-    this[14] = m23;
-    this[15] = m33;
-    return this.check();
+  fromObject(object) {
+    const array = object.elements;
+    return this.fromRowMajor(array);
   }
 
-  // accepts column major order, stores in column major order
-  setColumnMajor(
-    m00 = 1,
-    m10 = 0,
-    m20 = 0,
-    m30 = 0,
-    m01 = 0,
-    m11 = 1,
-    m21 = 0,
-    m31 = 0,
-    m02 = 0,
-    m12 = 0,
-    m22 = 1,
-    m32 = 0,
-    m03 = 0,
-    m13 = 0,
-    m23 = 0,
-    m33 = 1
-  ) {
-    this[0] = m00;
-    this[1] = m10;
-    this[2] = m20;
-    this[3] = m30;
-    this[4] = m01;
-    this[5] = m11;
-    this[6] = m21;
-    this[7] = m31;
-    this[8] = m02;
-    this[9] = m12;
-    this[10] = m22;
-    this[11] = m32;
-    this[12] = m03;
-    this[13] = m13;
-    this[14] = m23;
-    this[15] = m33;
-    return this.check();
+  toObject(object) {
+    const array = object.elements;
+    this.toRowMajor(array);
+    return object;
   }
-  /* eslint-enable no-multi-spaces, brace-style, no-return-assign */
-
-  // copy(array) {
-  //   // return this.setColumnMajor(...array);
-  // }
 
   // Sets exact values (column major)
   set(...args) {
-    return this.setColumnMajor(...args);
+    return this.fromColumnMajor(...args);
   }
 
-  /* eslint-enable max-params */
+  // accepts column major order, stores in column major order
+  fromColumnMajor(...args) {
+    return this.copy(args);
+  }
 
-  // Accessors
+  // accepts row major order, stores as column major
+  fromRowMajor(...args) {
+    this[0] = args[0];
+    this[1] = args[4];
+    this[2] = args[8];
+    this[3] = args[12];
+    this[4] = args[1];
+    this[5] = args[5];
+    this[6] = args[9];
+    this[7] = args[13];
+    this[8] = args[2];
+    this[9] = args[6];
+    this[10] = args[10];
+    this[11] = args[14];
+    this[12] = args[3];
+    this[13] = args[7];
+    this[14] = args[11];
+    this[15] = args[15];
+    return this.check();
+  }
 
-  determinant() {
-    return mat4.determinant(this);
+  toColumnMajor(result) {
+    return this.toArray(result);
+  }
+
+  toRowMajor(result) {
+    result[0] = this[0];
+    result[1] = this[4];
+    result[2] = this[8];
+    result[3] = this[12];
+    result[4] = this[1];
+    result[5] = this[5];
+    result[6] = this[9];
+    result[7] = this[13];
+    result[8] = this[2];
+    result[9] = this[6];
+    result[10] = this[10];
+    result[11] = this[14];
+    result[12] = this[3];
+    result[13] = this[7];
+    result[14] = this[11];
+    result[15] = this[15];
   }
 
   // Constructors
@@ -280,6 +250,63 @@ export default class Matrix4 extends Matrix {
     return this.check();
   }
 
+  // Accessors
+
+  determinant() {
+    return mat4.determinant(this);
+  }
+
+  // Extracts the non-uniform scale assuming the matrix is an affine transformation.
+  // The scales are the "lengths" of the column vectors in the upper-left 3x3 matrix.
+  getScale(result = [-0, -0, -0]) {
+    // explicit is faster than hypot...
+    result[0] = Math.sqrt(this[0] * this[0] + this[1] * this[1] + this[2] * this[2]);
+    result[1] = Math.sqrt(this[4] * this[4] + this[5] * this[5] + this[6] * this[6]);
+    result[2] = Math.sqrt(this[8] * this[8] + this[9] * this[9] + this[10] * this[10]);
+    // result[0] = Math.hypot(this[0], this[1], this[2]);
+    // result[1] = Math.hypot(this[4], this[5], this[6]);
+    // result[2] = Math.hypot(this[8], this[9], this[10]);
+    return result;
+  }
+
+  // Gets the translation portion, assuming the matrix is a affine transformation matrix.
+  getTranslation(result = [-0, -0, -0]) {
+    result[0] = this[12];
+    result[1] = this[13];
+    result[2] = this[14];
+    return result;
+  }
+
+  // Gets upper left 3x3 pure rotation matrix (non-scaling), assume affine transformation matrix
+  getRotation(
+    result = [-0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0],
+    scaleResult = null
+  ) {
+    const scale = this.getScale(scaleResult || [-0, -0, -0]);
+
+    const inverseScale0 = 1 / scale[0];
+    const inverseScale1 = 1 / scale[1];
+    const inverseScale2 = 1 / scale[2];
+
+    result[0] = this[0] * inverseScale0;
+    result[1] = this[1] * inverseScale1;
+    result[2] = this[2] * inverseScale2;
+    result[3] = 0;
+    result[4] = this[4] * inverseScale0;
+    result[5] = this[5] * inverseScale1;
+    result[6] = this[6] * inverseScale2;
+    result[7] = 0;
+    result[8] = this[8] * inverseScale0;
+    result[9] = this[9] * inverseScale1;
+    result[10] = this[10] * inverseScale2;
+    result[11] = 0;
+    result[12] = 0;
+    result[13] = 0;
+    result[14] = 0;
+    result[15] = 1;
+    return result;
+  }
+
   // Modifiers
 
   transpose() {
@@ -351,82 +378,109 @@ export default class Matrix4 extends Matrix {
     return this.check();
   }
 
-  transformVector2(vector, out) {
-    // out = out || [0, 0];
-    out = out || new Vector2();
-    vec2.transformMat4(out, vector, this);
-    validateVector(out, 2);
-    return out;
+  transformVector2(vector, result) {
+    // result = result || [0, 0];
+    result = result || new Vector2();
+    vec2.transformMat4(result, vector, this);
+    if (config.debug) {
+      validateVector(result, 2);
+    }
+    return result;
   }
 
-  transformVector3(vector, out) {
-    // out = out || [0, 0, 0];
-    out = out || new Vector3();
-    vec3.transformMat4(out, vector, this);
-    validateVector(out, 3);
-    return out;
+  transformVector3(vector, result) {
+    // result = result || [0, 0, 0];
+    result = result || new Vector3();
+    vec3.transformMat4(result, vector, this);
+    if (config.debug) {
+      validateVector(result, 3);
+    }
+    return result;
   }
 
-  transformVector4(vector, out) {
-    // out = out || [0, 0, 0, 0];
-    out = out || new Vector4();
-    vec4.transformMat4(out, vector, this);
-    validateVector(out, 4);
-    return out.check();
+  transformVector4(vector, result) {
+    // result = result || [0, 0, 0, 0];
+    result = result || new Vector4();
+    vec4.transformMat4(result, vector, this);
+    if (config.debug) {
+      validateVector(result, 4);
+    }
+    return result;
   }
 
   // Transforms any 2, 3 or 4 element vector
   // returns a newly minted Vector2, Vector3 or Vector4
-  transformVector(vector, out) {
+  transformVector(vector, result) {
     switch (vector.length) {
       case 2:
-        return this.transformVector2(vector, out);
+        return this.transformVector2(vector, result);
       case 3:
-        return this.transformVector3(vector, out);
+        return this.transformVector3(vector, result);
       case 4:
-        return this.transformVector4(vector, out);
+        return vector[3]
+          ? this.transformVector4(vector, result)
+          : this.transformDirection4(vector, result);
       default:
         throw new Error('Illegal vector');
     }
   }
 
-  transformDirection(vector, out) {
-    return this._transformVector(vector, out, 0);
+  transformDirection(vector, result) {
+    return this._transformVector(vector, result, 0);
   }
 
-  transformPoint(vector, out) {
-    return this._transformVector(vector, out, 1);
+  transformDirection4(vector, result = vector) {
+    const x = vector[0];
+    const y = vector[1];
+    const z = vector[2];
+    result[0] = this[0] * x + this[4] * y + this[8] * z;
+    result[1] = this[1] * x + this[5] * y + this[9] * z;
+    result[2] = this[2] * x + this[6] * y + this[10] * z;
+    result[3] = 0;
+    return checkVector(result, 4);
   }
 
-  _transformVector(vector, out, w) {
+  transformDirection3(vector, result = vector) {
+    const x = vector[0];
+    const y = vector[1];
+    const z = vector[2];
+    const w = vector[3];
+    result[0] = this[0] * x + this[4] * y + this[8] * z + this[12] * w;
+    result[1] = this[1] * x + this[5] * y + this[9] * z + this[13] * w;
+    result[2] = this[2] * x + this[6] * y + this[10] * z + this[14] * w;
+    result[3] = 0;
+    return checkVector(result, 4);
+  }
+
+  transformPoint(vector, result) {
+    return this._transformVector(vector, result, 1);
+  }
+
+  _transformVector(vector, result, w) {
     switch (vector.length) {
       case 2:
-        out = out || new Vector2();
-        // out = out || [0, 0];
-        vec4.transformMat4(out, [vector[0], vector[1], 0, w], this);
-        out.length = 2;
-        validateVector(out, 2);
-        break;
+        result = result || new Vector2();
+        // result = result || [0, 0];
+        vec4.transformMat4(result, [vector[0], vector[1], 0, w], this);
+        result.length = 2;
+        return checkVector(result, 2);
       case 3:
-        out = out || new Vector3();
-        // out = out || [0, 0, 0];
-        vec4.transformMat4(out, [vector[0], vector[1], vector[2], w], this);
-        out.length = 3;
-        validateVector(out, 3);
-        break;
+        result = result || new Vector3();
+        // result = result || [0, 0, 0];
+        vec4.transformMat4(result, [vector[0], vector[1], vector[2], w], this);
+        result.length = 3;
+        return checkVector(result, 3);
       case 4:
         if (Boolean(w) !== Boolean(vector[3])) {
           throw new Error('math.gl: Matrix4.transformPoint - invalid vector');
         }
-        out = out || new Vector4();
-        // out = out || [0, 0, 0, 0];
-        vec4.transformMat4(out, vector, this);
-        validateVector(out, 4);
-        break;
+        result = result || new Vector4();
+        // result = result || [0, 0, 0, 0];
+        vec4.transformMat4(result, vector, this);
+        return checkVector(result, 4);
       default:
         throw new Error('Illegal vector');
     }
-    return out;
   }
 
   // three.js math API compatibility
@@ -441,4 +495,74 @@ export default class Matrix4 extends Matrix {
   makeRotationFromQuaternion(q) {
     return this.fromQuaternion(q);
   }
+
+  // DEPRECATED
+
+  /* eslint-disable max-params */
+  // accepts row major order, stores as column major
+  // prettier-ignore
+  setRowMajor(
+    m00 = 1,
+    m01 = 0,
+    m02 = 0,
+    m03 = 0,
+    m10 = 0,
+    m11 = 1,
+    m12 = 0,
+    m13 = 0,
+    m20 = 0,
+    m21 = 0,
+    m22 = 1,
+    m23 = 0,
+    m30 = 0,
+    m31 = 0,
+    m32 = 0,
+    m33 = 1
+  ) {
+    // prettier-ignore
+    return this.fromRowMajor(
+      m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33
+    );
+  }
+
+  // accepts column major order, stores in column major order
+  // prettier-ignore
+  setColumnMajor(
+    m00 = 1,
+    m10 = 0,
+    m20 = 0,
+    m30 = 0,
+    m01 = 0,
+    m11 = 1,
+    m21 = 0,
+    m31 = 0,
+    m02 = 0,
+    m12 = 0,
+    m22 = 1,
+    m32 = 0,
+    m03 = 0,
+    m13 = 0,
+    m23 = 0,
+    m33 = 1
+  ) {
+    this[0] = m00;
+    this[1] = m10;
+    this[2] = m20;
+    this[3] = m30;
+    this[4] = m01;
+    this[5] = m11;
+    this[6] = m21;
+    this[7] = m31;
+    this[8] = m02;
+    this[9] = m12;
+    this[10] = m22;
+    this[11] = m32;
+    this[12] = m03;
+    this[13] = m13;
+    this[14] = m23;
+    this[15] = m33;
+    return this.check();
+  }
+  /* eslint-enable no-multi-spaces, brace-style, no-return-assign */
+  /* eslint-enable max-params */
 }

@@ -20,13 +20,18 @@
 
 import javascriptBench from './lib/javascript.bench';
 import commonBench from './lib/common.bench';
+
 import classesBench from './classes/classes.bench';
 import vector3Bench from './classes/vector3.bench';
+import matrix4Bench from './classes/matrix4.bench';
 
-export default function coreBench(suite) {
-  javascriptBench(suite);
-  commonBench(suite);
-  classesBench(suite);
-  vector3Bench(suite);
+export default function coreBench(suite, addReferenceBenchmarks) {
+  classesBench(suite, addReferenceBenchmarks);
+  commonBench(suite, addReferenceBenchmarks);
+  javascriptBench(suite, addReferenceBenchmarks);
+
+  vector3Bench(suite, addReferenceBenchmarks);
+  matrix4Bench(suite, addReferenceBenchmarks);
+
   return suite;
 }

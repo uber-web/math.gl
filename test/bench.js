@@ -18,17 +18,19 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-/* eslint-disable no-console, no-invalid-this */
 require('reify');
 
 const {Bench} = require('@probe.gl/bench');
 const coreBench = require('math.gl/test/bench').default;
 const geospatialBench = require('@math.gl/geospatial/test/bench').default;
 
+// Set to true to include detailed supporting benchmarks
+const addReferenceBenchmarks = false;
+
 const suite = new Bench();
 
-coreBench(suite);
-geospatialBench(suite);
+coreBench(suite, addReferenceBenchmarks);
+geospatialBench(suite, addReferenceBenchmarks);
 
 suite
   // Calibrate performance

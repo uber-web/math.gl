@@ -84,24 +84,6 @@ export default class Vector extends MathArray {
   //   return this.check();
   // }
 
-  add(...vectors) {
-    for (const vector of vectors) {
-      for (let i = 0; i < this.ELEMENTS; ++i) {
-        this[i] += vector[i];
-      }
-    }
-    return this.check();
-  }
-
-  subtract(...vectors) {
-    for (const vector of vectors) {
-      for (let i = 0; i < this.ELEMENTS; ++i) {
-        this[i] -= vector[i];
-      }
-    }
-    return this.check();
-  }
-
   multiply(...vectors) {
     for (const vector of vectors) {
       for (let i = 0; i < this.ELEMENTS; ++i) {
@@ -116,23 +98,6 @@ export default class Vector extends MathArray {
       for (let i = 0; i < this.ELEMENTS; ++i) {
         this[i] /= vector[i];
       }
-    }
-    return this.check();
-  }
-
-  scale(scale) {
-    if (Array.isArray(scale)) {
-      return this.multiply(scale);
-    }
-    for (let i = 0; i < this.ELEMENTS; ++i) {
-      this[i] *= scale;
-    }
-    return this.check();
-  }
-
-  scaleAndAdd(vector, scale) {
-    for (let i = 0; i < this.ELEMENTS; ++i) {
-      this[i] = this[i] * scale + vector[i];
     }
     return this.check();
   }
@@ -175,5 +140,10 @@ export default class Vector extends MathArray {
 
   addScaledVector(a, b) {
     return this.add(new this.constructor(a).multiplyScalar(b));
+  }
+
+  operation(operation, ...args) {
+    operation(this, this, ...args);
+    return this.check();
   }
 }

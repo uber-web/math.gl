@@ -19,10 +19,11 @@
 // THE SOFTWARE.
 
 import MathArray from '../lib/math-array';
-import {checkNumber} from '../lib/validators';
+import {checkNumber, checkVector} from '../lib/validators';
 import assert from '../lib/assert';
 
 import * as quat from 'gl-matrix/quat';
+import * as vec4 from 'gl-matrix/vec4';
 
 const IDENTITY_QUATERNION = [0, 0, 0, 1];
 
@@ -271,6 +272,11 @@ export default class Quaternion extends MathArray {
     }
     quat.slerp(this, start, target, ratio);
     return this.check();
+  }
+
+  transformVector4(vector, result = vector) {
+    vec4.transformQuat(result, vector, this);
+    return checkVector(result, 4);
   }
 
   // THREE.js Math API compatibility

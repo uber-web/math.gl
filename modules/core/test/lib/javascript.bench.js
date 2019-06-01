@@ -10,8 +10,26 @@ class ClassWithConstructor {
     this.data = null;
   }
 }
+class ClassWithConstructorXYZ {
+  constructor() {
+    this.x = -0;
+    this.y = -0;
+    this.z = -0;
+    this.w = -0;
+  }
+}
+class ClassWithConstructor04 {
+  constructor() {
+    this[0] = -0;
+    this[1] = -0;
+    this[2] = -0;
+    this[3] = -0;
+  }
+}
+
 class ArrayExtenderNoConstructor extends Array {}
 class ArrayExtenderEmptyConstructor extends Array {
+  // eslint-disable-next-line no-useless-constructor
   constructor() {
     super();
   }
@@ -57,11 +75,14 @@ export default function javascriptBench(suite, addReferenceBenchmarks) {
   if (addReferenceBenchmarks) {
     suite
       .group('Class/Array inheritance construction cost')
+      .add('new Array', () => new Array()) // eslint-disable-line
       .add('new ArrayExtender', () => new ArrayExtender())
-      .add('new ArrayExtenderEmptyConstructor', () => new ArrayExtenderEmptyConstructor())
       .add('new ArrayExtenderNoConstructor', () => new ArrayExtenderNoConstructor())
+      .add('new ArrayExtenderEmptyConstructor', () => new ArrayExtenderEmptyConstructor())
+      .add('new ClassNoConstructor', () => new ClassNoConstructor())
       .add('new ClassWithConstructor', () => new ClassWithConstructor())
-      .add('new ClassNoConstructor', () => new ClassNoConstructor());
+      .add('new ClassWithConstructorXYZ', () => new ClassWithConstructorXYZ())
+      .add('new ClassWithConstructor0-4', () => new ClassWithConstructor04());
 
     suite
       .group('Default parameter cost')

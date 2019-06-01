@@ -43,6 +43,28 @@ export default class Vector4 extends Vector {
     }
   }
 
+  fromObject(object) {
+    if (config.debug) {
+      checkNumber(object.x);
+      checkNumber(object.y);
+      checkNumber(object.z);
+      checkNumber(object.w);
+    }
+    this[0] = object.x;
+    this[1] = object.y;
+    this[2] = object.z;
+    this[3] = object.w;
+    return this;
+  }
+
+  toObject(object) {
+    object.x = this[0];
+    object.y = this[1];
+    object.z = this[2];
+    object.w = this[3];
+    return object;
+  }
+
   // Getters/setters
   /* eslint-disable no-multi-spaces, brace-style, no-return-assign */
   get ELEMENTS() {

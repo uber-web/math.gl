@@ -19,9 +19,7 @@
     "metrics": "ocular-metrics",
     "publish": "ocular-publish",
     "bench": "ocular-test bench",
-    "bench-browser": "ocular-test bench-browser",
     "test": "ocular-test",
-    "test-browser": "ocular-test browser",
     "test-size-explicit": "npm run build && webpack --config test/webpack.config.js --env.import-vec4-mat4-explicit",
     "test-size": "npm run build && webpack --config test/webpack.config.js --env.import-nothing"
   },
@@ -34,6 +32,7 @@
     "@probe.gl/test-utils": "^3.0.2",
     "babel-plugin-transform-builtin-extend": "^1.1.2",
     "coveralls": "^3.0.0",
+    "eslint-plugin-react": "^7.10",
     "ocular-dev-tools": "0.0.25",
     "pre-commit": "^1.2.2",
     "reify": "^0.18.1"
