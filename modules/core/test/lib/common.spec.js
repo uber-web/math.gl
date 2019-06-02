@@ -20,25 +20,10 @@
 
 import {Vector2, Vector3} from 'math.gl';
 import {config, configure, isArray, clone, equals, exactEquals, formatValue} from 'math.gl';
-import {
-  toRadians,
-  toDegrees,
-  radians,
-  degrees,
-  sin,
-  cos,
-  tan,
-  asin,
-  acos,
-  atan,
-  clamp,
-  lerp
-} from 'math.gl';
+import {toRadians, toDegrees} from 'math.gl';
+import {radians, degrees, sin, cos, tan, asin, acos, atan, clamp, lerp} from 'math.gl';
 import {tapeEquals} from 'test/utils/tape-assertions';
 import test from 'tape-catch';
-import {tapeEquals} from 'test/utils/tape-assertions';
-import {config, isArray, toRadians, toDegrees, equals, exactEquals, lerp, Vector2} from 'math.gl';
-import {radians, degrees} from 'math.gl';
 
 test('math.gl#types', t => {
   t.equals(typeof isArray, 'function');
