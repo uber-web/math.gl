@@ -30,6 +30,12 @@
           ]
         },
         {
+          "title": "Geospatial Math",
+          "entries": [
+            {"entry": "docs/developer-guide/geospatial"}
+          ]
+        },
+        {
           "title": "Concepts",
           "entries": [
             {"entry": "docs/developer-guide/concepts/homogenous-coordinates"},
@@ -63,6 +69,12 @@
           "title": "Add-ons",
           "entries": [
             {"entry": "docs/api-reference/addons/polygon"}
+          ]
+        },
+        {
+          "title": "Geospatial",
+          "entries": [
+            {"entry": "docs/api-reference/math/geospatial/ellipsoid"}
           ]
         }
       ]

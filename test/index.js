@@ -20,3 +20,4 @@
 
 require('reify');
 require('../modules/core/test');
+require('../modules/geospatial/test');

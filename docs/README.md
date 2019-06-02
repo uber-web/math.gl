@@ -1,11 +1,15 @@
 # Introduction
 
-math.gl is a JavaScript class library for 3D math. It provides the traditional 3D classes (vectors, matrices etc).
+math.gl is a JavaScript class library for 3D and geospatial math. It provides a set of "traditional" 3D classes for vectors, matrices etc, as well as a set of optional modules that address different domains.
 
 In spite of the name, math.gl has no hard WebGL dependencies and is usable in any JavaScript applications. That said, math.gl is designed to be optimized for WebGL/3D applications.
 
+## Available Modules
 
-## Features
+- `math.gl` - basic math classes (vectors, matrices etc).
+- `@math.gl/geospatial` - support for geospatial math, primarily WGS84 and Web Mercator.
+
+## Class Library Features
 
 - `math.gl`: Basic math classes (vectors, matrices etc) and utilities (`toRadians` etc).
 - `@math.gl/geospatial`: Support for geospatial math, primarily the WGS84 coordinate system.
