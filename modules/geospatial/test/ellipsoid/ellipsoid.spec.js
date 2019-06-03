@@ -1,3 +1,6 @@
+// This file is derived from the Cesium math library under Apache 2 license
+// See LICENSE.md and https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md
+
 /* eslint-disable */
 import test from 'tape-catch';
 import {Vector3, toRadians, toDegrees, _MathUtils} from 'math.gl';
