@@ -19,21 +19,16 @@
 // THE SOFTWARE.
 
 import {configure, Vector2, Vector3, Vector4, Matrix3, Matrix4} from 'math.gl';
-import * as mat4 from 'gl-matrix/mat4';
 
 configure({debug: false});
 
-const IDENTITY = [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1];
-
-const classicArray = [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1];
-const float32Array = new Float32Array([1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
-const float64Array = new Float64Array([1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
 const mathglArray = new Matrix4();
+const mathglVector4 = new Vector4();
 
 export default function classesBench(suite, addReferenceBenchmarks) {
   suite
     // add tests
-    .group('Object construction')
+    .group('@math.gl/core: Object Construction Summary')
     .add('new Vector2', () => new Vector2())
     .add('new Vector3', () => new Vector3())
     .add('new Vector4', () => new Vector4())
@@ -57,37 +52,19 @@ export default function classesBench(suite, addReferenceBenchmarks) {
 
       .group('Matrix3 construction')
       .add('Array(9)', () => new Array(9))
-      .add('[1, 0, 0, ...]', () => [1, 0, 0, 0, 1, 0, 0, 0, 1])
+      .add('[1, 0, 0, ...]', () => [1, 0, 0, 0, 1, 0, 0, 0, 1]);
 
-      .group('Matrix4 construction')
-      .add('Array(16)', () => new Array(16))
-      .add('[1, 0, 0, 0, ...]', () => [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1])
-      .add('new Float32Array(16)', () => new Float32Array(16))
-      .add('new Float32Array(IDENTITY)', () => new Float32Array(IDENTITY))
-      .add('new Float64Array(16)', () => new Float64Array(16))
-      .add('new Float64Array(IDENTITY)', () => new Float64Array(IDENTITY));
+    // .group('Matrix4 construction')
+    // .add('Array(16)', () => new Array(16))
+    // .add('[1, 0, 0, 0, ...]', () => [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1])
   }
 
   suite
     .group('debug validation cost')
-    .add('Matrix4#validate', () => mathglArray.validate())
-
-    .group('4x4 multiplication')
-    .add('Matrix4#multiplyRight(Matrix4)', () => mathglArray.multiplyRight(mathglArray))
-    .add('gl-matrix#multiply(Matrix4)', () => mat4.multiply(mathglArray, mathglArray, mathglArray));
-
-  if (addReferenceBenchmarks) {
-    suite
-      .add('gl-matrix#multiply(array)', () =>
-        mat4.multiply(classicArray, classicArray, classicArray)
-      )
-      .add('gl-matrix#multiply(float32Array)', () =>
-        mat4.multiply(float32Array, float32Array, float32Array)
-      )
-      .add('gl-matrix#multiply(float64Array)', () =>
-        mat4.multiply(float64Array, float64Array, float64Array)
-      );
-  }
+    .add('Vector4#validate (debug)', () => configure({debug: true}), () => mathglVector4.check())
+    .add('Vector4#validate (prod)', () => configure({debug: false}), () => mathglVector4.check())
+    .add('Matrix4#validate (debug)', () => configure({debug: true}), () => mathglArray.check())
+    .add('Matrix4#validate (prod)', () => configure({debug: false}), () => mathglArray.check());
 
   return suite;
 }

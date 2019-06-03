@@ -18,12 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-export function checkNumber(value) {
-  if (!Number.isFinite(value)) {
-    throw new Error(`Invalid number ${value}`);
-  }
-  return value;
-}
+import {config} from './common';
 
 export function validateVector(v, length) {
   if (v.length !== length) {
@@ -32,25 +27,16 @@ export function validateVector(v, length) {
   return v.every(Number.isFinite);
 }
 
-export function checkVector(v, length, callerName) {
-  if (!validateVector(v, length)) {
-    throw new Error(`math.gl: ${callerName | ''} some fields set to invalid numbers'`);
+export function checkNumber(value) {
+  if (!Number.isFinite(value)) {
+    throw new Error(`Invalid number ${value}`);
   }
+  return value;
 }
 
-// export function validateArray(v, offset, length) {
-//   if (v.length !== length) {
-//     return false;
-//   }
-//   length += offset;
-//   for (let i = offset; i < length; ++i) {
-//   	if (!Number.isFinite(array[i]))
-//   }
-//   return v.every(Number.isFinite);
-// }
-
-export function checkArray(v, length, callerName) {
-  if (!validateVector(v, length)) {
+export function checkVector(v, length, callerName) {
+  if (config.debug && !validateVector(v, length)) {
     throw new Error(`math.gl: ${callerName | ''} some fields set to invalid numbers'`);
   }
+  return v;
 }

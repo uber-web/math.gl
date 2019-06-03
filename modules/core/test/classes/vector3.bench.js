@@ -34,9 +34,9 @@ const objectVector = new ObjectVector();
 const arrayVector = new Vector3();
 const vector3 = new Vector3();
 
-export default function classesBench(suite, addReferenceBenchmarks) {
+export default function vector3Bench(suite, addReferenceBenchmarks) {
   suite
-    .group('Vector3 construction')
+    .group('@math.gl/core: Vector3')
     .add('Vector3#new()', () => new Vector3(1, 2, 3))
     .add('Vector3#set()', () => vector3.set(1, 2, 3))
     .add('Vector3#copy()', () => vector3.copy([1, 2, 3]))
@@ -44,6 +44,7 @@ export default function classesBench(suite, addReferenceBenchmarks) {
     .add('Vector3#from(Object)', () => vector3.from(objectVector))
     .add('Vector3#to(Vector3)', () => vector3.to(arrayVector))
     .add('Vector3#to(Object)', () => vector3.to(objectVector));
+
   if (addReferenceBenchmarks) {
     suite
       .group('Vector3 Type Conversion Cost')

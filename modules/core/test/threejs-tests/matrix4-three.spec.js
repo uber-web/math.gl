@@ -679,8 +679,8 @@ test.skip('three.js#Matrix4#makeOrthographic', t => {
 });
 
 test('three.js#Matrix4#equals', t => {
-  const a = new Matrix4().set(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
-  const b = new Matrix4().set(0, -1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+  const a = new Matrix4().set(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
+  const b = new Matrix4().set(-1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
 
   t.notOk(a.equals(b), 'Check that a does not equal b');
   t.notOk(b.equals(a), 'Check that b does not equal a');

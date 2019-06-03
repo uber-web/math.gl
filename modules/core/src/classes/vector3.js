@@ -54,7 +54,7 @@ export default class Vector3 extends Vector {
     this[0] = object.x;
     this[1] = object.y;
     this[2] = object.z;
-    return this;
+    return this.check();
   }
 
   toObject(object) {
@@ -103,11 +103,6 @@ export default class Vector3 extends Vector {
 
   rotateZ({radians, origin = ORIGIN}) {
     vec3.rotateZ(this, this, origin, radians);
-    return this.check();
-  }
-
-  operation(operation, ...args) {
-    operation(this, this, ...args);
     return this.check();
   }
 }

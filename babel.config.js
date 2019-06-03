@@ -2,7 +2,7 @@
 
 const TARGETS = {
   chrome: '60',
-  edge: '15',
+  edge: '16',
   firefox: '53',
   ios: '10.3',
   safari: '10.1',
@@ -31,13 +31,15 @@ const ENV_CONFIG = {
       [
         '@babel/env',
         {
-          forceAllTransforms: true,
           modules: false
+          // Transpiling classes kills object creation performance
+          // exclude: ['@babel/plugin-transform-classes']
         }
       ]
     ],
     plugins: [
       ['@babel/transform-runtime', {useESModules: true}],
+      // Transpiling classes kills object creation performance
       ['transform-builtin-extend', {globals: ['Array']}]
     ]
   },

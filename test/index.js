@@ -19,5 +19,10 @@
 // THE SOFTWARE.
 
 require('reify');
+
+const {configure} = require('math.gl');
+
+configure({debug: true});
+
 require('../modules/core/test');
 require('../modules/geospatial/test');

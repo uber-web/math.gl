@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import {Vector3, toRadians} from 'math.gl';
+import {Vector3, toRadians, radians} from 'math.gl';
 import {isArray} from 'math.gl';
 
 const classicArray = [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1];
@@ -28,24 +28,21 @@ const mathglArray = new Vector3();
 
 export default function commonBench(suite, addReferenceBenchmarks) {
   suite
-    .group('array test cost')
-    .add('Array#isArray(Vector3)', () => Array.isArray(mathglArray))
-    .add('Array#isArray(array)', () => Array.isArray(classicArray))
-    .add('Array#isArray(Float32Array)', () => Array.isArray(float32Array))
-    .add('Array#isArray(Float64Array)', () => Array.isArray(float64Array));
+    .group('@math.gl/core: Global Functions')
+    .add('isArray(Vector3)', () => isArray(mathglArray))
+    .add('isArray(Float32Array)', () => isArray(float32Array));
 
   if (addReferenceBenchmarks) {
     suite
-      .add('math.gl#isArray(Vector3)', () => isArray(mathglArray))
-      .add('math.gl#isArray(array)', () => isArray(classicArray))
-      .add('math.gl#isArray(Float32Array)', () => isArray(float32Array))
-      .add('math.gl#isArray(Float64Array)', () => isArray(float64Array));
+      .add('isArray(array)', () => isArray(classicArray))
+      .add('isArray(Float64Array)', () => isArray(float64Array));
   }
 
   suite
-    .group('toRadians/toDegrees')
     .add('toRadians(Number)', () => toRadians(100))
-    .add('toRadians(Vector3)', () => toRadians(mathglArray));
+    .add('radians(Number)', () => radians(200))
+    .add('radians(Vector3)', () => radians(mathglArray))
+    .add('radians(Vector3, result)', () => radians(mathglArray, mathglArray));
 
   if (addReferenceBenchmarks) {
     suite

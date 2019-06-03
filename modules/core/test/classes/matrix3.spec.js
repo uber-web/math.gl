@@ -41,6 +41,19 @@ test('Matrix3#construct and Array.isArray check', t => {
   t.end();
 });
 
+test('Matrix3#from', t => {
+  tapeEquals(t, new Matrix3().from([1, 2, 3, 4, 5, 6, 7, 8, 9]), [1, 2, 3, 4, 5, 6, 7, 8, 9]);
+  // tapeEquals(t, new Matrix3().from({x: 1, y: 2, z: 3, w: 4}), [1, 2, 3, 4]);
+  t.end();
+});
+
+test.skip('Matrix3#to', t => {
+  const matrix = new Matrix3(1, 2, 3, 4, 5, 6, 7, 8, 9);
+  tapeEquals(t, matrix.to([0, 0, 0, 0, 0, 0, 0, 0, 0]), [1, 2, 3, 4, 5, 6, 7, 8, 9]);
+  // t.deepEquals(matrix.to({x: 0, y: 0, z: 0, w: 0}), {x: 1, y: 2, z: 4});
+  t.end();
+});
+
 test('Matrix3#toFloat32Array', t => {
   t.equals(typeof Matrix3.prototype.toFloat32Array, 'function');
   const m = new Matrix3();

@@ -18,6 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+import {config} from 'math.gl';
+
 // math.gl classes
 export {default as Vector2} from './classes/vector2';
 export {default as Vector3} from './classes/vector3';
@@ -60,3 +62,18 @@ export {default as _Euler} from './classes/euler';
 export {default as _Polygon} from './addons/polygon';
 
 export {default as assert} from './lib/assert';
+
+/* global self, window, global */
+const globals = {
+  self: typeof self !== 'undefined' && self,
+  window: typeof window !== 'undefined' && window,
+  global: typeof global !== 'undefined' && global
+};
+
+const global_ = globals.global || globals.self || globals.window;
+
+// Make config avalable as global variable for access in debugger
+// TODO - integrate with probe.gl (as soft dependency) to persist across reloades
+global_.mathgl = {
+  config
+};

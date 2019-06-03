@@ -18,6 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
+import assert from './assert';
+
 const RADIANS_TO_DEGREES = (1 / Math.PI) * 180;
 const DEGREES_TO_RADIANS = (1 / 180) * Math.PI;
 
@@ -25,7 +27,7 @@ const DEGREES_TO_RADIANS = (1 / 180) * Math.PI;
 /* eslint-disable no-shadow */
 const config = {};
 config.EPSILON = 1e-12;
-config.debug = true;
+config.debug = false;
 config.precision = 4;
 config.printTypes = false;
 config.printDegrees = false;
@@ -33,14 +35,13 @@ config.printRowMajor = true;
 
 export {config};
 
-export function configure(options) {
-  if ('epsilon' in options) {
-    config.EPSILON = options.epsilon;
+export function configure(options = {}) {
+  // Only copy existing keys
+  for (const key in options) {
+    assert(key in config);
+    config[key] = options[key];
   }
-
-  if ('debug' in options) {
-    config.debug = options.debug;
-  }
+  return config;
 }
 
 function round(value) {
@@ -49,16 +50,8 @@ function round(value) {
 
 export function formatValue(value, {precision = config.precision || 4} = {}) {
   value = round(value);
-  return parseFloat(value.toPrecision(precision));
-}
-
-export function formatAngle(
-  value,
-  {precision = config.precision || 4, printDegrees = config.printAngles} = {}
-) {
-  value = printDegrees ? degrees(value) : value;
-  value = round(value);
-  return `${parseFloat(value.toPrecision(precision))}${printDegrees ? '°' : ''}`;
+  // get rid of trailing zeros
+  return `${parseFloat(value.toPrecision(precision))}`;
 }
 
 // Returns true if value is either an array or a typed array
@@ -68,17 +61,21 @@ export function isArray(value) {
 }
 
 // If the array has a clone function, calls it, otherwise returns a copy
+function duplicateArray(array) {
+  return array.clone ? array.clone() : new Array(array.length);
+}
+
 export function clone(array) {
   return array.clone ? array.clone() : new Array(...array);
 }
 
 // If the argument value is an array, applies the func element wise,
 // otherwise applies func to the argument value
-function map(value, func) {
+function map(value, func, result) {
   if (isArray(value)) {
-    const result = clone(value);
-    for (let i = 0; i < result.length; ++i) {
-      result[i] = func(result[i], i, result);
+    result = result || duplicateArray(value);
+    for (let i = 0; i < result.length && i < value.length; ++i) {
+      result[i] = func(value[i], i, result);
     }
     return result;
   }
@@ -86,11 +83,11 @@ function map(value, func) {
 }
 
 export function toRadians(degrees) {
-  return map(degrees, degrees => degrees * DEGREES_TO_RADIANS);
+  return radians(degrees);
 }
 
 export function toDegrees(radians) {
-  return map(radians, radians => radians * RADIANS_TO_DEGREES);
+  return degrees(radians);
 }
 
 //
@@ -98,12 +95,12 @@ export function toDegrees(radians) {
 // Works on both single values and vectors
 //
 
-export function radians(degrees) {
-  return toRadians(degrees);
+export function radians(degrees, result) {
+  return map(degrees, degrees => degrees * DEGREES_TO_RADIANS, result);
 }
 
-export function degrees(radians) {
-  return toDegrees(radians);
+export function degrees(radians, result) {
+  return map(radians, radians => radians * RADIANS_TO_DEGREES, result);
 }
 
 // GLSL equivalent: Works on single values and vectors

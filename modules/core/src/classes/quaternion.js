@@ -19,10 +19,11 @@
 // THE SOFTWARE.
 
 import MathArray from '../lib/math-array';
-import {checkNumber} from '../lib/validators';
+import {checkNumber, checkVector} from '../lib/validators';
 import assert from '../lib/assert';
 
 import * as quat from 'gl-matrix/quat';
+import * as vec4 from 'gl-matrix/vec4';
 
 const IDENTITY_QUATERNION = [0, 0, 0, 1];
 
@@ -63,6 +64,11 @@ export default class Quaternion extends MathArray {
     return this.check();
   }
 
+  fromAxisRotation(axis, rad) {
+    quat.setAxisAngle(this, axis, rad);
+    return this.check();
+  }
+
   // Set the components of a quat to the given values
   // set(i, j, k, l) {
   //   quat.set(this, i, j, k, l);
@@ -71,8 +77,7 @@ export default class Quaternion extends MathArray {
 
   // Sets a quat from the given angle and rotation axis, then returns it.
   setAxisAngle(axis, rad) {
-    quat.setAxisAngle(this, axis, rad);
-    return this.check();
+    return this.fromAxisRotation(axis, rad);
   }
 
   // Getters/setters
@@ -271,6 +276,11 @@ export default class Quaternion extends MathArray {
     }
     quat.slerp(this, start, target, ratio);
     return this.check();
+  }
+
+  transformVector4(vector, result = vector) {
+    vec4.transformQuat(result, vector, this);
+    return checkVector(result, 4);
   }
 
   // THREE.js Math API compatibility

@@ -21,7 +21,9 @@
 import './lib/common.spec';
 
 import './classes/vectors.spec';
+import './classes/vector2.spec';
 import './classes/vector3.spec';
+import './classes/vector4.spec';
 import './classes/matrix3.spec';
 import './classes/matrix4.spec';
 import './classes/pose.spec';

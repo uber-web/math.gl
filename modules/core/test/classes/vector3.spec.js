@@ -34,6 +34,22 @@ test('Vector3#construct and Array.isArray check', t => {
   t.end();
 });
 
+test('Vector3#from', t => {
+  let vector3;
+  vector3 = new Vector3().from([1, 2, 3]);
+  tapeEquals(t, vector3, [1, 2, 3]);
+  vector3 = new Vector3().from({x: 1, y: 2, z: 3});
+  tapeEquals(t, vector3, [1, 2, 3]);
+  t.end();
+});
+
+test('Vector3#to', t => {
+  const vector3 = new Vector3(1, 2, 3);
+  tapeEquals(t, vector3.to([0, 0, 0]), [1, 2, 3]);
+  t.deepEquals(vector3.to({x: 0, y: 0, z: 0}), {x: 1, y: 2, z: 3});
+  t.end();
+});
+
 // ['add', 'cross'];
 const VECTOR_METHODS = ['clone'];
 

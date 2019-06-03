@@ -18,10 +18,20 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import {config, formatValue, equals} from './common';
+import {config, formatValue, equals, isArray} from './common';
 import {checkVector} from './validators';
 
 export default class MathArray extends Array {
+  // get length() {
+  //   return this.ELEMENTS;
+  // }
+
+  // constructor(...args) {
+  //   for (let i = 0; i < args.length; ++i) {
+  //     this[i] = args[i];
+  //   }
+  // }
+
   clone() {
     return new this.constructor().copy(this);
   }
@@ -58,9 +68,7 @@ export default class MathArray extends Array {
   }
 
   to(arrayOrObject) {
-    return Array.isArray(arrayOrObject)
-      ? this.toArray(arrayOrObject)
-      : this.toObject(arrayOrObject);
+    return isArray(arrayOrObject) ? this.toArray(arrayOrObject) : this.toObject(arrayOrObject);
   }
 
   toArray(array = [], offset = 0) {
@@ -156,6 +164,41 @@ export default class MathArray extends Array {
   clamp(minVector, maxVector) {
     for (let i = 0; i < this.ELEMENTS; ++i) {
       this[i] = Math.min(Math.max(this[i], minVector[i]), maxVector[i]);
+    }
+    return this.check();
+  }
+
+  add(...vectors) {
+    for (const vector of vectors) {
+      for (let i = 0; i < this.ELEMENTS; ++i) {
+        this[i] += vector[i];
+      }
+    }
+    return this.check();
+  }
+
+  subtract(...vectors) {
+    for (const vector of vectors) {
+      for (let i = 0; i < this.ELEMENTS; ++i) {
+        this[i] -= vector[i];
+      }
+    }
+    return this.check();
+  }
+
+  scale(scale) {
+    if (Array.isArray(scale)) {
+      return this.multiply(scale);
+    }
+    for (let i = 0; i < this.ELEMENTS; ++i) {
+      this[i] *= scale;
+    }
+    return this.check();
+  }
+
+  scaleAndAdd(vector, scale) {
+    for (let i = 0; i < this.ELEMENTS; ++i) {
+      this[i] = this[i] * scale + vector[i];
     }
     return this.check();
   }
