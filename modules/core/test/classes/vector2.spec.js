@@ -48,6 +48,22 @@ test('Vector2#members and methods', t => {
   t.end();
 });
 
+test('Vector2#from', t => {
+  let vector2;
+  vector2 = new Vector2().from([1, 2]);
+  tapeEquals(t, vector2, [1, 2]);
+  vector2 = new Vector2().from({x: 1, y: 2});
+  tapeEquals(t, vector2, [1, 2]);
+  t.end();
+});
+
+test('Vector2#to', t => {
+  const vector2 = new Vector2(1, 2);
+  tapeEquals(t, vector2.to([0, 0]), [1, 2]);
+  t.deepEquals(vector2.to({x: 0, y: 0}), {x: 1, y: 2});
+  t.end();
+});
+
 test('Vector2#toString', t => {
   const TEST_CASES = [{input: [0, 1], precision: 5, string: '[0, 1]'}];
   for (const tc of TEST_CASES) {

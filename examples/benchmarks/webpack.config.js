@@ -18,10 +18,13 @@ const COMMON_CONFIG = {
         options: {
           presets: [
             '@babel/preset-react',
-            ['@babel/preset-env', {
-              // Transpiling classes kills object creation performance
-              exclude: ['@babel/plugin-transform-classes']
-            }]
+            [
+              '@babel/preset-env',
+              {
+                // Transpiling classes kills object creation performance
+                exclude: ['@babel/plugin-transform-classes']
+              }
+            ]
           ],
           plugins: [
             // Kills object creation performance

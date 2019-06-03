@@ -6,9 +6,9 @@ import {equals, _withEpsilon} from 'math.gl';
 export function tapeEquals(t, a, b, msg, extra) {
   /* eslint-disable no-invalid-this */
   let valid = false;
-  if (a.equals) {
+  if (a && a.equals) {
     valid = a.equals(b);
-  } else if (b.equals) {
+  } else if (b && b.equals) {
     valid = b.equals(a);
   } else {
     valid = equals(a, b);

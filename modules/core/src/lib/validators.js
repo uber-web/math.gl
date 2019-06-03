@@ -40,20 +40,3 @@ export function checkVector(v, length, callerName) {
   }
   return v;
 }
-
-// export function validateArray(v, offset, length) {
-//   if (v.length !== length) {
-//     return false;
-//   }
-//   length += offset;
-//   for (let i = offset; i < length; ++i) {
-//   	if (!Number.isFinite(array[i]))
-//   }
-//   return v.every(Number.isFinite);
-// }
-
-export function checkArray(v, length, callerName) {
-  if (!validateVector(v, length)) {
-    throw new Error(`math.gl: ${callerName | ''} some fields set to invalid numbers'`);
-  }
-}

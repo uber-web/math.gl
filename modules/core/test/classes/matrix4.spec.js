@@ -50,6 +50,19 @@ test('Matrix4#construct and Array.isArray check', t => {
   t.end();
 });
 
+test('Matrix4#from', t => {
+  tapeEquals(t, new Matrix4().from(INDICES_MATRIX), INDICES_MATRIX);
+  // tapeEquals(t, new Matrix4().from({x: 1, y: 2, z: 3, w: 4}), [1, 2, 3, 4]);
+  t.end();
+});
+
+test.skip('Matrix4#to', t => {
+  const matrix = new Matrix4(...INDICES_MATRIX);
+  tapeEquals(t, matrix.to([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]), INDICES_MATRIX);
+  // t.deepEquals(matrix.to({x: 0, y: 0, z: 0, w: 0}), {x: 1, y: 2, z: 4});
+  t.end();
+});
+
 test('Matrix4.toFloat32Array', t => {
   t.equals(typeof Matrix4.prototype.toFloat32Array, 'function');
   const m = new Matrix4();

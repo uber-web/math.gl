@@ -31,16 +31,16 @@ const ENV_CONFIG = {
       [
         '@babel/env',
         {
-          modules: false,
+          modules: false
           // Transpiling classes kills object creation performance
-          exclude: ['@babel/plugin-transform-classes']
+          // exclude: ['@babel/plugin-transform-classes']
         }
       ]
     ],
     plugins: [
       ['@babel/transform-runtime', {useESModules: true}],
       // Transpiling classes kills object creation performance
-      // ['transform-builtin-extend', {globals: ['Array']}]
+      ['transform-builtin-extend', {globals: ['Array']}]
     ]
   },
   es6: {

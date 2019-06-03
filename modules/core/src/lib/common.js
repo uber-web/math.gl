@@ -35,12 +35,13 @@ config.printRowMajor = true;
 
 export {config};
 
-export function configure(options) {
+export function configure(options = {}) {
   // Only copy existing keys
   for (const key in options) {
     assert(key in config);
     config[key] = options[key];
   }
+  return config;
 }
 
 function round(value) {

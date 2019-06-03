@@ -31,7 +31,7 @@ function BarCell({color, percent, stars = 0, children}) {
     >
       <div
         style={{
-          width: `${percent}%`, // `
+          width: `${percent}%`, // ` workaround chrome devtools formatting issue
           height: '100%',
           backgroundColor: color,
           borderRadius: '2px',

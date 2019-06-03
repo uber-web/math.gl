@@ -22,7 +22,7 @@
 import test from 'tape-catch';
 import {tapeEquals} from 'test/utils/tape-assertions';
 
-import {Vector4} from 'math.gl';
+import {configure, Vector4} from 'math.gl';
 
 test('Vector4#import', t => {
   t.equals(typeof Vector4, 'function');
@@ -31,6 +31,31 @@ test('Vector4#import', t => {
 
 test('Vector4#construct and Array.isArray check', t => {
   t.ok(Array.isArray(new Vector4()));
+  t.end();
+});
+
+test('Vector4#debug validators', t => {
+  const {debug} = configure();
+  configure({debug: true});
+  t.throws(() => new Vector4(NaN, 0, 0, 1));
+  t.throws(() => new Vector4().copy([NaN, 0, 0, 1]));
+  configure({debug: false});
+  t.doesNotThrow(() => new Vector4(NaN, 0, 0, 1));
+  t.doesNotThrow(() => new Vector4().copy([NaN, 0, 0, 1]));
+  configure({debug});
+  t.end();
+});
+
+test('Vector4#from', t => {
+  tapeEquals(t, new Vector4().from([1, 2, 3, 4]), [1, 2, 3, 4]);
+  tapeEquals(t, new Vector4().from({x: 1, y: 2, z: 3, w: 4}), [1, 2, 3, 4]);
+  t.end();
+});
+
+test('Vector4#to', t => {
+  const vector4 = new Vector4(1, 2, 3, 4);
+  tapeEquals(t, vector4.to([0, 0, 0, 0]), [1, 2, 3, 4]);
+  t.deepEquals(vector4.to({x: 0, y: 0, z: 0, w: 0}), {x: 1, y: 2, z: 3, w: 4});
   t.end();
 });
 
