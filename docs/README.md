@@ -1,6 +1,6 @@
 # Introduction
 
-math.gl is a JavaScript class library for 3D and geospatial math. It provides a set of "traditional" 3D classes for vectors, matrices etc, as well as additional optional modules that address different domains.
+math.gl is a JavaScript class library for 3D and geospatial math. It provides traditional 3D library classes for vectors, matrices etc, as well as additional, optional modules that address different domains.
 
 ## Available Modules
 
@@ -9,13 +9,11 @@ math.gl is a JavaScript class library for 3D and geospatial math. It provides a 
 
 ## Class Library Features
 
-This is a short list of feature highlights to show what math.gl is about:
-
 - **Classes for gl-matrix** - math.gl classes are built on top of `gl-matrix`. `gl-matrix` has a reputation for being the most performant and battle-tested JavaScript math library around.
 
 - **Array-Based** - math.gl classes (like `Vector3`, `Matrix4`) are subclasses of the built-in JavaScript `Array` which enables applications to use them interchangeably with plain (or typed) arrays.
 
-- **Debug Friendly** - math.gl offers **optional** error checking after every math operation which makes quick work of locating coding errors and bad data. Also, "printing support" (`toString`) simplifies debugging.
+- **Debug Friendly** - math.gl offers **optional** error checking after every math operation which makes quick work of locating coding errors and bad input data. Printing support for objects (`toString`) also simplifies debugging.
 
 - **Documentation** - If you are new to 3D programming it can be hard to know where to start. math.gl comes with articles to show you the big picture and get you up-to-speed on the mathematical concepts and the corresponding classes.
 
@@ -23,9 +21,12 @@ This is a short list of feature highlights to show what math.gl is about:
 
 ## Supported Browsers and Node Versions
 
-math.gl is fully supported on "evergreen" browsers, such as Chrome, Safari, Firefox, Edge etc. While not evergreen, IE11 should support the math.gl distribution's transpiled code (with certain performance caveats). However, Internet Explorer < 10 will not work. math.gl also works on Node.js.
+math.gl is fully supported on:
+- "evergreen" browsers: i.e recent versions of Chrome, Safari, Firefox, Edge etc.
+- Node.js
+- IE11: math.gl's fully transpiled `es5` distribution shuold work (with performance caveats).
 
-If your application needs to support non-evergreen browsers, an option could be to use e.g. `gl-matrix` directly.
+However, Internet Explorer < 10 will not work. If your application needs to support non-evergreen browsers, an option could be to use e.g. `gl-matrix` directly.
 
 ## Key Design Ideas
 
