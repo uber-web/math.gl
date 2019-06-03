@@ -21,7 +21,7 @@ let vector = new Vector2(NaN, NaN); // Now throws an error. The check
 
 Verifying that error checks are not turned on.
 ```js
-import {configure, Vector2} from 'math.gl';
+import {configure} from 'math.gl';
 console.log('Debug status', configure().debug);
 ```
 
