@@ -1,55 +1,60 @@
 # Introduction
 
-math.gl is a JavaScript class library for 3D and geospatial math. It provides a set of "traditional" 3D classes for vectors, matrices etc, as well as a set of optional modules that address different domains.
-
-In spite of the name, math.gl has no hard WebGL dependencies and is usable in any JavaScript applications. That said, math.gl is designed to be optimized for WebGL/3D applications.
+math.gl is a JavaScript class library for 3D and geospatial math. It provides traditional 3D library classes for vectors, matrices etc, as well as additional, optional modules that address different domains.
 
 ## Available Modules
 
-- `math.gl` - basic math classes (vectors, matrices etc).
+- `math.gl`: Basic 3D math classes (vectors, matrices etc) and utilities (`equals`, `toRadians` etc).
 - `@math.gl/geospatial` - support for geospatial math, primarily WGS84 and Web Mercator.
 
 ## Class Library Features
 
-- `math.gl`: Basic math classes (vectors, matrices etc) and utilities (`toRadians` etc).
-- `@math.gl/geospatial`: Support for geospatial math, primarily the WGS84 coordinate system.
+- **Classes for gl-matrix** - math.gl classes are built on top of `gl-matrix`. `gl-matrix` has a reputation for being the most performant and battle-tested JavaScript math library around.
 
-## Class Library Features
+- **Array-Based** - math.gl classes (like `Vector3`, `Matrix4`) are subclasses of the built-in JavaScript `Array` which enables applications to use them interchangeably with plain (or typed) arrays.
 
-This is a short list of feature high-lights to show what math.gl is about:
+- **Debug Friendly** - math.gl offers **optional** error checking after every math operation which makes quick work of locating coding errors and bad input data. Printing support for objects (`toString`) also simplifies debugging.
 
-- **Classes for gl-matrix** - math.gl provides classes for `gl-matrix`. `gl-matrix` has a reputation for being one of the highest performance and most battle-tested JavaScript math libraries. However, the `gl-matrix` interface is procedural, and application code that uses it may not be as readable as it a class based API would be.
+- **Documentation** - If you are new to 3D programming it can be hard to know where to start. math.gl comes with articles to show you the big picture and get you up-to-speed on the mathematical concepts and the corresponding classes.
 
-- **Array-based Classes** - All math.gl classes (like `Vector3`, `Matrix4`) are subclasses of the built-in JavaScript `Array` class. This means that they can be used directly with any Javascript function that e.g. expects vectors to be provided as plain JavaScript `Array` arguments.
-
-- **Debug Friendly** - JavaScript math can be frustrating to code and debug. math.gl offers **optional** error checking after every math operation which makes quick work of locating coding errors and bad data. Also, "printing support" (`toString`) simplifies debugging.
-
-- **WebGL Support** - Matrices are stored internally in the format required by WebGL (array of contiguous values in column-major order), while exposing the more "natural" row-major API to the JavaScript programmer (e.g. through accessors, printing using `toString()` etc).
-
-- **Documentation** - Some JavaScript 3D math libraries come with reference documentation only. If you are new to 3D programming it can be hard to know where to start. math.gl comes with articles that try to show you the big picture and get you quickly up-to-speed on the mathematical concepts and the math.gl classes that support them.
-
-- **Size Conscious** - A math library can quickly get big as a various classed and functions keep getting added. But for many 3D applications, only a few basic operations are necessary. math.gl has made a choice to restrict itself to a set of classes and functions that are likely to be most important in WebGL applications, and optimizes dependencies for tree-shaking to make sure you only pay for (bundle) what you use. The intention is for math.gl to be a "mid-size" 3D math library: reasonably full featured, but small enough that unless you are targeting a very small final bundle for your application, its size should not be a concern.
-
+- **Size Conscious** - math.gl is published as multiple modules to let applications cherry-pick required functionality, and is optimizes dependencies for tree-shaking to make sure you only pay for (bundle) what you use.
 
 ## Supported Browsers and Node Versions
 
-math.gl is fully supported on "evergreen" browsers, such as Chrome, Safari, Firefox, Edge etc. While not evergreen, IE11 should support the math.gl distribution's transpiled code, but Internet Explorer < 10 will not work. math.gl also works on recent versions of Node.js (tested on v6+).
+math.gl is fully supported on:
+- "evergreen" browsers: i.e recent versions of Chrome, Safari, Firefox, Edge etc.
+- Node.js
+- IE11: math.gl's fully transpiled `es5` distribution shuold work (with performance caveats).
 
-> Disclaimer: These restrictions are both due to real technical limitations with math.gl's `Array`subclassing approach, as well as a conscious decision by the maintainers to limit the support matrix for the library. So, if your application needs to support non-evergreen browsers, math.gl is unlikely to be the right choice for you. A good alternative option could be to use e.g. `gl-matrix` directly.
+However, Internet Explorer < 10 will not work. If your application needs to support non-evergreen browsers, an option could be to use e.g. `gl-matrix` directly.
 
+## Key Design Ideas
+
+- ES6 allows JavaScript classes to be derived from the built-in arrays
+- gl-matrix provides high-performance math that works directly on arrays.
+- Geospatial frameworks like deck.gl and mapbox-gl expect vectors to be supplied in the form of JavaScript arrays.
 
 ## History
 
-math.gl was developed as a companion 3D math library for the luma.gl and deck.gl WebGL frameworks, and the precursors of the math.gl classes were in fact part of luma.gl v4.0, but have now been broken out into this separate library.
+- The core classes were originally developed as part of luma.gl v4 to provide a basic 3D math library for the luma.gl and deck.gl frameworks.
+- math.gl was then broken out into its own module to allow it to mature in terms of functionality and stability.
+- Through a collaboration with the Cesium team, parts of the Cesium math library are ported and published as independently usable math.gl modules (geospatial and culling).
 
-In spite of its roots, the intention is that math.gl should be able to serve a general purpose 3D math library, and can be used either directly or as a "starting point" by other projects with similar needs.
+## Roadmap
 
+- The intention is that math.gl should be able to serve a general purpose 3D math library.
+- math.gl modules (such as geospatial math) should be usable by applications using other frameworks, without having to use the core math.gl classes.
 
-## Attribution
+## Attributions
 
-math.gl was inspired by, and includes code, documentation and ideas from some of the most proven open source JavaScript math libraries, the awesome [`gl-matrix`](http://glmatrix.net/) and the THREE.js math library. Those libraries encouraged reuse which enabled math.gl to be built, and naturally math.gl does the same!
+math.gl was inspired by and built upon some of the most proven open source JavaScript math libraries:
 
+- [`gl-matrix`](http://glmatrix.net/) - math.gl classes use gl-matrix under the hood
+- THREE.js math library - math.gl classes are API-compatible with a subset of the THREE.js classes and pass THREE.js test suites.
+- Cesium math library (Apache2) - The geospatial and culling modules were ported from Cesium code base.
 
 ## License
 
-MIT license. The libraries that math.gl are built on (e.g. gl-matrix) are also all open source and MIT licensed.
+MIT license. The libraries that the core `math.gl` module are built on (e.g. gl-matrix) are also all open source and MIT licensed.
+
+The `@math.gl/geospatial` and `@math.gl/culling` include Cesium-derived code which is Apache2 licensed.

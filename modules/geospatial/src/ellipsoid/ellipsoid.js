@@ -1,3 +1,6 @@
+// This file is derived from the Cesium math library under Apache 2 license
+// See LICENSE.md and https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md
+
 /* eslint-disable */
 import {Vector3, Matrix4, toRadians, toDegrees, assert, equals, _MathUtils} from 'math.gl';
 import * as vec3 from 'gl-matrix/vec3';
