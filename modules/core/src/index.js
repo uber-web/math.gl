@@ -49,12 +49,14 @@ export {
   acos,
   atan,
   clamp,
-  lerp
+  lerp,
+  // experimental
+  withEpsilon as _withEpsilon
 } from './lib/common';
 
 export {checkNumber} from './lib/validators';
 
-export {default as _MathUtils, withEpsilon as _withEpsilon} from './lib/math-utils';
+export {default as _MathUtils} from './lib/math-utils';
 
 export {default as _SphericalCoordinates} from './classes/spherical-coordinates';
 export {default as _Pose} from './classes/pose';

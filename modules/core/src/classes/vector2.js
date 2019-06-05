@@ -19,10 +19,15 @@
 // THE SOFTWARE.
 
 import Vector from '../lib/vector';
-// import * as vec2 from 'gl-matrix/vec2';
-
 import {config, isArray} from '../lib/common';
 import {checkNumber} from '../lib/validators';
+
+import * as vec2 from 'gl-matrix/vec2';
+import {
+  vec2_transformMat2,
+  vec2_transformMat3,
+  vec2_transformMat4AsVector
+} from '../lib/gl-matrix-extras';
 
 export default class Vector2 extends Vector {
   // Creates a new, empty vec2
@@ -60,6 +65,35 @@ export default class Vector2 extends Vector {
   // Getters/setters
   get ELEMENTS() {
     return 2;
+  }
+
+  transform(matrix4) {
+    return this.transformByMatrix4AsPoint(matrix4);
+  }
+
+  transformByMatrix4AsPoint(matrix) {
+    vec2.transformMat4(this, this, matrix);
+    return this.check();
+  }
+
+  transformByMatrix4AsVector(matrix) {
+    vec2_transformMat4AsVector(this, this, matrix);
+    return this.check();
+  }
+
+  transformByMatrix3(matrix3) {
+    vec2.transformMat3(this, this, matrix3);
+    return this.check();
+  }
+
+  transformByMatrix2x3(matrix2x3) {
+    vec2.transformMat2d(this, this, matrix2x3);
+    return this.check();
+  }
+
+  transformByMatrix2(matrix2) {
+    vec2.transformMat2(this, this, matrix2);
+    return this.check();
   }
 
   // x,y inherited from Vector

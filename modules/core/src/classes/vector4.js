@@ -22,6 +22,9 @@ import Vector from '../lib/vector';
 import {config, isArray} from '../lib/common';
 import {checkNumber} from '../lib/validators';
 
+import * as vec4 from 'gl-matrix/vec3';
+import {vec4_transformMat2, vec4_transformMat3} from '../lib/gl-matrix-extras';
+
 export default class Vector4 extends Vector {
   constructor(x = 0, y = 0, z = 0, w = 0) {
     // PERF NOTE: initialize elements as double precision numbers
@@ -89,6 +92,30 @@ export default class Vector4 extends Vector {
     return (this[3] = checkNumber(value));
   }
   /* eslint-enable no-multi-spaces, brace-style, no-return-assign */
+
+  transform(matrix4) {
+    return this.transformByMatrix4(matrix4);
+  }
+
+  transformByMatrix4(matrix4) {
+    vec4.transformMat4(this, this, matrix4);
+    return this.check();
+  }
+
+  transformByMatrix3(matrix3) {
+    vec4_transformMat3(this, this, matrix3);
+    return this.check();
+  }
+
+  transformByMatrix2(matrix2) {
+    vec4_transformMat2(this, this, matrix2);
+    return this.check();
+  }
+
+  transformByQuaternion(quaternion) {
+    vec4.transformQuat(this, this, quaternion);
+    return this.check();
+  }
 
   // three.js compatibility
   applyMatrix4(m) {

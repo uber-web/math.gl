@@ -205,3 +205,15 @@ export function exactEquals(a, b) {
   }
   return false;
 }
+
+export function withEpsilon(EPSILON, func) {
+  const oldPrecision = config.EPSILON;
+  config.EPSILON = EPSILON;
+  let value;
+  try {
+    value = func();
+  } finally {
+    config.EPSILON = oldPrecision;
+  }
+  return value;
+}

@@ -129,6 +129,33 @@ export default class Matrix3 extends Matrix {
     return this.check();
   }
 
+  // Transforms
+
+  transformVector2(vector, out) {
+    out = out || new Vector2();
+    vec2.transformMat3(out, vector, this);
+    validateVector(out, 2);
+    return out;
+  }
+
+  transformVector3(vector, out) {
+    out = out || new Vector3();
+    vec3.transformMat3(out, vector, this);
+    validateVector(out, 3);
+    return out;
+  }
+
+  transformVector(vector, out) {
+    switch (vector.length) {
+      case 2:
+        return this.transformVector2(vector, out);
+      case 3:
+        return this.transformVector3(vector, out);
+      default:
+        throw new Error('Illegal vector');
+    }
+  }
+
   // Modifiers
 
   transpose() {
@@ -171,30 +198,5 @@ export default class Matrix3 extends Matrix {
   translate(vec) {
     mat3.translate(this, this, vec);
     return this.check();
-  }
-
-  transformVector2(vector, out) {
-    out = out || new Vector2();
-    vec2.transformMat3(out, vector, this);
-    validateVector(out, 2);
-    return out;
-  }
-
-  transformVector3(vector, out) {
-    out = out || new Vector3();
-    vec3.transformMat3(out, vector, this);
-    validateVector(out, 3);
-    return out;
-  }
-
-  transformVector(vector, out) {
-    switch (vector.length) {
-      case 2:
-        return this.transformVector2(vector, out);
-      case 3:
-        return this.transformVector3(vector, out);
-      default:
-        throw new Error('Illegal vector');
-    }
   }
 }

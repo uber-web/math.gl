@@ -1,5 +1,5 @@
-import {config} from 'math.gl';
-
+// NOTE: Added to make Cesium-derived test cases work
+// TODO: Determine if/how to keep
 export default {
   EPSILON1: 1e-1,
   EPSILON2: 1e-2,
@@ -17,17 +17,9 @@ export default {
   EPSILON14: 1e-14,
   EPSILON15: 1e-15,
   EPSILON16: 1e-16,
-  EPSILON17: 1e-17
-};
+  EPSILON17: 1e-17,
 
-export function withEpsilon(EPSILON, func) {
-  const oldPrecision = config.EPSILON;
-  config.EPSILON = EPSILON;
-  let value;
-  try {
-    value = func();
-  } finally {
-    config.EPSILON = oldPrecision;
-  }
-  return value;
-}
+  PI_OVER_TWO: Math.PI / 2,
+  PI_OVER_FOUR: Math.PI / 4,
+  PI_OVER_SIX: Math.PI / 6
+};

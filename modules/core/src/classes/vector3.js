@@ -23,6 +23,7 @@ import {config, isArray} from '../lib/common';
 import {checkNumber} from '../lib/validators';
 
 import * as vec3 from 'gl-matrix/vec3';
+import {vec3_transformMat2, vec3_transformMat4AsVector} from '../lib/gl-matrix-extras';
 
 const ORIGIN = [0, 0, 0];
 
@@ -85,6 +86,38 @@ export default class Vector3 extends Vector {
   }
 
   // MODIFIERS
+
+  // transforms as point (4th component is implicitly 1)
+  transform(matrix4) {
+    return this.transformAsPoint(matrix4);
+  }
+
+  // transforms as point (4th component is implicitly 1)
+  transformAsPoint(matrix4) {
+    vec3.transformMat4(this, this, matrix4);
+    return this.check();
+  }
+
+  // transforms as vector  (4th component is implicitly 0, ignores translation. slightly faster)
+  transformAsVector(matrix4) {
+    vec3_transformMat4AsVector(this, this, matrix4);
+    return this.check();
+  }
+
+  transformByMatrix3(matrix3) {
+    vec3.transformMat3(this, this, matrix3);
+    return this.check();
+  }
+
+  transformByMatrix2(matrix2) {
+    vec3_transformMat2(this, this, matrix2);
+    return this.check();
+  }
+
+  transformByQuaternion(quaternion) {
+    vec3.transformMat3(this, this, quaternion);
+    return this.check();
+  }
 
   cross(vector) {
     vec3.cross(this, this, vector);
