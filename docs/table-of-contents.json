@@ -28,6 +28,12 @@
           ]
         },
         {
+          "title": "@math.gl/culling",
+          "entries": [
+            {"entry": "modules/culling/docs/developer-guide/culling-guide"}
+          ]
+        },
+        {
           "title": "@math.gl/geospatial",
           "entries": [
             {"entry": "modules/geospatial/docs/developer-guide/geospatial-guide"}
@@ -73,6 +79,15 @@
           "title": "@math.gl/geospatial",
           "entries": [
             {"entry": "modules/geospatial/docs/api-reference/ellipsoid"}
+          ]
+        },
+        {
+          "title": "@math.gl/culling",
+          "entries": [
+            {"entry": "modules/culling/docs/api-reference/bounding-sphere"},
+            {"entry": "modules/culling/docs/api-reference/culling-volume"},
+            {"entry": "modules/culling/docs/api-reference/oriented-bounding-box"},
+            {"entry": "modules/culling/docs/api-reference/plane"}
           ]
         }
       ]
