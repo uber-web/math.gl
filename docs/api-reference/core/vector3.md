@@ -145,3 +145,22 @@ Rotate a 3D vector around the z-axis
 
 * `radians` (Number) - angle to rotate.
 * `origin`=`[0, 0, 0]` (Vector3) - the origin of the rotation (optional)
+
+
+### transform(matrix4 : Number[16]) : Vector4
+
+Transforms the vector by the provided 4x4 matrix.
+
+Note: Scales the resulting vector to ensure that `w`, if non-zero, is set to `1`.
+
+### transformByMatrix3(matrix3 : Number[9]) : Vector4
+
+Transforms the vector by the provided 3x3 matrix.
+
+### transformByMatrix2(matrix2 : Number[4]) : Vector4
+
+Transform the vector's `x` and `y` values by the provided 2x2 matrix.
+
+### transformByQuaternion(quaternion : Number[4]) : Vector4
+
+Transform the vector by the provided `quaternion`.

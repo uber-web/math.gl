@@ -37,8 +37,8 @@ export function vec3_transformMat2(out, a, m) {
 export function vec4_transformMat2(out, a, m) {
   const x = a[0];
   const y = a[1];
-  out[0] = m[0] * x + m[3] * y;
-  out[1] = m[1] * x + m[4] * y;
+  out[0] = m[0] * x + m[2] * y;
+  out[1] = m[1] * x + m[3] * y;
   out[2] = a[2];
   out[3] = a[3];
   return out;

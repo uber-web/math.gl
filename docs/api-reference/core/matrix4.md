@@ -286,7 +286,7 @@ Equivalent to right multiplying the new transform into the matrix but more perfo
 During vector transformation the given translation values are added to each component of the vector being transformed.
 
 
-### transformPoint
+### transformPoint(vector : Number[4]) : Number[4]
 
 Transforms any 2, 3 or 4 element vector as a "point" by multiplying it (from the right) with this matrix. `Point` here means that the returned vector will include any translations in this matrix.
 
@@ -296,12 +296,11 @@ Transforms any 2, 3 or 4 element vector as a "point" by multiplying it (from the
 * `out` - unless supplied, will be a Vector2, Vector3 or Vector4, matching the length of input vector.
 Returns `out`, or a newly minted `Vector2`, `Vector3` or `Vector4`
 
-
 * If `vector` is specified in homogenous coordinates, `w` coordinate must NOT be `0`.
 * If `vector` is specified in homogenous coordinates the returned vector will be `w` adjusted, (i.e. `w` coordinate will be `1`, even if the supplied vector was not normalized).
 
 
-### transformDirection
+### transformDirection(vector : Number[4]) : Number[4]
 
 Transforms any 2, 3 or 4 element vector interpreted as a direction (i.e. all vectors are based in the origin so the transformation not pick up any translations from the matrix).
 
@@ -310,7 +309,7 @@ Transforms any 2, 3 or 4 element vector interpreted as a direction (i.e. all vec
 * If `vector` is specified in homogenous coordinates, `w` coordinate must be `0`.
 
 
-### transformVector (DEPRECATED)
+### transformVector(vector : Number[4]) : Number[4] \(DEPRECATED)
 
 Confusingly corresponds to `transformPoint`.
 
@@ -321,6 +320,11 @@ Confusingly corresponds to `transformPoint`.
 Returns `out`, or a newly minted `Vector2`, `Vector3` or `Vector4`
 
 
+### transformByMatrix3(vector : Number[4]) : Number[4]
+
+Transforms 
+
+### transformByMatrix2(vector : Number[4]) : Number[4]
 
 
 ## Remarks

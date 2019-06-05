@@ -67,6 +67,18 @@ export default class Vector2 extends Vector {
     return 2;
   }
 
+  // x,y inherited from Vector
+
+  horizontalAngle() {
+    return Math.atan2(this.y, this.x);
+  }
+
+  verticalAngle() {
+    return Math.atan2(this.x, this.y);
+  }
+
+  // Transforms
+
   transform(matrix4) {
     return this.transformByMatrix4AsPoint(matrix4);
   }
@@ -94,15 +106,5 @@ export default class Vector2 extends Vector {
   transformByMatrix2(matrix2) {
     vec2.transformMat2(this, this, matrix2);
     return this.check();
-  }
-
-  // x,y inherited from Vector
-
-  horizontalAngle() {
-    return Math.atan2(this.y, this.x);
-  }
-
-  verticalAngle() {
-    return Math.atan2(this.x, this.y);
   }
 }

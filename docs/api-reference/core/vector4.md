@@ -50,65 +50,78 @@ Many of the most commonly used `Vector2` methods are inherited from [`MathArray`
 Note that `Vector2` is a subclass of the built in JavaScript `Array` and can thus e.g. be supplied as a parameter to any function expecting an `Array`.
 
 
-### constructor
+### constructor(x? : Number, y? : Number, z? : Number, w? : Number)
 
 `new Vector4(x = 0, y = 0, z = 0, w = 0)`
 
 Creates a new, empty `Vector4`
 
-### set(x, y, z, w)
+### set(x? : Number, y? : Number, z? : Number, w? : Number) : Vector4
 
 Updates a `Vector4`
 
+### distance(vector : Number[4]) : Vector4
 
-### distance
+Returns the distance to the specifed Vector.
 
-`distance(vector)`
+### distanceSquared(vector : Number[4]) : Vector4
 
+Returns the squared distance to the specifed Vector. Fast to calculate than distance and often sufficient for e.g. sorting etc.
 
-### add
+### dot(vector : Number[4]) : Number
+
+Calculates the dot product with the supplied `vector`.
+
+### add(vector : Number[4]) : Vector4
 
 `add(...vectors)`
 
-
-### subtract
+### subtract(vector : Number[4]) : Vector4
 
 `subtract(...vectors)`
 
-
-### multiply
+### multiply(vector : Number[4]) : Vector4
 
 `multiply(...vectors)`
 
-
-### divide
+### divide(vector : Number[4]) : Vector4
 
 `divide(...vectors)`
 
-
-### scale
+### scale(vector : Number[4]) : Vector4
 
 `scale(scale)`
 
+### negate() : Vector4
 
-### negate
-`negate()`
+Negates each element in the vector.
 
+### inverse() : Vector4
 
-### inverse
-`inverse()`
+Inverses (`x = 1/x`) each element in the vector.
 
+### normalize() : Vector4
 
-### normalize
-`normalize()`
+Normalizes the vector. Same direction but `len()` will now return `1`.
 
+### lerp(vector : Number[4], coefficient : Number) : Vector4
 
-### dot
+Linearly interpolates between the vectors current value and the supplied `vector`.
 
-`dot(vector)`
+### transform(matrix4 : Number[16]) : Vector4
 
+Transforms the vector by the provided 4x4 matrix.
 
-### lerp
+Note: Scales the resulting vector to ensure that `w`, if non-zero, is set to `1`.
 
-`lerp(vector, coeff)`
+### transformByMatrix3(matrix3 : Number[9]) : Vector4
 
+Transforms the vector's `x`, `y` and `z` values by the provided 3x3 matrix.
+
+### transformByMatrix2(matrix2 : Number[4]) : Vector4
+
+Transform the vector's `x` and `y` values by the provided 2x2 matrix.
+
+### transformByQuaternion(quaternion : Number[4]) : Vector4
+
+Transform the vector by the provided `quaternion`.

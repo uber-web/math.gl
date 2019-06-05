@@ -126,3 +126,18 @@ Calculates clockwise angle in radians starting from positive y axis
 `verticalAngle()`
 
 Note: returns `Math.atan2(this.x, this.y)`
+
+
+### transform(matrix3 : Number[16]) : Vector4
+
+Transforms the vector by the provided 4x4 matrix.
+
+Note: Scales the resulting vector to ensure that `w`, if non-zero, is set to `1`.
+
+### transformByMatrix2x3(matrix2 : Number[4]) : Vector4
+
+Transform the vector by the provided 2x3 matrix.
+
+### transformByMatrix2(matrix2 : Number[4]) : Vector4
+
+Transform the vector by the provided 2x2 matrix.

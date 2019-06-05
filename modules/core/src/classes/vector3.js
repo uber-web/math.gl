@@ -87,6 +87,28 @@ export default class Vector3 extends Vector {
 
   // MODIFIERS
 
+  cross(vector) {
+    vec3.cross(this, this, vector);
+    return this.check();
+  }
+
+  rotateX({radians, origin = ORIGIN}) {
+    vec3.rotateX(this, this, origin, radians);
+    return this.check();
+  }
+
+  rotateY({radians, origin = ORIGIN}) {
+    vec3.rotateY(this, this, origin, radians);
+    return this.check();
+  }
+
+  rotateZ({radians, origin = ORIGIN}) {
+    vec3.rotateZ(this, this, origin, radians);
+    return this.check();
+  }
+
+  // Transforms
+
   // transforms as point (4th component is implicitly 1)
   transform(matrix4) {
     return this.transformAsPoint(matrix4);
@@ -115,27 +137,7 @@ export default class Vector3 extends Vector {
   }
 
   transformByQuaternion(quaternion) {
-    vec3.transformMat3(this, this, quaternion);
-    return this.check();
-  }
-
-  cross(vector) {
-    vec3.cross(this, this, vector);
-    return this.check();
-  }
-
-  rotateX({radians, origin = ORIGIN}) {
-    vec3.rotateX(this, this, origin, radians);
-    return this.check();
-  }
-
-  rotateY({radians, origin = ORIGIN}) {
-    vec3.rotateY(this, this, origin, radians);
-    return this.check();
-  }
-
-  rotateZ({radians, origin = ORIGIN}) {
-    vec3.rotateZ(this, this, origin, radians);
+    vec3.transformQuat(this, this, quaternion);
     return this.check();
   }
 }
