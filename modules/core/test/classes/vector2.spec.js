@@ -154,13 +154,12 @@ test('Vector2#verticalAngle', t => {
   t.end();
 });
 
-
 test('Vector2#transform', t => {
   const transform = new Matrix4().scale([0.5, 0.5, 0.5]).translate([1, 1, 1]);
 
   const TEST_CASES = [
-    {input: [0, 0], result: [ 0.5, 0.5]},
-    {input: [1, 0], result: [ 1, 0.5]},
+    {input: [0, 0], result: [0.5, 0.5]},
+    {input: [1, 0], result: [1, 0.5]},
     {input: [3, 4], result: [2, 2.5]},
     {input: [1, 1], result: [1, 1]}
   ];

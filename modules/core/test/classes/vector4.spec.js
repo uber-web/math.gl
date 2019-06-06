@@ -143,8 +143,8 @@ test('Vector4#transform', t => {
   const transform = new Matrix4().scale([0.5, 0.5, 0.5]).translate([1, 1, 1]);
 
   const TEST_CASES = [
-    {input: [0, 0, 0, 0], result: [ 0.5, 0.5, 0.5, 0 ]},
-    {input: [1, 0, 0, 0], result: [ 1, 0.5, 0.5, 0 ]},
+    {input: [0, 0, 0, 0], result: [0.5, 0.5, 0.5, 0]},
+    {input: [1, 0, 0, 0], result: [1, 0.5, 0.5, 0]},
     {input: [3, 4, 0, 0], result: [2, 2.5, 0.5, 0]},
     {input: [1, 1, 1, 0], result: [1, 1, 1, 0]}
   ];
@@ -180,7 +180,7 @@ test('Vector4#transformByMatrix2', t => {
     {input: [0, 0, 0, 0], result: [0, 0, 0, 0]},
     {input: [1, 0, 0, 0], result: [0.5, 0, 0, 0]},
     {input: [3, 4, 0, 0], result: [1.5, 2, 0, 0]},
-    {input: [1, 1, 1, 0], result: [0.5, 0.5, 1, 0 ]}
+    {input: [1, 1, 1, 0], result: [0.5, 0.5, 1, 0]}
   ];
   for (const testCase of TEST_CASES) {
     const v = new Vector4(...testCase.input);
@@ -197,7 +197,7 @@ test('Vector4#transformByQuaternion', t => {
     {input: [0, 0, 0, 1], result: [0, 0, 0, 1]},
     {input: [1, 0, 0, 0], result: [0, 1, 0, 0]},
     {input: [3, 4, 0, 0], result: [0, 3, 4, 0]},
-    {input: [1, 1, 1, 0], result: [ 1, 1, 1, 0 ]}
+    {input: [1, 1, 1, 0], result: [1, 1, 1, 0]}
   ];
   for (const testCase of TEST_CASES) {
     const v = new Vector4(...testCase.input);
