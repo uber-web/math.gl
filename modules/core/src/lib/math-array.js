@@ -247,6 +247,12 @@ export default class MathArray extends Array {
     return this.check();
   }
 
+  // Cesium compatibility
+
+  multiplyByScalar(scalar) {
+    return this.scale(scalar);
+  }
+
   // THREE.js compatibility
   get elements() {
     return this;

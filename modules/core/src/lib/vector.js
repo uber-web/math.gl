@@ -26,7 +26,7 @@ export default class Vector extends MathArray {
   }
 
   magnitude() {
-    return Math.sqrt(this.lengthSquared());
+    return this.len();
   }
 
   lengthSquared() {
@@ -35,6 +35,10 @@ export default class Vector extends MathArray {
       length += this[i] * this[i];
     }
     return length;
+  }
+
+  magnitudeSquared() {
+    return this.lengthSquared();
   }
 
   distance(mathArray) {

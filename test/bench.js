@@ -21,16 +21,13 @@
 require('reify');
 
 const {Bench} = require('@probe.gl/bench');
-const coreBench = require('math.gl/test/bench').default;
-const geospatialBench = require('@math.gl/geospatial/test/bench').default;
+const addBenchmarks = require('./modules.bench').default;
 
-// Set to true to include detailed supporting benchmarks
 const addReferenceBenchmarks = false;
 
 const suite = new Bench();
 
-coreBench(suite, addReferenceBenchmarks);
-geospatialBench(suite, addReferenceBenchmarks);
+addBenchmarks(suite, addReferenceBenchmarks);
 
 suite
   // Calibrate performance

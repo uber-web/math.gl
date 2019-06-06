@@ -19,10 +19,8 @@
 // THE SOFTWARE.
 
 import Matrix from '../lib/matrix';
-import {validateVector} from '../lib/validators';
-// import {checkNumber} from '../lib/validators';
-import Vector2 from './vector2';
-import Vector3 from './vector3';
+import {checkVector, deprecated} from '../lib/validators';
+import {vec4_transformMat3} from '../lib/gl-matrix-extras';
 
 import * as mat3 from 'gl-matrix/mat3';
 import * as vec2 from 'gl-matrix/vec2';
@@ -53,10 +51,6 @@ export default class Matrix3 extends Matrix {
 
   get RANK() {
     return 3;
-  }
-
-  get Vector() {
-    return Vector3;
   }
 
   constructor(...args) {
@@ -173,28 +167,42 @@ export default class Matrix3 extends Matrix {
     return this.check();
   }
 
-  transformVector2(vector, out) {
-    out = out || new Vector2();
-    vec2.transformMat3(out, vector, this);
-    validateVector(out, 2);
-    return out;
-  }
+  // Transforms
 
-  transformVector3(vector, out) {
-    out = out || new Vector3();
-    vec3.transformMat3(out, vector, this);
-    validateVector(out, 3);
-    return out;
-  }
-
-  transformVector(vector, out) {
+  transform(vector, result) {
     switch (vector.length) {
       case 2:
-        return this.transformVector2(vector, out);
+        result = vec2.transformMat3(result || [-0, -0], vector, this);
+        break;
       case 3:
-        return this.transformVector3(vector, out);
+        vec3.transformMat3(result || [-0, -0, -0], vector, this);
+        break;
+      case 4:
+        vec4_transformMat3(result || [-0, -0, -0, -0], vector, this);
+        break;
       default:
         throw new Error('Illegal vector');
     }
+    checkVector(result, vector.length);
+    return result;
   }
+
+  // DEPRECATED IN 3.0
+
+  transformVector(vector, result) {
+    deprecated('Matrix3.transformVector');
+    return this.transform(vector, result);
+  }
+
+  transformVector2(vector, result) {
+    deprecated('Matrix3.transformVector');
+    return this.transform(vector, result);
+  }
+
+  transformVector3(vector, result) {
+    deprecated('Matrix3.transformVector');
+    return this.transform(vector, result);
+  }
+
+  // Deprecations in v3.0
 }

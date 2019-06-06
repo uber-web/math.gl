@@ -101,7 +101,7 @@ The class API is intentionally designed to remain intuitively similar to the wra
 
 Only in a few cases where `gl-matrix` methods take a long list arguments (e.g. `mat4.perspective`, `mat4.ortho` etc) or return multiple values (e.g. `quat.getAxisRotation`) do methods provide a modified API that is more natural for modern ES6 applications to use, e.g. using named parameters, or collecting all results in one returned object.
 
-Also, for transforming vectors with matrices, the `transformVector*` methods are offered in the matrix classes, instead of on the vector classes. They also (optionally) auto allocate the result vectors.
+Also, for transforming vectors with matrices, the `transform*` methods are offered in the matrix classes, instead of on the vector classes. They also (optionally) auto allocate the result vectors.
 
 
 ## Caveats

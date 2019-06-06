@@ -22,7 +22,7 @@
 import test from 'tape-catch';
 import {tapeEquals} from 'test/utils/tape-assertions';
 
-import {Vector3} from 'math.gl';
+import {Vector3, Matrix4, Matrix3, Quaternion} from 'math.gl';
 
 test('Vector3#import', t => {
   t.equals(typeof Vector3, 'function');
@@ -168,5 +168,73 @@ test('Vector3.rotateZ', t => {
   result = new Vector3([0, 6, -5]).rotateZ({radians: Math.PI, origin: [0, 0, -5]});
   t.ok(result.equals([0, -6, -5]), 'rotation around arbitrary origin should return rotated vector');
 
+  t.end();
+});
+
+test('Vector3#transform', t => {
+  const transform = new Matrix4().scale([0.5, 0.5, 0.5]).translate([1, 1, 1]);
+
+  const TEST_CASES = [
+    {input: [0, 0, 0], result: [0.5, 0.5, 0.5]},
+    {input: [1, 0, 0], result: [1, 0.5, 0.5]},
+    {input: [3, 4, 0], result: [2, 2.5, 0.5]},
+    {input: [1, 1, 1], result: [1, 1, 1]}
+  ];
+  for (const testCase of TEST_CASES) {
+    const v = new Vector3(...testCase.input);
+    const result = v.transform(transform);
+    tapeEquals(t, result, testCase.result);
+  }
+  t.end();
+});
+
+test('Vector3#transformByMatrix3', t => {
+  const transform = new Matrix3().scale([0.5, 0.5, 0.5]).translate([1, 1, 1]);
+
+  const TEST_CASES = [
+    {input: [0, 0, 0], result: [0, 0, 0]},
+    {input: [1, 0, 0], result: [0.5, 0, 0]},
+    {input: [3, 4, 0], result: [1.5, 2, 0]},
+    {input: [1, 1, 1], result: [1, 1, 1]}
+  ];
+  for (const testCase of TEST_CASES) {
+    const v = new Vector3(...testCase.input);
+    const result = v.transformByMatrix3(transform);
+    tapeEquals(t, result, testCase.result);
+  }
+  t.end();
+});
+
+test('Vector3#transformByMatrix2', t => {
+  const transform = [0.5, 0, 0, 0.5];
+
+  const TEST_CASES = [
+    {input: [0, 0, 0], result: [0, 0, 0]},
+    {input: [1, 0, 0], result: [0.5, 0, 0]},
+    {input: [3, 4, 0], result: [1.5, 2, 0]},
+    {input: [1, 1, 1], result: [0.5, 0.5, 1]}
+  ];
+  for (const testCase of TEST_CASES) {
+    const v = new Vector3(...testCase.input);
+    const result = v.transformByMatrix2(transform);
+    tapeEquals(t, result, testCase.result);
+  }
+  t.end();
+});
+
+test('Vector3#transformByQuaternion', t => {
+  const transform = new Quaternion(0.5, 0.5, 0.5, 0.5);
+
+  const TEST_CASES = [
+    {input: [0, 0, 0], result: [0, 0, 0]},
+    {input: [1, 0, 0], result: [0, 1, 0]},
+    {input: [3, 4, 0], result: [0, 3, 4]},
+    {input: [1, 1, 1], result: [1, 1, 1]}
+  ];
+  for (const testCase of TEST_CASES) {
+    const v = new Vector3(...testCase.input);
+    const result = v.transformByQuaternion(transform);
+    tapeEquals(t, result, testCase.result);
+  }
   t.end();
 });

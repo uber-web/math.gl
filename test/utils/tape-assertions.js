@@ -22,6 +22,10 @@ export function tapeEquals(t, a, b, msg, extra) {
   });
 }
 
+export function tapeNotEquals(t, a, b, msg, extra) {
+  return !tapeEquals(t, a, b, msg, extra);
+}
+
 // eslint-disable-next-line max-params
 export function tapeEqualsEpsilon(t, a, b, epsilon, msg, extra) {
   return _withEpsilon(epsilon, () => tapeEquals(t, a, b, msg, extra));

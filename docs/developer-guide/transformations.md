@@ -1,14 +1,47 @@
-# Using Transformations
+# Transformations
 
-> Note: This article is a work in progress and may contain incorrect information.
+One of the core use cases for math.gl is to perform transformations on objects (typically either vectors or more complex object such as spheres, planes, boxes etc).
+
+There are additional articles [docs/developer-guide/concepts](./'homogenous-coordinates.md') that provides more background about advantages when using 4x4 matrices, those transformations work in the same way from an API perspective as the ones described here.
+
+## Representing Transformations
+
+Transformations can be represented in many different notations but for computational purposes it is efficient to express them as matrices, or in some cases as quaternions.
 
 
-In math.gl transformations are usually managed by creating instances of `Matrix4` class, and this article is intended to be an overview of how that works in an application.
+## Applying transformations
 
-There are additional articles [](./'homogenous-coordinates.md') that provides more background about the additional transformations enabled when using 4x4 matrices, those transformations work in the same way from an API perspective as the ones described here.
+The most general transform is a 4x4 matrix. Most math.gl classes offer a `transform` method that accepts 4x4 matrices. Note that as usual these operations modifies the object being transformed (and returns itself).
 
+```js
+const transformedVector1 = new Vector4(1, 0, 0, 1).transform([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1])
+// or
+const transformedVector2 = new Vector4(1, 0, 0, 1).transform(new Matrix4([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]))
+```
 
-# Types of Transformations
+The various vector classes also offer methods to transform with smaller matrices
+```js
+const transformedVector1 = new Vector4(1, 0, 0, 1).transformByMatrix3([1, 0, 0, 0, 1, 0, 0, 0, 1])
+// or
+const transformedVector2 = new Vector3(1, 0, 0).transformByMatrix2(new Matrix2([1, 0, 0, 1]))
+```
+
+Quaternion transformations are also supported on some objects
+```js
+const transformedVector1 = new Vector4(1, 0, 0).transformByQuaternion([0, 0, 0, 1])
+// or
+const transformedVector2 = new Vector3(1, 0, 0).transformByQuaternion(new Quaternion([1, 0, 0, 1]))
+```
+
+Note that the transformations can also be performed via the matrix and quaternion classes. In this case, the transformation is stored in the result parameters (a new array is allocated if it `result` is not supplied.)
+```js
+const transformedVector1 = new Vector4(1, 0, 0).transformByQuaternion([0, 0, 0, 1])
+// or
+const result = new Vector3();
+const transformedVector2 = new Quaternion([1, 0, 0, 1]).transformByQuaternion([1, 0, 0], result);
+```
+
+## Types of Transformations
 
 The basic transformations are rotations, scalings, and translations.
 

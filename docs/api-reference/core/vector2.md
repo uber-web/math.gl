@@ -12,9 +12,9 @@ const vector = new Vector2(1, 1);
 
 ## Inheritance
 
-`class Vector2 extends [Vector](./docs/api-reference/vector) extends [MathArray](./docs/api-reference/math-array) extends [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)`
+`Vector2` extends [`Vector`](./docs/api-reference/vector) extends [`MathArray`](./docs/api-reference/math-array) extends [`Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)
 
-Many commonly used `Vector2` methods are inherited from `Vector` and `MathArray` :
+Many commonly used `Vector2` methods are inherited from `Vector` and `MathArray`:
 
 * `Vector2.clone()`
 * `Vector2.copy(array)`
@@ -126,3 +126,31 @@ Calculates clockwise angle in radians starting from positive y axis
 `verticalAngle()`
 
 Note: returns `Math.atan2(this.x, this.y)`
+
+### transform(matrix4 : Number[16]) : Vector4
+
+Equivalent to `transformAsPoint`.
+
+### transformAsPoint(matrix4 : Number[16]) : Vector4
+
+Transforms this vector by the provided 4x4 matrix as a point (i.e includes translations).
+
+Note: Implicitly extends the vector to `[x, y, 0, 1]` before applying the 4x4 transformation.
+
+### transformAsVector(matrix4 : Number[16]) : Vector4
+
+Transforms this vector by the provided 4x4 matrix as a vector (i.e does not include translations).
+
+Note: Implicitly extends the vector to `[x, y, 0, 0]` before applying the 4x4 transformation.
+
+### transformByMatrix3(matrix3 : Number[9]) : Vector4
+
+Transforms this vector by the provided 3x3 matrix.
+
+### transformByMatrix2x3(matrix2 : Number[6]) : Vector4
+
+Transforms this vector  by the provided 2x3 matrix (A pure 2D transform that can incorporate translations).
+
+### transformByMatrix2(matrix2 : Number[4]) : Vector4
+
+Transforms this vector by the provided 2x2 matrix.
