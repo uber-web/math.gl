@@ -94,10 +94,6 @@ export default class Vector4 extends Vector {
   /* eslint-enable no-multi-spaces, brace-style, no-return-assign */
 
   transform(matrix4) {
-    return this.transformByMatrix4(matrix4);
-  }
-
-  transformByMatrix4(matrix4) {
     vec4.transformMat4(this, this, matrix4);
     return this.check();
   }
@@ -119,7 +115,7 @@ export default class Vector4 extends Vector {
 
   // three.js compatibility
   applyMatrix4(m) {
-    m.transformVector(this, this);
+    m.transform(this, this);
     return this;
   }
 }

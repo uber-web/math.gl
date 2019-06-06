@@ -377,37 +377,80 @@ test('Matrix4.rotateAxis', t => {
 test('Matrix4#transform', t => {
   const matrix = new Matrix4().translate([1, 2, 3]).scale([2, 2, 2]);
 
-  const direction = [2, 2, 0, 0];
-  const result = [4, 4, 0, 0];
+  const TEST_CASES = [
+    {
+      method: 'transform',
+      input: [2, 2, 0, 1],
+      expected: [5, 6, 3, 1]
+    },
+    {
+      method: 'transform',
+      input: [2, 2, 0],
+      expected: [5, 6, 3]
+    },
+    {
+      method: 'transform',
+      input: [2, 2],
+      expected: [5, 6]
+    },
+    {
+      method: 'transformAsPoint',
+      input: [2, 2, 0],
+      expected: [5, 6, 3]
+    },
+    {
+      method: 'transformAsPoint',
+      input: [2, 2],
+      expected: [5, 6]
+    },
+    {
+      method: 'transformAsVector',
+      input: [2, 2, 0],
+      expected: [4, 4, 0]
+    },
+    {
+      method: 'transformAsVector',
+      input: [2, 2],
+      expected: [4, 4]
+    },
+    // DEPRECATED
+    {
+      method: 'transformPoint',
+      input: [2, 2, 0],
+      expected: [5, 6, 3]
+    },
+    {
+      method: 'transformVector',
+      input: [2, 2, 0],
+      expected: [5, 6, 3]
+    },
+    {
+      method: 'transformDirection',
+      input: [2, 2, 0],
+      expected: [4, 4, 0]
+    },
+    // DEPRECATED
+    {
+      method: 'transformPoint',
+      input: [2, 2],
+      expected: [5, 6]
+    },
+    {
+      method: 'transformVector',
+      input: [2, 2],
+      expected: [5, 6]
+    },
+    {
+      method: 'transformDirection',
+      input: [2, 2],
+      expected: [4, 4]
+    }
+  ];
 
-  const point = [2, 2, 0, 1];
-  const resultPoint = [5, 6, 3, 1];
-
-  let p4 = matrix.transformDirection(direction);
-  tapeEquals(t, p4, result, 'transform gave the right result');
-
-  p4 = matrix.transformPoint(point);
-  tapeEquals(t, p4, resultPoint, 'transform gave the right result');
-
-  direction.length = 3;
-  point.length = 3;
-  result.length = 3;
-  resultPoint.length = 3;
-  let p3 = matrix.transformDirection(direction);
-  tapeEquals(t, p3, result, 'transform gave the right result');
-
-  p3 = matrix.transformPoint(point);
-  tapeEquals(t, p3, resultPoint, 'transform gave the right result');
-
-  direction.length = 2;
-  point.length = 2;
-  result.length = 2;
-  resultPoint.length = 2;
-  let p2 = matrix.transformDirection(direction);
-  tapeEquals(t, p2, result, 'transform gave the right result');
-
-  p2 = matrix.transformPoint(point);
-  tapeEquals(t, p2, resultPoint, 'transform gave the right result');
+  for (const testCase of TEST_CASES) {
+    const p4 = matrix[testCase.method](testCase.input);
+    tapeEquals(t, p4, testCase.expected, 'transform gave the right result');
+  }
 
   t.end();
 });

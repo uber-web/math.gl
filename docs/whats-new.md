@@ -2,17 +2,34 @@
 
 ## v2.4 (In Development)
 
-Date: TBD, target June 2019
+Date: TBD, target end of June 2019
 
-#### `@math.gl/geospatial` - New module with geospatial math
+### Performance
 
-- New class `Ellipsoid` for working with WSG84 coordinates
+A benchmarking example has been added that makes it easy to assess the performance. The performance of the library has been significantly improved tuned based on these benchmarks.
 
-#### `math.gl` - Core module additions
+### `@math.gl/geospatial`
 
-- New class `Matrix`. Base class for `Matrix3` and `Matrix4` with common methods to minimize bundle size
-- New methods `Matrix.setColumn()` and `Matrix.getColumn()`
-- New method `Matrix.toString()`
+A new module (developed in collaboration with the Cesium team) providing framework-independent geospatial math classes and algorithms:
+
+- New class `Ellipsoid` and constant `Ellipsoid.WGS84` for working with WSG84 coordinates
+
+### `math.gl` - Core module additions
+
+#### Transform API Improvements
+
+The API for transformations (i.e. multiplying vectors with matrices or quaternions) has been extended and made more orthogonal:
+
+- The `transform*` methods are now available on all `Vector` classes, in addition to on the `Matrix` classes. Among other things, this enables transformations without using `Matrix` classes.
+- Naming consistency of transform methods across classes (`transform`, `transformAsPoint`, `transformAsVector`).
+- Alternative transform methods added to the `Vector` classes (`transformByMatrix3`, `transformByMatrix2`, `transformByMatrix2x3` and `transformByQuaternion`). Simplifies using the most efficient transformation for the job.
+
+#### Matrix classes
+
+- New methods `Matrix*.setColumn()` and `Matrix*.getColumn()`
+- New method `Matrix*.toString()`
+
+#### Utility Functions
 
 - New: global functions `toRadians` and `toDegrees`
 - New: global function `exactEqual`

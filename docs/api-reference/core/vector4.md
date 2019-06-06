@@ -1,28 +1,28 @@
 # Vector4
 
-```js
-class Vector4 extends MathArray extends Array
-```
+`Vector4` is designed to hold three dimensional coordinates in projective space. Using the projective representation allows JavaScript applications to perform the same calculations that the GPU does.
 
-`Vector4`s, while general, are provided to hold "homogenous" coordinates. It is not necessary to understand projective geometry to use then, but see the remarks for some background.
+A main feature of vectors is that they can be transformed by matrices and quaternions. And `Vector4`s are particular general when transformed with 4x4 matrices (`Matrix4` or just arrays of 16 numbers), as those can include translations, projections and other transformations that cannot be expressed by e.g. 3x3 matrices or quaternions alone.
 
-`Vector4`s are intended to be transformed with `Matrix4`s.
-
-The fourth component (`w`) is usually set to either
+Note that the fourth element `w` is not a coordinate but a scaling factor. The fourth component (`w`) is usually set to either
 - `0` to represent a vector
 - `1` to represent a point
-Setting `w` to 0 prevents translation when multiplied with a 4x4 matrix.
+
+`Vector4` methods will keep the vector scaled so that `w` (if non-zero) is `1`.
+
+The math behind `Vector4` comes from projective geometry, which significantly generalizes calculations and removes a number of special cases compared to affine geometry. It is not necessary to understand the details to use `Vector4`, but see the developer guide for some additional xbackground.
 
 ## Usage
 
 ```js
 import {Vector4} from 'math.gl';
 const vector = new Vector4(1, 1, 1, 0);
+const point = new Vector4(0, 0, 0, 1);
 ```
 
 ## Inheritance
 
-`class Vector4 extends [Vector](./docs/api-reference/vector) extends [MathArray](./docs/api-reference/math-array) extends [Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)`
+`Vector4` extends [`Vector`](./docs/api-reference/vector) extends [`MathArray`](./docs/api-reference/math-array) extends [`Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)
 
 ## Members
 
@@ -110,7 +110,11 @@ Linearly interpolates between the vectors current value and the supplied `vector
 
 ### transform(matrix4 : Number[16]) : Vector4
 
-Transforms the vector by the provided 4x4 matrix.
+Equivalent to `transformByMatrix4`.
+
+### transformByMatrix4(matrix4 : Number[16]) : Vector4
+
+Transforms a vector by the provided 4x4 matrix.
 
 Note: Scales the resulting vector to ensure that `w`, if non-zero, is set to `1`.
 

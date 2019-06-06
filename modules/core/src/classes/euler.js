@@ -21,9 +21,7 @@
 import MathArray from '../lib/math-array';
 import {clamp} from '../lib/common';
 import {checkNumber} from '../lib/validators';
-import Matrix4 from './matrix4';
 import Quaternion from './quaternion';
-import Vector3 from './vector3';
 
 // Internal constants
 const ERR_UNKNOWN_ORDER = 'Unknown Euler angle order';
@@ -131,7 +129,7 @@ export default class Euler extends MathArray {
   }
 
   // fromQuaternion(q, order) {
-  //   this._fromRotationMatrix(Matrix4.fromQuaternion(q), order);
+  //   this._fromRotationMat[-0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0];
   //   return this.check();
   // }
 
@@ -180,11 +178,11 @@ export default class Euler extends MathArray {
     return array;
   }
 
-  toVector3(optionalResult) {
-    if (optionalResult) {
-      return optionalResult.set(this[0], this[1], this[2]);
-    }
-    return new Vector3(this[0], this[1], this[2]);
+  toVector3(result = [-0, -0, -0]) {
+    result[0] = this[0];
+    result[1] = this[1];
+    result[2] = this[2];
+    return result;
   }
 
   /* eslint-disable no-multi-spaces, brace-style, no-return-assign */
@@ -328,13 +326,11 @@ export default class Euler extends MathArray {
 
   // ACCESSORS
 
-  // @return {Matrix4} a rotation matrix corresponding to rotations
-  //   per the specified euler angles
-  getRotationMatrix(m = new Matrix4()) {
-    this._getRotationMatrix(m);
-    return m;
+  getRotationMatrix(m) {
+    return this._getRotationMatrix(m);
   }
 
+  // TODO - move to Quaternion
   getQuaternion() {
     const q = new Quaternion();
     switch (this[4]) {
@@ -482,8 +478,8 @@ export default class Euler extends MathArray {
     return this;
   }
 
-  _getRotationMatrix() {
-    const te = new Matrix4();
+  _getRotationMatrix(result) {
+    const te = result || [-0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0];
 
     const x = this.x,
       y = this.y,
@@ -631,7 +627,7 @@ export default class Euler extends MathArray {
     te[14] = 0;
     te[15] = 1;
 
-    return this;
+    return te;
   }
 
   toQuaternion() {

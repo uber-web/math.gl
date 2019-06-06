@@ -76,16 +76,18 @@ export default class Vector2 extends Vector {
   // Transforms
 
   transform(matrix4) {
-    return this.transformByMatrix4AsPoint(matrix4);
+    return this.transformAsPoint(matrix4);
   }
 
-  transformByMatrix4AsPoint(matrix) {
-    vec2.transformMat4(this, this, matrix);
+  // transforms as point (4th component is implicitly 1)
+  transformAsPoint(matrix4) {
+    vec2.transformMat4(this, this, matrix4);
     return this.check();
   }
 
-  transformByMatrix4AsVector(matrix) {
-    vec2_transformMat4AsVector(this, this, matrix);
+  // transforms as vector  (4th component is implicitly 0, ignores translation. slightly faster)
+  transformAsVector(matrix4) {
+    vec2_transformMat4AsVector(this, this, matrix4);
     return this.check();
   }
 

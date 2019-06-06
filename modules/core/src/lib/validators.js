@@ -40,3 +40,15 @@ export function checkVector(v, length, callerName) {
   }
   return v;
 }
+
+const map = {};
+
+export function deprecated(method, version) {
+  if (!map[method]) {
+    map[method] = true;
+    // eslint-disasble-next-line
+    console.warn(
+      `${method} has been removed in version ${version}, see upgrade guide for more information`
+    );
+  }
+}

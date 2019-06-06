@@ -36,7 +36,7 @@ export default class Matrix extends MathArray {
     return this;
   }
 
-  getColumn(columnIndex, result = new this.Vector()) {
+  getColumn(columnIndex, result = new Array(this.RANK).fill(-0)) {
     const firstIndex = columnIndex * this.RANK;
     for (let i = 0; i < this.RANK; ++i) {
       result[i] = this[firstIndex + i];

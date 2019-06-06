@@ -18,12 +18,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import {config} from '../lib/common';
-import {validateVector, checkVector} from '../lib/validators';
+import {checkVector, deprecated} from '../lib/validators';
 import Matrix from '../lib/matrix';
-import Vector2 from './vector2';
-import Vector3 from './vector3';
-import Vector4 from './vector4';
+
+import {vec2_transformMat4AsVector, vec3_transformMat4AsVector} from '../lib/gl-matrix-extras';
 
 import * as mat4 from 'gl-matrix/mat4';
 import * as vec2 from 'gl-matrix/vec2';
@@ -62,10 +60,6 @@ export default class Matrix4 extends Matrix {
 
   get RANK() {
     return 4;
-  }
-
-  get Vector() {
-    return Vector4;
   }
 
   constructor() {
@@ -378,109 +372,49 @@ export default class Matrix4 extends Matrix {
     return this.check();
   }
 
-  transformVector2(vector, result) {
-    // result = result || [0, 0];
-    result = result || new Vector2();
-    vec2.transformMat4(result, vector, this);
-    if (config.debug) {
-      validateVector(result, 2);
+  // Transforms
+
+  // Transforms any 2, 3 or 4 element vector. 2 and 3 elements are treated as points
+  transform(vector, result) {
+    if (vector.length === 4) {
+      result = vec4.transformMat4(result || [-0, -0, -0, -0], vector, this);
+      checkVector(result, 4);
+      return result;
     }
-    return result;
+    return this.transformAsPoint(vector, result);
   }
 
-  transformVector3(vector, result) {
-    // result = result || [0, 0, 0];
-    result = result || new Vector3();
-    vec3.transformMat4(result, vector, this);
-    if (config.debug) {
-      validateVector(result, 3);
-    }
-    return result;
-  }
-
-  transformVector4(vector, result) {
-    // result = result || [0, 0, 0, 0];
-    result = result || new Vector4();
-    vec4.transformMat4(result, vector, this);
-    if (config.debug) {
-      validateVector(result, 4);
-    }
-    return result;
-  }
-
-  // Transforms any 2, 3 or 4 element vector
-  // returns a newly minted Vector2, Vector3 or Vector4
-  transformVector(vector, result) {
-    switch (vector.length) {
+  // Transforms any 2 or 3 element array as point (w implicitly 1)
+  transformAsPoint(vector, result) {
+    const {length} = vector;
+    switch (length) {
       case 2:
-        return this.transformVector2(vector, result);
+        result = vec2.transformMat4(result || [-0, -0], vector, this);
+        break;
       case 3:
-        return this.transformVector3(vector, result);
-      case 4:
-        return vector[3]
-          ? this.transformVector4(vector, result)
-          : this.transformDirection4(vector, result);
+        result = vec3.transformMat4(result || [-0, -0, -0], vector, this);
+        break;
       default:
         throw new Error('Illegal vector');
     }
+    checkVector(result, vector.length);
+    return result;
   }
 
-  transformDirection(vector, result) {
-    return this._transformVector(vector, result, 0);
-  }
-
-  transformDirection4(vector, result = vector) {
-    const x = vector[0];
-    const y = vector[1];
-    const z = vector[2];
-    result[0] = this[0] * x + this[4] * y + this[8] * z;
-    result[1] = this[1] * x + this[5] * y + this[9] * z;
-    result[2] = this[2] * x + this[6] * y + this[10] * z;
-    result[3] = 0;
-    return checkVector(result, 4);
-  }
-
-  transformDirection3(vector, result = vector) {
-    const x = vector[0];
-    const y = vector[1];
-    const z = vector[2];
-    const w = vector[3];
-    result[0] = this[0] * x + this[4] * y + this[8] * z + this[12] * w;
-    result[1] = this[1] * x + this[5] * y + this[9] * z + this[13] * w;
-    result[2] = this[2] * x + this[6] * y + this[10] * z + this[14] * w;
-    result[3] = 0;
-    return checkVector(result, 4);
-  }
-
-  transformPoint(vector, result) {
-    return this._transformVector(vector, result, 1);
-  }
-
-  _transformVector(vector, result, w) {
+  // Transforms any 2 or 3 element array as vector (w implicitly 0)
+  transformAsVector(vector, result) {
     switch (vector.length) {
       case 2:
-        result = result || new Vector2();
-        // result = result || [0, 0];
-        vec4.transformMat4(result, [vector[0], vector[1], 0, w], this);
-        result.length = 2;
-        return checkVector(result, 2);
+        result = vec2_transformMat4AsVector(result || [-0, -0], vector, this);
+        break;
       case 3:
-        result = result || new Vector3();
-        // result = result || [0, 0, 0];
-        vec4.transformMat4(result, [vector[0], vector[1], vector[2], w], this);
-        result.length = 3;
-        return checkVector(result, 3);
-      case 4:
-        if (Boolean(w) !== Boolean(vector[3])) {
-          throw new Error('math.gl: Matrix4.transformPoint - invalid vector');
-        }
-        result = result || new Vector4();
-        // result = result || [0, 0, 0, 0];
-        vec4.transformMat4(result, vector, this);
-        return checkVector(result, 4);
+        result = vec3_transformMat4AsVector(result || [-0, -0, -0], vector, this);
+        break;
       default:
         throw new Error('Illegal vector');
     }
+    checkVector(result, vector.length);
+    return result;
   }
 
   // three.js math API compatibility
@@ -496,7 +430,22 @@ export default class Matrix4 extends Matrix {
     return this.fromQuaternion(q);
   }
 
-  // DEPRECATED
+  // DEPRECATED in 3.0
+
+  transformPoint(vector, result) {
+    deprecated('Matrix4.transformPoint', '3.0');
+    return this.transformAsPoint(vector, result);
+  }
+
+  transformVector(vector, result) {
+    deprecated('Matrix4.transformVector', '3.0');
+    return this.transformAsPoint(vector, result);
+  }
+
+  transformDirection(vector, result) {
+    deprecated('Matrix4.transformDirection', '3.0');
+    return this.transformAsVector(vector, result);
+  }
 
   /* eslint-disable max-params */
   // accepts row major order, stores as column major

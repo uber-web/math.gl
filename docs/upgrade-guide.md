@@ -2,19 +2,62 @@
 
 ## Upgrading to v3.0
 
-| Method | Status | Replacement | Reason |
-| --- | --- | --- | --- |
-| `Vector2.cross` | Removed | `Vector3.cross` | Cross product by definition work on 3 dimensional vectors |
+#### `Matrix` transforms now return `Array` by default
+
+The `Matrix4` and `Matrix3` classes no longer by default create new `Vector2`, `Vector3` and `Vector4` instances. Instead they create standard JavaScript arrays.
+
+Previously
+```js
+import {Matrix4, Vector4} from 'math.gl';
+const vector = new Matrix4().transform([0, 0, 0, 1]);
+assert(vector instanceof Vector4);
+```
+
+Now
+```js
+import {Matrix4} from 'math.gl';
+const vector = new Matrix4().transform([0, 0, 0, 1]);
+assert(vector instanceof Array);
+```
+
+The old behavior can be restored by providing the result parameter
+```js
+import {Matrix4, Vector4} from 'math.gl';
+const vector = new Matrix4().transform([0, 0, 0, 1], new Vector4());
+assert(vector instanceof Vector4);
+```
+
+This change reduces dependencies between math.gl core classes which improves tree-shaking and ultimately bundle size.
+
+#### Deprecations
+
+| Method | Replacement | Reason |
+| --- |  --- | --- |
+| `Matrix4.transformPoint`     | `Matrix4.transform`         | Name alignment |
+| `Matrix4.transformVector`    | `Matrix4.transform`         | Name alignment |
+| `Matrix4.transformDirection` | `Matrix4.transformAsVector` | Name alignment |
+| `Matrix3.transformVector`    | `Matrix3.transform`         | Name alignment |
+| `Matrix3.transformVector2`   | `Matrix3.transform`         | Generalize |
+| `Matrix3.transformVector3`   | `Matrix3.transform`         | Generalize |
+
+#### Removals
+
+| Method | Replacement | Reason |
+| --- | --- | --- |
+| `Vector2.cross` | `Vector3.cross` | Cross products by definition work on 3 dimensional vectors. |
+
 
 ## Upgrading to v2.0
 
 Experimental exports are now exported with a leading underscore (\_), instead of as members of the `experimental` namespace:
 
+NOW: math.gl v2
 ```js
-// NOW: math.gl v2
 import {_Euler as Euler} from 'math.gl';
+```
 
-// BEFORE: math.gl v1.x
+BEFORE: math.gl v1.x
+```js
 import {experimental} from 'math.gl';
 const {Euler} = experimental;
 ```
