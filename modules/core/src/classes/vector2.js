@@ -23,11 +23,7 @@ import {config, isArray} from '../lib/common';
 import {checkNumber} from '../lib/validators';
 
 import * as vec2 from 'gl-matrix/vec2';
-import {
-  vec2_transformMat2,
-  vec2_transformMat3,
-  vec2_transformMat4AsVector
-} from '../lib/gl-matrix-extras';
+import {vec2_transformMat4AsVector} from '../lib/gl-matrix-extras';
 
 export default class Vector2 extends Vector {
   // Creates a new, empty vec2
