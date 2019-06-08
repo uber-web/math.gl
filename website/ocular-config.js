@@ -20,7 +20,7 @@ const DOCS = require('../docs/table-of-contents.json');
 module.exports = {
   logLevel: 4,
 
-  DOC_FOLDER: '../docs/',
+  DOC_FOLDERS: [`${__dirname}/../docs/`, `${__dirname}/../modules`],
   ROOT_FOLDER: '..',
   DIR_NAME: __dirname,
 

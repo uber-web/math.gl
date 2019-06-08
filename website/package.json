@@ -21,16 +21,12 @@
     "react-table": "^6.10.0"
   },
   "devDependencies": {
-    "@babel/plugin-proposal-optional-chaining": "^7.2.0",
-    "babel-preset-gatsby": "^0.1.11",
     "gatsby": "^2.8.2",
     "gh-pages": "^2.0.1",
-    "ocular-gatsby": "1.0.0-alpha.35",
+    "ocular-gatsby": "1.0.0-alpha.39",
     "sharp": "^0.22.1"
   },
   "resolutions": {
-    "gatsby": "^2.8.2",
-    "sharp": "^0.22.1",
     "fsevents": "^1.2.9",
     "node-sass": "4.12.0"
   }
