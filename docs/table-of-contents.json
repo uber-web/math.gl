@@ -13,31 +13,31 @@
       "title": "Developer Guide",
       "chapters": [
         {
-          "title": "Core Classes",
+          "title": "math.gl",
           "entries": [
-            {"entry": "docs/developer-guide/get-started"},
-            {"entry": "docs/developer-guide/transformations"},
-            {"entry": "docs/developer-guide/debugging"},
-            {"entry": "docs/developer-guide/floating-point"},
-            {"entry": "docs/developer-guide/performance"},
-            {"entry": "docs/developer-guide/view-and-projection"},
-            {"entry": "docs/developer-guide/coordinate-systems"},
-            {"entry": "docs/wip/features"},
-            {"entry": "docs/wip/using-vectors"},
-            {"entry": "docs/developer-guide/external-frameworks"}
+            {"entry": "modules/core/docs/developer-guide/get-started"},
+            {"entry": "modules/core/docs/developer-guide/transformations"},
+            {"entry": "modules/core/docs/developer-guide/debugging"},
+            {"entry": "modules/core/docs/developer-guide/floating-point"},
+            {"entry": "modules/core/docs/developer-guide/performance"},
+            {"entry": "modules/core/docs/developer-guide/view-and-projection"},
+            {"entry": "modules/core/docs/developer-guide/coordinate-systems"},
+            {"entry": "modules/core/docs/wip/features"},
+            {"entry": "modules/core/docs/wip/using-vectors"},
+            {"entry": "modules/core/docs/developer-guide/external-frameworks"}
           ]
         },
         {
-          "title": "Geospatial Math",
+          "title": "@math.gl/geospatial",
           "entries": [
-            {"entry": "docs/developer-guide/geospatial"}
+            {"entry": "modules/geospatial/docs/developer-guide/geospatial"}
           ]
         },
         {
           "title": "Concepts",
           "entries": [
-            {"entry": "docs/developer-guide/concepts/homogenous-coordinates"},
-            {"entry": "docs/developer-guide/concepts/rotations"}
+            {"entry": "modules/core/docs/developer-guide/concepts/homogenous-coordinates"},
+            {"entry": "modules/core/docs/developer-guide/concepts/rotations"}
           ]
         }
       ]
@@ -46,33 +46,33 @@
       "title": "API Reference",
       "chapters": [
         {
-          "title": "Core Classes",
+          "title": "math.gl",
           "entries": [
-            {"entry": "docs/api-reference/euler"},
-            {"entry": "docs/api-reference/math-array"},
-            {"entry": "docs/api-reference/matrix"},
-            {"entry": "docs/api-reference/matrix3"},
-            {"entry": "docs/api-reference/matrix4"},
-            {"entry": "docs/api-reference/pose"},
-            {"entry": "docs/api-reference/quaternion"},
-            {"entry": "docs/api-reference/spherical-coordinates"},
-            {"entry": "docs/api-reference/utilities"},
-            {"entry": "docs/api-reference/vector"},
-            {"entry": "docs/api-reference/vector2"},
-            {"entry": "docs/api-reference/vector3"},
-            {"entry": "docs/api-reference/vector4"}
+            {"entry": "modules/core/docs/api-reference/euler"},
+            {"entry": "modules/core/docs/api-reference/math-array"},
+            {"entry": "modules/core/docs/api-reference/matrix"},
+            {"entry": "modules/core/docs/api-reference/matrix3"},
+            {"entry": "modules/core/docs/api-reference/matrix4"},
+            {"entry": "modules/core/docs/api-reference/pose"},
+            {"entry": "modules/core/docs/api-reference/quaternion"},
+            {"entry": "modules/core/docs/api-reference/spherical-coordinates"},
+            {"entry": "modules/core/docs/api-reference/utilities"},
+            {"entry": "modules/core/docs/api-reference/vector"},
+            {"entry": "modules/core/docs/api-reference/vector2"},
+            {"entry": "modules/core/docs/api-reference/vector3"},
+            {"entry": "modules/core/docs/api-reference/vector4"}
           ]
         },
         {
-          "title": "Add-ons",
+          "title": "math.gl add-ons",
           "entries": [
-            {"entry": "docs/api-reference/addons/polygon"}
+            {"entry": "modules/core/docs/api-reference/addons/polygon"}
           ]
         },
         {
-          "title": "Geospatial",
+          "title": "@math.gl/geospatial",
           "entries": [
-            {"entry": "docs/api-reference/math/geospatial/ellipsoid"}
+            {"entry": "modules/geospatial/docs/api-reference/ellipsoid"}
           ]
         }
       ]
