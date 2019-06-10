@@ -2,7 +2,11 @@
 
 ## Upgrading to v3.0
 
-#### `Matrix` transforms now return `Array` by default
+#### Matrix API changes
+
+* Matrix setter functions no longer support ommitted parameters. (Motivation: Increased API rigor, improved debugging and library compactness).
+
+#### `Matrix` transforms now return `Array`s by default
 
 The `Matrix4` and `Matrix3` classes no longer by default create new `Vector2`, `Vector3` and `Vector4` instances. Instead they create standard JavaScript arrays.
 
@@ -29,14 +33,12 @@ assert(vector instanceof Vector4);
 
 Motivation: This change reduces dependencies between math.gl core classes which improves tree-shaking and bundle sizes.
 
-### Matrix setter functions no longer support ommitted parameters
-
-Motivation: This change increases rigor, facilitates debugging, and improves library compactness, and the use case for default parameters was questionable.
 
 #### Deprecations
 
 | Method | Replacement | Reason |
 | --- |  --- | --- |
+| `Matrix*.setColumnMajor`     | `Matrix*.set`               | API simplification |
 | `Matrix4.transformPoint`     | `Matrix4.transform`         | Name alignment |
 | `Matrix4.transformVector`    | `Matrix4.transform`         | Name alignment |
 | `Matrix4.transformDirection` | `Matrix4.transformAsVector` | Name alignment |

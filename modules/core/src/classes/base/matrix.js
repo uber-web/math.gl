@@ -1,5 +1,5 @@
 import MathArray from './math-array';
-import {checkNumber} from '../../lib/validators';
+import {checkNumber, deprecated} from '../../lib/validators';
 import {config} from '../../lib/common';
 
 export default class Matrix extends MathArray {
@@ -35,17 +35,6 @@ export default class Matrix extends MathArray {
   // accepts column major order, stores in column major order
   fromColumnMajor() {
     return this.copy(arguments);
-  }
-
-  // accepts row major order, stores as column major
-  setTransposed() {
-    const {RANK} = this;
-    for (let row = 0; row < RANK; row++) {
-      for (let col = 0; col < RANK; col++) {
-        this[row * RANK + col] = arguments[col * RANK + row];
-      }
-    }
-    return this.check();
   }
 
   toColumnMajor(result) {
@@ -87,5 +76,10 @@ export default class Matrix extends MathArray {
 
   multiplyMatrices(a, b) {
     return this.copy(a).multiplyRight(b);
+  }
+
+  setColumnMajor() {
+    deprecated('Matrix.setColumnMajor', '3.0');
+    return this.set(arguments);
   }
 }
