@@ -77,8 +77,8 @@ export default function matrix4Bench(suite, addReferenceBenchmarks) {
     .add('Matrix4#new Matrix4()', () => configure({debug: false}), () => new Matrix4())
     .add('Matrix4#copy()', () => matrix4.copy(IDENTITY))
     .add('Matrix4#set()', () => matrix4.set(1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1))
-    .add('Matrix4#setTransposed()', () =>
-      matrix4.setTransposed(1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1)
+    .add('Matrix4#setRowMajor()', () =>
+      matrix4.setRowMajor(1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1)
     )
     .add('Matrix4#identity', () => matrix4.identity())
     .add('Matrix4#fromQuaternion', () => matrix4.fromQuaternion([1, 1, 1, 1]));
