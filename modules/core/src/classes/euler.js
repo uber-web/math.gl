@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import MathArray from '../lib/math-array';
+import MathArray from './base/math-array';
 import {clamp} from '../lib/common';
 import {checkNumber} from '../lib/validators';
 import Quaternion from './quaternion';

@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import Vector from '../lib/vector';
+import Vector from './base/vector';
 import {config, isArray} from '../lib/common';
 import {checkNumber} from '../lib/validators';
 
@@ -31,7 +31,7 @@ export default class Vector3 extends Vector {
   constructor(x = 0, y = 0, z = 0) {
     // PERF NOTE: initialize elements as double precision numbers
     super(-0, -0, -0);
-    if (isArray(x) && arguments.length === 1) {
+    if (arguments.length === 1 && isArray(x)) {
       this.copy(x);
     } else {
       // this.set(x, y, z);
@@ -44,6 +44,20 @@ export default class Vector3 extends Vector {
       this[1] = y;
       this[2] = z;
     }
+  }
+
+  set(x, y, z) {
+    this[0] = x;
+    this[1] = y;
+    this[2] = z;
+    return this.check();
+  }
+
+  copy(array) {
+    this[0] = array[0];
+    this[1] = array[1];
+    this[2] = array[2];
+    return this.check();
   }
 
   fromObject(object) {

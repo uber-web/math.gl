@@ -18,8 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import {config, formatValue, equals, isArray} from './common';
-import {checkVector} from './validators';
+import {config, formatValue, equals, isArray} from '../../lib/common';
+import {checkVector} from '../../lib/validators';
 
 export default class MathArray extends Array {
   // get length() {
@@ -46,12 +46,12 @@ export default class MathArray extends Array {
     return this;
   }
 
-  set(...args) {
+  set() {
     if (config.debug) {
-      checkVector(args, this.ELEMENTS, this.constructor.name);
+      checkVector(arguments, this.ELEMENTS, this.constructor.name);
     }
     for (let i = 0; i < this.ELEMENTS; ++i) {
-      this[i] = args[i];
+      this[i] = arguments[i];
     }
     return this;
   }
@@ -68,7 +68,14 @@ export default class MathArray extends Array {
   }
 
   to(arrayOrObject) {
+    if (arrayOrObject === this) {
+      return this;
+    }
     return isArray(arrayOrObject) ? this.toArray(arrayOrObject) : this.toObject(arrayOrObject);
+  }
+
+  toTarget(target) {
+    return target ? this.to(target) : this;
   }
 
   toArray(array = [], offset = 0) {

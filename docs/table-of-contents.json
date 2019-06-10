@@ -30,13 +30,13 @@
         {
           "title": "@math.gl/geospatial",
           "entries": [
-            {"entry": "modules/geospatial/docs/developer-guide/geospatial"}
+            {"entry": "modules/geospatial/docs/developer-guide/geospatial-guide"}
           ]
         },
         {
           "title": "Concepts",
           "entries": [
-            {"entry": "modules/core/docs/developer-guide/concepts/homogenous-coordinates"},
+            {"entry": "modules/core/docs/developer-guide/concepts/homogeneous-coordinates"},
             {"entry": "modules/core/docs/developer-guide/concepts/rotations"}
           ]
         }

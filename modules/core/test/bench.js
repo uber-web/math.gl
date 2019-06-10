@@ -22,7 +22,9 @@ import javascriptBench from './lib/javascript.bench';
 import commonBench from './lib/common.bench';
 
 import classesBench from './classes/classes.bench';
+import vector2Bench from './classes/vector2.bench';
 import vector3Bench from './classes/vector3.bench';
+import vector4Bench from './classes/vector4.bench';
 import matrix4Bench from './classes/matrix4.bench';
 
 export default function coreBench(suite, addReferenceBenchmarks) {
@@ -30,8 +32,11 @@ export default function coreBench(suite, addReferenceBenchmarks) {
   commonBench(suite, addReferenceBenchmarks);
   javascriptBench(suite, addReferenceBenchmarks);
 
-  vector3Bench(suite, addReferenceBenchmarks);
   matrix4Bench(suite, addReferenceBenchmarks);
+
+  vector2Bench(suite, addReferenceBenchmarks);
+  vector3Bench(suite, addReferenceBenchmarks);
+  vector4Bench(suite, addReferenceBenchmarks);
 
   return suite;
 }

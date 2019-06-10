@@ -1,8 +1,19 @@
 import MathArray from './math-array';
-import {checkNumber} from './validators';
-import {config} from './common';
+import {checkNumber} from '../../lib/validators';
+import {config} from '../../lib/common';
 
 export default class Matrix extends MathArray {
+  fromObject(object) {
+    const array = object.elements;
+    return this.fromRowMajor(array);
+  }
+
+  toObject(object) {
+    const array = object.elements;
+    this.toRowMajor(array);
+    return object;
+  }
+
   toString() {
     let string = '[';
     if (config.printRowMajor) {
@@ -21,18 +32,38 @@ export default class Matrix extends MathArray {
     return string;
   }
 
-  // By default assumes row major indices
-  getElement(i, j, columnMajor = false) {
-    return columnMajor ? this[i * 3 + j] : this[j * 3 + i];
+  // accepts column major order, stores in column major order
+  fromColumnMajor() {
+    return this.copy(arguments);
+  }
+
+  // accepts row major order, stores as column major
+  setTransposed() {
+    const {RANK} = this;
+    for (let row = 0; row < RANK; row++) {
+      for (let col = 0; col < RANK; col++) {
+        this[row * RANK + col] = arguments[col * RANK + row];
+      }
+    }
+    return this.check();
+  }
+
+  toColumnMajor(result) {
+    return this.toArray(result);
+  }
+
+  getElementIndex(row, col) {
+    return col * this.RANK + row;
   }
 
   // By default assumes row major indices
-  setElement(i, j, value, columnMajor = false) {
-    if (columnMajor) {
-      this[i * this.RANK + j] = checkNumber(value);
-    } else {
-      this[j * this.RANK + i] = checkNumber(value);
-    }
+  getElement(row, col) {
+    return this[col * this.RANK + row];
+  }
+
+  // By default assumes row major indices
+  setElement(row, col, value) {
+    this[col * this.RANK + row] = checkNumber(value);
     return this;
   }
 

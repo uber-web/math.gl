@@ -68,48 +68,8 @@ test('Matrix3#setRowMajor', t => {
   const INPUT = INDICES_MATRIX;
   const RESULT = TRANSPOSED_INDICES_MATRIX;
 
-  let m = new Matrix3().setRowMajor(...INPUT);
-
+  const m = new Matrix3().setRowMajor(...INPUT);
   tapeEquals(t, m, RESULT, 'setRowMajor gave the right result');
-
-  m = new Matrix3().setRowMajor(1, 2, 3, 4, 5, 6);
-
-  tapeEquals(
-    t,
-    m,
-    [1, 4, 0, 2, 5, 0, 3, 6, 1],
-    'setRowMajor with missing params gave the right result'
-  );
-
-  m = new Matrix3().setRowMajor();
-
-  tapeEquals(t, m, IDENTITY_MATRIX, 'setRowMajor with no params gave the right result');
-
-  t.end();
-});
-
-test('Matrix3#setColumnMajor', t => {
-  t.equals(typeof Matrix3.prototype.setColumnMajor, 'function');
-
-  const INPUT = INDICES_MATRIX;
-  const RESULT = INDICES_MATRIX;
-
-  let m = new Matrix3().setColumnMajor(...INPUT);
-
-  tapeEquals(t, m, RESULT, 'set gave the right result');
-
-  m = new Matrix3().setColumnMajor(1, 2, 3, 4, 5, 6);
-
-  tapeEquals(
-    t,
-    m,
-    [1, 2, 3, 4, 5, 6, 0, 0, 1],
-    'setColumnMajor with missing params gave the right result'
-  );
-
-  m = new Matrix3().setColumnMajor();
-
-  tapeEquals(t, m, IDENTITY_MATRIX, 'setColumnMajor with no params gave the right result');
 
   t.end();
 });

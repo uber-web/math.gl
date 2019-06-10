@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import Matrix from '../lib/matrix';
+import Matrix from './base/matrix';
 import {checkVector, deprecated} from '../lib/validators';
 import {vec4_transformMat3} from '../lib/gl-matrix-extras';
 
@@ -26,23 +26,22 @@ import * as mat3 from 'gl-matrix/mat3';
 import * as vec2 from 'gl-matrix/vec2';
 import * as vec3 from 'gl-matrix/vec3';
 
-const IDENTITY = [1, 0, 0, 0, 1, 0, 0, 0, 1];
+const IDENTITY = Object.freeze([1, 0, 0, 0, 1, 0, 0, 0, 1]);
+const ZERO = Object.freeze([0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
-// eslint-disable-next-line complexity
-export function validateMatrix3(m) {
-  return (
-    m.length === 9 &&
-    Number.isFinite(m[0]) &&
-    Number.isFinite(m[1]) &&
-    Number.isFinite(m[2]) &&
-    Number.isFinite(m[3]) &&
-    Number.isFinite(m[4]) &&
-    Number.isFinite(m[5]) &&
-    Number.isFinite(m[6]) &&
-    Number.isFinite(m[7]) &&
-    Number.isFinite(m[8])
-  );
-}
+const INDICES = Object.freeze({
+  COL0ROW0: 0,
+  COL0ROW1: 1,
+  COL0ROW2: 2,
+  COL1ROW0: 3,
+  COL1ROW1: 4,
+  COL1ROW2: 5,
+  COL2ROW0: 6,
+  COL2ROW1: 7,
+  COL2ROW2: 8
+});
+
+const constants = {};
 
 export default class Matrix3 extends Matrix {
   get ELEMENTS() {
@@ -53,27 +52,46 @@ export default class Matrix3 extends Matrix {
     return 3;
   }
 
-  constructor(...args) {
+  get INDICES() {
+    return INDICES;
+  }
+
+  get IDENTITY() {
+    constants.IDENTITY = constants.IDENTITY || Object.freeze(new Matrix3(IDENTITY));
+    return constants.IDENTITY;
+  }
+
+  get ZERO() {
+    constants.ZERO = constants.ZERO || Object.freeze(new Matrix3(ZERO));
+    return constants.ZERO;
+  }
+
+  constructor(array) {
     // PERF NOTE: initialize elements as double precision numbers
     super(-0, -0, -0, -0, -0, -0, -0, -0, -0);
-    if (Array.isArray(args[0]) && arguments.length === 1) {
-      this.copy(args[0]);
+    if (arguments.length === 1 && Array.isArray(array)) {
+      this.copy(array);
     } else {
       this.identity();
     }
   }
 
   copy(array) {
-    return this.setColumnMajor(...array);
+    this[0] = array[0];
+    this[1] = array[1];
+    this[2] = array[2];
+    this[3] = array[3];
+    this[4] = array[4];
+    this[5] = array[5];
+    this[6] = array[6];
+    this[7] = array[7];
+    this[8] = array[8];
+    return this.check();
   }
 
-  set(...args) {
-    return this.setColumnMajor(...args);
-  }
-
-  // accepts row major order, stores as column major
+  // accepts column major order, stores in column major order
   // eslint-disable-next-line max-params
-  setRowMajor(m00 = 1, m01 = 0, m02 = 0, m10 = 0, m11 = 1, m12 = 0, m20 = 0, m21 = 0, m22 = 1) {
+  set(m00, m10, m20, m01, m11, m21, m02, m12, m22) {
     this[0] = m00;
     this[1] = m10;
     this[2] = m20;
@@ -86,9 +104,9 @@ export default class Matrix3 extends Matrix {
     return this.check();
   }
 
-  // accepts column major order, stores in column major order
+  // accepts row major order, stores as column major
   // eslint-disable-next-line max-params
-  setColumnMajor(m00 = 1, m10 = 0, m20 = 0, m01 = 0, m11 = 1, m21 = 0, m02 = 0, m12 = 0, m22 = 1) {
+  setRowMajor(m00, m01, m02, m10, m11, m12, m20, m21, m22) {
     this[0] = m00;
     this[1] = m10;
     this[2] = m20;
@@ -110,10 +128,7 @@ export default class Matrix3 extends Matrix {
   // Constructors
 
   identity() {
-    for (let i = 0; i < IDENTITY.length; ++i) {
-      this[i] = IDENTITY[i];
-    }
-    return this.check();
+    return this.copy(IDENTITY);
   }
 
   // Calculates a 3x3 matrix from the given quaternion
