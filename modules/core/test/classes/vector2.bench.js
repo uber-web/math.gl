@@ -29,9 +29,9 @@ export default function vector2Bench(suite, addReferenceBenchmarks) {
     .group('@math.gl/core: Vector2')
     .add('Vector2#new()', () => new Vector2(1, 2))
     .add('Vector2#set()', () => vector2.set(1, 2))
-    .add('Vector2#copy()', () => vector2.copy([1, 2]))
-    // .add('Vector2#from(Vector2)', () => vector2.from(arrayVector))
-    // .add('Vector2#to(Vector2)', () => vector2.to(arrayVector))
+    .add('Vector2#copy()', () => vector2.copy([1, 2]));
+  // .add('Vector2#from(Vector2)', () => vector2.from(arrayVector))
+  // .add('Vector2#to(Vector2)', () => vector2.to(arrayVector))
 
   if (addReferenceBenchmarks) {
     suite

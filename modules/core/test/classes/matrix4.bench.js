@@ -77,14 +77,15 @@ export default function matrix4Bench(suite, addReferenceBenchmarks) {
     .add('Matrix4#new Matrix4()', () => configure({debug: false}), () => new Matrix4())
     .add('Matrix4#copy()', () => matrix4.copy(IDENTITY))
     .add('Matrix4#set()', () => matrix4.set(1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1))
-    .add('Matrix4#setTransposed()', () => matrix4.setTransposed(1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1))
+    .add('Matrix4#setTransposed()', () =>
+      matrix4.setTransposed(1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1)
+    )
     .add('Matrix4#identity', () => matrix4.identity())
-    .add('Matrix4#fromQuaternion', () => matrix4.fromQuaternion([1, 1, 1, 1]))
-    // .add('Matrix4#from(Matrix4)', () => matrix4.from(arrayVector))
-    // .add('Matrix4#from(Object)', () => matrix4.from(objectVector))
-    // .add('Matrix4#to(Matrix4)', () => matrix4.to(arrayVector))
-    // .add('Matrix4#to(Object)', () => matrix4.to(objectVector));
-    ;
+    .add('Matrix4#fromQuaternion', () => matrix4.fromQuaternion([1, 1, 1, 1]));
+  // .add('Matrix4#from(Matrix4)', () => matrix4.from(arrayVector))
+  // .add('Matrix4#from(Object)', () => matrix4.from(objectVector))
+  // .add('Matrix4#to(Matrix4)', () => matrix4.to(arrayVector))
+  // .add('Matrix4#to(Object)', () => matrix4.to(objectVector));
 
   if (addReferenceBenchmarks) {
     suite
@@ -114,8 +115,7 @@ export default function matrix4Bench(suite, addReferenceBenchmarks) {
     .add('Matrix4#transform(dir4)', () => matrix4.transform(dirVector4, mathglVector4))
     .add('Matrix4#transform(point4)', () => matrix4.transform(pointVector4, mathglVector4))
     .add('Matrix4#transformAsVector(v3)', () => matrix4.transformAsVector(vector3, vector3))
-    .add('Matrix4#transformAsPoint(v3)', () => matrix4.transformAsVector(vector3, vector3))
-    ;
+    .add('Matrix4#transformAsPoint(v3)', () => matrix4.transformAsVector(vector3, vector3));
 
   suite
     .group('@math.gl/core: Matrix4 accessors')

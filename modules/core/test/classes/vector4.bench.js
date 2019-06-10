@@ -29,9 +29,9 @@ export default function vector4Bench(suite, addReferenceBenchmarks) {
     .group('@math.gl/core: Vector4')
     .add('Vector4#new()', () => new Vector4(1, 2, 3, 4))
     .add('Vector4#set()', () => vector4.set(1, 2, 3, 4))
-    .add('Vector4#copy()', () => vector4.copy([1, 2, 3, 4]))
-    // .add('Vector4#from(Vector4)', () => vector4.from(arrayVector))
-    // .add('Vector4#to(Vector4)', () => vector4.to(arrayVector))
+    .add('Vector4#copy()', () => vector4.copy([1, 2, 3, 4]));
+  // .add('Vector4#from(Vector4)', () => vector4.from(arrayVector))
+  // .add('Vector4#to(Vector4)', () => vector4.to(arrayVector))
 
   if (addReferenceBenchmarks) {
     suite
