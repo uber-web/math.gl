@@ -157,6 +157,14 @@ test('setAxisAngle', t => {
   t.end();
 });
 
+test('transform', t => {
+  const quat = new Quaternion();
+  t.throws(() => quat.transformVector4([NaN, 0, 0, 0]));
+  t.throws(() => quat.transformVector4([0, 0, 0]));
+  t.throws(() => quat.transformVector4([0, 0, 0, 0, 0]));
+  t.end();
+});
+
 test.skip('getAxisAngle', tt => {
   test('getAxisAngle for a quaternion representing no rotation', t => {
     const quat = new Quaternion().setAxisAngle(out[(0, 1, 0)], 0.0);

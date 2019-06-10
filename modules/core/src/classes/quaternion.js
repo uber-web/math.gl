@@ -50,6 +50,22 @@ export default class Quaternion extends MathArray {
     }
   }
 
+  copy(array) {
+    this[0] = array[0];
+    this[1] = array[1];
+    this[2] = array[2];
+    this[3] = array[3];
+    return this.check();
+  }
+
+  set(x, y, z, w) {
+    this[0] = x;
+    this[1] = y;
+    this[2] = z;
+    this[3] = w;
+    return this.check();
+  }
+
   // Creates a quaternion from the given 3x3 rotation matrix.
   // NOTE: The resultant quaternion is not normalized, so you should
   // be sure to renormalize the quaternion yourself where necessary.

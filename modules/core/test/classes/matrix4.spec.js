@@ -19,7 +19,7 @@
 // THE SOFTWARE.
 
 /* eslint-disable max-statements */
-import {Matrix4, Vector3, config} from 'math.gl';
+import {Matrix4, Vector3, config, configure} from 'math.gl';
 import test from 'tape-catch';
 import {tapeEquals, tapeEqualsEpsilon} from 'test/utils/tape-assertions';
 
@@ -60,6 +60,19 @@ test.skip('Matrix4#to', t => {
   const matrix = new Matrix4(...INDICES_MATRIX);
   tapeEquals(t, matrix.to([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]), INDICES_MATRIX);
   // t.deepEquals(matrix.to({x: 0, y: 0, z: 0, w: 0}), {x: 1, y: 2, z: 4});
+  t.end();
+});
+
+test('Matrix4#toString', t => {
+  const matrix = new Matrix4(INDICES_MATRIX);
+  configure({printRowMajor: true});
+  tapeEquals(t, String(matrix), '[row-major: 1 5 9 13 2 6 10 14 3 7 11 15 4 8 12 16]');
+
+  configure({printRowMajor:  false});
+  tapeEquals(t, String(matrix), '[column-major: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16]');
+
+  configure({printRowMajor: true});
+
   t.end();
 });
 
@@ -472,6 +485,10 @@ test('Matrix4#transform', t => {
     const p4 = matrix[testCase.method](testCase.input);
     tapeEquals(t, p4, testCase.expected, 'transform gave the right result');
   }
+
+  t.throws(() => t.transform([NaN, 0, 0, 0]));
+  t.throws(() => t.transform([0, 0, 0]));
+  t.throws(() => t.transform([0, 0, 0, 0, 0]));
 
   t.end();
 });

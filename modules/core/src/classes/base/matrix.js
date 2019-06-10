@@ -3,16 +3,16 @@ import {checkNumber, deprecated} from '../../lib/validators';
 import {config} from '../../lib/common';
 
 export default class Matrix extends MathArray {
-  fromObject(object) {
-    const array = object.elements;
-    return this.fromRowMajor(array);
-  }
+  // fromObject(object) {
+  //   const array = object.elements;
+  //   return this.fromRowMajor(array);
+  // }
 
-  toObject(object) {
-    const array = object.elements;
-    this.toRowMajor(array);
-    return object;
-  }
+  // toObject(object) {
+  //   const array = object.elements;
+  //   this.toRowMajor(array);
+  //   return object;
+  // }
 
   toString() {
     let string = '[';
@@ -20,25 +20,17 @@ export default class Matrix extends MathArray {
       string += 'row-major:';
       for (let row = 0; row < this.RANK; ++row) {
         for (let col = 0; col < this.RANK; ++col) {
-          string += ` ${this[row * this.RANK + col]}`;
+          string += ` ${this[col * this.RANK + row]}`;
         }
       }
     } else {
-      string += 'col-major:';
+      string += 'column-major:';
       for (let i = 0; i < this.ELEMENTS; ++i) {
         string += ` ${this[i]}`;
       }
     }
+    string += ']';
     return string;
-  }
-
-  // accepts column major order, stores in column major order
-  fromColumnMajor() {
-    return this.copy(arguments);
-  }
-
-  toColumnMajor(result) {
-    return this.toArray(result);
   }
 
   getElementIndex(row, col) {

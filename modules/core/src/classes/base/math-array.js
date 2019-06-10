@@ -19,41 +19,10 @@
 // THE SOFTWARE.
 
 import {config, formatValue, equals, isArray} from '../../lib/common';
-import {checkVector} from '../../lib/validators';
 
 export default class MathArray extends Array {
-  // get length() {
-  //   return this.ELEMENTS;
-  // }
-
-  // constructor(...args) {
-  //   for (let i = 0; i < args.length; ++i) {
-  //     this[i] = args[i];
-  //   }
-  // }
-
   clone() {
     return new this.constructor().copy(this);
-  }
-
-  copy(array) {
-    if (config.debug) {
-      checkVector(array, this.ELEMENTS, this.constructor.name);
-    }
-    for (let i = 0; i < this.ELEMENTS; ++i) {
-      this[i] = array[i];
-    }
-    return this;
-  }
-
-  set() {
-    if (config.debug) {
-      checkVector(arguments, this.ELEMENTS, this.constructor.name);
-    }
-    for (let i = 0; i < this.ELEMENTS; ++i) {
-      this[i] = arguments[i];
-    }
-    return this;
   }
 
   from(arrayOrObject) {

@@ -135,9 +135,9 @@ export default class Euler extends MathArray {
 
   // If copied array does contain fourth element, preserves currently set order
   copy(array) {
-    for (let i = 0; i < 3; ++i) {
-      this[i] = array[i];
-    }
+    this[0] = array[0];
+    this[1] = array[1];
+    this[2] = array[2];
     this[3] = Number.isFinite(array[3]) || this.order;
     return this.check();
   }
