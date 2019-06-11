@@ -3,6 +3,8 @@
 
 import {Matrix3, _MathUtils} from 'math.gl';
 
+const scratchMatrix = new Matrix3();
+
 const scratchUnitary = new Matrix3();
 const scratchDiagonal = new Matrix3();
 
@@ -96,7 +98,7 @@ const colVal = [2, 2, 1];
 function offDiagonalFrobeniusNorm(matrix) {
   let norm = 0.0;
   for (let i = 0; i < 3; ++i) {
-    const temp = matrix[scratchDiagonal.getElementIndex(colVal[i], rowVal[i])];
+    const temp = matrix[scratchMatrix.getElementIndex(colVal[i], rowVal[i])];
     norm += 2.0 * temp * temp;
   }
   return Math.sqrt(norm);
@@ -118,7 +120,7 @@ function shurDecomposition(matrix, result) {
 
   // find pivot (rotAxis) based on max diagonal of matrix
   for (let i = 0; i < 3; ++i) {
-    const temp = Math.abs(matrix[Matrix3.getElementIndex(colVal[i], rowVal[i])]);
+    const temp = Math.abs(matrix[scratchMatrix.getElementIndex(colVal[i], rowVal[i])]);
     if (temp > maxDiagonal) {
       rotAxis = i;
       maxDiagonal = temp;
@@ -131,10 +133,10 @@ function shurDecomposition(matrix, result) {
   let c = 1.0;
   let s = 0.0;
 
-  if (Math.abs(matrix[Matrix3.getElementIndex(q, p)]) > tolerance) {
-    const qq = matrix[Matrix3.getElementIndex(q, q)];
-    const pp = matrix[Matrix3.getElementIndex(p, p)];
-    const qp = matrix[Matrix3.getElementIndex(q, p)];
+  if (Math.abs(matrix[scratchMatrix.getElementIndex(q, p)]) > tolerance) {
+    const qq = matrix[scratchMatrix.getElementIndex(q, q)];
+    const pp = matrix[scratchMatrix.getElementIndex(p, p)];
+    const qp = matrix[scratchMatrix.getElementIndex(q, p)];
 
     const tau = (qq - pp) / 2.0 / qp;
     let t;
@@ -150,10 +152,10 @@ function shurDecomposition(matrix, result) {
   }
 
   // Copy into result
-  result = Matrix3.copy(Matrix3.IDENTITY, result);
-  result[Matrix3.getElementIndex(p, p)] = result[Matrix3.getElementIndex(q, q)] = c;
-  result[Matrix3.getElementIndex(q, p)] = s;
-  result[Matrix3.getElementIndex(p, q)] = -s;
+  Matrix3.IDENTITY.to(result);
+  result[scratchMatrix.getElementIndex(p, p)] = result[scratchMatrix.getElementIndex(q, q)] = c;
+  result[scratchMatrix.getElementIndex(q, p)] = s;
+  result[scratchMatrix.getElementIndex(p, q)] = -s;
 
   return result;
 }

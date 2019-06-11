@@ -44,6 +44,16 @@ const INDICES = Object.freeze({
 const constants = {};
 
 export default class Matrix3 extends Matrix {
+  static get IDENTITY() {
+    constants.IDENTITY = constants.IDENTITY || Object.freeze(new Matrix3(IDENTITY));
+    return constants.IDENTITY;
+  }
+
+  static get ZERO() {
+    constants.ZERO = constants.ZERO || Object.freeze(new Matrix3(ZERO));
+    return constants.ZERO;
+  }
+
   get ELEMENTS() {
     return 9;
   }
@@ -54,16 +64,6 @@ export default class Matrix3 extends Matrix {
 
   get INDICES() {
     return INDICES;
-  }
-
-  get IDENTITY() {
-    constants.IDENTITY = constants.IDENTITY || Object.freeze(new Matrix3(IDENTITY));
-    return constants.IDENTITY;
-  }
-
-  get ZERO() {
-    constants.ZERO = constants.ZERO || Object.freeze(new Matrix3(ZERO));
-    return constants.ZERO;
   }
 
   constructor(array) {
