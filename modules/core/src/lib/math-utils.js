@@ -18,6 +18,9 @@ export default {
   EPSILON15: 1e-15,
   EPSILON16: 1e-16,
   EPSILON17: 1e-17,
+  EPSILON18: 1e-18,
+  EPSILON19: 1e-19,
+  EPSILON20: 1e-20,
 
   PI_OVER_TWO: Math.PI / 2,
   PI_OVER_FOUR: Math.PI / 4,

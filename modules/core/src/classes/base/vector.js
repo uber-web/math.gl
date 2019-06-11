@@ -1,6 +1,6 @@
 import MathArray from './math-array';
-import {checkNumber} from './validators';
-import assert from './assert';
+import {checkNumber} from '../../lib/validators';
+import assert from '../../lib/assert';
 
 export default class Vector extends MathArray {
   // ACCESSORS

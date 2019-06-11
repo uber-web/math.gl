@@ -24,7 +24,13 @@ export function validateVector(v, length) {
   if (v.length !== length) {
     return false;
   }
-  return v.every(Number.isFinite);
+  // Could be arguments "array" (v.every not availasble)
+  for (let i = 0; i < v.length; ++i) {
+    if (!Number.isFinite(v[i])) {
+      return false;
+    }
+  }
+  return true;
 }
 
 export function checkNumber(value) {

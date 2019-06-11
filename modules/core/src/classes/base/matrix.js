@@ -1,38 +1,50 @@
 import MathArray from './math-array';
-import {checkNumber} from './validators';
-import {config} from './common';
+import {checkNumber, deprecated} from '../../lib/validators';
+import {config} from '../../lib/common';
 
 export default class Matrix extends MathArray {
+  // fromObject(object) {
+  //   const array = object.elements;
+  //   return this.fromRowMajor(array);
+  // }
+
+  // toObject(object) {
+  //   const array = object.elements;
+  //   this.toRowMajor(array);
+  //   return object;
+  // }
+
   toString() {
     let string = '[';
     if (config.printRowMajor) {
       string += 'row-major:';
       for (let row = 0; row < this.RANK; ++row) {
         for (let col = 0; col < this.RANK; ++col) {
-          string += ` ${this[row * this.RANK + col]}`;
+          string += ` ${this[col * this.RANK + row]}`;
         }
       }
     } else {
-      string += 'col-major:';
+      string += 'column-major:';
       for (let i = 0; i < this.ELEMENTS; ++i) {
         string += ` ${this[i]}`;
       }
     }
+    string += ']';
     return string;
   }
 
-  // By default assumes row major indices
-  getElement(i, j, columnMajor = false) {
-    return columnMajor ? this[i * 3 + j] : this[j * 3 + i];
+  getElementIndex(row, col) {
+    return col * this.RANK + row;
   }
 
   // By default assumes row major indices
-  setElement(i, j, value, columnMajor = false) {
-    if (columnMajor) {
-      this[i * this.RANK + j] = checkNumber(value);
-    } else {
-      this[j * this.RANK + i] = checkNumber(value);
-    }
+  getElement(row, col) {
+    return this[col * this.RANK + row];
+  }
+
+  // By default assumes row major indices
+  setElement(row, col, value) {
+    this[col * this.RANK + row] = checkNumber(value);
     return this;
   }
 
@@ -56,5 +68,10 @@ export default class Matrix extends MathArray {
 
   multiplyMatrices(a, b) {
     return this.copy(a).multiplyRight(b);
+  }
+
+  setColumnMajor() {
+    deprecated('Matrix.setColumnMajor', '3.0');
+    return this.set(arguments);
   }
 }

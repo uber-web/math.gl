@@ -39,6 +39,7 @@ test('Vector4#debug validators', t => {
   configure({debug: true});
   t.throws(() => new Vector4(NaN, 0, 0, 1));
   t.throws(() => new Vector4().copy([NaN, 0, 0, 1]));
+  t.throws(() => new Vector4().copy([0, 0, 0]));
   configure({debug: false});
   t.doesNotThrow(() => new Vector4(NaN, 0, 0, 1));
   t.doesNotThrow(() => new Vector4().copy([NaN, 0, 0, 1]));

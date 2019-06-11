@@ -67,20 +67,25 @@ const float64Array = new Float64Array([1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0,
 const mathglVector4 = new Vector4();
 const dirVector4 = new Vector4(0, 0, 0, 0);
 const pointVector4 = new Vector4(0, 0, 0, 1);
+const vector3 = [0, 0, 0];
 
 export default function matrix4Bench(suite, addReferenceBenchmarks) {
   suite
     // add tests
     .group('@math.gl/core: Matrix4 constructors')
-    .add('Matrix4#new Matrix4()', () => configure({debug: false}), () => new Matrix4())
     .add('Matrix4#new Matrix4(debug)', () => configure({debug: true}), () => new Matrix4())
-    .add('Matrix4#copy()', () => configure({debug: false}), () => matrix4.copy(IDENTITY))
-    // .add('Matrix4#from(Matrix4)', () => matrix4.from(arrayVector))
-    // .add('Matrix4#from(Object)', () => matrix4.from(objectVector))
-    // .add('Matrix4#to(Matrix4)', () => matrix4.to(arrayVector))
-    // .add('Matrix4#to(Object)', () => matrix4.to(objectVector));
+    .add('Matrix4#new Matrix4()', () => configure({debug: false}), () => new Matrix4())
+    .add('Matrix4#copy()', () => matrix4.copy(IDENTITY))
+    .add('Matrix4#set()', () => matrix4.set(1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1))
+    .add('Matrix4#setRowMajor()', () =>
+      matrix4.setRowMajor(1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1)
+    )
     .add('Matrix4#identity', () => matrix4.identity())
     .add('Matrix4#fromQuaternion', () => matrix4.fromQuaternion([1, 1, 1, 1]));
+  // .add('Matrix4#from(Matrix4)', () => matrix4.from(arrayVector))
+  // .add('Matrix4#from(Object)', () => matrix4.from(objectVector))
+  // .add('Matrix4#to(Matrix4)', () => matrix4.to(arrayVector))
+  // .add('Matrix4#to(Object)', () => matrix4.to(objectVector));
 
   if (addReferenceBenchmarks) {
     suite
@@ -107,12 +112,10 @@ export default function matrix4Bench(suite, addReferenceBenchmarks) {
     .group('@math.gl/core: Matrix4 Multiplication')
     .add('Matrix4#multiplyRight(Matrix4)', () => matrix4.multiplyRight(matrix4))
     .add('gl-matrix#multiply(Matrix4)', () => mat4.multiply(matrix4, matrix4, matrix4))
-    .add('Matrix4#transformVector(d4)', () => matrix4.transformVector(dirVector4, mathglVector4))
-    .add('Matrix4#transformVector(p4)', () => matrix4.transformVector(pointVector4, mathglVector4))
-    .add('Matrix4#transformDirection', () => matrix4.transformDirection(dirVector4, mathglVector4))
-    .add('Matrix4#transformDirection4', () =>
-      matrix4.transformDirection4(dirVector4, mathglVector4)
-    );
+    .add('Matrix4#transform(dir4)', () => matrix4.transform(dirVector4, mathglVector4))
+    .add('Matrix4#transform(point4)', () => matrix4.transform(pointVector4, mathglVector4))
+    .add('Matrix4#transformAsVector(v3)', () => matrix4.transformAsVector(vector3, vector3))
+    .add('Matrix4#transformAsPoint(v3)', () => matrix4.transformAsVector(vector3, vector3));
 
   suite
     .group('@math.gl/core: Matrix4 accessors')

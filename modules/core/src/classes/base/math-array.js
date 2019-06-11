@@ -18,42 +18,11 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import {config, formatValue, equals, isArray} from './common';
-import {checkVector} from './validators';
+import {config, formatValue, equals, isArray} from '../../lib/common';
 
 export default class MathArray extends Array {
-  // get length() {
-  //   return this.ELEMENTS;
-  // }
-
-  // constructor(...args) {
-  //   for (let i = 0; i < args.length; ++i) {
-  //     this[i] = args[i];
-  //   }
-  // }
-
   clone() {
     return new this.constructor().copy(this);
-  }
-
-  copy(array) {
-    if (config.debug) {
-      checkVector(array, this.ELEMENTS, this.constructor.name);
-    }
-    for (let i = 0; i < this.ELEMENTS; ++i) {
-      this[i] = array[i];
-    }
-    return this;
-  }
-
-  set(...args) {
-    if (config.debug) {
-      checkVector(args, this.ELEMENTS, this.constructor.name);
-    }
-    for (let i = 0; i < this.ELEMENTS; ++i) {
-      this[i] = args[i];
-    }
-    return this;
   }
 
   from(arrayOrObject) {
@@ -68,7 +37,14 @@ export default class MathArray extends Array {
   }
 
   to(arrayOrObject) {
+    if (arrayOrObject === this) {
+      return this;
+    }
     return isArray(arrayOrObject) ? this.toArray(arrayOrObject) : this.toObject(arrayOrObject);
+  }
+
+  toTarget(target) {
+    return target ? this.to(target) : this;
   }
 
   toArray(array = [], offset = 0) {

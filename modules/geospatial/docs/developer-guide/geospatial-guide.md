@@ -1,4 +1,4 @@
-# Geospatial Math
+# Geospatial Math Overview
 
 The `@math.gl/geospatial` librarys provides support for geospatial math.
 
@@ -47,3 +47,13 @@ const transformMatrix = Ellipsoid.WGS84.eastNorthUpToFixedFrame([0, 0, 0]);
 Like all non-core math.gl modules, this module can be used independently of core math.gl classes.
 
 - Any input or result vectors can be supplied as JavaScript `Array` instances of length 3, or objects with `x`, `y`, `z` elements.
+
+
+## History
+
+This library was initially developed as a fork of selected classes from Cesium math library, as part of a collaboration between vis.gl and Cesium teams to provide framework-independent, portable support for the 3D tiles specification.
+
+## Attribution
+
+This code was initially forked from [Cesium](https://github.com/AnalyticalGraphicsInc/cesium) under the Apache 2 License.
+

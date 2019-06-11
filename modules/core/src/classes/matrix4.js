@@ -19,7 +19,7 @@
 // THE SOFTWARE.
 
 import {checkVector, deprecated} from '../lib/validators';
-import Matrix from '../lib/matrix';
+import Matrix from './base/matrix';
 
 import {vec2_transformMat4AsVector, vec3_transformMat4AsVector} from '../lib/gl-matrix-extras';
 
@@ -28,30 +28,29 @@ import * as vec2 from 'gl-matrix/vec2';
 import * as vec3 from 'gl-matrix/vec3';
 import * as vec4 from 'gl-matrix/vec4';
 
-const IDENTITY = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
+const IDENTITY = Object.freeze([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
+const ZERO = Object.freeze([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
 
-// eslint-disable-next-line complexity
-export function validateMatrix4(m) {
-  return (
-    m.length === 16 &&
-    Number.isFinite(m[0]) &&
-    Number.isFinite(m[1]) &&
-    Number.isFinite(m[2]) &&
-    Number.isFinite(m[3]) &&
-    Number.isFinite(m[4]) &&
-    Number.isFinite(m[5]) &&
-    Number.isFinite(m[6]) &&
-    Number.isFinite(m[7]) &&
-    Number.isFinite(m[8]) &&
-    Number.isFinite(m[9]) &&
-    Number.isFinite(m[10]) &&
-    Number.isFinite(m[11]) &&
-    Number.isFinite(m[12]) &&
-    Number.isFinite(m[13]) &&
-    Number.isFinite(m[14]) &&
-    Number.isFinite(m[15])
-  );
-}
+const INDICES = Object.freeze({
+  COL0ROW0: 0,
+  COL0ROW1: 1,
+  COL0ROW2: 2,
+  COL0ROW3: 3,
+  COL1ROW0: 4,
+  COL1ROW1: 5,
+  COL1ROW2: 6,
+  COL1ROW3: 7,
+  COL2ROW0: 8,
+  COL2ROW1: 9,
+  COL2ROW2: 10,
+  COL2ROW3: 11,
+  COL3ROW0: 12,
+  COL3ROW1: 13,
+  COL3ROW2: 14,
+  COL3ROW3: 15
+});
+
+const constants = {};
 
 export default class Matrix4 extends Matrix {
   get ELEMENTS() {
@@ -62,60 +61,91 @@ export default class Matrix4 extends Matrix {
     return 4;
   }
 
-  constructor() {
+  get INDICES() {
+    return INDICES;
+  }
+
+  get IDENTITY() {
+    constants.IDENTITY = constants.IDENTITY || Object.freeze(new Matrix4(IDENTITY));
+    return constants.IDENTITY;
+  }
+
+  get ZERO() {
+    constants.ZERO = constants.ZERO || Object.freeze(new Matrix4(ZERO));
+    return constants.ZERO;
+  }
+
+  constructor(array) {
     // PERF NOTE: initialize elements as double precision numbers
     super(-0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0);
-    if (arguments.length === 1 && Array.isArray(arguments[0])) {
-      this.copy(arguments[0]);
+    if (arguments.length === 1 && Array.isArray(array)) {
+      this.copy(array);
     } else {
       this.identity();
     }
   }
 
-  fromObject(object) {
-    const array = object.elements;
-    return this.fromRowMajor(array);
-  }
-
-  toObject(object) {
-    const array = object.elements;
-    this.toRowMajor(array);
-    return object;
-  }
-
-  // Sets exact values (column major)
-  set(...args) {
-    return this.fromColumnMajor(...args);
-  }
-
-  // accepts column major order, stores in column major order
-  fromColumnMajor(...args) {
-    return this.copy(args);
-  }
-
-  // accepts row major order, stores as column major
-  fromRowMajor(...args) {
-    this[0] = args[0];
-    this[1] = args[4];
-    this[2] = args[8];
-    this[3] = args[12];
-    this[4] = args[1];
-    this[5] = args[5];
-    this[6] = args[9];
-    this[7] = args[13];
-    this[8] = args[2];
-    this[9] = args[6];
-    this[10] = args[10];
-    this[11] = args[14];
-    this[12] = args[3];
-    this[13] = args[7];
-    this[14] = args[11];
-    this[15] = args[15];
+  copy(array) {
+    this[0] = array[0];
+    this[1] = array[1];
+    this[2] = array[2];
+    this[3] = array[3];
+    this[4] = array[4];
+    this[5] = array[5];
+    this[6] = array[6];
+    this[7] = array[7];
+    this[8] = array[8];
+    this[9] = array[9];
+    this[10] = array[10];
+    this[11] = array[11];
+    this[12] = array[12];
+    this[13] = array[13];
+    this[14] = array[14];
+    this[15] = array[15];
     return this.check();
   }
 
-  toColumnMajor(result) {
-    return this.toArray(result);
+  // eslint-disable-next-line max-params
+  set(m00, m10, m20, m30, m01, m11, m21, m31, m02, m12, m22, m32, m03, m13, m23, m33) {
+    this[0] = m00;
+    this[1] = m10;
+    this[2] = m20;
+    this[3] = m30;
+    this[4] = m01;
+    this[5] = m11;
+    this[6] = m21;
+    this[7] = m31;
+    this[8] = m02;
+    this[9] = m12;
+    this[10] = m22;
+    this[11] = m32;
+    this[12] = m03;
+    this[13] = m13;
+    this[14] = m23;
+    this[15] = m33;
+    return this.check();
+  }
+
+  // accepts row major order, stores as column major
+  // eslint-disable-next-line max-params
+  setRowMajor(m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33) {
+    this[0] = m00;
+    this[1] = m10;
+    this[2] = m20;
+    this[3] = m30;
+    this[4] = m01;
+    this[5] = m11;
+    this[6] = m21;
+    this[7] = m31;
+    this[8] = m02;
+    this[9] = m12;
+    this[10] = m22;
+    this[11] = m32;
+    this[12] = m03;
+    this[13] = m13;
+    this[14] = m23;
+    this[15] = m33;
+    return this.check();
   }
 
   toRowMajor(result) {
@@ -446,72 +476,4 @@ export default class Matrix4 extends Matrix {
     deprecated('Matrix4.transformDirection', '3.0');
     return this.transformAsVector(vector, result);
   }
-
-  /* eslint-disable max-params */
-  // accepts row major order, stores as column major
-  // prettier-ignore
-  setRowMajor(
-    m00 = 1,
-    m01 = 0,
-    m02 = 0,
-    m03 = 0,
-    m10 = 0,
-    m11 = 1,
-    m12 = 0,
-    m13 = 0,
-    m20 = 0,
-    m21 = 0,
-    m22 = 1,
-    m23 = 0,
-    m30 = 0,
-    m31 = 0,
-    m32 = 0,
-    m33 = 1
-  ) {
-    // prettier-ignore
-    return this.fromRowMajor(
-      m00, m01, m02, m03, m10, m11, m12, m13, m20, m21, m22, m23, m30, m31, m32, m33
-    );
-  }
-
-  // accepts column major order, stores in column major order
-  // prettier-ignore
-  setColumnMajor(
-    m00 = 1,
-    m10 = 0,
-    m20 = 0,
-    m30 = 0,
-    m01 = 0,
-    m11 = 1,
-    m21 = 0,
-    m31 = 0,
-    m02 = 0,
-    m12 = 0,
-    m22 = 1,
-    m32 = 0,
-    m03 = 0,
-    m13 = 0,
-    m23 = 0,
-    m33 = 1
-  ) {
-    this[0] = m00;
-    this[1] = m10;
-    this[2] = m20;
-    this[3] = m30;
-    this[4] = m01;
-    this[5] = m11;
-    this[6] = m21;
-    this[7] = m31;
-    this[8] = m02;
-    this[9] = m12;
-    this[10] = m22;
-    this[11] = m32;
-    this[12] = m03;
-    this[13] = m13;
-    this[14] = m23;
-    this[15] = m33;
-    return this.check();
-  }
-  /* eslint-enable no-multi-spaces, brace-style, no-return-assign */
-  /* eslint-enable max-params */
 }

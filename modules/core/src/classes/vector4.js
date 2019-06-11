@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import Vector from '../lib/vector';
+import Vector from './base/vector';
 import {config, isArray} from '../lib/common';
 import {checkNumber} from '../lib/validators';
 
@@ -44,6 +44,22 @@ export default class Vector4 extends Vector {
       this[2] = z;
       this[3] = w;
     }
+  }
+
+  set(x, y, z, w) {
+    this[0] = x;
+    this[1] = y;
+    this[2] = z;
+    this[3] = w;
+    return this.check();
+  }
+
+  copy(array) {
+    this[0] = array[0];
+    this[1] = array[1];
+    this[2] = array[2];
+    this[3] = array[3];
+    return this.check();
   }
 
   fromObject(object) {

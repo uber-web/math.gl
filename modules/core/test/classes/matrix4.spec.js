@@ -19,9 +19,9 @@
 // THE SOFTWARE.
 
 /* eslint-disable max-statements */
-import {Matrix4, Vector3, config} from 'math.gl';
+import {Matrix4, Vector3, config, configure} from 'math.gl';
 import test from 'tape-catch';
-import {tapeEquals} from 'test/utils/tape-assertions';
+import {tapeEquals, tapeEqualsEpsilon} from 'test/utils/tape-assertions';
 
 config.EPSILON = 1e-6;
 
@@ -60,6 +60,19 @@ test.skip('Matrix4#to', t => {
   const matrix = new Matrix4(...INDICES_MATRIX);
   tapeEquals(t, matrix.to([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]), INDICES_MATRIX);
   // t.deepEquals(matrix.to({x: 0, y: 0, z: 0, w: 0}), {x: 1, y: 2, z: 4});
+  t.end();
+});
+
+test('Matrix4#toString', t => {
+  const matrix = new Matrix4(INDICES_MATRIX);
+  configure({printRowMajor: true});
+  tapeEquals(t, String(matrix), '[row-major: 1 5 9 13 2 6 10 14 3 7 11 15 4 8 12 16]');
+
+  configure({printRowMajor: false});
+  tapeEquals(t, String(matrix), '[column-major: 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16]');
+
+  configure({printRowMajor: true});
+
   t.end();
 });
 
@@ -114,49 +127,70 @@ test('Matrix4#setRowMajor', t => {
   const INPUT = INDICES_MATRIX;
   const RESULT = TRANSPOSED_INDICES_MATRIX;
 
-  let m = new Matrix4().setRowMajor(...INPUT);
-
+  const m = new Matrix4().setRowMajor(...INPUT);
   tapeEquals(t, m, RESULT, 'setRowMajor gave the right result');
-
-  m = new Matrix4().setRowMajor(1, 2, 3, 4, 5, 6, 7, 8);
-
-  tapeEquals(
-    t,
-    m,
-    [1, 5, 0, 0, 2, 6, 0, 0, 3, 7, 1, 0, 4, 8, 0, 1],
-    'setRowMajor with missing params gave the right result'
-  );
-
-  m = new Matrix4().setRowMajor();
-
-  tapeEquals(t, m, IDENTITY_MATRIX, 'setRowMajor with no params gave the right result');
 
   t.end();
 });
 
-test('Matrix4#setColumnMajor', t => {
-  t.equals(typeof Matrix4.prototype.setColumnMajor, 'function');
-
-  const INPUT = INDICES_MATRIX;
-  const RESULT = INDICES_MATRIX;
-
-  let m = new Matrix4().setColumnMajor(...INPUT);
-
-  tapeEquals(t, m, RESULT, 'set gave the right result');
-
-  m = new Matrix4().setColumnMajor(1, 2, 3, 4, 5, 6, 7, 8);
-
+test('Matrix4#perspective#', t => {
+  const fovy = Math.PI * 0.5;
+  const result = new Matrix4().perspective({fovy, aspect: 1, near: 0, far: 1});
   tapeEquals(
     t,
-    m,
-    [1, 2, 3, 4, 5, 6, 7, 8, 0, 0, 1, 0, 0, 0, 0, 1],
-    'setColumnMajor with missing params gave the right result'
+    result,
+    [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, -1, 0, 0, 0, 0],
+    'should place values into out'
   );
+  t.end();
+});
 
-  m = new Matrix4().setColumnMajor();
+test('Matrix4#perspective#with nonzero near, 45deg fovy, and realistic aspect ratio', t => {
+  const result = new Matrix4().perspective({
+    fovy: (45 * Math.PI) / 180.0,
+    aspect: 640 / 480,
+    near: 0.1,
+    far: 200
+  });
+  tapeEquals(
+    t,
+    result,
+    [1.81066, 0, 0, 0, 0, 2.414213, 0, 0, 0, 0, -1.001, -1, 0, 0, -0.2001, 0],
+    'should calculate correct matrix'
+  );
+  t.end();
+});
 
-  tapeEquals(t, m, IDENTITY_MATRIX, 'setColumnMajor with no params gave the right result');
+test('Matrix4#perspective#with no far plane, 45deg fovy, and realistic aspect ratio', t => {
+  const result = new Matrix4().perspective({
+    fovy: (45 * Math.PI) / 180.0,
+    aspect: 640 / 480,
+    near: 0.1
+  });
+  tapeEqualsEpsilon(
+    t,
+    result,
+    [1.81066, 0, 0, 0, 0, 2.414213, 0, 0, 0, 0, -1, -1, 0, 0, -0.2, 0],
+    1e-3,
+    'should calculate correct matrix'
+  );
+  // TODO why so inexact?
+  t.end();
+});
 
+test('Matrix4#perspective#with infinite far plane, 45deg fovy, and realistic aspect ratio', t => {
+  const result = new Matrix4().perspective({
+    fovy: (45 * Math.PI) / 180.0,
+    aspect: 640 / 480,
+    near: 0.1,
+    far: Infinity
+  });
+  tapeEquals(
+    t,
+    result,
+    [1.81066, 0, 0, 0, 0, 2.414213, 0, 0, 0, 0, -1, -1, 0, 0, -0.2, 0],
+    'should calculate correct matrix'
+  );
   t.end();
 });
 
@@ -451,6 +485,10 @@ test('Matrix4#transform', t => {
     const p4 = matrix[testCase.method](testCase.input);
     tapeEquals(t, p4, testCase.expected, 'transform gave the right result');
   }
+
+  t.throws(() => t.transform([NaN, 0, 0, 0]));
+  t.throws(() => t.transform([0, 0, 0]));
+  t.throws(() => t.transform([0, 0, 0, 0, 0]));
 
   t.end();
 });

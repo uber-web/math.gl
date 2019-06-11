@@ -8,7 +8,7 @@ There are many possible ways to represent points in space using coordinates, e.g
 math.gl provides support for a couple of 3D coordinate systems:
 * Rectilinear (`Vector3`) - Typically used to represent standard Cartesian space
 * Spherical (`SpericalCoordinates`) - Two angles representing point on sphere and a distance from center
-* Projective/Homogenous (`Vector4`) - These are coordinates in "projective" 3-space. The purpose of these is explained in [link](./'homogenous-coordinates.md')
+* Projective/Homogeneous (`Vector4`) - These are coordinates in "projective" 3-space. The purpose of these is explained in [link](./'homogeneous-coordinates.md')
 
 
 ## Converting between Coordinate Systems

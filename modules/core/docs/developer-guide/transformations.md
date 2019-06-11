@@ -2,7 +2,7 @@
 
 One of the core use cases for math.gl is to perform transformations on objects (typically either vectors or more complex object such as spheres, planes, boxes etc).
 
-There are additional articles [docs/developer-guide/concepts](./'homogenous-coordinates.md') that provides more background about advantages when using 4x4 matrices, those transformations work in the same way from an API perspective as the ones described here.
+There are additional articles [docs/developer-guide/concepts](./'homogeneous-coordinates.md') that provides more background about advantages when using 4x4 matrices, those transformations work in the same way from an API perspective as the ones described here.
 
 ## Representing Transformations
 
