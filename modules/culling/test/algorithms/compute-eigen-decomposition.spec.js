@@ -82,6 +82,6 @@ test('computeEigenDecomposition#computes eigenvalues and eigenvectors with resul
   lambda = diagonal.getColumn(2, new Vector3()).z;
   tapeEqualsEpsilon(t, v.clone().scale(lambda), v.transformByMatrix3(a), _MathUtils.EPSILON14);
   */
-  
+
   t.end();
 });
