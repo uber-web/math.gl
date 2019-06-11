@@ -1,7 +1,7 @@
 import test from 'tape-catch';
-import {tapeEqualsEpsilon} from 'test/utils/tape-assertions';
+// import {tapeEqualsEpsilon} from 'test/utils/tape-assertions';
 
-import {Vector3, Matrix3, _MathUtils} from 'math.gl';
+import {Matrix3} from 'math.gl';
 import computeEigenDecomposition from '@math.gl/culling/algorithms/compute-eigen-decomposition';
 
 test('computeEigenDecomposition#throws without a matrix', t => {
@@ -17,14 +17,17 @@ test('computeEigenDecomposition#computes eigenvalues and eigenvectors', t => {
     1.0, -2.0, 3.0);
 
   // prettier-ignore
-  const expectedDiagonal = new Matrix3().setRowMajor(
-    3.0, 0.0, 0.0,
-    0.0, 6.0, 0.0,
-    0.0, 0.0, 1.0);
+  // const expectedDiagonal = new Matrix3().setRowMajor(
+  //   3.0, 0.0, 0.0,
+  //   0.0, 6.0, 0.0,
+  //   0.0, 0.0, 1.0);
 
-  const {diagonal, unitary} = computeEigenDecomposition(a);
+  const result = computeEigenDecomposition(a);
+  t.ok(result);
 
   /* TODO - not yet quite right
+  const {diagonal, unitary} = result;
+
   tapeEqualsEpsilon(t, diagonal, expectedDiagonal, _MathUtils.EPSILON14);
 
   let v = unitary.getColumn(0, new Vector3());
@@ -51,10 +54,10 @@ test('computeEigenDecomposition#computes eigenvalues and eigenvectors with resul
     1.0, -2.0, 3.0);
 
   // prettier-ignore
-  const expectedDiagonal = new Matrix3().setRowMajor(
-    3.0, 0.0, 0.0,
-    0.0, 6.0, 0.0,
-    0.0, 0.0, 1.0);
+  // const expectedDiagonal = new Matrix3().setRowMajor(
+  //   3.0, 0.0, 0.0,
+  //   0.0, 6.0, 0.0,
+  //   0.0, 0.0, 1.0);
 
   const result = {
     unitary: new Matrix3(),
@@ -63,11 +66,11 @@ test('computeEigenDecomposition#computes eigenvalues and eigenvectors with resul
 
   const decomposition = computeEigenDecomposition(a, result);
 
-  const {diagonal, unitary} = decomposition;
-
   t.equals(decomposition, result);
 
   /* TODO - not yet quite right
+  const {diagonal, unitary} = decomposition;
+
   tapeEqualsEpsilon(t, diagonal, expectedDiagonal, _MathUtils.EPSILON14);
 
   let v = unitary.getColumn(0, new Vector3());
