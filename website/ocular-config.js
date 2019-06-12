@@ -18,7 +18,7 @@ for (const dependency in DEPENDENCIES) {
 const DOCS = require('../docs/table-of-contents.json');
 
 module.exports = {
-  logLevel: 4,
+  logLevel: 2,
 
   DOC_FOLDERS: [`${__dirname}/../docs/`, `${__dirname}/../modules`],
   ROOT_FOLDER: '..',
@@ -43,38 +43,38 @@ module.exports = {
   HOME_BULLETS: [
     {
       text: 'Array-based Classes',
-      desc: 'All math.gl classes (like Vector3, Matrix4) are subclasses of the built-in JavaScript Array class. This means that they can be used directly with any Javascript function that e.g. expects plain JavaScript Array arguments for Vectors, which is increasingly common.',
+      desc: 'All math.gl classes (like Vector3, Matrix4) are subclasses of the built-in JavaScript Array class.',
       img: 'images/icon-high-precision.svg'
     },
     {
       text: 'Debug Friendly',
-      desc: 'JavaScript math can be frustrating to code and debug. math.gl offers optional error checking after every math operation which makes quick work of locating coding errors and bad data. Also, strong "printing support" (toString) simplifies debugging.',
+      desc: 'math.gl offers optional error checking after every math operation which makes quick work of locating coding errors and bad data.',
       img: 'images/icon-high-precision.svg'
     },
     {
       text: 'WebGL Support',
-      desc: 'Matrices are stored internally in the format required by WebGL (array of contiguous values in column-major order), while exposing the more "natural" row-major API to the JavaScript programmer (e.g. through accessors, printing using toString() etc).',
+      desc: 'Matrices are stored internally in the format required by WebGL (column-major), while exposing a row-major API to the JavaScript programmer.',
       img: 'images/icon-high-precision.svg'
     },
     {
       text: 'Documentation',
-      desc: 'Some JavaScript 3D math libraries come with reference documentation only. If you are new to 3D programming it can be hard to know where to start. math.gl comes with articles that try to show you the big picture and get you quickly up-to-speed on the mathematical concepts and the math.gl classes that support them.',
+      desc: 'math.gl comes with articles that get you quickly up-to-speed on the mathematical concepts used in 3D programming.',
       img: 'images/icon-high-precision.svg'
     },
     {
       text: 'Size Conscious',
-      desc: 'A math library can quickly get big as a various classed and functions keep getting added. But for many 3D applications, only a few basic operations are necessary. math.gl has made a choices to restrict itself to a set of classes and functions that are likely to be most important in WebGL applications. The intention is to position math.gl as a "mid-size" 3D math library: reasonably full featured, but small enough that unless you are targeting a very small final bundle for your application, its size should not be a big concern.',
+      desc: 'To keep unused code from being bundled, math.gl avoids cross dependencies to maximize tree-shaking.',
       img: 'images/icon-high-precision.svg'
     }
   ],
 
   EXAMPLES: [
-    // {
-    //   title: 'Benchmarks',
-    //   image: 'images/icon-high-precision.svg',
-    //   componentUrl: resolve(__dirname, '../examples/benchmarks/app.js'),
-    //   path: 'examples/benchmarks'
-    // }
+    {
+      title: 'Benchmark',
+      image: 'images/icon-high-precision.svg',
+      componentUrl: resolve(__dirname, '../examples/benchmarks/app.js'),
+      path: 'examples/benchmarks'
+    }
   ],
 
   ADDITIONAL_LINKS: [],
@@ -87,11 +87,7 @@ module.exports = {
 
   // Avoids duplicate conflicting inputs when importing from examples folders
   // Ocular adds this to gatsby's webpack config
-  webpack: {
-    resolve: {
-      // modules: [resolve(__dirname, './node_modules')],
-      alias: Object.assign({}, ALIASES, dependencyAliases)
-      // Local aliases need to be set in local gatsby node!
-    }
-  }
+  WEBPACK_ALIAS: Object.assign({}, ALIASES, dependencyAliases),
+
+  WEBPACK_EXCLUDE_REGEXP: /math\.gl\/modules\/.*js$/
 };

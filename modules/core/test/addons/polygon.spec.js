@@ -84,8 +84,11 @@ test('Polygon#methods', t => {
 });
 
 test('Polygon#forEachSegment', t => {
+<<<<<<< HEAD
   const config = configure({EPSILON: 1e-4});
 
+=======
+>>>>>>> Website fixes
   for (const tc of TEST_CASES) {
     const polygon = new Polygon(tc.polygon);
     let count = 0;
@@ -94,7 +97,10 @@ test('Polygon#forEachSegment', t => {
     });
     t.equals(count, tc.segments, 'forEachSegment() iterated over all virtual segments');
   }
+<<<<<<< HEAD
 
   configure(config);
+=======
+>>>>>>> Website fixes
   t.end();
 });

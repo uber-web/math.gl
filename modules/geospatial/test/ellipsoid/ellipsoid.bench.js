@@ -4,30 +4,27 @@
 import {Vector3, Matrix4} from 'math.gl';
 import {Ellipsoid} from '@math.gl/geospatial';
 // import {externalVector3ToArray, setExternalVector3} from '@math.gl/geospatial/type-utils';
-import * as vec3 from 'gl-matrix/vec3';
+// import * as vec3 from 'gl-matrix/vec3';
 
 const ellipsoid = Ellipsoid.WGS84;
 const spaceCartesian = new Vector3(4582719.8827300891, -4582719.8827300882, 1725510.4250797231);
 const spaceCartographic = new Vector3(-45.0, 15.0, 330000.0);
-const spaceCartographicObject = {x: -45.0, y: 15.0, z: 330000.0};
+// const spaceCartographicObject = {x: -45.0, y: 15.0, z: 330000.0};
 const resultVector = new Vector3();
-const resultArray = [0, 0, 0];
-const resultObject = {x: 0, y: 0, z: 0};
+// const resultArray = [0, 0, 0];
+// const resultObject = {x: 0, y: 0, z: 0};
 
 const origin = new Vector3(1.0, 0.0, 0.0);
-const northPole = new Vector3(0.0, 0.0, 1.0);
+// const northPole = new Vector3(0.0, 0.0, 1.0);
 const resultMatrix = new Matrix4();
 
 export default function ellipsoidBench(suite) {
   // const spaceCartesian = new Vector3(4582719.8827300891, -4582719.8827300882, 1725510.4250797231);
 
   suite
-    .group('Ellipsoid Major Operations')
+    .group('@math.gl/geospatial Ellipsoid')
     .add('#cartographicToCartesian(=>Vector3)', () =>
       ellipsoid.cartographicToCartesian(spaceCartographic, resultVector)
-    )
-    .add('#cartographicToCartesian(=>Object)', () =>
-      ellipsoid.cartographicToCartesian(spaceCartographic, resultObject)
     )
     .add('#cartesianToCartographic(=>Vector3)', () =>
       ellipsoid.cartesianToCartographic(spaceCartesian, resultVector)
@@ -35,20 +32,23 @@ export default function ellipsoidBench(suite) {
     .add('#eastNorthUpToFixedFrame()', () =>
       Ellipsoid.WGS84.eastNorthUpToFixedFrame(origin, resultMatrix)
     )
-    .add('#eastNorthUpToFixedFrame(Pole)', () =>
-      Ellipsoid.WGS84.eastNorthUpToFixedFrame(northPole, resultMatrix)
-    )
+    // .add('#eastNorthUpToFixedFrame(Pole)', () =>
+    //   Ellipsoid.WGS84.eastNorthUpToFixedFrame(northPole, resultMatrix)
+    // )
 
-    .group('Ellipsoid Minor Operations')
-    .add('#geodSurfNormalCarto(=>Object)', () =>
-      ellipsoid.geodeticSurfaceNormalCartographic(spaceCartographicObject, resultObject)
-    )
+    // .add('#cartographicToCartesian(=>Object)', () =>
+    //   ellipsoid.cartographicToCartesian(spaceCartographic, resultObject)
+    // )
+    // .add('#geodSurfNormalCarto(=>Object)', () =>
+    //   ellipsoid.geodeticSurfaceNormalCartographic(spaceCartographicObject, resultObject)
+    // )
+
     .add('#geodSurfNormal(=>Vector3)', () =>
       ellipsoid.geodeticSurfaceNormalCartographic(spaceCartographic, resultVector)
     )
-    .add('#geodSurfNormalCarto() Opt', () =>
-      geodeticSurfaceNormalCartographicOptimized(spaceCartographic, resultArray)
-    )
+    // .add('#geodSurfNormalCarto() Opt', () =>
+    //   geodeticSurfaceNormalCartographicOptimized(spaceCartographic, resultArray)
+    // )
 
     .add('#geodeticSurfaceNormal(=>Vector3)', () =>
       ellipsoid.geodeticSurfaceNormal(spaceCartesian, resultVector)
@@ -57,13 +57,15 @@ export default function ellipsoidBench(suite) {
     .add('#scaleToGeocentricSurface(=>Vector3)', () =>
       ellipsoid.scaleToGeocentricSurface(spaceCartesian, resultVector)
     )
-    .add('#scaleToGeocentricSurface(=>Object)', () =>
-      ellipsoid.scaleToGeocentricSurface(spaceCartesian, resultObject)
-    );
+    // .add('#scaleToGeocentricSurface(=>Object)', () =>
+    //   ellipsoid.scaleToGeocentricSurface(spaceCartesian, resultObject)
+    // )
+    ;
 
   return suite;
 }
 
+/*
 // Hand optimized version of Ellipsoid.geodeticSurfaceNormalCartographic
 // Computes the normal of the plane tangent to the surface of the ellipsoid at provided position.
 function geodeticSurfaceNormalCartographicOptimized(cartographic, result = new Vector3()) {
@@ -87,3 +89,4 @@ function geodeticSurfaceNormalCartographicOptimized(cartographic, result = new V
 
   return vec3.normalize(result, result);
 }
+*/

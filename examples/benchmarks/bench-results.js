@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 
 import ReactTable from 'react-table';
-import 'react-table/react-table.css';
+import './react-table.css';
 
 function getPercent(score) {
   // Log scale between 100K - 100M, 0-3
@@ -71,7 +71,7 @@ export default class BenchResults extends Component {
     const {log} = this.props;
     return (
       <div>
-        <div style={{display: 'flex', height: 16}}>
+        <div style={{display: 'flex', height: 22}}>
           <BarCell color={RED} percent={100}>
             {' '}
             &lt; 1M iterations/s
@@ -96,17 +96,19 @@ export default class BenchResults extends Component {
             {
               Header: 'Id',
               accessor: 'id',
-              Cell: ({row}) => (row.score > 0 ? row.id : <b>{row.id}</b>)
+              Cell: ({row}) => (row.formattedValue ? row.id : <h3>{row.id.replace(/@math\.gl\/[a-zA-Z]*: /, '')}</h3>)
             },
             {
-              Header: 'Iterations/Second',
-              accessor: 'formattedValue'
+              Header: 'iter/s',
+              accessor: 'formattedValue',
+              maxWidth: 85
             },
             {
               Header: 'Score',
               accessor: 'value',
               id: 'score',
-              Cell: PerformanceBarCell
+              Cell: PerformanceBarCell,
+              maxWidth: 300
             }
           ]}
           showPagination={false}

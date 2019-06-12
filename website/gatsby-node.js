@@ -21,6 +21,7 @@ const callbacks = getGatsbyNodeCallbacks(ocularConfig);
 
 module.exports = callbacks;
 
+/*
 const onCreateWebpackConfig = callbacks.onCreateWebpackConfig;
 
 callbacks.onCreateWebpackConfig = function onCreateWebpackConfigOverride(opts) {
@@ -56,23 +57,23 @@ callbacks.onCreateWebpackConfig = function onCreateWebpackConfigOverride(opts) {
 
     // Exclude all node_modules from transpilation, except for ocular
     exclude: modulePath => {
-      const excluded = /\/modules/.test(modulePath) ||
+      const excluded = /\/modules\/core\/.*\.js$/.test(modulePath) ||
         (/node_modules/.test(modulePath) &&
         !/node_modules\/(ocular|ocular-gatsby|gatsby-plugin-ocular)/.test(modulePath));
-      if (!/\/website/.test(modulePath)) {
-        console.log(modulePath, excluded);
+      if (excluded && /\/modules\/core\/.*js$/.test(modulePath)) {
+        console.log('excluding', modulePath, excluded);
       }
       return excluded;
     }
   });
 
   const newConfig = {
-    module: {
-      rules: [
-        // Omit the default rule where test === '\.jsx?$'
-        newJSRule
-      ]
-    },
+    // module: {
+    //   rules: [
+    //     // Omit the default rule where test === '\.jsx?$'
+    //     newJSRule
+    //   ]
+    // },
     node: {
       fs: 'empty'
     },
@@ -84,3 +85,4 @@ callbacks.onCreateWebpackConfig = function onCreateWebpackConfigOverride(opts) {
   // Merges into the webpack config
   actions.setWebpackConfig(newConfig);
 };
+*/
