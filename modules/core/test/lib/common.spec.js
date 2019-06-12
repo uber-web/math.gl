@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import {Vector2, Vector3} from 'math.gl';
+import {Vector2, Vector3, _Pose as Pose, _MathUtils} from 'math.gl';
 import {config, configure, isArray, clone, equals, exactEquals, formatValue} from 'math.gl';
 import {toRadians, toDegrees} from 'math.gl';
 import {radians, degrees, sin, cos, tan, asin, acos, atan, clamp, lerp} from 'math.gl';
@@ -30,6 +30,7 @@ test('math.gl#types', t => {
   t.equals(typeof radians, 'function');
   t.equals(typeof equals, 'function');
   t.equals(typeof config.EPSILON, 'number');
+  t.ok(_MathUtils);
   t.end();
 });
 
@@ -96,6 +97,22 @@ test('math.gl#equals', t => {
     equals(new Vector2([1.0, 2.0]), [1.0, 2.0]),
     'should return true for Array and Vector2 with same values'
   );
+  t.notOk(
+    equals([1.0, 2.0], [1.0, 2.0, 3.0]),
+    'should return false for Arrays of different lengths'
+  );
+  t.ok(
+    equals(new Vector2([1.0, 2.0]), [1.0, 2.0]),
+    'should return true for Arrays of different types'
+  );
+  t.notOk(
+    equals([1.0, 2.0], new Pose()),
+    'should return false for incompatible objects w equals method'
+  );
+  t.notOk(
+    equals(new Pose(), [1.0, 2.0]),
+    'should return false for incompatible objects w equals method'
+  );
   t.end();
 });
 
@@ -118,6 +135,30 @@ test('math.gl#exactEquals', t => {
   t.notOk(
     exactEquals([1.0, 2.0], new Vector2([1.0, 2.0])),
     'should return false for Array and Vector2 with same values'
+  );
+  t.notOk(
+    exactEquals([1.0, 2.0], [1.0, 2.0, 3.0]),
+    'should return false for Arrays of different lengths'
+  );
+  t.notOk(
+    exactEquals(new Pose(), [1.0, 2.0]),
+    'should return false for incompatible objects w equals method'
+  );
+  t.notOk(
+    exactEquals([1.0, 2.0], new Pose()),
+    'should return false for incompatible objects w equals method'
+  );
+  t.notOk(
+    exactEquals(new Pose(), new Pose({x: 1})),
+    'should return false for different compatible objects w equals method'
+  );
+  t.notOk(
+    exactEquals(new Pose({x: 1}), new Pose()),
+    'should return false for different compatible objects w equals method'
+  );
+  t.notOk(
+    exactEquals([new Pose({x: 1})], [new Pose()]),
+    'should return false for arrays of different compatible objects w equals method'
   );
   t.end();
 });

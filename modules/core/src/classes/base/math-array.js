@@ -103,13 +103,6 @@ export default class MathArray extends Array {
     return this.check();
   }
 
-  inverse() {
-    for (let i = 0; i < this.ELEMENTS; ++i) {
-      this[i] = 1 / this[i];
-    }
-    return this.check();
-  }
-
   lerp(a, b, t) {
     if (t === undefined) {
       t = b;
@@ -168,13 +161,6 @@ export default class MathArray extends Array {
     }
     for (let i = 0; i < this.ELEMENTS; ++i) {
       this[i] *= scale;
-    }
-    return this.check();
-  }
-
-  scaleAndAdd(vector, scale) {
-    for (let i = 0; i < this.ELEMENTS; ++i) {
-      this[i] = this[i] * scale + vector[i];
     }
     return this.check();
   }

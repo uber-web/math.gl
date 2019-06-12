@@ -145,9 +145,4 @@ export default class Vector extends MathArray {
   addScaledVector(a, b) {
     return this.add(new this.constructor(a).multiplyScalar(b));
   }
-
-  operation(operation, ...args) {
-    operation(this, this, ...args);
-    return this.check();
-  }
 }

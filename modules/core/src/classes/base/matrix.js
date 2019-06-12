@@ -1,5 +1,5 @@
 import MathArray from './math-array';
-import {checkNumber, deprecated} from '../../lib/validators';
+import {checkNumber} from '../../lib/validators';
 import {config} from '../../lib/common';
 
 export default class Matrix extends MathArray {
@@ -62,16 +62,5 @@ export default class Matrix extends MathArray {
       this[firstIndex + i] = columnVector[i];
     }
     return this;
-  }
-
-  // three.js compatibility
-
-  multiplyMatrices(a, b) {
-    return this.copy(a).multiplyRight(b);
-  }
-
-  setColumnMajor() {
-    deprecated('Matrix.setColumnMajor', '3.0');
-    return this.set(arguments);
   }
 }

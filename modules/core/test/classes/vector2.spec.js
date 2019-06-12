@@ -171,6 +171,18 @@ test('Vector2#transform', t => {
   t.end();
 });
 
+test('Vector2#transformAsVector', t => {
+  const transform = new Matrix4().scale([0.5, 0.5, 0.5]).translate([1, 1, 1]);
+
+  const TEST_CASES = [{input: [0, 0], result: [0, 0]}, {input: [1, 0], result: [0.5, 0]}];
+  for (const testCase of TEST_CASES) {
+    const v = new Vector2(...testCase.input);
+    const result = v.transformAsVector(transform);
+    tapeEquals(t, result, testCase.result);
+  }
+  t.end();
+});
+
 test('Vector2#transformByMatrix3', t => {
   const transform = new Matrix3().scale([0.5, 0.5, 0.5]).translate([1, 1, 1]);
 

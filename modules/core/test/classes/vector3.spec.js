@@ -126,6 +126,15 @@ test('Vector3#dot', t => {
   t.end();
 });
 
+test('Vector3#angle', t => {
+  const TEST_CASES = [{input: [0, 1, 0], result: Math.PI / 2}];
+  for (const tc of TEST_CASES) {
+    const result = new Vector3([1, 0, 0]).angle(tc.input);
+    tapeEquals(t, result, tc.result);
+  }
+  t.end();
+});
+
 test('Vector3#normalize', t => {
   const TEST_CASES = [
     {input: [0, 0, 0], result: [0, 0, 0]},
