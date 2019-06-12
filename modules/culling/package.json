@@ -2,7 +2,7 @@
   "name": "@math.gl/culling",
   "description": "Culling Functionality for 3D Classes",
   "license": "MIT",
-  "version": "2.3.0",
+  "version": "3.0.0-alpha.1",
   "keywords": [
     "webgl",
     "javascript",
@@ -33,6 +33,6 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "gl-matrix": "^3.0.0",
-    "math.gl": "^2.3.0"
+    "math.gl": "3.0.0-alpha.1"
   }
 }
