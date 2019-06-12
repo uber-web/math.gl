@@ -70,6 +70,8 @@ test('SphericalCoordinates#import', t => {
 test('SphericalCoordinates#constructor', t => {
   const spherical = new SphericalCoordinates();
   t.ok(spherical, 'SphericalCoordinates default constructor OK');
+  t.throws(() => new SphericalCoordinates({ bearing: NaN }));
+  t.throws(() => new SphericalCoordinates({ bearing: 0, pitch: 'a'  }));
   t.end();
 });
 
@@ -104,11 +106,21 @@ test('SphericalCoordinates#accessors', t => {
   t.end();
 });
 
+test('SphericalCoordinates#methods', t => {
+  const spherical = new SphericalCoordinates();
+  spherical.set(1, 0, 0);
+  spherical.copy(new SphericalCoordinates());
+  spherical.fromLngLatZ([1, 1, 0]);
+  spherical.fromVector3([1, 1, 1]);
+  t.end();
+});
+
 test('SphericalCoordinates#clone', t => {
   const spherical = new SphericalCoordinates();
   const s2 = spherical.clone();
   t.notEqual(spherical, s2, 'clone');
   tapeEquals(t, spherical, s2, 'clone');
+  t.ok(spherical.exactEquals(s2), 'clone');
   t.end();
 });
 

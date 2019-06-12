@@ -646,6 +646,4 @@ export default class Euler extends MathArray {
 
     return new Quaternion(x, y, z, w);
   }
-
-  /* eslint-enable complexity, max-statements, one-var */
 }
