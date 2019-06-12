@@ -70,8 +70,8 @@ test('SphericalCoordinates#import', t => {
 test('SphericalCoordinates#constructor', t => {
   const spherical = new SphericalCoordinates();
   t.ok(spherical, 'SphericalCoordinates default constructor OK');
-  t.throws(() => new SphericalCoordinates({ bearing: NaN }));
-  t.throws(() => new SphericalCoordinates({ bearing: 0, pitch: 'a'  }));
+  t.throws(() => new SphericalCoordinates({bearing: NaN}));
+  t.throws(() => new SphericalCoordinates({bearing: 0, pitch: 'a'}));
   t.end();
 });
 

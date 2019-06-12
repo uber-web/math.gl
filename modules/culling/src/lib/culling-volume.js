@@ -24,7 +24,7 @@ export default class CullingVolume {
   // For plane masks (as used in {@link CullingVolume.prototype.computeVisibilityWithPlaneMask}), this value
   // represents the case where the object bounding volume is entirely inside the culling volume.
   static get MASK_INSIDE() {
-    return 0xffffffff;
+    return 0x00000000;
   }
 
   // For plane masks (as used in {@link CullingVolume.prototype.computeVisibilityWithPlaneMask}), this value
@@ -49,8 +49,8 @@ export default class CullingVolume {
     let planeIndex = 0;
 
     for (const faceNormal of faces) {
-      const plane0 = this.planes[planeIndex];
-      const plane1 = this.planes[planeIndex + 1];
+      let plane0 = this.planes[planeIndex];
+      let plane1 = this.planes[planeIndex + 1];
 
       if (!plane0) {
         plane0 = this.planes[planeIndex] = new Vector4();
@@ -60,7 +60,7 @@ export default class CullingVolume {
       }
 
       scratchPlaneCenter
-        .set(faceNormal)
+        .copy(faceNormal)
         .scale(-radius)
         .add(center);
 
@@ -70,7 +70,7 @@ export default class CullingVolume {
       plane0.w = -faceNormal.dot(scratchPlaneCenter);
 
       scratchPlaneCenter
-        .set(faceNormal)
+        .copy(faceNormal)
         .scale(radius)
         .add(center);
       plane1.x = -faceNormal.x;
@@ -82,25 +82,31 @@ export default class CullingVolume {
       planeIndex += 2;
     }
 
-    return result;
+    return this;
   }
 
   // Determines whether a bounding volume intersects the culling volume.
   computeVisibility(boundingVolume) {
     assert(boundingVolume);
     const planes = this.planes;
-    const intersecting = false;
+    const intersect = Intersect.INSIDE;
     for (const plane of this.planes) {
-      const result = boundingVolume.intersectPlane(Plane.fromCartesian4(plane, scratchPlane));
-      if (result === Intersect.OUTSIDE) {
-        return Intersect.OUTSIDE;
-      }
-      if (result === Intersect.INTERSECTING) {
-        intersecting = true;
+      const result = boundingVolume.intersectPlane(plane);
+      switch (result) {
+        case Intersect.OUTSIDE:
+          // We are done
+          return Intersect.OUTSIDE;
+
+        case Intersect.INTERSECTING:
+          // If no other intersection is outside, return INTERSECTING
+          intersect = Intersect.INTERSECTING;
+          break;
+
+        default:
       }
     }
 
-    return intersecting ? Intersect.INTERSECTING : Intersect.INSIDE;
+    return intersect;
   }
 
   // Determines whether a bounding volume intersects the culling volume.

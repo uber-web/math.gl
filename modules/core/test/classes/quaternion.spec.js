@@ -152,8 +152,8 @@ test('Quaternion#identity', t => {
 });
 
 test('Quaternion#add', t => {
-	const quat = new Quaternion(1, 1, 1, 1).identity();
-	t.throws(() => quat.add([0, 0, 0, 0], [0, 0, 0, 0]));
+  const quat = new Quaternion(1, 1, 1, 1).identity();
+  t.throws(() => quat.add([0, 0, 0, 0], [0, 0, 0, 0]));
   tapeEquals(t, quat.add([0, 0, 0, 0]), quat, 'should add quaternion');
   t.end();
 });

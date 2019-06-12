@@ -160,7 +160,6 @@ test('Matrix4#toRowMajor', t => {
   t.end();
 });
 
-
 test('Matrix4#getScale', t => {
   const INPUT = INDICES_MATRIX;
   const RESULT = [3.7416573867739413, 10.488088481701515, 17.37814719698276];
@@ -173,7 +172,24 @@ test('Matrix4#getScale', t => {
 
 test('Matrix4#getRotation', t => {
   const INPUT = INDICES_MATRIX;
-  const RESULT = [0.2672612419124244, 0.19069251784911848, 0.17263060129453078, 0, 1.3363062095621219, 0.5720775535473555, 0.4028047363539052, 0, 2.4053511772118195, 0.9534625892455924, 0.6329788714132796, 0, 0, 0, 0, 1 ];
+  const RESULT = [
+    0.2672612419124244,
+    0.19069251784911848,
+    0.17263060129453078,
+    0,
+    1.3363062095621219,
+    0.5720775535473555,
+    0.4028047363539052,
+    0,
+    2.4053511772118195,
+    0.9534625892455924,
+    0.6329788714132796,
+    0,
+    0,
+    0,
+    0,
+    1
+  ];
 
   const m = new Matrix4(INPUT).getRotation([...INDICES_MATRIX]);
   tapeEquals(t, m, RESULT, 'getRotation gave the right result');
