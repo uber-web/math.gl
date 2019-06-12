@@ -1,0 +1,38 @@
+{
+  "name": "@math.gl/culling",
+  "description": "Culling Functionality for 3D Classes",
+  "license": "MIT",
+  "version": "2.3.0",
+  "keywords": [
+    "webgl",
+    "javascript",
+    "math",
+    "matrix",
+    "matrix4",
+    "vector",
+    "vector2",
+    "vector3",
+    "vector4",
+    "quaternion",
+    "euler",
+    "spherical",
+    "coordinates",
+    "3d"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/uber-web/math.gl.git"
+  },
+  "main": "dist/es5/index.js",
+  "module": "dist/esm/index.js",
+  "esnext": "dist/es6/index.js",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.0.0",
+    "gl-matrix": "^3.0.0",
+    "math.gl": "^2.3.0"
+  }
+}

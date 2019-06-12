@@ -33,6 +33,9 @@ assert(vector instanceof Vector4);
 
 Motivation: This change reduces dependencies between math.gl core classes which improves tree-shaking and bundle sizes.
 
+### Matrix setter functions no longer support ommitted parameters
+
+Motivation: This change increases rigor, facilitates debugging, and improves library compactness, and the use case for default parameters was questionable.
 
 #### Deprecations
 
