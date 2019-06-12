@@ -8,7 +8,7 @@
   <a href="https://npmjs.org/package/math.gl">
     <img src="https://img.shields.io/npm/dm/math.gl.svg?style=flat-square" alt="downloads" />
   </a>
-  <a href='https://coveralls.io/github/uber-web/math.gl?branch=x/cover'><img src='https://coveralls.io/repos/github/uber-web/math.gl/badge.svg' alt='Coverage Status' /></a>
+  <a href='https://coveralls.io/github/uber-web/math.gl'><img src='https://coveralls.io/repos/github/uber-web/math.gl/badge.svg' alt='Coverage Status' /></a>
 </p>
 
 <h1 align="center">math.gl | <a href="https://math.gl">Docs</a></h1>
