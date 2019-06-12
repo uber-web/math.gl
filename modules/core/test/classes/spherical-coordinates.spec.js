@@ -19,22 +19,9 @@
 // THE SOFTWARE.
 
 /* eslint-disable max-statements, max-depth */
-import {_SphericalCoordinates as SphericalCoordinates} from 'math.gl';
 import test from 'tape-catch';
-
-// FOR TAPE TESTING
-// Use tape assert to compares using a.equals(b)
-// Usage test(..., t => { tapeEquals(t, a, b, ...); });
-export function tapeEquals(t, a, b, msg, extra) {
-  /* eslint-disable no-invalid-this */
-  t._assert(a.equals(b), {
-    message: msg || 'should be equal',
-    operator: 'equal',
-    actual: a,
-    expected: b,
-    extra
-  });
-}
+import {tapeEquals} from 'test/utils/tape-assertions';
+import {_SphericalCoordinates as SphericalCoordinates} from 'math.gl';
 
 const REPRESENTATION_TEST_CASES = [
   {
@@ -83,6 +70,8 @@ test('SphericalCoordinates#import', t => {
 test('SphericalCoordinates#constructor', t => {
   const spherical = new SphericalCoordinates();
   t.ok(spherical, 'SphericalCoordinates default constructor OK');
+  t.throws(() => new SphericalCoordinates({bearing: NaN}));
+  t.throws(() => new SphericalCoordinates({bearing: 0, pitch: 'a'}));
   t.end();
 });
 
@@ -101,5 +90,42 @@ test('SphericalCoordinates#representations', t => {
       tapeEquals(t, spherical.toVector3(), tc.vector, `Vector conversion OK ${spherical}`);
     }
   }
+  t.end();
+});
+
+test('SphericalCoordinates#accessors', t => {
+  const spherical = new SphericalCoordinates();
+  t.equals(spherical.bearing, 180, 'bearing');
+  t.equals(spherical.pitch, 0, 'pitch');
+  // t.equals(spherical.altitude, 0, 'altitude');
+  t.equals(spherical.longitude, 0, 'longitude');
+  t.equals(spherical.latitude, 0, 'latitude');
+  t.equals(spherical.lng, 0, 'lng');
+  t.equals(spherical.lat, 0, 'lat');
+  t.equals(spherical.z, 0, 'z');
+  t.end();
+});
+
+test('SphericalCoordinates#methods', t => {
+  const spherical = new SphericalCoordinates();
+  spherical.set(1, 0, 0);
+  spherical.copy(new SphericalCoordinates());
+  spherical.fromLngLatZ([1, 1, 0]);
+  spherical.fromVector3([1, 1, 1]);
+  t.end();
+});
+
+test('SphericalCoordinates#clone', t => {
+  const spherical = new SphericalCoordinates();
+  const s2 = spherical.clone();
+  t.notEqual(spherical, s2, 'clone');
+  tapeEquals(t, spherical, s2, 'clone');
+  t.ok(spherical.exactEquals(s2), 'clone');
+  t.end();
+});
+
+test('SphericalCoordinates#makeSafe', t => {
+  const spherical = new SphericalCoordinates();
+  t.doesNotThrow(() => spherical.makeSafe());
   t.end();
 });

@@ -30,8 +30,25 @@ import {CullingVolume, BoundingSphere, makeBoundingSphereFromPoints} from '@math
 //     Vector3.UNIT_Y
 //   );
 
+test('CullingVolume#constructor', t => {
+  t.doesNotThrow(() => new CullingVolume());
+  t.ok(CullingVolume.MASK_INSIDE >= 0);
+  t.ok(CullingVolume.MASK_OUTSIDE >= 0);
+  t.ok(CullingVolume.MASK_INDETERMINATE >= 0);
+  t.end();
+});
+
 test('CullingVolume#computeVisibility throws without a bounding volume', t => {
   t.throws(() => new CullingVolume().computeVisibility());
+  t.end();
+});
+
+test('CullingVolume#fromBoundingSphere', t => {
+  const sphere = makeBoundingSphereFromPoints([
+    new Vector3(0, -2.0, -1.5),
+    new Vector3(0, 0, -1.5)
+  ]);
+  t.doesNotThrow(() => new CullingVolume().fromBoundingSphere(sphere));
   t.end();
 });
 

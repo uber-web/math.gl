@@ -3,9 +3,9 @@
 
 /* eslint-disable */
 import test from 'tape-catch';
-import {tapeEquals} from 'test/utils/tape-assertions';
+import {tapeEquals, tapeEqualsEpsilon} from 'test/utils/tape-assertions';
 
-import {Vector3, Matrix3, Quaternion, toRadians} from 'math.gl';
+import {Vector3, Matrix3, Quaternion, toRadians, _MathUtils} from 'math.gl';
 import {BoundingSphere, OrientedBoundingBox, Intersect, Plane} from '@math.gl/culling';
 
 const ZERO_VECTOR3 = Object.freeze(new Vector3(0, 0, 0));
@@ -52,7 +52,7 @@ function rotatePositions(positions, axis, angle) {
 function translatePositions(positions, translation) {
   const points = [];
   for (let i = 0; i < positions.length; ++i) {
-    points.push(Vector3.add(translation, positions[i], new Vector3()));
+    points.push(new Vector3(translation).add(positions[i]));
   }
 
   return points;
@@ -102,11 +102,9 @@ test('OrientedBoundingBox#getBoundingSphere works without a result parameter', t
 
 test('BoundingSphere#throws from fromOrientedBoundingBox with null orientedBoundingBox parameter', t => {
   t.throws(() => sphere.fromOrientedBoundingBox(null));
-
   t.end();
 });
 
-/*
 // eslint-disable-next-line max-statements
 function intersectPlaneTestCornersEdgesFaces(t, center, axes) {
   const SQRT1_2 = Math.pow(1.0 / 2.0, 1 / 2.0);
@@ -118,9 +116,18 @@ function intersectPlaneTestCornersEdgesFaces(t, center, axes) {
     const n = new Vector3(nx, ny, nz);
     const arb = new Vector3(357, 924, 258);
 
-    const p0 = n.clone().normalize().multiplyByScalar(-dist);
-    const tang = n.clone().cross(arb).normalize();
-    const binorm = n.clone().cross(tang).normalize();
+    const p0 = n
+      .clone()
+      .normalize()
+      .multiplyByScalar(-dist);
+    const tang = n
+      .clone()
+      .cross(arb)
+      .normalize();
+    const binorm = n
+      .clone()
+      .cross(tang)
+      .normalize();
 
     p0.transformByMatrix3(axes);
     tang.transformByMatrix3(axes);
@@ -138,17 +145,30 @@ function intersectPlaneTestCornersEdgesFaces(t, center, axes) {
       return new Plane(n, d);
     }
     return undefined;
-  }
+  };
 
   let pl;
 
   // Tests against faces
 
   // prettier-ignore-start
-  pl = planeNormXform(+1.0, +0.0, +0.0,  0.50001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INSIDE); }
-  pl = planeNormXform(-1.0, +0.0, +0.0,  0.50001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INSIDE); }
-  pl = planeNormXform(+0.0, +1.0, +0.0,  0.50001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INSIDE); }
-  pl = planeNormXform(+0.0, -1.0, +0.0,  0.50001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INSIDE); }
+  pl = planeNormXform(+1.0, +0.0, +0.0, 0.50001);
+  if (pl) {
+    t.equals(box.intersectPlane(pl), Intersect.INSIDE);
+  }
+  pl = planeNormXform(-1.0, +0.0, +0.0, 0.50001);
+  if (pl) {
+    t.equals(box.intersectPlane(pl), Intersect.INSIDE);
+  }
+  pl = planeNormXform(+0.0, +1.0, +0.0, 0.50001);
+  if (pl) {
+    t.equals(box.intersectPlane(pl), Intersect.INSIDE);
+  }
+  pl = planeNormXform(+0.0, -1.0, +0.0, 0.50001);
+  if (pl) {
+    t.equals(box.intersectPlane(pl), Intersect.INSIDE);
+  }
+  /*
   pl = planeNormXform(+0.0, +0.0, +1.0,  0.50001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INSIDE); }
   pl = planeNormXform(+0.0, +0.0, -1.0,  0.50001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INSIDE); }
 
@@ -264,6 +284,7 @@ function intersectPlaneTestCornersEdgesFaces(t, center, axes) {
   pl = planeNormXform(-1.0, +1.0, -1.0, -SQRT3_4 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.OUTSIDE); }
   pl = planeNormXform(-1.0, -1.0, +1.0, -SQRT3_4 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.OUTSIDE); }
   pl = planeNormXform(-1.0, -1.0, -1.0, -SQRT3_4 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.OUTSIDE); }
+  */
   // prettier-ignore-end
 }
 
@@ -337,17 +358,18 @@ test.skip('intersectPlane fails without plane parameter', t => {
   t.throws(() => OrientedBoundingBox.intersectPlane(box, undefined));
   t.end();
 });
+*/
 
 function makeRotationY(angle) {
   const cosAngle = Math.cos(angle);
   const sinAngle = Math.sin(angle);
-  return new Matrix3(cosAngle, 0.0, sinAngle, 0.0, 1.0, 0.0, -sinAngle, 0.0, cosAngle);
+  return new Matrix3([cosAngle, 0.0, sinAngle, 0.0, 1.0, 0.0, -sinAngle, 0.0, cosAngle]);
 }
 
 function makeRotationZ(angle, result) {
   const cosAngle = Math.cos(angle);
   const sinAngle = Math.sin(angle);
-  return new Matrix3(cosAngle, -sinAngle, 0.0, sinAngle, cosAngle, 0.0, 0.0, 0.0, 1.0);
+  return new Matrix3([cosAngle, -sinAngle, 0.0, sinAngle, cosAngle, 0.0, 0.0, 0.0, 1.0]);
 }
 
 // eslint-disable-next-line max-statements
@@ -369,20 +391,21 @@ test('OrientedBoundingBox#distanceSquaredTo', t => {
   const zAxis = halfAxes.getColumn(2, new Vector3());
 
   // from positive x direction
-  const cartesian = Vector3.multiplyByScalar(xAxis, 2.0, new Vector3());
-  Vector3.add(cartesian, center, cartesian);
+  const cartesian = new Vector3(xAxis).multiplyByScalar(2.0);
+  cartesian.add(center);
 
-  let d = Vector3.distance(cartesian, center) - scale.x;
+  let d = cartesian.distanceTo(center) - scale.x;
   let expected = d * d;
-  expect(obb.distanceSquaredTo(cartesian)).toEqualEpsilon(expected, _MathUtils.EPSILON10);
+  tapeEqualsEpsilon(t, obb.distanceSquaredTo(cartesian), expected, _MathUtils.EPSILON10);
 
+  /*
   // from negative x direction
   Vector3.multiplyByScalar(xAxis, -2.0, cartesian);
   Vector3.add(cartesian, center, cartesian);
 
   d = Vector3.distance(cartesian, center) - scale.x;
   expected = d * d;
-  expect(obb.distanceSquaredTo(cartesian)).toEqualEpsilon(expected, _MathUtils.EPSILON10);
+  tapeEqualsEpsilon(t, obb.distanceSquaredTo(cartesian), expected, _MathUtils.EPSILON10);
 
   // from positive y direction
   Vector3.multiplyByScalar(yAxis, 2.0, cartesian);
@@ -390,7 +413,7 @@ test('OrientedBoundingBox#distanceSquaredTo', t => {
 
   d = Vector3.distance(cartesian, center) - scale.y;
   expected = d * d;
-  expect(obb.distanceSquaredTo(cartesian)).toEqualEpsilon(expected, _MathUtils.EPSILON10);
+  tapeEqualsEpsilon(t, obb.distanceSquaredTo(cartesian), expected, _MathUtils.EPSILON10);
 
   // from negative y direction
   Vector3.multiplyByScalar(yAxis, -2.0, cartesian);
@@ -398,7 +421,7 @@ test('OrientedBoundingBox#distanceSquaredTo', t => {
 
   d = Vector3.distance(cartesian, center) - scale.y;
   expected = d * d;
-  expect(obb.distanceSquaredTo(cartesian)).toEqualEpsilon(expected, _MathUtils.EPSILON10);
+  tapeEqualsEpsilon(t, obb.distanceSquaredTo(cartesian), expected, _MathUtils.EPSILON10);
 
   // from positive z direction
   Vector3.multiplyByScalar(zAxis, 2.0, cartesian);
@@ -406,7 +429,7 @@ test('OrientedBoundingBox#distanceSquaredTo', t => {
 
   d = Vector3.distance(cartesian, center) - scale.z;
   expected = d * d;
-  expect(obb.distanceSquaredTo(cartesian)).toEqualEpsilon(expected, _MathUtils.EPSILON10);
+  tapeEqualsEpsilon(t, obb.distanceSquaredTo(cartesian), expected, _MathUtils.EPSILON10);
 
   // from negative z direction
   Vector3.multiplyByScalar(zAxis, -2.0, cartesian);
@@ -414,7 +437,7 @@ test('OrientedBoundingBox#distanceSquaredTo', t => {
 
   d = Vector3.distance(cartesian, center) - scale.z;
   expected = d * d;
-  expect(obb.distanceSquaredTo(cartesian)).toEqualEpsilon(expected, _MathUtils.EPSILON10);
+  tapeEqualsEpsilon(t, obb.distanceSquaredTo(cartesian), expected, _MathUtils.EPSILON10);
 
   // from corner point
   Vector3.add(xAxis, yAxis, cartesian);
@@ -425,12 +448,8 @@ test('OrientedBoundingBox#distanceSquaredTo', t => {
 
   d = Vector3.distance(cartesian, center) - cornerDistance;
   expected = d * d;
-  expect(obb.distanceSquaredTo(cartesian)).toEqualEpsilon(expected, _MathUtils.EPSILON10);
-  t.end();
-});
-
-test('OrientedBoundingBox#distanceSquaredTo throws without box', t => {
-  t.throws(() => new OrientedBoundingBox().distanceSquaredTo(new Vector3()));
+  tapeEqualsEpsilon(t, obb.distanceSquaredTo(cartesian), expected, _MathUtils.EPSILON10);
+  */
   t.end();
 });
 
@@ -444,9 +463,9 @@ test('OrientedBoundingBox#computePlaneDistances', t => {
   const r0 = makeRotationZ(toRadians(-45.0));
   const r1 = makeRotationY(toRadians(45.0));
 
-  const rotation = Matrix3.multiply(r1, r0, r0);
+  const rotation = r0.multiplyLeft(r1);
   const scale = new Vector3(2.0, 3.0, 4.0);
-  const rotationScale = Matrix3.multiplyByScale(rotation, scale, rotation);
+  const rotationScale = rotation.multiplyByScalar(scale);
 
   const center = new Vector3(4.0, 3.0, 2.0);
 
@@ -454,71 +473,67 @@ test('OrientedBoundingBox#computePlaneDistances', t => {
 
   const halfAxes = obb.halfAxes;
   const xAxis = halfAxes.getColumn(0, new Vector3());
-  const yAxis = halfAxes.getColumn(1, new Vector3());
-  const zAxis = halfAxes.getColumn(2, new Vector3());
+  // const yAxis = halfAxes.getColumn(1, new Vector3());
+  // const zAxis = halfAxes.getColumn(2, new Vector3());
 
   // from x direction
-  const position = Vector3.multiplyByScalar(xAxis, 2.0, new Vector3());
-  Vector3.add(position, center, position);
+  const position = new Vector3(xAxis).multiplyByScalar(2.0).add(center);
 
-  const direction = Vector3.negate(xAxis, new Vector3());
-  Vector3.normalize(direction, direction);
+  const direction = new Vector3(xAxis).negate().normalize();
 
-  const d = Vector3.distance(position, center);
-  const expectedNear = d - scale.x;
-  const expectedFar = d + scale.x;
+  // let d = position.distanceTo(center);
+  // let expectedNear = d - scale.x;
+  // let expectedFar = d + scale.x;
 
   const distances = obb.computePlaneDistances(position, direction);
-  expect(distances.start).toEqualEpsilon(expectedNear, _MathUtils.EPSILON14);
-  expect(distances.stop).toEqualEpsilon(expectedFar, _MathUtils.EPSILON14);
+
+  /*
+  tapeEqualsEpsilon(t, distances.start, expectedNear, _MathUtils.EPSILON14);
+  tapeEqualsEpsilon(t, distances.stop, expectedFar, _MathUtils.EPSILON14);
 
   // from y direction
-  Vector3.multiplyByScalar(yAxis, 2.0, position);
-  Vector3.add(position, center, position);
+  position.copy(yAxis).multiplyByScalar(2.0).add(center);
 
-  Vector3.negate(yAxis, direction);
-  Vector3.normalize(direction, direction);
+  direction.copy(yAxis).negate().normalize();
 
-  d = Vector3.distance(position, center);
+  d = position.distance(center);
   expectedNear = d - scale.y;
   expectedFar = d + scale.y;
 
   obb.computePlaneDistances(position, direction, distances);
-  expect(distances.start).toEqualEpsilon(expectedNear, _MathUtils.EPSILON14);
-  expect(distances.stop).toEqualEpsilon(expectedFar, _MathUtils.EPSILON14);
+  tapeEqualsEpsilon(t, distances.start, expectedNear, _MathUtils.EPSILON14);
+  tapeEqualsEpsilon(t, distances.stop, expectedFar, _MathUtils.EPSILON14);
 
   // from z direction
-  Vector3.multiplyByScalar(zAxis, 2.0, position);
-  Vector3.add(position, center, position);
+  position.copy(zAxis).multiplyByScalar(2.0).add(center);
 
-  Vector3.negate(zAxis, direction);
-  Vector3.normalize(direction, direction);
+  direction.copy(zAxis).negate().normalize();
 
-  d = Vector3.distance(position, center);
+  d = position.distance(center);
   expectedNear = d - scale.z;
   expectedFar = d + scale.z;
 
   obb.computePlaneDistances(position, direction, distances);
-  expect(distances.start).toEqualEpsilon(expectedNear, _MathUtils.EPSILON14);
-  expect(distances.stop).toEqualEpsilon(expectedFar, _MathUtils.EPSILON14);
+  tapeEqualsEpsilon(t, distances.start, expectedNear, _MathUtils.EPSILON14);
+  tapeEqualsEpsilon(t, distances.stop, expectedFar, _MathUtils.EPSILON14);
 
   // from corner point
-  Vector3.add(xAxis, yAxis, position);
-  Vector3.add(zAxis, position, position);
+  position.copy(xAxis).add(yAxis).add(zAxis);
 
-  Vector3.negate(position, direction);
-  Vector3.normalize(direction, direction);
+  direction.copy(position).negate().normalize();
 
-  const cornerDistance = Vector3.magnitude(position);
-  Vector3.add(position, center, position);
+  const cornerDistance = position.magnitude();
+  position.add(center);
 
-  d = Vector3.distance(position, center);
+  d = position.distance(center);
   expectedNear = d - cornerDistance;
   expectedFar = d + cornerDistance;
 
   obb.computePlaneDistances(position, direction, distances);
-  expect(distances.start).toEqualEpsilon(expectedNear, _MathUtils.EPSILON14);
-  expect(distances.stop).toEqualEpsilon(expectedFar, _MathUtils.EPSILON14);
+  tapeEqualsEpsilon(t, distances.start, expectedNear, _MathUtils.EPSILON14);
+  tapeEqualsEpsilon(t, distances.stop, expectedFar, _MathUtils.EPSILON14);
+  */
+
   t.end();
 });
 
@@ -568,7 +583,6 @@ test('OrientedBoundingBox#isOccluded throws without a occluder', t => {
   t.throws(() => OrientedBoundingBox.isOccluded(new OrientedBoundingBox(), undefined));
   t.end();
 });
-*/
 
 test.skip('fromPoints constructs empty box with undefined positions', t => {
   const box = OrientedBoundingBox.fromPoints(undefined);
@@ -608,11 +622,11 @@ test.skip('fromPoints rotation about z', t => {
   rotation[3] = -rotation[3];
 
   const box = OrientedBoundingBox.fromPoints(points);
-  expect(box.halfAxes).toEqualEpsilon(
+  tapeEqualsEpsilon(t, box.halfAxes,
     Matrix3.multiplyByScale(rotation, new Vector3(3.0, 2.0, 4.0), new Matrix3()),
     _MathUtils.EPSILON15
   );
-  expect(box.center).toEqualEpsilon(ZERO_VECTOR3, _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box.center, ZERO_VECTOR3, _MathUtils.EPSILON15);
   t.end();
 });
 
@@ -624,11 +638,11 @@ test.skip('fromPoints rotation about y', t => {
   rotation[6] = -rotation[6];
 
   const box = OrientedBoundingBox.fromPoints(points);
-  expect(box.halfAxes).toEqualEpsilon(
+  tapeEqualsEpsilon(t, box.halfAxes,
     Matrix3.multiplyByScale(rotation, new Vector3(4.0, 3.0, 2.0), new Matrix3()),
     _MathUtils.EPSILON15
   );
-  expect(box.center).toEqualEpsilon(ZERO_VECTOR3, _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box.center, ZERO_VECTOR3, _MathUtils.EPSILON15);
   t.end();
 });
 
@@ -640,11 +654,11 @@ test.skip('fromPoints rotation about x', t => {
   rotation[7] = -rotation[7];
 
   const box = OrientedBoundingBox.fromPoints(points);
-  expect(box.halfAxes).toEqualEpsilon(
+  tapeEqualsEpsilon(t, box.halfAxes,
     Matrix3.multiplyByScale(rotation, new Vector3(2.0, 4.0, 3.0), new Matrix3()),
     _MathUtils.EPSILON15
   );
-  expect(box.center).toEqualEpsilon(ZERO_VECTOR3, _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box.center, ZERO_VECTOR3, _MathUtils.EPSILON15);
   t.end();
 });
 
@@ -659,11 +673,11 @@ test.skip('fromPoints rotation and translation', t => {
   points = translatePositions(points, translation);
 
   const box = OrientedBoundingBox.fromPoints(points);
-  expect(box.halfAxes).toEqualEpsilon(
+  tapeEqualsEpsilon(t, box.halfAxes,
     Matrix3.multiplyByScale(rotation, new Vector3(3.0, 2.0, 4.0), new Matrix3()),
     _MathUtils.EPSILON14
   );
-  expect(box.center).toEqualEpsilon(translation, _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box.center, translation, _MathUtils.EPSILON15);
   t.end();
 });
 
@@ -672,9 +686,9 @@ test.skip('fromRectangle sets correct default ellipsoid', t => {
   const box1 = OrientedBoundingBox.fromRectangle(rectangle, 0.0, 0.0);
   const box2 = OrientedBoundingBox.fromRectangle(rectangle, 0.0, 0.0, Ellipsoid.WGS84);
 
-  expect(box1.center).toEqualEpsilon(box2.center, _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box1.center, box2.center, _MathUtils.EPSILON15);
 
-  expect(box1.halfAxes).toEqualEpsilon(box2.halfAxes, _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box1.halfAxes, box2.halfAxes, _MathUtils.EPSILON15);
   t.end();
 });
 
@@ -687,10 +701,10 @@ test.skip('fromRectangle sets correct default heights', t => {
     Ellipsoid.UNIT_SPHERE
   );
 
-  expect(box.center).toEqualEpsilon(new Vector3(1.0, 0.0, 0.0), _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box.center, new Vector3(1.0, 0.0, 0.0), _MathUtils.EPSILON15);
 
   const rotScale = ZERO_MATRIX3;
-  expect(box.halfAxes).toEqualEpsilon(rotScale, _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box.halfAxes, rotScale, _MathUtils.EPSILON15);
   t.end();
 });
 
@@ -739,10 +753,10 @@ test.skip('fromRectangle creates an OrientedBoundingBox without a result paramet
   const rectangle = new Rectangle(0.0, 0.0, 0.0, 0.0);
   const box = OrientedBoundingBox.fromRectangle(rectangle, 0.0, 0.0, ellipsoid);
 
-  expect(box.center).toEqualEpsilon(new Vector3(1.0, 0.0, 0.0), _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box.center, new Vector3(1.0, 0.0, 0.0), _MathUtils.EPSILON15);
 
   const rotScale = ZERO_MATRIX3;
-  expect(box.halfAxes).toEqualEpsilon(rotScale, _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box.halfAxes, rotScale, _MathUtils.EPSILON15);
   t.end();
 });
 
@@ -753,10 +767,10 @@ test.skip('fromRectangle creates an OrientedBoundingBox with a result parameter'
   const box = OrientedBoundingBox.fromRectangle(rectangle, 0.0, 0.0, ellipsoid, result);
   expect(box).toBe(result);
 
-  expect(box.center).toEqualEpsilon(new Vector3(1.0, 0.0, 0.0), _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box.center, new Vector3(1.0, 0.0, 0.0), _MathUtils.EPSILON15);
 
   const rotScale = ZERO_MATRIX3;
-  expect(box.halfAxes).toEqualEpsilon(rotScale, _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box.halfAxes, rotScale, _MathUtils.EPSILON15);
   t.end();
 });
 
@@ -771,8 +785,8 @@ test.skip('fromRectangle for rectangles with heights', t => {
     1.0,
     Ellipsoid.UNIT_SPHERE
   );
-  expect(box.center).toEqualEpsilon(new Vector3(2.0, 0.0, 0.0), _MathUtils.EPSILON15);
-  expect(box.halfAxes).toEqualEpsilon(ZERO_MATRIX3, _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box.center, new Vector3(2.0, 0.0, 0.0), _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box.halfAxes, ZERO_MATRIX3, _MathUtils.EPSILON15);
 
   box = OrientedBoundingBox.fromRectangle(
     new Rectangle(0.0, 0.0, 0.0, 0.0),
@@ -780,8 +794,8 @@ test.skip('fromRectangle for rectangles with heights', t => {
     -1.0,
     Ellipsoid.UNIT_SPHERE
   );
-  expect(box.center).toEqualEpsilon(new Vector3(0.0, 0.0, 0.0), _MathUtils.EPSILON15);
-  expect(box.halfAxes).toEqualEpsilon(ZERO_MATRIX3, _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box.center, new Vector3(0.0, 0.0, 0.0), _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box.halfAxes, ZERO_MATRIX3, _MathUtils.EPSILON15);
 
   box = OrientedBoundingBox.fromRectangle(
     new Rectangle(0.0, 0.0, 0.0, 0.0),
@@ -789,8 +803,8 @@ test.skip('fromRectangle for rectangles with heights', t => {
     1.0,
     Ellipsoid.UNIT_SPHERE
   );
-  expect(box.center).toEqualEpsilon(new Vector3(1.0, 0.0, 0.0), _MathUtils.EPSILON15);
-  expect(box.halfAxes).toEqualEpsilon(new Matrix3(0, 0, 1, 0, 0, 0, 0, 0, 0), _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box.center, new Vector3(1.0, 0.0, 0.0), _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box.halfAxes, new Matrix3(0, 0, 1, 0, 0, 0, 0, 0, 0), _MathUtils.EPSILON15);
 
   box = OrientedBoundingBox.fromRectangle(
     new Rectangle(-d90, -d90, d90, d90),
@@ -798,8 +812,8 @@ test.skip('fromRectangle for rectangles with heights', t => {
     1.0,
     Ellipsoid.UNIT_SPHERE
   );
-  expect(box.center).toEqualEpsilon(new Vector3(1.0, 0.0, 0.0), _MathUtils.EPSILON15);
-  expect(box.halfAxes).toEqualEpsilon(new Matrix3(0, 0, 1, 2, 0, 0, 0, 2, 0), _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box.center, new Vector3(1.0, 0.0, 0.0), _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box.halfAxes, new Matrix3(0, 0, 1, 2, 0, 0, 0, 2, 0), _MathUtils.EPSILON15);
 
   box = OrientedBoundingBox.fromRectangle(
     new Rectangle(-d90, -d90, d90, d90),
@@ -807,8 +821,8 @@ test.skip('fromRectangle for rectangles with heights', t => {
     -1.0,
     Ellipsoid.UNIT_SPHERE
   );
-  expect(box.center).toEqualEpsilon(new Vector3(0.0, 0.0, 0.0), _MathUtils.EPSILON15);
-  expect(box.halfAxes).toEqualEpsilon(ZERO_MATRIX3, _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box.center, new Vector3(0.0, 0.0, 0.0), _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box.halfAxes, ZERO_MATRIX3, _MathUtils.EPSILON15);
 
   box = OrientedBoundingBox.fromRectangle(
     new Rectangle(-d90, -d90, d90, d90),
@@ -816,8 +830,8 @@ test.skip('fromRectangle for rectangles with heights', t => {
     0.0,
     Ellipsoid.UNIT_SPHERE
   );
-  expect(box.center).toEqualEpsilon(new Vector3(0.5, 0.0, 0.0), _MathUtils.EPSILON15);
-  expect(box.halfAxes).toEqualEpsilon(
+  tapeEqualsEpsilon(t, box.center, new Vector3(0.5, 0.0, 0.0), _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box.halfAxes,
     new Matrix3(0, 0, 0.5, 1, 0, 0, 0, 1, 0),
     _MathUtils.EPSILON15
   );
@@ -840,8 +854,8 @@ test.skip('fromRectangle for interesting, degenerate, and edge-case rectangles',
     0.0,
     Ellipsoid.UNIT_SPHERE
   );
-  expect(box.center).toEqualEpsilon(new Vector3(1.0, 0.0, 0.0), _MathUtils.EPSILON15);
-  expect(box.halfAxes).toEqualEpsilon(ZERO_MATRIX3, _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box.center, new Vector3(1.0, 0.0, 0.0), _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box.halfAxes, ZERO_MATRIX3, _MathUtils.EPSILON15);
 
   box = OrientedBoundingBox.fromRectangle(
     new Rectangle(d180, 0.0, -d180, 0.0),
@@ -849,8 +863,8 @@ test.skip('fromRectangle for interesting, degenerate, and edge-case rectangles',
     0.0,
     Ellipsoid.UNIT_SPHERE
   );
-  expect(box.center).toEqualEpsilon(new Vector3(-1.0, 0.0, 0.0), _MathUtils.EPSILON15);
-  expect(box.halfAxes).toEqualEpsilon(ZERO_MATRIX3, _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box.center, new Vector3(-1.0, 0.0, 0.0), _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box.halfAxes, ZERO_MATRIX3, _MathUtils.EPSILON15);
 
   box = OrientedBoundingBox.fromRectangle(
     new Rectangle(d180, 0.0, d180, 0.0),
@@ -858,8 +872,8 @@ test.skip('fromRectangle for interesting, degenerate, and edge-case rectangles',
     0.0,
     Ellipsoid.UNIT_SPHERE
   );
-  expect(box.center).toEqualEpsilon(new Vector3(-1.0, 0.0, 0.0), _MathUtils.EPSILON15);
-  expect(box.halfAxes).toEqualEpsilon(ZERO_MATRIX3, _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box.center, new Vector3(-1.0, 0.0, 0.0), _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box.halfAxes, ZERO_MATRIX3, _MathUtils.EPSILON15);
 
   box = OrientedBoundingBox.fromRectangle(
     new Rectangle(0.0, d90, 0.0, d90),
@@ -867,8 +881,8 @@ test.skip('fromRectangle for interesting, degenerate, and edge-case rectangles',
     0.0,
     Ellipsoid.UNIT_SPHERE
   );
-  expect(box.center).toEqualEpsilon(new Vector3(0.0, 0.0, 1.0), _MathUtils.EPSILON15);
-  expect(box.halfAxes).toEqualEpsilon(ZERO_MATRIX3, _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box.center, new Vector3(0.0, 0.0, 1.0), _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box.halfAxes, ZERO_MATRIX3, _MathUtils.EPSILON15);
 
   box = OrientedBoundingBox.fromRectangle(
     new Rectangle(0.0, 0.0, d180, 0.0),
@@ -876,8 +890,8 @@ test.skip('fromRectangle for interesting, degenerate, and edge-case rectangles',
     0.0,
     Ellipsoid.UNIT_SPHERE
   );
-  expect(box.center).toEqualEpsilon(new Vector3(0.0, 0.5, 0.0), _MathUtils.EPSILON15);
-  expect(box.halfAxes).toEqualEpsilon(
+  tapeEqualsEpsilon(t, box.center, new Vector3(0.0, 0.5, 0.0), _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box.halfAxes,
     new Matrix3(-1.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0),
     _MathUtils.EPSILON15
   );
@@ -888,8 +902,8 @@ test.skip('fromRectangle for interesting, degenerate, and edge-case rectangles',
     0.0,
     Ellipsoid.UNIT_SPHERE
   );
-  expect(box.center).toEqualEpsilon(new Vector3(0.5, 0.0, 0.0), _MathUtils.EPSILON15);
-  expect(box.halfAxes).toEqualEpsilon(
+  tapeEqualsEpsilon(t, box.center, new Vector3(0.5, 0.0, 0.0), _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box.halfAxes,
     new Matrix3(0.0, 0.0, 0.5, 1.0, 0.0, 0.0, 0.0, 1.0, 0.0),
     _MathUtils.EPSILON15
   );
@@ -900,8 +914,8 @@ test.skip('fromRectangle for interesting, degenerate, and edge-case rectangles',
     0.0,
     Ellipsoid.UNIT_SPHERE
   );
-  expect(box.center).toEqualEpsilon(new Vector3(0.1875 * sqrt3, 0.0, 0.1875), _MathUtils.EPSILON15);
-  expect(box.halfAxes).toEqualEpsilon(
+  tapeEqualsEpsilon(t, box.center, new Vector3(0.1875 * sqrt3, 0.0, 0.1875), _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box.halfAxes,
     new Matrix3(0, -sqrt3 / 4, (5 * sqrt3) / 16, 1, 0, 0, 0, 3 / 4, 5 / 16),
     _MathUtils.EPSILON15
   );
@@ -912,11 +926,11 @@ test.skip('fromRectangle for interesting, degenerate, and edge-case rectangles',
     0.0,
     Ellipsoid.UNIT_SPHERE
   );
-  expect(box.center).toEqualEpsilon(
+  tapeEqualsEpsilon(t, box.center,
     new Vector3(0.1875 * sqrt3, 0.0, -0.1875),
     _MathUtils.EPSILON15
   );
-  expect(box.halfAxes).toEqualEpsilon(
+  tapeEqualsEpsilon(t, box.halfAxes,
     new Matrix3(0, sqrt3 / 4, (5 * sqrt3) / 16, 1, 0, 0, 0, 3 / 4, -5 / 16),
     _MathUtils.EPSILON15
   );
@@ -927,8 +941,8 @@ test.skip('fromRectangle for interesting, degenerate, and edge-case rectangles',
     0.0,
     Ellipsoid.UNIT_SPHERE
   );
-  expect(box.center).toEqualEpsilon(new Vector3(0.0, 0.1875 * sqrt3, 0.1875), _MathUtils.EPSILON15);
-  expect(box.halfAxes).toEqualEpsilon(
+  tapeEqualsEpsilon(t, box.center, new Vector3(0.0, 0.1875 * sqrt3, 0.1875), _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box.halfAxes,
     new Matrix3(-1, 0, 0, 0, -sqrt3 / 4, (5 * sqrt3) / 16, 0, 3 / 4, 5 / 16),
     _MathUtils.EPSILON15
   );
@@ -939,11 +953,11 @@ test.skip('fromRectangle for interesting, degenerate, and edge-case rectangles',
     0.0,
     Ellipsoid.UNIT_SPHERE
   );
-  expect(box.center).toEqualEpsilon(
+  tapeEqualsEpsilon(t, box.center,
     new Vector3(0.0, 0.1875 * sqrt3, -0.1875),
     _MathUtils.EPSILON15
   );
-  expect(box.halfAxes).toEqualEpsilon(
+  tapeEqualsEpsilon(t, box.halfAxes,
     new Matrix3(-1, 0, 0, 0, sqrt3 / 4, (5 * sqrt3) / 16, 0, 3 / 4, -5 / 16),
     _MathUtils.EPSILON15
   );
@@ -954,11 +968,11 @@ test.skip('fromRectangle for interesting, degenerate, and edge-case rectangles',
     0.0,
     Ellipsoid.UNIT_SPHERE
   );
-  expect(box.center).toEqualEpsilon(
+  tapeEqualsEpsilon(t, box.center,
     new Vector3((1.0 + Math.SQRT1_2) / 2.0, 0.0, 0.0),
     _MathUtils.EPSILON15
   );
-  expect(box.halfAxes).toEqualEpsilon(
+  tapeEqualsEpsilon(t, box.halfAxes,
     new Matrix3(0.0, 0.0, 0.5 * (1.0 - Math.SQRT1_2), Math.SQRT1_2, 0.0, 0.0, 0.0, 0.0, 0.0),
     _MathUtils.EPSILON15
   );
@@ -969,11 +983,11 @@ test.skip('fromRectangle for interesting, degenerate, and edge-case rectangles',
     0.0,
     Ellipsoid.UNIT_SPHERE
   );
-  expect(box.center).toEqualEpsilon(
+  tapeEqualsEpsilon(t, box.center,
     new Vector3(-(1.0 + Math.SQRT1_2) / 2.0, 0.0, 0.0),
     _MathUtils.EPSILON15
   );
-  expect(box.halfAxes).toEqualEpsilon(
+  tapeEqualsEpsilon(t, box.halfAxes,
     new Matrix3(0.0, 0.0, -0.5 * (1.0 - Math.SQRT1_2), -Math.SQRT1_2, 0.0, 0.0, 0.0, 0.0, 0.0),
     _MathUtils.EPSILON15
   );
@@ -984,11 +998,11 @@ test.skip('fromRectangle for interesting, degenerate, and edge-case rectangles',
     0.0,
     Ellipsoid.UNIT_SPHERE
   );
-  expect(box.center).toEqualEpsilon(
+  tapeEqualsEpsilon(t, box.center,
     new Vector3((1.0 + Math.SQRT1_2) / 2.0, 0.0, 0.0),
     _MathUtils.EPSILON15
   );
-  expect(box.halfAxes).toEqualEpsilon(
+  tapeEqualsEpsilon(t, box.halfAxes,
     new Matrix3(0.0, 0.0, 0.5 * (1.0 - Math.SQRT1_2), 0.0, 0.0, 0.0, 0.0, Math.SQRT1_2, 0.0),
     _MathUtils.EPSILON15
   );
@@ -999,8 +1013,8 @@ test.skip('fromRectangle for interesting, degenerate, and edge-case rectangles',
     0.0,
     Ellipsoid.UNIT_SPHERE
   );
-  expect(box.center).toEqualEpsilon(new Vector3(0.5, 0.0, 0.0), _MathUtils.EPSILON15);
-  expect(box.halfAxes).toEqualEpsilon(
+  tapeEqualsEpsilon(t, box.center, new Vector3(0.5, 0.0, 0.0), _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box.halfAxes,
     new Matrix3(0.0, 0.0, 0.5, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0),
     _MathUtils.EPSILON15
   );
@@ -1011,11 +1025,12 @@ test.skip('fromRectangle for interesting, degenerate, and edge-case rectangles',
     0.0,
     Ellipsoid.UNIT_SPHERE
   );
-  expect(box.center).toEqualEpsilon(new Vector3(0.5, 0.0, 0.0), _MathUtils.EPSILON15);
-  expect(box.halfAxes).toEqualEpsilon(
+  tapeEqualsEpsilon(t, box.center, new Vector3(0.5, 0.0, 0.0), _MathUtils.EPSILON15);
+  tapeEqualsEpsilon(t, box.halfAxes,
     new Matrix3(0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0),
     _MathUtils.EPSILON15
   );
 
   t.end();
 });
+*/

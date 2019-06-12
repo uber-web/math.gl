@@ -27,16 +27,6 @@ import * as vec4 from 'gl-matrix/vec4';
 
 const IDENTITY_QUATERNION = [0, 0, 0, 1];
 
-export function validateQuaternion(q) {
-  return (
-    q.length === 4 &&
-    Number.isFinite(q[0]) &&
-    Number.isFinite(q[1]) &&
-    Number.isFinite(q[2]) &&
-    Number.isFinite(q[3])
-  );
-}
-
 export default class Quaternion extends MathArray {
   // Creates a new identity quaternion
   // w^2 + x^2 + y^2 + z^2 = 1
@@ -195,7 +185,7 @@ export default class Quaternion extends MathArray {
     if (b !== undefined) {
       throw new Error('Quaternion.add only takes one argument');
     }
-    quat.add(this, a);
+    quat.add(this, this, a);
     return this.check();
   }
 

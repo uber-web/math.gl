@@ -30,7 +30,7 @@ export default class Polygon {
     for (let i = 0; i < length - 1; i++) {
       visitor(this.points[i], this.points[i + 1], i, i + 1);
     }
-    if (this.isPolygon && !this.isClosed()) {
+    if (!this.isClosed) {
       // Call function with points and indices
       visitor(this.points[length - 1], this.points[0], length - 1, 0);
     }

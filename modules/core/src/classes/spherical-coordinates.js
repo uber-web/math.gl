@@ -152,10 +152,7 @@ export default class SphericalCoordinates {
 
   fromVector3(v) {
     this.radius = vec3.length(v);
-    if (this.radius === 0) {
-      this.theta = 0;
-      this.phi = 0;
-    } else {
+    if (this.radius > 0) {
       this.theta = Math.atan2(v[0], v[1]); // equator angle around y-up axis
       this.phi = Math.acos(clamp(v[2] / this.radius, -1, 1)); // polar angle
     }

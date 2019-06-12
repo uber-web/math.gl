@@ -165,6 +165,7 @@ export default class Matrix4 extends Matrix {
     result[13] = this[7];
     result[14] = this[11];
     result[15] = this[15];
+    return result;
   }
 
   // Constructors

@@ -81,7 +81,7 @@ test('Quaternion#methods', t => {
   t.end();
 });
 
-test('Quaternion.fromAxisRotation', t => {
+test('Quaternion#fromAxisRotation', t => {
   let q = new Quaternion().fromAxisRotation(new Vector3(0, 0, 1), Math.PI);
   tapeEquals(t, q, [0, 0, 1, Math.cos(Math.PI / 2)]);
 
@@ -105,7 +105,7 @@ const vec = [1, 1, -1];
 const id = [0, 0, 0, 1];
 const deg90 = Math.PI / 2;
 
-test('create', t => {
+test('Quaternion#create', t => {
   tapeEquals(
     t,
     new Quaternion(),
@@ -117,7 +117,7 @@ test('create', t => {
   t.end();
 });
 
-test('clone', t => {
+test('Quaternion#clone', t => {
   const result = new Quaternion(quatA).clone();
   tapeEquals(
     t,
@@ -128,13 +128,13 @@ test('clone', t => {
   t.end();
 });
 
-test('copy', t => {
+test('Quaternion#copy', t => {
   const result = new Quaternion().copy(quatA);
   tapeEquals(t, result, [1, 2, 3, 4], 'should place values into out');
   t.end();
 });
 
-test('set', t => {
+test('Quaternion#set', t => {
   const result = new Quaternion().set(1, 2, 3, 4);
   tapeEquals(
     t,
@@ -145,19 +145,26 @@ test('set', t => {
   t.end();
 });
 
-test('identity', t => {
+test('Quaternion#identity', t => {
   const result = new Quaternion(1, 1, 1, 1).identity();
   tapeEquals(t, result, [0, 0, 0, 1], 'should return identity quaternion');
   t.end();
 });
 
-test('setAxisAngle', t => {
+test('Quaternion#add', t => {
+  const quat = new Quaternion(1, 1, 1, 1).identity();
+  t.throws(() => quat.add([0, 0, 0, 0], [0, 0, 0, 0]));
+  tapeEquals(t, quat.add([0, 0, 0, 0]), quat, 'should add quaternion');
+  t.end();
+});
+
+test('Quaternion#setAxisAngle', t => {
   const result = new Quaternion().setAxisAngle([1, 0, 0], Math.PI * 0.5);
   tapeEquals(t, result, [0.707106, 0, 0, 0.707106], 'should return correct values');
   t.end();
 });
 
-test('transform', t => {
+test('Quaternion#transform', t => {
   const quat = new Quaternion();
   t.throws(() => quat.transformVector4([NaN, 0, 0, 0]));
   t.throws(() => quat.transformVector4([0, 0, 0]));
@@ -166,7 +173,7 @@ test('transform', t => {
 });
 
 test.skip('getAxisAngle', tt => {
-  test('getAxisAngle for a quaternion representing no rotation', t => {
+  test('Quaternion#getAxisAngle for a quaternion representing no rotation', t => {
     const quat = new Quaternion().setAxisAngle(out[(0, 1, 0)], 0.0);
     const out = [0, 0, 0];
     deg90 = quat.getAxisAngle(out);
@@ -179,193 +186,193 @@ test.skip('getAxisAngle', tt => {
   });
 
   /*
-	test('for a simple rotation about X axis', t => {
+	test('Quaternion#for a simple rotation about X axis', t => {
 		beforeEach(function() { result = quat.setAxisAngle(out, [1, 0, 0], 0.7778); deg90 = quat.getAxisAngle(vec, out); });
-		test('should return the same provided angle', function() { expect(deg90).toBeEqualish(0.7778); });
-		test('should return the X axis as the angle', function() { expect(vec).toBeEqualish([1, 0, 0]); });
+		test('Quaternion#should return the same provided angle', function() { expect(deg90).toBeEqualish(0.7778); });
+		test('Quaternion#should return the X axis as the angle', function() { expect(vec).toBeEqualish([1, 0, 0]); });
 	});
 
-	test('for a simple rotation about Y axis', t => {
+	test('Quaternion#for a simple rotation about Y axis', t => {
 		beforeEach(function() { result = quat.setAxisAngle(out, [0, 1, 0], 0.879546); deg90 = quat.getAxisAngle(vec, out); });
-		test('should return the same provided angle', function() { expect(deg90).toBeEqualish(0.879546); });
-		test('should return the X axis as the angle', function() { expect(vec).toBeEqualish([0, 1, 0]); });
+		test('Quaternion#should return the same provided angle', function() { expect(deg90).toBeEqualish(0.879546); });
+		test('Quaternion#should return the X axis as the angle', function() { expect(vec).toBeEqualish([0, 1, 0]); });
 	});
 
-	test('for a simple rotation about Z axis', t => {
+	test('Quaternion#for a simple rotation about Z axis', t => {
 		beforeEach(function() { result = quat.setAxisAngle(out, [0, 0, 1], 0.123456); deg90 = quat.getAxisAngle(vec, out); });
-		test('should return the same provided angle', function() { expect(deg90).toBeEqualish(0.123456); });
-		test('should return the X axis as the angle', function() { expect(vec).toBeEqualish([0, 0, 1]); });
+		test('Quaternion#should return the same provided angle', function() { expect(deg90).toBeEqualish(0.123456); });
+		test('Quaternion#should return the X axis as the angle', function() { expect(vec).toBeEqualish([0, 0, 1]); });
 	});
 
-	test('for a slightly irregular axis and right angle', t => {
+	test('Quaternion#for a slightly irregular axis and right angle', t => {
 		beforeEach(function() { result = quat.setAxisAngle(out, [0.707106, 0, 0.707106], Math.PI * 0.5); deg90 = quat.getAxisAngle(vec, out); });
-		test('should place values into vec', function() { expect(vec).toBeEqualish([0.707106, 0, 0.707106]); });
-		test('should return a numeric angle', function() { expect(deg90).toBeEqualish(Math.PI * 0.5); });
+		test('Quaternion#should place values into vec', function() { expect(vec).toBeEqualish([0.707106, 0, 0.707106]); });
+		test('Quaternion#should return a numeric angle', function() { expect(deg90).toBeEqualish(Math.PI * 0.5); });
 	});
 
-	test('for a very irregular axis and negative input angle', t => {
+	test('Quaternion#for a very irregular axis and negative input angle', t => {
 		beforeEach(function() {
 			quatA = quat.setAxisAngle(quatA, [0.65538555, 0.49153915, 0.57346237], 8.8888);
 			deg90 = quat.getAxisAngle(vec, quatA);
 			quatB = quat.setAxisAngle(quatB, vec, deg90);
 		});
-		test('should return an angle between 0 and 2*PI', function() { expect(deg90).toBeGreaterThan(0.0); expect(deg90).toBeLessThan(Math.PI * 2.0); });
-		test('should create the same quaternion from axis and angle extracted', function() { expect(quatA).toBeEqualish(quatB); });
+		test('Quaternion#should return an angle between 0 and 2*PI', function() { expect(deg90).toBeGreaterThan(0.0); expect(deg90).toBeLessThan(Math.PI * 2.0); });
+		test('Quaternion#should create the same quaternion from axis and angle extracted', function() { expect(quatA).toBeEqualish(quatB); });
 	});
   */
   t.end();
 });
 
 /*
-test('add', t => {
-	test('with a separate output quaternion', t => {
+test('Quaternion#add', t => {
+	test('Quaternion#with a separate output quaternion', t => {
 		beforeEach(function() { result = quat.add(out, quatA, quatB); });
 
-		test('should place values into out', function() { expect(out).toBeEqualish([6, 8, 10, 12]); });
-		test('should return out', function() { expect(result).toBe(out); });
-		test('should not modify quatA', function() { expect(quatA).toBeEqualish([1, 2, 3, 4]); });
-		test('should not modify quatB', function() { expect(quatB).toBeEqualish([5, 6, 7, 8]); });
+		test('Quaternion#should place values into out', function() { expect(out).toBeEqualish([6, 8, 10, 12]); });
+		test('Quaternion#should return out', function() { expect(result).toBe(out); });
+		test('Quaternion#should not modify quatA', function() { expect(quatA).toBeEqualish([1, 2, 3, 4]); });
+		test('Quaternion#should not modify quatB', function() { expect(quatB).toBeEqualish([5, 6, 7, 8]); });
 	});
 
-	test('when quatA is the output quaternion', t => {
+	test('Quaternion#when quatA is the output quaternion', t => {
 		beforeEach(function() { result = quat.add(quatA, quatA, quatB); });
 
-		test('should place values into quatA', function() { expect(quatA).toBeEqualish([6, 8, 10, 12]); });
-		test('should return quatA', function() { expect(result).toBe(quatA); });
-		test('should not modify quatB', function() { expect(quatB).toBeEqualish([5, 6, 7, 8]); });
+		test('Quaternion#should place values into quatA', function() { expect(quatA).toBeEqualish([6, 8, 10, 12]); });
+		test('Quaternion#should return quatA', function() { expect(result).toBe(quatA); });
+		test('Quaternion#should not modify quatB', function() { expect(quatB).toBeEqualish([5, 6, 7, 8]); });
 	});
 
-	test('when quatB is the output quaternion', t => {
+	test('Quaternion#when quatB is the output quaternion', t => {
 		beforeEach(function() { result = quat.add(quatB, quatA, quatB); });
 
-		test('should place values into quatB', function() { expect(quatB).toBeEqualish([6, 8, 10, 12]); });
-		test('should return quatB', function() { expect(result).toBe(quatB); });
-		test('should not modify quatA', function() { expect(quatA).toBeEqualish([1, 2, 3, 4]); });
+		test('Quaternion#should place values into quatB', function() { expect(quatB).toBeEqualish([6, 8, 10, 12]); });
+		test('Quaternion#should return quatB', function() { expect(result).toBe(quatB); });
+		test('Quaternion#should not modify quatA', function() { expect(quatA).toBeEqualish([1, 2, 3, 4]); });
 	});
 });
 
-test('multiply', t => {
-	test('should have an alias called 'mul'', function() { expect(quat.mul).toEqual(quat.multiply); });
+test('Quaternion#multiply', t => {
+	test('Quaternion#should have an alias called 'mul'', function() { expect(quat.mul).toEqual(quat.multiply); });
 
-	test('with a separate output quaternion', t => {
+	test('Quaternion#with a separate output quaternion', t => {
 		beforeEach(function() { result = quat.multiply(out, quatA, quatB); });
 
-		test('should place values into out', function() { expect(out).toBeEqualish([24, 48, 48, -6]); });
-		test('should return out', function() { expect(result).toBe(out); });
-		test('should not modify quatA', function() { expect(quatA).toBeEqualish([1, 2, 3, 4]); });
-		test('should not modify quatB', function() { expect(quatB).toBeEqualish([5, 6, 7, 8]); });
+		test('Quaternion#should place values into out', function() { expect(out).toBeEqualish([24, 48, 48, -6]); });
+		test('Quaternion#should return out', function() { expect(result).toBe(out); });
+		test('Quaternion#should not modify quatA', function() { expect(quatA).toBeEqualish([1, 2, 3, 4]); });
+		test('Quaternion#should not modify quatB', function() { expect(quatB).toBeEqualish([5, 6, 7, 8]); });
 	});
 
-	test('when quatA is the output quaternion', t => {
+	test('Quaternion#when quatA is the output quaternion', t => {
 		beforeEach(function() { result = quat.multiply(quatA, quatA, quatB); });
 
-		test('should place values into quatA', function() { expect(quatA).toBeEqualish([24, 48, 48, -6]); });
-		test('should return quatA', function() { expect(result).toBe(quatA); });
-		test('should not modify quatB', function() { expect(quatB).toBeEqualish([5, 6, 7, 8]); });
+		test('Quaternion#should place values into quatA', function() { expect(quatA).toBeEqualish([24, 48, 48, -6]); });
+		test('Quaternion#should return quatA', function() { expect(result).toBe(quatA); });
+		test('Quaternion#should not modify quatB', function() { expect(quatB).toBeEqualish([5, 6, 7, 8]); });
 	});
 
-	test('when quatB is the output quaternion', t => {
+	test('Quaternion#when quatB is the output quaternion', t => {
 		beforeEach(function() { result = quat.multiply(quatB, quatA, quatB); });
 
-		test('should place values into quatB', function() { expect(quatB).toBeEqualish([24, 48, 48, -6]); });
-		test('should return quatB', function() { expect(result).toBe(quatB); });
-		test('should not modify quatA', function() { expect(quatA).toBeEqualish([1, 2, 3, 4]); });
+		test('Quaternion#should place values into quatB', function() { expect(quatB).toBeEqualish([24, 48, 48, -6]); });
+		test('Quaternion#should return quatB', function() { expect(result).toBe(quatB); });
+		test('Quaternion#should not modify quatA', function() { expect(quatA).toBeEqualish([1, 2, 3, 4]); });
 	});
 });
 
-test('scale', t => {
-	test('with a separate output quaternion', t => {
+test('Quaternion#scale', t => {
+	test('Quaternion#with a separate output quaternion', t => {
 		beforeEach(function() { result = quat.scale(out, quatA, 2); });
 
-		test('should place values into out', function() { expect(out).toBeEqualish([2, 4, 6, 8]); });
-		test('should return out', function() { expect(result).toBe(out); });
-		test('should not modify quatA', function() { expect(quatA).toBeEqualish([1, 2, 3, 4]); });
+		test('Quaternion#should place values into out', function() { expect(out).toBeEqualish([2, 4, 6, 8]); });
+		test('Quaternion#should return out', function() { expect(result).toBe(out); });
+		test('Quaternion#should not modify quatA', function() { expect(quatA).toBeEqualish([1, 2, 3, 4]); });
 	});
 
-	test('when quatA is the output quaternion', t => {
+	test('Quaternion#when quatA is the output quaternion', t => {
 		beforeEach(function() { result = quat.scale(quatA, quatA, 2); });
 
-		test('should place values into quatA', function() { expect(quatA).toBeEqualish([2, 4, 6, 8]); });
-		test('should return quatA', function() { expect(result).toBe(quatA); });
+		test('Quaternion#should place values into quatA', function() { expect(quatA).toBeEqualish([2, 4, 6, 8]); });
+		test('Quaternion#should return quatA', function() { expect(result).toBe(quatA); });
 	});
 });
 
-test('length', t => {
-	test('should have an alias called 'len'', function() { expect(quat.len).toEqual(quat.length); });
+test('Quaternion#length', t => {
+	test('Quaternion#should have an alias called 'len'', function() { expect(quat.len).toEqual(quat.length); });
 
 	beforeEach(function() { result = quat.len(quatA); });
 
-	test('should return the length', function() { expect(result).toBeEqualish(5.477225); });
+	test('Quaternion#should return the length', function() { expect(result).toBeEqualish(5.477225); });
 });
 
-test('squaredLength', t => {
-	test('should have an alias called 'sqrLen'', function() { expect(quat.sqrLen).toEqual(quat.squaredLength); });
+test('Quaternion#squaredLength', t => {
+	test('Quaternion#should have an alias called 'sqrLen'', function() { expect(quat.sqrLen).toEqual(quat.squaredLength); });
 
 	beforeEach(function() { result = quat.squaredLength(quatA); });
 
-	test('should return the squared length', function() { expect(result).toEqual(30); });
+	test('Quaternion#should return the squared length', function() { expect(result).toEqual(30); });
 });
 
-test('normalize', t => {
+test('Quaternion#normalize', t => {
 	beforeEach(function() { quatA = [5, 0, 0, 0]; });
 
-	test('with a separate output quaternion', t => {
+	test('Quaternion#with a separate output quaternion', t => {
 		beforeEach(function() { result = quat.normalize(out, quatA); });
 
-		test('should place values into out', function() { expect(out).toBeEqualish([1, 0, 0, 0]); });
-		test('should return out', function() { expect(result).toBe(out); });
-		test('should not modify quatA', function() { expect(quatA).toBeEqualish([5, 0, 0, 0]); });
+		test('Quaternion#should place values into out', function() { expect(out).toBeEqualish([1, 0, 0, 0]); });
+		test('Quaternion#should return out', function() { expect(result).toBe(out); });
+		test('Quaternion#should not modify quatA', function() { expect(quatA).toBeEqualish([5, 0, 0, 0]); });
 	});
 
-	test('when quatA is the output quaternion', t => {
+	test('Quaternion#when quatA is the output quaternion', t => {
 		beforeEach(function() { result = quat.normalize(quatA, quatA); });
 
-		test('should place values into quatA', function() { expect(quatA).toBeEqualish([1, 0, 0, 0]); });
-		test('should return quatA', function() { expect(result).toBe(quatA); });
+		test('Quaternion#should place values into quatA', function() { expect(quatA).toBeEqualish([1, 0, 0, 0]); });
+		test('Quaternion#should return quatA', function() { expect(result).toBe(quatA); });
 	});
 });
 
-test('invert', t => {
-	test('with a separate output quaternion', t => {
+test('Quaternion#invert', t => {
+	test('Quaternion#with a separate output quaternion', t => {
 		beforeEach(function() { result = quat.invert(out, quatA); });
 
-		test('should place values into out', function() { expect(out).toBeEqualish([-0.033333, -0.066666, -0.1, 0.133333]); });
-		test('should return out', function() { expect(result).toBe(out); });
-		test('should not modify quatA', function() { expect(quatA).toBeEqualish([1, 2, 3, 4]); });
+		test('Quaternion#should place values into out', function() { expect(out).toBeEqualish([-0.033333, -0.066666, -0.1, 0.133333]); });
+		test('Quaternion#should return out', function() { expect(result).toBe(out); });
+		test('Quaternion#should not modify quatA', function() { expect(quatA).toBeEqualish([1, 2, 3, 4]); });
 	});
 
-	test('when quatA is the output quaternion', t => {
+	test('Quaternion#when quatA is the output quaternion', t => {
 		beforeEach(function() { result = quat.invert(quatA, quatA); });
 
-		test('should place values into quatA', function() { expect(quatA).toBeEqualish([-0.033333, -0.066666, -0.1, 0.133333]); });
-		test('should return quatA', function() { expect(result).toBe(quatA); });
+		test('Quaternion#should place values into quatA', function() { expect(quatA).toBeEqualish([-0.033333, -0.066666, -0.1, 0.133333]); });
+		test('Quaternion#should return quatA', function() { expect(result).toBe(quatA); });
 	});
 });
 
-test('conjugate', t => {
-	test('with a separate output quaternion', t => {
+test('Quaternion#conjugate', t => {
+	test('Quaternion#with a separate output quaternion', t => {
 		beforeEach(function() { result = quat.conjugate(out, quatA); });
 
-		test('should place values into out', function() { expect(out).toBeEqualish([-1, -2, -3, 4]); });
-		test('should return out', function() { expect(result).toBe(out); });
-		test('should not modify quatA', function() { expect(quatA).toBeEqualish([1, 2, 3, 4]); });
+		test('Quaternion#should place values into out', function() { expect(out).toBeEqualish([-1, -2, -3, 4]); });
+		test('Quaternion#should return out', function() { expect(result).toBe(out); });
+		test('Quaternion#should not modify quatA', function() { expect(quatA).toBeEqualish([1, 2, 3, 4]); });
 	});
 
-	test('when quatA is the output quaternion', t => {
+	test('Quaternion#when quatA is the output quaternion', t => {
 		beforeEach(function() { result = quat.conjugate(quatA, quatA); });
 
-		test('should place values into quatA', function() { expect(quatA).toBeEqualish([-1, -2, -3, 4]); });
-		test('should return quatA', function() { expect(result).toBe(quatA); });
+		test('Quaternion#should place values into quatA', function() { expect(quatA).toBeEqualish([-1, -2, -3, 4]); });
+		test('Quaternion#should return quatA', function() { expect(result).toBe(quatA); });
 	});
 });
 
-test('str', t => {
+test('Quaternion#str', t => {
 	beforeEach(function() { result = quat.str(quatA); });
 
-	test('should return a string representation of the quaternion', function() { expect(result).toEqual('quat(1, 2, 3, 4)'); });
+	test('Quaternion#should return a string representation of the quaternion', function() { expect(result).toEqual('quat(1, 2, 3, 4)'); });
 });
 
-test('exactEquals', t => {
+test('Quaternion#exactEquals', t => {
 	let quatC, r0, r1;
 	beforeEach(function() {
 		quatA = [0, 1, 2, 3];
@@ -375,13 +382,13 @@ test('exactEquals', t => {
 		r1 = quat.exactEquals(quatA, quatC);
 	});
 
-	test('should return true for identical quaternions', function() { expect(r0).toBe(true); });
-	test('should return false for different quaternions', function() { expect(r1).toBe(false); });
-	test('should not modify quatA', function() { expect(quatA).toBeEqualish([0, 1, 2, 3]); });
-	test('should not modify quatB', function() { expect(quatB).toBeEqualish([0, 1, 2, 3]); });
+	test('Quaternion#should return true for identical quaternions', function() { expect(r0).toBe(true); });
+	test('Quaternion#should return false for different quaternions', function() { expect(r1).toBe(false); });
+	test('Quaternion#should not modify quatA', function() { expect(quatA).toBeEqualish([0, 1, 2, 3]); });
+	test('Quaternion#should not modify quatB', function() { expect(quatB).toBeEqualish([0, 1, 2, 3]); });
 });
 
-test('equals', t => {
+test('Quaternion#equals', t => {
 	let quatC, quatD, r0, r1, r2;
 	beforeEach(function() {
 		quatA = [0, 1, 2, 3];
@@ -392,99 +399,99 @@ test('equals', t => {
 		r1 = quat.equals(quatA, quatC);
 		r2 = quat.equals(quatA, quatD);
 	});
-	test('should return true for identical quaternions', function() { expect(r0).toBe(true); });
-	test('should return false for different quaternions', function() { expect(r1).toBe(false); });
-	test('should return true for close but not identical quaternions', function() { expect(r2).toBe(true); });
-	test('should not modify quatA', function() { expect(quatA).toBeEqualish([0, 1, 2, 3]); });
-	test('should not modify quatB', function() { expect(quatB).toBeEqualish([0, 1, 2, 3]); });
+	test('Quaternion#should return true for identical quaternions', function() { expect(r0).toBe(true); });
+	test('Quaternion#should return false for different quaternions', function() { expect(r1).toBe(false); });
+	test('Quaternion#should return true for close but not identical quaternions', function() { expect(r2).toBe(true); });
+	test('Quaternion#should not modify quatA', function() { expect(quatA).toBeEqualish([0, 1, 2, 3]); });
+	test('Quaternion#should not modify quatB', function() { expect(quatB).toBeEqualish([0, 1, 2, 3]); });
 });
 
-test('slerp', t => {
-	test('the normal case', t => {
+test('Quaternion#slerp', t => {
+	test('Quaternion#the normal case', t => {
 		beforeEach(function() {
 			result = quat.slerp(out, [0, 0, 0, 1], [0, 1, 0, 0], 0.5);
 		});
 
-		test('should return out', function() { expect(result).toBe(out); });
-		test('should calculate proper quat', function() {
+		test('Quaternion#should return out', function() { expect(result).toBe(out); });
+		test('Quaternion#should calculate proper quat', function() {
 			expect(result).toBeEqualish([0, 0.707106, 0, 0.707106]);
 		});
 	});
 
-	test('where a == b', t => {
+	test('Quaternion#where a == b', t => {
 		beforeEach(function() {
 			result = quat.slerp(out, [0, 0, 0, 1], [0, 0, 0, 1], 0.5);
 		});
 
-		test('should return out', function() { expect(result).toBe(out); });
-		test('should calculate proper quat', function() {
+		test('Quaternion#should return out', function() { expect(result).toBe(out); });
+		test('Quaternion#should calculate proper quat', function() {
 			expect(result).toBeEqualish([0, 0, 0, 1]);
 		});
 	});
 
-	test('where theta == 180deg', t => {
+	test('Quaternion#where theta == 180deg', t => {
 		beforeEach(function() {
 			quat.rotateX(quatA, [1,0,0,0], Math.PI); // 180 deg
 			result = quat.slerp(out, [1,0,0,0], quatA, 1);
 		});
 
-		test('should calculate proper quat', function() {
+		test('Quaternion#should calculate proper quat', function() {
 			expect(result).toBeEqualish([0,0,0,-1]);
 		});
 	});
 
-	test('where a == -b', t => {
+	test('Quaternion#where a == -b', t => {
 		beforeEach(function() {
 			result = quat.slerp(out, [1, 0, 0, 0], [-1, 0, 0, 0], 0.5);
 		});
 
-		test('should return out', function() { expect(result).toBe(out); });
-		test('should calculate proper quat', function() {
+		test('Quaternion#should return out', function() { expect(result).toBe(out); });
+		test('Quaternion#should calculate proper quat', function() {
 			expect(result).toBeEqualish([1, 0, 0, 0]);
 		});
 	});
 });
 
-test('rotateX', t => {
+test('Quaternion#rotateX', t => {
 	beforeEach(function() {
 		result = quat.rotateX(out, id, deg90);
 	});
 
-	test('should return out', function() { expect(result).toBe(out); });
-	test('should transform vec accordingly', function() {
+	test('Quaternion#should return out', function() { expect(result).toBe(out); });
+	test('Quaternion#should transform vec accordingly', function() {
 		vec3.transformQuat(vec, [0,0,-1], out);
 		expect(vec).toBeEqualish([0, 1, 0]);
 	});
 });
 
-test('rotateY', t => {
+test('Quaternion#rotateY', t => {
 	beforeEach(function() {
 		result = quat.rotateY(out, id, deg90);
 	});
 
-	test('should return out', function() { expect(result).toBe(out); });
-	test('should transform vec accordingly', function() {
+	test('Quaternion#should return out', function() { expect(result).toBe(out); });
+	test('Quaternion#should transform vec accordingly', function() {
 		vec3.transformQuat(vec, [0,0,-1], out);
 		expect(vec).toBeEqualish([-1, 0, 0]);
 	});
 });
 
-test('rotateZ', t => {
+test('Quaternion#rotateZ', t => {
 	beforeEach(function() {
 		result = quat.rotateZ(out, id, deg90);
 	});
 
-	test('should return out', function() { expect(result).toBe(out); });
-	test('should transform vec accordingly', function() {
+	test('Quaternion#should return out', function() { expect(result).toBe(out); });
+	test('Quaternion#should transform vec accordingly', function() {
 		vec3.transformQuat(vec, [0,1,0], out);
 		expect(vec).toBeEqualish([-1, 0, 0]);
 	});
 });
 
-test('fromMat3', t => {
+test('Quaternion#fromMat3', t => {
 	let matr;
 
-	test('legacy', t => {
+	test('Quaternion#legacy', t => {
 		beforeEach(function() {
 			matr = [ 1, 0,  0,
 					 0, 0, -1,
@@ -492,12 +499,12 @@ test('fromMat3', t => {
 			result = quat.fromMat3(out, matr);
 		});
 
-		test('should set dest to the correct value', function() {
+		test('Quaternion#should set dest to the correct value', function() {
 			expect(result).toBeEqualish([-0.707106, 0, 0, 0.707106]);
 		});
 	});
 
-	test('where trace > 0', t => {
+	test('Quaternion#where trace > 0', t => {
 		beforeEach(function() {
 			matr = [ 1, 0,  0,
 					 0, 0, -1,
@@ -505,85 +512,85 @@ test('fromMat3', t => {
 			result = quat.fromMat3(out, matr);
 		});
 
-		test('should return out', function() { expect(result).toBe(out); });
+		test('Quaternion#should return out', function() { expect(result).toBe(out); });
 
-		test('should produce the correct transformation', function() {
+		test('Quaternion#should produce the correct transformation', function() {
 			expect(vec3.transformQuat([], [0,1,0], out)).toBeEqualish([0,0,-1]);
 		});
 	});
 
-	test('from a normal matrix looking 'backward'', t => {
+	test('Quaternion#from a normal matrix looking 'backward'', t => {
 		beforeEach(function() {
 			matr = mat3.create();
 			mat3.transpose(matr, mat3.invert(matr, mat3.fromMat4(matr, mat4.lookAt(mat4.create(), [0, 0, 0], [0, 0, 1], [0, 1, 0]))));
 			result = quat.fromMat3(out, matr);
 		});
 
-		test('should return out', function() { expect(result).toBe(out); });
+		test('Quaternion#should return out', function() { expect(result).toBe(out); });
 
-		test('should produce the same transformation as the given matrix', function() {
+		test('Quaternion#should produce the same transformation as the given matrix', function() {
 			expect(vec3.transformQuat([], [3,2,-1], quat.normalize(out, out))).toBeEqualish(vec3.transformMat3([], [3,2,-1], matr));
 		});
 	});
 
-	test('from a normal matrix looking 'left' and 'upside down'', t => {
+	test('Quaternion#from a normal matrix looking 'left' and 'upside down'', t => {
 		beforeEach(function() {
 			matr = mat3.create();
 			mat3.transpose(matr, mat3.invert(matr, mat3.fromMat4(matr, mat4.lookAt(mat4.create(), [0, 0, 0], [-1, 0, 0], [0, -1, 0]))));
 			result = quat.fromMat3(out, matr);
 		});
 
-		test('should return out', function() { expect(result).toBe(out); });
+		test('Quaternion#should return out', function() { expect(result).toBe(out); });
 
-		test('should produce the same transformation as the given matrix', function() {
+		test('Quaternion#should produce the same transformation as the given matrix', function() {
 			expect(vec3.transformQuat([], [3,2,-1], quat.normalize(out, out))).toBeEqualish(vec3.transformMat3([], [3,2,-1], matr));
 		});
 	});
 
-	test('from a normal matrix looking 'upside down'', t => {
+	test('Quaternion#from a normal matrix looking 'upside down'', t => {
 		beforeEach(function() {
 			matr = mat3.create();
 			mat3.transpose(matr, mat3.invert(matr, mat3.fromMat4(matr, mat4.lookAt(mat4.create(), [0, 0, 0], [0, 0, -1], [0, -1, 0]))));
 			result = quat.fromMat3(out, matr);
 		});
 
-		test('should return out', function() { expect(result).toBe(out); });
+		test('Quaternion#should return out', function() { expect(result).toBe(out); });
 
-		test('should produce the same transformation as the given matrix', function() {
+		test('Quaternion#should produce the same transformation as the given matrix', function() {
 			expect(vec3.transformQuat([], [3,2,-1], quat.normalize(out, out))).toBeEqualish(vec3.transformMat3([], [3,2,-1], matr));
 		});
 	});
 });
 
-test('fromEuler', t => {
-	test('legacy', t => {
+test('Quaternion#fromEuler', t => {
+	test('Quaternion#legacy', t => {
 		beforeEach(function() {
 			result = quat.fromEuler(out, -90, 0, 0);
 		});
 
-		test('should set dest to the correct value', function() {
+		test('Quaternion#should set dest to the correct value', function() {
 			expect(result).toBeEqualish([-0.707106, 0, 0, 0.707106]);
 		});
 	});
 
-	test('where trace > 0', t => {
+	test('Quaternion#where trace > 0', t => {
 		beforeEach(function() {
 			result = quat.fromEuler(out, -90, 0, 0);
 		});
 
-		test('should return out', function() { expect(result).toBe(out); });
+		test('Quaternion#should return out', function() { expect(result).toBe(out); });
 
-		test('should produce the correct transformation', function() {
+		test('Quaternion#should produce the correct transformation', function() {
 			expect(vec3.transformQuat([], [0,1,0], out)).toBeEqualish([0,0,-1]);
 		});
 	});
 });
 
-test('setAxes', t => {
+test('Quaternion#setAxes', t => {
 	let r;
 	beforeEach(function() { r = vec3.create(); });
 
-	test('looking left', t => {
+	test('Quaternion#looking left', t => {
 		let view, up, right;
 		beforeEach(function() {
 			view = [-1, 0, 0];
@@ -592,18 +599,18 @@ test('setAxes', t => {
 			result = quat.setAxes([], view, right, up);
 		});
 
-		test('should transform local view into world left', function() {
+		test('Quaternion#should transform local view into world left', function() {
 			r = vec3.transformQuat([], [0,0,-1], result);
 			expect(r).toBeEqualish([1, 0, 0]);
 		});
 
-		test('should transform local right into world front', function() {
+		test('Quaternion#should transform local right into world front', function() {
 			r = vec3.transformQuat([], [1,0,0], result);
 			expect(r).toBeEqualish([0, 0, 1]);
 		});
 	});
 
-	test('given opengl defaults', t => {
+	test('Quaternion#given opengl defaults', t => {
 		let view, up, right;
 		beforeEach(function() {
 			view = [0, 0, -1];
@@ -612,16 +619,16 @@ test('setAxes', t => {
 			result = quat.setAxes(out, view, right, up);
 		});
 
-		test('should return out', function() {
+		test('Quaternion#should return out', function() {
 			expect(result).toBe(out);
 		});
 
-		test('should produce identity', function() {
+		test('Quaternion#should produce identity', function() {
 			expect(out).toBeEqualish([0, 0, 0, 1]);
 		});
 	});
 
-	test('legacy example', t => {
+	test('Quaternion#legacy example', t => {
 		let view, up, right;
 		beforeEach(function() {
 			right= [1,  0, 0];
@@ -630,139 +637,139 @@ test('setAxes', t => {
 			result = quat.setAxes(out, view, right, up);
 		});
 
-		xtest('should set correct quat4 values', function() {
+		xtest('Quaternion#should set correct quat4 values', function() {
 			expect(result).toBeEqualish([0.707106, 0, 0, 0.707106]);
 		});
 	});
 });
 
-test('rotationTo', t => {
+test('Quaternion#rotationTo', t => {
 	let r;
 	beforeEach(function() { r = vec3.create(); });
 
-	test('at right angle', t => {
+	test('Quaternion#at right angle', t => {
 		beforeEach(function() {
 			result = quat.rotationTo(out, [0, 1, 0], [1, 0, 0]);
 		});
 
-		test('should return out', function() { expect(result).toBe(out); });
+		test('Quaternion#should return out', function() { expect(result).toBe(out); });
 
-		test('should calculate proper quaternion', function() {
+		test('Quaternion#should calculate proper quaternion', function() {
 			expect(out).toBeEqualish([0, 0, -0.707106, 0.707106]);
 		});
 	});
 
-	test('when vectors are parallel', t => {
+	test('Quaternion#when vectors are parallel', t => {
 		beforeEach(function() {
 			result = quat.rotationTo(out, [0, 1, 0], [0, 1, 0]);
 		});
 
-		test('should return out', function() { expect(result).toBe(out); });
+		test('Quaternion#should return out', function() { expect(result).toBe(out); });
 
-		test('multiplying A should produce B', function() {
+		test('Quaternion#multiplying A should produce B', function() {
 			expect(vec3.transformQuat(r, [0, 1, 0], out)).toBeEqualish([0, 1, 0]);
 		});
 	});
 
-	test('when vectors are opposed X', t => {
+	test('Quaternion#when vectors are opposed X', t => {
 		beforeEach(function() {
 			result = quat.rotationTo(out, [1, 0, 0], [-1, 0, 0]);
 		});
 
-		test('should return out', function() { expect(result).toBe(out); });
+		test('Quaternion#should return out', function() { expect(result).toBe(out); });
 
-		test('multiplying A should produce B', function() {
+		test('Quaternion#multiplying A should produce B', function() {
 			expect(vec3.transformQuat(r, [1, 0, 0], out)).toBeEqualish([-1, 0, 0]);
 		});
 	});
 
-	test('when vectors are opposed Y', t => {
+	test('Quaternion#when vectors are opposed Y', t => {
 		beforeEach(function() {
 			result = quat.rotationTo(out, [0, 1, 0], [0, -1, 0]);
 		});
 
-		test('should return out', function() { expect(result).toBe(out); });
+		test('Quaternion#should return out', function() { expect(result).toBe(out); });
 
-		test('multiplying A should produce B', function() {
+		test('Quaternion#multiplying A should produce B', function() {
 			expect(vec3.transformQuat(r, [0, 1, 0], out)).toBeEqualish([0, -1, 0]);
 		});
 	});
 
-	test('when vectors are opposed Z', t => {
+	test('Quaternion#when vectors are opposed Z', t => {
 		beforeEach(function() {
 			result = quat.rotationTo(out, [0, 0, 1], [0, 0, -1]);
 		});
 
-		test('should return out', function() { expect(result).toBe(out); });
+		test('Quaternion#should return out', function() { expect(result).toBe(out); });
 
-		test('multiplying A should produce B', function() {
+		test('Quaternion#multiplying A should produce B', function() {
 			expect(vec3.transformQuat(r, [0, 0, 1], out)).toBeEqualish([0, 0, -1]);
 		});
 	});
 });
 
-test('lerp', t => {
-	test('with a separate output quaternion', t => {
+test('Quaternion#lerp', t => {
+	test('Quaternion#with a separate output quaternion', t => {
 		beforeEach(function() { result = quat.lerp(out, quatA, quatB, 0.5); });
 
-		test('should place values into out', function() { expect(out).toBeEqualish([3, 4, 5, 6]); });
-		test('should return out', function() { expect(result).toBe(out); });
-		test('should not modify quatA', function() { expect(quatA).toBeEqualish([1, 2, 3, 4]); });
-		test('should not modify quatB', function() { expect(quatB).toBeEqualish([5, 6, 7, 8]); });
+		test('Quaternion#should place values into out', function() { expect(out).toBeEqualish([3, 4, 5, 6]); });
+		test('Quaternion#should return out', function() { expect(result).toBe(out); });
+		test('Quaternion#should not modify quatA', function() { expect(quatA).toBeEqualish([1, 2, 3, 4]); });
+		test('Quaternion#should not modify quatB', function() { expect(quatB).toBeEqualish([5, 6, 7, 8]); });
 	});
 
-	test('when quatA is the output quaternion', t => {
+	test('Quaternion#when quatA is the output quaternion', t => {
 		beforeEach(function() { result = quat.lerp(quatA, quatA, quatB, 0.5); });
 
-		test('should place values into quatA', function() { expect(quatA).toBeEqualish([3, 4, 5, 6]); });
-		test('should return quatA', function() { expect(result).toBe(quatA); });
-		test('should not modify quatB', function() { expect(quatB).toBeEqualish([5, 6, 7, 8]); });
+		test('Quaternion#should place values into quatA', function() { expect(quatA).toBeEqualish([3, 4, 5, 6]); });
+		test('Quaternion#should return quatA', function() { expect(result).toBe(quatA); });
+		test('Quaternion#should not modify quatB', function() { expect(quatB).toBeEqualish([5, 6, 7, 8]); });
 	});
 
-	test('when quatB is the output quaternion', t => {
+	test('Quaternion#when quatB is the output quaternion', t => {
 		beforeEach(function() { result = quat.lerp(quatB, quatA, quatB, 0.5); });
 
-		test('should place values into quatB', function() { expect(quatB).toBeEqualish([3, 4, 5, 6]); });
-		test('should return quatB', function() { expect(result).toBe(quatB); });
-		test('should not modify quatA', function() { expect(quatA).toBeEqualish([1, 2, 3, 4]); });
+		test('Quaternion#should place values into quatB', function() { expect(quatB).toBeEqualish([3, 4, 5, 6]); });
+		test('Quaternion#should return quatB', function() { expect(result).toBe(quatB); });
+		test('Quaternion#should not modify quatA', function() { expect(quatA).toBeEqualish([1, 2, 3, 4]); });
 	});
 });
 
-test('slerp', t => {
-	test('with a separate output quaternion', t => {
+test('Quaternion#slerp', t => {
+	test('Quaternion#with a separate output quaternion', t => {
 		beforeEach(function() { result = quat.slerp(out, quatA, quatB, 0.5); });
 
-		test('should place values into out', function() { expect(out).toBeEqualish([3, 4, 5, 6]); });
-		test('should return out', function() { expect(result).toBe(out); });
-		test('should not modify quatA', function() { expect(quatA).toBeEqualish([1, 2, 3, 4]); });
-		test('should not modify quatB', function() { expect(quatB).toBeEqualish([5, 6, 7, 8]); });
+		test('Quaternion#should place values into out', function() { expect(out).toBeEqualish([3, 4, 5, 6]); });
+		test('Quaternion#should return out', function() { expect(result).toBe(out); });
+		test('Quaternion#should not modify quatA', function() { expect(quatA).toBeEqualish([1, 2, 3, 4]); });
+		test('Quaternion#should not modify quatB', function() { expect(quatB).toBeEqualish([5, 6, 7, 8]); });
 	});
 
-	test('when quatA is the output quaternion', t => {
+	test('Quaternion#when quatA is the output quaternion', t => {
 		beforeEach(function() { result = quat.slerp(quatA, quatA, quatB, 0.5); });
 
-		test('should place values into quatA', function() { expect(quatA).toBeEqualish([3, 4, 5, 6]); });
-		test('should return quatA', function() { expect(result).toBe(quatA); });
-		test('should not modify quatB', function() { expect(quatB).toBeEqualish([5, 6, 7, 8]); });
+		test('Quaternion#should place values into quatA', function() { expect(quatA).toBeEqualish([3, 4, 5, 6]); });
+		test('Quaternion#should return quatA', function() { expect(result).toBe(quatA); });
+		test('Quaternion#should not modify quatB', function() { expect(quatB).toBeEqualish([5, 6, 7, 8]); });
 	});
 
-	test('when quatB is the output quaternion', t => {
+	test('Quaternion#when quatB is the output quaternion', t => {
 		beforeEach(function() { result = quat.slerp(quatB, quatA, quatB, 0.5); });
 
-		test('should place values into quatB', function() { expect(quatB).toBeEqualish([3, 4, 5, 6]); });
-		test('should return quatB', function() { expect(result).toBe(quatB); });
-		test('should not modify quatA', function() { expect(quatA).toBeEqualish([1, 2, 3, 4]); });
+		test('Quaternion#should place values into quatB', function() { expect(quatB).toBeEqualish([3, 4, 5, 6]); });
+		test('Quaternion#should return quatB', function() { expect(result).toBe(quatB); });
+		test('Quaternion#should not modify quatA', function() { expect(quatA).toBeEqualish([1, 2, 3, 4]); });
 	});
 });
 
-test('random', t => {
+test('Quaternion#random', t => {
 	beforeEach(function() { result = quat.random(out); });
 
-	test('should result in a normalized quaternion', function() {
+	test('Quaternion#should result in a normalized quaternion', function() {
 		let copy = quat.clone(out);
 		expect(quat.normalize(out, out)).toBeEqualish(copy);
 	});
-	test('should return out', function() { expect(result).toBe(out); });
+	test('Quaternion#should return out', function() { expect(result).toBe(out); });
 });
 
 */

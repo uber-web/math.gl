@@ -29,19 +29,22 @@ const TEST_CASES = [
     title: 'non-closed poly',
     polygon: [[5, 0], [6, 4], [4, 5], [1, 5], [1, 0]],
     area: 22,
-    sign: -1
+    sign: -1,
+    segments: 5
   },
   {
     title: 'exactly closed poly',
     polygon: [[5, 0], [6, 4], [4, 5], [1, 5], [1, 0], [5, 0]],
     area: 22,
-    sign: -1
+    sign: -1,
+    segments: 5
   },
   {
     title: 'EPSILON closed poly',
     polygon: [[5, 0], [6, 4], [4, 5], [1, 5], [1, 0], [5, 0.0000001]],
     area: 22,
-    sign: -1
+    sign: -1,
+    segments: 5
   }
 ];
 
@@ -77,5 +80,21 @@ test('Polygon#methods', t => {
   }
 
   configure({EPSILON: 1e-12});
+  t.end();
+});
+
+test('Polygon#forEachSegment', t => {
+  const config = configure({EPSILON: 1e-4});
+
+  for (const tc of TEST_CASES) {
+    const polygon = new Polygon(tc.polygon);
+    let count = 0;
+    polygon.forEachSegment(() => {
+      count++;
+    });
+    t.equals(count, tc.segments, 'forEachSegment() iterated over all virtual segments');
+  }
+
+  configure(config);
   t.end();
 });

@@ -46,7 +46,11 @@ test('Matrix4#types', t => {
 });
 
 test('Matrix4#construct and Array.isArray check', t => {
-  t.ok(Array.isArray(new Matrix4()));
+  const m = new Matrix4();
+  t.ok(Array.isArray(m));
+  t.ok(m.INDICES);
+  t.ok(m.IDENTITY);
+  t.ok(m.ZERO);
   t.end();
 });
 
@@ -56,9 +60,10 @@ test('Matrix4#from', t => {
   t.end();
 });
 
-test.skip('Matrix4#to', t => {
+test('Matrix4#to', t => {
   const matrix = new Matrix4(...INDICES_MATRIX);
-  tapeEquals(t, matrix.to([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]), INDICES_MATRIX);
+  t.ok(matrix.to(matrix), 'Handles copy to self');
+  // tapeEquals(t, matrix.to([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]), INDICES_MATRIX);
   // t.deepEquals(matrix.to({x: 0, y: 0, z: 0, w: 0}), {x: 1, y: 2, z: 4});
   t.end();
 });
@@ -81,6 +86,20 @@ test('Matrix4.toFloat32Array', t => {
   const m = new Matrix4();
   m.identity();
   t.equals(m.toFloat32Array().BYTES_PER_ELEMENT, 4);
+  t.end();
+});
+
+test('Matrix4.equals', t => {
+  const m = new Matrix4();
+  t.ok(m.equals(IDENTITY_MATRIX));
+  t.notOk(m.equals([...IDENTITY_MATRIX, 0]));
+  t.end();
+});
+
+test('Matrix4.exactEquals', t => {
+  const m = new Matrix4();
+  t.ok(m.exactEquals(IDENTITY_MATRIX));
+  t.notOk(m.exactEquals([...IDENTITY_MATRIX, 0]));
   t.end();
 });
 
@@ -122,13 +141,68 @@ test('Matrix4#set', t => {
 });
 
 test('Matrix4#setRowMajor', t => {
-  t.equals(typeof Matrix4.prototype.setRowMajor, 'function');
-
   const INPUT = INDICES_MATRIX;
   const RESULT = TRANSPOSED_INDICES_MATRIX;
 
   const m = new Matrix4().setRowMajor(...INPUT);
   tapeEquals(t, m, RESULT, 'setRowMajor gave the right result');
+
+  t.end();
+});
+
+test('Matrix4#toRowMajor', t => {
+  const INPUT = INDICES_MATRIX;
+  const RESULT = TRANSPOSED_INDICES_MATRIX;
+
+  const m = new Matrix4(INPUT).toRowMajor([...INDICES_MATRIX]);
+  tapeEquals(t, m, RESULT, 'setRowMajor gave the right result');
+
+  t.end();
+});
+
+test('Matrix4#getScale', t => {
+  const INPUT = INDICES_MATRIX;
+  const RESULT = [3.7416573867739413, 10.488088481701515, 17.37814719698276];
+
+  const scale = new Matrix4(INPUT).getScale();
+  tapeEquals(t, scale, RESULT, 'getScale gave the right result');
+
+  t.end();
+});
+
+test('Matrix4#getRotation', t => {
+  const INPUT = INDICES_MATRIX;
+  const RESULT = [
+    0.2672612419124244,
+    0.19069251784911848,
+    0.17263060129453078,
+    0,
+    1.3363062095621219,
+    0.5720775535473555,
+    0.4028047363539052,
+    0,
+    2.4053511772118195,
+    0.9534625892455924,
+    0.6329788714132796,
+    0,
+    0,
+    0,
+    0,
+    1
+  ];
+
+  const m = new Matrix4(INPUT).getRotation([...INDICES_MATRIX]);
+  tapeEquals(t, m, RESULT, 'getRotation gave the right result');
+
+  t.end();
+});
+
+test('Matrix4#getTranslation', t => {
+  const INPUT = INDICES_MATRIX;
+  const RESULT = [13, 14, 15];
+
+  const m = new Matrix4(INPUT).getTranslation([0, 0, 0]);
+  tapeEquals(t, m, RESULT, 'getTranslation gave the right result');
 
   t.end();
 });

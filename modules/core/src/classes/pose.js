@@ -30,7 +30,7 @@ export default class Pose {
    * pose's position and with with the defining pose's orientation
    * aligned with axis.
    */
-  constructor({x = 0, y = 0, z = 0, roll = 0, pitch = 0, yaw = 0, position, orientation}) {
+  constructor({x = 0, y = 0, z = 0, roll = 0, pitch = 0, yaw = 0, position, orientation} = {}) {
     if (Array.isArray(position) && position.length === 3) {
       this.position = new Vector3(position);
     } else {

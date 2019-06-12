@@ -129,7 +129,7 @@ export default class OrientedBoundingBox {
 
   // eslint-disable-next-line max-statements
   distanceSquaredTo(point) {
-    const offset = Vector3.subtract(point, this.center, scratchOffset);
+    const offset = scratchOffset.copy(point).subtract(this.center);
 
     const halfAxes = this.halfAxes;
     const u = halfAxes.getColumn(0, scratchVectorU);
@@ -183,101 +183,117 @@ export default class OrientedBoundingBox {
   // to position projected onto direction.
 
   // eslint-disable-next-line max-statements
-  computePlaneDistances(box, position, direction, result = [[], []]) {
+  computePlaneDistances(position, direction, result = [[], []]) {
     let minDist = Number.POSITIVE_INFINITY;
     let maxDist = Number.NEGATIVE_INFINITY;
 
-    const center = box.center;
-    const halfAxes = box.halfAxes;
+    const center = this.center;
+    const halfAxes = this.halfAxes;
 
     const u = halfAxes.getColumn(0, scratchVectorU);
     const v = halfAxes.getColumn(1, scratchVectorV);
     const w = halfAxes.getColumn(2, scratchVectorW);
 
     // project first corner
-    const corner = Vector3.add(u, v, scratchCorner);
-    Vector3.add(corner, w, corner);
-    Vector3.add(corner, center, corner);
+    const corner = scratchCorner
+      .copy(u)
+      .add(v)
+      .add(w)
+      .add(center);
 
-    const toCenter = Vector3.subtract(corner, position, scratchToCenter);
-    let mag = Vector3.dot(direction, toCenter);
+    const toCenter = scratchToCenter.copy(corner).subtract(position);
+    let mag = direction.dot(toCenter);
 
     minDist = Math.min(mag, minDist);
     maxDist = Math.max(mag, maxDist);
 
     // project second corner
-    Vector3.add(center, u, corner);
-    Vector3.add(corner, v, corner);
-    Vector3.subtract(corner, w, corner);
+    corner
+      .copy(center)
+      .add(u)
+      .add(v)
+      .subtract(w);
 
-    Vector3.subtract(corner, position, toCenter);
-    mag = Vector3.dot(direction, toCenter);
+    toCenter.copy(corner).subtract(position);
+    mag = direction.dot(toCenter);
 
     minDist = Math.min(mag, minDist);
     maxDist = Math.max(mag, maxDist);
 
     // project third corner
-    Vector3.add(center, u, corner);
-    Vector3.subtract(corner, v, corner);
-    Vector3.add(corner, w, corner);
+    corner
+      .copy(center)
+      .add(u)
+      .subtract(v)
+      .add(w);
 
-    Vector3.subtract(corner, position, toCenter);
-    mag = Vector3.dot(direction, toCenter);
+    toCenter.copy(corner).subtract(position);
+    mag = direction.dot(toCenter);
 
     minDist = Math.min(mag, minDist);
     maxDist = Math.max(mag, maxDist);
 
     // project fourth corner
-    Vector3.add(center, u, corner);
-    Vector3.subtract(corner, v, corner);
-    Vector3.subtract(corner, w, corner);
+    corner
+      .copy(center)
+      .add(u)
+      .subtract(v)
+      .subtract(w);
 
-    Vector3.subtract(corner, position, toCenter);
-    mag = Vector3.dot(direction, toCenter);
+    toCenter.copy(corner).subtract(position);
+    mag = direction.dot(toCenter);
 
     minDist = Math.min(mag, minDist);
     maxDist = Math.max(mag, maxDist);
 
     // project fifth corner
-    Vector3.subtract(center, u, corner);
-    Vector3.add(corner, v, corner);
-    Vector3.add(corner, w, corner);
+    center
+      .copy(corner)
+      .subtract(u)
+      .add(v)
+      .add(w);
 
-    Vector3.subtract(corner, position, toCenter);
-    mag = Vector3.dot(direction, toCenter);
+    toCenter.copy(corner).subtract(position);
+    mag = direction.dot(toCenter);
 
     minDist = Math.min(mag, minDist);
     maxDist = Math.max(mag, maxDist);
 
     // project sixth corner
-    Vector3.subtract(center, u, corner);
-    Vector3.add(corner, v, corner);
-    Vector3.subtract(corner, w, corner);
+    center
+      .copy(corner)
+      .subtract(u)
+      .add(v)
+      .subtract(w);
 
-    Vector3.subtract(corner, position, toCenter);
-    mag = Vector3.dot(direction, toCenter);
+    toCenter.copy(corner).subtract(position);
+    mag = direction.dot(toCenter);
 
     minDist = Math.min(mag, minDist);
     maxDist = Math.max(mag, maxDist);
 
     // project seventh corner
-    Vector3.subtract(center, u, corner);
-    Vector3.subtract(corner, v, corner);
-    Vector3.add(corner, w, corner);
+    center
+      .copy(corner)
+      .subtract(u)
+      .subtract(v)
+      .add(w);
 
-    Vector3.subtract(corner, position, toCenter);
-    mag = Vector3.dot(direction, toCenter);
+    toCenter.copy(corner).subtract(position);
+    mag = direction.dot(toCenter);
 
     minDist = Math.min(mag, minDist);
     maxDist = Math.max(mag, maxDist);
 
     // project eighth corner
-    Vector3.subtract(center, u, corner);
-    Vector3.subtract(corner, v, corner);
-    Vector3.subtract(corner, w, corner);
+    center
+      .copy(corner)
+      .subtract(u)
+      .subtract(v)
+      .subtract(w);
 
-    Vector3.subtract(corner, position, toCenter);
-    mag = Vector3.dot(direction, toCenter);
+    toCenter.copy(corner).subtract(position);
+    mag = direction.dot(toCenter);
 
     minDist = Math.min(mag, minDist);
     maxDist = Math.max(mag, maxDist);
