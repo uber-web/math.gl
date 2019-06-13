@@ -190,10 +190,10 @@ export default class Matrix3 extends Matrix {
         result = vec2.transformMat3(result || [-0, -0], vector, this);
         break;
       case 3:
-        vec3.transformMat3(result || [-0, -0, -0], vector, this);
+        result = vec3.transformMat3(result || [-0, -0, -0], vector, this);
         break;
       case 4:
-        vec4_transformMat3(result || [-0, -0, -0, -0], vector, this);
+        result = vec4_transformMat3(result || [-0, -0, -0, -0], vector, this);
         break;
       default:
         throw new Error('Illegal vector');

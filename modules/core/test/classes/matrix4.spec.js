@@ -42,6 +42,8 @@ const TRANSPOSED_INDICES_MATRIX = [1, 5, 9, 13, 2, 6, 10, 14, 3, 7, 11, 15, 4, 8
 
 test('Matrix4#types', t => {
   t.equals(typeof Matrix4, 'function');
+  t.ok(Matrix4.IDENTITY);
+  t.ok(Matrix4.ZERO);
   t.end();
 });
 
@@ -49,8 +51,11 @@ test('Matrix4#construct and Array.isArray check', t => {
   const m = new Matrix4();
   t.ok(Array.isArray(m));
   t.ok(m.INDICES);
-  t.ok(m.IDENTITY);
-  t.ok(m.ZERO);
+  t.end();
+});
+
+test('Matrix4#fromQuaternion', t => {
+  tapeEquals(t, new Matrix4().fromQuaternion([0, 0, 0, 1]), IDENTITY_MATRIX);
   t.end();
 });
 
@@ -265,6 +270,41 @@ test('Matrix4#perspective#with infinite far plane, 45deg fovy, and realistic asp
     [1.81066, 0, 0, 0, 0, 2.414213, 0, 0, 0, 0, -1, -1, 0, 0, -0.2, 0],
     'should calculate correct matrix'
   );
+  t.throws(() => new Matrix4().perspective({fovy: 10, aspect: 1, near: 0, far: 1}));
+  t.end();
+});
+
+test('Matrix4#orthographic#', t => {
+  const fovy = Math.PI * 0.5;
+  const result = new Matrix4().orthographic({fovy, aspect: 1, near: 0, far: 1});
+  t.ok(result);
+  t.throws(() => new Matrix4().orthographic({fovy: 10, aspect: 1, near: 0, far: 1}));
+  t.end();
+});
+
+test('Matrix4#frustum', t => {
+  const result = new Matrix4().frustum(
+    {left: -1, right: 1, bottom: -1, top: 1, near: -1, far: 1}
+  );
+  t.ok(result);
+  t.end();
+});
+
+test('Matrix4#ortho', t => {
+  const result = new Matrix4().ortho(
+    {left: -1, right: 1, bottom: -1, top: 1, near: -1, far: 1}
+  );
+  t.ok(result);
+  t.end();
+});
+
+test('Matrix4#lookat', t => {
+  let result = new Matrix4().lookAt(
+    { eye: [1, 1, 1], center: [0, 0, 0], up: [0, 1, 0] }
+  );
+  t.ok(result);
+  result = new Matrix4().lookAt([1, 1, 1], [0, 0, 0], [0, 1, 0]);
+  t.ok(result);
   t.end();
 });
 
@@ -307,6 +347,24 @@ test('Matrix4.scale', t => {
 
   tapeEquals(t, m2Result, M2_RESULT, 'scale gave the right result');
 
+  t.end();
+});
+
+test('Matrix4.multiplyRight', t => {
+  const RESULT = [2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2];
+
+  const m = new Matrix4().multiplyRight(RESULT);
+
+  tapeEquals(t, m, RESULT, 'multiplyRight gave the right result');
+  t.end();
+});
+
+test('Matrix4.multiplyLeft', t => {
+  const RESULT = [2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2];
+
+  const m = new Matrix4().multiplyLeft(RESULT);
+
+  tapeEquals(t, m, RESULT, 'multiplyLeft gave the right result');
   t.end();
 });
 
@@ -468,19 +526,30 @@ test('Matrix4.rotateAxis', t => {
   t.end();
 });
 
-// test('Matrix4.rotateXYZ', t => {
-//   t.equals(typeof Matrix4.prototype.rotateXYZ, 'function');
-//   const m = new Matrix4();
-//   const result = m.rotateXYZ([1, 2, 3]);
-//   const reference = new Matrix4([
-//     0.411982245665683, -0.8337376517741568, -0.36763046292489926, 0,
-//     -0.05872664492762098, -0.42691762127620736, 0.9023815854833308, 0,
-//     -0.9092974268256817, -0.35017548837401463, -0.2248450953661529, 0,
-//     0, 0, 0, 1
-//   ]).transpose();
-//   t.assert(result.equals(reference), 'rotateXYZ generated expected matrix');
-//   t.end();
-// });
+test('Matrix4.rotateXYZ', t => {
+  const m = new Matrix4();
+  const result = m.rotateXYZ([1, 2, 3]);
+  const reference = [
+    0.411982245665683,
+    -0.6812427202564033,
+    0.6051272472413688,
+    0,
+    0.05872664492762098,
+    -0.642872836134547,
+    -0.7637183366502791,
+    0,
+    0.9092974268256817,
+    0.35017548837401463,
+    -0.2248450953661529,
+    0,
+    0,
+    0,
+    0,
+    1
+  ];
+  tapeEquals(t, result, reference, 'rotateXYZ generated expected matrix');
+  t.end();
+});
 
 test('Matrix4#transform', t => {
   const matrix = new Matrix4().translate([1, 2, 3]).scale([2, 2, 2]);
@@ -560,9 +629,11 @@ test('Matrix4#transform', t => {
     tapeEquals(t, p4, testCase.expected, 'transform gave the right result');
   }
 
-  t.throws(() => t.transform([NaN, 0, 0, 0]));
-  t.throws(() => t.transform([0, 0, 0]));
-  t.throws(() => t.transform([0, 0, 0, 0, 0]));
+  t.throws(() => matrix.transform([NaN, 0, 0, 0]));
+  t.throws(() => matrix.transform([0]));
+  t.throws(() => matrix.transform([0, 0, 0, 0, 0]));
+  t.throws(() => matrix.transformAsVector([0, 0, 0, 0, 0]));
+  t.throws(() => matrix.transformAsPoint([0, 0, 0, 0, 0]));
 
   t.end();
 });

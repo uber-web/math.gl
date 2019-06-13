@@ -302,17 +302,17 @@ export default class Quaternion extends MathArray {
     return this.multiplyLeft(a, b);
   }
 
-  // DEPRECATED
-
-  fromValues(x, y, z, w) {
-    return this.set(x, y, z, w);
-  }
-
-  squaredLength() {
-    return this.lengthSquared();
-  }
-
   multiply(a, b) {
     return this.multiplyRight(a, b);
   }
+
+  // DEPRECATED
+
+  // fromValues(x, y, z, w) {
+  //   return this.set(x, y, z, w);
+  // }
+
+  // squaredLength() {
+  //   return this.lengthSquared();
+  // }
 }

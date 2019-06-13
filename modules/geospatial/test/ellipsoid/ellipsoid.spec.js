@@ -537,7 +537,9 @@ test("getSurfaceNormalIntersectionWithZAxis returns a result that when it's used
 
   let result = ellipsoid.getSurfaceNormalIntersectionWithZAxis(cartesianOnTheSurface, undefined);
 
-  let surfaceNormalWithLength = new Vector3(surfaceNormal).multiplyByScalar(ellipsoid.maximumRadius);
+  let surfaceNormalWithLength = new Vector3(surfaceNormal).multiplyByScalar(
+    ellipsoid.maximumRadius
+  );
   let position = new Vector3(surfaceNormalWithLength).add(result);
   let resultCartographic = ellipsoid.cartesianToCartographic(position);
   resultCartographic[2] = 0.0;

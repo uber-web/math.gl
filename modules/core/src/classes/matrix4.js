@@ -53,26 +53,26 @@ const INDICES = Object.freeze({
 const constants = {};
 
 export default class Matrix4 extends Matrix {
-  get ELEMENTS() {
-    return 16;
+  static get IDENTITY() {
+    constants.IDENTITY = constants.IDENTITY || Object.freeze(new Matrix4(IDENTITY));
+    return constants.IDENTITY;
   }
 
-  get RANK() {
-    return 4;
+  static get ZERO() {
+    constants.ZERO = constants.ZERO || Object.freeze(new Matrix4(ZERO));
+    return constants.ZERO;
   }
 
   get INDICES() {
     return INDICES;
   }
 
-  get IDENTITY() {
-    constants.IDENTITY = constants.IDENTITY || Object.freeze(new Matrix4(IDENTITY));
-    return constants.IDENTITY;
+  get ELEMENTS() {
+    return 16;
   }
 
-  get ZERO() {
-    constants.ZERO = constants.ZERO || Object.freeze(new Matrix4(ZERO));
-    return constants.ZERO;
+  get RANK() {
+    return 4;
   }
 
   constructor(array) {
@@ -455,10 +455,6 @@ export default class Matrix4 extends Matrix {
 
   makeTranslation(x, y, z) {
     return this.identity().translate([x, y, z]);
-  }
-
-  makeRotationFromQuaternion(q) {
-    return this.fromQuaternion(q);
   }
 
   // DEPRECATED in 3.0

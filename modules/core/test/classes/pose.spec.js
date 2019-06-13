@@ -82,6 +82,14 @@ test('Pose#constructor', t => {
   pose2 = new Pose(flattenProps);
 
   t.ok(pose1.equals(pose2), 'reconstructed from flatten props');
+  t.end();
+});
+
+test('Pose#equals', t => {
+  const pose1 = new Pose({});
+
+  t.notOk(pose1.equals(undefined), 'not equal to undefined');
+  t.notOk(pose1.exactEquals(undefined), 'not exactEquals to undefined');
 
   t.end();
 });

@@ -131,7 +131,10 @@ export default class Ellipsoid {
   // Computes the unit vector directed from the center of this ellipsoid toward
   // the provided Cartesian position.
   geocentricSurfaceNormal(cartesian, result = [0, 0, 0]) {
-    return scratchVector.from(cartesian).normalize().to(result);
+    return scratchVector
+      .from(cartesian)
+      .normalize()
+      .to(result);
   }
 
   // Computes the normal of the plane tangent to the surface of the ellipsoid at provided position.
