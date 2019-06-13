@@ -290,7 +290,6 @@ test('Matrix3#translate', t => {
   t.end();
 });
 
-
 test('Matrix3#transform', t => {
   const matrix = new Matrix3().scale([2, 2, 2]);
 
@@ -325,7 +324,7 @@ test('Matrix3#transform', t => {
       method: 'transformVector3',
       input: [2, 2, 0],
       expected: [4, 4, 0]
-    },
+    }
   ];
 
   for (const testCase of TEST_CASES) {

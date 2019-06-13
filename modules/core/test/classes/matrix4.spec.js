@@ -283,25 +283,19 @@ test('Matrix4#orthographic#', t => {
 });
 
 test('Matrix4#frustum', t => {
-  const result = new Matrix4().frustum(
-    {left: -1, right: 1, bottom: -1, top: 1, near: -1, far: 1}
-  );
+  const result = new Matrix4().frustum({left: -1, right: 1, bottom: -1, top: 1, near: -1, far: 1});
   t.ok(result);
   t.end();
 });
 
 test('Matrix4#ortho', t => {
-  const result = new Matrix4().ortho(
-    {left: -1, right: 1, bottom: -1, top: 1, near: -1, far: 1}
-  );
+  const result = new Matrix4().ortho({left: -1, right: 1, bottom: -1, top: 1, near: -1, far: 1});
   t.ok(result);
   t.end();
 });
 
 test('Matrix4#lookat', t => {
-  let result = new Matrix4().lookAt(
-    { eye: [1, 1, 1], center: [0, 0, 0], up: [0, 1, 0] }
-  );
+  let result = new Matrix4().lookAt({eye: [1, 1, 1], center: [0, 0, 0], up: [0, 1, 0]});
   t.ok(result);
   result = new Matrix4().lookAt([1, 1, 1], [0, 0, 0], [0, 1, 0]);
   t.ok(result);
