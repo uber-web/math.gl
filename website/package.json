@@ -23,7 +23,7 @@
   "devDependencies": {
     "gatsby": "^2.8.2",
     "gh-pages": "^2.0.1",
-    "ocular-gatsby": "1.0.0-alpha.39",
+    "ocular-gatsby": "1.0.0-alpha.41",
     "sharp": "^0.22.1"
   },
   "resolutions": {
