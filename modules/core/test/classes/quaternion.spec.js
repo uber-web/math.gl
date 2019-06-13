@@ -81,6 +81,25 @@ test('Quaternion#methods', t => {
   t.end();
 });
 
+test('Quaternion#fromMatrix3', t => {
+  const TEST_CASES = [
+    {
+      title: 'legacy',
+      matrix3: [1, 0, 0, 0, 0, -1, 0, 1, 0],
+      quaternion: [-0.707106, 0, 0, 0.707106]
+    }
+  ];
+
+  for (const testCase of TEST_CASES) {
+    const result = new Quaternion().fromMatrix3(testCase.matrix3);
+    if (testCase.quaternion) {
+      tapeEquals(t, result, testCase.quaternion, testCase.title);
+    }
+  }
+
+  t.end();
+});
+
 test('Quaternion#fromAxisRotation', t => {
   let q = new Quaternion().fromAxisRotation(new Vector3(0, 0, 1), Math.PI);
   tapeEquals(t, q, [0, 0, 1, Math.cos(Math.PI / 2)]);
@@ -151,6 +170,63 @@ test('Quaternion#identity', t => {
   t.end();
 });
 
+test('Quaternion#dot', t => {
+  t.throws(() => new Quaternion(1, 1, 1, 1).dot([1, 1, 1, 1], [1, 1, 1, 1]));
+  t.end();
+});
+
+test('Quaternion#rotationTo', t => {
+  t.doesNotThrow(() => new Quaternion().rotationTo([1, 1, 1, 1], [2, 2, 2, 2]));
+  t.end();
+});
+
+test('Quaternion#calculateW', t => {
+  t.doesNotThrow(() => new Quaternion().calculateW());
+  t.end();
+});
+
+test('Quaternion#invert', t => {
+  t.doesNotThrow(() => new Quaternion([1, 1, 1, 1]).invert());
+  t.end();
+});
+
+test('Quaternion#lerp', t => {
+  t.doesNotThrow(() => new Quaternion().lerp([1, 1, 1, 1], [2, 2, 2, 2], 0.5));
+  t.end();
+});
+
+test('Quaternion#slerp', t => {
+  t.doesNotThrow(() => new Quaternion().slerp([1, 1, 1, 1], [2, 2, 2, 2], 0.5));
+  t.doesNotThrow(() =>
+    new Quaternion().slerp({
+      start: [1, 1, 1, 1],
+      target: [2, 2, 2, 2],
+      ratio: 0.5
+    })
+  );
+  t.end();
+});
+
+test('Quaternion#scale', t => {
+  t.doesNotThrow(() => new Quaternion([1, 1, 1, 1]).scale(5));
+  t.end();
+});
+
+test('Quaternion#rotateX', t => {
+  t.doesNotThrow(() => new Quaternion([1, 1, 1, 1]).rotateX(5));
+  t.end();
+});
+
+test('Quaternion#rotateY', t => {
+  t.doesNotThrow(() => new Quaternion([1, 1, 1, 1]).rotateY(5));
+  t.end();
+});
+
+test('Quaternion#rotateZ', t => {
+  t.doesNotThrow(() => new Quaternion([1, 1, 1, 1]).rotateZ(5));
+  t.end();
+});
+
 test('Quaternion#add', t => {
   const quat = new Quaternion(1, 1, 1, 1).identity();
   t.throws(() => quat.add([0, 0, 0, 0], [0, 0, 0, 0]));
@@ -184,8 +260,10 @@ test.skip('getAxisAngle', tt => {
       'should return a multiple of 2*PI as the angle component'
     );
   });
+  tt.end();
+});
 
-  /*
+/*
 	test('Quaternion#for a simple rotation about X axis', t => {
 		beforeEach(function() { result = quat.setAxisAngle(out, [1, 0, 0], 0.7778); deg90 = quat.getAxisAngle(vec, out); });
 		test('Quaternion#should return the same provided angle', function() { expect(deg90).toBeEqualish(0.7778); });
@@ -219,7 +297,6 @@ test.skip('getAxisAngle', tt => {
 		test('Quaternion#should return an angle between 0 and 2*PI', function() { expect(deg90).toBeGreaterThan(0.0); expect(deg90).toBeLessThan(Math.PI * 2.0); });
 		test('Quaternion#should create the same quaternion from axis and angle extracted', function() { expect(quatA).toBeEqualish(quatB); });
 	});
-  */
   t.end();
 });
 
@@ -487,35 +564,45 @@ test('Quaternion#rotateZ', t => {
 		expect(vec).toBeEqualish([-1, 0, 0]);
 	});
 });
+*/
 
-test('Quaternion#fromMat3', t => {
-	let matr;
+/*
+	test('Quaternion#fromMat3', t => {
+		const TEST_CASES = [
+			{
+				title: 'legacy',
+				matrix3: [1, 0, 0, 0, 0, -1, 0, 1, 0],
+				quaternion: [-0.707106, 0, 0, 0.707106],
+				vector3: null,
+				transformedVector3: null
+			},
+			{
+				title: 'where trace > 0',
+				matrix4: [ 1, 0, 0, 0, 0, -1, 0, 1, 0],
+				vector3: [0, 1, 0],
+				transformedVector3: [0,0,-1]
+			}
+		];
 
-	test('Quaternion#legacy', t => {
-		beforeEach(function() {
-			matr = [ 1, 0,  0,
-					 0, 0, -1,
-					 0, 1,  0 ];
-			result = quat.fromMat3(out, matr);
-		});
+		for (const testCase of TEST_CASES) {
+			const result = new Quaternion().fromMatrix3(testCase.matrix3);
+			if (testCase.quaternion) {
+				tapeEquals(t, result, testCase.quaternion, title);
+			}
+		}
 
-		test('Quaternion#should set dest to the correct value', function() {
-			expect(result).toBeEqualish([-0.707106, 0, 0, 0.707106]);
-		});
-	});
+		t.end();
+	}
 
-	test('Quaternion#where trace > 0', t => {
-		beforeEach(function() {
-			matr = [ 1, 0,  0,
-					 0, 0, -1,
-					 0, 1,  0 ];
+  , 'should set to the correct value');
+
 			result = quat.fromMat3(out, matr);
 		});
 
 		test('Quaternion#should return out', function() { expect(result).toBe(out); });
 
 		test('Quaternion#should produce the correct transformation', function() {
-			expect(vec3.transformQuat([], [0,1,0], out)).toBeEqualish([0,0,-1]);
+			expect(vec3.transformQuat([], , out)).toBeEqualish([0,0,-1]);
 		});
 	});
 

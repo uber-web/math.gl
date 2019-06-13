@@ -33,11 +33,15 @@ const TRANSPOSED_INDICES_MATRIX = [1, 4, 7, 2, 5, 8, 3, 6, 9];
 
 test('Matrix3#types', t => {
   t.equals(typeof Matrix3, 'function');
+  t.ok(Matrix3.IDENTITY);
+  t.ok(Matrix3.ZERO);
   t.end();
 });
 
 test('Matrix3#construct and Array.isArray check', t => {
-  t.ok(Array.isArray(new Matrix3()));
+  const m = new Matrix3();
+  t.ok(Array.isArray(m));
+  t.ok(m.INDICES);
   t.end();
 });
 
@@ -283,5 +287,56 @@ test('Matrix3#translate', t => {
   const result = m.translate([1, 2]);
 
   tapeEquals(t, result, RESULT, 'translate gave the right result');
+  t.end();
+});
+
+test('Matrix3#transform', t => {
+  const matrix = new Matrix3().scale([2, 2, 2]);
+
+  const TEST_CASES = [
+    {
+      method: 'transform',
+      input: [2, 2, 0],
+      expected: [4, 4, 0]
+    },
+    {
+      method: 'transform',
+      input: [2, 2],
+      expected: [4, 4]
+    },
+    // DEPRECATED
+    {
+      method: 'transformVector',
+      input: [2, 2],
+      expected: [4, 4]
+    },
+    {
+      method: 'transformVector',
+      input: [2, 2, 0],
+      expected: [4, 4, 0]
+    },
+    {
+      method: 'transformVector2',
+      input: [2, 2],
+      expected: [4, 4]
+    },
+    {
+      method: 'transformVector3',
+      input: [2, 2, 0],
+      expected: [4, 4, 0]
+    }
+  ];
+
+  for (const testCase of TEST_CASES) {
+    const p4 = matrix[testCase.method](testCase.input);
+    tapeEquals(t, p4, testCase.expected, 'transform gave the right result');
+  }
+
+  t.throws(() => matrix.transform([NaN, 0, 0, 0]));
+  t.throws(() => matrix.transform([0]));
+  t.throws(() => matrix.transform([0, 0, 0, 0, 0]));
+  t.throws(() => matrix.transformAsVector([0, 0, 0, 0, 0]));
+  t.throws(() => matrix.transformAsPoint([0, 0, 0, 0, 0]));
+
   t.end();
 });

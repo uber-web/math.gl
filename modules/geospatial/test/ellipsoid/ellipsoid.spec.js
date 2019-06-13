@@ -59,15 +59,10 @@ test('Ellipsoid#constructor computes correct values', t => {
   t.end();
 });
 
-test('Ellipsoid#fromVector3 computes correct values', t => {
-  const ellipsoid = Ellipsoid.fromVector3(radii);
-  tapeEquals(t, ellipsoid.radii, radii);
-  tapeEquals(t, ellipsoid.radiiSquared, radiiSquared);
-  tapeEquals(t, ellipsoid.radiiToTheFourth, radiiToTheFourth);
-  tapeEquals(t, ellipsoid.oneOverRadii, oneOverRadii);
-  tapeEquals(t, ellipsoid.oneOverRadiiSquared, oneOverRadiiSquared);
-  t.equals(ellipsoid.minimumRadius, minimumRadius);
-  t.equals(ellipsoid.maximumRadius, maximumRadius);
+test('Ellipsoid#ellipsoid is initialized with squaredXOverSquaredZ property', t => {
+  const ellipsoid = new Ellipsoid(4, 4, 3);
+  const squaredXOverSquaredZ = ellipsoid.radiiSquared.x / ellipsoid.radiiSquared.z;
+  t.equals(ellipsoid.squaredXOverSquaredZ, squaredXOverSquaredZ);
   t.end();
 });
 
@@ -110,6 +105,22 @@ test('Ellipsoid#geodeticSurfaceNormal works with a result parameter', t => {
   const returnedResult = ellipsoid.geodeticSurfaceNormal(spaceCartesian, result);
   t.ok(returnedResult === result);
   tapeEqualsEpsilon(t, returnedResult, spaceCartesianGeodeticSurfaceNormal, _MathUtils.EPSILON15);
+  t.end();
+});
+
+test('Ellipsoid#geocentricSurfaceNormal works without a result parameter', t => {
+  const ellipsoid = Ellipsoid.WGS84;
+  const returnedResult = ellipsoid.geocentricSurfaceNormal([2, 0, 0]);
+  tapeEquals(t, returnedResult, [1, 0, 0]);
+  t.end();
+});
+
+test('Ellipsoid#geocentricSurfaceNormal works with a result parameter', t => {
+  const ellipsoid = Ellipsoid.WGS84;
+  const result = new Vector3();
+  const returnedResult = ellipsoid.geocentricSurfaceNormal([2, 0, 0], result);
+  t.ok(returnedResult === result);
+  tapeEquals(t, returnedResult, [1, 0, 0]);
   t.end();
 });
 
@@ -454,7 +465,7 @@ test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis works without a result par
   const cartographic = [35.23, 33.23, 0]; // Cartographic.fromDegrees(35.23, 33.23);
   const cartesianOnTheSurface = ellipsoid.cartographicToCartesian(cartographic);
   const returnedResult = ellipsoid.getSurfaceNormalIntersectionWithZAxis(cartesianOnTheSurface);
-  t.ok(returnedResult instanceof Vector3);
+  t.ok(returnedResult instanceof Array);
   t.end();
 });
 
@@ -497,16 +508,15 @@ test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis returns undefined if the r
   t.end();
 });
 
-/*
 test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis returns a result that is equal to a value that computed in a different way', t => {
   const ellipsoid = Ellipsoid.WGS84;
   const cartographic = [35.23, 33.23, 0]; // Cartographic.fromDegrees(35.23, 33.23);
   let cartesianOnTheSurface = ellipsoid.cartographicToCartesian(cartographic);
   const surfaceNormal = ellipsoid.geodeticSurfaceNormal(cartesianOnTheSurface);
-  const magnitude = cartesianOnTheSurface.x / surfaceNormal.x;
+  const magnitude = cartesianOnTheSurface[0] / surfaceNormal[0];
 
   const expected = new Vector3();
-  expected.z = cartesianOnTheSurface.z - surfaceNormal.z * magnitude;
+  expected.z = cartesianOnTheSurface[2] - surfaceNormal[2] * magnitude;
   let result = ellipsoid.getSurfaceNormalIntersectionWithZAxis(cartesianOnTheSurface, undefined);
   tapeEqualsEpsilon(t, result, expected, _MathUtils.EPSILON8);
 
@@ -520,45 +530,31 @@ test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis returns a result that is e
 
 test("getSurfaceNormalIntersectionWithZAxis returns a result that when it's used as an origin for a vector with the surface normal direction it produces an accurate cartographic", t => {
   const ellipsoid = Ellipsoid.WGS84;
-  const cartographic = Cartographic.fromDegrees(35.23, 33.23);
-  const cartesianOnTheSurface = ellipsoid.cartographicToCartesian(cartographic);
-  const surfaceNormal = ellipsoid.geodeticSurfaceNormal(cartesianOnTheSurface);
 
-  const result = ellipsoid.getSurfaceNormalIntersectionWithZAxis(cartesianOnTheSurface, undefined);
+  let cartographic = [35.23, 33.23, 0];
+  let cartesianOnTheSurface = ellipsoid.cartographicToCartesian(cartographic);
+  let surfaceNormal = ellipsoid.geodeticSurfaceNormal(cartesianOnTheSurface);
 
-  const surfaceNormalWithLength = Vector3.multiplyByScalar(
-    surfaceNormal,
-    ellipsoid.maximumRadius,
-    new Vector3()
+  let result = ellipsoid.getSurfaceNormalIntersectionWithZAxis(cartesianOnTheSurface, undefined);
+
+  let surfaceNormalWithLength = new Vector3(surfaceNormal).multiplyByScalar(
+    ellipsoid.maximumRadius
   );
-  const position = Vector3.add(result, surfaceNormalWithLength, new Vector3());
-  const resultCartographic = ellipsoid.cartesianToCartographic(position);
-  resultCartographic.height = 0.0;
+  let position = new Vector3(surfaceNormalWithLength).add(result);
+  let resultCartographic = ellipsoid.cartesianToCartographic(position);
+  resultCartographic[2] = 0.0;
   tapeEqualsEpsilon(t, resultCartographic, cartographic, _MathUtils.EPSILON8);
 
   // at the north pole
-  cartographic = Cartographic.fromDegrees(0, 90);
+  cartographic = [0, 90, 0];
   cartesianOnTheSurface = new Vector3(0, 0, ellipsoid.radii.z);
   surfaceNormal = ellipsoid.geodeticSurfaceNormal(cartesianOnTheSurface);
-  surfaceNormalWithLength = Vector3.multiplyByScalar(
-    surfaceNormal,
-    ellipsoid.maximumRadius,
-    new Vector3()
-  );
+  surfaceNormalWithLength = new Vector3(surfaceNormal).multiplyByScalar(ellipsoid.maximumRadius);
   result = ellipsoid.getSurfaceNormalIntersectionWithZAxis(cartesianOnTheSurface, undefined);
-  position = Vector3.add(result, surfaceNormalWithLength, new Vector3());
+  position = new Vector3(surfaceNormalWithLength).add(result);
   resultCartographic = ellipsoid.cartesianToCartographic(position);
-  resultCartographic.height = 0.0;
+  resultCartographic[2] = 0.0;
   tapeEqualsEpsilon(t, resultCartographic, cartographic, _MathUtils.EPSILON8);
 
-  t.end();
-});
-*/
-
-test('Ellipsoid#ellipsoid is initialized with squaredXOverSquaredZ property', t => {
-  const ellipsoid = new Ellipsoid(4, 4, 3);
-
-  const squaredXOverSquaredZ = ellipsoid.radiiSquared.x / ellipsoid.radiiSquared.z;
-  t.equals(ellipsoid.squaredXOverSquaredZ, squaredXOverSquaredZ);
   t.end();
 });

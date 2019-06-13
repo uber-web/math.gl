@@ -30,11 +30,63 @@ function extendToMatrix4(arr) {
 
 test('Euler#import', t => {
   t.equals(typeof Euler, 'function');
+  t.ok(Euler.ZYX >= 0);
+  t.ok(Euler.YXZ > 0);
+  t.ok(Euler.XZY > 0);
+  t.ok(Euler.ZXY > 0);
+  t.ok(Euler.YZX > 0);
+  t.ok(Euler.XYZ > 0);
+
+  t.ok(Euler.RollPitchYaw >= 0);
+  t.ok(Euler.DefaultOrder >= 0);
+  t.ok(Euler.RotationOrders);
+
+  t.equals(Euler.rotationOrder(Euler.ZYX), 'ZYX');
+
   t.end();
 });
 
 test('Euler#construct and Array.isArray check', t => {
   t.ok(Array.isArray(new Euler()));
+  t.end();
+});
+
+test('Euler#coverage', t => {
+  let result = new Euler().fromRollPitchYaw(0, 0, 0);
+  t.ok(result);
+  result = new Euler().fromRotationMatrix(Matrix4.IDENTITY);
+  t.ok(result);
+
+  const euler = new Euler();
+
+  euler.x = euler.y;
+  euler.y = euler.z;
+  euler.z = euler.x;
+
+  euler.beta = euler.alpha;
+  euler.gamma = euler.beta;
+  euler.alpha = euler.gamma;
+
+  t.ok(euler.alpha >= 0);
+  t.ok(euler.beta >= 0);
+  t.ok(euler.gamma >= 0);
+
+  euler.phi = euler.theta;
+  euler.theta = euler.psi;
+  euler.psi = euler.phi;
+
+  euler.order = Euler.XYZ;
+  euler.order = euler.order;
+
+  euler.copy([0, 0, 0, 1]);
+
+  euler.to([0, 0, 0, 0]);
+  euler.toArray4([0, 0, 0, 0]);
+  euler.toVector3([0, 0, 0]);
+
+  // result = euler.getQuaternion();
+  // t.ok(result);
+
   t.end();
 });
 

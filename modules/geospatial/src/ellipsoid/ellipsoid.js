@@ -29,11 +29,7 @@ export default class Ellipsoid {
     return wgs84;
   }
 
-  // Computes an Ellipsoid from a Cartesian specifying the radii in x, y, and z directions.
-  static fromVector3([x, y, z]) {
-    return new Ellipsoid(x, y, z);
-  }
-
+  // Creates an Ellipsoid from a Cartesian specifying the radii in x, y, and z directions.
   constructor(x = 0.0, y = 0.0, z = 0.0) {
     assert(x >= 0.0);
     assert(y >= 0.0);
@@ -81,7 +77,7 @@ export default class Ellipsoid {
   }
 
   // Converts the provided cartographic to Cartesian representation.
-  cartographicToCartesian(cartographic, result = new Vector3()) {
+  cartographicToCartesian(cartographic, result = [0, 0, 0]) {
     const normal = scratchNormal;
     const k = scratchK;
 
@@ -101,7 +97,7 @@ export default class Ellipsoid {
 
   // Converts the provided cartesian to cartographic (lng/lat/z) representation.
   // The cartesian is undefined at the center of the ellipsoid.
-  cartesianToCartographic(cartesian, result = new Vector3()) {
+  cartesianToCartographic(cartesian, result = [0, 0, 0]) {
     const point = this.scaleToGeodeticSurface(cartesian, scratchPosition);
 
     if (!point) {
@@ -134,12 +130,15 @@ export default class Ellipsoid {
 
   // Computes the unit vector directed from the center of this ellipsoid toward
   // the provided Cartesian position.
-  geocentricSurfaceNormal(cartesian) {
-    return scratchVector.from(cartesian).normalize();
+  geocentricSurfaceNormal(cartesian, result = [0, 0, 0]) {
+    return scratchVector
+      .from(cartesian)
+      .normalize()
+      .to(result);
   }
 
   // Computes the normal of the plane tangent to the surface of the ellipsoid at provided position.
-  geodeticSurfaceNormalCartographic(cartographic, result = new Vector3()) {
+  geodeticSurfaceNormalCartographic(cartographic, result = [0, 0, 0]) {
     const cartographicVectorRadians = fromCartographicToRadians(cartographic);
 
     const longitude = cartographicVectorRadians[0];
@@ -155,7 +154,7 @@ export default class Ellipsoid {
   }
 
   // Computes the normal of the plane tangent to the surface of the ellipsoid at the provided position.
-  geodeticSurfaceNormal(cartesian, result = new Vector3()) {
+  geodeticSurfaceNormal(cartesian, result = [0, 0, 0]) {
     return scratchVector
       .from(cartesian)
       .scale(this.oneOverRadiiSquared)
@@ -172,7 +171,7 @@ export default class Ellipsoid {
 
   // Scales the provided Cartesian position along the geocentric surface normal
   // so that it is on the surface of this ellipsoid.
-  scaleToGeocentricSurface(cartesian, result = new Vector3()) {
+  scaleToGeocentricSurface(cartesian, result = [0, 0, 0]) {
     scratchPosition.from(cartesian);
 
     const positionX = scratchPosition.x;
@@ -193,7 +192,7 @@ export default class Ellipsoid {
 
   // Transforms a Cartesian X, Y, Z position to the ellipsoid-scaled space by multiplying
   // its components by the result of `Ellipsoid#oneOverRadii`
-  transformPositionToScaledSpace(position, result = new Vector3()) {
+  transformPositionToScaledSpace(position, result = [0, 0, 0]) {
     return scratchPosition
       .from(position)
       .scale(this.oneOverRadii)
@@ -202,7 +201,7 @@ export default class Ellipsoid {
 
   // Transforms a Cartesian X, Y, Z position from the ellipsoid-scaled space by multiplying
   // its components by the result of `Ellipsoid#radii`.
-  transformPositionFromScaledSpace(position, result = new Vector3()) {
+  transformPositionFromScaledSpace(position, result = [0, 0, 0]) {
     return scratchPosition
       .from(position)
       .scale(this.radii)
@@ -210,7 +209,7 @@ export default class Ellipsoid {
   }
 
   // Computes a point which is the intersection of the surface normal with the z-axis.
-  getSurfaceNormalIntersectionWithZAxis(position, buffer = 0.0, result = new Vector3()) {
+  getSurfaceNormalIntersectionWithZAxis(position, buffer = 0.0, result = [0, 0, 0]) {
     // Ellipsoid must be an ellipsoid of revolution (radii.x == radii.y)
     assert(equals(this.radii.x, this.radii.y, _MathUtils.EPSILON15));
     assert(this.radii.z > 0);
