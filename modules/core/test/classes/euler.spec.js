@@ -63,6 +63,10 @@ test('Euler#coverage', t => {
   euler.y = euler.z;
   euler.z = euler.x;
 
+  euler.beta = euler.alpha;
+  euler.gamma = euler.beta;
+  euler.alpha = euler.gamma;
+
   t.ok(euler.alpha >= 0);
   t.ok(euler.beta >= 0);
   t.ok(euler.gamma >= 0);
@@ -70,6 +74,15 @@ test('Euler#coverage', t => {
   euler.phi = euler.theta;
   euler.theta = euler.psi;
   euler.psi = euler.phi;
+
+  euler.order = Euler.XYZ;
+  euler.order = euler.order;
+
+  euler.copy([0, 0, 0, 1]);
+
+  euler.to([0, 0, 0, 0]);
+  euler.toArray4([0, 0, 0, 0]);
+  euler.toVector3([0, 0, 0]);
 
   // result = euler.getQuaternion();
   // t.ok(result);
