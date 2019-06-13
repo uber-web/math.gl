@@ -57,14 +57,13 @@ export default function classesBench(suite, addReferenceBenchmarks) {
     // .group('Matrix4 construction')
     // .add('Array(16)', () => new Array(16))
     // .add('[1, 0, 0, 0, ...]', () => [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1])
+    suite
+      .group('debug validation cost')
+      .add('Vector4#validate (debug)', () => configure({debug: true}), () => mathglVector4.check())
+      .add('Vector4#validate (prod)', () => configure({debug: false}), () => mathglVector4.check())
+      .add('Matrix4#validate (debug)', () => configure({debug: true}), () => mathglArray.check())
+      .add('Matrix4#validate (prod)', () => configure({debug: false}), () => mathglArray.check());
   }
-
-  suite
-    .group('debug validation cost')
-    .add('Vector4#validate (debug)', () => configure({debug: true}), () => mathglVector4.check())
-    .add('Vector4#validate (prod)', () => configure({debug: false}), () => mathglVector4.check())
-    .add('Matrix4#validate (debug)', () => configure({debug: true}), () => mathglArray.check())
-    .add('Matrix4#validate (prod)', () => configure({debug: false}), () => mathglArray.check());
 
   return suite;
 }

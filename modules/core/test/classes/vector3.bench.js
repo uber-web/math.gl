@@ -41,13 +41,13 @@ export default function vector3Bench(suite, addReferenceBenchmarks) {
     .add('Vector3#set()', () => vector3.set(1, 2, 3))
     .add('Vector3#copy()', () => vector3.copy([1, 2, 3]))
     .add('Vector3#from(Vector3)', () => vector3.from(arrayVector))
-    .add('Vector3#from(Object)', () => vector3.from(objectVector))
-    .add('Vector3#to(Vector3)', () => vector3.to(arrayVector))
-    .add('Vector3#to(Object)', () => vector3.to(objectVector));
+    .add('Vector3#to(Vector3)', () => vector3.to(arrayVector));
 
   if (addReferenceBenchmarks) {
     suite
       .group('Vector3 Type Conversion Cost')
+      .add('Vector3#from(Object)', () => vector3.from(objectVector))
+      .add('Vector3#to(Object)', () => vector3.to(objectVector))
       .add('Vector3.from#Array', () => vector3.from(array))
       .add('Vector3.from#Float32Array', () => vector3.from(float32Array))
       .add('Vector3.to#Array', () => vector3.to(array))

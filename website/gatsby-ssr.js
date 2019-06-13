@@ -1,1 +1,1 @@
-module.exports = require('ocular-gatsby/gatsby-ssr');
+Object.assign(module.exports, require('ocular-gatsby/gatsby-ssr'));

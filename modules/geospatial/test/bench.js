@@ -29,14 +29,16 @@ export default function geospatialBench(suite, addReferenceBenchmarks) {
     .group('Cartographic Type Conversion Cost')
     .add('fromCartographic#Vector3', () => fromCartographic(vector3, vector))
     .add('fromCartographicToRadians#Vector3', () => fromCartographicToRadians(vector3, vector))
-    .add('fromCartographicToRadians#Object', () => fromCartographicToRadians(vector3, objectVector))
-    .add('toCartographicFromRadians#Vector3', () => toCartographicFromRadians(vector3, vector))
-    .add('toCartographicFromRadians#Object', () =>
-      toCartographicFromRadians(vector3, objectVector)
-    );
+    .add('toCartographicFromRadians#Vector3', () => toCartographicFromRadians(vector3, vector));
 
   if (addReferenceBenchmarks) {
     suite
+      .add('fromCartographicToRadians#Object', () =>
+        fromCartographicToRadians(vector3, objectVector)
+      )
+      .add('toCartographicFromRadians#Object', () =>
+        toCartographicFromRadians(vector3, objectVector)
+      )
       .add('fromCartographicToRadians#Array', () => fromCartographicToRadians(vector3, array))
       .add('fromCartographicToRadians#Float32Array', () =>
         fromCartographicToRadians(vector3, float32Array)
