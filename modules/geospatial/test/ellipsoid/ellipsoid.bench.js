@@ -56,11 +56,10 @@ export default function ellipsoidBench(suite) {
 
     .add('#scaleToGeocentricSurface(=>Vector3)', () =>
       ellipsoid.scaleToGeocentricSurface(spaceCartesian, resultVector)
-    )
-    // .add('#scaleToGeocentricSurface(=>Object)', () =>
-    //   ellipsoid.scaleToGeocentricSurface(spaceCartesian, resultObject)
-    // )
-    ;
+    );
+  // .add('#scaleToGeocentricSurface(=>Object)', () =>
+  //   ellipsoid.scaleToGeocentricSurface(spaceCartesian, resultObject)
+  // )
 
   return suite;
 }

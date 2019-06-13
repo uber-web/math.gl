@@ -77,7 +77,11 @@ export default function matrix4Bench(suite, addReferenceBenchmarks) {
     .add('Matrix4#new Matrix4(debug)', () => configure({debug: true}), () => new Matrix4())
     .add('Matrix4#copy()', () => configure({debug: false}), () => matrix4.copy(IDENTITY))
     .add('Matrix4#copy(debug)', () => configure({debug: true}), () => matrix4.copy(IDENTITY))
-    .add('Matrix4#set()', () => configure({debug: false}), () => matrix4.set(1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1))
+    .add(
+      'Matrix4#set()',
+      () => configure({debug: false}),
+      () => matrix4.set(1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1)
+    )
     .add('Matrix4#setRowMajor()', () =>
       matrix4.setRowMajor(1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1)
     )

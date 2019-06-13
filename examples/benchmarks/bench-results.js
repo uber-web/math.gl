@@ -96,7 +96,12 @@ export default class BenchResults extends Component {
             {
               Header: 'Id',
               accessor: 'id',
-              Cell: ({row}) => (row.formattedValue ? row.id : <h3>{row.id.replace(/@math\.gl\/[a-zA-Z]*: /, '')}</h3>)
+              Cell: ({row}) =>
+                row.formattedValue ? (
+                  row.id
+                ) : (
+                  <h3>{row.id.replace(/@math\.gl\/[a-zA-Z]*: /, '')}</h3>
+                )
             },
             {
               Header: 'iter/s',

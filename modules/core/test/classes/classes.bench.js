@@ -65,6 +65,5 @@ export default function classesBench(suite, addReferenceBenchmarks) {
       .add('Matrix4#validate (prod)', () => configure({debug: false}), () => mathglArray.check());
   }
 
-
   return suite;
 }
