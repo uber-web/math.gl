@@ -23,6 +23,7 @@ import {formatValue, equals, config} from '../lib/common';
 import {degrees, radians, clamp} from '../lib/common';
 import Vector3 from './vector3';
 
+// @ts-ignore: error TS2307: Cannot find module 'gl-matrix/...'.
 import * as vec3 from 'gl-matrix/vec3';
 
 // TODO - import epsilon
@@ -37,18 +38,24 @@ export default class SphericalCoordinates {
    * The poles (phi) are at the positive and negative y axis.
    * The equator starts at positive z.
    * @class
-   * @param {Number} phi=0 - rotation around X (latitude)
-   * @param {Number} theta=0 - rotation around Y (longitude)
-   * @param {Number} radius=1 - Distance from center
+   * @param {Object} options
+   * @param {Number} options.phi=0 - rotation around X (latitude)
+   * @param {Number} options.theta=0 - rotation around Y (longitude)
+   * @param {Number} options.radius=1 - Distance from center
+   * @param {Number} options.bearing
+   * @param {Number} options.pitch
+   * @param {Number} options.altitude
+   * @param {Number} options.radiusScale -
    */
-  /* eslint-disable complexity */
+  // @ts-ignore TS2740: Type '{}' is missing the following properties from type
+  // eslint-disable-next-line complexity
   constructor({
-    phi,
-    theta,
-    radius,
-    bearing,
-    pitch,
-    altitude,
+    phi = 0,
+    theta = 0,
+    radius = 1,
+    bearing = undefined,
+    pitch = undefined,
+    altitude = undefined,
     radiusScale = EARTH_RADIUS_METERS
   } = {}) {
     if (arguments.length === 0) {
@@ -66,7 +73,6 @@ export default class SphericalCoordinates {
     this.radiusScale = radiusScale || 1; // Used by lngLatZ
     this.check();
   }
-  /* eslint-enable complexity */
 
   toString() {
     return this.formatString(config);
@@ -134,7 +140,7 @@ export default class SphericalCoordinates {
   }
 
   clone() {
-    return new this.constructor().copy(this);
+    return new SphericalCoordinates().copy(this);
   }
 
   copy(other) {

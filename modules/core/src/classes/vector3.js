@@ -22,12 +22,19 @@ import Vector from './base/vector';
 import {config, isArray} from '../lib/common';
 import {checkNumber} from '../lib/validators';
 
+// @ts-ignore: error TS2307: Cannot find module 'gl-matrix/...'.
 import * as vec3 from 'gl-matrix/vec3';
 import {vec3_transformMat2, vec3_transformMat4AsVector} from '../lib/gl-matrix-extras';
 
 const ORIGIN = [0, 0, 0];
 
 export default class Vector3 extends Vector {
+  /**
+   * @class
+   * @param {Number | [Number, Number, Number]} x
+   * @param {Number} y - rotation around X (latitude)
+   * @param {Number} z - rotation around X (latitude)
+   */
   constructor(x = 0, y = 0, z = 0) {
     // PERF NOTE: initialize elements as double precision numbers
     super(-0, -0, -0);
@@ -91,7 +98,7 @@ export default class Vector3 extends Vector {
     return this[2];
   }
   set z(value) {
-    return (this[2] = checkNumber(value));
+    this[2] = checkNumber(value);
   }
   /* eslint-enable no-multi-spaces, brace-style, no-return-assign */
 

@@ -57,7 +57,7 @@ export function formatValue(value, {precision = config.precision || 4} = {}) {
 // Returns true if value is either an array or a typed array
 // Note: does not return true for ArrayBuffers and DataViews
 export function isArray(value) {
-  return Array.isArray(value) || (ArrayBuffer.isView(value) && value.length !== undefined);
+  return Array.isArray(value) || (ArrayBuffer.isView(value) && !(value instanceof DataView));
 }
 
 // If the array has a clone function, calls it, otherwise returns a copy

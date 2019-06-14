@@ -40,9 +40,9 @@ export function checkNumber(value) {
   return value;
 }
 
-export function checkVector(v, length, callerName) {
+export function checkVector(v, length, callerName = '') {
   if (config.debug && !validateVector(v, length)) {
-    throw new Error(`math.gl: ${callerName | ''} some fields set to invalid numbers'`);
+    throw new Error(`math.gl: ${callerName} some fields set to invalid numbers'`);
   }
   return v;
 }

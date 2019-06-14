@@ -23,9 +23,13 @@ import Matrix from './base/matrix';
 
 import {vec2_transformMat4AsVector, vec3_transformMat4AsVector} from '../lib/gl-matrix-extras';
 
+// @ts-ignore: error TS2307: Cannot find module 'gl-matrix/...'.
 import * as mat4 from 'gl-matrix/mat4';
+// @ts-ignore: error TS2307: Cannot find module 'gl-matrix/...'.
 import * as vec2 from 'gl-matrix/vec2';
+// @ts-ignore: error TS2307: Cannot find module 'gl-matrix/...'.
 import * as vec3 from 'gl-matrix/vec3';
+// @ts-ignore: error TS2307: Cannot find module 'gl-matrix/...'.
 import * as vec4 from 'gl-matrix/vec4';
 
 const IDENTITY = Object.freeze([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
@@ -294,7 +298,7 @@ export default class Matrix4 extends Matrix {
   // near  number  Near bound of the frustum
   // far number  Far bound of the frustum
   perspective({
-    fovy,
+    fovy = undefined,
     fov = (45 * Math.PI) / 180, // DEPRECATED
     aspect = 1,
     near = 0.1,

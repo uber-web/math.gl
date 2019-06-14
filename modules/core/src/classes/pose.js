@@ -29,8 +29,27 @@ export default class Pose {
    * These "pose relative" coordinate will be centered on the defining
    * pose's position and with with the defining pose's orientation
    * aligned with axis.
+   * @param {Object} options
+   * @param {[Number, Number, Number]} options.position
+   * @param {[Number, Number, Number, Number]} options.orientation
+   * @param {Number} options.x
+   * @param {Number} options.y
+   * @param {Number} options.z
+   * @param {Number} options.roll
+   * @param {Number} options.pitch
+   * @param {Number} options.yaw
    */
-  constructor({x = 0, y = 0, z = 0, roll = 0, pitch = 0, yaw = 0, position, orientation} = {}) {
+  // @ts-ignore TS2740: Type '{}' is missing the following properties from type
+  constructor({
+    x = 0,
+    y = 0,
+    z = 0,
+    roll = 0,
+    pitch = 0,
+    yaw = 0,
+    position = undefined,
+    orientation = undefined
+  } = {}) {
     if (Array.isArray(position) && position.length === 3) {
       this.position = new Vector3(position);
     } else {
@@ -48,37 +67,37 @@ export default class Pose {
     return this.position.x;
   }
   set x(value) {
-    return (this.position.x = value);
+    this.position.x = value;
   }
   get y() {
     return this.position.y;
   }
   set y(value) {
-    return (this.position.y = value);
+    this.position.y = value;
   }
   get z() {
     return this.position.z;
   }
   set z(value) {
-    return (this.position.z = value);
+    this.position.z = value;
   }
   get roll() {
     return this.orientation.roll;
   }
   set roll(value) {
-    return (this.orientation.roll = value);
+    this.orientation.roll = value;
   }
   get pitch() {
     return this.orientation.pitch;
   }
   set pitch(value) {
-    return (this.orientation.pitch = value);
+    this.orientation.pitch = value;
   }
   get yaw() {
     return this.orientation.yaw;
   }
   set yaw(value) {
-    return (this.orientation.yaw = value);
+    this.orientation.yaw = value;
   }
   /* eslint-enable no-multi-spaces, brace-style, no-return-assign */
 

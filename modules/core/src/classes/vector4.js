@@ -22,6 +22,7 @@ import Vector from './base/vector';
 import {config, isArray} from '../lib/common';
 import {checkNumber} from '../lib/validators';
 
+// @ts-ignore: error TS2307: Cannot find module 'gl-matrix/...'.
 import * as vec4 from 'gl-matrix/vec3';
 import {vec4_transformMat2, vec4_transformMat3} from '../lib/gl-matrix-extras';
 
@@ -97,7 +98,7 @@ export default class Vector4 extends Vector {
   }
 
   set z(value) {
-    return (this[2] = checkNumber(value));
+    this[2] = checkNumber(value);
   }
 
   get w() {
@@ -105,7 +106,7 @@ export default class Vector4 extends Vector {
   }
 
   set w(value) {
-    return (this[3] = checkNumber(value));
+    this[3] = checkNumber(value);
   }
   /* eslint-enable no-multi-spaces, brace-style, no-return-assign */
 

@@ -22,7 +22,8 @@ const ENV_CONFIG = {
           forceAllTransforms: true,
           modules: 'commonjs'
         }
-      ]
+      ],
+      '@babel/preset-typescript'
     ],
     plugins: ['@babel/transform-runtime', ['transform-builtin-extend', {globals: ['Array']}]]
   },
@@ -35,7 +36,8 @@ const ENV_CONFIG = {
           // Transpiling classes kills object creation performance
           // exclude: ['@babel/plugin-transform-classes']
         }
-      ]
+      ],
+      '@babel/preset-typescript'
     ],
     plugins: [
       ['@babel/transform-runtime', {useESModules: true}],
@@ -51,7 +53,8 @@ const ENV_CONFIG = {
           targets: TARGETS,
           modules: false
         }
-      ]
+      ],
+      '@babel/preset-typescript'
     ],
     plugins: [['@babel/transform-runtime', {useESModules: true}]]
   },

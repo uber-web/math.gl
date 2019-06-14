@@ -3,20 +3,26 @@ import {checkNumber} from '../../lib/validators';
 import assert from '../../lib/assert';
 
 export default class Vector extends MathArray {
+  // VIRTUAL METHODS
+  copy(vector) {
+    assert(false);
+    return this;
+  }
+
   // ACCESSORS
 
   get x() {
     return this[0];
   }
   set x(value) {
-    return (this[0] = checkNumber(value));
+    this[0] = checkNumber(value);
   }
 
   get y() {
     return this[1];
   }
   set y(value) {
-    return (this[1] = checkNumber(value));
+    this[1] = checkNumber(value);
   }
 
   // NOTE: `length` is a reserved word for Arrays, so we can't use `v.length()`
@@ -143,6 +149,7 @@ export default class Vector extends MathArray {
   }
 
   addScaledVector(a, b) {
+    // @ts-ignore error TS2351: Cannot use 'new' with an expression whose type lacks a call or construct signature.
     return this.add(new this.constructor(a).multiplyScalar(b));
   }
 }

@@ -96,8 +96,12 @@ export default class Euler extends MathArray {
 
   /* eslint-enable no-multi-spaces, brace-style, no-return-assign */
 
-  /*
-   * Number|Number[], Number, Number, Number
+  /**
+   * @class
+   * @param {Number | [Number, Number, Number, Number] =} x
+   * @param {Number=} y
+   * @param {Number=} z
+   * @param {Number=} order
    */
   constructor(x = 0, y = 0, z = 0, order = Euler.DefaultOrder) {
     // PERF NOTE: initialize elements as double precision numbers
@@ -105,6 +109,7 @@ export default class Euler extends MathArray {
     if (arguments.length > 0 && Array.isArray(arguments[0])) {
       this.fromVector3(...arguments);
     } else {
+      // @ts-ignore error TS2345: Argument of type 'number | [number, number, number, number]' not assignable to 'number'
       this.set(x, y, z, order);
     }
   }
@@ -193,7 +198,7 @@ export default class Euler extends MathArray {
   }
 
   set x(value) {
-    return (this[0] = checkNumber(value));
+    this[0] = checkNumber(value);
   }
 
   get y() {
@@ -201,7 +206,7 @@ export default class Euler extends MathArray {
   }
 
   set y(value) {
-    return (this[1] = checkNumber(value));
+    this[1] = checkNumber(value);
   }
 
   get z() {
@@ -209,7 +214,7 @@ export default class Euler extends MathArray {
   }
 
   set z(value) {
-    return (this[2] = checkNumber(value));
+    this[2] = checkNumber(value);
   }
 
   // alpha, beta, gamma angle notation
@@ -218,7 +223,7 @@ export default class Euler extends MathArray {
   }
 
   set alpha(value) {
-    return (this[0] = checkNumber(value));
+    this[0] = checkNumber(value);
   }
 
   get beta() {
@@ -226,7 +231,7 @@ export default class Euler extends MathArray {
   }
 
   set beta(value) {
-    return (this[1] = checkNumber(value));
+    this[1] = checkNumber(value);
   }
 
   get gamma() {
@@ -234,7 +239,7 @@ export default class Euler extends MathArray {
   }
 
   set gamma(value) {
-    return (this[2] = checkNumber(value));
+    this[2] = checkNumber(value);
   }
 
   // phi, theta, psi angle notation
@@ -243,7 +248,7 @@ export default class Euler extends MathArray {
   }
 
   set phi(value) {
-    return (this[0] = checkNumber(value));
+    this[0] = checkNumber(value);
   }
 
   get theta() {
@@ -251,7 +256,7 @@ export default class Euler extends MathArray {
   }
 
   set theta(value) {
-    return (this[1] = checkNumber(value));
+    this[1] = checkNumber(value);
   }
 
   get psi() {
@@ -259,7 +264,7 @@ export default class Euler extends MathArray {
   }
 
   set psi(value) {
-    return (this[2] = checkNumber(value));
+    this[2] = checkNumber(value);
   }
 
   // roll, pitch, yaw angle notation
@@ -268,7 +273,7 @@ export default class Euler extends MathArray {
   }
 
   set roll(value) {
-    return (this[0] = checkNumber(value));
+    this[0] = checkNumber(value);
   }
 
   get pitch() {
@@ -276,7 +281,7 @@ export default class Euler extends MathArray {
   }
 
   set pitch(value) {
-    return (this[1] = checkNumber(value));
+    this[1] = checkNumber(value);
   }
 
   get yaw() {
@@ -284,7 +289,7 @@ export default class Euler extends MathArray {
   }
 
   set yaw(value) {
-    return (this[2] = checkNumber(value));
+    this[2] = checkNumber(value);
   }
 
   // rotation order, in all three angle notations
@@ -293,7 +298,7 @@ export default class Euler extends MathArray {
   }
 
   set order(value) {
-    return (this[3] = checkOrder(value));
+    this[3] = checkOrder(value);
   }
 
   /* eslint-disable no-multi-spaces, brace-style, no-return-assign */

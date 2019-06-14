@@ -22,8 +22,11 @@ import Matrix from './base/matrix';
 import {checkVector, deprecated} from '../lib/validators';
 import {vec4_transformMat3} from '../lib/gl-matrix-extras';
 
+// @ts-ignore: error TS2307: Cannot find module 'gl-matrix/...'.
 import * as mat3 from 'gl-matrix/mat3';
+// @ts-ignore: error TS2307: Cannot find module 'gl-matrix/...'.
 import * as vec2 from 'gl-matrix/vec2';
+// @ts-ignore: error TS2307: Cannot find module 'gl-matrix/...'.
 import * as vec3 from 'gl-matrix/vec3';
 
 const IDENTITY = Object.freeze([1, 0, 0, 0, 1, 0, 0, 0, 1]);
