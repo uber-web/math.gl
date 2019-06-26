@@ -78,7 +78,8 @@
         {
           "title": "@math.gl/geospatial",
           "entries": [
-            {"entry": "modules/geospatial/docs/api-reference/ellipsoid"}
+            {"entry": "modules/geospatial/docs/api-reference/ellipsoid"},
+            {"entry": "modules/geospatial/docs/api-reference/helpers"}
           ]
         },
         {
