@@ -98,6 +98,9 @@ export default class Ellipsoid {
   // Converts the provided cartesian to cartographic (lng/lat/z) representation.
   // The cartesian is undefined at the center of the ellipsoid.
   cartesianToCartographic(cartesian, result = [0, 0, 0]) {
+    if (Array.isArray(cartesian)) {
+      cartesian = new Vector3(cartesian);
+    }
     const point = this.scaleToGeodeticSurface(cartesian, scratchPosition);
 
     if (!point) {
