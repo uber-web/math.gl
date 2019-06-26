@@ -67,7 +67,5 @@ export function isWGS84(vector) {
   const x2 = vector[0] * vector[0] * oneOverRadiiSquared[0];
   const y2 = vector[1] * vector[1] * oneOverRadiiSquared[1];
   const z2 = vector[2] * vector[2] * oneOverRadiiSquared[2];
-  // eslint-disable-next-line
-  console.log(Math.abs(x2 + y2 + z2 - 1));
   return Math.abs(x2 + y2 + z2 - 1) < centerToleranceSquared;
 }
