@@ -16,6 +16,7 @@ const scratchNormal = new Vector3();
 const scratchK = new Vector3();
 const scratchPosition = new Vector3();
 const scratchHeight = new Vector3();
+const scratchCartesian = new Vector3();
 
 let wgs84;
 
@@ -98,7 +99,8 @@ export default class Ellipsoid {
   // Converts the provided cartesian to cartographic (lng/lat/z) representation.
   // The cartesian is undefined at the center of the ellipsoid.
   cartesianToCartographic(cartesian, result = [0, 0, 0]) {
-    const point = this.scaleToGeodeticSurface(cartesian, scratchPosition);
+    scratchCartesian.from(cartesian);
+    const point = this.scaleToGeodeticSurface(scratchCartesian, scratchPosition);
 
     if (!point) {
       return undefined;
@@ -107,11 +109,11 @@ export default class Ellipsoid {
     const normal = this.geodeticSurfaceNormal(point, scratchNormal);
 
     const h = scratchHeight;
-    h.copy(cartesian).subtract(point);
+    h.copy(scratchCartesian).subtract(point);
 
     const longitude = Math.atan2(normal.y, normal.x);
     const latitude = Math.asin(normal.z);
-    const height = Math.sign(vec3.dot(h, cartesian)) * vec3.length(h);
+    const height = Math.sign(vec3.dot(h, scratchCartesian)) * vec3.length(h);
 
     return toCartographicFromRadians([longitude, latitude, height], result);
   }
