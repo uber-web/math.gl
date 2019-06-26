@@ -16,9 +16,9 @@ export const WGS84_CONSTANTS = {
   ],
   oneOverRadii: [1.0 / WGS84_RADIUS_X, 1.0 / WGS84_RADIUS_Y, 1.0 / WGS84_RADIUS_Z],
   oneOverRadiiSquared: [
-    (1.0 / WGS84_RADIUS_X) * WGS84_RADIUS_X,
-    (1.0 / WGS84_RADIUS_Y) * WGS84_RADIUS_Y,
-    (1.0 / WGS84_RADIUS_Z) * WGS84_RADIUS_Z
+    1.0 / (WGS84_RADIUS_X * WGS84_RADIUS_X),
+    1.0 / (WGS84_RADIUS_Y * WGS84_RADIUS_Y),
+    1.0 / (WGS84_RADIUS_Z * WGS84_RADIUS_Z)
   ],
   maximumRadius: Math.max(WGS84_RADIUS_X, WGS84_RADIUS_Y, WGS84_RADIUS_Z),
   centerToleranceSquared: 1e-1 // EPSILON1;

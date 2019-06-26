@@ -2,6 +2,7 @@
 // See LICENSE.md and https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md
 
 import {Vector3, isArray, toRadians, toDegrees, config} from 'math.gl';
+import {WGS84_CONSTANTS} from './constants';
 
 const noop = x => x;
 
@@ -55,4 +56,18 @@ export function toCartographicFromRadians(vector, cartographic) {
 
 export function toCartographicFromDegrees(vector, cartographic) {
   return toCartographic(vector, cartographic, config.cartographicRadians ? toRadians : noop);
+}
+
+export function isWGS84(vector) {
+  if (!vector) {
+    return false;
+  }
+  scratchVector.from(vector);
+  const {oneOverRadiiSquared, centerToleranceSquared} = WGS84_CONSTANTS;
+  const x2 = vector[0] * vector[0] * oneOverRadiiSquared[0];
+  const y2 = vector[1] * vector[1] * oneOverRadiiSquared[1];
+  const z2 = vector[2] * vector[2] * oneOverRadiiSquared[2];
+  // eslint-disable-next-line
+  console.log(Math.abs(x2 + y2 + z2 - 1));
+  return Math.abs(x2 + y2 + z2 - 1) < centerToleranceSquared;
 }
