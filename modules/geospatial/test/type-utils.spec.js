@@ -4,6 +4,7 @@
 import test from 'tape-catch';
 import {toRadians} from 'math.gl';
 import {
+  isWGS84,
   fromCartographicToRadians,
   fromCartographicToDegrees,
   toCartographicFromRadians,
@@ -46,6 +47,15 @@ test('type-utils#toCartographic', t => {
   t.deepEquals(result, {x: 45, y: 45, z: 10});
   result = toCartographicFromRadians(radianVector, {longitude: 0, latitude: 0, height: 0});
   t.deepEquals(result, {longitude: 45, latitude: 45, height: 10});
+
+  t.end();
+});
+
+test('type-utils#isWGS84', t => {
+  t.ok(isWGS84([1215010.375, -4736313.5, 4081601.75]));
+  t.notOk(isWGS84([0, 0, 0]));
+  t.notOk(isWGS84([1, 2, 3]));
+  t.notOk(isWGS84([-1, -2, -3]));
 
   t.end();
 });
