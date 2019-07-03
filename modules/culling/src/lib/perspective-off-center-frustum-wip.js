@@ -283,7 +283,6 @@ export default class PerspectiveOffCenterFrustum {
    * const toCenterProj = Cesium.Vector3.multiplyByScalar(direction, Cesium.Vector3.dot(direction, toCenter), new Cesium.Vector3()); // project vector onto camera direction vector
    * const distance = Cesium.Vector3.magnitude(toCenterProj);
    * const pixelSize = camera.frustum.getPixelDimensions(scene.drawingBufferWidth, scene.drawingBufferHeight, distance, new Cesium.Vector2());
-   */
   getPixelDimensions(drawingBufferWidth, drawingBufferHeight, distance, result) {
     update(this);
 
@@ -315,13 +314,13 @@ export default class PerspectiveOffCenterFrustum {
     result.y = pixelHeight;
     return result;
   }
+   */
 
   /**
    * Returns a duplicate of a PerspectiveOffCenterFrustum instance.
    *
    * @param {PerspectiveOffCenterFrustum} [result] The object onto which to store the result.
    * @returns {PerspectiveOffCenterFrustum} The modified result parameter or a new PerspectiveFrustum instance if one was not provided.
-   */
   clone(result) {
     if (!defined(result)) {
       result = new PerspectiveOffCenterFrustum();
@@ -344,6 +343,7 @@ export default class PerspectiveOffCenterFrustum {
 
     return result;
   }
+   */
 
   /**
    * Compares the provided PerspectiveOffCenterFrustum componentwise and returns
@@ -351,7 +351,6 @@ export default class PerspectiveOffCenterFrustum {
    *
    * @param {PerspectiveOffCenterFrustum} [other] The right hand side PerspectiveOffCenterFrustum.
    * @returns {Boolean} <code>true</code> if they are equal, <code>false</code> otherwise.
-   */
   equals(other) {
     return (
       defined(other) &&
@@ -364,6 +363,7 @@ export default class PerspectiveOffCenterFrustum {
       this.far === other.far
     );
   }
+   */
 }
 
 function update(frustum) {

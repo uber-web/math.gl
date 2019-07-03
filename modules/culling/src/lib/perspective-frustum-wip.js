@@ -1,5 +1,5 @@
 /* eslint-disable */
-import PerspectiveOffCenterFrustum from './perspective-off-center-frustum';
+import PerspectiveOffCenterFrustum from './perspective-off-center-frustum-wip';
 
 /**
  * The viewing frustum is defined by 6 planes.
@@ -138,7 +138,6 @@ export default class PerspectiveFrustum {
    *
    * @param {PerspectiveFrustum} [result] The object onto which to store the result.
    * @returns {PerspectiveFrustum} The modified result parameter or a new PerspectiveFrustum instance if one was not provided.
-   */
   clone(result) {
     if (!defined(result)) {
       result = new PerspectiveFrustum();
@@ -166,7 +165,6 @@ export default class PerspectiveFrustum {
    *
    * @param {PerspectiveFrustum} [other] The right hand side PerspectiveFrustum.
    * @returns {Boolean} <code>true</code> if they are equal, <code>false</code> otherwise.
-   */
   equals(other) {
     if (!defined(other) || !(other instanceof PerspectiveFrustum)) {
       return false;
@@ -183,6 +181,7 @@ export default class PerspectiveFrustum {
       this._offCenterFrustum.equals(other._offCenterFrustum)
     );
   }
+   */
 
   /**
    * Creates a culling volume for this frustum.
@@ -229,7 +228,6 @@ export default class PerspectiveFrustum {
    * var toCenterProj = Cesium.Cartesian3.multiplyByScalar(direction, Cesium.Cartesian3.dot(direction, toCenter), new Cesium.Cartesian3()); // project vector onto camera direction vector
    * var distance = Cesium.Cartesian3.magnitude(toCenterProj);
    * var pixelSize = camera.frustum.getPixelDimensions(scene.drawingBufferWidth, scene.drawingBufferHeight, distance, new Cesium.Cartesian2());
-   */
   getPixelDimensions(drawingBufferWidth, drawingBufferHeight, distance, result) {
     update(this);
     return this._offCenterFrustum.getPixelDimensions(
@@ -239,6 +237,7 @@ export default class PerspectiveFrustum {
       result
     );
   }
+   */
 }
 
 function update(frustum) {
@@ -302,67 +301,3 @@ function update(frustum) {
     f.bottom += frustum.yOffset;
   }
 }
-
-/**
-   * The number of elements used to pack the object into an array.
-   * @type {Number}
-   *
-  PerspectiveFrustum.packedLength = 6;
-
-
-  /**
-   * Stores the provided instance into the provided array.
-   *
-   * @param {PerspectiveFrustum} value The value to pack.
-   * @param {Number[]} array The array to pack into.
-   * @param {Number} [startingIndex=0] The index into the array at which to start packing the elements.
-   *
-   * @returns {Number[]} The array that was packed into
-   *
-  PerspectiveFrustum.pack = function(value, array, startingIndex) {
-    //>>includeStart('debug', pragmas.debug);
-    Check.typeOf.object('value', value);
-    Check.defined('array', array);
-    //>>includeEnd('debug');
-
-    startingIndex = defaultValue(startingIndex, 0);
-
-    array[startingIndex++] = value.fov;
-    array[startingIndex++] = value.aspectRatio;
-    array[startingIndex++] = value.near;
-    array[startingIndex++] = value.far;
-    array[startingIndex++] = value.xOffset;
-    array[startingIndex] = value.yOffset;
-
-    return array;
-  }
-
-  /**
-   * Retrieves an instance from a packed array.
-   *
-   * @param {Number[]} array The packed array.
-   * @param {Number} [startingIndex=0] The starting index of the element to be unpacked.
-   * @param {PerspectiveFrustum} [result] The object into which to store the result.
-   * @returns {PerspectiveFrustum} The modified result parameter or a new PerspectiveFrustum instance if one was not provided.
-   *
-  PerspectiveFrustum.unpack = function(array, startingIndex, result) {
-    //>>includeStart('debug', pragmas.debug);
-    Check.defined('array', array);
-    //>>includeEnd('debug');
-
-    startingIndex = defaultValue(startingIndex, 0);
-
-    if (!defined(result)) {
-      result = new PerspectiveFrustum();
-    }
-
-    result.fov = array[startingIndex++];
-    result.aspectRatio = array[startingIndex++];
-    result.near = array[startingIndex++];
-    result.far = array[startingIndex++];
-    result.xOffset = array[startingIndex++];
-    result.yOffset = array[startingIndex];
-
-    return result;
-  }
-*/

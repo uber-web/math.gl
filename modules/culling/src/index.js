@@ -3,6 +3,8 @@
 
 export {INTERSECT} from './constants';
 export {INTERSECT as Intersect} from './constants';
+
+export {default as AxisAlignedBoundingBox} from './lib/axis-aligned-bounding-box';
 export {default as BoundingSphere} from './lib/bounding-sphere';
 export {default as OrientedBoundingBox} from './lib/oriented-bounding-box';
 export {default as CullingVolume} from './lib/culling-volume';

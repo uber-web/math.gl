@@ -1,7 +1,8 @@
 /* eslint-disable */
 import test from 'tape-catch';
 
-import {PerspectiveOffCenterFrustum} from '@loaders.gl/3d-tiles/math.gl/';
+import {PerspectiveOffCenterFrustum} from '@math.gl/culling/lib/perspective-off-center-frustum';
+import {Vector2, Vector3, Vector4} from 'math.gl';
 
 // defineSuite(
 //   [
@@ -13,22 +14,22 @@ import {PerspectiveOffCenterFrustum} from '@loaders.gl/3d-tiles/math.gl/';
 //     'Core/Matrix4'
 //   ],
 
-// const frustum, planes;
+letfrustum, planes;
 
-// beforeEach(function() {
-//   frustum = new PerspectiveOffCenterFrustum();
-//   frustum.right = 1.0;
-//   frustum.left = -frustum.right;
-//   frustum.top = 1.0;
-//   frustum.bottom = -frustum.top;
-//   frustum.near = 1.0;
-//   frustum.far = 2.0;
-//   planes = frustum.computeCullingVolume(
-//     new Cartesian3(),
-//     Cartesian3.negate(Cartesian3.UNIT_Z, new Cartesian3()),
-//     Cartesian3.UNIT_Y
-//   ).planes;
-// });
+beforeEach(function() {
+  frustum = new PerspectiveOffCenterFrustum();
+  frustum.right = 1.0;
+  frustum.left = -frustum.right;
+  frustum.top = 1.0;
+  frustum.bottom = -frustum.top;
+  frustum.near = 1.0;
+  frustum.far = 2.0;
+  planes = frustum.computeCullingVolume(
+    new Cartesian3(),
+    Cartesian3.negate(Cartesian3.UNIT_Z, new Cartesian3()),
+    Cartesian3.UNIT_Y
+  ).planes;
+});
 
 test('constructs', t => {
   const options = {

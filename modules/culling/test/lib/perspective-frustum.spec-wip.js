@@ -1,3 +1,8 @@
+import {beforeEach, it, expect} from 'test/utils/expect-assertions';
+
+import {PerspectiveFrustum} from '@math.gl/culling/lib/perspective-frustum';
+import {Vector3} from 'math.gl';
+
 /* eslint-disable */
 var frustum, planes;
 
@@ -8,9 +13,9 @@ beforeEach(function() {
   frustum.aspectRatio = 1.0;
   frustum.fov = Math.PI / 3;
   planes = frustum.computeCullingVolume(
-    new Cartesian3(),
-    Cartesian3.negate(Cartesian3.UNIT_Z, new Cartesian3()),
-    Cartesian3.UNIT_Y
+    new Vector3(),
+    Vector3.negate(Vector3.UNIT_Z, new Vector3()),
+    Vector3.UNIT_Y
   ).planes;
 });
 
@@ -83,13 +88,13 @@ it('computeCullingVolume with no position throws an exception', function() {
 
 it('computeCullingVolume with no direction throws an exception', function() {
   expect(function() {
-    return frustum.computeCullingVolume(new Cartesian3());
+    return frustum.computeCullingVolume(new Vector3());
   }).toThrowDeveloperError();
 });
 
 it('computeCullingVolume with no up throws an exception', function() {
   expect(function() {
-    return frustum.computeCullingVolume(new Cartesian3(), new Cartesian3());
+    return frustum.computeCullingVolume(new Vector3(), new Vector3());
   }).toThrowDeveloperError();
 });
 
