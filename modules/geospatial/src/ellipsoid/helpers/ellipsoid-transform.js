@@ -1,7 +1,8 @@
 import {Vector3, assert, equals as equalsEpsilon} from 'math.gl';
 
 const EPSILON14 = 1e-14;
-// Contains functions for transforming positions to reference frames.
+
+const scratchOrigin = new Vector3();
 
 // Caclulate third axis from given two axii
 const VECTOR_PRODUCT_LOCAL_FRAME = {
@@ -73,7 +74,7 @@ export default function localFrameToFixedFrame(
   firstAxis,
   secondAxis,
   thirdAxis,
-  origin,
+  cartesianOrigin,
   result
 ) {
   const thirdAxisInferred =
@@ -84,6 +85,8 @@ export default function localFrameToFixedFrame(
   let firstAxisVector;
   let secondAxisVector;
   let thirdAxisVector;
+
+  const origin = scratchOrigin.copy(cartesianOrigin);
 
   // If x and y are zero, assume origin is at a pole, which is a special case.
   const atPole = equalsEpsilon(origin.x, 0.0, EPSILON14) && equalsEpsilon(origin.y, 0.0, EPSILON14);

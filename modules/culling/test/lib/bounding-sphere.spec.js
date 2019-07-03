@@ -247,6 +247,15 @@ test('BoundingSphere#estimated distance squared to point', t => {
   t.end();
 });
 
+test('BoundingSphere#estimated distance to point', t => {
+  const bs = new BoundingSphere(VECTOR3_ZERO, 1.0);
+  const position = new Vector3(-2.0, 1.0, 0.0);
+  const expected = position.lengthSquared() - 1.0;
+  t.equals(bs.distanceTo(position), Math.sqrt(expected));
+
+  t.end();
+});
+
 test('BoundingSphere#union throws with no parameter', t => {
   const left = new BoundingSphere();
   t.throws(() => sphere.union(undefined));

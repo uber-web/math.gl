@@ -139,4 +139,8 @@ export default class BoundingSphere {
     const delta = point.subtract(this.center);
     return delta.lengthSquared() - this.radius * this.radius;
   }
+
+  distanceTo(point) {
+    return Math.sqrt(this.distanceSquaredTo(point));
+  }
 }
