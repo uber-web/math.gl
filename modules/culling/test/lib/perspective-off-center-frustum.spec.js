@@ -1,35 +1,33 @@
 /* eslint-disable */
 import test from 'tape-catch';
 
-import {PerspectiveOffCenterFrustum} from '@math.gl/culling/lib/perspective-off-center-frustum';
+import {_PerspectiveOffCenterFrustum as PerspectiveOffCenterFrustum} from '@math.gl/culling';
 import {Vector2, Vector3, Vector4} from 'math.gl';
 
 // defineSuite(
 //   [
 //     'Core/PerspectiveOffCenterFrustum',
 //     'Core/Cartesian2',
-//     'Core/Cartesian3',
+//     'Core/Vector3',
 //     'Core/Cartesian4',
 //     'Core/Math',
 //     'Core/Matrix4'
 //   ],
 
-letfrustum, planes;
+// letfrustum, planes;
 
-beforeEach(function() {
-  frustum = new PerspectiveOffCenterFrustum();
-  frustum.right = 1.0;
-  frustum.left = -frustum.right;
-  frustum.top = 1.0;
-  frustum.bottom = -frustum.top;
-  frustum.near = 1.0;
-  frustum.far = 2.0;
-  planes = frustum.computeCullingVolume(
-    new Cartesian3(),
-    Cartesian3.negate(Cartesian3.UNIT_Z, new Cartesian3()),
-    Cartesian3.UNIT_Y
-  ).planes;
-});
+const frustum = new PerspectiveOffCenterFrustum();
+frustum.right = 1.0;
+frustum.left = -frustum.right;
+frustum.top = 1.0;
+frustum.bottom = -frustum.top;
+frustum.near = 1.0;
+frustum.far = 2.0;
+const planes = frustum.computeCullingVolume(
+  new Vector3(),
+  new Vector3().negate(new Vector3().UNIT_Z, new Vector3()),
+  new Vector3().UNIT_Y
+).planes;
 
 test('constructs', t => {
   const options = {
@@ -77,12 +75,12 @@ test('computeCullingVolume with no position throws an exception', t => {
 });
 
 test('computeCullingVolume with no direction throws an exception', t => {
-  t.throws(() => frustum.computeCullingVolume(new Cartesian3()));
+  t.throws(() => frustum.computeCullingVolume(new Vector3()));
   t.end();
 });
 
 test('computeCullingVolume with no up throws an exception', t => {
-  t.throws(() => frustum.computeCullingVolume(new Cartesian3(), new Cartesian3()));
+  t.throws(() => frustum.computeCullingVolume(new Vector3(), new Vector3()));
   t.end();
 });
 
@@ -209,9 +207,9 @@ test('equals', t => {
   frustum2.bottom = -frustum.top;
   frustum2.near = 1.0;
   frustum2.far = 2.0;
-  frustum2.position = new Cartesian3();
-  frustum2.direction = Cartesian3.negate(Cartesian3.UNIT_Z, new Cartesian3());
-  frustum2.up = Cartesian3.UNIT_Y;
+  frustum2.position = new Vector3();
+  frustum2.direction = new Vector3().negate(new Vector3(0, 0, 1), new Vector3());
+  frustum2.up = new Vector3(0, 1, 0);
 
   t.equals(frustum, frustum2);
   t.end();

@@ -6,7 +6,10 @@ import test from 'tape-catch';
 
 import {Vector3} from 'math.gl';
 import {
-  CullingVolume, BoundingSphere, AxisAlignedBoundingBox, makeBoundingSphereFromPoints,
+  CullingVolume,
+  BoundingSphere,
+  AxisAlignedBoundingBox,
+  makeBoundingSphereFromPoints,
   _PerspectiveFrustum as PerspectiveFrustum
 } from '@math.gl/culling';
 
@@ -16,20 +19,16 @@ frustum.far = 2.0;
 frustum.fov = Math.PI / 3;
 frustum.aspectRatio = 1.0;
 
-const cullingVolume = frustum.computeCullingVolume(
+let cullingVolume = frustum.computeCullingVolume(
   new Vector3(),
-  Vector3.negate(Vector3.UNIT_Z, new Vector3()),
-  Vector3.UNIT_Y
+  new Vector3().negate(new Vector3(0, 0, 1), new Vector3()),
+  new Vector3(0, 1, 0)
 );
-
-
-//   return cullingVolume;
-// });
 
 cullingVolume = frustum.computeCullingVolume(
   new Vector3(),
-  Vector3.negate(Vector3.UNIT_Z, new Vector3()),
-  Vector3.UNIT_Y
+  new Vector3().negate(new Vector3(0, 0, 1), new Vector3()),
+  new Vector3(0, 1, 0)
 );
 
 test('CullingVolume#constructor', t => {
@@ -77,8 +76,8 @@ function testWithAndWithoutPlaneMask(t, culling, bound, intersect) {
   } else if (intersect === Intersect.OUTSIDE) {
     t.equals(mask, CullingVolume.MASK_OUTSIDE);
   } else {
-    expect(mask).not.toEqual(CullingVolume.MASK_INSIDE);
-    expect(mask).not.toEqual(CullingVolume.MASK_OUTSIDE);
+    t.notOk(mask === CullingVolume.MASK_INSIDE);
+    t.notOk(mask === CullingVolume.MASK_OUTSIDE);
   }
   t.equals(culling.computeVisibilityWithPlaneMask(bound, mask), mask);
 }
@@ -388,7 +387,7 @@ test('CullingVolume#construct from bounding sphere', ttt => {
   test('CullingVolume#can partially contain a volume', tt => {
     test('CullingVolume#on the far plane', t => {
       const offset = new Vector3(0.0, 0.0, boundingSphereCullingVolume.radius * 1.5);
-      const center = Vector3.add(boundingSphereCullingVolume.center, offset, new Vector3());
+      const center = new Vector3().add(boundingSphereCullingVolume.center, offset, new Vector3());
       const radius = boundingSphereCullingVolume.radius * 0.5;
       const sphere2 = new BoundingSphere(center, radius);
 
@@ -398,7 +397,7 @@ test('CullingVolume#construct from bounding sphere', ttt => {
 
     test('CullingVolume#on the near plane', t => {
       const offset = new Vector3(0.0, 0.0, -boundingSphereCullingVolume.radius * 1.5);
-      const center = Vector3.add(boundingSphereCullingVolume.center, offset, new Vector3());
+      const center = new Vector3().add(boundingSphereCullingVolume.center, offset, new Vector3());
       const radius = boundingSphereCullingVolume.radius * 0.5;
       const sphere3 = new BoundingSphere(center, radius);
 
@@ -408,7 +407,7 @@ test('CullingVolume#construct from bounding sphere', ttt => {
 
     test('CullingVolume#on the left plane', t => {
       const offset = new Vector3(-boundingSphereCullingVolume.radius * 1.5, 0.0, 0.0);
-      const center = Vector3.add(boundingSphereCullingVolume.center, offset, new Vector3());
+      const center = new Vector3().add(boundingSphereCullingVolume.center, offset, new Vector3());
       const radius = boundingSphereCullingVolume.radius * 0.5;
       const sphere4 = new BoundingSphere(center, radius);
 
@@ -418,7 +417,7 @@ test('CullingVolume#construct from bounding sphere', ttt => {
 
     test('CullingVolume#on the right plane', t => {
       const offset = new Vector3(boundingSphereCullingVolume.radius * 1.5, 0.0, 0.0);
-      const center = Vector3.add(boundingSphereCullingVolume.center, offset, new Vector3());
+      const center = new Vector3().add(boundingSphereCullingVolume.center, offset, new Vector3());
       const radius = boundingSphereCullingVolume.radius * 0.5;
       const sphere5 = new BoundingSphere(center, radius);
 
@@ -428,7 +427,7 @@ test('CullingVolume#construct from bounding sphere', ttt => {
 
     test('CullingVolume#on the top plane', t => {
       const offset = new Vector3(0.0, boundingSphereCullingVolume.radius * 1.5, 0.0);
-      const center = Vector3.add(boundingSphereCullingVolume.center, offset, new Vector3());
+      const center = new Vector3().add(boundingSphereCullingVolume.center, offset, new Vector3());
       const radius = boundingSphereCullingVolume.radius * 0.5;
       const sphere6 = new BoundingSphere(center, radius);
 
@@ -438,7 +437,7 @@ test('CullingVolume#construct from bounding sphere', ttt => {
 
     test('CullingVolume#on the bottom plane', t => {
       const offset = new Vector3(0.0, -boundingSphereCullingVolume.radius * 1.5, 0.0);
-      const center = Vector3.add(boundingSphereCullingVolume.center, offset, new Vector3());
+      const center = new Vector3().add(boundingSphereCullingVolume.center, offset, new Vector3());
       const radius = boundingSphereCullingVolume.radius * 0.5;
       const sphere7 = new BoundingSphere(center, radius);
 
@@ -450,7 +449,7 @@ test('CullingVolume#construct from bounding sphere', ttt => {
   test('CullingVolume#can not contain a volume', tt => {
     test('CullingVolume#past the far plane', t => {
       const offset = new Vector3(0.0, 0.0, boundingSphereCullingVolume.radius * 2.0);
-      const center = Vector3.add(boundingSphereCullingVolume.center, offset, new Vector3());
+      const center = new Vector3().add(boundingSphereCullingVolume.center, offset, new Vector3());
       const radius = boundingSphereCullingVolume.radius * 0.5;
       const sphere8 = new BoundingSphere(center, radius);
 
@@ -460,7 +459,7 @@ test('CullingVolume#construct from bounding sphere', ttt => {
 
     test('CullingVolume#before the near plane', t => {
       const offset = new Vector3(0.0, 0.0, -boundingSphereCullingVolume.radius * 2.0);
-      const center = Vector3.add(boundingSphereCullingVolume.center, offset, new Vector3());
+      const center = new Vector3().add(boundingSphereCullingVolume.center, offset, new Vector3());
       const radius = boundingSphereCullingVolume.radius * 0.5;
       const sphere9 = new BoundingSphere(center, radius);
 
@@ -470,7 +469,7 @@ test('CullingVolume#construct from bounding sphere', ttt => {
 
     test('CullingVolume#past the left plane', t => {
       const offset = new Vector3(-boundingSphereCullingVolume.radius * 2.0, 0.0, 0.0);
-      const center = Vector3.add(boundingSphereCullingVolume.center, offset, new Vector3());
+      const center = new Vector3().add(boundingSphereCullingVolume.center, offset, new Vector3());
       const radius = boundingSphereCullingVolume.radius * 0.5;
       const sphere10 = new BoundingSphere(center, radius);
 
@@ -480,7 +479,7 @@ test('CullingVolume#construct from bounding sphere', ttt => {
 
     test('CullingVolume#past the right plane', t => {
       const offset = new Vector3(boundingSphereCullingVolume.radius * 2.0, 0.0, 0.0);
-      const center = Vector3.add(boundingSphereCullingVolume.center, offset, new Vector3());
+      const center = new Vector3().add(boundingSphereCullingVolume.center, offset, new Vector3());
       const radius = boundingSphereCullingVolume.radius * 0.5;
       const sphere11 = new BoundingSphere(center, radius);
 
@@ -490,7 +489,7 @@ test('CullingVolume#construct from bounding sphere', ttt => {
 
     test('CullingVolume#past the top plane', t => {
       const offset = new Vector3(0.0, boundingSphereCullingVolume.radius * 2.0, 0.0);
-      const center = Vector3.add(boundingSphereCullingVolume.center, offset, new Vector3());
+      const center = new Vector3().add(boundingSphereCullingVolume.center, offset, new Vector3());
       const radius = boundingSphereCullingVolume.radius * 0.5;
       const sphere12 = new BoundingSphere(center, radius);
 
@@ -500,7 +499,7 @@ test('CullingVolume#construct from bounding sphere', ttt => {
 
     test('CullingVolume#past the bottom plane', t => {
       const offset = new Vector3(0.0, -boundingSphereCullingVolume.radius * 2.0, 0.0);
-      const center = Vector3.add(boundingSphereCullingVolume.center, offset, new Vector3());
+      const center = new Vector3().add(boundingSphereCullingVolume.center, offset, new Vector3());
       const radius = boundingSphereCullingVolume.radius * 0.5;
       const sphere13 = new BoundingSphere(center, radius);
 

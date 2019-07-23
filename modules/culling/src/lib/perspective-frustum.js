@@ -1,6 +1,10 @@
 /* eslint-disable */
 import PerspectiveOffCenterFrustum from './perspective-off-center-frustum';
 
+const defined = val => val !== null && typeof val !== 'undefined';
+// eslint-disable-next-line no-console, no-undef
+const DeveloperError = console;
+
 /**
  * The viewing frustum is defined by 6 planes.
  * Each plane is represented by a {@link Cartesian4} object, where the x, y, and z components
