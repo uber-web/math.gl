@@ -1,5 +1,5 @@
 /* eslint-disable */
-import {Vector3, Vector4, Matrix4} from 'math.gl';
+import {Vector3, Vector4, Matrix4, assert} from 'math.gl';
 import CullingVolume from './culling-volume';
 
 const getPlanesRight = new Vector3();
@@ -26,7 +26,7 @@ export default class PerspectiveOffCenterFrustum {
    * @param {Number} [options.far=500000000.0] The far clipping plane distance.
    *
    * @example
-   * const frustum = new Cesium.PerspectiveOffCenterFrustum({
+   * const frustum = new PerspectiveOffCenterFrustum({
    *     left : -1.0,
    *     right : 1.0,
    *     top : 1.0,
@@ -38,6 +38,8 @@ export default class PerspectiveOffCenterFrustum {
    * @see PerspectiveFrustum
    */
   constructor(options = {}) {
+    options = { near: 1.0, far: 500000000.0, ...options };
+
     /**
      * Defines the left clipping plane.
      * @type {Number}
@@ -75,7 +77,7 @@ export default class PerspectiveOffCenterFrustum {
      * @type {Number}
      * @default 1.0
      */
-    this.near = defaultValue(options.near, 1.0);
+    this.near = options.near;
     this._near = this.near;
 
     /**
@@ -83,7 +85,7 @@ export default class PerspectiveOffCenterFrustum {
      * @type {Number}
      * @default 500000000.0
      */
-    this.far = defaultValue(options.far, 500000000.0);
+    this.far = options.far;
     this._far = this.far;
 
     this._cullingVolume = new CullingVolume();
@@ -131,19 +133,9 @@ export default class PerspectiveOffCenterFrustum {
    * const intersect = cullingVolume.computeVisibility(boundingVolume);
    */
   computeCullingVolume(position, direction, up) {
-    //>>includeStart('debug', pragmas.debug);
-    if (!defined(position)) {
-      throw new DeveloperError('position is required.');
-    }
-
-    if (!defined(direction)) {
-      throw new DeveloperError('direction is required.');
-    }
-
-    if (!defined(up)) {
-      throw new DeveloperError('up is required.');
-    }
-    //>>includeEnd('debug');
+    assert(position, 'position is required.');
+    assert(direction, 'direction is required.');
+    assert(up, 'up is required.');
 
     const planes = this._cullingVolume.planes;
 
@@ -271,7 +263,7 @@ export default class PerspectiveOffCenterFrustum {
    * @example
    * // Example 1
    * // Get the width and height of a pixel.
-   * const pixelSize = camera.frustum.getPixelDimensions(scene.drawingBufferWidth, scene.drawingBufferHeight, 1.0, new Cesium.Vector2());
+   * const pixelSize = camera.frustum.getPixelDimensions(scene.drawingBufferWidth, scene.drawingBufferHeight, 1.0, new Vector2());
    *
    * @example
    * // Example 2
@@ -279,10 +271,10 @@ export default class PerspectiveOffCenterFrustum {
    * // For example, get the size of a pixel of an image on a billboard.
    * const position = camera.position;
    * const direction = camera.direction;
-   * const toCenter = Cesium.Vector3.subtract(primitive.boundingVolume.center, position, new Cesium.Vector3());      // vector from camera to a primitive
-   * const toCenterProj = Cesium.Vector3.multiplyByScalar(direction, Cesium.Vector3.dot(direction, toCenter), new Cesium.Vector3()); // project vector onto camera direction vector
-   * const distance = Cesium.Vector3.magnitude(toCenterProj);
-   * const pixelSize = camera.frustum.getPixelDimensions(scene.drawingBufferWidth, scene.drawingBufferHeight, distance, new Cesium.Vector2());
+   * const toCenter = Vector3.subtract(primitive.boundingVolume.center, position, new Vector3());      // vector from camera to a primitive
+   * const toCenterProj = Vector3.multiplyByScalar(direction, Vector3.dot(direction, toCenter), new Vector3()); // project vector onto camera direction vector
+   * const distance = Vector3.magnitude(toCenterProj);
+   * const pixelSize = camera.frustum.getPixelDimensions(scene.drawingBufferWidth, scene.drawingBufferHeight, distance, new Vector2());
   getPixelDimensions(drawingBufferWidth, drawingBufferHeight, distance, result) {
     update(this);
 

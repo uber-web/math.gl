@@ -10,4 +10,7 @@ export {default as OrientedBoundingBox} from './lib/oriented-bounding-box';
 export {default as CullingVolume} from './lib/culling-volume';
 export {default as Plane} from './lib/plane';
 
+export { default as _PerspectiveOffCenterFrustum } from './lib/perspective-off-center-frustum';
+export { default as _PerspectiveFrustum } from './lib/perspective-frustum';
+
 export {makeBoundingSphereFromPoints} from './algorithms/bounding-sphere-from-points';

@@ -1,5 +1,5 @@
 /* eslint-disable */
-import PerspectiveOffCenterFrustum from './perspective-off-center-frustum-wip';
+import PerspectiveOffCenterFrustum from './perspective-off-center-frustum';
 
 /**
  * The viewing frustum is defined by 6 planes.
@@ -30,6 +30,14 @@ import PerspectiveOffCenterFrustum from './perspective-off-center-frustum-wip';
  */
 export default class PerspectiveFrustum {
   constructor(options = {}) {
+    options = {
+      near: 1.0,
+      far: 500000000.0,
+      xOffset: 0.0,
+      yOffset: 0.0,
+      ...options
+    };
+
     this._offCenterFrustum = new PerspectiveOffCenterFrustum();
 
     /**
@@ -58,7 +66,7 @@ export default class PerspectiveFrustum {
      * @type {Number}
      * @default 1.0
      */
-    this.near = defaultValue(options.near, 1.0);
+    this.near = options.near;
     this._near = this.near;
 
     /**
@@ -66,7 +74,7 @@ export default class PerspectiveFrustum {
      * @type {Number}
      * @default 500000000.0
      */
-    this.far = defaultValue(options.far, 500000000.0);
+    this.far = options.far;
     this._far = this.far;
 
     /**
@@ -74,7 +82,7 @@ export default class PerspectiveFrustum {
      * @type {Number}
      * @default 0.0
      */
-    this.xOffset = defaultValue(options.xOffset, 0.0);
+    this.xOffset = options.xOffset;
     this._xOffset = this.xOffset;
 
     /**
@@ -82,7 +90,7 @@ export default class PerspectiveFrustum {
      * @type {Number}
      * @default 0.0
      */
-    this.yOffset = defaultValue(options.yOffset, 0.0);
+    this.yOffset = options.yOffset;
     this._yOffset = this.yOffset;
   }
 

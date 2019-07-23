@@ -5,30 +5,32 @@
 import test from 'tape-catch';
 
 import {Vector3} from 'math.gl';
-import {CullingVolume, BoundingSphere, makeBoundingSphereFromPoints} from '@math.gl/culling';
+import {
+  CullingVolume, BoundingSphere, AxisAlignedBoundingBox, makeBoundingSphereFromPoints,
+  _PerspectiveFrustum as PerspectiveFrustum
+} from '@math.gl/culling';
 
-// const cullingVolume;
+const frustum = new PerspectiveFrustum();
+frustum.near = 1.0;
+frustum.far = 2.0;
+frustum.fov = Math.PI / 3;
+frustum.aspectRatio = 1.0;
 
-// beforeEach(function() {
-//   const frustum = new PerspectiveFrustum();
-//   frustum.near = 1.0;
-//   frustum.far = 2.0;
-//   frustum.fov = Math.PI / 3;
-//   frustum.aspectRatio = 1.0;
-//   cullingVolume = frustum.computeCullingVolume(
-//     new Vector3(),
-//     Vector3.negate(Vector3.UNIT_Z, new Vector3()),
-//     Vector3.UNIT_Y
-//   );
+const cullingVolume = frustum.computeCullingVolume(
+  new Vector3(),
+  Vector3.negate(Vector3.UNIT_Z, new Vector3()),
+  Vector3.UNIT_Y
+);
+
 
 //   return cullingVolume;
 // });
 
-//   cullingVolume = frustum.computeCullingVolume(
-//     new Vector3(),
-//     Vector3.negate(Vector3.UNIT_Z, new Vector3()),
-//     Vector3.UNIT_Y
-//   );
+cullingVolume = frustum.computeCullingVolume(
+  new Vector3(),
+  Vector3.negate(Vector3.UNIT_Z, new Vector3()),
+  Vector3.UNIT_Y
+);
 
 test('CullingVolume#constructor', t => {
   t.doesNotThrow(() => new CullingVolume());
@@ -52,7 +54,6 @@ test('CullingVolume#fromBoundingSphere', t => {
   t.end();
 });
 
-/*
 test('CullingVolume#computeVisibilityWithPlaneMask throws without a bounding volume', t => {
   t.throws(() =>
     new CullingVolume().computeVisibilityWithPlaneMask(undefined, CullingVolume.MASK_INDETERMINATE)
@@ -82,10 +83,9 @@ function testWithAndWithoutPlaneMask(t, culling, bound, intersect) {
   t.equals(culling.computeVisibilityWithPlaneMask(bound, mask), mask);
 }
 
-/*
-test('CullingVolume#box intersections', ttt => {
+test('CullingVolume#box intersections', tt => {
   test('CullingVolume#can contain an axis aligned bounding box', t => {
-    const box1 = AxisAlignedBoundingBox.fromPoints([
+    const box1 = new AxisAlignedBoundingBox().fromPoints([
       new Vector3(-0.5, 0, -1.25),
       new Vector3(0.5, 0, -1.25),
       new Vector3(-0.5, 0, -1.75),
@@ -94,7 +94,10 @@ test('CullingVolume#box intersections', ttt => {
     testWithAndWithoutPlaneMask(t, cullingVolume, box1, Intersect.INSIDE);
     t.end();
   });
+  tt.end();
+});
 
+/*
   test('CullingVolume#can partially contain an axis aligned bounding box', tt => {
     test('CullingVolume#on the far plane', t => {
       const box2 = AxisAlignedBoundingBox.fromPoints([
