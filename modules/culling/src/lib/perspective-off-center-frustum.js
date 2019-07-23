@@ -359,7 +359,6 @@ export default class PerspectiveOffCenterFrustum {
 }
 
 function update(frustum) {
-  //>>includeStart('debug', pragmas.debug);
   if (
     !defined(frustum.right) ||
     !defined(frustum.left) ||
@@ -370,51 +369,44 @@ function update(frustum) {
   ) {
     throw new DeveloperError('right, left, top, bottom, near, or far parameters are not set.');
   }
-  //>>includeEnd('debug');
 
-  const t = frustum.top;
-  const b = frustum.bottom;
-  const r = frustum.right;
-  const l = frustum.left;
-  const n = frustum.near;
-  const f = frustum.far;
+  const top = frustum.top;
+  const bottom = frustum.bottom;
+  const right = frustum.right;
+  const lelft = frustum.left;
+  const near = frustum.near;
+  const far = frustum.far;
 
   if (
-    t !== frustum._top ||
-    b !== frustum._bottom ||
-    l !== frustum._left ||
-    r !== frustum._right ||
-    n !== frustum._near ||
-    f !== frustum._far
+    top !== frustum._top ||
+    bottom !== frustum._bottom ||
+    left !== frustum._left ||
+    right !== frustum._right ||
+    near !== frustum._near ||
+    far !== frustum._far
   ) {
-    //>>includeStart('debug', pragmas.debug);
-    if (frustum.near <= 0 || frustum.near > frustum.far) {
-      throw new DeveloperError('near must be greater than zero and less than far.');
-    }
-    //>>includeEnd('debug');
+    assert(frustum.near <= 0 || frustum.near > frustum.far, 'near must be greater than zero and less than far.');
 
-    frustum._left = l;
-    frustum._right = r;
-    frustum._top = t;
-    frustum._bottom = b;
-    frustum._near = n;
-    frustum._far = f;
-    frustum._perspectiveMatrix = Matrix4.computePerspectiveOffCenter(
-      l,
-      r,
-      b,
-      t,
-      n,
-      f,
-      frustum._perspectiveMatrix
-    );
-    frustum._infinitePerspective = Matrix4.computeInfinitePerspectiveOffCenter(
-      l,
-      r,
-      b,
-      t,
-      n,
-      frustum._infinitePerspective
-    );
-  }
+    frustum._left = left;
+    frustum._right = right;
+    frustum._top = top;
+    frustum._bottom = bottom;
+    frustum._near = near;
+    frustum._far = far;
+    frustum._perspectiveMatrix = new Matrix4().frustum({
+      left,
+      right,
+      bottom,
+      top,
+      near,
+      far
+    });
+    frustum._infinitePerspective = new Matrix4().frustum({
+      left,
+      right,
+      bottom,
+      top,
+      near,
+      far: Infinity
+  });
 }
