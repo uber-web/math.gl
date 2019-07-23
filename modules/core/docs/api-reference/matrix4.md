@@ -99,7 +99,7 @@ Sets the matrix to a transformation corresponding to the rotations represented b
 
 ### frustum
 
-Generates a frustum matrix with the given bounds.
+Generates a frustum matrix with the given bounds. The frustum far plane can be infinite.
 
 `matrix4.frustum({left, right, bottom, top, near, far})`
 * `left` (`Number`) - Left bound of the frustum
@@ -107,7 +107,7 @@ Generates a frustum matrix with the given bounds.
 * `bottom` (`Number`) - Bottom bound of the frustum
 * `top` (`Number`) - Top bound of the frustum
 * `near` (`Number`) - Near bound of the frustum
-* `far` (`Number`) - Far bound of the frustum
+* `far` (`Number`|`Infinity`) - Far bound of the frustum
 
 
 ### lookAt
@@ -151,7 +151,7 @@ as a perspective matrix (plus `focalDistance`).
 
 ### perspective
 
-Generates a perspective projection matrix with the given bounds
+Generates a perspective projection matrix with the given bounds. The frustum far plane can be infinite.
 
 `matrix4.perspective({
   fovy = 45 * Math.PI - / 180,
@@ -162,7 +162,7 @@ Generates a perspective projection matrix with the given bounds
 * `fovy`=`45` (`Number`) - Vertical field of view in radians (default is 45 degrees specified in radians)
 * `aspect`=`1` (`Number`) - Aspect ratio. typically viewport width/height
 * `near`=`0.1` (`Number`) - Near bound of the frustum
-* `far`=`500` (`Number`) - Far bound of the frustum
+* `far`=`500` (`Number`|`Infinity`) - Far bound of the frustum
 
 
 ### determinant()
@@ -322,7 +322,7 @@ Returns `out`, or a newly minted `Vector2`, `Vector3` or `Vector4`
 
 ### transformByMatrix3(vector : Number[4]) : Number[4]
 
-Transforms 
+Transforms
 
 ### transformByMatrix2(vector : Number[4]) : Number[4]
 
