@@ -277,6 +277,7 @@ export default class PerspectiveOffCenterFrustum {
    * const toCenterProj = Vector3.multiplyByScalar(direction, Vector3.dot(direction, toCenter), new Vector3()); // project vector onto camera direction vector
    * const distance = Vector3.magnitude(toCenterProj);
    * const pixelSize = camera.frustum.getPixelDimensions(scene.drawingBufferWidth, scene.drawingBufferHeight, distance, new Vector2());
+   */
   getPixelDimensions(drawingBufferWidth, drawingBufferHeight, distance, result) {
     update(this);
 
@@ -299,7 +300,7 @@ export default class PerspectiveOffCenterFrustum {
     //>>includeEnd('debug');
 
     const inverseNear = 1.0 / this.near;
-    const tanTheta = this.top * inverseNear;
+    let tanTheta = this.top * inverseNear;
     const pixelHeight = (2.0 * distance * tanTheta) / drawingBufferHeight;
     tanTheta = this.right * inverseNear;
     const pixelWidth = (2.0 * distance * tanTheta) / drawingBufferWidth;
@@ -308,13 +309,13 @@ export default class PerspectiveOffCenterFrustum {
     result.y = pixelHeight;
     return result;
   }
-   */
 
   /**
    * Returns a duplicate of a PerspectiveOffCenterFrustum instance.
    *
    * @param {PerspectiveOffCenterFrustum} [result] The object onto which to store the result.
    * @returns {PerspectiveOffCenterFrustum} The modified result parameter or a new PerspectiveFrustum instance if one was not provided.
+   * */
   clone(result) {
     if (!defined(result)) {
       result = new PerspectiveOffCenterFrustum();
@@ -337,7 +338,6 @@ export default class PerspectiveOffCenterFrustum {
 
     return result;
   }
-   */
 
   /**
    * Compares the provided PerspectiveOffCenterFrustum componentwise and returns
@@ -345,7 +345,7 @@ export default class PerspectiveOffCenterFrustum {
    *
    * @param {PerspectiveOffCenterFrustum} [other] The right hand side PerspectiveOffCenterFrustum.
    * @returns {Boolean} <code>true</code> if they are equal, <code>false</code> otherwise.
-  equals(other) {
+   equals(other) {
     return (
       defined(other) &&
       other instanceof PerspectiveOffCenterFrustum &&
@@ -375,7 +375,7 @@ function update(frustum) {
   const top = frustum.top;
   const bottom = frustum.bottom;
   const right = frustum.right;
-  const lelft = frustum.left;
+  const left = frustum.left;
   const near = frustum.near;
   const far = frustum.far;
 
@@ -387,7 +387,10 @@ function update(frustum) {
     near !== frustum._near ||
     far !== frustum._far
   ) {
-    assert(frustum.near <= 0 || frustum.near > frustum.far, 'near must be greater than zero and less than far.');
+    assert(
+      frustum.near > 0 || frustum.near < frustum.far,
+      'near must be greater than zero and less than far.'
+    );
 
     frustum._left = left;
     frustum._right = right;
@@ -410,5 +413,6 @@ function update(frustum) {
       top,
       near,
       far: Infinity
-  });
+    });
+  }
 }

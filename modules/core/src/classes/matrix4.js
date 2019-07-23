@@ -188,7 +188,7 @@ export default class Matrix4 extends Matrix {
   // top Number  Top bound of the frustum
   // near  Number  Near bound of the frustum
   // far Number  Far bound of the frustum
-  frustum({ left, right, bottom, top, near, far }) {
+  frustum({left, right, bottom, top, near, far}) {
     if (far === Infinity) {
       Matrix4._computeInfinitePerspectiveOffCenter(this, left, right, bottom, top, near);
     } else {
@@ -197,34 +197,34 @@ export default class Matrix4 extends Matrix {
     return this.check();
   }
 
-    //
-    static _computeInfinitePerspectiveOffCenter(result, left, right, bottom, top, near) {
-      const column0Row0 = 2.0 * near / (right - left);
-      const column1Row1 = 2.0 * near / (top - bottom);
-      const column2Row0 = (right + left) / (right - left);
-      const column2Row1 = (top + bottom) / (top - bottom);
-      const column2Row2 = -1.0;
-      const column2Row3 = -1.0;
-      const column3Row2 = -2.0 * near;
+  // eslint-disable-next-line max-params
+  static _computeInfinitePerspectiveOffCenter(result, left, right, bottom, top, near) {
+    const column0Row0 = (2.0 * near) / (right - left);
+    const column1Row1 = (2.0 * near) / (top - bottom);
+    const column2Row0 = (right + left) / (right - left);
+    const column2Row1 = (top + bottom) / (top - bottom);
+    const column2Row2 = -1.0;
+    const column2Row3 = -1.0;
+    const column3Row2 = -2.0 * near;
 
-      result[0] = column0Row0;
-      result[1] = 0.0;
-      result[2] = 0.0;
-      result[3] = 0.0;
-      result[4] = 0.0;
-      result[5] = column1Row1;
-      result[6] = 0.0;
-      result[7] = 0.0;
-      result[8] = column2Row0;
-      result[9] = column2Row1;
-      result[10] = column2Row2;
-      result[11] = column2Row3;
-      result[12] = 0.0;
-      result[13] = 0.0;
-      result[14] = column3Row2;
-      result[15] = 0.0;
-      return result;
-    };
+    result[0] = column0Row0;
+    result[1] = 0.0;
+    result[2] = 0.0;
+    result[3] = 0.0;
+    result[4] = 0.0;
+    result[5] = column1Row1;
+    result[6] = 0.0;
+    result[7] = 0.0;
+    result[8] = column2Row0;
+    result[9] = column2Row1;
+    result[10] = column2Row2;
+    result[11] = column2Row3;
+    result[12] = 0.0;
+    result[13] = 0.0;
+    result[14] = column3Row2;
+    result[15] = 0.0;
+    return result;
+  }
 
   // Generates a look-at matrix with the given eye position, focal point,
   // and up axis

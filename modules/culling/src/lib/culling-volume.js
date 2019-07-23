@@ -3,7 +3,7 @@
 
 /* eslint-disable */
 import {Vector3, Vector4, assert} from 'math.gl';
-import {INTERSECT, Intersect} from '../constants';
+import {Intersect} from '../constants';
 import Plane from './plane';
 
 // X, Y, Z Unit vectors
@@ -88,8 +88,8 @@ export default class CullingVolume {
   // Determines whether a bounding volume intersects the culling volume.
   computeVisibility(boundingVolume) {
     assert(boundingVolume);
-    const planes = this.planes;
-    const intersect = Intersect.INSIDE;
+    // const planes = this.planes;
+    let intersect = Intersect.INSIDE;
     for (const plane of this.planes) {
       const result = boundingVolume.intersectPlane(plane);
       switch (result) {
@@ -130,7 +130,7 @@ export default class CullingVolume {
 
     // Start with MASK_INSIDE (all zeros) so that after the loop, the return value can be compared with MASK_INSIDE.
     // (Because if there are fewer than 31 planes, the upper bits wont be changed.)
-    const mask = CullingVolume.MASK_INSIDE;
+    let mask = CullingVolume.MASK_INSIDE;
 
     const planes = this.planes;
     for (let k = 0; k < this.planes.length; ++k) {

@@ -10,7 +10,8 @@ import {
   BoundingSphere,
   AxisAlignedBoundingBox,
   makeBoundingSphereFromPoints,
-  _PerspectiveFrustum as PerspectiveFrustum
+  _PerspectiveFrustum as PerspectiveFrustum,
+  Intersect
 } from '@math.gl/culling';
 
 const frustum = new PerspectiveFrustum();

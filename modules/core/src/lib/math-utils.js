@@ -24,5 +24,7 @@ export default {
 
   PI_OVER_TWO: Math.PI / 2,
   PI_OVER_FOUR: Math.PI / 4,
-  PI_OVER_SIX: Math.PI / 6
+  PI_OVER_SIX: Math.PI / 6,
+
+  TWO_PI: Math.PI * 2
 };
