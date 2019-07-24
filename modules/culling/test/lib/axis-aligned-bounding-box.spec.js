@@ -18,10 +18,10 @@ const positionsMinimum = new Vector3(-3, -3, -3);
 const positionsMaximum = new Vector3(3, 3, 3);
 const positionsCenter = new Vector3(0, 0, 0);
 
-const VECTOR3_ZERO = [0, 0, 0];
-const VECTOR3_UNIT_X = [1, 0, 0];
-const VECTOR3_UNIT_Y = [0, 1, 0];
-const VECTOR3_UNIT_Z = [0, 0, 1];
+const VECTOR3_UNIT_X = Object.freeze(new Vector3(1, 0, 0));
+const VECTOR3_ZERO = Object.freeze(new Vector3(0, 0, 0));
+const VECTOR3_UNIT_Y = Object.freeze(new Vector3(0, 1, 0));
+const VECTOR3_UNIT_Z = Object.freeze(new Vector3(0, 0, 1));
 
 it('AxisAlignedBoundingBox#constructor sets expected default values', () => {
   const box = new AxisAlignedBoundingBox();

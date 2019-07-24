@@ -1,6 +1,6 @@
 # What's New
 
-## v2.4 (In Development)
+## v3.0 (In Development)
 
 Date: TBD, target end of June 2019
 
@@ -28,6 +28,7 @@ The API for transformations (i.e. multiplying vectors with matrices or quaternio
 
 - New methods `Matrix*.setColumn()` and `Matrix*.getColumn()`
 - New method `Matrix*.toString()`
+- Improved method: `Matrix4.frustum()` now supports infinite `far` plane (parity with `Matrix4.perspective`, which already supported this).
 
 #### Utility Functions
 

@@ -442,68 +442,6 @@ test('BoundingSphere#projectTo2D with result parameter', t => {
   t.end();
 });
 
-test('BoundingSphere#can pack and unpack', t => {
-  const array = [];
-  const boundingSphere = new BoundingSphere();
-  boundingSphere.center = new Vector3(1, 2, 3);
-  boundingSphere.radius = 4;
-  BoundingSphere.pack(boundingSphere, array);
-  t.equals(array.length, BoundingSphere.packedLength);
-  t.equals(BoundingSphere.unpack(array), boundingSphere);
-
-  t.end();
-});
-
-test('BoundingSphere#can pack and unpack with offset', t => {
-  const packed = new Array(3);
-  const offset = 3;
-  const boundingSphere = new BoundingSphere();
-  boundingSphere.center = new Vector3(1, 2, 3);
-  boundingSphere.radius = 4;
-
-  BoundingSphere.pack(boundingSphere, packed, offset);
-  t.equals(packed.length, offset + BoundingSphere.packedLength);
-
-  const result = new BoundingSphere();
-  const returnedResult = BoundingSphere.unpack(packed, offset, result);
-  expect(returnedResult).toBe(result);
-  t.equals(result, boundingSphere);
-
-  t.end();
-});
-
-test('BoundingSphere#pack throws with undefined boundingSphere', t => {
-  const array = [];
-  t.throws(() => sphere.pack(undefined, array));
-
-  t.end();
-});
-
-test('BoundingSphere#pack throws with undefined array', t => {
-  const boundingSphere = new BoundingSphere();
-  t.throws(() => sphere.pack(boundingSphere, undefined));
-
-  t.end();
-});
-
-test('BoundingSphere#unpack throws with undefined array', t => {
-  t.throws(() => sphere.unpack(undefined));
-
-  t.end();
-});
-
-test('BoundingSphere#static projectTo2D throws without sphere', t => {
-  t.throws(() => sphere.projectTo2D());
-
-  t.end();
-});
-
-test('BoundingSphere#clone returns undefined with no parameter', t => {
-  expect(BoundingSphere.clone()).toBeUndefined();
-
-  t.end();
-});
-
 test('BoundingSphere#union throws with no left parameter', t => {
   const right = new BoundingSphere();
   t.throws(() => sphere.union(undefined, right));
@@ -649,12 +587,5 @@ test('BoundingSphere#fromRectangleWithHeights2D includes specified min and max h
   expectBoundingSphereToContainPoint(boundingSphere, point, projection);
 
   t.end();
-});
-
-test('BoundingSphere#computes the volume of a BoundingSphere', t => {
-  const sphere = new BoundingSphere(new Vector3(), 1.0);
-  const computedVolume = sphere.volume();
-  const expectedVolume = (4.0 / 3.0) * CesiumMath.PI;
-  expect(computedVolume).toEqualEpsilon(expectedVolume, CesiumMath.EPSILON6);
 });
 */

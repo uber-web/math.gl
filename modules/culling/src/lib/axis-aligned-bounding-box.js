@@ -2,7 +2,7 @@ import {Vector3} from 'math.gl';
 import {Intersect} from '../constants';
 
 const scratchVector = new Vector3();
-const intersectScratch = new Vector3();
+const scratchNormal = new Vector3();
 
 /**
  * Creates an instance of an AxisAlignedBoundingBox from the minimum and maximum points along the x, y, and z axes.
@@ -135,11 +135,11 @@ export default class AxisAlignedBoundingBox {
    *                      intersects the plane.
    */
   intersectPlane(plane) {
-    const h = intersectScratch
+    const h = scratchVector
       .copy(this.maximum)
       .subtract(this.minimum)
       .scale(0.5); // The positive half diagonal
-    const normal = plane.normal;
+    const normal = scratchNormal.from(plane.normal);
     const e = h.x * Math.abs(normal.x) + h.y * Math.abs(normal.y) + h.z * Math.abs(normal.z);
     const s = this.center.dot(normal) + plane.distance; // signed distance from center
 

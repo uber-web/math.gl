@@ -12,5 +12,5 @@ import './lib/plane.spec';
 import './lib/oriented-bounding-box.spec';
 import './lib/culling-volume.spec';
 
-// import './lib/perspective-off-center-frustum.spec';
-// import './lib/perspective-frustum.spec';
+import './lib/perspective-off-center-frustum.spec';
+import './lib/perspective-frustum.spec';

@@ -3,7 +3,7 @@
 
 /* eslint-disable */
 import {Vector3, Vector4, assert} from 'math.gl';
-import {INTERSECT, Intersect} from '../constants';
+import {Intersect} from '../constants';
 import Plane from './plane';
 
 // X, Y, Z Unit vectors
@@ -36,6 +36,7 @@ export default class CullingVolume {
   constructor(planes = []) {
     // {Cartesian4[]} [planes] An array of clipping planes.
     this.planes = planes;
+    assert(this.planes.every(plane => plane instanceof Plane));
   }
 
   // Constructs a culling volume from a bounding sphere. Creates six planes that create a box containing the sphere.
@@ -59,25 +60,32 @@ export default class CullingVolume {
         plane1 = this.planes[planeIndex + 1] = new Vector4();
       }
 
-      scratchPlaneCenter
+      const plane0Center = scratchPlaneCenter
         .copy(faceNormal)
         .scale(-radius)
         .add(center);
+      const plane0Distance = -faceNormal.dot(plane0Center);
 
+      // plane0.fromNormalDistance(faceNormal, plane0Distance);
       plane0.x = faceNormal.x;
       plane0.y = faceNormal.y;
       plane0.z = faceNormal.z;
-      plane0.w = -faceNormal.dot(scratchPlaneCenter);
+      plane0.w = plane0Distance;
 
-      scratchPlaneCenter
+      const plane1Center = scratchPlaneCenter
         .copy(faceNormal)
         .scale(radius)
         .add(center);
-      plane1.x = -faceNormal.x;
-      plane1.y = -faceNormal.y;
-      plane1.z = -faceNormal.z;
-      plane0.w = -faceNormal.negate().dot(scratchPlaneCenter);
-      // plane1.w = -Vector3.dot(Vector3.negate(faceNormal, scratchPlaneNormal), scratchPlaneCenter);
+
+      const negatedFaceNormal = scratchPlaneNormal.copy(faceNormal).negate();
+
+      const plane1Distance = -negatedFaceNormal.dot(plane1Center);
+
+      // plane1.fromNormalDistance(negatedFaceNormal, plane1Distance);
+      plane1.x = negatedFaceNormal.x;
+      plane1.y = negatedFaceNormal.y;
+      plane1.z = negatedFaceNormal.z;
+      plane1.w = plane1Distance;
 
       planeIndex += 2;
     }
@@ -88,9 +96,10 @@ export default class CullingVolume {
   // Determines whether a bounding volume intersects the culling volume.
   computeVisibility(boundingVolume) {
     assert(boundingVolume);
-    const planes = this.planes;
-    const intersect = Intersect.INSIDE;
-    for (const plane of this.planes) {
+    // const planes = this.planes;
+    let intersect = Intersect.INSIDE;
+    for (const planeCoefficients of this.planes) {
+      const plane = scratchPlane.fromCoefficients(...planeCoefficients);
       const result = boundingVolume.intersectPlane(plane);
       switch (result) {
         case Intersect.OUTSIDE:
@@ -115,9 +124,10 @@ export default class CullingVolume {
    *                                 volume, such that if (planeMask & (1 << planeIndex) === 0), for k < 31, then
    *                                 the parent (and therefore this) volume is completely inside plane[planeIndex]
    *                                 and that plane check can be skipped.
+   */
   computeVisibilityWithPlaneMask(boundingVolume, parentPlaneMask) {
-    // assert(boundingVolume, 'boundingVolume is required.');
-    // assert(parentPlaneMask, 'parentPlaneMask is required.');
+    assert(boundingVolume, 'boundingVolume is required.');
+    assert(Number.isFinite(parentPlaneMask), 'parentPlaneMask is required.');
 
     if (
       parentPlaneMask === CullingVolume.MASK_OUTSIDE ||
@@ -129,7 +139,7 @@ export default class CullingVolume {
 
     // Start with MASK_INSIDE (all zeros) so that after the loop, the return value can be compared with MASK_INSIDE.
     // (Because if there are fewer than 31 planes, the upper bits wont be changed.)
-    const mask = CullingVolume.MASK_INSIDE;
+    let mask = CullingVolume.MASK_INSIDE;
 
     const planes = this.planes;
     for (let k = 0; k < this.planes.length; ++k) {
@@ -140,7 +150,8 @@ export default class CullingVolume {
         continue;
       }
 
-      const result = boundingVolume.intersectPlane(Plane.fromCartesian4(planes[k], scratchPlane));
+      const plane = scratchPlane.fromCoefficients(...planes[k]);
+      const result = boundingVolume.intersectPlane(plane);
       if (result === Intersect.OUTSIDE) {
         return CullingVolume.MASK_OUTSIDE;
       } else if (result === Intersect.INTERSECTING) {
@@ -150,5 +161,4 @@ export default class CullingVolume {
 
     return mask;
   }
-  */
 }

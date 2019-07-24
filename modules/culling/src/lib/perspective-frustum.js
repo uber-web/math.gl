@@ -1,9 +1,18 @@
-/* eslint-disable */
-import PerspectiveOffCenterFrustum from './perspective-off-center-frustum-wip';
+// This file is derived from the Cesium math library under Apache 2 license
+// See LICENSE.md and https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md
+
+// Note: This class is still an experimental export, mainly used by other test cases
+// - It has not been fully adapted to math.gl conventions
+// - Documentation has not been ported
+
+import {assert} from 'math.gl';
+import PerspectiveOffCenterFrustum from './perspective-off-center-frustum';
+
+const defined = val => val !== null && typeof val !== 'undefined';
 
 /**
  * The viewing frustum is defined by 6 planes.
- * Each plane is represented by a {@link Cartesian4} object, where the x, y, and z components
+ * Each plane is represented by a {@link Vector4} object, where the x, y, and z components
  * define the unit vector normal to the plane, and the w component is the distance of the
  * plane from the origin/camera position.
  *
@@ -19,8 +28,8 @@ import PerspectiveOffCenterFrustum from './perspective-off-center-frustum-wip';
  * @param {Number} [options.yOffset=0.0] The offset in the y direction.
  *
  * @example
- * var frustum = new Cesium.PerspectiveFrustum({
- *     fov : Cesium.Math.PI_OVER_THREE,
+ * var frustum = new PerspectiveFrustum({
+ *     fov : Math.PI_OVER_THREE,
  *     aspectRatio : canvas.clientWidth / canvas.clientHeight
  *     near : 1.0,
  *     far : 1000.0
@@ -30,6 +39,14 @@ import PerspectiveOffCenterFrustum from './perspective-off-center-frustum-wip';
  */
 export default class PerspectiveFrustum {
   constructor(options = {}) {
+    options = {
+      near: 1.0,
+      far: 500000000.0,
+      xOffset: 0.0,
+      yOffset: 0.0,
+      ...options
+    };
+
     this._offCenterFrustum = new PerspectiveOffCenterFrustum();
 
     /**
@@ -58,7 +75,7 @@ export default class PerspectiveFrustum {
      * @type {Number}
      * @default 1.0
      */
-    this.near = defaultValue(options.near, 1.0);
+    this.near = options.near;
     this._near = this.near;
 
     /**
@@ -66,7 +83,7 @@ export default class PerspectiveFrustum {
      * @type {Number}
      * @default 500000000.0
      */
-    this.far = defaultValue(options.far, 500000000.0);
+    this.far = options.far;
     this._far = this.far;
 
     /**
@@ -74,7 +91,7 @@ export default class PerspectiveFrustum {
      * @type {Number}
      * @default 0.0
      */
-    this.xOffset = defaultValue(options.xOffset, 0.0);
+    this.xOffset = options.xOffset;
     this._xOffset = this.xOffset;
 
     /**
@@ -82,8 +99,47 @@ export default class PerspectiveFrustum {
      * @type {Number}
      * @default 0.0
      */
-    this.yOffset = defaultValue(options.yOffset, 0.0);
+    this.yOffset = options.yOffset;
     this._yOffset = this.yOffset;
+  }
+
+  /**
+   * Returns a duplicate of a PerspectiveFrustum instance.
+   *
+   * @param {PerspectiveFrustum} [result] The object onto which to store the result.
+   * @returns {PerspectiveFrustum} The modified result parameter or a new PerspectiveFrustum instance if one was not provided.
+   */
+  clone() {
+    return new PerspectiveFrustum({
+      aspectRatio: this.aspectRatio,
+      fov: this.fov,
+      near: this.near,
+      far: this.far
+    });
+  }
+
+  /**
+   * Compares the provided PerspectiveFrustum componentwise and returns
+   * <code>true</code> if they are equal, <code>false</code> otherwise.
+   *
+   * @param {PerspectiveFrustum} [other] The right hand side PerspectiveFrustum.
+   * @returns {Boolean} <code>true</code> if they are equal, <code>false</code> otherwise.
+   */
+  equals(other) {
+    if (!defined(other) || !(other instanceof PerspectiveFrustum)) {
+      return false;
+    }
+
+    update(this);
+    update(other);
+
+    return (
+      this.fov === other.fov &&
+      this.aspectRatio === other.aspectRatio &&
+      this.near === other.near &&
+      this.far === other.far &&
+      this._offCenterFrustum.equals(other._offCenterFrustum)
+    );
   }
 
   /**
@@ -134,61 +190,11 @@ export default class PerspectiveFrustum {
   }
 
   /**
-   * Returns a duplicate of a PerspectiveFrustum instance.
-   *
-   * @param {PerspectiveFrustum} [result] The object onto which to store the result.
-   * @returns {PerspectiveFrustum} The modified result parameter or a new PerspectiveFrustum instance if one was not provided.
-  clone(result) {
-    if (!defined(result)) {
-      result = new PerspectiveFrustum();
-    }
-
-    result.aspectRatio = this.aspectRatio;
-    result.fov = this.fov;
-    result.near = this.near;
-    result.far = this.far;
-
-    // force update of clone to compute matrices
-    result._aspectRatio = undefined;
-    result._fov = undefined;
-    result._near = undefined;
-    result._far = undefined;
-
-    this._offCenterFrustum.clone(result._offCenterFrustum);
-
-    return result;
-  }
-
-  /**
-   * Compares the provided PerspectiveFrustum componentwise and returns
-   * <code>true</code> if they are equal, <code>false</code> otherwise.
-   *
-   * @param {PerspectiveFrustum} [other] The right hand side PerspectiveFrustum.
-   * @returns {Boolean} <code>true</code> if they are equal, <code>false</code> otherwise.
-  equals(other) {
-    if (!defined(other) || !(other instanceof PerspectiveFrustum)) {
-      return false;
-    }
-
-    update(this);
-    update(other);
-
-    return (
-      this.fov === other.fov &&
-      this.aspectRatio === other.aspectRatio &&
-      this.near === other.near &&
-      this.far === other.far &&
-      this._offCenterFrustum.equals(other._offCenterFrustum)
-    );
-  }
-   */
-
-  /**
    * Creates a culling volume for this frustum.
    *
-   * @param {Cartesian3} position The eye position.
-   * @param {Cartesian3} direction The view direction.
-   * @param {Cartesian3} up The up direction.
+   * @param {Vector3} position The eye position.
+   * @param {Vector3} direction The view direction.
+   * @param {Vector3} up The up direction.
    * @returns {CullingVolume} A culling volume at the given position and orientation.
    *
    * @example
@@ -207,8 +213,8 @@ export default class PerspectiveFrustum {
    * @param {Number} drawingBufferWidth The width of the drawing buffer.
    * @param {Number} drawingBufferHeight The height of the drawing buffer.
    * @param {Number} distance The distance to the near plane in meters.
-   * @param {Cartesian2} result The object onto which to store the result.
-   * @returns {Cartesian2} The modified result parameter or a new instance of {@link Cartesian2} with the pixel's width and height in the x and y properties, respectively.
+   * @param {Vector2} result The object onto which to store the result.
+   * @returns {Vector2} The modified result parameter or a new instance of {@link Vector2} with the pixel's width and height in the x and y properties, respectively.
    *
    * @exception {DeveloperError} drawingBufferWidth must be greater than zero.
    * @exception {DeveloperError} drawingBufferHeight must be greater than zero.
@@ -216,7 +222,7 @@ export default class PerspectiveFrustum {
    * @example
    * // Example 1
    * // Get the width and height of a pixel.
-   * var pixelSize = camera.frustum.getPixelDimensions(scene.drawingBufferWidth, scene.drawingBufferHeight, 1.0, new Cesium.Cartesian2());
+   * var pixelSize = camera.frustum.getPixelDimensions(scene.drawingBufferWidth, scene.drawingBufferHeight, 1.0, new Vector2());
    *
    * @example
    * // Example 2
@@ -224,10 +230,11 @@ export default class PerspectiveFrustum {
    * // For example, get the size of a pixel of an image on a billboard.
    * var position = camera.position;
    * var direction = camera.direction;
-   * var toCenter = Cesium.Cartesian3.subtract(primitive.boundingVolume.center, position, new Cesium.Cartesian3());      // vector from camera to a primitive
-   * var toCenterProj = Cesium.Cartesian3.multiplyByScalar(direction, Cesium.Cartesian3.dot(direction, toCenter), new Cesium.Cartesian3()); // project vector onto camera direction vector
-   * var distance = Cesium.Cartesian3.magnitude(toCenterProj);
-   * var pixelSize = camera.frustum.getPixelDimensions(scene.drawingBufferWidth, scene.drawingBufferHeight, distance, new Cesium.Cartesian2());
+   * var toCenter = Vector3.subtract(primitive.boundingVolume.center, position, new Vector3());      // vector from camera to a primitive
+   * var toCenterProj = Vector3.multiplyByScalar(direction, Vector3.dot(direction, toCenter), new Vector3()); // project vector onto camera direction vector
+   * var distance = Vector3.magnitude(toCenterProj);
+   * var pixelSize = camera.frustum.getPixelDimensions(scene.drawingBufferWidth, scene.drawingBufferHeight, distance, new Vector2());
+   */
   getPixelDimensions(drawingBufferWidth, drawingBufferHeight, distance, result) {
     update(this);
     return this._offCenterFrustum.getPixelDimensions(
@@ -237,22 +244,19 @@ export default class PerspectiveFrustum {
       result
     );
   }
-   */
 }
 
+// eslint-disable-next-line complexity, max-statements
 function update(frustum) {
-  //>>includeStart('debug', pragmas.debug);
-  if (
-    !defined(frustum.fov) ||
-    !defined(frustum.aspectRatio) ||
-    !defined(frustum.near) ||
-    !defined(frustum.far)
-  ) {
-    throw new DeveloperError('fov, aspectRatio, near, or far parameters are not set.');
-  }
-  //>>includeEnd('debug');
+  assert(
+    Number.isFinite(frustum.fov) &&
+      Number.isFinite(frustum.aspectRatio) &&
+      Number.isFinite(frustum.near) &&
+      Number.isFinite(frustum.far)
+  );
+  // 'fov, aspectRatio, near, or far parameters are not set.'
 
-  var f = frustum._offCenterFrustum;
+  const f = frustum._offCenterFrustum;
 
   if (
     frustum.fov !== frustum._fov ||
@@ -262,19 +266,14 @@ function update(frustum) {
     frustum.xOffset !== frustum._xOffset ||
     frustum.yOffset !== frustum._yOffset
   ) {
-    //>>includeStart('debug', pragmas.debug);
-    if (frustum.fov < 0 || frustum.fov >= Math.PI) {
-      throw new DeveloperError('fov must be in the range [0, PI).');
-    }
+    assert(frustum.fov >= 0 && frustum.fov < Math.PI);
+    // throw new DeveloperError('fov must be in the range [0, PI).');
 
-    if (frustum.aspectRatio < 0) {
-      throw new DeveloperError('aspectRatio must be positive.');
-    }
+    assert(frustum.aspectRatio > 0);
+    // throw new DeveloperError('aspectRatio must be positive.');
 
-    if (frustum.near < 0 || frustum.near > frustum.far) {
-      throw new DeveloperError('near must be greater than zero and less than far.');
-    }
-    //>>includeEnd('debug');
+    assert(frustum.near >= 0 && frustum.near < frustum.far);
+    // throw new DeveloperError('near must be greater than zero and less than far.');
 
     frustum._aspectRatio = frustum.aspectRatio;
     frustum._fov = frustum.fov;
