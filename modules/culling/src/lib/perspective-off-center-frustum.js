@@ -96,6 +96,41 @@ export default class PerspectiveOffCenterFrustum {
   }
 
   /**
+   * Returns a duplicate of a PerspectiveOffCenterFrustum instance.
+   * @returns {PerspectiveOffCenterFrustum} A new PerspectiveFrustum instance.
+   * */
+  clone() {
+    return new PerspectiveOffCenterFrustum({
+      right: this.right,
+      left: this.left,
+      top: this.top,
+      bottom: this.bottom,
+      near: this.near,
+      far: this.far
+    });
+  }
+
+  /**
+   * Compares the provided PerspectiveOffCenterFrustum componentwise and returns
+   * <code>true</code> if they are equal, <code>false</code> otherwise.
+   *
+   * @param {PerspectiveOffCenterFrustum} [other] The right hand side PerspectiveOffCenterFrustum.
+   * @returns {Boolean} <code>true</code> if they are equal, <code>false</code> otherwise.
+   */
+  equals(other) {
+    return (
+      other &&
+      other instanceof PerspectiveOffCenterFrustum &&
+      this.right === other.right &&
+      this.left === other.left &&
+      this.top === other.top &&
+      this.bottom === other.bottom &&
+      this.near === other.near &&
+      this.far === other.far
+    );
+  }
+
+  /**
    * Gets the perspective projection matrix computed from the view frustum.
    * @memberof PerspectiveOffCenterFrustum.prototype
    * @type {Matrix4}
@@ -281,23 +316,16 @@ export default class PerspectiveOffCenterFrustum {
   getPixelDimensions(drawingBufferWidth, drawingBufferHeight, distance, result) {
     update(this);
 
-    //>>includeStart('debug', pragmas.debug);
-    if (!defined(drawingBufferWidth) || !defined(drawingBufferHeight)) {
-      throw new DeveloperError('Both drawingBufferWidth and drawingBufferHeight are required.');
-    }
-    if (drawingBufferWidth <= 0) {
-      throw new DeveloperError('drawingBufferWidth must be greater than zero.');
-    }
-    if (drawingBufferHeight <= 0) {
-      throw new DeveloperError('drawingBufferHeight must be greater than zero.');
-    }
-    if (!defined(distance)) {
-      throw new DeveloperError('distance is required.');
-    }
-    if (!defined(result)) {
-      throw new DeveloperError('A result object is required.');
-    }
-    //>>includeEnd('debug');
+    assert(Number.isFinite(drawingBufferWidth) && Number.isFinite(drawingBufferHeight));
+    // 'Both drawingBufferWidth and drawingBufferHeight are required.'
+    assert(drawingBufferWidth > 0);
+    // 'drawingBufferWidth must be greater than zero.'
+    assert(drawingBufferHeight > 0);
+    // 'drawingBufferHeight must be greater than zero.'
+    assert(distance > 0);
+    // 'distance is required.');
+    assert(result);
+    // 'A result object is required.');
 
     const inverseNear = 1.0 / this.near;
     let tanTheta = this.top * inverseNear;
@@ -309,55 +337,6 @@ export default class PerspectiveOffCenterFrustum {
     result.y = pixelHeight;
     return result;
   }
-
-  /**
-   * Returns a duplicate of a PerspectiveOffCenterFrustum instance.
-   *
-   * @param {PerspectiveOffCenterFrustum} [result] The object onto which to store the result.
-   * @returns {PerspectiveOffCenterFrustum} The modified result parameter or a new PerspectiveFrustum instance if one was not provided.
-   * */
-  clone(result) {
-    if (!defined(result)) {
-      result = new PerspectiveOffCenterFrustum();
-    }
-
-    result.right = this.right;
-    result.left = this.left;
-    result.top = this.top;
-    result.bottom = this.bottom;
-    result.near = this.near;
-    result.far = this.far;
-
-    // force update of clone to compute matrices
-    result._left = undefined;
-    result._right = undefined;
-    result._top = undefined;
-    result._bottom = undefined;
-    result._near = undefined;
-    result._far = undefined;
-
-    return result;
-  }
-
-  /**
-   * Compares the provided PerspectiveOffCenterFrustum componentwise and returns
-   * <code>true</code> if they are equal, <code>false</code> otherwise.
-   *
-   * @param {PerspectiveOffCenterFrustum} [other] The right hand side PerspectiveOffCenterFrustum.
-   * @returns {Boolean} <code>true</code> if they are equal, <code>false</code> otherwise.
-   equals(other) {
-    return (
-      defined(other) &&
-      other instanceof PerspectiveOffCenterFrustum &&
-      this.right === other.right &&
-      this.left === other.left &&
-      this.top === other.top &&
-      this.bottom === other.bottom &&
-      this.near === other.near &&
-      this.far === other.far
-    );
-  }
-   */
 }
 
 function update(frustum) {

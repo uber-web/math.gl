@@ -23,8 +23,8 @@ const DeveloperError = console;
  * @param {Number} [options.yOffset=0.0] The offset in the y direction.
  *
  * @example
- * var frustum = new Cesium.PerspectiveFrustum({
- *     fov : Cesium.Math.PI_OVER_THREE,
+ * var frustum = new PerspectiveFrustum({
+ *     fov : Math.PI_OVER_THREE,
  *     aspectRatio : canvas.clientWidth / canvas.clientHeight
  *     near : 1.0,
  *     far : 1000.0
@@ -99,6 +99,45 @@ export default class PerspectiveFrustum {
   }
 
   /**
+   * Returns a duplicate of a PerspectiveFrustum instance.
+   *
+   * @param {PerspectiveFrustum} [result] The object onto which to store the result.
+   * @returns {PerspectiveFrustum} The modified result parameter or a new PerspectiveFrustum instance if one was not provided.
+   */
+  clone() {
+    return new PerspectiveFrustum({
+      aspectRatio: this.aspectRatio,
+      fov: this.fov,
+      near: this.near,
+      far: this.far
+    });
+  }
+
+  /**
+   * Compares the provided PerspectiveFrustum componentwise and returns
+   * <code>true</code> if they are equal, <code>false</code> otherwise.
+   *
+   * @param {PerspectiveFrustum} [other] The right hand side PerspectiveFrustum.
+   * @returns {Boolean} <code>true</code> if they are equal, <code>false</code> otherwise.
+   */
+  equals(other) {
+    if (!defined(other) || !(other instanceof PerspectiveFrustum)) {
+      return false;
+    }
+
+    update(this);
+    update(other);
+
+    return (
+      this.fov === other.fov &&
+      this.aspectRatio === other.aspectRatio &&
+      this.near === other.near &&
+      this.far === other.far &&
+      this._offCenterFrustum.equals(other._offCenterFrustum)
+    );
+  }
+
+  /**
    * Gets the perspective projection matrix computed from the view frustum.
    * @memberof PerspectiveFrustum.prototype
    * @type {Matrix4}
@@ -146,56 +185,6 @@ export default class PerspectiveFrustum {
   }
 
   /**
-   * Returns a duplicate of a PerspectiveFrustum instance.
-   *
-   * @param {PerspectiveFrustum} [result] The object onto which to store the result.
-   * @returns {PerspectiveFrustum} The modified result parameter or a new PerspectiveFrustum instance if one was not provided.
-  clone(result) {
-    if (!defined(result)) {
-      result = new PerspectiveFrustum();
-    }
-
-    result.aspectRatio = this.aspectRatio;
-    result.fov = this.fov;
-    result.near = this.near;
-    result.far = this.far;
-
-    // force update of clone to compute matrices
-    result._aspectRatio = undefined;
-    result._fov = undefined;
-    result._near = undefined;
-    result._far = undefined;
-
-    this._offCenterFrustum.clone(result._offCenterFrustum);
-
-    return result;
-  }
-
-  /**
-   * Compares the provided PerspectiveFrustum componentwise and returns
-   * <code>true</code> if they are equal, <code>false</code> otherwise.
-   *
-   * @param {PerspectiveFrustum} [other] The right hand side PerspectiveFrustum.
-   * @returns {Boolean} <code>true</code> if they are equal, <code>false</code> otherwise.
-  equals(other) {
-    if (!defined(other) || !(other instanceof PerspectiveFrustum)) {
-      return false;
-    }
-
-    update(this);
-    update(other);
-
-    return (
-      this.fov === other.fov &&
-      this.aspectRatio === other.aspectRatio &&
-      this.near === other.near &&
-      this.far === other.far &&
-      this._offCenterFrustum.equals(other._offCenterFrustum)
-    );
-  }
-   */
-
-  /**
    * Creates a culling volume for this frustum.
    *
    * @param {Cartesian3} position The eye position.
@@ -228,7 +217,7 @@ export default class PerspectiveFrustum {
    * @example
    * // Example 1
    * // Get the width and height of a pixel.
-   * var pixelSize = camera.frustum.getPixelDimensions(scene.drawingBufferWidth, scene.drawingBufferHeight, 1.0, new Cesium.Cartesian2());
+   * var pixelSize = camera.frustum.getPixelDimensions(scene.drawingBufferWidth, scene.drawingBufferHeight, 1.0, new Cartesian2());
    *
    * @example
    * // Example 2
@@ -236,10 +225,11 @@ export default class PerspectiveFrustum {
    * // For example, get the size of a pixel of an image on a billboard.
    * var position = camera.position;
    * var direction = camera.direction;
-   * var toCenter = Cesium.Cartesian3.subtract(primitive.boundingVolume.center, position, new Cesium.Cartesian3());      // vector from camera to a primitive
-   * var toCenterProj = Cesium.Cartesian3.multiplyByScalar(direction, Cesium.Cartesian3.dot(direction, toCenter), new Cesium.Cartesian3()); // project vector onto camera direction vector
-   * var distance = Cesium.Cartesian3.magnitude(toCenterProj);
-   * var pixelSize = camera.frustum.getPixelDimensions(scene.drawingBufferWidth, scene.drawingBufferHeight, distance, new Cesium.Cartesian2());
+   * var toCenter = Cartesian3.subtract(primitive.boundingVolume.center, position, new Cartesian3());      // vector from camera to a primitive
+   * var toCenterProj = Cartesian3.multiplyByScalar(direction, Cartesian3.dot(direction, toCenter), new Cartesian3()); // project vector onto camera direction vector
+   * var distance = Cartesian3.magnitude(toCenterProj);
+   * var pixelSize = camera.frustum.getPixelDimensions(scene.drawingBufferWidth, scene.drawingBufferHeight, distance, new Cartesian2());
+   */
   getPixelDimensions(drawingBufferWidth, drawingBufferHeight, distance, result) {
     update(this);
     return this._offCenterFrustum.getPixelDimensions(
@@ -249,7 +239,6 @@ export default class PerspectiveFrustum {
       result
     );
   }
-   */
 }
 
 function update(frustum) {

@@ -53,31 +53,27 @@ export default class CullingVolume {
       let plane1 = this.planes[planeIndex + 1];
 
       if (!plane0) {
-        plane0 = this.planes[planeIndex] = new Vector4();
+        plane0 = this.planes[planeIndex] = new Plane();
       }
       if (!plane1) {
-        plane1 = this.planes[planeIndex + 1] = new Vector4();
+        plane1 = this.planes[planeIndex + 1] = new Plane();
       }
 
-      scratchPlaneCenter
+      const planeCenter = scratchPlaneCenter
         .copy(faceNormal)
         .scale(-radius)
         .add(center);
 
-      plane0.x = faceNormal.x;
-      plane0.y = faceNormal.y;
-      plane0.z = faceNormal.z;
-      plane0.w = -faceNormal.dot(scratchPlaneCenter);
+      plane0.fromNormalDistance(faceNormal, -faceNormal.dot(planeCenter));
 
-      scratchPlaneCenter
+      const secondPlaneCenter = scratchPlaneCenter
         .copy(faceNormal)
         .scale(radius)
         .add(center);
-      plane1.x = -faceNormal.x;
-      plane1.y = -faceNormal.y;
-      plane1.z = -faceNormal.z;
-      plane0.w = -faceNormal.negate().dot(scratchPlaneCenter);
-      // plane1.w = -Vector3.dot(Vector3.negate(faceNormal, scratchPlaneNormal), scratchPlaneCenter);
+
+      const negatedFaceNormal = faceNormal.clone().negate();
+
+      plane0.fromNormalDistance(negatedFaceNormal, -negatedFaceNormal.dot(secondPlaneCenter));
 
       planeIndex += 2;
     }

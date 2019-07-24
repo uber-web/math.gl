@@ -288,31 +288,31 @@ test('Matrix4#frustum', t => {
   t.end();
 });
 
-test('frustum works', t => {
-  const expected = new Matrix4(2, 0, 3, 0, 0, 2, 5, 0, 0, 0, -3, -4, 0, 0, -1, 0);
+test('Matrix4#frustum() works', t => {
+  const expected = new Matrix4([2, 0, 3, 0, 0, 2, 5, 0, 0, 0, -3, -4, 0, 0, -1, 0]).transpose();
   const returnedResult = new Matrix4().frustum({
     left: 1,
     right: 2,
-    top: 2,
-    bottom: 3,
+    bottom: 2,
+    top: 3,
     near: 1,
     far: 2
   });
-  tapeEquals(returnedResult, expected);
+  tapeEquals(t, returnedResult, expected);
   t.end();
 });
 
-test('frustum(far: Infinity) works', t => {
-  const expected = new Matrix4(2, 0, 3, 0, 0, 2, 5, 0, 0, 0, -1, -2, 0, 0, -1, 0);
+test('Matrix4#frustum(far: Infinity) works', t => {
+  const expected = new Matrix4([2, 0, 3, 0, 0, 2, 5, 0, 0, 0, -1, -2, 0, 0, -1, 0]).transpose();
   const returnedResult = new Matrix4().frustum({
     left: 1,
     right: 2,
-    top: 2,
-    bottom: 3,
+    bottom: 2,
+    top: 3,
     near: 1,
     far: Infinity
   });
-  tapeEquals(returnedResult, expected);
+  tapeEquals(t, returnedResult, expected);
   t.end();
 });
 

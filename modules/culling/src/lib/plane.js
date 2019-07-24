@@ -4,22 +4,27 @@
 /* eslint-disable */
 import {Vector3, equals, assert, MathUtils} from 'math.gl';
 
-const scratchNormal = new Vector3();
-const scratchVector3 = new Vector3();
 const scratchPosition = new Vector3();
+const scratchNormal = new Vector3();
 
 // A plane in Hessian Normal Form
 export default class Plane {
   constructor(normal = [0, 0, 1], distance = 0) {
+    this.normal = new Vector3();
+    this.distance = -0;
+    this.fromNormalDistance(normal, distance);
+  }
+
+  fromNormalDistance(normal, distance) {
     assert(Number.isFinite(distance));
-    this.normal = new Vector3().from(normal).normalize();
+    this.normal.from(normal).normalize();
     this.distance = distance;
+    return this;
   }
 
   // Creates a plane from a normal and a point on the plane.
   fromPointNormal(point, normal) {
-    point = scratchVector3.from(point);
-
+    point = scratchPosition.from(point);
     this.normal.from(normal).normalize();
     const distance = -this.normal.dot(point);
     this.distance = distance;
