@@ -1,21 +1,11 @@
-/* eslint-disable */
+// This file is derived from the Cesium math library under Apache 2 license
+// See LICENSE.md and https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md
+
 import test from 'tape-catch';
-import {tapeEquals, tapeEqualsEpsilon} from 'test/utils/tape-assertions';
+import {tapeEquals} from 'test/utils/tape-assertions';
 
 import {_PerspectiveOffCenterFrustum as PerspectiveOffCenterFrustum} from '@math.gl/culling';
 import {Vector2, Vector3, Vector4, Matrix4, _MathUtils, equals} from 'math.gl';
-
-// defineSuite(
-//   [
-//     'Core/PerspectiveOffCenterFrustum',
-//     'Core/Vector2',
-//     'Core/Vector3',
-//     'Core/Vector4',
-//     'Core/Math',
-//     'Core/Matrix4'
-//   ],
-
-// letfrustum, planes;
 
 function beforeEachTest() {
   const frustum = new PerspectiveOffCenterFrustum({

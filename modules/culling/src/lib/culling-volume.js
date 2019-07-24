@@ -36,6 +36,7 @@ export default class CullingVolume {
   constructor(planes = []) {
     // {Cartesian4[]} [planes] An array of clipping planes.
     this.planes = planes;
+    assert(this.planes.every(plane => plane instanceof Plane));
   }
 
   // Constructs a culling volume from a bounding sphere. Creates six planes that create a box containing the sphere.

@@ -1,4 +1,10 @@
-/* eslint-disable */
+// This file is derived from the Cesium math library under Apache 2 license
+// See LICENSE.md and https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md
+
+// Note: This class is still an experimental export, mainly used by other test cases
+// - It has not been fully adapted to math.gl conventions
+// - Documentation has not been ported
+
 import {Vector3, Vector4, Matrix4, assert} from 'math.gl';
 import CullingVolume from './culling-volume';
 
@@ -6,8 +12,6 @@ const getPlanesRight = new Vector3();
 const getPlanesNearCenter = new Vector3();
 const getPlanesFarCenter = new Vector3();
 const getPlanesNormal = new Vector3();
-
-const defined = val => val !== undefined && val !== null;
 
 export default class PerspectiveOffCenterFrustum {
   /**
@@ -169,6 +173,7 @@ export default class PerspectiveOffCenterFrustum {
    * const cullingVolume = frustum.computeCullingVolume(cameraPosition, cameraDirection, cameraUp);
    * const intersect = cullingVolume.computeVisibility(boundingVolume);
    */
+  // eslint-disable-next-line complexity, max-statements
   computeCullingVolume(position, direction, up) {
     assert(position, 'position is required.');
     assert(direction, 'direction is required.');
@@ -195,7 +200,7 @@ export default class PerspectiveOffCenterFrustum {
 
     const normal = getPlanesNormal;
 
-    //Left plane computation
+    // Left plane computation
     new Vector3().multiplyByScalar(right, l, normal);
     new Vector3().add(nearCenter, normal, normal);
     new Vector3().subtract(normal, position, normal);
@@ -203,80 +208,67 @@ export default class PerspectiveOffCenterFrustum {
     new Vector3().cross(normal, up, normal);
     new Vector3().normalize(normal, normal);
 
+    planes[0] = planes[0] || new Vector4();
     let plane = planes[0];
-    if (!defined(plane)) {
-      plane = planes[0] = new Vector4();
-    }
     plane.x = normal.x;
     plane.y = normal.y;
     plane.z = normal.z;
     plane.w = -new Vector3().dot(normal, position);
 
-    //Right plane computation
+    // Right plane computation
     new Vector3().multiplyByScalar(right, r, normal);
     new Vector3().add(nearCenter, normal, normal);
     new Vector3().subtract(normal, position, normal);
     new Vector3().cross(up, normal, normal);
     new Vector3().normalize(normal, normal);
 
+    planes[1] = planes[1] || new Vector4();
     plane = planes[1];
-    if (!defined(plane)) {
-      plane = planes[1] = new Vector4();
-    }
     plane.x = normal.x;
     plane.y = normal.y;
     plane.z = normal.z;
     plane.w = -new Vector3().dot(normal, position);
 
-    //Bottom plane computation
+    // Bottom plane computation
     new Vector3().multiplyByScalar(up, b, normal);
     new Vector3().add(nearCenter, normal, normal);
     new Vector3().subtract(normal, position, normal);
     new Vector3().cross(right, normal, normal);
     new Vector3().normalize(normal, normal);
 
+    planes[2] = planes[2] || new Vector4();
     plane = planes[2];
-    if (!defined(plane)) {
-      plane = planes[2] = new Vector4();
-    }
     plane.x = normal.x;
     plane.y = normal.y;
     plane.z = normal.z;
     plane.w = -new Vector3().dot(normal, position);
 
-    //Top plane computation
+    // Top plane computation
     new Vector3().multiplyByScalar(up, t, normal);
     new Vector3().add(nearCenter, normal, normal);
     new Vector3().subtract(normal, position, normal);
     new Vector3().cross(normal, right, normal);
     new Vector3().normalize(normal, normal);
 
+    planes[3] = planes[3] || new Vector4();
     plane = planes[3];
-    if (!defined(plane)) {
-      plane = planes[3] = new Vector4();
-    }
     plane.x = normal.x;
     plane.y = normal.y;
     plane.z = normal.z;
     plane.w = -new Vector3().dot(normal, position);
 
-    //Near plane computation
+    // Near plane computation
+    planes[4] = planes[4] || new Vector4();
     plane = planes[4];
-    if (!defined(plane)) {
-      plane = planes[4] = new Vector4();
-    }
     plane.x = direction.x;
     plane.y = direction.y;
     plane.z = direction.z;
     plane.w = -new Vector3().dot(direction, nearCenter);
 
-    //Far plane computation
+    // Far plane computation
     new Vector3().negate(direction, normal);
 
-    plane = planes[5];
-    if (!defined(plane)) {
-      plane = planes[5] = new Vector4();
-    }
+    planes[5] = planes[5] || new Vector4();
     plane.x = normal.x;
     plane.y = normal.y;
     plane.z = normal.z;
@@ -339,17 +331,17 @@ export default class PerspectiveOffCenterFrustum {
   }
 }
 
+// eslint-disable-next-line complexity, max-statements
 function update(frustum) {
-  if (
-    !defined(frustum.right) ||
-    !defined(frustum.left) ||
-    !defined(frustum.top) ||
-    !defined(frustum.bottom) ||
-    !defined(frustum.near) ||
-    !defined(frustum.far)
-  ) {
-    throw new DeveloperError('right, left, top, bottom, near, or far parameters are not set.');
-  }
+  assert(
+    Number.isFinite(frustum.right) &&
+      Number.isFinite(frustum.left) &&
+      Number.isFinite(frustum.top) &&
+      Number.isFinite(frustum.bottom) &&
+      Number.isFinite(frustum.near) &&
+      Number.isFinite(frustum.far)
+  );
+  // throw new DeveloperError('right, left, top, bottom, near, or far parameters are not set.');
 
   const top = frustum.top;
   const bottom = frustum.bottom;

@@ -1,9 +1,14 @@
-/* eslint-disable */
+// This file is derived from the Cesium math library under Apache 2 license
+// See LICENSE.md and https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md
+
+// Note: This class is still an experimental export, mainly used by other test cases
+// - It has not been fully adapted to math.gl conventions
+// - Documentation has not been ported
+
+import {assert} from 'math.gl';
 import PerspectiveOffCenterFrustum from './perspective-off-center-frustum';
 
 const defined = val => val !== null && typeof val !== 'undefined';
-// eslint-disable-next-line no-console, no-undef
-const DeveloperError = console;
 
 /**
  * The viewing frustum is defined by 6 planes.
@@ -241,19 +246,17 @@ export default class PerspectiveFrustum {
   }
 }
 
+// eslint-disable-next-line complexity, max-statements
 function update(frustum) {
-  //>>includeStart('debug', pragmas.debug);
-  if (
-    !defined(frustum.fov) ||
-    !defined(frustum.aspectRatio) ||
-    !defined(frustum.near) ||
-    !defined(frustum.far)
-  ) {
-    throw new DeveloperError('fov, aspectRatio, near, or far parameters are not set.');
-  }
-  //>>includeEnd('debug');
+  assert(
+    Number.isFinite(frustum.fov) &&
+      Number.isFinite(frustum.aspectRatio) &&
+      Number.isFinite(frustum.near) &&
+      Number.isFinite(frustum.far)
+  );
+  // 'fov, aspectRatio, near, or far parameters are not set.'
 
-  var f = frustum._offCenterFrustum;
+  const f = frustum._offCenterFrustum;
 
   if (
     frustum.fov !== frustum._fov ||
@@ -263,19 +266,14 @@ function update(frustum) {
     frustum.xOffset !== frustum._xOffset ||
     frustum.yOffset !== frustum._yOffset
   ) {
-    //>>includeStart('debug', pragmas.debug);
-    if (frustum.fov < 0 || frustum.fov >= Math.PI) {
-      throw new DeveloperError('fov must be in the range [0, PI).');
-    }
+    assert(frustum.fov >= 0 && frustum.fov < Math.PI);
+    // throw new DeveloperError('fov must be in the range [0, PI).');
 
-    if (frustum.aspectRatio < 0) {
-      throw new DeveloperError('aspectRatio must be positive.');
-    }
+    assert(frustum.aspectRatio > 0);
+    // throw new DeveloperError('aspectRatio must be positive.');
 
-    if (frustum.near < 0 || frustum.near > frustum.far) {
-      throw new DeveloperError('near must be greater than zero and less than far.');
-    }
-    //>>includeEnd('debug');
+    assert(frustum.near >= 0 && frustum.near < frustum.far);
+    // throw new DeveloperError('near must be greater than zero and less than far.');
 
     frustum._aspectRatio = frustum.aspectRatio;
     frustum._fov = frustum.fov;
