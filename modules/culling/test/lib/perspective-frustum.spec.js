@@ -172,14 +172,13 @@ test('PerspectiveFrustum#get sseDenominator', t => {
 test('PerspectiveFrustum#get perspective projection matrix', t => {
   const {frustum} = beforeEachTest();
   let projectionMatrix = frustum.projectionMatrix;
-  let expected = Matrix4.computePerspectiveFieldOfView(
-    frustum.fovy,
-    frustum.aspectRatio,
-    frustum.near,
-    frustum.far,
-    new Matrix4()
-  );
-  equals(projectionMatrix, expected, _MathUtils.EPSILON6);
+  let expected = new Matrix44.perspective({
+    fovy: frustum.fovy,
+    aspectRatio: frustum.aspectRatio,
+    near: frustum.near,
+    far: frustum.far
+  });
+  tapeEqualsEpsilon(t, projectionMatrix, expected, _MathUtils.EPSILON6);
   t.end();
 });
 
