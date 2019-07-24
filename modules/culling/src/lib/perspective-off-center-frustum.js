@@ -183,9 +183,15 @@ export default class PerspectiveOffCenterFrustum {
 
     const right = scratchPlaneRightVector.copy(direction).cross(up);
 
-    const nearCenter = scratchPlaneNearCenter.copy(direction).multiplyByScalar(this.near).add(position);
+    const nearCenter = scratchPlaneNearCenter
+      .copy(direction)
+      .multiplyByScalar(this.near)
+      .add(position);
 
-    const farCenter = scratchPlaneFarCenter.copy(direction).multiplyByScalar(this.far).add(position);
+    const farCenter = scratchPlaneFarCenter
+      .copy(direction)
+      .multiplyByScalar(this.far)
+      .add(position);
 
     let normal = scratchPlaneNormal;
 
@@ -257,9 +263,7 @@ export default class PerspectiveOffCenterFrustum {
     plane.z = normal.z;
     plane.w = -normal.dot(position);
 
-    normal = new Vector3()
-      .copy(direction)
-      .normalize();
+    normal = new Vector3().copy(direction).normalize();
 
     // Near plane computation
     planes[4] = planes[4] || new Vector4();
@@ -267,7 +271,7 @@ export default class PerspectiveOffCenterFrustum {
     plane.x = direction.x;
     plane.y = direction.y;
     plane.z = direction.z;
-    plane.w = -new Vector3().copy(direction).dot(nearCenter);
+    plane.w = -direction.dot(nearCenter);
 
     // Far plane computation
     normal
@@ -351,12 +355,7 @@ function update(frustum) {
   );
   // throw new DeveloperError('right, left, top, bottom, near, or far parameters are not set.');
 
-  const top = frustum.top;
-  const bottom = frustum.bottom;
-  const right = frustum.right;
-  const left = frustum.left;
-  const near = frustum.near;
-  const far = frustum.far;
+  const {top, bottom, right, left, near, far} = frustum;
 
   if (
     top !== frustum._top ||
@@ -367,7 +366,7 @@ function update(frustum) {
     far !== frustum._far
   ) {
     assert(
-      frustum.near > 0 || frustum.near < frustum.far,
+      frustum.near > 0 && frustum.near < frustum.far,
       'near must be greater than zero and less than far.'
     );
 

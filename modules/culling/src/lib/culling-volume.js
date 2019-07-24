@@ -64,7 +64,7 @@ export default class CullingVolume {
         .copy(faceNormal)
         .scale(-radius)
         .add(center);
-      const plane0Distance = -faceNormal.dot(plane0Center)
+      const plane0Distance = -faceNormal.dot(plane0Center);
 
       // plane0.fromNormalDistance(faceNormal, plane0Distance);
       plane0.x = faceNormal.x;

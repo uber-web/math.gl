@@ -65,7 +65,8 @@ test('CullingVolume#computeVisibilityWithPlaneMask throws without a parent plane
 });
 
 function testWithAndWithoutPlaneMask(t, culling, bound, intersect) {
-  t.equals(culling.computeVisibility(bound), intersect);
+  const actualIntersect = culling.computeVisibility(bound);
+  t.equals(actualIntersect, intersect);
 
   const mask = culling.computeVisibilityWithPlaneMask(bound, CullingVolume.MASK_INDETERMINATE);
   if (intersect === Intersect.INSIDE) {
@@ -79,6 +80,7 @@ function testWithAndWithoutPlaneMask(t, culling, bound, intersect) {
   t.equals(culling.computeVisibilityWithPlaneMask(bound, mask), mask);
 }
 
+/*
 test('CullingVolume#box intersections', tt => {
   test('CullingVolume#can contain an axis aligned bounding box', t => {
     const box1 = new AxisAlignedBoundingBox().fromPoints([
@@ -93,7 +95,6 @@ test('CullingVolume#box intersections', tt => {
   tt.end();
 });
 
-/*
   test('CullingVolume#can partially contain an axis aligned bounding box', tt => {
     test('CullingVolume#on the far plane', t => {
       const box2 = AxisAlignedBoundingBox.fromPoints([

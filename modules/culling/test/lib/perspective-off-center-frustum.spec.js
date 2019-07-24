@@ -7,7 +7,7 @@ import {tapeEquals} from 'test/utils/tape-assertions';
 import {_PerspectiveOffCenterFrustum as PerspectiveOffCenterFrustum} from '@math.gl/culling';
 import {Vector2, Vector3, Vector4, Matrix4, _MathUtils, equals} from 'math.gl';
 
-const VECTOR3_UNIT_Y = Object.freeze(new Vector3( 0, 1, 0));
+const VECTOR3_UNIT_Y = Object.freeze(new Vector3(0, 1, 0));
 const VECTOR3_UNIT_Z = Object.freeze(new Vector3(0, 0, 1));
 
 function beforeEachTest() {
@@ -57,32 +57,37 @@ test('PerspectiveOffCenterFrustum#default constructs', t => {
   t.end();
 });
 
-// test('PerspectiveOffCenterFrustum#out of range near plane throws an exception', t => {
-//   frustum.near = -1.0;
-//   t.throws(() => frustum.projectionMatrix);
-//   t.end();
-// });
-//
-// test('PerspectiveOffCenterFrustum#negative far plane throws an exception', t => {
-//   frustum.far = -1.0;
-//   t.throws(() => frustum.projectionMatrix);
-//   t.end();
-// });
-//
-// test('PerspectiveOffCenterFrustum#computeCullingVolume with no position throws an exception', t => {
-//   t.throws(() => frustum.computeCullingVolume());
-//   t.end();
-// });
-//
-// test('PerspectiveOffCenterFrustum#computeCullingVolume with no direction throws an exception', t => {
-//   t.throws(() => frustum.computeCullingVolume(new Vector3()));
-//   t.end();
-// });
-//
-// test('PerspectiveOffCenterFrustum#computeCullingVolume with no up throws an exception', t => {
-//   t.throws(() => frustum.computeCullingVolume(new Vector3(), new Vector3()));
-//   t.end();
-// });
+test('PerspectiveOffCenterFrustum#out of range near plane throws an exception', t => {
+  const {frustum} = beforeEachTest();
+  frustum.near = -1.0;
+  t.throws(() => frustum.projectionMatrix);
+  t.end();
+});
+
+test('PerspectiveOffCenterFrustum#negative far plane throws an exception', t => {
+  const {frustum} = beforeEachTest();
+  frustum.far = -1.0;
+  t.throws(() => frustum.projectionMatrix);
+  t.end();
+});
+
+test('PerspectiveOffCenterFrustum#computeCullingVolume with no position throws an exception', t => {
+  const {frustum} = beforeEachTest();
+  t.throws(() => frustum.computeCullingVolume());
+  t.end();
+});
+
+test('PerspectiveOffCenterFrustum#computeCullingVolume with no direction throws an exception', t => {
+  const {frustum} = beforeEachTest();
+  t.throws(() => frustum.computeCullingVolume(new Vector3()));
+  t.end();
+});
+
+test('PerspectiveOffCenterFrustum#computeCullingVolume with no up throws an exception', t => {
+  const {frustum} = beforeEachTest();
+  t.throws(() => frustum.computeCullingVolume(new Vector3(), new Vector3()));
+  t.end();
+});
 
 test('PerspectiveOffCenterFrustum#get frustum left plane', t => {
   const {planes} = beforeEachTest();

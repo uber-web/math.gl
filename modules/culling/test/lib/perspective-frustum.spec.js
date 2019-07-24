@@ -60,58 +60,58 @@ test('PerspectiveFrustum#default constructs', t => {
   t.end();
 });
 
-// test('PerspectiveFrustum#out of range fov causes an exception', t => {
-//   const {frustum} = beforeEachTest();
-//   frustum.fov = -1.0;
-//   t.throws(() => frustum.projectionMatrix);
-//
-//   frustum.fov = _MathUtils.TWO_PI;
-//
-//   t.throws(() => frustum.projectionMatrix);
-//
-//   t.end();
-// });
-//
-// test('PerspectiveFrustum#negative aspect ratio throws an exception', t => {
-//   const {frustum} = beforeEachTest();
-//   frustum.aspectRatio = -1.0;
-//   t.throws(() => frustum.projectionMatrix);
-//
-//   t.end();
-// });
-//
-// test('PerspectiveFrustum#out of range near plane throws an exception', t => {
-//   const {frustum} = beforeEachTest();
-//   frustum.near = -1.0;
-//   t.throws(() => frustum.projectionMatrix);
-//
-//   t.end();
-// });
-//
-// test('PerspectiveFrustum#negative far plane throws an exception', t => {
-//   const {frustum} = beforeEachTest();
-//   frustum.far = -1.0;
-//   t.throws(() => frustum.projectionMatrix);
-//   t.end();
-// });
-//
-// test('PerspectiveFrustum#computeCullingVolume with no position throws an exception', t => {
-//   const {frustum} = beforeEachTest();
-//   t.throws(() => frustum.projectionMatrix);
-//   t.end();
-// });
-//
-// test('PerspectiveFrustum#computeCullingVolume with no direction throws an exception', t => {
-//   const {frustum} = beforeEachTest();
-//   t.throws(() => frustum.projectionMatrix);
-//   t.end();
-// });
-//
-// test('PerspectiveFrustum#computeCullingVolume with no up throws an exception', t => {
-//   const {frustum} = beforeEachTest();
-//   t.throws(() => frustum.projectionMatrix);
-//   t.end();
-// });
+test('PerspectiveFrustum#out of range fov causes an exception', t => {
+  const {frustum} = beforeEachTest();
+  frustum.fov = -1.0;
+  t.throws(() => frustum.projectionMatrix);
+
+  frustum.fov = _MathUtils.TWO_PI;
+
+  t.throws(() => frustum.projectionMatrix);
+
+  t.end();
+});
+
+test('PerspectiveFrustum#negative aspect ratio throws an exception', t => {
+  const {frustum} = beforeEachTest();
+  frustum.aspectRatio = -1.0;
+  t.throws(() => frustum.projectionMatrix);
+
+  t.end();
+});
+
+test('PerspectiveFrustum#out of range near plane throws an exception', t => {
+  const {frustum} = beforeEachTest();
+  frustum.near = -1.0;
+  t.throws(() => frustum.projectionMatrix);
+
+  t.end();
+});
+
+test('PerspectiveFrustum#negative far plane throws an exception', t => {
+  const {frustum} = beforeEachTest();
+  frustum.far = -1.0;
+  t.throws(() => frustum.projectionMatrix);
+  t.end();
+});
+
+test('PerspectiveFrustum#computeCullingVolume with no position throws an exception', t => {
+  const {frustum} = beforeEachTest();
+  t.throws(() => frustum.computeCullingVolume());
+  t.end();
+});
+
+test('PerspectiveFrustum#computeCullingVolume with no direction throws an exception', t => {
+  const {frustum} = beforeEachTest();
+  t.throws(() => frustum.computeCullingVolume([0, 0, 0]));
+  t.end();
+});
+
+test('PerspectiveFrustum#computeCullingVolume with no up throws an exception', t => {
+  const {frustum} = beforeEachTest();
+  t.throws(() => frustum.computeCullingVolume([0, 0, 0], [0, 0, 0]));
+  t.end();
+});
 
 test('PerspectiveFrustum#get frustum left plane', t => {
   const {planes} = beforeEachTest();
