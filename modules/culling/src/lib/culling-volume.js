@@ -150,7 +150,8 @@ export default class CullingVolume {
         continue;
       }
 
-      const result = boundingVolume.intersectPlane(Plane.fromCartesian4(planes[k], scratchPlane));
+      const plane = scratchPlane.fromCoefficients(...planes[k]);
+      const result = boundingVolume.intersectPlane(plane);
       if (result === Intersect.OUTSIDE) {
         return CullingVolume.MASK_OUTSIDE;
       } else if (result === Intersect.INTERSECTING) {

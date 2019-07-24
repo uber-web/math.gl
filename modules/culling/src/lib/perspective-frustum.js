@@ -12,7 +12,7 @@ const defined = val => val !== null && typeof val !== 'undefined';
 
 /**
  * The viewing frustum is defined by 6 planes.
- * Each plane is represented by a {@link Cartesian4} object, where the x, y, and z components
+ * Each plane is represented by a {@link Vector4} object, where the x, y, and z components
  * define the unit vector normal to the plane, and the w component is the distance of the
  * plane from the origin/camera position.
  *
@@ -192,9 +192,9 @@ export default class PerspectiveFrustum {
   /**
    * Creates a culling volume for this frustum.
    *
-   * @param {Cartesian3} position The eye position.
-   * @param {Cartesian3} direction The view direction.
-   * @param {Cartesian3} up The up direction.
+   * @param {Vector3} position The eye position.
+   * @param {Vector3} direction The view direction.
+   * @param {Vector3} up The up direction.
    * @returns {CullingVolume} A culling volume at the given position and orientation.
    *
    * @example
@@ -213,8 +213,8 @@ export default class PerspectiveFrustum {
    * @param {Number} drawingBufferWidth The width of the drawing buffer.
    * @param {Number} drawingBufferHeight The height of the drawing buffer.
    * @param {Number} distance The distance to the near plane in meters.
-   * @param {Cartesian2} result The object onto which to store the result.
-   * @returns {Cartesian2} The modified result parameter or a new instance of {@link Cartesian2} with the pixel's width and height in the x and y properties, respectively.
+   * @param {Vector2} result The object onto which to store the result.
+   * @returns {Vector2} The modified result parameter or a new instance of {@link Vector2} with the pixel's width and height in the x and y properties, respectively.
    *
    * @exception {DeveloperError} drawingBufferWidth must be greater than zero.
    * @exception {DeveloperError} drawingBufferHeight must be greater than zero.
@@ -222,7 +222,7 @@ export default class PerspectiveFrustum {
    * @example
    * // Example 1
    * // Get the width and height of a pixel.
-   * var pixelSize = camera.frustum.getPixelDimensions(scene.drawingBufferWidth, scene.drawingBufferHeight, 1.0, new Cartesian2());
+   * var pixelSize = camera.frustum.getPixelDimensions(scene.drawingBufferWidth, scene.drawingBufferHeight, 1.0, new Vector2());
    *
    * @example
    * // Example 2
@@ -230,10 +230,10 @@ export default class PerspectiveFrustum {
    * // For example, get the size of a pixel of an image on a billboard.
    * var position = camera.position;
    * var direction = camera.direction;
-   * var toCenter = Cartesian3.subtract(primitive.boundingVolume.center, position, new Cartesian3());      // vector from camera to a primitive
-   * var toCenterProj = Cartesian3.multiplyByScalar(direction, Cartesian3.dot(direction, toCenter), new Cartesian3()); // project vector onto camera direction vector
-   * var distance = Cartesian3.magnitude(toCenterProj);
-   * var pixelSize = camera.frustum.getPixelDimensions(scene.drawingBufferWidth, scene.drawingBufferHeight, distance, new Cartesian2());
+   * var toCenter = Vector3.subtract(primitive.boundingVolume.center, position, new Vector3());      // vector from camera to a primitive
+   * var toCenterProj = Vector3.multiplyByScalar(direction, Vector3.dot(direction, toCenter), new Vector3()); // project vector onto camera direction vector
+   * var distance = Vector3.magnitude(toCenterProj);
+   * var pixelSize = camera.frustum.getPixelDimensions(scene.drawingBufferWidth, scene.drawingBufferHeight, distance, new Vector2());
    */
   getPixelDimensions(drawingBufferWidth, drawingBufferHeight, distance, result) {
     update(this);

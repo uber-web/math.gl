@@ -14,6 +14,8 @@ import {
   Intersect
 } from '@math.gl/culling';
 
+const VECTOR3_UNIT_Z = Object.freeze(new Vector3(0, 0, 1));
+
 const frustum = new PerspectiveFrustum();
 frustum.near = 1.0;
 frustum.far = 2.0;
@@ -22,7 +24,7 @@ frustum.aspectRatio = 1.0;
 
 const cullingVolume = frustum.computeCullingVolume(
   new Vector3(),
-  new Vector3().negate(new Vector3(0, 0, 1), new Vector3()),
+  new Vector3().copy(VECTOR3_UNIT_Z).negate(),
   new Vector3(0, 1, 0)
 );
 

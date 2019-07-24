@@ -7,8 +7,8 @@ import {tapeEquals, tapeEqualsEpsilon} from 'test/utils/tape-assertions';
 import {_PerspectiveFrustum as PerspectiveFrustum} from '@math.gl/culling';
 import {Vector2, Vector3, Vector4, Matrix4, _MathUtils, equals} from 'math.gl';
 
-const VECTOR3_UNIT_Y = new Vector3(0, 1, 0);
-const VECTOR3_UNIT_Z = new Vector3(0, 0, 1);
+const VECTOR3_UNIT_Y = Object.freeze(new Vector3(0, 1, 0));
+const VECTOR3_UNIT_Z = Object.freeze(new Vector3(0, 0, 1));
 
 function beforeEachTest() {
   const frustum = new PerspectiveFrustum({
@@ -20,7 +20,7 @@ function beforeEachTest() {
 
   const planes = frustum.computeCullingVolume(
     new Vector3(),
-    new Vector3().negate(VECTOR3_UNIT_Z, new Vector3()),
+    new Vector3().copy(VECTOR3_UNIT_Z).negate(),
     VECTOR3_UNIT_Y
   ).planes;
 
@@ -149,7 +149,7 @@ test('PerspectiveFrustum#get frustum near plane', t => {
   const {planes} = beforeEachTest();
   const nearPlane = planes[4];
   const expectedResult = new Vector4(0.0, 0.0, -1.0, -1.0);
-  t.equals(nearPlane, expectedResult);
+  equals(nearPlane, expectedResult, _MathUtils.EPSILON15);
   t.end();
 });
 
@@ -157,7 +157,7 @@ test('PerspectiveFrustum#get frustum far plane', t => {
   const {planes} = beforeEachTest();
   const farPlane = planes[5];
   const expectedResult = new Vector4(0.0, 0.0, 1.0, 2.0);
-  t.equals(farPlane, expectedResult);
+  equals(farPlane, expectedResult, _MathUtils.EPSILON15);
   t.end();
 });
 

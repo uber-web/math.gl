@@ -7,6 +7,9 @@ import {tapeEquals} from 'test/utils/tape-assertions';
 import {_PerspectiveOffCenterFrustum as PerspectiveOffCenterFrustum} from '@math.gl/culling';
 import {Vector2, Vector3, Vector4, Matrix4, _MathUtils, equals} from 'math.gl';
 
+const VECTOR3_UNIT_Y = Object.freeze(new Vector3( 0, 1, 0));
+const VECTOR3_UNIT_Z = Object.freeze(new Vector3(0, 0, 1));
+
 function beforeEachTest() {
   const frustum = new PerspectiveOffCenterFrustum({
     right: 1.0,
@@ -19,8 +22,8 @@ function beforeEachTest() {
 
   const planes = frustum.computeCullingVolume(
     new Vector3(),
-    new Vector3().negate(new Vector3(0, 0, 1), new Vector3()),
-    new Vector3(0, 1, 0)
+    new Vector3().copy(VECTOR3_UNIT_Z).negate(),
+    VECTOR3_UNIT_Y
   ).planes;
 
   return {frustum, planes};
