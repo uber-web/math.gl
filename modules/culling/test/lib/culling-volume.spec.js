@@ -20,13 +20,7 @@ frustum.far = 2.0;
 frustum.fov = Math.PI / 3;
 frustum.aspectRatio = 1.0;
 
-let cullingVolume = frustum.computeCullingVolume(
-  new Vector3(),
-  new Vector3().negate(new Vector3(0, 0, 1), new Vector3()),
-  new Vector3(0, 1, 0)
-);
-
-cullingVolume = frustum.computeCullingVolume(
+const cullingVolume = frustum.computeCullingVolume(
   new Vector3(),
   new Vector3().negate(new Vector3(0, 0, 1), new Vector3()),
   new Vector3(0, 1, 0)

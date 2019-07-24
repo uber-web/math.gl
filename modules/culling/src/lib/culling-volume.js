@@ -54,27 +54,38 @@ export default class CullingVolume {
       let plane1 = this.planes[planeIndex + 1];
 
       if (!plane0) {
-        plane0 = this.planes[planeIndex] = new Plane();
+        plane0 = this.planes[planeIndex] = new Vector4();
       }
       if (!plane1) {
-        plane1 = this.planes[planeIndex + 1] = new Plane();
+        plane1 = this.planes[planeIndex + 1] = new Vector4();
       }
 
-      const planeCenter = scratchPlaneCenter
+      const plane0Center = scratchPlaneCenter
         .copy(faceNormal)
         .scale(-radius)
         .add(center);
+      const plane0Distance = -faceNormal.dot(plane0Center)
 
-      plane0.fromNormalDistance(faceNormal, -faceNormal.dot(planeCenter));
+      // plane0.fromNormalDistance(faceNormal, plane0Distance);
+      plane0.x = faceNormal.x;
+      plane0.y = faceNormal.y;
+      plane0.z = faceNormal.z;
+      plane0.w = plane0Distance;
 
-      const secondPlaneCenter = scratchPlaneCenter
+      const plane1Center = scratchPlaneCenter
         .copy(faceNormal)
         .scale(radius)
         .add(center);
 
-      const negatedFaceNormal = faceNormal.clone().negate();
+      const negatedFaceNormal = scratchPlaneNormal.copy(faceNormal).negate();
 
-      plane0.fromNormalDistance(negatedFaceNormal, -negatedFaceNormal.dot(secondPlaneCenter));
+      const plane1Distance = -negatedFaceNormal.dot(plane1Center);
+
+      // plane1.fromNormalDistance(negatedFaceNormal, plane1Distance);
+      plane1.x = negatedFaceNormal.x;
+      plane1.y = negatedFaceNormal.y;
+      plane1.z = negatedFaceNormal.z;
+      plane1.w = plane1Distance;
 
       planeIndex += 2;
     }
@@ -87,7 +98,8 @@ export default class CullingVolume {
     assert(boundingVolume);
     // const planes = this.planes;
     let intersect = Intersect.INSIDE;
-    for (const plane of this.planes) {
+    for (const planeCoefficients of this.planes) {
+      const plane = scratchPlane.fromCoefficients(...planeCoefficients);
       const result = boundingVolume.intersectPlane(plane);
       switch (result) {
         case Intersect.OUTSIDE:

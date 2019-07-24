@@ -8,10 +8,10 @@
 import {Vector3, Vector4, Matrix4, assert} from 'math.gl';
 import CullingVolume from './culling-volume';
 
-const getPlanesRight = new Vector3();
-const getPlanesNearCenter = new Vector3();
-const getPlanesFarCenter = new Vector3();
-const getPlanesNormal = new Vector3();
+const scratchPlaneRightVector = new Vector3();
+const scratchPlaneNearCenter = new Vector3();
+const scratchPlaneFarCenter = new Vector3();
+const scratchPlaneNormal = new Vector3();
 
 export default class PerspectiveOffCenterFrustum {
   /**
@@ -181,39 +181,32 @@ export default class PerspectiveOffCenterFrustum {
 
     const planes = this._cullingVolume.planes;
 
-    const t = this.top;
-    const b = this.bottom;
-    const r = this.right;
-    const l = this.left;
-    const n = this.near;
-    const f = this.far;
+    const { top: t, bottom: b, right: r } = this;
 
-    const right = new Vector3().cross(direction, up, getPlanesRight);
+    const right = scratchPlaneRightVector.copy(direction).cross(up);
 
-    const nearCenter = getPlanesNearCenter;
-    new Vector3().multiplyByScalar(direction, n, nearCenter);
-    new Vector3().add(position, nearCenter, nearCenter);
+    const nearCenter = scratchPlaneNearCenter.copy(direction).multiplyByScalar(this.near).add(position);
 
-    const farCenter = getPlanesFarCenter;
-    new Vector3().multiplyByScalar(direction, f, farCenter);
-    new Vector3().add(position, farCenter, farCenter);
+    const farCenter = scratchPlaneFarCenter.copy(direction).multiplyByScalar(this.far).add(position);
 
-    const normal = getPlanesNormal;
+    const normal = scratchPlaneNormal;
 
     // Left plane computation
-    new Vector3().multiplyByScalar(right, l, normal);
-    new Vector3().add(nearCenter, normal, normal);
-    new Vector3().subtract(normal, position, normal);
-    new Vector3().normalize(normal, normal);
-    new Vector3().cross(normal, up, normal);
-    new Vector3().normalize(normal, normal);
+    normal
+      .copy(right)
+      .multiplyByScalar(this.left)
+      .add(nearCenter)
+      .subtract(position)
+      .normalize()
+      .cross(up)
+      .normalize();
 
     planes[0] = planes[0] || new Vector4();
     let plane = planes[0];
     plane.x = normal.x;
     plane.y = normal.y;
     plane.z = normal.z;
-    plane.w = -new Vector3().dot(normal, position);
+    plane.w = -normal.dot(position);
 
     // Right plane computation
     new Vector3().multiplyByScalar(right, r, normal);
