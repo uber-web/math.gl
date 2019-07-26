@@ -2,21 +2,30 @@
 
 ## v3.0 (In Development)
 
-Date: TBD, target end of June 2019
+Date: Aug 8, 2019
 
-### Performance
+### Website Benchmarks and Performance Improvements
 
-A benchmarking example has been added that makes it easy to assess the performance. The performance of the library has been significantly improved tuned based on these benchmarks.
+A [benchmarking example](https://math.gl/examples/benchmarks) has been added to the website that makes it easy to assess the performance of the math.gl library on your own browser. The math.gl library has been carefully tuned based on these benchmarks and performance of the library has been significantly improved over version 2.x.
 
 ### `@math.gl/geospatial`
 
-A new module (developed in collaboration with the Cesium team) providing framework-independent geospatial math classes and algorithms:
+A new module (developed in collaboration with the Cesium engineering team) providing WebGL-framework-independent geospatial math classes and algorithms:
 
 - New class `Ellipsoid` and constant `Ellipsoid.WGS84` for working with WSG84 coordinates
 
+### `@math.gl/culling`
+
+A new module (developed in collaboration with the Cesium engineering team) providing WebGL-framework-independent classesthat support geometric intersection calculations (primarily intended to support frustum culling operations):
+
+- New class `AxisAlignedBoundingBox`
+- New class `OrientedBoundingBox`
+- New class `BoundingSphere`
+- New class `CullingVolume`
+
 ### `math.gl` - Core module additions
 
-#### Transform API Improvements
+#### Transform API Consolidation
 
 The API for transformations (i.e. multiplying vectors with matrices or quaternions) has been extended and made more orthogonal:
 
