@@ -21,9 +21,9 @@
     "react-table": "^6.10.0"
   },
   "devDependencies": {
-    "gatsby": "^2.8.2",
+    "gatsby": "^2.13.0",
     "gh-pages": "^2.0.1",
-    "ocular-gatsby": "1.0.0-alpha.41",
+    "ocular-gatsby": "1.0.0-alpha.44",
     "sharp": "^0.22.1"
   },
   "resolutions": {
