@@ -127,7 +127,8 @@ export default function matrix4Bench(suite, addReferenceBenchmarks) {
     .add('Matrix4#determinant()', () => matrix4.determinant())
     .add('Matrix4#getScale()', () => matrix4.getScale())
     .add('Matrix4#getTranslation()', () => matrix4.getTranslation())
-    .add('Matrix4#getRotation()', () => matrix4.getRotation());
+    .add('Matrix4#getRotation()', () => matrix4.getRotation())
+    .add('Matrix4#getRotationMatrix3()', () => matrix4.getRotationMatrix3());
 
   suite
     .group('@math.gl/core: Matrix4 operations')
