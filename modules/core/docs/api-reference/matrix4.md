@@ -326,6 +326,13 @@ Transforms
 
 ### transformByMatrix2(vector : Number[4]) : Number[4]
 
+### getRotation([result : Number[16]]) : Number[16]
+
+Returns rotation matrix (4 * 4).
+
+### getRotationMatrix3([result : Number[9]]) : Number[9]
+
+Returns rotation matrix (3 * 3).
 
 ## Remarks
 

@@ -202,6 +202,26 @@ test('Matrix4#getRotation', t => {
   t.end();
 });
 
+test('Matrix4#getRotationMatrix3', t => {
+  const INPUT = INDICES_MATRIX;
+  const RESULT = [
+    0.2672612419124244,
+    0.19069251784911848,
+    0.17263060129453078,
+    1.3363062095621219,
+    0.5720775535473555,
+    0.4028047363539052,
+    2.4053511772118195,
+    0.9534625892455924,
+    0.6329788714132796
+  ];
+
+  const m = new Matrix4(INPUT).getRotationMatrix3([...INDICES_MATRIX.slice(0, 9)]);
+  tapeEquals(t, m, RESULT, 'getRotationMatrix3 gave the right result');
+
+  t.end();
+});
+
 test('Matrix4#getTranslation', t => {
   const INPUT = INDICES_MATRIX;
   const RESULT = [13, 14, 15];

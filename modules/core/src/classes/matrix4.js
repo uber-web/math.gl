@@ -365,6 +365,25 @@ export default class Matrix4 extends Matrix {
     return result;
   }
 
+  getRotationMatrix3(result = [-0, -0, -0, -0, -0, -0, -0, -0, -0], scaleResult = null) {
+    const scale = this.getScale(scaleResult || [-0, -0, -0]);
+
+    const inverseScale0 = 1 / scale[0];
+    const inverseScale1 = 1 / scale[1];
+    const inverseScale2 = 1 / scale[2];
+
+    result[0] = this[0] * inverseScale0;
+    result[1] = this[1] * inverseScale1;
+    result[2] = this[2] * inverseScale2;
+    result[3] = this[4] * inverseScale0;
+    result[4] = this[5] * inverseScale1;
+    result[5] = this[6] * inverseScale2;
+    result[6] = this[8] * inverseScale0;
+    result[7] = this[9] * inverseScale1;
+    result[8] = this[10] * inverseScale2;
+    return result;
+  }
+
   // Modifiers
 
   transpose() {
