@@ -25,7 +25,7 @@
     "uglify-js": "git+https://github.com/mishoo/UglifyJS2.git#harmony",
     "uglify-js-harmony": "^2.7.5",
     "webpack": "^2.4.0",
-    "webpack-bundle-analyzer": "^2.4.0",
+    "webpack-bundle-analyzer": "^3.3.2",
     "webpack-dev-server": "^2.4.0"
   }
 }
