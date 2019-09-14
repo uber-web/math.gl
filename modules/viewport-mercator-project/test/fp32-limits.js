@@ -19,6 +19,7 @@ function getDiff(value, baseValue) {
   };
 }
 
+// eslint-disable-next-line max-statements
 test('FP32 & Offset Comparison', t => {
   // Explore limits at different scales
   for (let zoom = 1; zoom <= 20; zoom++) {
@@ -52,9 +53,11 @@ test('FP32 & Offset Comparison', t => {
       const pointFP32 = point.map(f => Math.fround(f));
       const coordsFP32 = [
         Math.fround(lngLatToWorld(pointFP32, scale)[0]) -
-        Math.fround(lngLatToWorld([longitudeFP32, latitudeFP32], scale)[0]),
-        -(Math.fround(lngLatToWorld(pointFP32, scale)[1]) -
-          Math.fround(lngLatToWorld([longitudeFP32, latitudeFP32], scale)[1]))
+          Math.fround(lngLatToWorld([longitudeFP32, latitudeFP32], scale)[0]),
+        -(
+          Math.fround(lngLatToWorld(pointFP32, scale)[1]) -
+          Math.fround(lngLatToWorld([longitudeFP32, latitudeFP32], scale)[1])
+        )
       ];
 
       t.comment(`- Absolute Coordinates FP32: ${getDiff(coordsFP32, realPixelPos).message}`);
@@ -83,9 +86,11 @@ test('FP32 & Offset Comparison', t => {
       // We need to recalculate the "real" one because we re-centered
       const realPixelPos2 = [
         lngLatToWorld(point, scale)[0] -
-        lngLatToWorld([centerPointFP32[0], centerPointFP32[1]], scale)[0],
-        -(lngLatToWorld(point, scale)[1] -
-          lngLatToWorld([centerPointFP32[0], centerPointFP32[1]], scale)[1])
+          lngLatToWorld([centerPointFP32[0], centerPointFP32[1]], scale)[0],
+        -(
+          lngLatToWorld(point, scale)[1] -
+          lngLatToWorld([centerPointFP32[0], centerPointFP32[1]], scale)[1]
+        )
       ];
 
       t.comment(`- Offset Coordinates FP32+64: ${getDiff(offsetPixelPos, realPixelPos2).message}`);

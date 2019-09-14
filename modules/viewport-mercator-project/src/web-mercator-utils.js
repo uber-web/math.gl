@@ -45,8 +45,8 @@ export function lngLatToWorld([lng, lat], scale) {
   scale *= TILE_SIZE;
   const lambda2 = lng * DEGREES_TO_RADIANS;
   const phi2 = lat * DEGREES_TO_RADIANS;
-  const x = scale * (lambda2 + PI) / (2 * PI);
-  const y = scale * (PI - Math.log(Math.tan(PI_4 + phi2 * 0.5))) / (2 * PI);
+  const x = (scale * (lambda2 + PI)) / (2 * PI);
+  const y = (scale * (PI - Math.log(Math.tan(PI_4 + phi2 * 0.5)))) / (2 * PI);
   return [x, y];
 }
 
@@ -125,10 +125,10 @@ export function getDistanceScales({latitude, longitude, zoom, scale, highPrecisi
        = DEGREES_TO_RADIANS * tan(lat * DEGREES_TO_RADIANS) / cos(lat * DEGREES_TO_RADIANS) * dLat
    */
   if (highPrecision) {
-    const latCosine2 = DEGREES_TO_RADIANS * Math.tan(latitude * DEGREES_TO_RADIANS) / latCosine;
-    const pixelsPerDegreeY2 = pixelsPerDegreeX * latCosine2 / 2;
-    const altPixelsPerDegree2 = worldSize / EARTH_CIRCUMFERENCE * latCosine2;
-    const altPixelsPerMeter2 = altPixelsPerDegree2 / pixelsPerDegreeY * altPixelsPerMeter;
+    const latCosine2 = (DEGREES_TO_RADIANS * Math.tan(latitude * DEGREES_TO_RADIANS)) / latCosine;
+    const pixelsPerDegreeY2 = (pixelsPerDegreeX * latCosine2) / 2;
+    const altPixelsPerDegree2 = (worldSize / EARTH_CIRCUMFERENCE) * latCosine2;
+    const altPixelsPerMeter2 = (altPixelsPerDegree2 / pixelsPerDegreeY) * altPixelsPerMeter;
 
     result.pixelsPerDegree2 = [0, -pixelsPerDegreeY2, altPixelsPerDegree2];
     result.pixelsPerMeter2 = [altPixelsPerMeter2, 0, altPixelsPerMeter2];
@@ -179,7 +179,6 @@ export function getViewMatrix({
   // Options
   flipY = false
 }) {
-
   // VIEW MATRIX: PROJECTS MERCATOR WORLD COORDINATES
   // Note that mercator world coordinates typically need to be flipped
   //
@@ -224,13 +223,13 @@ export function getProjectionParameters({
   const pitchRadians = pitch * DEGREES_TO_RADIANS;
   const halfFov = Math.atan(0.5 / altitude);
   const topHalfSurfaceDistance =
-    Math.sin(halfFov) * altitude / Math.sin(Math.PI / 2 - pitchRadians - halfFov);
+    (Math.sin(halfFov) * altitude) / Math.sin(Math.PI / 2 - pitchRadians - halfFov);
 
   // Calculate z value of the farthest fragment that should be rendered.
   const farZ = Math.cos(Math.PI / 2 - pitchRadians) * topHalfSurfaceDistance + altitude;
 
   return {
-    fov: 2 * Math.atan((height / 2) / altitude),
+    fov: 2 * Math.atan(height / 2 / altitude),
     aspect: width / height,
     focalDistance: altitude,
     near: nearZMultiplier,
@@ -250,15 +249,21 @@ export function getProjectionMatrix({
   nearZMultiplier,
   farZMultiplier
 }) {
-  const {fov, aspect, near, far} =
-    getProjectionParameters({width, height, altitude, pitch, nearZMultiplier, farZMultiplier});
+  const {fov, aspect, near, far} = getProjectionParameters({
+    width,
+    height,
+    altitude,
+    pitch,
+    nearZMultiplier,
+    farZMultiplier
+  });
 
   const projectionMatrix = mat4.perspective(
     [],
-    fov,      // fov in radians
-    aspect,   // aspect ratio
-    near,     // near plane
-    far       // far plane
+    fov, // fov in radians
+    aspect, // aspect ratio
+    near, // near plane
+    far // far plane
   );
 
   return projectionMatrix;

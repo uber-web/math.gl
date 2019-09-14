@@ -129,9 +129,9 @@ const CONFIGS = {
         filename: 'bundle.js'
       },
       resolve: {
-        mainFields: env.es6 ?
-          ['esnext', 'browser', 'module', 'main'] :
-          ['browser', 'module', 'main'],
+        mainFields: env.es6
+          ? ['esnext', 'browser', 'module', 'main']
+          : ['browser', 'module', 'main'],
         alias: Object.assign({}, ALIASES, {
           'deck.gl': resolve(__dirname, `../dist/${dist}`)
         })

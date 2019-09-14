@@ -1,5 +1,5 @@
 import WebMercatorViewport from './web-mercator-viewport';
-import {mod}  from './math-utils';
+import {mod} from './math-utils';
 
 // defined by mapbox-gl
 const MAX_LATITUDE = 85.05113;

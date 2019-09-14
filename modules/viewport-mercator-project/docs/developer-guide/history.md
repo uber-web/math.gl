@@ -1,4 +1,6 @@
-# What's New
+# History
+
+> viewport-mercator-project originated as a separate module/repository, this is the original version history.
 
 ## v6.2
 

@@ -33,7 +33,7 @@ export default class Viewport {
    * @param {Number} opt.longitude - Center of viewport on map (alternative to opt.center)
    * @param {Number} opt.zoom - Scale = Math.pow(2,zoom) on map (alternative to opt.scale)
    */
-  /* eslint-disable complexity */
+  // eslint-disable-next-line complexity, max-statements
   constructor({
     // Window width/height in pixels (for pixel projection)
     width,
@@ -102,10 +102,12 @@ export default class Viewport {
       return false;
     }
 
-    return viewport.width === this.width &&
+    return (
+      viewport.width === this.width &&
       viewport.height === this.height &&
       mat4.equals(viewport.projectionMatrix, this.projectionMatrix) &&
-      mat4.equals(viewport.viewMatrix, this.viewMatrix);
+      mat4.equals(viewport.viewMatrix, this.viewMatrix)
+    );
   }
 
   /**
@@ -191,5 +193,4 @@ export default class Viewport {
   unprojectFlat(xyz, scale = this.scale) {
     return xyz;
   }
-
 }

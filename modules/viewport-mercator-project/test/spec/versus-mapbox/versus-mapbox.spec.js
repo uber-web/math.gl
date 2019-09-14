@@ -1,11 +1,11 @@
-import {MapboxTransform} from '../utils/mapbox-transform';
+import {MapboxTransform} from './mapbox-transform';
 
 import {WebMercatorViewport} from 'viewport-mercator-project';
 import test from 'tape-catch';
-import {toLowPrecision} from '../utils/test-utils';
+import {toLowPrecision} from '../../utils/test-utils';
 import {equals, config, Matrix4} from 'math.gl';
 
-import VIEWPORT_PROPS from '../utils/sample-viewports';
+import VIEWPORT_PROPS from '../../utils/sample-viewports';
 
 const TEST_CASES = [
   {
@@ -30,8 +30,11 @@ test('Viewport vs. Mapbox projectFlat', t => {
     const transform = new MapboxTransform(viewportProps);
     const mapboxProjection = transform.mapboxProjectFlat([-122.43, 37.75]);
 
-    t.deepEquals(toLowPrecision(projection), toLowPrecision(mapboxProjection),
-      `projectFlat(${viewportName}) - viewport/mapbox match`);
+    t.deepEquals(
+      toLowPrecision(projection),
+      toLowPrecision(mapboxProjection),
+      `projectFlat(${viewportName}) - viewport/mapbox match`
+    );
   }
   t.end();
 });
@@ -46,8 +49,11 @@ test('Viewport vs. Mapbox unprojectFlat', t => {
     const transform = new MapboxTransform(viewportProps);
     const mapboxUnprojection = transform.mapboxUnprojectFlat([587, 107]);
 
-    t.deepEquals(toLowPrecision(unprojection), toLowPrecision(mapboxUnprojection),
-      `unprojectFlat(${viewportName}) - viewport/mapbox match`);
+    t.deepEquals(
+      toLowPrecision(unprojection),
+      toLowPrecision(mapboxUnprojection),
+      `unprojectFlat(${viewportName}) - viewport/mapbox match`
+    );
   }
   t.end();
 });
@@ -65,8 +71,10 @@ test('Viewport vs Mapbox project', t => {
       const transform = new MapboxTransform(viewportProps);
       const mapboxProjection = transform.mapboxProject(lngLat);
 
-      t.ok(equals(projection, mapboxProjection),
-        `project(${title}, ${viewportName}) - viewport ${projection} mapbox ${mapboxProjection}`);
+      t.ok(
+        equals(projection, mapboxProjection),
+        `project(${title}, ${viewportName}) - viewport ${projection} mapbox ${mapboxProjection}`
+      );
     }
   }
   t.end();
@@ -85,8 +93,10 @@ test('Viewport vs Mapbox unproject', t => {
       const viewport = new WebMercatorViewport(viewportProps);
       const unprojection = viewport.unproject(mapboxProjection, {topLeft: true});
 
-      t.ok(equals(unprojection, lngLat),
-        `unproject(${title}, ${viewportName}) - viewport/mapbox match`);
+      t.ok(
+        equals(unprojection, lngLat),
+        `unproject(${title}, ${viewportName}) - viewport/mapbox match`
+      );
     }
   }
   t.end();
@@ -116,8 +126,11 @@ test('Viewport vs Mapbox project 3D', t => {
     mapboxProjected.scale(1 / mapboxProjected[3]);
 
     // TODO - math.gl does not deal with significant digits
-    t.deepEquals(toLowPrecision(viewportProjected, 4), toLowPrecision(mapboxProjected, 4),
-      `project 3D ${viewportName} - viewport/mapbox match`);
+    t.deepEquals(
+      toLowPrecision(viewportProjected, 4),
+      toLowPrecision(mapboxProjected, 4),
+      `project 3D ${viewportName} - viewport/mapbox match`
+    );
   }
   t.end();
 });
@@ -132,8 +145,11 @@ test('Viewport/Mapbox getLocationAtPoint', t => {
       const transform = new MapboxTransform(viewportProps);
       const llm = transform.mapboxGetLngLatAtPoint({lngLat, pos: [100, 100]});
 
-      t.deepEquals(toLowPrecision(llp), toLowPrecision(llm),
-        `getLocationAtPoint(${title}, ${viewportName})) - viewport/mapbox match`);
+      t.deepEquals(
+        toLowPrecision(llp),
+        toLowPrecision(llm),
+        `getLocationAtPoint(${title}, ${viewportName})) - viewport/mapbox match`
+      );
     }
   }
   t.end();

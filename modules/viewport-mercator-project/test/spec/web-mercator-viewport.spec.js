@@ -10,18 +10,24 @@ test('WebMercatorViewport#imports', t => {
 });
 
 test('WebMercatorViewport#constructor', t => {
-  t.ok(new WebMercatorViewport() instanceof WebMercatorViewport,
-    'Created new WebMercatorViewport with default args');
+  t.ok(
+    new WebMercatorViewport() instanceof WebMercatorViewport,
+    'Created new WebMercatorViewport with default args'
+  );
   t.end();
 });
 
 test('WebMercatorViewport#constructor - 0 width/height', t => {
-  const viewport = new WebMercatorViewport(Object.assign({}, VIEWPORT_PROPS.flat, {
-    width: 0,
-    height: 0
-  }));
-  t.ok(viewport instanceof WebMercatorViewport,
-    'WebMercatorViewport constructed successfully with 0 width and height');
+  const viewport = new WebMercatorViewport(
+    Object.assign({}, VIEWPORT_PROPS.flat, {
+      width: 0,
+      height: 0
+    })
+  );
+  t.ok(
+    viewport instanceof WebMercatorViewport,
+    'WebMercatorViewport constructed successfully with 0 width and height'
+  );
   t.end();
 });
 
@@ -91,17 +97,16 @@ test('WebMercatorViewport.getLocationAtPoint', t => {
   for (const vc in VIEWPORT_PROPS) {
     const viewport = new WebMercatorViewport(VIEWPORT_PROPS[vc]);
     for (const tc in VIEWPORT_PROPS) {
-      const lngLat = [
-        VIEWPORT_PROPS[tc].longitude,
-        VIEWPORT_PROPS[tc].latitude
-      ];
+      const lngLat = [VIEWPORT_PROPS[tc].longitude, VIEWPORT_PROPS[tc].latitude];
 
       const [newLng, newLat] = viewport.getLocationAtPoint({lngLat, pos: TEST_POS});
 
-      const newViewport = new WebMercatorViewport(Object.assign({}, VIEWPORT_PROPS[vc], {
-        longitude: newLng,
-        latitude: newLat
-      }));
+      const newViewport = new WebMercatorViewport(
+        Object.assign({}, VIEWPORT_PROPS[vc], {
+          longitude: newLng,
+          latitude: newLat
+        })
+      );
 
       const xy = newViewport.project(lngLat);
 

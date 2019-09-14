@@ -29,7 +29,7 @@ export default function fitBounds({
   width,
   height,
   bounds,
-  minExtent = 0,  // 0.01 would be about 1000 meters (degree is ~110KM)
+  minExtent = 0, // 0.01 would be about 1000 meters (degree is ~110KM)
   maxZoom = 24, // ~x4,000,000 => About 10 meter extents
   // options
   padding = 0,
@@ -47,10 +47,11 @@ export default function fitBounds({
     };
   } else {
     // Make sure all the required properties are set
-    assert(Number.isFinite(padding.top) &&
-      Number.isFinite(padding.bottom) &&
-      Number.isFinite(padding.left) &&
-      Number.isFinite(padding.right)
+    assert(
+      Number.isFinite(padding.top) &&
+        Number.isFinite(padding.bottom) &&
+        Number.isFinite(padding.left) &&
+        Number.isFinite(padding.right)
     );
   }
 
@@ -86,10 +87,7 @@ export default function fitBounds({
   const offsetX = (padding.right - padding.left) / 2 / scaleX;
   const offsetY = (padding.bottom - padding.top) / 2 / scaleY;
 
-  const center = [
-    (se[0] + nw[0]) / 2 + offsetX,
-    (se[1] + nw[1]) / 2 + offsetY
-  ];
+  const center = [(se[0] + nw[0]) / 2 + offsetX, (se[1] + nw[1]) / 2 + offsetY];
 
   const centerLngLat = viewport.unproject(center);
   const zoom = viewport.zoom + Math.log2(Math.abs(Math.min(scaleX, scaleY)));

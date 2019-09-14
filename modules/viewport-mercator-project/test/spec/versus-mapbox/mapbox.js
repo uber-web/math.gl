@@ -13,7 +13,6 @@ if (typeof window === 'undefined') {
   win.URL.createObjectURL = noop;
 
   mapbox = require.call(global, 'mapbox-gl/dist/mapbox-gl.js');
-
 } else {
   mapbox = require('mapbox-gl/dist/mapbox-gl.js');
 }

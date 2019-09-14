@@ -1,7 +1,5 @@
 // Mercator Utils
 require('./spec/web-mercator-utils.spec');
-// Test vs. mapbox Transform
-require('./spec/versus-mapbox.spec');
 // Viewport base class test cases
 require('./spec/viewport.spec');
 // Perspective Viewport test cases
@@ -16,3 +14,6 @@ require('./spec/normalize-viewport-props.spec');
 require('./spec/fly-to-viewport.spec');
 // Compare FP32 and Offset
 require('./fp32-limits');
+
+// Test vs. mapbox Transform
+// require('./spec/versus-mapbox/versus-mapbox.spec');

@@ -76,7 +76,7 @@ export default class WebMercatorViewport extends Viewport {
       pitch,
       bearing,
       altitude,
-      nearZMultiplier: nearZMultiplier || (1 / height),
+      nearZMultiplier: nearZMultiplier || 1 / height,
       farZMultiplier: farZMultiplier || 1.01
     });
 
@@ -173,5 +173,4 @@ export default class WebMercatorViewport extends Viewport {
     const {longitude, latitude, zoom} = fitBounds(Object.assign({width, height, bounds}, options));
     return new WebMercatorViewport({width, height, longitude, latitude, zoom});
   }
-
 }

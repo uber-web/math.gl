@@ -1,10 +1,5 @@
 import {lerp} from './math-utils';
-import {
-  scaleToZoom,
-  zoomToScale,
-  lngLatToWorld,
-  worldToLngLat
-} from './web-mercator-utils';
+import {scaleToZoom, zoomToScale, lngLatToWorld, worldToLngLat} from './web-mercator-utils';
 import * as vec2 from 'gl-matrix/vec2';
 
 const EPSILON = 0.01;
@@ -19,15 +14,17 @@ const DEFAULT_OPTS = {
  * mapbox-gl-js flyTo : https://www.mapbox.com/mapbox-gl-js/api/#map#flyto.
  * It implements “Smooth and efficient zooming and panning.” algorithm by
  * "Jarke J. van Wijk and Wim A.A. Nuij"
-*/
+ */
 export default function flyToViewport(startProps, endProps, t, opts = {}) {
   // Equations from above paper are referred where needed.
 
   const viewport = {};
 
-  const {
-    startZoom, startCenterXY, uDelta, w0, u1, S, rho, rho2, r0
-  } = getFlyToTransitionParams(startProps, endProps, opts);
+  const {startZoom, startCenterXY, uDelta, w0, u1, S, rho, rho2, r0} = getFlyToTransitionParams(
+    startProps,
+    endProps,
+    opts
+  );
 
   // If change in center is too small, do linear interpolaiton.
   if (Math.abs(u1) < EPSILON) {
@@ -41,8 +38,8 @@ export default function flyToViewport(startProps, endProps, t, opts = {}) {
 
   const s = t * S;
 
-  const w = (Math.cosh(r0) / Math.cosh(r0 + rho * s));
-  const u = w0 * ((Math.cosh(r0) * Math.tanh(r0 + rho * s) - Math.sinh(r0)) / rho2) / u1;
+  const w = Math.cosh(r0) / Math.cosh(r0 + rho * s);
+  const u = (w0 * ((Math.cosh(r0) * Math.tanh(r0 + rho * s) - Math.sinh(r0)) / rho2)) / u1;
 
   const scaleIncrement = 1 / w; // Using w method for scaling.
   const newZoom = startZoom + scaleToZoom(scaleIncrement);
@@ -51,9 +48,7 @@ export default function flyToViewport(startProps, endProps, t, opts = {}) {
   vec2.add(newCenterWorld, newCenterWorld, startCenterXY);
   vec2.scale(newCenterWorld, newCenterWorld, scaleIncrement);
 
-  const newCenter = worldToLngLat(
-    newCenterWorld,
-    zoomToScale(newZoom));
+  const newCenter = worldToLngLat(newCenterWorld, zoomToScale(newZoom));
   viewport.longitude = newCenter[0];
   viewport.latitude = newCenter[1];
   viewport.zoom = newZoom;
@@ -62,11 +57,10 @@ export default function flyToViewport(startProps, endProps, t, opts = {}) {
 
 // returns transition duration in milliseconds
 export function getFlyToDuration(startProps, endProps, opts = {}) {
-
   opts = Object.assign({}, DEFAULT_OPTS, opts);
   const {screenSpeed, speed, maxDuration} = opts;
   const {S, rho} = getFlyToTransitionParams(startProps, endProps, opts);
-  const length =  1000 * S;
+  const length = 1000 * S;
   let duration;
   if (Number.isFinite(screenSpeed)) {
     duration = length / (screenSpeed / rho);
@@ -81,7 +75,6 @@ export function getFlyToDuration(startProps, endProps, opts = {}) {
 
 // Calculate all parameters that are static for given startProps and endProps
 function getFlyToTransitionParams(startProps, endProps, opts) {
-
   opts = Object.assign({}, DEFAULT_OPTS, opts);
   const rho = opts.curve;
   const startZoom = startProps.zoom;

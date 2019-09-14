@@ -40,12 +40,22 @@
           ]
         },
         {
-          "title": "Concepts",
+          "title": "viewport-mercator-project",
           "entries": [
-            {"entry": "modules/core/docs/developer-guide/concepts/homogeneous-coordinates"},
-            {"entry": "modules/core/docs/developer-guide/concepts/rotations"}
+            {"entry": "modules/viewport-mercator-project/docs/developer-guide/viewport-mercator-project-guide"},
+            {"entry": "modules/viewport-mercator-project/docs/developer-guide/history"},
+            {"entry": "modules/viewport-mercator-project/docs/developer-guide/get-started"},
+            {"entry": "modules/viewport-mercator-project/docs/developer-guide/coordinates"},
+            {"entry": "modules/viewport-mercator-project/docs/developer-guide/offset-accuracy"}
           ]
         }
+      ]
+    },
+    {
+      "title": "Concepts",
+      "entries": [
+        {"entry": "modules/core/docs/developer-guide/concepts/homogeneous-coordinates"},
+        {"entry": "modules/core/docs/developer-guide/concepts/rotations"}
       ]
     },
     {
@@ -66,13 +76,17 @@
             {"entry": "modules/core/docs/api-reference/vector"},
             {"entry": "modules/core/docs/api-reference/vector2"},
             {"entry": "modules/core/docs/api-reference/vector3"},
-            {"entry": "modules/core/docs/api-reference/vector4"}
+            {"entry": "modules/core/docs/api-reference/vector4"},
+            {"entry": "modules/core/docs/api-reference/addons/polygon"}
           ]
         },
         {
-          "title": "math.gl add-ons",
+          "title": "@math.gl/culling",
           "entries": [
-            {"entry": "modules/core/docs/api-reference/addons/polygon"}
+            {"entry": "modules/culling/docs/api-reference/bounding-sphere"},
+            {"entry": "modules/culling/docs/api-reference/culling-volume"},
+            {"entry": "modules/culling/docs/api-reference/oriented-bounding-box"},
+            {"entry": "modules/culling/docs/api-reference/plane"}
           ]
         },
         {
@@ -83,12 +97,10 @@
           ]
         },
         {
-          "title": "@math.gl/culling",
+          "title": "viewport-mercator-project",
           "entries": [
-            {"entry": "modules/culling/docs/api-reference/bounding-sphere"},
-            {"entry": "modules/culling/docs/api-reference/culling-volume"},
-            {"entry": "modules/culling/docs/api-reference/oriented-bounding-box"},
-            {"entry": "modules/culling/docs/api-reference/plane"}
+            {"entry": "modules/viewport-mercator-project/api-reference/web-mercator-utils"},
+            {"entry": "modules/viewport-mercator-project/api-reference/web-mercator-viewport"}
           ]
         }
       ]

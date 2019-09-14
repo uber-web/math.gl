@@ -34,7 +34,6 @@ try {
   new Map({
     container: window.document.body
   });
-
 } catch (err) {
   // Ignore
 }
@@ -128,10 +127,7 @@ export class MapboxTransform extends Transform {
     const transform = cloneTransform(this);
     // const around = unprojectFromTransform(transform, mapboxPoint);
     transform.setLocationAtPoint(mapboxLngLat, mapboxPoint);
-    const lngLatResult = [
-      mod(transform.center.lng + 180, 360) - 180,
-      transform.center.lat
-    ];
+    const lngLatResult = [mod(transform.center.lng + 180, 360) - 180, transform.center.lat];
     // console.log('Get lngLat at Point', [lng, lat], [x, y], lngLatResult);
     return lngLatResult;
   }
