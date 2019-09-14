@@ -1,0 +1,52 @@
+{
+  "id": "table-of-contents",
+  "chapters": [
+    {
+      "title": "Overview",
+      "entries": [
+        {
+          "entry": "docs/README"
+        },
+        {
+          "entry": "docs/whats-new"
+        }
+      ]
+    },
+    {
+      "title": "Getting Started",
+      "entries": [
+        {
+          "name": "Overview",
+          "entry": "docs/get-started/README"
+        }
+      ]
+    },
+    {
+      "title": "Developer's guide",
+      "chapters": [
+        {
+          "title": "API Reference",
+          "entries": [
+            {
+              "entry": "docs/api-reference/web-mercator-utils.md"
+            },
+            {
+              "entry": "docs/api-reference/web-mercator-viewport.md"
+            }
+          ]
+        },
+        {
+          "title": "Articles",
+          "entries": [
+            {
+              "entry": "docs/articles/coordinates.md"
+            },
+            {
+              "entry": "docs/articles/offset-accuracy.md"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
