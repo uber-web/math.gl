@@ -1,4 +1,4 @@
-# `@math.gl/core` Overview
+# Overview
 
 ## Installation
 

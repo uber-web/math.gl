@@ -1,4 +1,4 @@
-# viewport-mercator-project
+# Overview
 
 > The viewport-mercator-project module was added to math.gl on Oct 1, 2019. It previously resided in a separate repository. See the original [release history](https://github.com/uber-common/viewport-mercator-project/blob/master/docs/whats-new.md)
 
