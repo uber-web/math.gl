@@ -1,4 +1,4 @@
-# Geospatial Math Overview
+# `@math.gl/geospatial` Overview
 
 The `@math.gl/geospatial` librarys provides support for geospatial math.
 

@@ -1,4 +1,4 @@
-# Culling Overview
+# `@math.gl/culling` Overview
 
 The `@math.gl/culling` module provides primitives for implementing frustum culling.
 

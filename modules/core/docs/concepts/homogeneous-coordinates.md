@@ -1,7 +1,6 @@
-# About Homogeneous Coordinates
+# Homogeneous Coordinates
 
-> This article is a work in progress and may contain incorrect information.
-
+> This article is a work in progress.
 
 The math.gl `Vector4` class is not normally used to represent four dimensonal points. Instead it is intended to be used to calculate with 3 dimensonal **homogeneous coordinates**, as defined by projective geometry.
 

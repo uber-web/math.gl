@@ -2,11 +2,11 @@
 
 ## Upgrading to v3.0
 
-#### Matrix API changes
+### Matrix API changes
 
-* Matrix setter functions no longer support ommitted parameters. (Motivation: Increased API rigor, improved debugging and library compactness).
+Matrix setter functions no longer support ommitted parameters. (Motivation: Increased API rigor, improved debugging and library compactness).
 
-#### `Matrix` transforms now return `Array`s by default
+### Matrix transforms now return Arrays by default
 
 The `Matrix4` and `Matrix3` classes no longer by default create new `Vector2`, `Vector3` and `Vector4` instances. Instead they create standard JavaScript arrays.
 
@@ -37,7 +37,7 @@ Motivation: This change reduces dependencies between math.gl core classes which 
 
 Motivation: This change increases rigor, facilitates debugging, and improves library compactness, and the use case for default parameters was questionable.
 
-#### Deprecations
+The following functions have been deprecated:
 
 | Method | Replacement | Reason |
 | --- |  --- | --- |
@@ -49,7 +49,7 @@ Motivation: This change increases rigor, facilitates debugging, and improves lib
 | `Matrix3.transformVector2`   | `Matrix3.transform`         | Generalize |
 | `Matrix3.transformVector3`   | `Matrix3.transform`         | Generalize |
 
-#### Removals
+The following functions have been removed:
 
 | Method | Replacement | Reason |
 | --- | --- | --- |

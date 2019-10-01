@@ -15,15 +15,12 @@
         {
           "title": "math.gl",
           "entries": [
-            {"entry": "modules/core/docs/developer-guide/get-started"},
+            {"entry": "modules/core/docs/developer-guide/core-overview"},
             {"entry": "modules/core/docs/developer-guide/transformations"},
+            {"entry": "modules/core/docs/developer-guide/view-and-projection"},
             {"entry": "modules/core/docs/developer-guide/debugging"},
             {"entry": "modules/core/docs/developer-guide/floating-point"},
             {"entry": "modules/core/docs/developer-guide/performance"},
-            {"entry": "modules/core/docs/developer-guide/view-and-projection"},
-            {"entry": "modules/core/docs/developer-guide/coordinate-systems"},
-            {"entry": "modules/core/docs/wip/features"},
-            {"entry": "modules/core/docs/wip/using-vectors"},
             {"entry": "modules/core/docs/developer-guide/external-frameworks"}
           ]
         },
@@ -43,19 +40,10 @@
           "title": "viewport-mercator-project",
           "entries": [
             {"entry": "modules/viewport-mercator-project/docs/developer-guide/viewport-mercator-project-guide"},
-            {"entry": "modules/viewport-mercator-project/docs/developer-guide/history"},
-            {"entry": "modules/viewport-mercator-project/docs/developer-guide/get-started"},
-            {"entry": "modules/viewport-mercator-project/docs/developer-guide/coordinates"},
-            {"entry": "modules/viewport-mercator-project/docs/developer-guide/offset-accuracy"}
+            {"entry": "modules/viewport-mercator-project/docs/developer-guide/about-coordinates"},
+            {"entry": "modules/viewport-mercator-project/docs/developer-guide/offset-projection-accuracy"}
           ]
         }
-      ]
-    },
-    {
-      "title": "Concepts",
-      "entries": [
-        {"entry": "modules/core/docs/developer-guide/concepts/homogeneous-coordinates"},
-        {"entry": "modules/core/docs/developer-guide/concepts/rotations"}
       ]
     },
     {
@@ -99,10 +87,18 @@
         {
           "title": "viewport-mercator-project",
           "entries": [
-            {"entry": "modules/viewport-mercator-project/api-reference/web-mercator-utils"},
-            {"entry": "modules/viewport-mercator-project/api-reference/web-mercator-viewport"}
+            {"entry": "modules/viewport-mercator-project/docs/api-reference/web-mercator-utils"},
+            {"entry": "modules/viewport-mercator-project/docs/api-reference/web-mercator-viewport"}
           ]
         }
+      ]
+    },
+    {
+      "title": "Concepts",
+      "entries": [
+        {"entry": "modules/core/docs/concepts/homogeneous-coordinates"},
+        {"entry": "modules/core/docs/concepts/coordinate-systems"},
+        {"entry": "modules/core/docs/concepts/rotations"}
       ]
     }
   ]

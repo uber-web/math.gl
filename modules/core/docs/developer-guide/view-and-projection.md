@@ -1,7 +1,6 @@
 ## View and Projection Matrices
 
-Projections in math.gl are concerned with projecting 3D coordinates to a 2D plane (the screen).
-
+One of the major functions of any 3D math library is to let applications create view and projection matrices to enable positioning of the viewer in a 3D world and projection of a field-of-view onto a flat "screen".
 
 ## View and Projection Matrices
 
@@ -13,14 +12,12 @@ The purpose of the projection matrix is to transform from view coordinates to "c
 
 Note: while a projection matrix may generate coordinates with `w !== 1`, the GPU will automatically divide the `xyzw` coordinates with the `w` coordinateof any positions it receives thus and "normalize" the `w` coordinate. Thus, there is no need to do this scaling manually in shaders unless doing additional arithmetic in clipspace.
 
-
 ### Creating a View Matrix
 
 To create a view matrix
 * `Matrix4.lookAt({...})`
 
 Normally positions are transformed by the view matrix. If doing work (e.g. lighting) in view space you will also want to transform other geometry such as normals.
-
 
 ## Projection Matrices
 
@@ -29,8 +26,8 @@ Projection matrices typically show everything inside a frustum (truncated pyrami
 ### Perspective Projection Matrix
 
 To create a projection matrix use:
-* `Matrix4.perspective({fov, aspect, near, far})`
 
+* `Matrix4.perspective({fov, aspect, near, far})`
 
 ### Creating an Orthographic Projection Matrix
 
@@ -46,7 +43,6 @@ The extents are specified in "view space" (which is typically translated and rot
 In applications it is not unusual to want to offer both perspective and orthographic views. To support this case, math.gl offers an additional method for creating orthographic projection matrix, that takes the same parameters as `Matrix4.perspective()`, with the addition of one additional parameter, `focalDistance` that selects which plane in the perspective view frustum should be used to calculate the size of the orthographic view box.
 
 * `Matrix4.orthographic({fovy, aspect, focalDistance, near, far})`
-
 
 ## About Projection Matrices
 
@@ -121,8 +117,6 @@ An ortograhic projection matrix essentially just scales your view to show everyt
 
 TBA
 
-
 ## Remarks
 
 * As always, matrices are presented here in row major notation, however math.gl stores them internally in column major format to match WebGL requirements.
-
