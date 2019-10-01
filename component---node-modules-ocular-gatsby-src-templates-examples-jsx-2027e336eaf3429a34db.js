@@ -1,6 +1,6 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[5],{
 
-/***/ 280:
+/***/ 288:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8,7 +8,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Examples; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var gatsby__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(58);
+/* harmony import */ var gatsby__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(69);
 /* harmony import */ var _components_styled__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(10);
 function _inheritsLoose(subClass,superClass){subClass.prototype=Object.create(superClass.prototype);subClass.prototype.constructor=subClass;subClass.__proto__=superClass;}// import ExampleTableOfContents from '../components/layout/example-table-of-contents';
 /* eslint no-undef: "off" */ /*
@@ -33,4 +33,4 @@ class Gallery extends Component {
 /***/ })
 
 }]);
-//# sourceMappingURL=component---node-modules-ocular-gatsby-src-templates-examples-jsx-dc554514476f1d79f032.js.map
+//# sourceMappingURL=component---node-modules-ocular-gatsby-src-templates-examples-jsx-2027e336eaf3429a34db.js.map
