@@ -1,0 +1,29 @@
+{
+  "name": "@math.gl/sun",
+  "description": "Sun classes",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "version": "3.0.0-beta.3",
+  "keywords": [
+    "javascript",
+    "math",
+    "geospatial"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/uber-web/math.gl.git"
+  },
+  "main": "dist/es5/index.js",
+  "module": "dist/esm/index.js",
+  "esnext": "dist/es6/index.js",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.0.0"
+  },
+  "gitHead": "e1a95300cb225a90da6e90333d4adf290f7ba501"
+}
