@@ -19,6 +19,5 @@
     "src"
   ],
   "dependencies": {
-    "@math.gl/core": "^3.0.0"
   }
 }
