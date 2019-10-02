@@ -1,27 +1,12 @@
 {
-  "name": "@math.gl/core",
+  "name": "math.gl",
   "description": "Array-based 3D Math Classes optimized for WebGL applications",
   "license": "MIT",
   "publishConfig": {
     "access": "public"
   },
   "version": "3.0.0-beta.3",
-  "keywords": [
-    "webgl",
-    "javascript",
-    "math",
-    "matrix",
-    "matrix4",
-    "vector",
-    "vector2",
-    "vector3",
-    "vector4",
-    "quaternion",
-    "euler",
-    "spherical",
-    "coordinates",
-    "3d"
-  ],
+  "keywords": [],
   "repository": {
     "type": "git",
     "url": "https://github.com/uber-web/math.gl.git"
@@ -33,12 +18,6 @@
     "dist",
     "src"
   ],
-  "sideEffects": [
-    "./src/lib/common.js"
-  ],
   "dependencies": {
-    "@babel/runtime": "^7.0.0",
-    "gl-matrix": "^3.0.0"
-  },
-  "gitHead": "e1a95300cb225a90da6e90333d4adf290f7ba501"
+  }
 }

@@ -1,4 +1,4 @@
-# Coordinates
+# Web Mercator Coordinates
 
 | Coordinates | Description |
 |---------|-------------|

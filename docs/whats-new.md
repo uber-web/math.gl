@@ -1,12 +1,14 @@
 # What's New
 
-## v3.0 (In Development)
+Date: Oct 1, 2019
+
+- `viewport-mercator-project` has been added to math.gl a new sub-module.
+
+## v3.0
 
 Date: Aug 8, 2019
 
-### Website Benchmarks and Performance Improvements
-
-A [benchmarking example](https://math.gl/examples/benchmarks) has been added to the website that makes it easy to assess the performance of the math.gl library on your own browser. The math.gl library has been carefully tuned based on these benchmarks and performance of the library has been significantly improved over version 2.x.
+The 3.0 release brings support for geospatial math, culling, performance improvements, and some API consolidation.
 
 ### `@math.gl/geospatial`
 
@@ -23,9 +25,9 @@ A new module (developed in collaboration with the Cesium engineering team) provi
 - New class `BoundingSphere`
 - New class `CullingVolume`
 
-### `math.gl` - Core module additions
+### `math.gl`
 
-#### Transform API Consolidation
+**Transform API Consolidation**
 
 The API for transformations (i.e. multiplying vectors with matrices or quaternions) has been extended and made more orthogonal:
 
@@ -33,16 +35,20 @@ The API for transformations (i.e. multiplying vectors with matrices or quaternio
 - Naming consistency of transform methods across classes (`transform`, `transformAsPoint`, `transformAsVector`).
 - Alternative transform methods added to the `Vector` classes (`transformByMatrix3`, `transformByMatrix2`, `transformByMatrix2x3` and `transformByQuaternion`). Simplifies using the most efficient transformation for the job.
 
-#### Matrix classes
+**Matrix classes**
 
 - New methods `Matrix*.setColumn()` and `Matrix*.getColumn()`
 - New method `Matrix*.toString()`
 - Improved method: `Matrix4.frustum()` now supports infinite `far` plane (parity with `Matrix4.perspective`, which already supported this).
 
-#### Utility Functions
+**Utility Functions**
 
 - New: global functions `toRadians` and `toDegrees`
 - New: global function `exactEqual`
+
+**Performance Improvements** (and Website Benchmarks)
+
+A [benchmarking example](https://math.gl/examples/benchmarks) has been added to the website that makes it easy to assess the performance of the math.gl library on your own browser. The math.gl library has been carefully tuned based on these benchmarks and performance of the library has been significantly improved over version 2.x.
 
 ## v2.3
 

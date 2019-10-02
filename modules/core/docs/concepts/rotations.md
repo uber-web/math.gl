@@ -1,6 +1,6 @@
 # 3D Rotations
 
-> Note: This article is a work in progress and may contain incorrect information.
+> This article is a work in progress.
 
 math.gl provides a "standard 3D library complement" of mathematical classes for handling rotations in 2D and 3D, such as classes for manipulating `Euler` angles and `Quaternion`s. As in any 3D math library, the key goals are enabling applications to easily and intuitively specify (parametrize) rotations, combine them with other rotations and other transformations, and ultimately transform points with the rotations or resulting transformations.
 
@@ -82,7 +82,7 @@ new Euler();
 
 ## Executing Rotation Transformations
 
-While Euler angles are often a good way to specify 3D rotations, they can not directly be used to transfor points or vectors. To do that, they have to be converted to . 
+While Euler angles are often a good way to specify 3D rotations, they can not directly be used to transfor points or vectors. To do that, they have to be converted to .
 
 
 ## Rotations using Rotation Matrices

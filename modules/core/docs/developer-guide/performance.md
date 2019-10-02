@@ -31,7 +31,7 @@ The biggest performance issue in math.gl (and essentially all other JavaScript m
 
 There are two standard techniques to avoid object creation costs.
 
-#### Resuing Objects
+### Resuing Objects
 
 Therefore, reusing objects where possible is an important technique to optimize performance. A typical technique is to allocate a global object in the file.
 
@@ -54,7 +54,7 @@ for (...) {
 
 Note that while creating objects can be slow, copying data into a temo object (e.g. `vector4.copy([1, 1, 1, 1])` or `vector4.copy([1, 1, 1, 1])`) is very fast.
 
-#### Supplying `result` Objects
+### Supplying `result` Objects
 
 A number of methods, such as `Matrix4.transformVector()`, allocate new objects as return values. These methods typically accept an optional `result` argument which can be populated and returned. By providing a `result` value, you revent the allocation of a new object and instead reuse an object you have already allocated.
 

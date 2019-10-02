@@ -4,27 +4,27 @@
 
 ## Methods
 
-#### toString()
+### toString()
 
 Returns a string representation of the matrix
 
-#### setElement
+### setElement
 
 Sets the element at "conceptual position" `M[i][j]`, row major indices by default
 
 `matrix3.set(i, j, value, columnMajor = false)`
 
 
-#### getElement
+### getElement
 
 Gets the element at "conceptual position" `M[i][j]`, row major indices by default
 
 `matrix3.get(i, j, columnMajor = false)`
 
-#### getColumn(columnIndex : Number [ , result : Number[3]]) : Number[3]
+### getColumn(columnIndex : Number [ , result : Number[3]]) : Number[3]
 
 Extracts a column from the matrix
 
-#### setColumn(columnIndex : Number, columnVector : Number[3]) : Matrix
+### setColumn(columnIndex : Number, columnVector : Number[3]) : Matrix
 
 Copies a column into the matrix

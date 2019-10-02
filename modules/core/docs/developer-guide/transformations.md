@@ -1,17 +1,16 @@
 # Transformations
 
-One of the core use cases for math.gl is to perform transformations on objects (typically either vectors or more complex object such as spheres, planes, boxes etc).
-
-There are additional articles [docs/developer-guide/concepts](./'homogeneous-coordinates.md') that provides more background about advantages when using 4x4 matrices, those transformations work in the same way from an API perspective as the ones described here.
+math.gl allows you to create mathematical objects and then apply transformations on those objects. Objects are typically vectors but can also be more complex object such as spheres, planes, boxes etc, and transformations are typically represented by matrices and quaternions.
 
 ## Representing Transformations
 
 Transformations can be represented in many different notations but for computational purposes it is efficient to express them as matrices, or in some cases as quaternions.
 
+The most general transform is a 4x4 matrix. See [docs/developer-guide/concepts](./'homogeneous-coordinates.md') regarding some advantages with using 4x4 matrices to represent transformations.
 
 ## Applying transformations
 
-The most general transform is a 4x4 matrix. Most math.gl classes offer a `transform` method that accepts 4x4 matrices. Note that as usual these operations modifies the object being transformed (and returns itself).
+Most math.gl classes offer a `transform` method that accepts matrices and quaternions.
 
 ```js
 const transformedVector1 = new Vector4(1, 0, 0, 1).transform([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1])
@@ -33,7 +32,10 @@ const transformedVector1 = new Vector4(1, 0, 0).transformByQuaternion([0, 0, 0, 
 const transformedVector2 = new Vector3(1, 0, 0).transformByQuaternion(new Quaternion([1, 0, 0, 1]))
 ```
 
-Note that the transformations can also be performed via the matrix and quaternion classes. In this case, the transformation is stored in the result parameters (a new array is allocated if it `result` is not supplied.)
+Note that `<object>.transform()` operations modify the object being transformed (and also return the modified object to enable "chaining" of calls).
+
+Alternatively, transformations can also be performed via the matrix and quaternion classes. In this case, the transformation is stored in the result parameters (a new array is allocated if it `result` is not supplied.)
+
 ```js
 const transformedVector1 = new Vector4(1, 0, 0).transformByQuaternion([0, 0, 0, 1])
 // or
@@ -44,7 +46,6 @@ const transformedVector2 = new Quaternion([1, 0, 0, 1]).transformByQuaternion([1
 ## Types of Transformations
 
 The basic transformations are rotations, scalings, and translations.
-
 
 ## Composing Transformations
 
@@ -75,7 +76,6 @@ const fullTransform = new Matrix4()
 const v = fullTransform.transformVector(new Vector4(...));
 ```
 
-
 ## About Rotations
 
 For more in-depth background about rotations, see the separate article on [rotations](./rotations.md).
@@ -85,8 +85,11 @@ If you have a vector with 3 elements you can rotate it around an axis and a poin
 const v = new Vector3([1, 2, 3]).rotateZ({radians: ..., origin: [1, 1, 0]});
 ```
 
+## Decomposing Transformations
 
-## Remarks
+The ability to compose transformations naturally leads to the possibility of _decomposing_ a composite transformations into constituent parts. This is possible with certain caveats.
 
-* Decomposition - The ability to compose transformations raises the question whether it is possible to decompose a composite transformations into constituent parts. This is possible under certain circumstances, TBA.
+TBA..
+
+
 

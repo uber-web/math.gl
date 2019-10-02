@@ -68,7 +68,7 @@ Returns: `[lng, lat]` or `[longitude, lat, Z]` in map coordinates. `Z` is elevat
 - If input is `[x, y, z]`: returns `[lng, lat, Z]`.
 
 
-#### `projectFlat(lngLat, scale)`
+### `projectFlat(lngLat, scale)`
 
 Project longitude and latitude onto Web Mercator coordinates.
 
@@ -81,7 +81,7 @@ Returns:
 
  - `[x, y]`, representing Web Mercator coordinates.
 
-#### `unprojectFlat(xy, scale)`
+### `unprojectFlat(xy, scale)`
 
 Unprojects a Web Mercator coordinate to longitude and latitude.
 | Parameter      | Type      | Default  | Description                     |
@@ -94,7 +94,7 @@ Returns:
  - `[longitude, latitude]`
 
 
-#### `fitBounds(bounds, options)`
+### `fitBounds(bounds, options)`
 
 Get a new flat viewport that fits around the given bounding box.
 
@@ -107,7 +107,7 @@ the bounding box. Each corner is specified in `[lon, lat]`.
   + `options.offset` ([Number,Number], optional) - The center of the given bounds relative to the viewport's center, `[x, y]` measured in pixels.
 
 
-#### `getMapCenterByLngLatPosition(opts)`
+### `getMapCenterByLngLatPosition(opts)`
 
 Returns the map center that place a given [lng, lat] coordinate at screen point [x, y].
 
