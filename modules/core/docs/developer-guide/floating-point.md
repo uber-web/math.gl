@@ -1,7 +1,6 @@
 # Floating Point
 
-> Note: This article is a work in progress and may contain incorrect information.
-
+> This article is a work in progress.
 
 ## Precision
 
@@ -15,9 +14,5 @@ There is also an `exactEquals` method that compares the floating point values di
  return Math.abs(a - b) <= config.EPSILON * Math.max(1.0, Math.abs(a), Math.abs(b));
 ```
 
-TBA:
-* Floating point comparison implementation in gl-matrix and alternatives (links)
-
-
-
-* [Comparisons](http://floating-point-gui.de/errors/comparison/)
+- Floating point comparison implementation in gl-matrix and alternatives (links)
+- [Comparisons](http://floating-point-gui.de/errors/comparison/)

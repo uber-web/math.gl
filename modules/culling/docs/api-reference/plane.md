@@ -22,17 +22,17 @@ const tangentPlane = new Plane().fromPointNormal(point, normal);
 
 ## Fields
 
-#### normal : Vector3
+### normal : Vector3
 
 The plane's normal.
 
-#### distance : Number
+### distance : Number
 
 The shortest distance from the origin to the plane. The sign of `distance` determines which side of the plane the origin is on. If `distance` is positive, the origin is in the half-space in the direction of the normal; if negative, the origin is in the half-space opposite to the normal; if zero, the plane passes through the origin.
 
 ## Methods
 
-#### constructor(normal : Number[3], distance : Number)
+### constructor(normal : Number[3], distance : Number)
 
 - `Vector3` normal The plane's normal (normalized).
 - Number distance The shortest distance from the origin to the plane. The sign of `distance` determines which side of the plane the origin is on. If `distance` is positive, the origin is in the half-space in the direction of the normal; if negative, the origin is in the half-space opposite to the normal; if zero, the plane passes through the origin.
@@ -41,7 +41,7 @@ Throws
 - Normal must be normalized
 
 
-#### fromPointNormal(point : Number[3], normal : Number[3]) : Plane
+### fromPointNormal(point : Number[3], normal : Number[3]) : Plane
 
 Creates a plane from a normal and a point on the plane.
 
@@ -52,7 +52,7 @@ Creates a plane from a normal and a point on the plane.
 Throws
 - Normal must be normalized
 
-#### Plane.fromCoefficients(coefficients : Number[4]) : Plane
+### Plane.fromCoefficients(coefficients : Number[4]) : Plane
 
 Creates a plane from the general equation
 
@@ -61,14 +61,14 @@ Creates a plane from the general equation
 Throws
 - Normal must be normalized
 
-#### clone() : Plane
+### clone() : Plane
 
 Duplicates a Plane instance.
 
 Returns
 - A new Plane instance with the same values
 
-#### equals(right : Plane) : Boolean
+### equals(right : Plane) : Boolean
 
 Compares the provided Planes by normal and distance and returns `true` if they are equal, `false` otherwise.
 
@@ -77,7 +77,7 @@ Compares the provided Planes by normal and distance and returns `true` if they a
 Returns
 - `true` if left and right are equal, `false` otherwise.
 
-#### getPointDistance(point : Number[3]) : Number
+### getPointDistance(point : Number[3]) : Number
 
 Computes the signed shortest distance of a point to a plane. The sign of the distance determines which side of the plane the point is on. If the distance is positive, the point is in the half-space in the direction of the normal; if negative, the point is in the half-space opposite to the normal; if zero, the plane passes through the point.
 
@@ -86,7 +86,7 @@ Computes the signed shortest distance of a point to a plane. The sign of the dis
 Returns
 - Number The signed shortest distance of the point to the plane.
 
-#### projectPointOntoPlane(point : Number[3] [, result : Number[3]]) : Number[3]
+### projectPointOntoPlane(point : Number[3] [, result : Number[3]]) : Number[3]
 
 Projects a point onto the plane.
 - `point` The point to project onto the plane
@@ -95,7 +95,7 @@ Projects a point onto the plane.
 Returns
 - The modified result parameter or a new `Vector3` instance if one was not provided.
 
-#### transform(transform : Number[16]) : Plane
+### transform(transform : Number[16]) : Plane
 
 Transforms the plane by the given transformation matrix.
 

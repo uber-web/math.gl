@@ -1,5 +1,5 @@
 {
-  "name": "math.gl",
+  "name": "@math.gl/core",
   "description": "Array-based 3D Math Classes optimized for WebGL applications",
   "license": "MIT",
   "publishConfig": {

@@ -4,27 +4,27 @@ A culling volume defined by planes.
 
 ## Static Members
 
-#### CullingVolume.MASK_OUTSIDE
+### CullingVolume.MASK_OUTSIDE
 
 For plane masks (as used in `CullingVolume#computeVisibilityWithPlaneMask`), this special value represents the case where the object bounding volume is entirely outside the culling volume.
 
-#### CullingVolume.MASK_INSIDE
+### CullingVolume.MASK_INSIDE
 
 For plane masks (as used in `CullingVolume.computeVisibilityWithPlaneMask`), this value represents the case where the object bounding volume is entirely inside the culling volume.
 
-#### CullingVolume.MASK_INDETERMINATE
+### CullingVolume.MASK_INDETERMINATE
 
 For plane masks (as used in`CullingVolume.computeVisibilityWithPlaneMask`), this value represents the case where the object bounding volume (may) intersect all planes of the culling volume.
 
 ## Methods
 
-#### constructor([planes : Plane[]])
+### constructor([planes : Plane[]])
 
 - `planes`=`[]` An array of clipping planes.
 
 Each plane is represented by a Cartesian4 object, where the x, y, and z components define the unit vector normal to the plane, and the w component is the distance of the plane from the origin.
 
-#### fromBoundingSphere(boundingSphere : BoundingSphere)
+### fromBoundingSphere(boundingSphere : BoundingSphere)
 
 Constructs a culling volume from a bounding sphere. Creates six planes that create a box containing the sphere. The planes are aligned to the x, y, and z axes in world coordinates.
 

@@ -1,7 +1,6 @@
 # Debugging
 
-> Note: This article is a work in progress and may contain incorrect information.
-
+> This article is a work in progress.
 
 ## About Validation and Debug Support
 
@@ -9,17 +8,13 @@ TBA:
 * Turning on an off
 * performance implications
 
-
 ## About "Printing"
 
 Generating a string representation of a math.gl object with desired precision and formatting.
 
 Every math.gl object has a `formatString({...opts})` method that allows you to stringify an object with special options set. Each object also defines the built-in JavaScript function `toString()` to call `formatString()` with the global printing options in the math.gl `config` object.
 
-
-
 * `toString` and `formatString` methods print with controllable precision
-
 
 | Print Parameter | Default | Description |
 | --- | --- | --- |

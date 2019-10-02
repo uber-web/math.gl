@@ -1,9 +1,11 @@
-# Culling Overview
+# Overview
 
-The `@math.gl/culling` module provides primitives for implementing frustum culling.
+The `@math.gl/culling` module provides primitives for implementing frustum culling:
 
-- It does provides fully "transformable" primitives (i.e. oriented bounding boxes as opposed to just axis-aligned bounding boxes).
-- It does not attempt to be a general collision detection library (i.e. does not handle time-interpolated intersections).
+- Bounding boxes and intersection logic
+- Fully "transformable" primitives (i.e. oriented bounding boxes as opposed to just axis-aligned bounding boxes).
+
+The culling module does not attempt to be a general "physics-based" collision detection library (e.g. it does not handle time-interpolated intersections like a physics library would).
 
 ## Classes
 

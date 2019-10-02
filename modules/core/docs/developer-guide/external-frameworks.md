@@ -1,12 +1,10 @@
 # Using with Other Frameworks
 
+> This article is a work in progress.
+
 math.gl is designed to be (reasonably) interoperable with other major math frameworks.
 
-
 ## Using with gl-matrix
-
-> Note: This article is a work in progress and may contain incorrect information.
-
 
 ### API comparison
 
@@ -25,8 +23,6 @@ In code that is very frequently executed, working with directly with gl-matrix c
 
 
 ## Using with THREE.js
-
-> Note: This article is a work in progress and may contain incorrect information.
 
 math.gl makes efforts to be compatible with the THREE.js math API.
 
@@ -52,17 +48,17 @@ In particular, the basic math.gl math classes have implementations of most of th
 ### Notable Incompatibilities
 
 
-#### Colum-Major vs. Row-Major Matrices
+### Colum-Major vs. Row-Major Matrices
 
 By default, math.gl stores matrices in column-major order internally (while exposing a row-major friendly interface), whereas THREE.js stores matrices in row-major order.
 
 
-#### Array.length()
+### Array.length()
 
 Since math.gl's classes are subclasses of JavaScripts built-in `Array` class, the `length` property has the special meaning defined by `Array`, so it is not possible to implement the `Vector.length()` method defined by THREE.js. Instead a `Vector.len()` method is offered on math.gl `Vector` classes.
 
 
-#### Cross-Library Convenience Methods
+### Cross-Library Convenience Methods
 
 A complication with THREE.js is that the framework is not strict about separating the library into independent layers. Thus the THREE math classes have convenience methods that accept other THREE.js objects such `Geometries` and `BufferAttributes`. These methods are not implemented in math.gl.
 

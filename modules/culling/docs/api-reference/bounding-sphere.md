@@ -25,7 +25,7 @@ spheres.sort(
 
 ## Global Functions
 
-#### makeBoundingSphereFromPoints(positions : iterator, result? : BoundingSphere) : BoundingSphere
+### makeBoundingSphereFromPoints(positions : iterator, result? : BoundingSphere) : BoundingSphere
 
 Computes a tight-fitting bounding sphere enclosing a list of 3D Cartesian points. The bounding sphere is computed by running two algorithms, a naive algorithm and Ritter's algorithm. The smaller of the two spheres is used to ensure a tight fit.
 
@@ -59,21 +59,21 @@ Creates a new `BoundingSphere`
 - `center`=`[0, 0, 0]` The center of the bounding sphere.
 - `radius`=`0.0` The radius of the bounding sphere.
 
-#### fromCenterRadius(center : Number[3], radius : Number) : BoundingSphere
+### fromCenterRadius(center : Number[3], radius : Number) : BoundingSphere
 
 Sets the `BoundingSphere` from center and radius
 
 - `center`=`[0, 0, 0]` The center of the bounding sphere.
 - `radius`=`0.0` The radius of the bounding sphere.
 
-#### fromCornerPoints(corner : Number[3], oppositeCorner : Number[3], result? : BoundingSphere) : BoundingSphere
+### fromCornerPoints(corner : Number[3], oppositeCorner : Number[3], result? : BoundingSphere) : BoundingSphere
 
 Computes a bounding sphere from the two corner points of an axis-aligned bounding box.  The sphere tighly and fully encompases the box.
 
 - `corner` The minimum height over the rectangle.
 - `oppositeCorner` The maximum height over the rectangle.
 
-#### fromBoundingSpheres(boundingSpheres : BoundingSphere[]) : BoundingSphere
+### fromBoundingSpheres(boundingSpheres : BoundingSphere[]) : BoundingSphere
 
 Computes a tight-fitting bounding sphere enclosing the provided array of bounding spheres.
 
@@ -82,14 +82,14 @@ Computes a tight-fitting bounding sphere enclosing the provided array of boundin
 Returns
 - The modified `result` parameter or a new `BoundingSphere` instance if none was provided.
 
-#### clone()
+### clone()
 
 Duplicates a `BoundingSphere` instance.
 
 Returns
 - A new `BoundingSphere` instance
 
-#### equals(right : BoundingSphere) Boolean
+### equals(right : BoundingSphere) Boolean
 
 Compares the provided `BoundingSphere` componentwise and returns `true` if they are equal, `false` otherwise.
 
@@ -98,19 +98,19 @@ Compares the provided `BoundingSphere` componentwise and returns `true` if they 
 Returns
 - `true` if left and right are equal, `false` otherwise.
 
-#### union(right : BoundingSphere) : BoundingSphere
+### union(right : BoundingSphere) : BoundingSphere
 
 Computes a bounding sphere that contains both the this and the `right` bounding spheres.
 
 - `right` The second `BoundingSphere`.
 
-#### expand(point : Number[3]) : BoundingSphere
+### expand(point : Number[3]) : BoundingSphere
 
 Computes a bounding sphere by enlarging the provided sphere to contain the provided point.
 
 - `point` A point to enclose in a bounding sphere.
 
-#### intersectPlane(plane : Plane) : Intersect
+### intersectPlane(plane : Plane) : Intersect
 
 Determines which side of a plane a sphere is located.
 
@@ -120,13 +120,13 @@ Returns
 - `Intersect.OUTSIDE` if the entire sphere is on the opposite side
 - `Intersect.INTERSECTING` if the sphere intersects the plane.
 
-#### transform(transform : Number[16]) : BoundingSphere
+### transform(transform : Number[16]) : BoundingSphere
 
 Applies a 4x4 affine transformation matrix to a bounding sphere.
 
 - `transform` The transformation matrix to apply to the bounding sphere.
 
-#### distanceSquaredTo(point) : Number
+### distanceSquaredTo(point) : Number
 
 Computes the estimated distance squared from the closest point on a bounding sphere to a point.
 
@@ -136,7 +136,7 @@ Returns
 - The estimated distance squared from the bounding sphere to the point.
 
 
-##### transformWithoutScale(sphere, transform, result)
+### transformWithoutScale(sphere, transform, result)
 
 Applies a 4x4 affine transformation matrix to a bounding sphere where there is no scale
 The transformation matrix is not verified to have a uniform scale of 1.
@@ -155,7 +155,7 @@ var boundingSphere = new BoundingSphere();
 var newBoundingSphere = BoundingSphere.transformWithoutScale(boundingSphere, modelMatrix);
 
 
-#### computePlaneDistances (sphere, position, direction, result)
+### computePlaneDistances (sphere, position, direction, result)
 
 The distances calculated by the vector from the center of the bounding sphere to position projected onto direction plus/minus the radius of the bounding sphere.
 
@@ -168,7 +168,7 @@ If you imagine the infinite number of planes with normal direction, this compute
 @returns {Interval} The nearest and farthest distances on the bounding sphere from position in direction.
 
 
-#### projectTo2D(sphere, projection, result)
+### projectTo2D(sphere, projection, result)
 
 Creates a bounding sphere in 2D from a bounding sphere in 3D world coordinates.
 

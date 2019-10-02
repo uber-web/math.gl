@@ -1,13 +1,24 @@
 # Introduction
 
-math.gl is a JavaScript class library for 3D and geospatial math. It provides traditional 3D library classes for vectors, matrices etc, as well as additional, optional modules that address different domains.
+math.gl is a JavaScript class library focused on 3D and geospatial math. It provides a core module with traditional 3D library classes for vectors, matrices etc, and additional, optional modules providing geospatial math and .
 
-## Available Modules
+## Modules
 
-- `math.gl`: Basic 3D math classes (vectors, matrices etc) and utilities (`equals`, `toRadians` etc).
-- `@math.gl/geospatial` - support for geospatial math, primarily WGS84 and Web Mercator.
+math.gl is a toolbox that offers a range of modules for
 
-## Class Library Features
+| Module    | Description |
+| ---       | --- |
+| `@math.gl/core` | Basic 3D math classes (vectors, matrices etc) and utilities (`equals`, `toRadians` etc) |
+| `@math.gl/culling` | Bounding volumes and intersection testing. |
+| `@math.gl/geospatial` | Ellipsoidal geospatial math, primarily for WGS84 cartesian to cartographic transformations. |
+| `viewport-mercator-project` | Web Mercator projection utilities |
+
+Remarks:
+
+- The `math.gl` module is now deprecated. It is still available as an "alias" for `math.gl/core` but should not be used in new applications.
+- The `viewport-mercator-project` module was consolidated with math.gl in Oct 2019. It was orignally developed indendently in the [https://github.com/uber-common/viewport-mercator-project] repository.
+
+## Core Library Features
 
 - **Classes for gl-matrix** - math.gl classes are built on top of `gl-matrix`. `gl-matrix` has a reputation for being the most performant and battle-tested JavaScript math library around.
 
@@ -22,11 +33,11 @@ math.gl is a JavaScript class library for 3D and geospatial math. It provides tr
 ## Supported Browsers and Node Versions
 
 math.gl is fully supported on:
-- "evergreen" browsers: i.e recent versions of Chrome, Safari, Firefox, Edge etc.
-- Node.js
-- IE11: math.gl's fully transpiled `es5` distribution shuold work (with performance caveats).
+- Evergreen browsers: Recent versions of Chrome, Safari, Firefox, Edge etc.
+- Node.js: Active and Maintenance [LTS releases](https://nodejs.org/en/about/releases/)
+- IE11: Supported (with certain performance caveats) using math.gl's fully transpiled `es5` distribution and `@babel/polyfills`.
 
-However, Internet Explorer < 10 will not work. If your application needs to support non-evergreen browsers, an option could be to use e.g. `gl-matrix` directly.
+Note that Internet Explorer < 10 will not work. If your application needs to support older browsers, an option could be to use [`gl-matrix`](http://glmatrix.net/) directly.
 
 ## Key Design Ideas
 

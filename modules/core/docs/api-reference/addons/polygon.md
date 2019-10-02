@@ -15,21 +15,21 @@ import {_Polygon as Polygon} from 'math.gl';
 
 ## Methods
 
-#### constructor
+### constructor
 
 Creates a new Polygon object.
 
 > The polygon object will reference the provided points, assuming them to not be modified for the lifetime of the Polygon object.
 
 
-#### getSignedArea
+### getSignedArea
 
 Returns the area with a sign indicating the winding direction.
 
 `polygon.getSignedArea()`
 
 
-#### getArea
+### getArea
 
 `polygon.getArea()`
 
@@ -37,7 +37,7 @@ Note:
 * A convenience method that returns `Math.abs(polygon.getSignedArea())`.
 
 
-#### getWindingDirection
+### getWindingDirection
 
 Returns the direction of the polygon path.
 
@@ -50,7 +50,7 @@ Note:
 * A convenience method that returns `Math.sign(polygon.getSignedArea())`
 
 
-#### forEachSegment
+### forEachSegment
 
 Lets the application iterate over each segment.
 
