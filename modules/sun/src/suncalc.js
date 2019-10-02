@@ -17,7 +17,7 @@ const M1 = 0.98560028; // Earth angle traverses on average per day seen from the
 const THETA0 = 280.147; // The sidereal time (in degrees) at longitude 0° at the instant defined by JD2000
 const THETA1 = 360.9856235; // The rate of change of the sidereal time, in degrees per day.
 
-export function getSolarPosition(timestamp, latitude, longitude) {
+export function getSunPosition(timestamp, latitude, longitude) {
   const longitudeWestInRadians = DEGREES_TO_RADIANS * -longitude;
   const phi = DEGREES_TO_RADIANS * latitude;
   const d = toDays(timestamp);
@@ -36,8 +36,8 @@ export function getSolarPosition(timestamp, latitude, longitude) {
   };
 }
 
-export function getSunlightDirection(timestamp, latitude, longitude) {
-  const {azimuth, altitude} = getSolarPosition(timestamp, latitude, longitude);
+export function getSunDirection(timestamp, latitude, longitude) {
+  const {azimuth, altitude} = getSunPosition(timestamp, latitude, longitude);
   // convert azimuth from 0 at south to be 0 at north
   const azimuthN = azimuth + Math.PI;
 
