@@ -129,7 +129,7 @@ export default class OrientedBoundingBox {
 
   // eslint-disable-next-line max-statements
   distanceSquaredTo(point) {
-    const offset = scratchOffset.copy(point).subtract(this.center);
+    const offset = scratchOffset.from(point).subtract(this.center);
 
     const halfAxes = this.halfAxes;
     const u = halfAxes.getColumn(0, scratchVectorU);
