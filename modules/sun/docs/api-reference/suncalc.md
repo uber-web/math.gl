@@ -12,10 +12,10 @@ npm install @math.gl/sun
 ## Usage
 
 ```js
-import {getSunlightDirection} from '@math.gl/sun';
+import {getSunDirection} from '@math.gl/sun';
 const latitude = 37.7749;
 const longitude = -122.4194;
-const sunDir = getSunlightDirection(Date.now(), latitude, longitude);
+const sunDir = getSunDirection(Date.now(), latitude, longitude);
 ```
 
 ## Attribution
