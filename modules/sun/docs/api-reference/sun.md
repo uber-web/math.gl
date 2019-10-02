@@ -1,6 +1,6 @@
-# SunCalc
+# Sun
 
-SunCalc is a tiny JavaScript library for calculating sun position for the given location and time.
+`@math.gl/sun` is a tiny JavaScript library for calculating sun position for the given location and time.
 
 ## Installation
 
@@ -20,4 +20,4 @@ const sunDir = getSunDirection(Date.now(), latitude, longitude);
 
 ## Attribution
 
-This class was ported from [Cesium](https://github.com/mourner/suncalc) under BSD-license.
+This class was ported from [SunCalc](https://github.com/mourner/suncalc) under BSD-license.
