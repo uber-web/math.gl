@@ -1,4 +1,4 @@
-# Sun
+# Overview
 
 `@math.gl/sun` is a tiny JavaScript library for calculating sun position for the given location and time.
 
@@ -7,7 +7,6 @@
 ```bash
 npm install @math.gl/sun
 ```
-
 
 ## Usage
 
@@ -20,4 +19,4 @@ const sunDir = getSunDirection(Date.now(), latitude, longitude);
 
 ## Attribution
 
-This class was ported from [SunCalc](https://github.com/mourner/suncalc) under BSD-license.
+This module is a fork of @mourner's [SunCalc](https://github.com/mourner/suncalc) under BSD 2-clause license.
