@@ -20,22 +20,22 @@ config.precision = 4;
 
 ## Functions
 
-#### configure
+### configure
 
 `configure(options)`
 
 
-#### checkNumber
+### checkNumber
 
 `checkNumber(value)`
 
 
-#### formatValue
+### formatValue
 
 `formatValue(value, precision = config.precision || 4)`
 
 
-#### isArray
+### isArray
 
 Returns true if value is either an array or a typed array
 
@@ -44,26 +44,26 @@ Returns true if value is either an array or a typed array
 Note: does not return true for ArrayBuffers and DataViews
 
 
-#### clone
+### clone
 
 `clone(array)If the array has a clone function, calls it, otherwise returns a copy`
 
 
-#### toRadians
+### toRadians
 
 `toRadians(degrees)`
 
 Works on single values and vectors
 
 
-#### toDegrees
+### toDegrees
 
 `toDegrees(radians)`
 
 Works on single values and vectors
 
 
-#### equals
+### equals
 
 `equals(a, b, epsilon)`
 
@@ -72,7 +72,7 @@ Works on single values and vectors
 - Objects will be compared with their `.equals()` method if present.
 
 
-#### exactEquals
+### exactEquals
 
 `exactEquals(a, b)`
 
@@ -83,61 +83,61 @@ Works on single values and vectors
 
 ## GLSL equivalents
 
-#### radians
+### radians
 
 `radians(degrees)`
 
 GLSL equivalent: Works on single values and vectors
 
 
-#### degrees
+### degrees
 
 `degrees(radians)`
 
 GLSL equivalent: Works on single values and vectors
 
 
-#### sin
+### sin
 
 `sin(radians)`
 
 GLSL equivalent: Works on single values and vectors
 
 
-#### cos
+### cos
 
 `cos(radians)`
 
 GLSL equivalent: Works on single values and vectors
 
 
-#### tan
+### tan
 
 `tan(radians)`
 
 GLSL equivalent: Works on single values and vectors
 
 
-#### asin
+### asin
 
 `asin(radians)`
 
 GLSL equivalent: Works on single values and vectors
 
 
-#### acos
+### acos
 
 `acos(radians)`
 
 GLSL equivalent: Works on single values and vectors
 
 
-#### atan
+### atan
 
 `atan(radians)`
 
 
-#### clamp
+### clamp
 
 `clamp(value, min, max)`
 
