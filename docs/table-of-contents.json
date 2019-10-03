@@ -37,6 +37,12 @@
           ]
         },
         {
+          "title": "@math.gl/sun",
+          "entries": [
+            {"entry": "modules/sun/docs/developer-guide/sun-guide"}
+          ]
+        },
+        {
           "title": "viewport-mercator-project",
           "entries": [
             {"entry": "modules/viewport-mercator-project/docs/developer-guide/viewport-mercator-project-guide"},
@@ -82,6 +88,13 @@
           "entries": [
             {"entry": "modules/geospatial/docs/api-reference/ellipsoid"},
             {"entry": "modules/geospatial/docs/api-reference/helpers"}
+          ]
+        },
+        {
+          "title": "@math.gl/sun",
+          "entries": [
+            {"entry": "modules/sun/docs/api-reference/get-sun"},
+            {"entry": "modules/sun/docs/api-reference/get-sun-direction"}
           ]
         },
         {
