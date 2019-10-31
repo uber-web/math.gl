@@ -46,9 +46,8 @@ export default function flyToViewport(startProps, endProps, t, opts = {}) {
 
   const newCenterWorld = vec2.scale([], uDelta, u);
   vec2.add(newCenterWorld, newCenterWorld, startCenterXY);
-  vec2.scale(newCenterWorld, newCenterWorld, scaleIncrement);
 
-  const newCenter = worldToLngLat(newCenterWorld, zoomToScale(newZoom));
+  const newCenter = worldToLngLat(newCenterWorld);
   viewport.longitude = newCenter[0];
   viewport.latitude = newCenter[1];
   viewport.zoom = newZoom;
@@ -84,13 +83,13 @@ function getFlyToTransitionParams(startProps, endProps, opts) {
   const endCenter = [endProps.longitude, endProps.latitude];
   const scale = zoomToScale(endZoom - startZoom);
 
-  const startCenterXY = lngLatToWorld(startCenter, startScale);
-  const endCenterXY = lngLatToWorld(endCenter, startScale);
+  const startCenterXY = lngLatToWorld(startCenter);
+  const endCenterXY = lngLatToWorld(endCenter);
   const uDelta = vec2.sub([], endCenterXY, startCenterXY);
 
   const w0 = Math.max(startProps.width, startProps.height);
   const w1 = w0 / scale;
-  const u1 = vec2.length(uDelta);
+  const u1 = vec2.length(uDelta) * startScale;
   // u0 is treated as '0' in Eq (9).
 
   // Implement Equation (9) from above algorithm.

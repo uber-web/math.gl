@@ -6,10 +6,10 @@ import {config, equals} from 'math.gl';
 import {
   lngLatToWorld,
   worldToLngLat,
+  zoomToScale,
   getMeterZoom,
   getDistanceScales,
   addMetersToLngLat,
-  getUncenteredViewMatrix,
   getViewMatrix,
   getProjectionMatrix,
   getProjectionParameters,
@@ -28,7 +28,6 @@ test('Viewport#imports', t => {
   t.ok(worldToLngLat, 'worldToLngLat imports OK');
   t.ok(getMeterZoom, 'getMeterZoom imports OK');
   t.ok(getViewMatrix, 'getViewMatrix imports OK');
-  t.ok(getUncenteredViewMatrix, 'getUncenteredViewMatrix imports OK');
   t.ok(getProjectionMatrix, 'getProjectionMatrix imports OK');
   t.ok(getProjectionParameters, 'getProjectionParameters imports OK');
   t.ok(worldToPixels, 'worldToPixels imports OK');
@@ -37,9 +36,9 @@ test('Viewport#imports', t => {
 });
 
 test('lngLatToWorld', t => {
-  t.throws(() => lngLatToWorld([38, -122], 128), /latitude/i, 'throws on invalid latitude');
+  t.throws(() => lngLatToWorld([38, -122]), /latitude/i, 'throws on invalid latitude');
   t.ok(
-    equals(lngLatToWorld([-122, 38], 128), [10558.577777777778, 25279.113534227028]),
+    equals(lngLatToWorld([-122, 38]), [82.4888888888889, 314.50692551385134]),
     'returns correct result'
   );
   t.end();
@@ -48,34 +47,37 @@ test('lngLatToWorld', t => {
 test('getDistanceScales', t => {
   for (const vc in VIEWPORT_PROPS) {
     const props = VIEWPORT_PROPS[vc];
-    const {metersPerPixel, pixelsPerMeter, degreesPerPixel, pixelsPerDegree} = getDistanceScales(
-      props
+    const {
+      metersPerCommonUnit,
+      commonUnitsPerMeter,
+      degreesPerCommonUnit,
+      commonUnitsPerDegree
+    } = getDistanceScales(props);
+
+    t.deepEqual(
+      [
+        toLowPrecision(metersPerCommonUnit[0] * commonUnitsPerMeter[0]),
+        toLowPrecision(metersPerCommonUnit[1] * commonUnitsPerMeter[1]),
+        toLowPrecision(metersPerCommonUnit[2] * commonUnitsPerMeter[2])
+      ],
+      [1, 1, 1],
+      'metersPerCommonUnit checks with commonUnitsPerMeter'
     );
 
     t.deepEqual(
       [
-        toLowPrecision(metersPerPixel[0] * pixelsPerMeter[0]),
-        toLowPrecision(metersPerPixel[1] * pixelsPerMeter[1]),
-        toLowPrecision(metersPerPixel[2] * pixelsPerMeter[2])
+        toLowPrecision(degreesPerCommonUnit[0] * commonUnitsPerDegree[0]),
+        toLowPrecision(degreesPerCommonUnit[1] * commonUnitsPerDegree[1]),
+        toLowPrecision(degreesPerCommonUnit[2] * commonUnitsPerDegree[2])
       ],
       [1, 1, 1],
-      'metersPerPixel checks with pixelsPerMeter'
-    );
-
-    t.deepEqual(
-      [
-        toLowPrecision(degreesPerPixel[0] * pixelsPerDegree[0]),
-        toLowPrecision(degreesPerPixel[1] * pixelsPerDegree[1]),
-        toLowPrecision(degreesPerPixel[2] * pixelsPerDegree[2])
-      ],
-      [1, 1, 1],
-      'degreesPerPixel checks with pixelsPerDegree'
+      'degreesPerCommonUnit checks with commonUnitsPerDegree'
     );
   }
   t.end();
 });
 
-test('getDistanceScales#pixelsPerDegree', t => {
+test('getDistanceScales#commonUnitsPerDegree', t => {
   const scale = Math.pow(2, DISTANCE_SCALE_TEST_ZOOM);
   const z = 1000;
 
@@ -83,10 +85,9 @@ test('getDistanceScales#pixelsPerDegree', t => {
     t.comment(vc);
     const props = VIEWPORT_PROPS[vc];
     const {longitude, latitude} = props;
-    const {pixelsPerDegree, pixelsPerDegree2} = getDistanceScales({
+    const {commonUnitsPerDegree, commonUnitsPerDegree2} = getDistanceScales({
       longitude,
       latitude,
-      scale,
       highPrecision: true
     });
 
@@ -96,14 +97,14 @@ test('getDistanceScales#pixelsPerDegree', t => {
 
       // To pixels
       const coords = [
-        delta * pixelsPerDegree[0],
-        delta * pixelsPerDegree[1],
-        z * pixelsPerDegree[2]
+        delta * commonUnitsPerDegree[0],
+        delta * commonUnitsPerDegree[1],
+        z * commonUnitsPerDegree[2]
       ];
       const coordsAdjusted = [
-        delta * (pixelsPerDegree[0] + pixelsPerDegree2[0] * delta),
-        delta * (pixelsPerDegree[1] + pixelsPerDegree2[1] * delta),
-        z * (pixelsPerDegree[2] + pixelsPerDegree2[2] * delta)
+        delta * (commonUnitsPerDegree[0] + commonUnitsPerDegree2[0] * delta),
+        delta * (commonUnitsPerDegree[1] + commonUnitsPerDegree2[1] * delta),
+        z * (commonUnitsPerDegree[2] + commonUnitsPerDegree2[2] * delta)
       ];
 
       const pt = [longitude + delta, latitude + delta];
@@ -111,11 +112,11 @@ test('getDistanceScales#pixelsPerDegree', t => {
       const realCoords = [
         lngLatToWorld(pt, scale)[0] - lngLatToWorld([longitude, latitude], scale)[0],
         lngLatToWorld(pt, scale)[1] - lngLatToWorld([longitude, latitude], scale)[1],
-        z * getDistanceScales({longitude: pt[0], latitude: pt[1], scale}).pixelsPerMeter[2]
+        z * getDistanceScales({longitude: pt[0], latitude: pt[1]}).commonUnitsPerMeter[2]
       ];
 
-      const diff = getDiff(coords, realCoords);
-      const diffAdjusted = getDiff(coordsAdjusted, realCoords);
+      const diff = getDiff(coords, realCoords, scale);
+      const diffAdjusted = getDiff(coordsAdjusted, realCoords, scale);
 
       t.comment(`unadjusted: ${diff.message}`);
       t.comment(`adjusted: ${diffAdjusted.message}`);
@@ -130,7 +131,7 @@ test('getDistanceScales#pixelsPerDegree', t => {
   t.end();
 });
 
-test('getDistanceScales#pixelsPerMeter', t => {
+test('getDistanceScales#commonUnitsPerMeter', t => {
   const scale = Math.pow(2, DISTANCE_SCALE_TEST_ZOOM);
   const z = 1000;
 
@@ -138,7 +139,7 @@ test('getDistanceScales#pixelsPerMeter', t => {
     t.comment(vc);
     const props = VIEWPORT_PROPS[vc];
     const {longitude, latitude} = props;
-    const {pixelsPerMeter, pixelsPerMeter2} = getDistanceScales({
+    const {commonUnitsPerMeter, commonUnitsPerMeter2} = getDistanceScales({
       latitude,
       longitude,
       scale,
@@ -150,11 +151,15 @@ test('getDistanceScales#pixelsPerMeter', t => {
       t.comment(`R = ${delta} meters`);
 
       // To pixels
-      const coords = [delta * pixelsPerMeter[0], delta * pixelsPerMeter[1], z * pixelsPerMeter[2]];
+      const coords = [
+        delta * commonUnitsPerMeter[0],
+        delta * commonUnitsPerMeter[1],
+        z * commonUnitsPerMeter[2]
+      ];
       const coordsAdjusted = [
-        delta * (pixelsPerMeter[0] + pixelsPerMeter2[0] * delta),
-        delta * (pixelsPerMeter[1] + pixelsPerMeter2[1] * delta),
-        z * (pixelsPerMeter[2] + pixelsPerMeter2[2] * delta)
+        delta * (commonUnitsPerMeter[0] + commonUnitsPerMeter2[0] * delta),
+        delta * (commonUnitsPerMeter[1] + commonUnitsPerMeter2[1] * delta),
+        z * (commonUnitsPerMeter[2] + commonUnitsPerMeter2[2] * delta)
       ];
 
       let pt = [longitude, latitude];
@@ -165,11 +170,11 @@ test('getDistanceScales#pixelsPerMeter', t => {
       const realCoords = [
         lngLatToWorld(pt, scale)[0] - lngLatToWorld([longitude, latitude], scale)[0],
         lngLatToWorld(pt, scale)[1] - lngLatToWorld([longitude, latitude], scale)[1],
-        z * getDistanceScales({longitude: pt[0], latitude: pt[1], scale}).pixelsPerMeter[2]
+        z * getDistanceScales({longitude: pt[0], latitude: pt[1], scale}).commonUnitsPerMeter[2]
       ];
 
-      const diff = getDiff(coords, realCoords);
-      const diffAdjusted = getDiff(coordsAdjusted, realCoords);
+      const diff = getDiff(coords, realCoords, scale);
+      const diffAdjusted = getDiff(coordsAdjusted, realCoords, scale);
 
       t.comment(`unadjusted: ${diff.message}`);
       t.comment(`adjusted: ${diffAdjusted.message}`);
@@ -215,16 +220,21 @@ test('getMeterZoom', t => {
 
   for (const latitude of TEST_LATITUDES) {
     const zoom = getMeterZoom({latitude});
+    const scale = zoomToScale(zoom);
 
-    const {pixelsPerMeter} = getDistanceScales({latitude, longitude: 0, zoom});
-    t.deepEqual(toLowPrecision(pixelsPerMeter), [1, -1, 1], 'zoom yields 1 pixel per meter');
+    const {commonUnitsPerMeter} = getDistanceScales({latitude, longitude: 0, zoom});
+    t.deepEqual(
+      toLowPrecision(commonUnitsPerMeter.map(x => x * scale)),
+      [1, 1, 1],
+      'zoom yields 1 pixel per meter'
+    );
   }
 
   t.end();
 });
 
-function getDiff(value, baseValue) {
-  const errorPixels = value.map((v, i) => Math.abs(v - baseValue[i]));
+function getDiff(value, baseValue, scale) {
+  const errorPixels = value.map((v, i) => Math.abs((v - baseValue[i]) * scale));
   const error = value.map(
     (v, i) => Math.abs(v - baseValue[i]) / Math.min(Math.abs(v), Math.abs(baseValue[i]))
   );

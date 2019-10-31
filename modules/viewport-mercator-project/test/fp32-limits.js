@@ -65,22 +65,25 @@ test('FP32 & Offset Comparison', t => {
       // Calculate using FP32+64 mixed offset mode (NEW WAY IN DECK.GL 6.0)
       // Select center point (the center is in 32-bit coords)
       const centerPointFP32 = [longitude, latitude].map(f => Math.fround(f));
-      const {pixelsPerDegree, pixelsPerDegree2} = getDistanceScales({
+      const {commonUnitsPerDegree, commonUnitsPerDegree2} = getDistanceScales({
         longitude: centerPointFP32[0],
         latitude: centerPointFP32[1],
-        scale,
         highPrecision: true
       });
       // these are passed as FP32
-      const pixelsPerDegreeFP32 = pixelsPerDegree.map(f => Math.fround(f));
-      const pixelsPerDegree2FP32 = pixelsPerDegree2.map(f => Math.fround(f));
+      const commonUnitsPerDegreeFP32 = commonUnitsPerDegree.map(f => Math.fround(f));
+      const commonUnitsPerDegree2FP32 = commonUnitsPerDegree2.map(f => Math.fround(f));
       // Only the offset is FP64
       const offsetFP64 = [point[0] - centerPointFP32[0], point[1] - centerPointFP32[1]];
 
       // To pixels
       const offsetPixelPos = [
-        offsetFP64[0] * (pixelsPerDegreeFP32[0] + pixelsPerDegree2FP32[0] * offsetFP64[0]),
-        offsetFP64[1] * (pixelsPerDegreeFP32[1] + pixelsPerDegree2FP32[1] * offsetFP64[1])
+        offsetFP64[0] *
+          (commonUnitsPerDegreeFP32[0] + commonUnitsPerDegree2FP32[0] * offsetFP64[0]) *
+          scale,
+        offsetFP64[1] *
+          (commonUnitsPerDegreeFP32[1] + commonUnitsPerDegree2FP32[1] * offsetFP64[1]) *
+          scale
       ];
 
       // We need to recalculate the "real" one because we re-centered
