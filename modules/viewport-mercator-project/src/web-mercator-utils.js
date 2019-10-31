@@ -197,17 +197,14 @@ export function getViewMatrix({
   const vm = createMat4();
 
   // Move camera to altitude (along the pitch & bearing direction)
-  mat4.translate(vm, vm, [0, 0, (-altitude * height) / scale]);
-
-  // After the rotateX, z values are in pixel units. Convert them to
-  // altitude units. 1 altitude unit = the screen height.
-  // mat4.scale(vm, vm, [1, 1, 1 / height]);
+  mat4.translate(vm, vm, [0, 0, -altitude]);
 
   // Rotate by bearing, and then by pitch (which tilts the view)
   mat4.rotateX(vm, vm, -pitch * DEGREES_TO_RADIANS);
   mat4.rotateZ(vm, vm, bearing * DEGREES_TO_RADIANS);
 
-  // mat4.scale(vm, vm, [scale, scale, scale]);
+  scale /= height;
+  mat4.scale(vm, vm, [scale, scale, scale]);
 
   if (center) {
     mat4.translate(vm, vm, vec3.negate([], center));
@@ -223,26 +220,24 @@ export function getProjectionParameters({
   height,
   altitude = DEFAULT_ALTITUDE,
   pitch = 0,
-  scale,
   nearZMultiplier = 1,
   farZMultiplier = 1
 }) {
-  const pixels = (altitude * height) / scale;
   // Find the distance from the center point to the center top
   // in altitude units using law of sines.
   const pitchRadians = pitch * DEGREES_TO_RADIANS;
   const halfFov = Math.atan(0.5 / altitude);
   const topHalfSurfaceDistance =
-    (Math.sin(halfFov) * pixels) / Math.sin(Math.PI / 2 - pitchRadians - halfFov);
+    (Math.sin(halfFov) * altitude) / Math.sin(Math.PI / 2 - pitchRadians - halfFov);
 
   // Calculate z value of the farthest fragment that should be rendered.
-  const farZ = Math.cos(Math.PI / 2 - pitchRadians) * topHalfSurfaceDistance + pixels;
+  const farZ = Math.cos(Math.PI / 2 - pitchRadians) * topHalfSurfaceDistance + altitude;
 
   return {
     fov: 2 * halfFov,
     aspect: width / height,
-    focalDistance: pixels,
-    near: (nearZMultiplier * height) / scale,
+    focalDistance: altitude,
+    near: nearZMultiplier,
     far: farZ * farZMultiplier
   };
 }
