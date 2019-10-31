@@ -251,6 +251,7 @@ function getDiff(value, baseValue, scale) {
 test('getProjectionParameters', t => {
   for (const vc in VIEWPORT_PROPS) {
     const props = VIEWPORT_PROPS[vc];
+    props.scale = zoomToScale(props.zoom);
 
     // TODO - for now, just tests that fields are valid number
     const {fov, aspect, focalDistance, near, far} = getProjectionParameters(props);

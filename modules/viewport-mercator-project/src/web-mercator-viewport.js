@@ -76,6 +76,7 @@ export default class WebMercatorViewport extends Viewport {
       pitch,
       bearing,
       altitude,
+      scale,
       nearZMultiplier,
       farZMultiplier
     });

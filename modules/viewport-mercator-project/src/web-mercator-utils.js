@@ -186,7 +186,7 @@ export function getViewMatrix({
   bearing,
   altitude,
   // Pre-calculated parameters
-  scale = 1,
+  scale,
   center = null
 }) {
   // VIEW MATRIX: PROJECTS MERCATOR WORLD COORDINATES
@@ -197,7 +197,7 @@ export function getViewMatrix({
   const vm = createMat4();
 
   // Move camera to altitude (along the pitch & bearing direction)
-  mat4.translate(vm, vm, [0, 0, -altitude * height]);
+  mat4.translate(vm, vm, [0, 0, (-altitude * height) / scale]);
 
   // After the rotateX, z values are in pixel units. Convert them to
   // altitude units. 1 altitude unit = the screen height.
@@ -207,7 +207,7 @@ export function getViewMatrix({
   mat4.rotateX(vm, vm, -pitch * DEGREES_TO_RADIANS);
   mat4.rotateZ(vm, vm, bearing * DEGREES_TO_RADIANS);
 
-  mat4.scale(vm, vm, [scale, scale, scale]);
+  // mat4.scale(vm, vm, [scale, scale, scale]);
 
   if (center) {
     mat4.translate(vm, vm, vec3.negate([], center));
@@ -223,10 +223,11 @@ export function getProjectionParameters({
   height,
   altitude = DEFAULT_ALTITUDE,
   pitch = 0,
+  scale,
   nearZMultiplier = 1,
   farZMultiplier = 1
 }) {
-  const pixels = altitude * height;
+  const pixels = (altitude * height) / scale;
   // Find the distance from the center point to the center top
   // in altitude units using law of sines.
   const pitchRadians = pitch * DEGREES_TO_RADIANS;
@@ -241,7 +242,7 @@ export function getProjectionParameters({
     fov: 2 * halfFov,
     aspect: width / height,
     focalDistance: pixels,
-    near: nearZMultiplier * height,
+    near: (nearZMultiplier * height) / scale,
     far: farZ * farZMultiplier
   };
 }
@@ -255,6 +256,7 @@ export function getProjectionMatrix({
   height,
   pitch,
   altitude,
+  scale,
   nearZMultiplier,
   farZMultiplier
 }) {
@@ -263,6 +265,7 @@ export function getProjectionMatrix({
     height,
     altitude,
     pitch,
+    scale,
     nearZMultiplier,
     farZMultiplier
   });
