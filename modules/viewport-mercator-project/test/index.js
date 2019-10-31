@@ -16,4 +16,4 @@ require('./spec/fly-to-viewport.spec');
 require('./fp32-limits');
 
 // Test vs. mapbox Transform
-// require('./spec/versus-mapbox/versus-mapbox.spec');
+require('./spec/versus-mapbox/versus-mapbox.spec');

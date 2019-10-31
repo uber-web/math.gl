@@ -21,6 +21,7 @@
 // NOTE: Transform is not a public API so we should be careful to always lock
 // down mapbox-gl to a specific major, minor, and patch version.
 import {Map, LngLat, Point} from './mapbox';
+import * as vec4 from 'gl-matrix/vec4';
 
 let Transform;
 /* eslint-disable */
@@ -93,10 +94,14 @@ export class MapboxTransform extends Transform {
   mapboxProject(lngLatZ) {
     const [lng, lat] = lngLatZ;
     const lngLat = new LngLat(lng, lat);
-    const point = this.locationPoint(lngLat);
-    const {x, y} = point;
-    // console.log('Project', [x, y], [lng, lat]);
-    return lngLatZ.length === 3 ? [x, y, 0] : [x, y];
+    const coord = this.locationCoordinate(lngLat);
+
+    const p = [coord.x * this.worldSize, coord.y * this.worldSize, 0, 1];
+    vec4.transformMat4(p, p, this.pixelMatrix);
+    const x = p[0] / p[3];
+    const y = p[1] / p[3];
+    const z = p[2] / p[3];
+    return lngLatZ.length === 3 ? [x, y, z] : [x, y];
   }
 
   // Uses map to unproject a coordinate
@@ -105,18 +110,7 @@ export class MapboxTransform extends Transform {
     const point = new Point(x, y);
     const latLng = this.pointLocation(point);
     const {lng, lat} = latLng;
-    // console.log('Unproject', [x, y], [lng, lat]);
-    return xyz.length === 3 ? [lng, lat, 0] : [lng, lat];
-  }
-
-  // Uses map to project a coordinate
-  mapboxProjectFlat([lng, lat]) {
-    return [this.lngX(lng), this.latY(lat)];
-  }
-
-  // Uses map to unproject a coordinate
-  mapboxUnprojectFlat([x, y]) {
-    return [this.xLng(x), this.yLat(y)];
+    return [lng, lat];
   }
 
   // Uses map to get position for panning
