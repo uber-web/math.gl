@@ -3,7 +3,7 @@
   "description": "Utilities for perspective-enabled Web Mercator projections",
   "author": "Uber Technologies, Inc.",
   "license": "MIT",
-  "version": "6.1.1",
+  "version": "7.0.0-alpha.0",
   "keywords": [
     "webgl",
     "javascript",
@@ -18,19 +18,10 @@
     "type": "git",
     "url": "https://github.com/uber-web/math.gl.git"
   },
-  "main": "dist/es5/index.js",
-  "module": "dist/esm/index.js",
-  "esnext": "dist/es6/index.js",
   "files": [
-    "dist",
-    "src"
+    "index.js"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.0.0",
-    "gl-matrix": "^3.0.0"
-  },
-  "devDependencies": {
-    "mapbox-gl": "^1.0.0",
-    "mock-browser": "^0.92.14"
+    "@math.gl/web-mercator": "^3.0.0"
   }
 }

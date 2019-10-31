@@ -1,5 +1,5 @@
 import test from 'tape-catch';
-import Viewport from 'viewport-mercator-project/viewport';
+import Viewport from '@math.gl/web-mercator/viewport';
 import * as mat4 from 'gl-matrix/mat4';
 
 const TEST_DATA = {

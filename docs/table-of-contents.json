@@ -43,11 +43,11 @@
           ]
         },
         {
-          "title": "viewport-mercator-project",
+          "title": "@math.gl/web-mercator",
           "entries": [
-            {"entry": "modules/viewport-mercator-project/docs/developer-guide/viewport-mercator-project-guide"},
-            {"entry": "modules/viewport-mercator-project/docs/developer-guide/about-coordinates"},
-            {"entry": "modules/viewport-mercator-project/docs/developer-guide/offset-projection-accuracy"}
+            {"entry": "modules/web-mercator/docs/developer-guide/web-mercator-guide"},
+            {"entry": "modules/web-mercator/docs/developer-guide/about-coordinates"},
+            {"entry": "modules/web-mercator/docs/developer-guide/offset-projection-accuracy"}
           ]
         }
       ]
@@ -98,10 +98,10 @@
           ]
         },
         {
-          "title": "viewport-mercator-project",
+          "title": "@math.gl/web-mercator",
           "entries": [
-            {"entry": "modules/viewport-mercator-project/docs/api-reference/web-mercator-utils"},
-            {"entry": "modules/viewport-mercator-project/docs/api-reference/web-mercator-viewport"}
+            {"entry": "modules/web-mercator/docs/api-reference/web-mercator-utils"},
+            {"entry": "modules/web-mercator/docs/api-reference/web-mercator"}
           ]
         }
       ]
