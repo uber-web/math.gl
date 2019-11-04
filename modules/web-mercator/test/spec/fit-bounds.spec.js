@@ -1,6 +1,6 @@
 import test from 'tape-catch';
-import {fitBounds} from 'viewport-mercator-project';
-import {WebMercatorViewport} from 'viewport-mercator-project';
+import {fitBounds} from '@math.gl/web-mercator';
+import {WebMercatorViewport} from '@math.gl/web-mercator';
 import {toLowPrecision} from '../utils/test-utils';
 
 const FITBOUNDS_TEST_CASES = [

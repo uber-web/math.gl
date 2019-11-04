@@ -1,4 +1,4 @@
-import {WebMercatorViewport} from 'viewport-mercator-project';
+import {WebMercatorViewport} from '@math.gl/web-mercator';
 import test from 'tape-catch';
 import {config, equals} from 'math.gl';
 

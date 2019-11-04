@@ -1,5 +1,5 @@
 import destination from '@turf/destination';
-import {lngLatToWorld, getDistanceScales} from 'viewport-mercator-project';
+import {lngLatToWorld, getDistanceScales} from '@math.gl/web-mercator';
 import test from 'tape-catch';
 
 import VIEWPORT_PROPS from './utils/sample-viewports';

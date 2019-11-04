@@ -1,6 +1,6 @@
 # Overview
 
-> The viewport-mercator-project module was added to math.gl on Oct 1, 2019. It previously resided in a separate repository. See the original [release history](https://github.com/uber-common/viewport-mercator-project/blob/master/docs/whats-new.md)
+> The `viewport-mercator-project` module was added to `@math.gl/web-mercator` on Oct 1, 2019. It previously resided in a separate repository. See the original [release history](https://github.com/uber-common/viewport-mercator-project/blob/master/docs/whats-new.md)
 
 Projection and camera utilities supporting the Web Mercator Projection. At its core this is a utility for converting to and from map coordinates (i.e. latitude, longitude) to screen coordinates and back.
 
@@ -13,11 +13,11 @@ Specifically built for use with [deck.gl](https://github.com/uber/deck.gl) and [
 The `WebMercatorViewport` class offers the equivalent of a 3D matrix "camera" class of the type you would find in any 3D/WebGL/OpenGL library.
 
 ```
-npm install viewport-mercator-project --save
+npm install @math.gl/web-mercator --save
 ```
 
 ```js
-import WebMercatorViewport from 'viewport-mercator-project';
+import WebMercatorViewport from '@math.gl/web-mercator';
 
 // A viewport looking at San Francisco city area
 const viewport = new WebMercatorViewport({

@@ -3,6 +3,6 @@
 // so no need to support it here
 export default function assert(condition, message) {
   if (!condition) {
-    throw new Error(message || 'viewport-mercator-project: assertion failed.');
+    throw new Error(message || '@math.gl/web-mercator: assertion failed.');
   }
 }

@@ -1,5 +1,5 @@
 import test from 'tape-catch';
-import {normalizeViewportProps} from 'viewport-mercator-project';
+import {normalizeViewportProps} from '@math.gl/web-mercator';
 import {config, equals} from 'math.gl';
 
 const NORMALIZATION_TEST_CASES = [

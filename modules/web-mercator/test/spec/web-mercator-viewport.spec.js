@@ -1,5 +1,5 @@
 import test from 'tape-catch';
-import {WebMercatorViewport} from 'viewport-mercator-project';
+import {WebMercatorViewport} from '@math.gl/web-mercator';
 import {equals, config} from 'math.gl';
 
 import VIEWPORT_PROPS from '../utils/sample-viewports';
