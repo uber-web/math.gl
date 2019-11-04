@@ -11,18 +11,12 @@ export {
   worldToLngLat,
   worldToPixels,
   pixelsToWorld,
+  zoomToScale,
+  scaleToZoom,
   getMeterZoom,
   getDistanceScales,
   addMetersToLngLat,
   getViewMatrix,
   getProjectionMatrix,
   getProjectionParameters
-} from './web-mercator-utils';
-
-// Deprecated
-export {default as PerspectiveMercatorViewport} from './web-mercator-viewport';
-export {
-  getViewMatrix as getUncenteredViewMatrix,
-  lngLatToWorld as projectFlat,
-  worldToLngLat as unprojectFlat
 } from './web-mercator-utils';

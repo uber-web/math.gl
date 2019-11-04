@@ -38,15 +38,14 @@ export function scaleToZoom(scale) {
  *   Specifies a point on the sphere to project onto the map.
  * @return {Array} [x,y] coordinates.
  */
-export function lngLatToWorld([lng, lat], scale) {
-  assert(Number.isFinite(lng) && Number.isFinite(scale));
+export function lngLatToWorld([lng, lat]) {
+  assert(Number.isFinite(lng));
   assert(Number.isFinite(lat) && lat >= -90 && lat <= 90, 'invalid latitude');
 
-  scale *= TILE_SIZE;
   const lambda2 = lng * DEGREES_TO_RADIANS;
   const phi2 = lat * DEGREES_TO_RADIANS;
-  const x = (scale * (lambda2 + PI)) / (2 * PI);
-  const y = (scale * (PI - Math.log(Math.tan(PI_4 + phi2 * 0.5)))) / (2 * PI);
+  const x = (TILE_SIZE * (lambda2 + PI)) / (2 * PI);
+  const y = (TILE_SIZE * (PI + Math.log(Math.tan(PI_4 + phi2 * 0.5)))) / (2 * PI);
   return [x, y];
 }
 
@@ -59,10 +58,9 @@ export function lngLatToWorld([lng, lat], scale) {
  *   Has toArray method if you need a GeoJSON Array.
  *   Per cartographic tradition, lat and lon are specified as degrees.
  */
-export function worldToLngLat([x, y], scale) {
-  scale *= TILE_SIZE;
-  const lambda2 = (x / scale) * (2 * PI) - PI;
-  const phi2 = 2 * (Math.atan(Math.exp(PI - (y / scale) * (2 * PI))) - PI_4);
+export function worldToLngLat([x, y]) {
+  const lambda2 = (x / TILE_SIZE) * (2 * PI) - PI;
+  const phi2 = 2 * (Math.atan(Math.exp((y / TILE_SIZE) * (2 * PI) - PI)) - PI_4);
   return [lambda2 * RADIANS_TO_DEGREES, phi2 * RADIANS_TO_DEGREES];
 }
 
@@ -80,30 +78,28 @@ export function getMeterZoom({latitude}) {
  * In mercator projection mode, the distance scales vary significantly
  * with latitude.
  */
-export function getDistanceScales({latitude, longitude, zoom, scale, highPrecision = false}) {
-  // Calculate scale from zoom if not provided
-  scale = scale !== undefined ? scale : zoomToScale(zoom);
 
-  assert(Number.isFinite(latitude) && Number.isFinite(longitude) && Number.isFinite(scale));
+export function getDistanceScales({latitude, longitude, highPrecision = false}) {
+  assert(Number.isFinite(latitude) && Number.isFinite(longitude));
 
   const result = {};
-  const worldSize = TILE_SIZE * scale;
+  const worldSize = TILE_SIZE;
   const latCosine = Math.cos(latitude * DEGREES_TO_RADIANS);
 
   /**
    * Number of pixels occupied by one degree longitude around current lat/lon:
-     pixelsPerDegreeX = d(lngLatToWorld([lng, lat])[0])/d(lng)
+     unitsPerDegreeX = d(lngLatToWorld([lng, lat])[0])/d(lng)
        = scale * TILE_SIZE * DEGREES_TO_RADIANS / (2 * PI)
-     pixelsPerDegreeY = d(lngLatToWorld([lng, lat])[1])/d(lat)
+     unitsPerDegreeY = d(lngLatToWorld([lng, lat])[1])/d(lat)
        = -scale * TILE_SIZE * DEGREES_TO_RADIANS / cos(lat * DEGREES_TO_RADIANS)  / (2 * PI)
    */
-  const pixelsPerDegreeX = worldSize / 360;
-  const pixelsPerDegreeY = pixelsPerDegreeX / latCosine;
+  const unitsPerDegreeX = worldSize / 360;
+  const unitsPerDegreeY = unitsPerDegreeX / latCosine;
 
   /**
    * Number of pixels occupied by one meter around current lat/lon:
    */
-  const altPixelsPerMeter = worldSize / EARTH_CIRCUMFERENCE / latCosine;
+  const altUnitsPerMeter = worldSize / EARTH_CIRCUMFERENCE / latCosine;
 
   /**
    * LngLat: longitude -> east and latitude -> north (bottom left)
@@ -112,11 +108,11 @@ export function getDistanceScales({latitude, longitude, zoom, scale, highPrecisi
    *
    * Y needs to be flipped when converting delta degree/meter to delta pixels
    */
-  result.pixelsPerMeter = [altPixelsPerMeter, -altPixelsPerMeter, altPixelsPerMeter];
-  result.metersPerPixel = [1 / altPixelsPerMeter, -1 / altPixelsPerMeter, 1 / altPixelsPerMeter];
+  result.unitsPerMeter = [altUnitsPerMeter, altUnitsPerMeter, altUnitsPerMeter];
+  result.metersPerUnit = [1 / altUnitsPerMeter, 1 / altUnitsPerMeter, 1 / altUnitsPerMeter];
 
-  result.pixelsPerDegree = [pixelsPerDegreeX, -pixelsPerDegreeY, altPixelsPerMeter];
-  result.degreesPerPixel = [1 / pixelsPerDegreeX, -1 / pixelsPerDegreeY, 1 / altPixelsPerMeter];
+  result.unitsPerDegree = [unitsPerDegreeX, unitsPerDegreeY, altUnitsPerMeter];
+  result.degreesPerUnit = [1 / unitsPerDegreeX, 1 / unitsPerDegreeY, 1 / altUnitsPerMeter];
 
   /**
    * Taylor series 2nd order for 1/latCosine
@@ -126,12 +122,12 @@ export function getDistanceScales({latitude, longitude, zoom, scale, highPrecisi
    */
   if (highPrecision) {
     const latCosine2 = (DEGREES_TO_RADIANS * Math.tan(latitude * DEGREES_TO_RADIANS)) / latCosine;
-    const pixelsPerDegreeY2 = (pixelsPerDegreeX * latCosine2) / 2;
-    const altPixelsPerDegree2 = (worldSize / EARTH_CIRCUMFERENCE) * latCosine2;
-    const altPixelsPerMeter2 = (altPixelsPerDegree2 / pixelsPerDegreeY) * altPixelsPerMeter;
+    const unitsPerDegreeY2 = (unitsPerDegreeX * latCosine2) / 2;
+    const altUnitsPerDegree2 = (worldSize / EARTH_CIRCUMFERENCE) * latCosine2;
+    const altUnitsPerMeter2 = (altUnitsPerDegree2 / unitsPerDegreeY) * altUnitsPerMeter;
 
-    result.pixelsPerDegree2 = [0, -pixelsPerDegreeY2, altPixelsPerDegree2];
-    result.pixelsPerMeter2 = [altPixelsPerMeter2, 0, altPixelsPerMeter2];
+    result.unitsPerDegree2 = [0, unitsPerDegreeY2, altUnitsPerDegree2];
+    result.unitsPerMeter2 = [altUnitsPerMeter2, 0, altUnitsPerMeter2];
   }
 
   // Main results, used for converting meters to latlng deltas and scaling offsets
@@ -145,19 +141,17 @@ export function addMetersToLngLat(lngLatZ, xyz) {
   const [longitude, latitude, z0] = lngLatZ;
   const [x, y, z] = xyz;
 
-  const scale = 1; // any constant works
-  const {pixelsPerMeter, pixelsPerMeter2} = getDistanceScales({
+  const {unitsPerMeter, unitsPerMeter2} = getDistanceScales({
     longitude,
     latitude,
-    scale,
     highPrecision: true
   });
 
-  const worldspace = lngLatToWorld(lngLatZ, scale);
-  worldspace[0] += x * (pixelsPerMeter[0] + pixelsPerMeter2[0] * y);
-  worldspace[1] += y * (pixelsPerMeter[1] + pixelsPerMeter2[1] * y);
+  const worldspace = lngLatToWorld(lngLatZ);
+  worldspace[0] += x * (unitsPerMeter[0] + unitsPerMeter2[0] * y);
+  worldspace[1] += y * (unitsPerMeter[1] + unitsPerMeter2[1] * y);
 
-  const newLngLat = worldToLngLat(worldspace, scale);
+  const newLngLat = worldToLngLat(worldspace);
   const newZ = (z0 || 0) + (z || 0);
 
   return Number.isFinite(z0) || Number.isFinite(z) ? [newLngLat[0], newLngLat[1], newZ] : newLngLat;
@@ -175,9 +169,8 @@ export function getViewMatrix({
   bearing,
   altitude,
   // Pre-calculated parameters
-  center = null,
-  // Options
-  flipY = false
+  scale,
+  center = null
 }) {
   // VIEW MATRIX: PROJECTS MERCATOR WORLD COORDINATES
   // Note that mercator world coordinates typically need to be flipped
@@ -189,17 +182,12 @@ export function getViewMatrix({
   // Move camera to altitude (along the pitch & bearing direction)
   mat4.translate(vm, vm, [0, 0, -altitude]);
 
-  // After the rotateX, z values are in pixel units. Convert them to
-  // altitude units. 1 altitude unit = the screen height.
-  mat4.scale(vm, vm, [1, 1, 1 / height]);
-
   // Rotate by bearing, and then by pitch (which tilts the view)
   mat4.rotateX(vm, vm, -pitch * DEGREES_TO_RADIANS);
   mat4.rotateZ(vm, vm, bearing * DEGREES_TO_RADIANS);
 
-  if (flipY) {
-    mat4.scale(vm, vm, [1, -1, 1]);
-  }
+  scale /= height;
+  mat4.scale(vm, vm, [scale, scale, scale]);
 
   if (center) {
     mat4.translate(vm, vm, vec3.negate([], center));
@@ -229,7 +217,7 @@ export function getProjectionParameters({
   const farZ = Math.cos(Math.PI / 2 - pitchRadians) * topHalfSurfaceDistance + altitude;
 
   return {
-    fov: 2 * Math.atan(height / 2 / altitude),
+    fov: 2 * halfFov,
     aspect: width / height,
     focalDistance: altitude,
     near: nearZMultiplier,

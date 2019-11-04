@@ -90,11 +90,13 @@ export default function fitBounds({
   const center = [(se[0] + nw[0]) / 2 + offsetX, (se[1] + nw[1]) / 2 + offsetY];
 
   const centerLngLat = viewport.unproject(center);
-  const zoom = viewport.zoom + Math.log2(Math.abs(Math.min(scaleX, scaleY)));
+  const zoom = Math.min(maxZoom, viewport.zoom + Math.log2(Math.abs(Math.min(scaleX, scaleY))));
+
+  assert(Number.isFinite(zoom));
 
   return {
     longitude: centerLngLat[0],
     latitude: centerLngLat[1],
-    zoom: Math.min(zoom, maxZoom)
+    zoom
   };
 }
