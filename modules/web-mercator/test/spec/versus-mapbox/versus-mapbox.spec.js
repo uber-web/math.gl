@@ -1,6 +1,6 @@
 import {MapboxTransform} from './mapbox-transform';
 
-import {WebMercatorViewport} from 'viewport-mercator-project';
+import {WebMercatorViewport} from '@math.gl/web-mercator';
 import test from 'tape-catch';
 import {toLowPrecision} from '../../utils/test-utils';
 import {equals, config} from 'math.gl';

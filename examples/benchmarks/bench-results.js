@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, {Component} from 'react';
 
 import ReactTable from 'react-table';
@@ -18,7 +19,6 @@ function Star() {
   return <span style={{fontSize: '100%', color: 'yellow'}}>★</span>;
 }
 
-// eslint-disable-next-line react/prop-types
 function BarCell({color, percent, stars = 0, children}) {
   return (
     <div

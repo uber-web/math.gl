@@ -15,7 +15,7 @@ import {
   getProjectionParameters,
   worldToPixels,
   pixelsToWorld
-} from 'viewport-mercator-project';
+} from '@math.gl/web-mercator';
 
 import VIEWPORT_PROPS from '../utils/sample-viewports';
 

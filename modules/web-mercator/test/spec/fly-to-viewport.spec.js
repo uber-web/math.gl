@@ -1,5 +1,5 @@
 import test from 'tape-catch';
-import {flyToViewport, getFlyToDuration} from 'viewport-mercator-project';
+import {flyToViewport, getFlyToDuration} from '@math.gl/web-mercator';
 import {toLowPrecision} from '../utils/test-utils';
 
 /* eslint-disable max-len */
