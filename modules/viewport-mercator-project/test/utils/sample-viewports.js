@@ -5,9 +5,7 @@ export default {
     zoom: 11.5,
     bearing: 0,
     width: 800,
-    height: 600,
-    nearZMultiplier: 1,
-    farZMultiplier: 1
+    height: 600
   },
   pitched: {
     latitude: 37.75,
@@ -16,9 +14,7 @@ export default {
     pitch: 30,
     bearing: 0,
     width: 800,
-    height: 600,
-    nearZMultiplier: 1,
-    farZMultiplier: 1
+    height: 600
   },
   rotated: {
     latitude: 37.7749,
@@ -28,9 +24,7 @@ export default {
     bearing: 180,
     pitch: 60,
     width: 1267,
-    height: 400,
-    nearZMultiplier: 1,
-    farZMultiplier: 1
+    height: 400
   },
   highLatitude: {
     latitude: 75.751537,
@@ -40,8 +34,6 @@ export default {
     bearing: -40,
     pitch: 20,
     width: 500,
-    height: 500,
-    nearZMultiplier: 1,
-    farZMultiplier: 1
+    height: 500
   }
 };
