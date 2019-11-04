@@ -1,12 +1,11 @@
 # Web Mercator Utility Functions
 
-### `lngLatToWorld(lngLat, scale)`
+### `lngLatToWorld(lngLat)`
 
-Project a coordinate on sphere onto the Web Mercator coordinate system at a given zoom level.
+Project a coordinate on sphere onto the 512x512 Web Mercator plane.
 
 Parameters:
 - `lngLat` (Array, required) - Specifies a point on the sphere to project. `[lng,lat]` in degrees.
-- `scale` (Number, required) - Scale of the projection.
 
 Returns:
 - `[x, y]`
@@ -14,11 +13,10 @@ Returns:
 
 ### `worldToLngLat(xy, scale)`
 
-Unproject a coordinate from the Web Mercator coordinate system back to the sphere at a given zoom level.
+Unproject a coordinate from the 512x512 Web Mercator plane back to the sphere.
 
 Parameters:
 - `xy` (Array, required) - Specifies a point on the Web Mercator tile to unproject. `[x, y]` in pixels.
-- `scale` (Number, required) - Scale of the projection.
 
 Returns:
 - `[lng, lat]`
@@ -68,18 +66,16 @@ Parameters:
 - `viewport` (Object) - viewport props
 - `viewport.longitude` (Number, required)
 - `viewport.latitude` (Number, required)
-- `viewport.zoom` (Number, optional)
-- `viewport.scale` (Number, optional) - must supply if zoom is not specified
 - `viewport.highPrecision` (bool, optional) - default `false`
 
 Returns:
 - `distanceScales` (Object)
-- `distanceScales.pixelsPerMeter` (Array) - pixels per meter in `[x, y, z]`.
-- `distanceScales.metersPerPixel` (Array) - meters per pixel in `[x, y, z]`
-- `distanceScales.pixelsPerDegree` (Array) - pixels per degree in `[x, y, z]`
-- `distanceScales.degreesPerPixel` (Array) - degree per pixel in `[x, y, z]`
-- `distanceScales.pixelsPerMeter2` (Array) - if `highPrecision` is `true`, returns pixels per meter adjustment in `[x2, y2, z2]`. It offers a cheap way to compensate for the precision loss with latitude. Amends `pixelsPerMeter` by y offset (in meters): `[x + x2 * dy, y + y2 * dy, z + z2 * dy]`.
-- `distanceScales.pixelsPerDegree2` (Array) - if `highPrecision` is `true`, returns pixels per degree adjustment in `[x2, y2, z2]`. It offers a cheap way to compensate for the precision loss with latitude. Amends `pixelsPerDegree` by y offset (in degrees): `[x + x2 * dy, y + y2 * dy, z + z2 * dy]`.
+- `distanceScales.unitsPerMeter` (Array) - world units per meter in `[x, y, z]`.
+- `distanceScales.metersPerUnit` (Array) - meters per world unit in `[x, y, z]`
+- `distanceScales.unitsPerDegree` (Array) - world units per degree in `[x, y, z]`
+- `distanceScales.degreesPerUnit` (Array) - degree per world unit in `[x, y, z]`
+- `distanceScales.unitsPerMeter2` (Array) - if `highPrecision` is `true`, returns world units per meter adjustment in `[x2, y2, z2]`. It offers a cheap way to compensate for the precision loss with latitude. Amends `unitsPerMeter` by y offset (in meters): `[x + x2 * dy, y + y2 * dy, z + z2 * dy]`.
+- `distanceScales.unitsPerDegree2` (Array) - if `highPrecision` is `true`, returns world units per degree adjustment in `[x2, y2, z2]`. It offers a cheap way to compensate for the precision loss with latitude. Amends `unitsPerDegree` by y offset (in degrees): `[x + x2 * dy, y + y2 * dy, z + z2 * dy]`.
 
 
 ### `addMetersToLngLat(lngLatZ, xyz)`
@@ -104,8 +100,8 @@ Parameters:
 - `viewport.height` (Number, required)
 - `viewport.pitch` (Number, required)
 - `viewport.bearing` (Number, required)
+- `viewport.scale` (Number, required)
 - `viewport.altitude` (Number, required)
-- `viewport.flipY` (Boolean, optional) - Whether the returned matrix should flip y. Default `true` (latitude and screen y increase in opposite directions).
 - `viewport.center` (Array, optional) - pre-calculated world position of map center using `getWorldPosition`. Default `[0, 0]`.
 
 Returns:

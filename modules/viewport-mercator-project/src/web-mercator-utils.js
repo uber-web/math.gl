@@ -88,18 +88,18 @@ export function getDistanceScales({latitude, longitude, highPrecision = false}) 
 
   /**
    * Number of pixels occupied by one degree longitude around current lat/lon:
-     commonUnitsPerDegreeX = d(lngLatToWorld([lng, lat])[0])/d(lng)
+     unitsPerDegreeX = d(lngLatToWorld([lng, lat])[0])/d(lng)
        = scale * TILE_SIZE * DEGREES_TO_RADIANS / (2 * PI)
-     commonUnitsPerDegreeY = d(lngLatToWorld([lng, lat])[1])/d(lat)
+     unitsPerDegreeY = d(lngLatToWorld([lng, lat])[1])/d(lat)
        = -scale * TILE_SIZE * DEGREES_TO_RADIANS / cos(lat * DEGREES_TO_RADIANS)  / (2 * PI)
    */
-  const commonUnitsPerDegreeX = worldSize / 360;
-  const commonUnitsPerDegreeY = commonUnitsPerDegreeX / latCosine;
+  const unitsPerDegreeX = worldSize / 360;
+  const unitsPerDegreeY = unitsPerDegreeX / latCosine;
 
   /**
    * Number of pixels occupied by one meter around current lat/lon:
    */
-  const altCommonUnitsPerMeter = worldSize / EARTH_CIRCUMFERENCE / latCosine;
+  const altUnitsPerMeter = worldSize / EARTH_CIRCUMFERENCE / latCosine;
 
   /**
    * LngLat: longitude -> east and latitude -> north (bottom left)
@@ -108,27 +108,11 @@ export function getDistanceScales({latitude, longitude, highPrecision = false}) 
    *
    * Y needs to be flipped when converting delta degree/meter to delta pixels
    */
-  result.commonUnitsPerMeter = [
-    altCommonUnitsPerMeter,
-    altCommonUnitsPerMeter,
-    altCommonUnitsPerMeter
-  ];
-  result.metersPerCommonUnit = [
-    1 / altCommonUnitsPerMeter,
-    1 / altCommonUnitsPerMeter,
-    1 / altCommonUnitsPerMeter
-  ];
+  result.unitsPerMeter = [altUnitsPerMeter, altUnitsPerMeter, altUnitsPerMeter];
+  result.metersPerUnit = [1 / altUnitsPerMeter, 1 / altUnitsPerMeter, 1 / altUnitsPerMeter];
 
-  result.commonUnitsPerDegree = [
-    commonUnitsPerDegreeX,
-    commonUnitsPerDegreeY,
-    altCommonUnitsPerMeter
-  ];
-  result.degreesPerCommonUnit = [
-    1 / commonUnitsPerDegreeX,
-    1 / commonUnitsPerDegreeY,
-    1 / altCommonUnitsPerMeter
-  ];
+  result.unitsPerDegree = [unitsPerDegreeX, unitsPerDegreeY, altUnitsPerMeter];
+  result.degreesPerUnit = [1 / unitsPerDegreeX, 1 / unitsPerDegreeY, 1 / altUnitsPerMeter];
 
   /**
    * Taylor series 2nd order for 1/latCosine
@@ -138,13 +122,12 @@ export function getDistanceScales({latitude, longitude, highPrecision = false}) 
    */
   if (highPrecision) {
     const latCosine2 = (DEGREES_TO_RADIANS * Math.tan(latitude * DEGREES_TO_RADIANS)) / latCosine;
-    const commonUnitsPerDegreeY2 = (commonUnitsPerDegreeX * latCosine2) / 2;
-    const altCommonUnitsPerDegree2 = (worldSize / EARTH_CIRCUMFERENCE) * latCosine2;
-    const altCommonUnitsPerMeter2 =
-      (altCommonUnitsPerDegree2 / commonUnitsPerDegreeY) * altCommonUnitsPerMeter;
+    const unitsPerDegreeY2 = (unitsPerDegreeX * latCosine2) / 2;
+    const altUnitsPerDegree2 = (worldSize / EARTH_CIRCUMFERENCE) * latCosine2;
+    const altUnitsPerMeter2 = (altUnitsPerDegree2 / unitsPerDegreeY) * altUnitsPerMeter;
 
-    result.commonUnitsPerDegree2 = [0, commonUnitsPerDegreeY2, altCommonUnitsPerDegree2];
-    result.commonUnitsPerMeter2 = [altCommonUnitsPerMeter2, 0, altCommonUnitsPerMeter2];
+    result.unitsPerDegree2 = [0, unitsPerDegreeY2, altUnitsPerDegree2];
+    result.unitsPerMeter2 = [altUnitsPerMeter2, 0, altUnitsPerMeter2];
   }
 
   // Main results, used for converting meters to latlng deltas and scaling offsets
@@ -158,15 +141,15 @@ export function addMetersToLngLat(lngLatZ, xyz) {
   const [longitude, latitude, z0] = lngLatZ;
   const [x, y, z] = xyz;
 
-  const {commonUnitsPerMeter, commonUnitsPerMeter2} = getDistanceScales({
+  const {unitsPerMeter, unitsPerMeter2} = getDistanceScales({
     longitude,
     latitude,
     highPrecision: true
   });
 
   const worldspace = lngLatToWorld(lngLatZ);
-  worldspace[0] += x * (commonUnitsPerMeter[0] + commonUnitsPerMeter2[0] * y);
-  worldspace[1] += y * (commonUnitsPerMeter[1] + commonUnitsPerMeter2[1] * y);
+  worldspace[0] += x * (unitsPerMeter[0] + unitsPerMeter2[0] * y);
+  worldspace[1] += y * (unitsPerMeter[1] + unitsPerMeter2[1] * y);
 
   const newLngLat = worldToLngLat(worldspace);
   const newZ = (z0 || 0) + (z || 0);
@@ -251,7 +234,6 @@ export function getProjectionMatrix({
   height,
   pitch,
   altitude,
-  scale,
   nearZMultiplier,
   farZMultiplier
 }) {
@@ -260,7 +242,6 @@ export function getProjectionMatrix({
     height,
     altitude,
     pitch,
-    scale,
     nearZMultiplier,
     farZMultiplier
   });

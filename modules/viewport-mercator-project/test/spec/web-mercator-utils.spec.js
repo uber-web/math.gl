@@ -47,37 +47,32 @@ test('lngLatToWorld', t => {
 test('getDistanceScales', t => {
   for (const vc in VIEWPORT_PROPS) {
     const props = VIEWPORT_PROPS[vc];
-    const {
-      metersPerCommonUnit,
-      commonUnitsPerMeter,
-      degreesPerCommonUnit,
-      commonUnitsPerDegree
-    } = getDistanceScales(props);
+    const {metersPerUnit, unitsPerMeter, degreesPerUnit, unitsPerDegree} = getDistanceScales(props);
 
     t.deepEqual(
       [
-        toLowPrecision(metersPerCommonUnit[0] * commonUnitsPerMeter[0]),
-        toLowPrecision(metersPerCommonUnit[1] * commonUnitsPerMeter[1]),
-        toLowPrecision(metersPerCommonUnit[2] * commonUnitsPerMeter[2])
+        toLowPrecision(metersPerUnit[0] * unitsPerMeter[0]),
+        toLowPrecision(metersPerUnit[1] * unitsPerMeter[1]),
+        toLowPrecision(metersPerUnit[2] * unitsPerMeter[2])
       ],
       [1, 1, 1],
-      'metersPerCommonUnit checks with commonUnitsPerMeter'
+      'metersPerUnit checks with unitsPerMeter'
     );
 
     t.deepEqual(
       [
-        toLowPrecision(degreesPerCommonUnit[0] * commonUnitsPerDegree[0]),
-        toLowPrecision(degreesPerCommonUnit[1] * commonUnitsPerDegree[1]),
-        toLowPrecision(degreesPerCommonUnit[2] * commonUnitsPerDegree[2])
+        toLowPrecision(degreesPerUnit[0] * unitsPerDegree[0]),
+        toLowPrecision(degreesPerUnit[1] * unitsPerDegree[1]),
+        toLowPrecision(degreesPerUnit[2] * unitsPerDegree[2])
       ],
       [1, 1, 1],
-      'degreesPerCommonUnit checks with commonUnitsPerDegree'
+      'degreesPerUnit checks with unitsPerDegree'
     );
   }
   t.end();
 });
 
-test('getDistanceScales#commonUnitsPerDegree', t => {
+test('getDistanceScales#unitsPerDegree', t => {
   const scale = Math.pow(2, DISTANCE_SCALE_TEST_ZOOM);
   const z = 1000;
 
@@ -85,7 +80,7 @@ test('getDistanceScales#commonUnitsPerDegree', t => {
     t.comment(vc);
     const props = VIEWPORT_PROPS[vc];
     const {longitude, latitude} = props;
-    const {commonUnitsPerDegree, commonUnitsPerDegree2} = getDistanceScales({
+    const {unitsPerDegree, unitsPerDegree2} = getDistanceScales({
       longitude,
       latitude,
       highPrecision: true
@@ -96,15 +91,11 @@ test('getDistanceScales#commonUnitsPerDegree', t => {
       t.comment(`R = ${delta} degrees`);
 
       // To pixels
-      const coords = [
-        delta * commonUnitsPerDegree[0],
-        delta * commonUnitsPerDegree[1],
-        z * commonUnitsPerDegree[2]
-      ];
+      const coords = [delta * unitsPerDegree[0], delta * unitsPerDegree[1], z * unitsPerDegree[2]];
       const coordsAdjusted = [
-        delta * (commonUnitsPerDegree[0] + commonUnitsPerDegree2[0] * delta),
-        delta * (commonUnitsPerDegree[1] + commonUnitsPerDegree2[1] * delta),
-        z * (commonUnitsPerDegree[2] + commonUnitsPerDegree2[2] * delta)
+        delta * (unitsPerDegree[0] + unitsPerDegree2[0] * delta),
+        delta * (unitsPerDegree[1] + unitsPerDegree2[1] * delta),
+        z * (unitsPerDegree[2] + unitsPerDegree2[2] * delta)
       ];
 
       const pt = [longitude + delta, latitude + delta];
@@ -112,7 +103,7 @@ test('getDistanceScales#commonUnitsPerDegree', t => {
       const realCoords = [
         lngLatToWorld(pt, scale)[0] - lngLatToWorld([longitude, latitude], scale)[0],
         lngLatToWorld(pt, scale)[1] - lngLatToWorld([longitude, latitude], scale)[1],
-        z * getDistanceScales({longitude: pt[0], latitude: pt[1]}).commonUnitsPerMeter[2]
+        z * getDistanceScales({longitude: pt[0], latitude: pt[1]}).unitsPerMeter[2]
       ];
 
       const diff = getDiff(coords, realCoords, scale);
@@ -131,7 +122,7 @@ test('getDistanceScales#commonUnitsPerDegree', t => {
   t.end();
 });
 
-test('getDistanceScales#commonUnitsPerMeter', t => {
+test('getDistanceScales#unitsPerMeter', t => {
   const scale = Math.pow(2, DISTANCE_SCALE_TEST_ZOOM);
   const z = 1000;
 
@@ -139,7 +130,7 @@ test('getDistanceScales#commonUnitsPerMeter', t => {
     t.comment(vc);
     const props = VIEWPORT_PROPS[vc];
     const {longitude, latitude} = props;
-    const {commonUnitsPerMeter, commonUnitsPerMeter2} = getDistanceScales({
+    const {unitsPerMeter, unitsPerMeter2} = getDistanceScales({
       latitude,
       longitude,
       scale,
@@ -151,15 +142,11 @@ test('getDistanceScales#commonUnitsPerMeter', t => {
       t.comment(`R = ${delta} meters`);
 
       // To pixels
-      const coords = [
-        delta * commonUnitsPerMeter[0],
-        delta * commonUnitsPerMeter[1],
-        z * commonUnitsPerMeter[2]
-      ];
+      const coords = [delta * unitsPerMeter[0], delta * unitsPerMeter[1], z * unitsPerMeter[2]];
       const coordsAdjusted = [
-        delta * (commonUnitsPerMeter[0] + commonUnitsPerMeter2[0] * delta),
-        delta * (commonUnitsPerMeter[1] + commonUnitsPerMeter2[1] * delta),
-        z * (commonUnitsPerMeter[2] + commonUnitsPerMeter2[2] * delta)
+        delta * (unitsPerMeter[0] + unitsPerMeter2[0] * delta),
+        delta * (unitsPerMeter[1] + unitsPerMeter2[1] * delta),
+        z * (unitsPerMeter[2] + unitsPerMeter2[2] * delta)
       ];
 
       let pt = [longitude, latitude];
@@ -170,7 +157,7 @@ test('getDistanceScales#commonUnitsPerMeter', t => {
       const realCoords = [
         lngLatToWorld(pt, scale)[0] - lngLatToWorld([longitude, latitude], scale)[0],
         lngLatToWorld(pt, scale)[1] - lngLatToWorld([longitude, latitude], scale)[1],
-        z * getDistanceScales({longitude: pt[0], latitude: pt[1], scale}).commonUnitsPerMeter[2]
+        z * getDistanceScales({longitude: pt[0], latitude: pt[1], scale}).unitsPerMeter[2]
       ];
 
       const diff = getDiff(coords, realCoords, scale);
@@ -222,9 +209,9 @@ test('getMeterZoom', t => {
     const zoom = getMeterZoom({latitude});
     const scale = zoomToScale(zoom);
 
-    const {commonUnitsPerMeter} = getDistanceScales({latitude, longitude: 0, zoom});
+    const {unitsPerMeter} = getDistanceScales({latitude, longitude: 0, zoom});
     t.deepEqual(
-      toLowPrecision(commonUnitsPerMeter.map(x => x * scale)),
+      toLowPrecision(unitsPerMeter.map(x => x * scale)),
       [1, 1, 1],
       'zoom yields 1 pixel per meter'
     );

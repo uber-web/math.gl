@@ -100,7 +100,7 @@ export default class WebMercatorViewport extends Viewport {
     this.altitude = altitude;
 
     this.center = center;
-    this.commonUnitsPerMeter = getDistanceScales(this).commonUnitsPerMeter[2];
+    this.unitsPerMeter = getDistanceScales(this).unitsPerMeter[2];
 
     Object.freeze(this);
   }
