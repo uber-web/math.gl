@@ -38,6 +38,7 @@ export default class Viewport {
     // Window width/height in pixels (for pixel projection)
     width,
     height,
+    scale,
     // Desc
     viewMatrix = IDENTITY,
     projectionMatrix = IDENTITY
@@ -45,8 +46,8 @@ export default class Viewport {
     // Silently allow apps to send in 0,0
     this.width = width || 1;
     this.height = height || 1;
-    this.scale = 1;
-    this.pixelsPerMeter = 1;
+    this.scale = scale;
+    this.unitsPerMeter = 1;
 
     this.viewMatrix = viewMatrix;
     this.projectionMatrix = projectionMatrix;
@@ -147,7 +148,7 @@ export default class Viewport {
     const [x, y, z] = xyz;
 
     const y2 = topLeft ? y : this.height - y;
-    const targetZWorld = targetZ && targetZ * this.pixelsPerMeter;
+    const targetZWorld = targetZ && targetZ * this.unitsPerMeter;
     const coord = pixelsToWorld([x, y2, z], this.pixelUnprojectionMatrix, targetZWorld);
     const [X, Y, Z] = this.unprojectPosition(coord);
 
@@ -162,13 +163,13 @@ export default class Viewport {
 
   projectPosition(xyz) {
     const [X, Y] = this.projectFlat(xyz);
-    const Z = (xyz[2] || 0) * this.pixelsPerMeter;
+    const Z = (xyz[2] || 0) * this.unitsPerMeter;
     return [X, Y, Z];
   }
 
   unprojectPosition(xyz) {
     const [X, Y] = this.unprojectFlat(xyz);
-    const Z = (xyz[2] || 0) / this.pixelsPerMeter;
+    const Z = (xyz[2] || 0) / this.unitsPerMeter;
     return [X, Y, Z];
   }
 

@@ -8,18 +8,18 @@ This article discusses the usage and accuracy of the distance scales.
 
 Regular meter offset to pixels projection:
 ```
-uniform vec3 pixelsPerMeter;
+uniform vec3 unitsPerMeter;
 vec3 meters_offset_to_pixels_offset(vec3 meters) {
-    return meters * pixelsPerMeter;
+    return meters * unitsPerMeter;
 }
 ```
 
 When `getDistanceScales` is called with flag `highPrecision: true`, it generates additional multipliers to compensate for precision loss over latitude change. More precise meter offset to pixels projection:
 ```
-uniform vec3 pixelsPerMeter;
-uniform vec3 pixelsPerMeter2;
+uniform vec3 unitsPerMeter;
+uniform vec3 unitsPerMeter2;
 vec3 meters_offset_to_pixels_offset_adjusted(vec3 meters) {
-    return meters * (pixelsPerMeter + pixelsPerMeter2 * meters.y);
+    return meters * (unitsPerMeter + unitsPerMeter2 * meters.y);
 }
 ```
 
@@ -49,18 +49,18 @@ Accuracy at high latitude (75N, z = 12):
 
 Regular lng_lat offset to pixels projection:
 ```
-uniform vec3 pixelsPerDegree;
+uniform vec3 unitsPerDegree;
 vec3 lnglat_offset_to_pixels_offset(vec3 lngLatZ) {
-    return lngLatZ * pixelsPerDegree;
+    return lngLatZ * unitsPerDegree;
 }
 ```
 
 When `getDistanceScales` is called with flag `highPrecision: true`, it generates additional multipliers to compensate for precision loss over latitude change. More precise meter offset to pixels projection:
 ```
-uniform vec3 pixelsPerDegree;
-uniform vec3 pixelsPerDegree2;
+uniform vec3 unitsPerDegree;
+uniform vec3 unitsPerDegree2;
 vec3 lnglat_offset_to_pixels_offset_adjusted(vec3 lngLatZ) {
-    return lngLatZ * (pixelsPerDegree + pixelsPerDegree2 * lngLatZ.y);
+    return lngLatZ * (unitsPerDegree + unitsPerDegree2 * lngLatZ.y);
 }
 ```
 

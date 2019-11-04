@@ -67,7 +67,7 @@ export default class WebMercatorViewport extends Viewport {
     // TODO - just throw an Error instead?
     altitude = Math.max(0.75, altitude);
 
-    const center = lngLatToWorld([longitude, latitude], scale);
+    const center = lngLatToWorld([longitude, latitude]);
     center[2] = 0;
 
     const projectionMatrix = getProjectionMatrix({
@@ -82,14 +82,14 @@ export default class WebMercatorViewport extends Viewport {
 
     const viewMatrix = getViewMatrix({
       height,
+      scale,
       center,
       pitch,
       bearing,
-      altitude,
-      flipY: true
+      altitude
     });
 
-    super({width, height, viewMatrix, projectionMatrix});
+    super({width, height, scale, viewMatrix, projectionMatrix});
 
     // Save parameters
     this.latitude = latitude;
@@ -99,9 +99,8 @@ export default class WebMercatorViewport extends Viewport {
     this.bearing = bearing;
     this.altitude = altitude;
 
-    this.scale = scale;
     this.center = center;
-    this.pixelsPerMeter = getDistanceScales(this).pixelsPerMeter[2];
+    this.unitsPerMeter = getDistanceScales(this).unitsPerMeter[2];
 
     Object.freeze(this);
   }
@@ -117,8 +116,8 @@ export default class WebMercatorViewport extends Viewport {
    *   Specifies a point on the sphere to project onto the map.
    * @return {Array} [x,y] coordinates.
    */
-  projectFlat(lngLat, scale = this.scale) {
-    return lngLatToWorld(lngLat, scale);
+  projectFlat(lngLat) {
+    return lngLatToWorld(lngLat);
   }
 
   /**
@@ -130,8 +129,8 @@ export default class WebMercatorViewport extends Viewport {
    *   Has toArray method if you need a GeoJSON Array.
    *   Per cartographic tradition, lat and lon are specified as degrees.
    */
-  unprojectFlat(xy, scale = this.scale) {
-    return worldToLngLat(xy, scale);
+  unprojectFlat(xy) {
+    return worldToLngLat(xy);
   }
 
   /**
@@ -146,7 +145,7 @@ export default class WebMercatorViewport extends Viewport {
    */
   getMapCenterByLngLatPosition({lngLat, pos}) {
     const fromLocation = pixelsToWorld(pos, this.pixelUnprojectionMatrix);
-    const toLocation = lngLatToWorld(lngLat, this.scale);
+    const toLocation = lngLatToWorld(lngLat);
 
     const translate = vec2.add([], toLocation, vec2.negate([], fromLocation));
     const newCenter = vec2.add([], this.center, translate);
