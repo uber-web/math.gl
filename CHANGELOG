@@ -1,5 +1,63 @@
 # CHANGELOG
 
+## v3.1.0-alpha.1 - Nov 4, 2019
+
+- Rename viewport-mercator-project to @math.gl/web-mercator (#116)
+- [viewport-mercator-project] use zoom-independent world space (#118)
+- Add sun module (#114)
+- Port sun calculations from deck (#111)
+- Fixes for 3D tiles (#112)
+
+
+## v3.0.0 - Sep 13, 2019
+
+## v3.0.0-beta.3 - Aug 26, 2019
+
+- Add getRotation return a Matrix3 object (#95)
+
+## v3.0.0-beta.2 - Jul 24, 2019
+
+- @math.gl/culling: Frustum classes to enable CullingVolume tests (#91)
+- @math.gl/culling: AxisAlignedBoundingBox (#86)
+
+## v3.0.0-beta.1 - Jul 1, 2019
+
+## v3.0.0-alpha.6 - Jun 27, 2019
+
+- add isWGS84 (#85)
+
+## v3.0.0-alpha.5 - Jun 26, 2019
+
+- fix cartesianToCartographic (#84)
+
+## v3.0.0-alpha.4 - Jun 22, 2019
+
+## v3.0.0-alpha.3 - Jun 11, 2019
+
+## v3.0.0-alpha.2 - Jun 11, 2019
+
+## v3.0.0-alpha.1 - Jun 11, 2019
+
+- @math.gl/culling (#71)
+- core: Matrix/Vector API alignment and performance tuning (#74)
+- core: `transform` API overhaul (#72)
+- Update docs and license (#70)
+- @math.gl/geospatial: new module, initial commit (#66)
+- Bump ocular-dev-tools to publish LICENSE (#68)
+- Matrix4: Passes three.js test suite (#62)
+- core: prep for geospatial (#65)
+- Perf: Array base-class initialization perf improvements (#64)
+- New methods: `Matrix.setColumn`/`getColumn` (#57)
+- Monorepo dev setup (#55)
+
+
+## v2.3.2 - May 30, 2019
+
+- Readme hotfix (#49)
+- Add scale factor support to Matrix3 and Matrix4 (#44)
+- Implement matrix3 (#41)
+
+
 ## v2.3.0 - Jan 29, 2019
 
 ## v2.3.0-beta.2 - Jan 24, 2019
