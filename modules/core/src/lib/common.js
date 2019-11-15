@@ -167,13 +167,16 @@ export function equals(a, b, epsilon) {
       }
       return true;
     }
-    if (a && typeof a === 'object' && a.equals) {
+    if (a && a.equals) {
       return a.equals(b);
     }
-    if (b && typeof b === 'object' && b.equals) {
+    if (b && b.equals) {
       return b.equals(a);
     }
-    return Math.abs(a - b) <= config.EPSILON * Math.max(1.0, Math.abs(a), Math.abs(b));
+    if (Number.isFinite(a) && Number.isFinite(b)) {
+      return Math.abs(a - b) <= config.EPSILON * Math.max(1.0, Math.abs(a), Math.abs(b));
+    }
+    return false;
   } finally {
     config.EPSILON = oldEpsilon;
   }

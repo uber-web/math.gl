@@ -87,6 +87,8 @@ test('math.gl#equals', t => {
     equals([1.0, 2.0], new Float32Array([1.0, 3.0])),
     'should return false for Array and TypedArray with different values'
   );
+  t.notOk(equals([0], 0), 'should return false for Array and Number');
+  t.notOk(equals(null, 0), 'should return false for null and Number');
   tapeEquals(
     t,
     [1.0, 2.0],
