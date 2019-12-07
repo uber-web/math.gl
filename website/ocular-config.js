@@ -18,7 +18,7 @@ for (const dependency in DEPENDENCIES) {
 const DOCS = require('../docs/table-of-contents.json');
 
 module.exports = {
-  logLevel: 2,
+  logLevel: 1,
 
   DOC_FOLDERS: [`${__dirname}/../docs/`, `${__dirname}/../modules`],
   ROOT_FOLDER: '..',
