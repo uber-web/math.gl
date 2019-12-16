@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v3.1.1 - Dec 16, 2019
+
+- fix dependencies (#122)
+
 ## v3.1.0 - Dec 16, 2019
 
 - fix equals (#120)
