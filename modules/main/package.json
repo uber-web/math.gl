@@ -17,5 +17,8 @@
   "files": [
     "dist",
     "src"
-  ]
+  ],
+  "dependencies": {
+    "@math.gl/core": "3.1.0-alpha.2"
+  }
 }

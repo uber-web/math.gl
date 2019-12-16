@@ -33,7 +33,7 @@
   "dependencies": {
     "@babel/runtime": "^7.0.0",
     "gl-matrix": "^3.0.0",
-    "math.gl": "3.1.0-alpha.2"
+    "@math.gl/core": "3.1.0-alpha.2"
   },
   "gitHead": "e1a95300cb225a90da6e90333d4adf290f7ba501"
 }
