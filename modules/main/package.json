@@ -5,7 +5,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "3.1.0-alpha.2",
+  "version": "3.1.0",
   "keywords": [],
   "repository": {
     "type": "git",
