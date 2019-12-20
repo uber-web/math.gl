@@ -5,9 +5,11 @@
 // - It has not been fully adapted to math.gl conventions
 // - Documentation has not been ported
 
-import {Vector3, Vector4, Matrix4, assert} from 'math.gl';
+import {Vector3, Matrix4, assert} from 'math.gl';
 import CullingVolume from './culling-volume';
+import Plane from './plane';
 
+const scratchPlaneUpVector = new Vector3();
 const scratchPlaneRightVector = new Vector3();
 const scratchPlaneNearCenter = new Vector3();
 const scratchPlaneFarCenter = new Vector3();
@@ -94,7 +96,14 @@ export default class PerspectiveOffCenterFrustum {
     this.far = options.far;
     this._far = this.far;
 
-    this._cullingVolume = new CullingVolume();
+    this._cullingVolume = new CullingVolume([
+      new Plane(),
+      new Plane(),
+      new Plane(),
+      new Plane(),
+      new Plane(),
+      new Plane()
+    ]);
     this._perspectiveMatrix = new Matrix4();
     this._infinitePerspective = new Matrix4();
   }
@@ -181,7 +190,11 @@ export default class PerspectiveOffCenterFrustum {
 
     const planes = this._cullingVolume.planes;
 
-    const right = scratchPlaneRightVector.copy(direction).cross(up);
+    up = scratchPlaneUpVector.copy(up).normalize();
+    const right = scratchPlaneRightVector
+      .copy(direction)
+      .cross(up)
+      .normalize();
 
     const nearCenter = scratchPlaneNearCenter
       .copy(direction)
@@ -201,16 +214,9 @@ export default class PerspectiveOffCenterFrustum {
       .multiplyByScalar(this.left)
       .add(nearCenter)
       .subtract(position)
-      .normalize()
-      .cross(up)
-      .normalize();
+      .cross(up);
 
-    planes[0] = planes[0] || new Vector4();
-    let plane = planes[0];
-    plane.x = normal.x;
-    plane.y = normal.y;
-    plane.z = normal.z;
-    plane.w = -normal.dot(position);
+    planes[0].fromPointNormal(position, normal);
 
     // Right plane computation
     normal
@@ -218,16 +224,10 @@ export default class PerspectiveOffCenterFrustum {
       .multiplyByScalar(this.right)
       .add(nearCenter)
       .subtract(position)
-      .normalize()
       .cross(up)
-      .normalize();
+      .negate();
 
-    planes[1] = planes[1] || new Vector4();
-    plane = planes[1];
-    plane.x = normal.x;
-    plane.y = normal.y;
-    plane.z = normal.z;
-    plane.w = -normal.dot(position);
+    planes[1].fromPointNormal(position, normal);
 
     // Bottom plane computation
     normal
@@ -235,16 +235,10 @@ export default class PerspectiveOffCenterFrustum {
       .multiplyByScalar(this.bottom)
       .add(nearCenter)
       .subtract(position)
-      .normalize()
       .cross(right)
-      .normalize();
+      .negate();
 
-    planes[2] = planes[2] || new Vector4();
-    plane = planes[2];
-    plane.x = normal.x;
-    plane.y = normal.y;
-    plane.z = normal.z;
-    plane.w = -normal.dot(position);
+    planes[2].fromPointNormal(position, normal);
 
     // Top plane computation
     normal
@@ -252,39 +246,19 @@ export default class PerspectiveOffCenterFrustum {
       .multiplyByScalar(this.top)
       .add(nearCenter)
       .subtract(position)
-      .normalize()
-      .cross(right)
-      .normalize();
+      .cross(right);
 
-    planes[3] = planes[3] || new Vector4();
-    plane = planes[3];
-    plane.x = normal.x;
-    plane.y = normal.y;
-    plane.z = normal.z;
-    plane.w = -normal.dot(position);
+    planes[3].fromPointNormal(position, normal);
 
-    normal = new Vector3().copy(direction).normalize();
+    normal = new Vector3().copy(direction);
 
     // Near plane computation
-    planes[4] = planes[4] || new Vector4();
-    plane = planes[4];
-    plane.x = direction.x;
-    plane.y = direction.y;
-    plane.z = direction.z;
-    plane.w = -direction.dot(nearCenter);
+    planes[4].fromPointNormal(nearCenter, normal);
 
     // Far plane computation
-    normal
-      .copy(direction)
-      .negate()
-      .normalize();
+    normal.negate();
 
-    planes[5] = planes[5] || new Vector4();
-    plane = planes[5];
-    plane.x = normal.x;
-    plane.y = normal.y;
-    plane.z = normal.z;
-    plane.w = -normal.dot(farCenter);
+    planes[5].fromPointNormal(farCenter, normal);
 
     return this._cullingVolume;
   }

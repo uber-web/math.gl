@@ -54,10 +54,10 @@ export default class CullingVolume {
       let plane1 = this.planes[planeIndex + 1];
 
       if (!plane0) {
-        plane0 = this.planes[planeIndex] = new Vector4();
+        plane0 = this.planes[planeIndex] = new Plane();
       }
       if (!plane1) {
-        plane1 = this.planes[planeIndex + 1] = new Vector4();
+        plane1 = this.planes[planeIndex + 1] = new Plane();
       }
 
       const plane0Center = scratchPlaneCenter
@@ -66,11 +66,7 @@ export default class CullingVolume {
         .add(center);
       const plane0Distance = -faceNormal.dot(plane0Center);
 
-      // plane0.fromNormalDistance(faceNormal, plane0Distance);
-      plane0.x = faceNormal.x;
-      plane0.y = faceNormal.y;
-      plane0.z = faceNormal.z;
-      plane0.w = plane0Distance;
+      plane0.fromPointNormal(plane0Center, faceNormal);
 
       const plane1Center = scratchPlaneCenter
         .copy(faceNormal)
@@ -81,11 +77,7 @@ export default class CullingVolume {
 
       const plane1Distance = -negatedFaceNormal.dot(plane1Center);
 
-      // plane1.fromNormalDistance(negatedFaceNormal, plane1Distance);
-      plane1.x = negatedFaceNormal.x;
-      plane1.y = negatedFaceNormal.y;
-      plane1.z = negatedFaceNormal.z;
-      plane1.w = plane1Distance;
+      plane1.fromPointNormal(plane1Center, negatedFaceNormal);
 
       planeIndex += 2;
     }
@@ -98,8 +90,7 @@ export default class CullingVolume {
     assert(boundingVolume);
     // const planes = this.planes;
     let intersect = Intersect.INSIDE;
-    for (const planeCoefficients of this.planes) {
-      const plane = scratchPlane.fromCoefficients(...planeCoefficients);
+    for (const plane of this.planes) {
       const result = boundingVolume.intersectPlane(plane);
       switch (result) {
         case Intersect.OUTSIDE:
@@ -150,7 +141,7 @@ export default class CullingVolume {
         continue;
       }
 
-      const plane = scratchPlane.fromCoefficients(...planes[k]);
+      const plane = planes[k];
       const result = boundingVolume.intersectPlane(plane);
       if (result === Intersect.OUTSIDE) {
         return CullingVolume.MASK_OUTSIDE;
