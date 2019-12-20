@@ -214,11 +214,9 @@ export default class PerspectiveOffCenterFrustum {
       .multiplyByScalar(this.left)
       .add(nearCenter)
       .subtract(position)
-      .cross(up)
-      .normalize();
+      .cross(up);
 
-    let plane = planes[0];
-    plane.fromCoefficients(normal.x, normal.y, normal.z, -normal.dot(position));
+    planes[0].fromPointNormal(position, normal);
 
     // Right plane computation
     normal
@@ -227,11 +225,9 @@ export default class PerspectiveOffCenterFrustum {
       .add(nearCenter)
       .subtract(position)
       .cross(up)
-      .normalize()
       .negate();
 
-    plane = planes[1];
-    plane.fromCoefficients(normal.x, normal.y, normal.z, -normal.dot(position));
+    planes[1].fromPointNormal(position, normal);
 
     // Bottom plane computation
     normal
@@ -240,11 +236,9 @@ export default class PerspectiveOffCenterFrustum {
       .add(nearCenter)
       .subtract(position)
       .cross(right)
-      .normalize()
       .negate();
 
-    plane = planes[2];
-    plane.fromCoefficients(normal.x, normal.y, normal.z, -normal.dot(position));
+    planes[2].fromPointNormal(position, normal);
 
     // Top plane computation
     normal
@@ -252,23 +246,19 @@ export default class PerspectiveOffCenterFrustum {
       .multiplyByScalar(this.top)
       .add(nearCenter)
       .subtract(position)
-      .cross(right)
-      .normalize();
+      .cross(right);
 
-    plane = planes[3];
-    plane.fromCoefficients(normal.x, normal.y, normal.z, -normal.dot(position));
+    planes[3].fromPointNormal(position, normal);
 
-    normal = new Vector3().copy(direction).normalize();
+    normal = new Vector3().copy(direction);
 
     // Near plane computation
-    plane = planes[4];
-    plane.fromCoefficients(normal.x, normal.y, normal.z, -normal.dot(nearCenter));
+    planes[4].fromPointNormal(nearCenter, normal);
 
     // Far plane computation
     normal.negate();
 
-    plane = planes[5];
-    plane.fromCoefficients(normal.x, normal.y, normal.z, -normal.dot(farCenter));
+    planes[5].fromPointNormal(farCenter, normal);
 
     return this._cullingVolume;
   }

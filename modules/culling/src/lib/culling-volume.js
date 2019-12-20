@@ -66,7 +66,7 @@ export default class CullingVolume {
         .add(center);
       const plane0Distance = -faceNormal.dot(plane0Center);
 
-      plane0.fromCoefficients(faceNormal.x, faceNormal.y, faceNormal.z, plane0Distance);
+      plane0.fromPointNormal(plane0Center, faceNormal);
 
       const plane1Center = scratchPlaneCenter
         .copy(faceNormal)
@@ -77,12 +77,7 @@ export default class CullingVolume {
 
       const plane1Distance = -negatedFaceNormal.dot(plane1Center);
 
-      plane1.fromCoefficients(
-        negatedFaceNormal.x,
-        negatedFaceNormal.y,
-        negatedFaceNormal.z,
-        plane1Distance
-      );
+      plane1.fromPointNormal(plane1Center, negatedFaceNormal);
 
       planeIndex += 2;
     }
