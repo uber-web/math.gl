@@ -35,7 +35,7 @@ export default class Plane {
   // Creates a plane from the general equation
   fromCoefficients(a, b, c, d) {
     this.normal.set(a, b, c);
-    assert(this.normal.len() === 1);
+    assert(equals(this.normal.len(), 1));
     this.distance = d;
     return this;
   }
