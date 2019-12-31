@@ -101,7 +101,7 @@ test('flyToViewport', t => {
   t.end();
 });
 
-test.only('getFlyToDuration', t => {
+test('getFlyToDuration', t => {
   DURATION_TEST_CASES.forEach(testCase => {
     const duration = getFlyToDuration(testCase.startProps, testCase.endProps, testCase.opts);
     t.deepEqual(
