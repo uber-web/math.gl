@@ -83,6 +83,12 @@ const DURATION_TEST_CASES = [
     endProps: END_PROPS,
     opts: {maxDuration: 5000},
     expect: 0
+  },
+  {
+    title: 'duration to the same view state',
+    startProps: START_PROPS,
+    endProps: START_PROPS,
+    expect: 0
   }
 ];
 
@@ -95,7 +101,7 @@ test('flyToViewport', t => {
   t.end();
 });
 
-test('getFlyToDuration', t => {
+test.only('getFlyToDuration', t => {
   DURATION_TEST_CASES.forEach(testCase => {
     const duration = getFlyToDuration(testCase.startProps, testCase.endProps, testCase.opts);
     t.deepEqual(

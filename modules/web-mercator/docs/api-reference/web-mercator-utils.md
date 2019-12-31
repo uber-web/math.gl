@@ -229,3 +229,6 @@ Parameters:
 
 Returns:
 - `duration` Number, in milliseconds.
+
+NOTES:
+- '0' will be returned when `longitude` and `latitude` of `startProps` and `endProps` are same.

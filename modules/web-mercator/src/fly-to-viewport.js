@@ -58,7 +58,11 @@ export default function flyToViewport(startProps, endProps, t, opts = {}) {
 export function getFlyToDuration(startProps, endProps, opts = {}) {
   opts = Object.assign({}, DEFAULT_OPTS, opts);
   const {screenSpeed, speed, maxDuration} = opts;
-  const {S, rho} = getFlyToTransitionParams(startProps, endProps, opts);
+  const {S, rho, u1} = getFlyToTransitionParams(startProps, endProps, opts);
+  if (u1 === 0) {
+    // No change in viewport center
+    return 0;
+  }
   const length = 1000 * S;
   let duration;
   if (Number.isFinite(screenSpeed)) {
