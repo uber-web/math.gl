@@ -27,7 +27,7 @@ export default function flyToViewport(startProps, endProps, t, opts = {}) {
   );
 
   // If change in center is too small, do linear interpolaiton.
-  if (Math.abs(u1) < EPSILON) {
+  if (u1 < EPSILON) {
     for (const key of VIEWPORT_TRANSITION_PROPS) {
       const startValue = startProps[key];
       const endValue = endProps[key];
@@ -92,10 +92,13 @@ function getFlyToTransitionParams(startProps, endProps, opts) {
   const u1 = vec2.length(uDelta) * startScale;
   // u0 is treated as '0' in Eq (9).
 
+  // If u1 is too small, will generate invalid number
+  const _u1 = Math.max(u1, EPSILON);
+
   // Implement Equation (9) from above algorithm.
   const rho2 = rho * rho;
-  const b0 = (w1 * w1 - w0 * w0 + rho2 * rho2 * u1 * u1) / (2 * w0 * rho2 * u1);
-  const b1 = (w1 * w1 - w0 * w0 - rho2 * rho2 * u1 * u1) / (2 * w1 * rho2 * u1);
+  const b0 = (w1 * w1 - w0 * w0 + rho2 * rho2 * _u1 * _u1) / (2 * w0 * rho2 * _u1);
+  const b1 = (w1 * w1 - w0 * w0 - rho2 * rho2 * _u1 * _u1) / (2 * w1 * rho2 * _u1);
   const r0 = Math.log(Math.sqrt(b0 * b0 + 1) - b0);
   const r1 = Math.log(Math.sqrt(b1 * b1 + 1) - b1);
   const S = (r1 - r0) / rho;
