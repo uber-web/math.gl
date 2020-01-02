@@ -1,26 +1,21 @@
 # WebMercatorViewport
 
-The main purpose of the `PerspectiveMercatorViewport` is to enable 3D rendering to
-seamlessly overlay on top of map components that take web mercator style
-map coordinates (`lat`, `lon`, `zoom`, `pitch`, `bearing` etc),
-and to facilite the necessary mercator projections by breaking them into a
-minimal non-linear piece followed by a standard projection chain.
+The `WebMercatorViewport` class takes map camera states (`latitude`, `longitude`, `zoom`, `pitch`, `bearing` etc.),
+and performs projections between world and screen coordinates.
 
 
-## Methods
-
-### Constructor
+## Constructor
 
 | Parameter     |  Type    | Default | Description                                                |
 | ------------- | -------- | ------- | ---------------------------------------------------------- |
-| `width`       | `Number` | `1`       | Width of "viewport" or window                              |
-| `height`      | `Number` | `1`       | Height of "viewport" or window                             |
-| `latitude`    | `Number` | `37`      | Center of viewport on map (alternative to center)          |
-| `longitude`   | `Number` | `-122`    | Center of viewport on map (alternative to center)          |
-| `zoom`        | `Number` | `11`      | Scale = Math.pow(2,zoom) on map (alternative to opt.scale) |
-| `pitch`       | `Number` | `0`       | Camera angle in degrees (0 is straight down)               |
-| `bearing`     | `Number` | `0`       | Map rotation in degrees (0 means north is up)              |
-| `altitude`    | `Number` | `1.5`     | Altitude of camera in screen units                         |
+| `width`       | `Number` | `1`       | Width of viewport |
+| `height`      | `Number` | `1`       | Height of viewport |
+| `latitude`    | `Number` | `0`      | Latitude of viewport center  |
+| `longitude`   | `Number` | `0`    | Longitude of viewport center  |
+| `zoom`        | `Number` | `11`      | Map zoom (scale is calculated as `2^zoom`) |
+| `pitch`       | `Number` | `0`       | The pitch (tilt) of the map from the screen, in degrees (0 is straight down) |
+| `bearing`     | `Number` | `0`       | The bearing (rotation) of the map from north, in degrees counter-clockwise (0 means north is up) |
+| `altitude`    | `Number` | `1.5`     | Altitude of camera in screen units  |
 
 
 Remarks:
@@ -28,11 +23,13 @@ Remarks:
  - `width` and `height` are forced to 1 if supplied as 0, to avoid
    division by zero. This is intended to reduce the burden of apps to
    to check values before instantiating a `Viewport`.
- -  When using mercatorProjection, per cartographic tradition, longitudes and
+ -  When using Mercator projection, per cartographic tradition, longitudes and
    latitudes are specified as degrees.
 
 
-### `project(lngLatZ, opts)`
+## Methods
+
+##### `project(lngLatZ, opts)`
 
 Projects latitude and longitude to pixel coordinates on screen.
 
@@ -51,7 +48,7 @@ Remarks:
   rendering.
 
 
-### `unproject(xyz, opts)`
+##### `unproject(xyz, opts)`
 
 Unproject pixel coordinates on screen to longitude and latitude on map.
 
@@ -68,7 +65,7 @@ Returns: `[lng, lat]` or `[longitude, lat, Z]` in map coordinates. `Z` is elevat
 - If input is `[x, y, z]`: returns `[lng, lat, Z]`.
 
 
-### `projectFlat(lngLat, scale)`
+##### `projectFlat(lngLat, scale)`
 
 Project longitude and latitude onto Web Mercator coordinates.
 
@@ -81,7 +78,7 @@ Returns:
 
  - `[x, y]`, representing Web Mercator coordinates.
 
-### `unprojectFlat(xy, scale)`
+##### `unprojectFlat(xy, scale)`
 
 Unprojects a Web Mercator coordinate to longitude and latitude.
 | Parameter      | Type      | Default  | Description                     |
@@ -94,7 +91,7 @@ Returns:
  - `[longitude, latitude]`
 
 
-### `fitBounds(bounds, options)`
+##### `fitBounds(bounds, options)`
 
 Get a new flat viewport that fits around the given bounding box.
 
@@ -107,7 +104,7 @@ the bounding box. Each corner is specified in `[lon, lat]`.
   + `options.offset` ([Number,Number], optional) - The center of the given bounds relative to the viewport's center, `[x, y]` measured in pixels.
 
 
-### `getMapCenterByLngLatPosition(opts)`
+##### `getMapCenterByLngLatPosition(opts)`
 
 Returns the map center that place a given [lng, lat] coordinate at screen point [x, y].
 
