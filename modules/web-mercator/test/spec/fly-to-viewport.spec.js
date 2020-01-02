@@ -88,7 +88,13 @@ const DURATION_TEST_CASES = [
     title: 'duration to the same view state',
     startProps: START_PROPS,
     endProps: START_PROPS,
-    expect: 0
+    expect: 0.014729167
+  },
+  {
+    title: 'duration to the same location with different zoom',
+    startProps: START_PROPS,
+    endProps: {...START_PROPS, zoom: 10},
+    expect: 817.01417
   }
 ];
 
