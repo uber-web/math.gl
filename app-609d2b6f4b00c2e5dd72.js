@@ -6344,27 +6344,6 @@ exports.Paragraph2 = Paragraph2;
 
 /***/ }),
 
-/***/ "BIJH":
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__("rE2o");
-
-__webpack_require__("ioFf");
-
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-if (false) { var throwOnDirectAccess, isValidElement, REACT_ELEMENT_TYPE; } else {
-  // By explicitly using `prop-types` you are opting into new production behavior.
-  // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__("GpOR")();
-}
-
-/***/ }),
-
 /***/ "BXFF":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7344,23 +7323,6 @@ module.exports = exports["default"];
 
 /***/ }),
 
-/***/ "GUKz":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
-module.exports = ReactPropTypesSecret;
-
-/***/ }),
-
 /***/ "GZEu":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -7456,70 +7418,6 @@ module.exports = {
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__("91GP");Object.assign(module.exports,__webpack_require__("lZDb"));
-
-/***/ }),
-
-/***/ "GpOR":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-var emptyFunction = __webpack_require__("pBKI");
-
-var invariant = __webpack_require__("L38R");
-
-var ReactPropTypesSecret = __webpack_require__("GUKz");
-
-module.exports = function () {
-  function shim(props, propName, componentName, location, propFullName, secret) {
-    if (secret === ReactPropTypesSecret) {
-      // It is still safe when called from React.
-      return;
-    }
-
-    invariant(false, 'Calling PropTypes validators directly is not supported by the `prop-types` package. ' + 'Use PropTypes.checkPropTypes() to call them. ' + 'Read more at http://fb.me/use-check-prop-types');
-  }
-
-  ;
-  shim.isRequired = shim;
-
-  function getShim() {
-    return shim;
-  }
-
-  ; // Important!
-  // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.
-
-  var ReactPropTypes = {
-    array: shim,
-    bool: shim,
-    func: shim,
-    number: shim,
-    object: shim,
-    string: shim,
-    symbol: shim,
-    any: shim,
-    arrayOf: getShim,
-    element: shim,
-    instanceOf: getShim,
-    node: shim,
-    objectOf: getShim,
-    oneOf: getShim,
-    oneOfType: getShim,
-    shape: getShim,
-    exact: getShim
-  };
-  ReactPropTypes.checkPropTypes = emptyFunction;
-  ReactPropTypes.PropTypes = ReactPropTypes;
-  return ReactPropTypes;
-};
 
 /***/ }),
 
@@ -8235,6 +8133,17 @@ module.exports = __webpack_require__("g3g5").getIteratorMethod = function (it) {
 
 /***/ }),
 
+/***/ "Ji/l":
+/***/ (function(module, exports, __webpack_require__) {
+
+var $export = __webpack_require__("XKFU");
+$export($export.G + $export.W + $export.F * !__webpack_require__("D4iV").ABV, {
+  DataView: __webpack_require__("7Qtz").DataView
+});
+
+
+/***/ }),
+
 /***/ "JiEa":
 /***/ (function(module, exports) {
 
@@ -8541,64 +8450,6 @@ module.exports = Object.create || function create(O, Properties) {
   return Properties === undefined ? result : dPs(result, Properties);
 };
 
-
-/***/ }),
-
-/***/ "L38R":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
-/**
- * Use invariant() to assert state which your program assumes to be true.
- *
- * Provide sprintf-style format (only %s is supported) and arguments
- * to provide information about what broke and what you were
- * expecting.
- *
- * The invariant message will be stripped in production, but the invariant
- * will remain to ensure logic does not differ in production.
- */
-
-__webpack_require__("f3/d");
-
-__webpack_require__("pIFo");
-
-var validateFormat = function validateFormat(format) {};
-
-if (false) {}
-
-function invariant(condition, format, a, b, c, d, e, f) {
-  validateFormat(format);
-
-  if (!condition) {
-    var error;
-
-    if (format === undefined) {
-      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
-    } else {
-      var args = [a, b, c, d, e, f];
-      var argIndex = 0;
-      error = new Error(format.replace(/%s/g, function () {
-        return args[argIndex++];
-      }));
-      error.name = 'Invariant Violation';
-    }
-
-    error.framesToPop = 1; // we don't care about invariant's own frame
-
-    throw error;
-  }
-}
-
-module.exports = invariant;
 
 /***/ }),
 
@@ -12101,7 +11952,7 @@ var _react = __webpack_require__("q1tI");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__("BIJH");
+var _propTypes = __webpack_require__("17x9");
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
@@ -17596,11 +17447,17 @@ module.exports = _defineProperty;
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es6.object.create.js
+var es6_object_create = __webpack_require__("hHhE");
+
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.function.name.js
 var es6_function_name = __webpack_require__("f3/d");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.regexp.replace.js
 var es6_regexp_replace = __webpack_require__("pIFo");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es6.string.trim.js
+var es6_string_trim = __webpack_require__("Tze0");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.regexp.split.js
 var es6_regexp_split = __webpack_require__("KKXr");
@@ -17617,11 +17474,29 @@ var web_dom_iterable = __webpack_require__("rGqo");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.array.iterator.js
 var es6_array_iterator = __webpack_require__("yt8O");
 
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es6.array.is-array.js
+var es6_array_is_array = __webpack_require__("LK8F");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es6.array.for-each.js
+var es6_array_for_each = __webpack_require__("8+KV");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es6.array.map.js
+var es6_array_map = __webpack_require__("bWfx");
+
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.regexp.to-string.js
 var es6_regexp_to_string = __webpack_require__("a1Th");
 
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es6.date.to-string.js
+var es6_date_to_string = __webpack_require__("h7Nl");
+
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.object.to-string.js
 var es6_object_to_string = __webpack_require__("Btvt");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es6.array.index-of.js
+var es6_array_index_of = __webpack_require__("V+eJ");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es6.typed.data-view.js
+var es6_typed_data_view = __webpack_require__("Ji/l");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es7.symbol.async-iterator.js
 var es7_symbol_async_iterator = __webpack_require__("rE2o");
@@ -17629,14 +17504,554 @@ var es7_symbol_async_iterator = __webpack_require__("rE2o");
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.symbol.js
 var es6_symbol = __webpack_require__("ioFf");
 
-// CONCATENATED MODULE: ./node_modules/ocular-gatsby/node_modules/whatwg-fetch/fetch.js
-var support={searchParams:'URLSearchParams'in self,iterable:'Symbol'in self&&'iterator'in Symbol,blob:'FileReader'in self&&'Blob'in self&&function(){try{new Blob();return true;}catch(e){return false;}}(),formData:'FormData'in self,arrayBuffer:'ArrayBuffer'in self};function isDataView(obj){return obj&&DataView.prototype.isPrototypeOf(obj);}if(support.arrayBuffer){var viewClasses=['[object Int8Array]','[object Uint8Array]','[object Uint8ClampedArray]','[object Int16Array]','[object Uint16Array]','[object Int32Array]','[object Uint32Array]','[object Float32Array]','[object Float64Array]'];var isArrayBufferView=ArrayBuffer.isView||function(obj){return obj&&viewClasses.indexOf(Object.prototype.toString.call(obj))>-1;};}function normalizeName(name){if(typeof name!=='string'){name=String(name);}if(/[^a-z0-9\-#$%&'*+.^_`|~]/i.test(name)){throw new TypeError('Invalid character in header field name');}return name.toLowerCase();}function normalizeValue(value){if(typeof value!=='string'){value=String(value);}return value;}// Build a destructive iterator for the value list
-function iteratorFor(items){var iterator={next:function next(){var value=items.shift();return{done:value===undefined,value:value};}};if(support.iterable){iterator[Symbol.iterator]=function(){return iterator;};}return iterator;}function Headers(headers){this.map={};if(headers instanceof Headers){headers.forEach(function(value,name){this.append(name,value);},this);}else if(Array.isArray(headers)){headers.forEach(function(header){this.append(header[0],header[1]);},this);}else if(headers){Object.getOwnPropertyNames(headers).forEach(function(name){this.append(name,headers[name]);},this);}}Headers.prototype.append=function(name,value){name=normalizeName(name);value=normalizeValue(value);var oldValue=this.map[name];this.map[name]=oldValue?oldValue+', '+value:value;};Headers.prototype['delete']=function(name){delete this.map[normalizeName(name)];};Headers.prototype.get=function(name){name=normalizeName(name);return this.has(name)?this.map[name]:null;};Headers.prototype.has=function(name){return this.map.hasOwnProperty(normalizeName(name));};Headers.prototype.set=function(name,value){this.map[normalizeName(name)]=normalizeValue(value);};Headers.prototype.forEach=function(callback,thisArg){for(var name in this.map){if(this.map.hasOwnProperty(name)){callback.call(thisArg,this.map[name],name,this);}}};Headers.prototype.keys=function(){var items=[];this.forEach(function(value,name){items.push(name);});return iteratorFor(items);};Headers.prototype.values=function(){var items=[];this.forEach(function(value){items.push(value);});return iteratorFor(items);};Headers.prototype.entries=function(){var items=[];this.forEach(function(value,name){items.push([name,value]);});return iteratorFor(items);};if(support.iterable){Headers.prototype[Symbol.iterator]=Headers.prototype.entries;}function consumed(body){if(body.bodyUsed){return Promise.reject(new TypeError('Already read'));}body.bodyUsed=true;}function fileReaderReady(reader){return new Promise(function(resolve,reject){reader.onload=function(){resolve(reader.result);};reader.onerror=function(){reject(reader.error);};});}function readBlobAsArrayBuffer(blob){var reader=new FileReader();var promise=fileReaderReady(reader);reader.readAsArrayBuffer(blob);return promise;}function readBlobAsText(blob){var reader=new FileReader();var promise=fileReaderReady(reader);reader.readAsText(blob);return promise;}function readArrayBufferAsText(buf){var view=new Uint8Array(buf);var chars=new Array(view.length);for(var i=0;i<view.length;i++){chars[i]=String.fromCharCode(view[i]);}return chars.join('');}function bufferClone(buf){if(buf.slice){return buf.slice(0);}else{var view=new Uint8Array(buf.byteLength);view.set(new Uint8Array(buf));return view.buffer;}}function Body(){this.bodyUsed=false;this._initBody=function(body){this._bodyInit=body;if(!body){this._bodyText='';}else if(typeof body==='string'){this._bodyText=body;}else if(support.blob&&Blob.prototype.isPrototypeOf(body)){this._bodyBlob=body;}else if(support.formData&&FormData.prototype.isPrototypeOf(body)){this._bodyFormData=body;}else if(support.searchParams&&URLSearchParams.prototype.isPrototypeOf(body)){this._bodyText=body.toString();}else if(support.arrayBuffer&&support.blob&&isDataView(body)){this._bodyArrayBuffer=bufferClone(body.buffer);// IE 10-11 can't handle a DataView body.
-this._bodyInit=new Blob([this._bodyArrayBuffer]);}else if(support.arrayBuffer&&(ArrayBuffer.prototype.isPrototypeOf(body)||isArrayBufferView(body))){this._bodyArrayBuffer=bufferClone(body);}else{this._bodyText=body=Object.prototype.toString.call(body);}if(!this.headers.get('content-type')){if(typeof body==='string'){this.headers.set('content-type','text/plain;charset=UTF-8');}else if(this._bodyBlob&&this._bodyBlob.type){this.headers.set('content-type',this._bodyBlob.type);}else if(support.searchParams&&URLSearchParams.prototype.isPrototypeOf(body)){this.headers.set('content-type','application/x-www-form-urlencoded;charset=UTF-8');}}};if(support.blob){this.blob=function(){var rejected=consumed(this);if(rejected){return rejected;}if(this._bodyBlob){return Promise.resolve(this._bodyBlob);}else if(this._bodyArrayBuffer){return Promise.resolve(new Blob([this._bodyArrayBuffer]));}else if(this._bodyFormData){throw new Error('could not read FormData body as blob');}else{return Promise.resolve(new Blob([this._bodyText]));}};this.arrayBuffer=function(){if(this._bodyArrayBuffer){return consumed(this)||Promise.resolve(this._bodyArrayBuffer);}else{return this.blob().then(readBlobAsArrayBuffer);}};}this.text=function(){var rejected=consumed(this);if(rejected){return rejected;}if(this._bodyBlob){return readBlobAsText(this._bodyBlob);}else if(this._bodyArrayBuffer){return Promise.resolve(readArrayBufferAsText(this._bodyArrayBuffer));}else if(this._bodyFormData){throw new Error('could not read FormData body as text');}else{return Promise.resolve(this._bodyText);}};if(support.formData){this.formData=function(){return this.text().then(decode);};}this.json=function(){return this.text().then(JSON.parse);};return this;}// HTTP methods whose capitalization should be normalized
-var methods=['DELETE','GET','HEAD','OPTIONS','POST','PUT'];function normalizeMethod(method){var upcased=method.toUpperCase();return methods.indexOf(upcased)>-1?upcased:method;}function Request(input,options){options=options||{};var body=options.body;if(input instanceof Request){if(input.bodyUsed){throw new TypeError('Already read');}this.url=input.url;this.credentials=input.credentials;if(!options.headers){this.headers=new Headers(input.headers);}this.method=input.method;this.mode=input.mode;this.signal=input.signal;if(!body&&input._bodyInit!=null){body=input._bodyInit;input.bodyUsed=true;}}else{this.url=String(input);}this.credentials=options.credentials||this.credentials||'same-origin';if(options.headers||!this.headers){this.headers=new Headers(options.headers);}this.method=normalizeMethod(options.method||this.method||'GET');this.mode=options.mode||this.mode||null;this.signal=options.signal||this.signal;this.referrer=null;if((this.method==='GET'||this.method==='HEAD')&&body){throw new TypeError('Body not allowed for GET or HEAD requests');}this._initBody(body);}Request.prototype.clone=function(){return new Request(this,{body:this._bodyInit});};function decode(body){var form=new FormData();body.trim().split('&').forEach(function(bytes){if(bytes){var split=bytes.split('=');var name=split.shift().replace(/\+/g,' ');var value=split.join('=').replace(/\+/g,' ');form.append(decodeURIComponent(name),decodeURIComponent(value));}});return form;}function parseHeaders(rawHeaders){var headers=new Headers();// Replace instances of \r\n and \n followed by at least one space or horizontal tab with a space
-// https://tools.ietf.org/html/rfc7230#section-3.2
-var preProcessedHeaders=rawHeaders.replace(/\r?\n[\t ]+/g,' ');preProcessedHeaders.split(/\r?\n/).forEach(function(line){var parts=line.split(':');var key=parts.shift().trim();if(key){var value=parts.join(':').trim();headers.append(key,value);}});return headers;}Body.call(Request.prototype);function Response(bodyInit,options){if(!options){options={};}this.type='default';this.status=options.status===undefined?200:options.status;this.ok=this.status>=200&&this.status<300;this.statusText='statusText'in options?options.statusText:'OK';this.headers=new Headers(options.headers);this.url=options.url||'';this._initBody(bodyInit);}Body.call(Response.prototype);Response.prototype.clone=function(){return new Response(this._bodyInit,{status:this.status,statusText:this.statusText,headers:new Headers(this.headers),url:this.url});};Response.error=function(){var response=new Response(null,{status:0,statusText:''});response.type='error';return response;};var redirectStatuses=[301,302,303,307,308];Response.redirect=function(url,status){if(redirectStatuses.indexOf(status)===-1){throw new RangeError('Invalid status code');}return new Response(null,{status:status,headers:{location:url}});};var DOMException=self.DOMException;try{new DOMException();}catch(err){DOMException=function DOMException(message,name){this.message=message;this.name=name;var error=Error(message);this.stack=error.stack;};DOMException.prototype=Object.create(Error.prototype);DOMException.prototype.constructor=DOMException;}function fetch(input,init){return new Promise(function(resolve,reject){var request=new Request(input,init);if(request.signal&&request.signal.aborted){return reject(new DOMException('Aborted','AbortError'));}var xhr=new XMLHttpRequest();function abortXhr(){xhr.abort();}xhr.onload=function(){var options={status:xhr.status,statusText:xhr.statusText,headers:parseHeaders(xhr.getAllResponseHeaders()||'')};options.url='responseURL'in xhr?xhr.responseURL:options.headers.get('X-Request-URL');var body='response'in xhr?xhr.response:xhr.responseText;resolve(new Response(body,options));};xhr.onerror=function(){reject(new TypeError('Network request failed'));};xhr.ontimeout=function(){reject(new TypeError('Network request failed'));};xhr.onabort=function(){reject(new DOMException('Aborted','AbortError'));};xhr.open(request.method,request.url,true);if(request.credentials==='include'){xhr.withCredentials=true;}else if(request.credentials==='omit'){xhr.withCredentials=false;}if('responseType'in xhr&&support.blob){xhr.responseType='blob';}request.headers.forEach(function(value,name){xhr.setRequestHeader(name,value);});if(request.signal){request.signal.addEventListener('abort',abortXhr);xhr.onreadystatechange=function(){// DONE (success or failure)
-if(xhr.readyState===4){request.signal.removeEventListener('abort',abortXhr);}};}xhr.send(typeof request._bodyInit==='undefined'?null:request._bodyInit);});}fetch.polyfill=true;if(!self.fetch){self.fetch=fetch;self.Headers=Headers;self.Request=Request;self.Response=Response;}
+// CONCATENATED MODULE: ./node_modules/whatwg-fetch/fetch.js
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+var support = {
+  searchParams: 'URLSearchParams' in self,
+  iterable: 'Symbol' in self && 'iterator' in Symbol,
+  blob: 'FileReader' in self && 'Blob' in self && function () {
+    try {
+      new Blob();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }(),
+  formData: 'FormData' in self,
+  arrayBuffer: 'ArrayBuffer' in self
+};
+
+function isDataView(obj) {
+  return obj && DataView.prototype.isPrototypeOf(obj);
+}
+
+if (support.arrayBuffer) {
+  var viewClasses = ['[object Int8Array]', '[object Uint8Array]', '[object Uint8ClampedArray]', '[object Int16Array]', '[object Uint16Array]', '[object Int32Array]', '[object Uint32Array]', '[object Float32Array]', '[object Float64Array]'];
+
+  var isArrayBufferView = ArrayBuffer.isView || function (obj) {
+    return obj && viewClasses.indexOf(Object.prototype.toString.call(obj)) > -1;
+  };
+}
+
+function normalizeName(name) {
+  if (typeof name !== 'string') {
+    name = String(name);
+  }
+
+  if (/[^a-z0-9\-#$%&'*+.^_`|~]/i.test(name)) {
+    throw new TypeError('Invalid character in header field name');
+  }
+
+  return name.toLowerCase();
+}
+
+function normalizeValue(value) {
+  if (typeof value !== 'string') {
+    value = String(value);
+  }
+
+  return value;
+} // Build a destructive iterator for the value list
+
+
+function iteratorFor(items) {
+  var iterator = {
+    next: function next() {
+      var value = items.shift();
+      return {
+        done: value === undefined,
+        value: value
+      };
+    }
+  };
+
+  if (support.iterable) {
+    iterator[Symbol.iterator] = function () {
+      return iterator;
+    };
+  }
+
+  return iterator;
+}
+
+function Headers(headers) {
+  this.map = {};
+
+  if (headers instanceof Headers) {
+    headers.forEach(function (value, name) {
+      this.append(name, value);
+    }, this);
+  } else if (Array.isArray(headers)) {
+    headers.forEach(function (header) {
+      this.append(header[0], header[1]);
+    }, this);
+  } else if (headers) {
+    Object.getOwnPropertyNames(headers).forEach(function (name) {
+      this.append(name, headers[name]);
+    }, this);
+  }
+}
+
+Headers.prototype.append = function (name, value) {
+  name = normalizeName(name);
+  value = normalizeValue(value);
+  var oldValue = this.map[name];
+  this.map[name] = oldValue ? oldValue + ', ' + value : value;
+};
+
+Headers.prototype['delete'] = function (name) {
+  delete this.map[normalizeName(name)];
+};
+
+Headers.prototype.get = function (name) {
+  name = normalizeName(name);
+  return this.has(name) ? this.map[name] : null;
+};
+
+Headers.prototype.has = function (name) {
+  return this.map.hasOwnProperty(normalizeName(name));
+};
+
+Headers.prototype.set = function (name, value) {
+  this.map[normalizeName(name)] = normalizeValue(value);
+};
+
+Headers.prototype.forEach = function (callback, thisArg) {
+  for (var name in this.map) {
+    if (this.map.hasOwnProperty(name)) {
+      callback.call(thisArg, this.map[name], name, this);
+    }
+  }
+};
+
+Headers.prototype.keys = function () {
+  var items = [];
+  this.forEach(function (value, name) {
+    items.push(name);
+  });
+  return iteratorFor(items);
+};
+
+Headers.prototype.values = function () {
+  var items = [];
+  this.forEach(function (value) {
+    items.push(value);
+  });
+  return iteratorFor(items);
+};
+
+Headers.prototype.entries = function () {
+  var items = [];
+  this.forEach(function (value, name) {
+    items.push([name, value]);
+  });
+  return iteratorFor(items);
+};
+
+if (support.iterable) {
+  Headers.prototype[Symbol.iterator] = Headers.prototype.entries;
+}
+
+function consumed(body) {
+  if (body.bodyUsed) {
+    return Promise.reject(new TypeError('Already read'));
+  }
+
+  body.bodyUsed = true;
+}
+
+function fileReaderReady(reader) {
+  return new Promise(function (resolve, reject) {
+    reader.onload = function () {
+      resolve(reader.result);
+    };
+
+    reader.onerror = function () {
+      reject(reader.error);
+    };
+  });
+}
+
+function readBlobAsArrayBuffer(blob) {
+  var reader = new FileReader();
+  var promise = fileReaderReady(reader);
+  reader.readAsArrayBuffer(blob);
+  return promise;
+}
+
+function readBlobAsText(blob) {
+  var reader = new FileReader();
+  var promise = fileReaderReady(reader);
+  reader.readAsText(blob);
+  return promise;
+}
+
+function readArrayBufferAsText(buf) {
+  var view = new Uint8Array(buf);
+  var chars = new Array(view.length);
+
+  for (var i = 0; i < view.length; i++) {
+    chars[i] = String.fromCharCode(view[i]);
+  }
+
+  return chars.join('');
+}
+
+function bufferClone(buf) {
+  if (buf.slice) {
+    return buf.slice(0);
+  } else {
+    var view = new Uint8Array(buf.byteLength);
+    view.set(new Uint8Array(buf));
+    return view.buffer;
+  }
+}
+
+function Body() {
+  this.bodyUsed = false;
+
+  this._initBody = function (body) {
+    this._bodyInit = body;
+
+    if (!body) {
+      this._bodyText = '';
+    } else if (typeof body === 'string') {
+      this._bodyText = body;
+    } else if (support.blob && Blob.prototype.isPrototypeOf(body)) {
+      this._bodyBlob = body;
+    } else if (support.formData && FormData.prototype.isPrototypeOf(body)) {
+      this._bodyFormData = body;
+    } else if (support.searchParams && URLSearchParams.prototype.isPrototypeOf(body)) {
+      this._bodyText = body.toString();
+    } else if (support.arrayBuffer && support.blob && isDataView(body)) {
+      this._bodyArrayBuffer = bufferClone(body.buffer); // IE 10-11 can't handle a DataView body.
+
+      this._bodyInit = new Blob([this._bodyArrayBuffer]);
+    } else if (support.arrayBuffer && (ArrayBuffer.prototype.isPrototypeOf(body) || isArrayBufferView(body))) {
+      this._bodyArrayBuffer = bufferClone(body);
+    } else {
+      this._bodyText = body = Object.prototype.toString.call(body);
+    }
+
+    if (!this.headers.get('content-type')) {
+      if (typeof body === 'string') {
+        this.headers.set('content-type', 'text/plain;charset=UTF-8');
+      } else if (this._bodyBlob && this._bodyBlob.type) {
+        this.headers.set('content-type', this._bodyBlob.type);
+      } else if (support.searchParams && URLSearchParams.prototype.isPrototypeOf(body)) {
+        this.headers.set('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
+      }
+    }
+  };
+
+  if (support.blob) {
+    this.blob = function () {
+      var rejected = consumed(this);
+
+      if (rejected) {
+        return rejected;
+      }
+
+      if (this._bodyBlob) {
+        return Promise.resolve(this._bodyBlob);
+      } else if (this._bodyArrayBuffer) {
+        return Promise.resolve(new Blob([this._bodyArrayBuffer]));
+      } else if (this._bodyFormData) {
+        throw new Error('could not read FormData body as blob');
+      } else {
+        return Promise.resolve(new Blob([this._bodyText]));
+      }
+    };
+
+    this.arrayBuffer = function () {
+      if (this._bodyArrayBuffer) {
+        return consumed(this) || Promise.resolve(this._bodyArrayBuffer);
+      } else {
+        return this.blob().then(readBlobAsArrayBuffer);
+      }
+    };
+  }
+
+  this.text = function () {
+    var rejected = consumed(this);
+
+    if (rejected) {
+      return rejected;
+    }
+
+    if (this._bodyBlob) {
+      return readBlobAsText(this._bodyBlob);
+    } else if (this._bodyArrayBuffer) {
+      return Promise.resolve(readArrayBufferAsText(this._bodyArrayBuffer));
+    } else if (this._bodyFormData) {
+      throw new Error('could not read FormData body as text');
+    } else {
+      return Promise.resolve(this._bodyText);
+    }
+  };
+
+  if (support.formData) {
+    this.formData = function () {
+      return this.text().then(decode);
+    };
+  }
+
+  this.json = function () {
+    return this.text().then(JSON.parse);
+  };
+
+  return this;
+} // HTTP methods whose capitalization should be normalized
+
+
+var methods = ['DELETE', 'GET', 'HEAD', 'OPTIONS', 'POST', 'PUT'];
+
+function normalizeMethod(method) {
+  var upcased = method.toUpperCase();
+  return methods.indexOf(upcased) > -1 ? upcased : method;
+}
+
+function Request(input, options) {
+  options = options || {};
+  var body = options.body;
+
+  if (input instanceof Request) {
+    if (input.bodyUsed) {
+      throw new TypeError('Already read');
+    }
+
+    this.url = input.url;
+    this.credentials = input.credentials;
+
+    if (!options.headers) {
+      this.headers = new Headers(input.headers);
+    }
+
+    this.method = input.method;
+    this.mode = input.mode;
+    this.signal = input.signal;
+
+    if (!body && input._bodyInit != null) {
+      body = input._bodyInit;
+      input.bodyUsed = true;
+    }
+  } else {
+    this.url = String(input);
+  }
+
+  this.credentials = options.credentials || this.credentials || 'same-origin';
+
+  if (options.headers || !this.headers) {
+    this.headers = new Headers(options.headers);
+  }
+
+  this.method = normalizeMethod(options.method || this.method || 'GET');
+  this.mode = options.mode || this.mode || null;
+  this.signal = options.signal || this.signal;
+  this.referrer = null;
+
+  if ((this.method === 'GET' || this.method === 'HEAD') && body) {
+    throw new TypeError('Body not allowed for GET or HEAD requests');
+  }
+
+  this._initBody(body);
+}
+
+Request.prototype.clone = function () {
+  return new Request(this, {
+    body: this._bodyInit
+  });
+};
+
+function decode(body) {
+  var form = new FormData();
+  body.trim().split('&').forEach(function (bytes) {
+    if (bytes) {
+      var split = bytes.split('=');
+      var name = split.shift().replace(/\+/g, ' ');
+      var value = split.join('=').replace(/\+/g, ' ');
+      form.append(decodeURIComponent(name), decodeURIComponent(value));
+    }
+  });
+  return form;
+}
+
+function parseHeaders(rawHeaders) {
+  var headers = new Headers(); // Replace instances of \r\n and \n followed by at least one space or horizontal tab with a space
+  // https://tools.ietf.org/html/rfc7230#section-3.2
+
+  var preProcessedHeaders = rawHeaders.replace(/\r?\n[\t ]+/g, ' ');
+  preProcessedHeaders.split(/\r?\n/).forEach(function (line) {
+    var parts = line.split(':');
+    var key = parts.shift().trim();
+
+    if (key) {
+      var value = parts.join(':').trim();
+      headers.append(key, value);
+    }
+  });
+  return headers;
+}
+
+Body.call(Request.prototype);
+function Response(bodyInit, options) {
+  if (!options) {
+    options = {};
+  }
+
+  this.type = 'default';
+  this.status = options.status === undefined ? 200 : options.status;
+  this.ok = this.status >= 200 && this.status < 300;
+  this.statusText = 'statusText' in options ? options.statusText : 'OK';
+  this.headers = new Headers(options.headers);
+  this.url = options.url || '';
+
+  this._initBody(bodyInit);
+}
+Body.call(Response.prototype);
+
+Response.prototype.clone = function () {
+  return new Response(this._bodyInit, {
+    status: this.status,
+    statusText: this.statusText,
+    headers: new Headers(this.headers),
+    url: this.url
+  });
+};
+
+Response.error = function () {
+  var response = new Response(null, {
+    status: 0,
+    statusText: ''
+  });
+  response.type = 'error';
+  return response;
+};
+
+var redirectStatuses = [301, 302, 303, 307, 308];
+
+Response.redirect = function (url, status) {
+  if (redirectStatuses.indexOf(status) === -1) {
+    throw new RangeError('Invalid status code');
+  }
+
+  return new Response(null, {
+    status: status,
+    headers: {
+      location: url
+    }
+  });
+};
+
+var DOMException = self.DOMException;
+
+try {
+  new DOMException();
+} catch (err) {
+  DOMException = function DOMException(message, name) {
+    this.message = message;
+    this.name = name;
+    var error = Error(message);
+    this.stack = error.stack;
+  };
+
+  DOMException.prototype = Object.create(Error.prototype);
+  DOMException.prototype.constructor = DOMException;
+}
+
+function fetch(input, init) {
+  return new Promise(function (resolve, reject) {
+    var request = new Request(input, init);
+
+    if (request.signal && request.signal.aborted) {
+      return reject(new DOMException('Aborted', 'AbortError'));
+    }
+
+    var xhr = new XMLHttpRequest();
+
+    function abortXhr() {
+      xhr.abort();
+    }
+
+    xhr.onload = function () {
+      var options = {
+        status: xhr.status,
+        statusText: xhr.statusText,
+        headers: parseHeaders(xhr.getAllResponseHeaders() || '')
+      };
+      options.url = 'responseURL' in xhr ? xhr.responseURL : options.headers.get('X-Request-URL');
+      var body = 'response' in xhr ? xhr.response : xhr.responseText;
+      resolve(new Response(body, options));
+    };
+
+    xhr.onerror = function () {
+      reject(new TypeError('Network request failed'));
+    };
+
+    xhr.ontimeout = function () {
+      reject(new TypeError('Network request failed'));
+    };
+
+    xhr.onabort = function () {
+      reject(new DOMException('Aborted', 'AbortError'));
+    };
+
+    xhr.open(request.method, request.url, true);
+
+    if (request.credentials === 'include') {
+      xhr.withCredentials = true;
+    } else if (request.credentials === 'omit') {
+      xhr.withCredentials = false;
+    }
+
+    if ('responseType' in xhr && support.blob) {
+      xhr.responseType = 'blob';
+    }
+
+    request.headers.forEach(function (value, name) {
+      xhr.setRequestHeader(name, value);
+    });
+
+    if (request.signal) {
+      request.signal.addEventListener('abort', abortXhr);
+
+      xhr.onreadystatechange = function () {
+        // DONE (success or failure)
+        if (xhr.readyState === 4) {
+          request.signal.removeEventListener('abort', abortXhr);
+        }
+      };
+    }
+
+    xhr.send(typeof request._bodyInit === 'undefined' ? null : request._bodyInit);
+  });
+}
+fetch.polyfill = true;
+
+if (!self.fetch) {
+  self.fetch = fetch;
+  self.Headers = Headers;
+  self.Request = Request;
+  self.Response = Response;
+}
 // EXTERNAL MODULE: ./node_modules/ocular-gatsby/src/gatsby-common/wrap-page.jsx
 var wrap_page = __webpack_require__("ZBCi");
 var wrap_page_default = /*#__PURE__*/__webpack_require__.n(wrap_page);
@@ -18780,51 +19195,6 @@ transform:'scaleY(1)',opacity:1},_ref3["@media screen and (max-width: "+$theme.b
 var MainExample=Object(baseui["styled"])('main',function(_ref5){var _ref6;var $theme=_ref5.$theme,props=styled_objectWithoutPropertiesLoose(_ref5,["$theme"]);return _ref6={height:'calc(100vh - 96px)'},_ref6["@media screen and (max-width: "+$theme.breakpoints.medium+")"]={marginTop:'64px'},_ref6;});// examples
 var MainExamples=Object(baseui["styled"])('main',function(_ref7){var _ref8;var $theme=_ref7.$theme,props=styled_objectWithoutPropertiesLoose(_ref7,["$theme"]);return _ref8={background:$theme.colors.mono100,display:'flex',flexWrap:'wrap'},_ref8["@media screen and (max-width: "+$theme.breakpoints.medium+")"]={marginTop:'64px'},_ref8;});var ExampleCard=Object(baseui["styled"])('div',function(_ref9){var $theme=_ref9.$theme,props=styled_objectWithoutPropertiesLoose(_ref9,["$theme"]);return{border:$theme.borders.border300,cursor:'pointer',margin:$theme.sizing.scale400,padding:$theme.sizing.scale700+" "+$theme.sizing.scale600+" "+$theme.sizing.scale700+" "+$theme.sizing.scale600,transition:"background "+$theme.animation.timing400+" border-color "+$theme.animation.timing400,transitionTimingFunction:$theme.animation.easeInOutCurve,'&:hover':{background:$theme.colors.mono200,borderColor:'transparent'}};});var ExampleTitle=Object(baseui["styled"])('div',function(_ref10){var $theme=_ref10.$theme,props=styled_objectWithoutPropertiesLoose(_ref10,["$theme"]);return Object.assign({color:$theme.colors.mono1000},$theme.typography.font200,{marginBottom:0,overflow:'hidden',textOverflow:'ellipsis',whiteSpace:'nowrap',width:'150px'});});// search
 var SearchContainer=Object(baseui["styled"])('div',function(_ref11){var $theme=_ref11.$theme,props=styled_objectWithoutPropertiesLoose(_ref11,["$theme"]);return{position:'relative',height:$theme.sizing.scale1000,marginBottom:'20px',background:$theme.colors.mono200};});var IconContainer=Object(baseui["styled"])('div',function(_ref12){var $theme=_ref12.$theme,props=styled_objectWithoutPropertiesLoose(_ref12,["$theme"]);return{position:'absolute',display:'flex',alignItems:'center',justifyContent:'center',width:$theme.sizing.scale1000,height:$theme.sizing.scale1000};});var InputSearch=Object(baseui["styled"])('input',function(_ref13){var $theme=_ref13.$theme,props=styled_objectWithoutPropertiesLoose(_ref13,["$theme"]);return{boxShadow:"rgba(0, 0, 0, 0) 0px 2px 6px",border:"1px solid transparent",transition:"0.3s",fontSize:"14px",fontWeight:500,lineHeight:"20px",padding:"10px 10px 10px 40px",':focus':{boxShadow:"rgba(39, 110, 241, 0.32) 0px 2px 6px",borderColor:"rgb(39, 110, 241)",outline:'none'}};});var MainSearch=Object(baseui["styled"])('main',function(_ref14){var $theme=_ref14.$theme,props=styled_objectWithoutPropertiesLoose(_ref14,["$theme"]);return{maxWidth:'600px',margin:'104px auto 0px'};});
-
-/***/ }),
-
-/***/ "pBKI":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- * 
- */
-
-function makeEmptyFunction(arg) {
-  return function () {
-    return arg;
-  };
-}
-/**
- * This function accepts and discards inputs; it has no side effects. This is
- * primarily useful idiomatically for overridable function endpoints which
- * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
- */
-
-
-var emptyFunction = function emptyFunction() {};
-
-emptyFunction.thatReturns = makeEmptyFunction;
-emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
-emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
-emptyFunction.thatReturnsNull = makeEmptyFunction(null);
-
-emptyFunction.thatReturnsThis = function () {
-  return this;
-};
-
-emptyFunction.thatReturnsArgument = function (arg) {
-  return arg;
-};
-
-module.exports = emptyFunction;
 
 /***/ }),
 
@@ -23008,7 +23378,7 @@ addToUnscopables('entries');
 /***/ "yxce":
 /***/ (function(module) {
 
-module.exports = JSON.parse("{\"data\":{\"site\":{\"siteMetadata\":{\"config\":{\"PROJECT_NAME\":\"math.gl\",\"PROJECT_TYPE\":\"github\",\"PROJECT_DESC\":\"A 3D/WebGL math library\",\"PROJECT_URL\":\"https://github.com/uber-web/math.gl\",\"PROJECT_ORG\":\"uber-web\",\"HOME_HEADING\":\"A 3D/WebGL math library\",\"LINK_TO_GET_STARTED\":\"/docs/developer-guide/get-started\",\"HOME_BULLETS\":[{\"text\":\"Array-based Classes\",\"desc\":\"All math.gl classes (like Vector3, Matrix4) are subclasses of the built-in JavaScript Array class.\",\"img\":\"images/icon-high-precision.svg\"},{\"text\":\"Debug Friendly\",\"desc\":\"math.gl offers optional error checking after every math operation which makes quick work of locating coding errors and bad data.\",\"img\":\"images/icon-high-precision.svg\"},{\"text\":\"WebGL Support\",\"desc\":\"Matrices are stored internally in the format required by WebGL (column-major), while exposing a row-major API to the JavaScript programmer.\",\"img\":\"images/icon-high-precision.svg\"},{\"text\":\"Documentation\",\"desc\":\"math.gl comes with articles that get you quickly up-to-speed on the mathematical concepts used in 3D programming.\",\"img\":\"images/icon-high-precision.svg\"},{\"text\":\"Size Conscious\",\"desc\":\"To keep unused code from being bundled, math.gl avoids cross dependencies to maximize tree-shaking.\",\"img\":\"images/icon-high-precision.svg\"}],\"EXAMPLES\":[{\"title\":\"Benchmark\",\"path\":\"examples/benchmarks\"}],\"THEME_OVERRIDES\":[{\"key\":\"none\",\"value\":\"none\"}],\"PROJECTS\":[],\"ADDITIONAL_LINKS\":[]}}},\"allMarkdown\":{\"edges\":[{\"node\":{\"id\":\"d33872ba-8485-5dc8-a3bb-f995660a5d79\",\"fields\":{\"slug\":\"docs\"},\"frontmatter\":{\"title\":\"Introduction\"}}},{\"node\":{\"id\":\"d9f520d8-89f7-5feb-96c9-3e0c2fbc290e\",\"fields\":{\"slug\":\"docs/upgrade-guide\"},\"frontmatter\":{\"title\":\"Upgrade Guide\"}}},{\"node\":{\"id\":\"e3384291-7018-5650-a224-606a1b48cc76\",\"fields\":{\"slug\":\"docs/whats-new\"},\"frontmatter\":{\"title\":\"What's New\"}}},{\"node\":{\"id\":\"cfaa899e-a1c2-5334-9515-7e021e058db4\",\"fields\":{\"slug\":\"modules/web-mercator\"},\"frontmatter\":{\"title\":\"@math.gl/web-mercator\"}}},{\"node\":{\"id\":\"28f6bcc0-1224-5ec8-b3a5-f0fc103729c8\",\"fields\":{\"slug\":\"modules/sun\"},\"frontmatter\":{\"title\":\"@math.gl/sun\"}}},{\"node\":{\"id\":\"90a51fad-ff55-5447-a3d3-5c1b13926bff\",\"fields\":{\"slug\":\"modules/main\"},\"frontmatter\":{\"title\":\"math.gl\"}}},{\"node\":{\"id\":\"0f743e40-069b-5188-a4d9-42a66ea7d27b\",\"fields\":{\"slug\":\"modules/geospatial\"},\"frontmatter\":{\"title\":\"@math.gl/geospatial\"}}},{\"node\":{\"id\":\"da2058a9-e876-5277-bc46-82a2bb34929f\",\"fields\":{\"slug\":\"modules/culling\"},\"frontmatter\":{\"title\":\"@math.gl/culling\"}}},{\"node\":{\"id\":\"57690e0a-fef8-5756-8f81-35bff1a9ecff\",\"fields\":{\"slug\":\"modules/core\"},\"frontmatter\":{\"title\":\"math.gl\"}}},{\"node\":{\"id\":\"120e9247-d951-5dd6-ba87-082b836b9ae3\",\"fields\":{\"slug\":\"modules/sun/docs/developer-guide/sun-guide\"},\"frontmatter\":{\"title\":\"Overview\"}}},{\"node\":{\"id\":\"f9182a8c-7ea1-5eea-b5a6-d04e80778478\",\"fields\":{\"slug\":\"modules/sun/docs/api-reference/get-sun-direction\"},\"frontmatter\":{\"title\":\"getSunDirection\"}}},{\"node\":{\"id\":\"52655838-de11-5edd-8a37-e7de5df517ad\",\"fields\":{\"slug\":\"modules/sun/docs/api-reference/get-sun\"},\"frontmatter\":{\"title\":\"getSun\"}}},{\"node\":{\"id\":\"1f5b05fa-c742-517e-b219-b41226bc23b2\",\"fields\":{\"slug\":\"modules/web-mercator/docs/developer-guide/about-coordinates\"},\"frontmatter\":{\"title\":\"Web Mercator Coordinates\"}}},{\"node\":{\"id\":\"ef284896-9bd0-5678-969e-f14f1a3adff2\",\"fields\":{\"slug\":\"modules/web-mercator/docs/developer-guide/offset-projection-accuracy\"},\"frontmatter\":{\"title\":\"Accuracy of Offset Projection\"}}},{\"node\":{\"id\":\"947b4e67-6434-5a2b-bcbc-d8ce2e630988\",\"fields\":{\"slug\":\"modules/web-mercator/docs/developer-guide/web-mercator-guide\"},\"frontmatter\":{\"title\":\"Overview\"}}},{\"node\":{\"id\":\"002c8e07-91e2-5ae5-8e28-c98b6c2b061c\",\"fields\":{\"slug\":\"modules/web-mercator/docs/api-reference/web-mercator\"},\"frontmatter\":{\"title\":\"WebMercatorViewport\"}}},{\"node\":{\"id\":\"466fca64-4ea3-56ed-8d76-b2fd6134c72d\",\"fields\":{\"slug\":\"modules/culling/wip/bounding-sphere\"},\"frontmatter\":{\"title\":\" WIP\"}}},{\"node\":{\"id\":\"2db110c5-92ad-5c04-b281-0eb16ccbc4f1\",\"fields\":{\"slug\":\"modules/culling/docs/developer-guide/culling-guide\"},\"frontmatter\":{\"title\":\"Overview\"}}},{\"node\":{\"id\":\"fb597e64-4b99-5fbc-bb59-a5c7ed7c86d1\",\"fields\":{\"slug\":\"modules/culling/docs/api-reference/bounding-sphere\"},\"frontmatter\":{\"title\":\"BoundingSphere\"}}},{\"node\":{\"id\":\"2598e571-ba85-54e9-b8ad-5d758681a554\",\"fields\":{\"slug\":\"modules/culling/docs/api-reference/culling-volume\"},\"frontmatter\":{\"title\":\"CullingVolume\"}}},{\"node\":{\"id\":\"6502569c-25a1-516a-883e-b7421fc8a730\",\"fields\":{\"slug\":\"modules/culling/docs/api-reference/oriented-bounding-box\"},\"frontmatter\":{\"title\":\"OrientedBoundingBox\"}}},{\"node\":{\"id\":\"f4abef21-e467-5e5d-83c8-7c742d483dc6\",\"fields\":{\"slug\":\"modules/culling/docs/api-reference/plane\"},\"frontmatter\":{\"title\":\"Plane\"}}},{\"node\":{\"id\":\"54355ea4-af91-5aac-aded-6c36d2612e68\",\"fields\":{\"slug\":\"modules/core/docs/wip/features\"},\"frontmatter\":{\"title\":\"Features (WIP)\"}}},{\"node\":{\"id\":\"34b6748c-41df-58ac-bf8b-cddfb98040d8\",\"fields\":{\"slug\":\"modules/core/docs/wip/using-vectors\"},\"frontmatter\":{\"title\":\"About the Vector Classes (WIP)\"}}},{\"node\":{\"id\":\"07078520-0d1d-5034-9bdf-41c2ccf45024\",\"fields\":{\"slug\":\"modules/core/docs/developer-guide/debugging\"},\"frontmatter\":{\"title\":\"Debugging\"}}},{\"node\":{\"id\":\"6646b468-304e-5842-adc2-238fc3e7b586\",\"fields\":{\"slug\":\"modules/core/docs/developer-guide/core-overview\"},\"frontmatter\":{\"title\":\"Overview\"}}},{\"node\":{\"id\":\"3706da89-eda0-5de3-a1f7-0acf849528f8\",\"fields\":{\"slug\":\"modules/core/docs/developer-guide/external-frameworks\"},\"frontmatter\":{\"title\":\"Using with Other Frameworks\"}}},{\"node\":{\"id\":\"4f3a8948-d622-5708-bf1c-51caff4c66d9\",\"fields\":{\"slug\":\"modules/core/docs/developer-guide/floating-point\"},\"frontmatter\":{\"title\":\"Floating Point\"}}},{\"node\":{\"id\":\"e65050fb-8844-55b4-9eef-e7ab3f131d20\",\"fields\":{\"slug\":\"modules/core/docs/developer-guide/performance\"},\"frontmatter\":{\"title\":\"Performance\"}}},{\"node\":{\"id\":\"8bb29d54-3e20-5791-8600-5f0298b6c468\",\"fields\":{\"slug\":\"modules/core/docs/developer-guide/transformations\"},\"frontmatter\":{\"title\":\"Transformations\"}}},{\"node\":{\"id\":\"2d9ae730-3767-5113-b483-807eb95a23d7\",\"fields\":{\"slug\":\"modules/core/docs/developer-guide/view-and-projection\"},\"frontmatter\":{\"title\":\" View and Projection Matrices\"}}},{\"node\":{\"id\":\"ee090d6c-0a85-5a88-9dc8-8908c596baee\",\"fields\":{\"slug\":\"modules/geospatial/docs/developer-guide/geospatial-guide\"},\"frontmatter\":{\"title\":\"Overview\"}}},{\"node\":{\"id\":\"ea1ffd08-da61-5d18-8567-b94649c232f0\",\"fields\":{\"slug\":\"modules/geospatial/docs/api-reference/helpers\"},\"frontmatter\":{\"title\":\"Helpers\"}}},{\"node\":{\"id\":\"3e85611a-f6da-54f0-bcf9-8be3332bbc9b\",\"fields\":{\"slug\":\"modules/core/docs/concepts/coordinate-systems\"},\"frontmatter\":{\"title\":\"3D Coordinate Systems\"}}},{\"node\":{\"id\":\"d7f465b5-b95c-5490-a233-6a2b8c3d9684\",\"fields\":{\"slug\":\"modules/core/docs/concepts/homogeneous-coordinates\"},\"frontmatter\":{\"title\":\"Homogeneous Coordinates\"}}},{\"node\":{\"id\":\"9bdc04f9-6df5-5c0d-ab6b-cf275a4b8ef1\",\"fields\":{\"slug\":\"modules/core/docs/api-reference/euler\"},\"frontmatter\":{\"title\":\"Euler (Experimental)\"}}},{\"node\":{\"id\":\"8bb81372-0bd0-58ff-98a5-4721fa10b230\",\"fields\":{\"slug\":\"modules/core/docs/api-reference/math-array\"},\"frontmatter\":{\"title\":\"MathArray\"}}},{\"node\":{\"id\":\"c1116098-96ca-5557-a068-cc20d44f49b4\",\"fields\":{\"slug\":\"modules/core/docs/api-reference/matrix\"},\"frontmatter\":{\"title\":\"Matrix\"}}},{\"node\":{\"id\":\"3981dbbd-a5f7-50cd-9cfe-89c0d08a49ba\",\"fields\":{\"slug\":\"modules/core/docs/api-reference/matrix3\"},\"frontmatter\":{\"title\":\"Matrix3\"}}},{\"node\":{\"id\":\"0accc591-ae6a-5df9-85c6-33de1571ec72\",\"fields\":{\"slug\":\"modules/core/docs/api-reference/pose\"},\"frontmatter\":{\"title\":\"Pose (Experimental)\"}}},{\"node\":{\"id\":\"7b91df43-a0f6-5c59-b670-98acb0d7232e\",\"fields\":{\"slug\":\"modules/core/docs/api-reference/quaternion\"},\"frontmatter\":{\"title\":\"Quaternion\"}}},{\"node\":{\"id\":\"c78d3679-5011-5a47-8004-2c247d17c886\",\"fields\":{\"slug\":\"modules/core/docs/api-reference/spherical-coordinates\"},\"frontmatter\":{\"title\":\"SphericalCoordinates (Experimental)\"}}},{\"node\":{\"id\":\"98c32a36-ad91-545d-958b-da093902ed6a\",\"fields\":{\"slug\":\"modules/core/docs/api-reference/vector\"},\"frontmatter\":{\"title\":\"Vector\"}}},{\"node\":{\"id\":\"bf1d1a03-05b9-57e6-bba3-68884ff86370\",\"fields\":{\"slug\":\"modules/core/docs/api-reference/utilities\"},\"frontmatter\":{\"title\":\"Math Utility Functions\"}}},{\"node\":{\"id\":\"6c5ba655-a642-5990-ae82-ce2d092026f7\",\"fields\":{\"slug\":\"modules/core/docs/api-reference/vector2\"},\"frontmatter\":{\"title\":\"Vector2\"}}},{\"node\":{\"id\":\"15df172b-fa65-5b7a-a356-a596fffc6d4e\",\"fields\":{\"slug\":\"modules/core/docs/api-reference/vector3\"},\"frontmatter\":{\"title\":\"Vector3\"}}},{\"node\":{\"id\":\"dd9393fb-3ebd-5fb4-9076-ef9fdd4b08c9\",\"fields\":{\"slug\":\"modules/core/docs/api-reference/vector4\"},\"frontmatter\":{\"title\":\"Vector4\"}}},{\"node\":{\"id\":\"c1ce4efc-52d1-56a5-9f7a-0de34767a441\",\"fields\":{\"slug\":\"modules/core/docs/api-reference/addons/polygon\"},\"frontmatter\":{\"title\":\"Polygon (Experimental)\"}}},{\"node\":{\"id\":\"6095d6bb-36cf-5f42-b6b1-fc7a1be44473\",\"fields\":{\"slug\":\"modules/web-mercator/docs/api-reference/web-mercator-utils\"},\"frontmatter\":{\"title\":\"Web Mercator Utility Functions\"}}},{\"node\":{\"id\":\"4962485c-c18f-52b1-815b-fed921ad8319\",\"fields\":{\"slug\":\"modules/geospatial/docs/api-reference/ellipsoid\"},\"frontmatter\":{\"title\":\"Ellipsoid\"}}},{\"node\":{\"id\":\"18be4de5-4df3-57e9-9467-fc371e1307d0\",\"fields\":{\"slug\":\"modules/core/docs/concepts/rotations\"},\"frontmatter\":{\"title\":\"3D Rotations\"}}},{\"node\":{\"id\":\"83469329-2c00-57fc-a37d-63e14015f0a5\",\"fields\":{\"slug\":\"modules/core/docs/api-reference/matrix4\"},\"frontmatter\":{\"title\":\"Matrix4\"}}}]},\"tableOfContents\":{\"chapters\":[{\"title\":\"Overview\",\"level\":1,\"chapters\":null,\"entries\":[{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Introduction\"},\"fields\":{\"slug\":\"docs\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"What's New\"},\"fields\":{\"slug\":\"docs/whats-new\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Upgrade Guide\"},\"fields\":{\"slug\":\"docs/upgrade-guide\"}}}]},{\"title\":\"Developer Guide\",\"level\":1,\"chapters\":[{\"title\":\"math.gl\",\"level\":2,\"entries\":[{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Overview\"},\"fields\":{\"slug\":\"modules/core/docs/developer-guide/core-overview\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Transformations\"},\"fields\":{\"slug\":\"modules/core/docs/developer-guide/transformations\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\" View and Projection Matrices\"},\"fields\":{\"slug\":\"modules/core/docs/developer-guide/view-and-projection\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Debugging\"},\"fields\":{\"slug\":\"modules/core/docs/developer-guide/debugging\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Floating Point\"},\"fields\":{\"slug\":\"modules/core/docs/developer-guide/floating-point\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Performance\"},\"fields\":{\"slug\":\"modules/core/docs/developer-guide/performance\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Using with Other Frameworks\"},\"fields\":{\"slug\":\"modules/core/docs/developer-guide/external-frameworks\"}}}]},{\"title\":\"@math.gl/culling\",\"level\":2,\"entries\":[{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Overview\"},\"fields\":{\"slug\":\"modules/culling/docs/developer-guide/culling-guide\"}}}]},{\"title\":\"@math.gl/geospatial\",\"level\":2,\"entries\":[{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Overview\"},\"fields\":{\"slug\":\"modules/geospatial/docs/developer-guide/geospatial-guide\"}}}]},{\"title\":\"@math.gl/sun\",\"level\":2,\"entries\":[{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Overview\"},\"fields\":{\"slug\":\"modules/sun/docs/developer-guide/sun-guide\"}}}]},{\"title\":\"@math.gl/web-mercator\",\"level\":2,\"entries\":[{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Overview\"},\"fields\":{\"slug\":\"modules/web-mercator/docs/developer-guide/web-mercator-guide\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Web Mercator Coordinates\"},\"fields\":{\"slug\":\"modules/web-mercator/docs/developer-guide/about-coordinates\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Accuracy of Offset Projection\"},\"fields\":{\"slug\":\"modules/web-mercator/docs/developer-guide/offset-projection-accuracy\"}}}]}],\"entries\":null},{\"title\":\"API Reference\",\"level\":1,\"chapters\":[{\"title\":\"math.gl\",\"level\":2,\"entries\":[{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Euler (Experimental)\"},\"fields\":{\"slug\":\"modules/core/docs/api-reference/euler\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"MathArray\"},\"fields\":{\"slug\":\"modules/core/docs/api-reference/math-array\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Matrix\"},\"fields\":{\"slug\":\"modules/core/docs/api-reference/matrix\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Matrix3\"},\"fields\":{\"slug\":\"modules/core/docs/api-reference/matrix3\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Matrix4\"},\"fields\":{\"slug\":\"modules/core/docs/api-reference/matrix4\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Pose (Experimental)\"},\"fields\":{\"slug\":\"modules/core/docs/api-reference/pose\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Quaternion\"},\"fields\":{\"slug\":\"modules/core/docs/api-reference/quaternion\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"SphericalCoordinates (Experimental)\"},\"fields\":{\"slug\":\"modules/core/docs/api-reference/spherical-coordinates\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Math Utility Functions\"},\"fields\":{\"slug\":\"modules/core/docs/api-reference/utilities\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Vector\"},\"fields\":{\"slug\":\"modules/core/docs/api-reference/vector\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Vector2\"},\"fields\":{\"slug\":\"modules/core/docs/api-reference/vector2\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Vector3\"},\"fields\":{\"slug\":\"modules/core/docs/api-reference/vector3\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Vector4\"},\"fields\":{\"slug\":\"modules/core/docs/api-reference/vector4\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Polygon (Experimental)\"},\"fields\":{\"slug\":\"modules/core/docs/api-reference/addons/polygon\"}}}]},{\"title\":\"@math.gl/culling\",\"level\":2,\"entries\":[{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"BoundingSphere\"},\"fields\":{\"slug\":\"modules/culling/docs/api-reference/bounding-sphere\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"CullingVolume\"},\"fields\":{\"slug\":\"modules/culling/docs/api-reference/culling-volume\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"OrientedBoundingBox\"},\"fields\":{\"slug\":\"modules/culling/docs/api-reference/oriented-bounding-box\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Plane\"},\"fields\":{\"slug\":\"modules/culling/docs/api-reference/plane\"}}}]},{\"title\":\"@math.gl/geospatial\",\"level\":2,\"entries\":[{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Ellipsoid\"},\"fields\":{\"slug\":\"modules/geospatial/docs/api-reference/ellipsoid\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Helpers\"},\"fields\":{\"slug\":\"modules/geospatial/docs/api-reference/helpers\"}}}]},{\"title\":\"@math.gl/sun\",\"level\":2,\"entries\":[{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"getSun\"},\"fields\":{\"slug\":\"modules/sun/docs/api-reference/get-sun\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"getSunDirection\"},\"fields\":{\"slug\":\"modules/sun/docs/api-reference/get-sun-direction\"}}}]},{\"title\":\"@math.gl/web-mercator\",\"level\":2,\"entries\":[{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Web Mercator Utility Functions\"},\"fields\":{\"slug\":\"modules/web-mercator/docs/api-reference/web-mercator-utils\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"WebMercatorViewport\"},\"fields\":{\"slug\":\"modules/web-mercator/docs/api-reference/web-mercator\"}}}]}],\"entries\":null},{\"title\":\"Concepts\",\"level\":1,\"chapters\":null,\"entries\":[{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Homogeneous Coordinates\"},\"fields\":{\"slug\":\"modules/core/docs/concepts/homogeneous-coordinates\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"3D Coordinate Systems\"},\"fields\":{\"slug\":\"modules/core/docs/concepts/coordinate-systems\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"3D Rotations\"},\"fields\":{\"slug\":\"modules/core/docs/concepts/rotations\"}}}]}]}}}");
+module.exports = JSON.parse("{\"data\":{\"site\":{\"siteMetadata\":{\"config\":{\"PROJECT_NAME\":\"math.gl\",\"PROJECT_TYPE\":\"github\",\"PROJECT_DESC\":\"A 3D/WebGL math library\",\"PROJECT_URL\":\"https://github.com/uber-web/math.gl\",\"PROJECT_ORG\":\"uber-web\",\"HOME_HEADING\":\"A 3D/WebGL math library\",\"LINK_TO_GET_STARTED\":\"/docs/developer-guide/get-started\",\"HOME_BULLETS\":[{\"text\":\"Array-based Classes\",\"desc\":\"All math.gl classes (like Vector3, Matrix4) are subclasses of the built-in JavaScript Array class.\",\"img\":\"images/icon-high-precision.svg\"},{\"text\":\"Debug Friendly\",\"desc\":\"math.gl offers optional error checking after every math operation which makes quick work of locating coding errors and bad data.\",\"img\":\"images/icon-high-precision.svg\"},{\"text\":\"WebGL Support\",\"desc\":\"Matrices are stored internally in the format required by WebGL (column-major), while exposing a row-major API to the JavaScript programmer.\",\"img\":\"images/icon-high-precision.svg\"},{\"text\":\"Documentation\",\"desc\":\"math.gl comes with articles that get you quickly up-to-speed on the mathematical concepts used in 3D programming.\",\"img\":\"images/icon-high-precision.svg\"},{\"text\":\"Size Conscious\",\"desc\":\"To keep unused code from being bundled, math.gl avoids cross dependencies to maximize tree-shaking.\",\"img\":\"images/icon-high-precision.svg\"}],\"EXAMPLES\":[{\"title\":\"Benchmark\",\"path\":\"examples/benchmarks\"}],\"THEME_OVERRIDES\":[{\"key\":\"none\",\"value\":\"none\"}],\"PROJECTS\":[],\"ADDITIONAL_LINKS\":[]}}},\"allMarkdown\":{\"edges\":[{\"node\":{\"id\":\"d9f520d8-89f7-5feb-96c9-3e0c2fbc290e\",\"fields\":{\"slug\":\"docs/upgrade-guide\"},\"frontmatter\":{\"title\":\"Upgrade Guide\"}}},{\"node\":{\"id\":\"d33872ba-8485-5dc8-a3bb-f995660a5d79\",\"fields\":{\"slug\":\"docs\"},\"frontmatter\":{\"title\":\"Introduction\"}}},{\"node\":{\"id\":\"e3384291-7018-5650-a224-606a1b48cc76\",\"fields\":{\"slug\":\"docs/whats-new\"},\"frontmatter\":{\"title\":\"What's New\"}}},{\"node\":{\"id\":\"28f6bcc0-1224-5ec8-b3a5-f0fc103729c8\",\"fields\":{\"slug\":\"modules/sun\"},\"frontmatter\":{\"title\":\"@math.gl/sun\"}}},{\"node\":{\"id\":\"90a51fad-ff55-5447-a3d3-5c1b13926bff\",\"fields\":{\"slug\":\"modules/main\"},\"frontmatter\":{\"title\":\"math.gl\"}}},{\"node\":{\"id\":\"cfaa899e-a1c2-5334-9515-7e021e058db4\",\"fields\":{\"slug\":\"modules/web-mercator\"},\"frontmatter\":{\"title\":\"@math.gl/web-mercator\"}}},{\"node\":{\"id\":\"0f743e40-069b-5188-a4d9-42a66ea7d27b\",\"fields\":{\"slug\":\"modules/geospatial\"},\"frontmatter\":{\"title\":\"@math.gl/geospatial\"}}},{\"node\":{\"id\":\"da2058a9-e876-5277-bc46-82a2bb34929f\",\"fields\":{\"slug\":\"modules/culling\"},\"frontmatter\":{\"title\":\"@math.gl/culling\"}}},{\"node\":{\"id\":\"57690e0a-fef8-5756-8f81-35bff1a9ecff\",\"fields\":{\"slug\":\"modules/core\"},\"frontmatter\":{\"title\":\"math.gl\"}}},{\"node\":{\"id\":\"f9182a8c-7ea1-5eea-b5a6-d04e80778478\",\"fields\":{\"slug\":\"modules/sun/docs/api-reference/get-sun-direction\"},\"frontmatter\":{\"title\":\"getSunDirection\"}}},{\"node\":{\"id\":\"120e9247-d951-5dd6-ba87-082b836b9ae3\",\"fields\":{\"slug\":\"modules/sun/docs/developer-guide/sun-guide\"},\"frontmatter\":{\"title\":\"Overview\"}}},{\"node\":{\"id\":\"52655838-de11-5edd-8a37-e7de5df517ad\",\"fields\":{\"slug\":\"modules/sun/docs/api-reference/get-sun\"},\"frontmatter\":{\"title\":\"getSun\"}}},{\"node\":{\"id\":\"ef284896-9bd0-5678-969e-f14f1a3adff2\",\"fields\":{\"slug\":\"modules/web-mercator/docs/developer-guide/offset-projection-accuracy\"},\"frontmatter\":{\"title\":\"Accuracy of Offset Projection\"}}},{\"node\":{\"id\":\"1f5b05fa-c742-517e-b219-b41226bc23b2\",\"fields\":{\"slug\":\"modules/web-mercator/docs/developer-guide/about-coordinates\"},\"frontmatter\":{\"title\":\"Web Mercator Coordinates\"}}},{\"node\":{\"id\":\"002c8e07-91e2-5ae5-8e28-c98b6c2b061c\",\"fields\":{\"slug\":\"modules/web-mercator/docs/api-reference/web-mercator\"},\"frontmatter\":{\"title\":\"WebMercatorViewport\"}}},{\"node\":{\"id\":\"947b4e67-6434-5a2b-bcbc-d8ce2e630988\",\"fields\":{\"slug\":\"modules/web-mercator/docs/developer-guide/web-mercator-guide\"},\"frontmatter\":{\"title\":\"Overview\"}}},{\"node\":{\"id\":\"466fca64-4ea3-56ed-8d76-b2fd6134c72d\",\"fields\":{\"slug\":\"modules/culling/wip/bounding-sphere\"},\"frontmatter\":{\"title\":\" WIP\"}}},{\"node\":{\"id\":\"2598e571-ba85-54e9-b8ad-5d758681a554\",\"fields\":{\"slug\":\"modules/culling/docs/api-reference/culling-volume\"},\"frontmatter\":{\"title\":\"CullingVolume\"}}},{\"node\":{\"id\":\"fb597e64-4b99-5fbc-bb59-a5c7ed7c86d1\",\"fields\":{\"slug\":\"modules/culling/docs/api-reference/bounding-sphere\"},\"frontmatter\":{\"title\":\"BoundingSphere\"}}},{\"node\":{\"id\":\"6502569c-25a1-516a-883e-b7421fc8a730\",\"fields\":{\"slug\":\"modules/culling/docs/api-reference/oriented-bounding-box\"},\"frontmatter\":{\"title\":\"OrientedBoundingBox\"}}},{\"node\":{\"id\":\"2db110c5-92ad-5c04-b281-0eb16ccbc4f1\",\"fields\":{\"slug\":\"modules/culling/docs/developer-guide/culling-guide\"},\"frontmatter\":{\"title\":\"Overview\"}}},{\"node\":{\"id\":\"f4abef21-e467-5e5d-83c8-7c742d483dc6\",\"fields\":{\"slug\":\"modules/culling/docs/api-reference/plane\"},\"frontmatter\":{\"title\":\"Plane\"}}},{\"node\":{\"id\":\"54355ea4-af91-5aac-aded-6c36d2612e68\",\"fields\":{\"slug\":\"modules/core/docs/wip/features\"},\"frontmatter\":{\"title\":\"Features (WIP)\"}}},{\"node\":{\"id\":\"34b6748c-41df-58ac-bf8b-cddfb98040d8\",\"fields\":{\"slug\":\"modules/core/docs/wip/using-vectors\"},\"frontmatter\":{\"title\":\"About the Vector Classes (WIP)\"}}},{\"node\":{\"id\":\"3706da89-eda0-5de3-a1f7-0acf849528f8\",\"fields\":{\"slug\":\"modules/core/docs/developer-guide/external-frameworks\"},\"frontmatter\":{\"title\":\"Using with Other Frameworks\"}}},{\"node\":{\"id\":\"6646b468-304e-5842-adc2-238fc3e7b586\",\"fields\":{\"slug\":\"modules/core/docs/developer-guide/core-overview\"},\"frontmatter\":{\"title\":\"Overview\"}}},{\"node\":{\"id\":\"07078520-0d1d-5034-9bdf-41c2ccf45024\",\"fields\":{\"slug\":\"modules/core/docs/developer-guide/debugging\"},\"frontmatter\":{\"title\":\"Debugging\"}}},{\"node\":{\"id\":\"4f3a8948-d622-5708-bf1c-51caff4c66d9\",\"fields\":{\"slug\":\"modules/core/docs/developer-guide/floating-point\"},\"frontmatter\":{\"title\":\"Floating Point\"}}},{\"node\":{\"id\":\"e65050fb-8844-55b4-9eef-e7ab3f131d20\",\"fields\":{\"slug\":\"modules/core/docs/developer-guide/performance\"},\"frontmatter\":{\"title\":\"Performance\"}}},{\"node\":{\"id\":\"8bb29d54-3e20-5791-8600-5f0298b6c468\",\"fields\":{\"slug\":\"modules/core/docs/developer-guide/transformations\"},\"frontmatter\":{\"title\":\"Transformations\"}}},{\"node\":{\"id\":\"2d9ae730-3767-5113-b483-807eb95a23d7\",\"fields\":{\"slug\":\"modules/core/docs/developer-guide/view-and-projection\"},\"frontmatter\":{\"title\":\" View and Projection Matrices\"}}},{\"node\":{\"id\":\"ee090d6c-0a85-5a88-9dc8-8908c596baee\",\"fields\":{\"slug\":\"modules/geospatial/docs/developer-guide/geospatial-guide\"},\"frontmatter\":{\"title\":\"Overview\"}}},{\"node\":{\"id\":\"ea1ffd08-da61-5d18-8567-b94649c232f0\",\"fields\":{\"slug\":\"modules/geospatial/docs/api-reference/helpers\"},\"frontmatter\":{\"title\":\"Helpers\"}}},{\"node\":{\"id\":\"3e85611a-f6da-54f0-bcf9-8be3332bbc9b\",\"fields\":{\"slug\":\"modules/core/docs/concepts/coordinate-systems\"},\"frontmatter\":{\"title\":\"3D Coordinate Systems\"}}},{\"node\":{\"id\":\"d7f465b5-b95c-5490-a233-6a2b8c3d9684\",\"fields\":{\"slug\":\"modules/core/docs/concepts/homogeneous-coordinates\"},\"frontmatter\":{\"title\":\"Homogeneous Coordinates\"}}},{\"node\":{\"id\":\"9bdc04f9-6df5-5c0d-ab6b-cf275a4b8ef1\",\"fields\":{\"slug\":\"modules/core/docs/api-reference/euler\"},\"frontmatter\":{\"title\":\"Euler (Experimental)\"}}},{\"node\":{\"id\":\"8bb81372-0bd0-58ff-98a5-4721fa10b230\",\"fields\":{\"slug\":\"modules/core/docs/api-reference/math-array\"},\"frontmatter\":{\"title\":\"MathArray\"}}},{\"node\":{\"id\":\"3981dbbd-a5f7-50cd-9cfe-89c0d08a49ba\",\"fields\":{\"slug\":\"modules/core/docs/api-reference/matrix3\"},\"frontmatter\":{\"title\":\"Matrix3\"}}},{\"node\":{\"id\":\"c1116098-96ca-5557-a068-cc20d44f49b4\",\"fields\":{\"slug\":\"modules/core/docs/api-reference/matrix\"},\"frontmatter\":{\"title\":\"Matrix\"}}},{\"node\":{\"id\":\"7b91df43-a0f6-5c59-b670-98acb0d7232e\",\"fields\":{\"slug\":\"modules/core/docs/api-reference/quaternion\"},\"frontmatter\":{\"title\":\"Quaternion\"}}},{\"node\":{\"id\":\"c78d3679-5011-5a47-8004-2c247d17c886\",\"fields\":{\"slug\":\"modules/core/docs/api-reference/spherical-coordinates\"},\"frontmatter\":{\"title\":\"SphericalCoordinates (Experimental)\"}}},{\"node\":{\"id\":\"98c32a36-ad91-545d-958b-da093902ed6a\",\"fields\":{\"slug\":\"modules/core/docs/api-reference/vector\"},\"frontmatter\":{\"title\":\"Vector\"}}},{\"node\":{\"id\":\"bf1d1a03-05b9-57e6-bba3-68884ff86370\",\"fields\":{\"slug\":\"modules/core/docs/api-reference/utilities\"},\"frontmatter\":{\"title\":\"Math Utility Functions\"}}},{\"node\":{\"id\":\"0accc591-ae6a-5df9-85c6-33de1571ec72\",\"fields\":{\"slug\":\"modules/core/docs/api-reference/pose\"},\"frontmatter\":{\"title\":\"Pose (Experimental)\"}}},{\"node\":{\"id\":\"6c5ba655-a642-5990-ae82-ce2d092026f7\",\"fields\":{\"slug\":\"modules/core/docs/api-reference/vector2\"},\"frontmatter\":{\"title\":\"Vector2\"}}},{\"node\":{\"id\":\"dd9393fb-3ebd-5fb4-9076-ef9fdd4b08c9\",\"fields\":{\"slug\":\"modules/core/docs/api-reference/vector4\"},\"frontmatter\":{\"title\":\"Vector4\"}}},{\"node\":{\"id\":\"15df172b-fa65-5b7a-a356-a596fffc6d4e\",\"fields\":{\"slug\":\"modules/core/docs/api-reference/vector3\"},\"frontmatter\":{\"title\":\"Vector3\"}}},{\"node\":{\"id\":\"c1ce4efc-52d1-56a5-9f7a-0de34767a441\",\"fields\":{\"slug\":\"modules/core/docs/api-reference/addons/polygon\"},\"frontmatter\":{\"title\":\"Polygon (Experimental)\"}}},{\"node\":{\"id\":\"6095d6bb-36cf-5f42-b6b1-fc7a1be44473\",\"fields\":{\"slug\":\"modules/web-mercator/docs/api-reference/web-mercator-utils\"},\"frontmatter\":{\"title\":\"Web Mercator Utility Functions\"}}},{\"node\":{\"id\":\"4962485c-c18f-52b1-815b-fed921ad8319\",\"fields\":{\"slug\":\"modules/geospatial/docs/api-reference/ellipsoid\"},\"frontmatter\":{\"title\":\"Ellipsoid\"}}},{\"node\":{\"id\":\"18be4de5-4df3-57e9-9467-fc371e1307d0\",\"fields\":{\"slug\":\"modules/core/docs/concepts/rotations\"},\"frontmatter\":{\"title\":\"3D Rotations\"}}},{\"node\":{\"id\":\"83469329-2c00-57fc-a37d-63e14015f0a5\",\"fields\":{\"slug\":\"modules/core/docs/api-reference/matrix4\"},\"frontmatter\":{\"title\":\"Matrix4\"}}}]},\"tableOfContents\":{\"chapters\":[{\"title\":\"Overview\",\"level\":1,\"chapters\":null,\"entries\":[{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Introduction\"},\"fields\":{\"slug\":\"docs\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"What's New\"},\"fields\":{\"slug\":\"docs/whats-new\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Upgrade Guide\"},\"fields\":{\"slug\":\"docs/upgrade-guide\"}}}]},{\"title\":\"Developer Guide\",\"level\":1,\"chapters\":[{\"title\":\"math.gl\",\"level\":2,\"entries\":[{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Overview\"},\"fields\":{\"slug\":\"modules/core/docs/developer-guide/core-overview\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Transformations\"},\"fields\":{\"slug\":\"modules/core/docs/developer-guide/transformations\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\" View and Projection Matrices\"},\"fields\":{\"slug\":\"modules/core/docs/developer-guide/view-and-projection\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Debugging\"},\"fields\":{\"slug\":\"modules/core/docs/developer-guide/debugging\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Floating Point\"},\"fields\":{\"slug\":\"modules/core/docs/developer-guide/floating-point\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Performance\"},\"fields\":{\"slug\":\"modules/core/docs/developer-guide/performance\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Using with Other Frameworks\"},\"fields\":{\"slug\":\"modules/core/docs/developer-guide/external-frameworks\"}}}]},{\"title\":\"@math.gl/culling\",\"level\":2,\"entries\":[{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Overview\"},\"fields\":{\"slug\":\"modules/culling/docs/developer-guide/culling-guide\"}}}]},{\"title\":\"@math.gl/geospatial\",\"level\":2,\"entries\":[{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Overview\"},\"fields\":{\"slug\":\"modules/geospatial/docs/developer-guide/geospatial-guide\"}}}]},{\"title\":\"@math.gl/sun\",\"level\":2,\"entries\":[{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Overview\"},\"fields\":{\"slug\":\"modules/sun/docs/developer-guide/sun-guide\"}}}]},{\"title\":\"@math.gl/web-mercator\",\"level\":2,\"entries\":[{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Overview\"},\"fields\":{\"slug\":\"modules/web-mercator/docs/developer-guide/web-mercator-guide\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Web Mercator Coordinates\"},\"fields\":{\"slug\":\"modules/web-mercator/docs/developer-guide/about-coordinates\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Accuracy of Offset Projection\"},\"fields\":{\"slug\":\"modules/web-mercator/docs/developer-guide/offset-projection-accuracy\"}}}]}],\"entries\":null},{\"title\":\"API Reference\",\"level\":1,\"chapters\":[{\"title\":\"math.gl\",\"level\":2,\"entries\":[{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Euler (Experimental)\"},\"fields\":{\"slug\":\"modules/core/docs/api-reference/euler\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"MathArray\"},\"fields\":{\"slug\":\"modules/core/docs/api-reference/math-array\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Matrix\"},\"fields\":{\"slug\":\"modules/core/docs/api-reference/matrix\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Matrix3\"},\"fields\":{\"slug\":\"modules/core/docs/api-reference/matrix3\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Matrix4\"},\"fields\":{\"slug\":\"modules/core/docs/api-reference/matrix4\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Pose (Experimental)\"},\"fields\":{\"slug\":\"modules/core/docs/api-reference/pose\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Quaternion\"},\"fields\":{\"slug\":\"modules/core/docs/api-reference/quaternion\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"SphericalCoordinates (Experimental)\"},\"fields\":{\"slug\":\"modules/core/docs/api-reference/spherical-coordinates\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Math Utility Functions\"},\"fields\":{\"slug\":\"modules/core/docs/api-reference/utilities\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Vector\"},\"fields\":{\"slug\":\"modules/core/docs/api-reference/vector\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Vector2\"},\"fields\":{\"slug\":\"modules/core/docs/api-reference/vector2\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Vector3\"},\"fields\":{\"slug\":\"modules/core/docs/api-reference/vector3\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Vector4\"},\"fields\":{\"slug\":\"modules/core/docs/api-reference/vector4\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Polygon (Experimental)\"},\"fields\":{\"slug\":\"modules/core/docs/api-reference/addons/polygon\"}}}]},{\"title\":\"@math.gl/culling\",\"level\":2,\"entries\":[{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"BoundingSphere\"},\"fields\":{\"slug\":\"modules/culling/docs/api-reference/bounding-sphere\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"CullingVolume\"},\"fields\":{\"slug\":\"modules/culling/docs/api-reference/culling-volume\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"OrientedBoundingBox\"},\"fields\":{\"slug\":\"modules/culling/docs/api-reference/oriented-bounding-box\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Plane\"},\"fields\":{\"slug\":\"modules/culling/docs/api-reference/plane\"}}}]},{\"title\":\"@math.gl/geospatial\",\"level\":2,\"entries\":[{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Ellipsoid\"},\"fields\":{\"slug\":\"modules/geospatial/docs/api-reference/ellipsoid\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Helpers\"},\"fields\":{\"slug\":\"modules/geospatial/docs/api-reference/helpers\"}}}]},{\"title\":\"@math.gl/sun\",\"level\":2,\"entries\":[{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"getSun\"},\"fields\":{\"slug\":\"modules/sun/docs/api-reference/get-sun\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"getSunDirection\"},\"fields\":{\"slug\":\"modules/sun/docs/api-reference/get-sun-direction\"}}}]},{\"title\":\"@math.gl/web-mercator\",\"level\":2,\"entries\":[{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Web Mercator Utility Functions\"},\"fields\":{\"slug\":\"modules/web-mercator/docs/api-reference/web-mercator-utils\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"WebMercatorViewport\"},\"fields\":{\"slug\":\"modules/web-mercator/docs/api-reference/web-mercator\"}}}]}],\"entries\":null},{\"title\":\"Concepts\",\"level\":1,\"chapters\":null,\"entries\":[{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"Homogeneous Coordinates\"},\"fields\":{\"slug\":\"modules/core/docs/concepts/homogeneous-coordinates\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"3D Coordinate Systems\"},\"fields\":{\"slug\":\"modules/core/docs/concepts/coordinate-systems\"}}},{\"childMarkdownRemark\":{\"frontmatter\":{\"title\":\"3D Rotations\"},\"fields\":{\"slug\":\"modules/core/docs/concepts/rotations\"}}}]}]}}}");
 
 /***/ }),
 
@@ -23050,4 +23420,4 @@ module.exports = function (object, names) {
 /***/ })
 
 },[["UxWs",8,0,2]]]);
-//# sourceMappingURL=app-0b733c7a98ecd85c3211.js.map
+//# sourceMappingURL=app-609d2b6f4b00c2e5dd72.js.map

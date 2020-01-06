@@ -10208,7 +10208,7 @@ return this.check();};_proto.rotateXYZ=function rotateXYZ(_ref5){var rx=_ref5[0]
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;__webpack_require__("LK8F");
 
 /*!
-  Copyright (c) 2016 Jed Watson.
+  Copyright (c) 2017 Jed Watson.
   Licensed under the MIT License (MIT), see
   http://jedwatson.github.io/classnames
 */
@@ -10229,8 +10229,12 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;__webpack_requir
 
       if (argType === 'string' || argType === 'number') {
         classes.push(arg);
-      } else if (Array.isArray(arg)) {
-        classes.push(classNames.apply(null, arg));
+      } else if (Array.isArray(arg) && arg.length) {
+        var inner = classNames.apply(null, arg);
+
+        if (inner) {
+          classes.push(inner);
+        }
       } else if (argType === 'object') {
         for (var key in arg) {
           if (hasOwn.call(arg, key) && arg[key]) {
@@ -10244,6 +10248,7 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;__webpack_requir
   }
 
   if ( true && module.exports) {
+    classNames["default"] = classNames;
     module.exports = classNames;
   } else if (true) {
     // register as 'classnames', consistent with npm package name
@@ -12156,4 +12161,4 @@ __webpack_require__("Xtr8")('seal', function ($seal) {
 /***/ })
 
 }]);
-//# sourceMappingURL=component---examples-benchmarks-app-js-5f593c0eb119a485cdcb.js.map
+//# sourceMappingURL=component---examples-benchmarks-app-js-d0a63e0d8d098c1d4e61.js.map

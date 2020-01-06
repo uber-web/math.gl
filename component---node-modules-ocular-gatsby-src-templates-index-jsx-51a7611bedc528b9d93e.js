@@ -246,70 +246,6 @@ var index = memoize_browser_esm(function (prop) {
 
 /***/ }),
 
-/***/ "B7Gq":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-var emptyFunction = __webpack_require__("j+Hp");
-
-var invariant = __webpack_require__("h5PJ");
-
-var ReactPropTypesSecret = __webpack_require__("Rrfz");
-
-module.exports = function () {
-  function shim(props, propName, componentName, location, propFullName, secret) {
-    if (secret === ReactPropTypesSecret) {
-      // It is still safe when called from React.
-      return;
-    }
-
-    invariant(false, 'Calling PropTypes validators directly is not supported by the `prop-types` package. ' + 'Use PropTypes.checkPropTypes() to call them. ' + 'Read more at http://fb.me/use-check-prop-types');
-  }
-
-  ;
-  shim.isRequired = shim;
-
-  function getShim() {
-    return shim;
-  }
-
-  ; // Important!
-  // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.
-
-  var ReactPropTypes = {
-    array: shim,
-    bool: shim,
-    func: shim,
-    number: shim,
-    object: shim,
-    string: shim,
-    symbol: shim,
-    any: shim,
-    arrayOf: getShim,
-    element: shim,
-    instanceOf: getShim,
-    node: shim,
-    objectOf: getShim,
-    oneOf: getShim,
-    oneOfType: getShim,
-    shape: getShim,
-    exact: getShim
-  };
-  ReactPropTypes.checkPropTypes = emptyFunction;
-  ReactPropTypes.PropTypes = ReactPropTypes;
-  return ReactPropTypes;
-};
-
-/***/ }),
-
 /***/ "DW2E":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -798,27 +734,6 @@ function concatArrays(originVal, newVal) {
 
 /***/ }),
 
-/***/ "Gn+F":
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__("rE2o");
-
-__webpack_require__("ioFf");
-
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-if (false) { var throwOnDirectAccess, isValidElement, REACT_ELEMENT_TYPE; } else {
-  // By explicitly using `prop-types` you are opting into new production behavior.
-  // http://fb.me/prop-types-in-prod
-  module.exports = __webpack_require__("B7Gq")();
-}
-
-/***/ }),
-
 /***/ "ME5O":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -872,23 +787,6 @@ var unitlessKeys = {
   strokeWidth: 1
 };
 /* harmony default export */ __webpack_exports__["a"] = (unitlessKeys);
-
-/***/ }),
-
-/***/ "Rrfz":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-var ReactPropTypesSecret = 'SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED';
-module.exports = ReactPropTypesSecret;
 
 /***/ }),
 
@@ -1945,64 +1843,6 @@ __webpack_require__("pIFo");
 
 /***/ }),
 
-/***/ "h5PJ":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
-/**
- * Use invariant() to assert state which your program assumes to be true.
- *
- * Provide sprintf-style format (only %s is supported) and arguments
- * to provide information about what broke and what you were
- * expecting.
- *
- * The invariant message will be stripped in production, but the invariant
- * will remain to ensure logic does not differ in production.
- */
-
-__webpack_require__("f3/d");
-
-__webpack_require__("pIFo");
-
-var validateFormat = function validateFormat(format) {};
-
-if (false) {}
-
-function invariant(condition, format, a, b, c, d, e, f) {
-  validateFormat(format);
-
-  if (!condition) {
-    var error;
-
-    if (format === undefined) {
-      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
-    } else {
-      var args = [a, b, c, d, e, f];
-      var argIndex = 0;
-      error = new Error(format.replace(/%s/g, function () {
-        return args[argIndex++];
-      }));
-      error.name = 'Invariant Violation';
-    }
-
-    error.framesToPop = 1; // we don't care about invariant's own frame
-
-    throw error;
-  }
-}
-
-module.exports = invariant;
-
-/***/ }),
-
 /***/ "hTIv":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2053,51 +1893,6 @@ return react_default.a.createElement("div",{className:"fg"},react_default.a.crea
 // CONCATENATED MODULE: ./node_modules/ocular-gatsby/src/templates/index.jsx
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return templates_IndexPage; });
 function templates_inheritsLoose(subClass,superClass){subClass.prototype=Object.create(superClass.prototype);subClass.prototype.constructor=subClass;subClass.__proto__=superClass;}var templates_IndexPage=/*#__PURE__*/function(_React$Component){templates_inheritsLoose(IndexPage,_React$Component);function IndexPage(){return _React$Component.apply(this,arguments)||this;}var _proto=IndexPage.prototype;_proto.render=function render(){return react_default.a.createElement(home_Home,null);};return IndexPage;}(react_default.a.Component);
-
-/***/ }),
-
-/***/ "j+Hp":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- * 
- */
-
-function makeEmptyFunction(arg) {
-  return function () {
-    return arg;
-  };
-}
-/**
- * This function accepts and discards inputs; it has no side effects. This is
- * primarily useful idiomatically for overridable function endpoints which
- * always need to be callable, since JS lacks a null-call idiom ala Cocoa.
- */
-
-
-var emptyFunction = function emptyFunction() {};
-
-emptyFunction.thatReturns = makeEmptyFunction;
-emptyFunction.thatReturnsFalse = makeEmptyFunction(false);
-emptyFunction.thatReturnsTrue = makeEmptyFunction(true);
-emptyFunction.thatReturnsNull = makeEmptyFunction(null);
-
-emptyFunction.thatReturnsThis = function () {
-  return this;
-};
-
-emptyFunction.thatReturnsArgument = function (arg) {
-  return arg;
-};
-
-module.exports = emptyFunction;
 
 /***/ }),
 
@@ -2210,7 +2005,7 @@ $export($export.P + $export.F * (NEGATIVE_ZERO || !__webpack_require__("LyE8")($
 /* harmony import */ var react_is__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__("TOwV");
 /* harmony import */ var react_is__WEBPACK_IMPORTED_MODULE_30___default = /*#__PURE__*/__webpack_require__.n(react_is__WEBPACK_IMPORTED_MODULE_30__);
 /* harmony import */ var memoize_one__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__("Wwog");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__("Gn+F");
+/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__("17x9");
 /* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_32___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_32__);
 /* harmony import */ var _emotion_is_prop_valid__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__("9uj6");
 /* harmony import */ var merge_anything__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__("ECyS");
@@ -4535,4 +4330,4 @@ if (false) {} //
 /***/ })
 
 }]);
-//# sourceMappingURL=component---node-modules-ocular-gatsby-src-templates-index-jsx-c5bf9b4a2ae5590bbd41.js.map
+//# sourceMappingURL=component---node-modules-ocular-gatsby-src-templates-index-jsx-51a7611bedc528b9d93e.js.map
