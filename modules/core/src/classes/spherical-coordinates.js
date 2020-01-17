@@ -58,19 +58,18 @@ export default class SphericalCoordinates {
     altitude = undefined,
     radiusScale = EARTH_RADIUS_METERS
   } = {}) {
-    if (arguments.length === 0) {
-      this.phi = 0;
-      this.theta = 0;
-      this.radius = 1;
-    } else if (Number.isFinite(phi) || Number.isFinite(theta)) {
-      this.phi = phi || 0; // up / down towards top and bottom pole
-      this.theta = theta || 0; // around the equator of the sphere
-    } else if (Number.isFinite(bearing) || Number.isFinite(pitch)) {
-      this.bearing = bearing || 0; // up / down towards top and bottom pole
-      this.pitch = pitch || 0; // around the equator of the sphere
-    }
-    this.radius = radius || 1; // radial distance from center
+    this.phi = phi;
+    this.theta = theta;
+    // TODO - silently accepts illegal 0
+    this.radius = radius || altitude || 1; // radial distance from center
     this.radiusScale = radiusScale || 1; // Used by lngLatZ
+    
+    if (bearing !== undefined) {
+      this.bearing = bearing; // up / down towards top and bottom pole
+    }
+    if (pitch !== undefined) {
+      this.pitch = pitch; // around the equator of the sphere
+    }
     this.check();
   }
 
