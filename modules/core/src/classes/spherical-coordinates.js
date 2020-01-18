@@ -63,7 +63,7 @@ export default class SphericalCoordinates {
     // TODO - silently accepts illegal 0
     this.radius = radius || altitude || 1; // radial distance from center
     this.radiusScale = radiusScale || 1; // Used by lngLatZ
-    
+
     if (bearing !== undefined) {
       this.bearing = bearing; // up / down towards top and bottom pole
     }

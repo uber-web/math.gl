@@ -18,8 +18,8 @@
     "lint": "ocular-lint",
     "metrics": "ocular-metrics",
     "publish": "ocular-publish",
-    "test": "ocular-test",
-    "types": "tsc",
+    "test": "yarn typescript && ocular-test",
+    "typescript": "tsc",
     "test-size-explicit": "npm run build && webpack --config test/webpack.config.js --env.import-vec4-mat4-explicit",
     "test-size": "npm run build && webpack --config test/webpack.config.js --env.import-nothing"
   },

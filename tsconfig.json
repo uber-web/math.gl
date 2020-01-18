@@ -1,18 +1,18 @@
 {
-	"compilerOptions": {
+  "compilerOptions": {
 
-		"target": "es2020",
-		"allowJs": true,
-		"checkJs": true,
+    "target": "es2020",
+    "allowJs": true,
+    "checkJs": true,
 
-		"noEmit": true
-	},
-	"include":[
-		"./modules/core"
-	],
-	"exclude":[
-		"./modules/**/test",
-		"./modules/**/wip",
-		"./modules/**/dist"
-	]
+    "noEmit": true
+  },
+  "include":[
+    "./modules/core"
+  ],
+  "exclude":[
+    "./modules/**/test",
+    "./modules/**/wip",
+    "./modules/**/dist"
+  ]
 }
