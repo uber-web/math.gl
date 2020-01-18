@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import {config} from 'math.gl';
+import {config} from './lib/common';
 
 // math.gl classes
 export {default as Vector2} from './classes/vector2';
@@ -77,6 +77,8 @@ const global_ = globals.global || globals.self || globals.window;
 
 // Make config avalable as global variable for access in debugger
 // TODO - integrate with probe.gl (as soft dependency) to persist across reloades
+
+// @ts-ignore error TS2339: Property 'mathgl' does not exist on type 'Window | Global
 global_.mathgl = {
   config
 };

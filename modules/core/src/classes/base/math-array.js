@@ -19,13 +19,28 @@
 // THE SOFTWARE.
 
 import {config, formatValue, equals, isArray} from '../../lib/common';
+import assert from '../../lib/assert';
 
 export default class MathArray extends Array {
+  // Defined by derived class
+  get ELEMENTS() {
+    assert(false);
+    return 0;
+  }
+
+  // Defined by derived class
+  get RANK() {
+    assert(false);
+    return 0;
+  }
+
   clone() {
+    // @ts-ignore error TS2351: Cannot use 'new' with an expression whose type lacks a call or construct signature.
     return new this.constructor().copy(this);
   }
 
   from(arrayOrObject) {
+    // @ts-ignore error TS2339: Property 'copy' does not exist on type 'MathArray'.
     return Array.isArray(arrayOrObject) ? this.copy(arrayOrObject) : this.fromObject(arrayOrObject);
   }
 
@@ -40,6 +55,7 @@ export default class MathArray extends Array {
     if (arrayOrObject === this) {
       return this;
     }
+    // @ts-ignore error TS2339: Property 'toObject' does not exist on type 'MathArray'.
     return isArray(arrayOrObject) ? this.toArray(arrayOrObject) : this.toObject(arrayOrObject);
   }
 
@@ -157,6 +173,7 @@ export default class MathArray extends Array {
 
   scale(scale) {
     if (Array.isArray(scale)) {
+      // @ts-ignore error TS2339: Property 'multiply' does not exist on type 'MathArray'.
       return this.multiply(scale);
     }
     for (let i = 0; i < this.ELEMENTS; ++i) {
@@ -223,7 +240,7 @@ export default class MathArray extends Array {
   // Debug checks
 
   check() {
-    if (config.debug && !this.validate(this)) {
+    if (config.debug && !this.validate()) {
       throw new Error(`math.gl: ${this.constructor.name} some fields set to invalid numbers'`);
     }
     return this;

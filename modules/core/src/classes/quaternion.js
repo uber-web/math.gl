@@ -22,7 +22,9 @@ import MathArray from './base/math-array';
 import {checkNumber, checkVector} from '../lib/validators';
 import assert from '../lib/assert';
 
+// @ts-ignore: error TS2307: Cannot find module 'gl-matrix/...'.
 import * as quat from 'gl-matrix/quat';
+// @ts-ignore: error TS2307: Cannot find module 'gl-matrix/...'.
 import * as vec4 from 'gl-matrix/vec4';
 
 const IDENTITY_QUATERNION = [0, 0, 0, 1];
@@ -97,7 +99,7 @@ export default class Quaternion extends MathArray {
   }
 
   set x(value) {
-    return (this[0] = checkNumber(value));
+    this[0] = checkNumber(value);
   }
 
   get y() {
@@ -105,7 +107,7 @@ export default class Quaternion extends MathArray {
   }
 
   set y(value) {
-    return (this[1] = checkNumber(value));
+    this[1] = checkNumber(value);
   }
 
   get z() {
@@ -113,7 +115,7 @@ export default class Quaternion extends MathArray {
   }
 
   set z(value) {
-    return (this[2] = checkNumber(value));
+    this[2] = checkNumber(value);
   }
 
   get w() {
@@ -121,7 +123,7 @@ export default class Quaternion extends MathArray {
   }
 
   set w(value) {
-    return (this[3] = checkNumber(value));
+    this[3] = checkNumber(value);
   }
 
   /* eslint-enable no-multi-spaces, brace-style, no-return-assign */

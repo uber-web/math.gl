@@ -18,7 +18,8 @@
     "lint": "ocular-lint",
     "metrics": "ocular-metrics",
     "publish": "ocular-publish",
-    "test": "ocular-test",
+    "test": "yarn typescript && ocular-test",
+    "typescript": "tsc",
     "test-size-explicit": "npm run build && webpack --config test/webpack.config.js --env.import-vec4-mat4-explicit",
     "test-size": "npm run build && webpack --config test/webpack.config.js --env.import-nothing"
   },
@@ -35,6 +36,7 @@
     "eslint-plugin-react": "^7.10",
     "ocular-dev-tools": "0.0.29",
     "pre-commit": "^1.2.2",
-    "reify": "^0.18.1"
+    "reify": "^0.18.1",
+    "typescript": "^3.5.2"
   }
 }

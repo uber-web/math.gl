@@ -49,6 +49,7 @@ function BarCell({color, percent, stars = 0, children}) {
 
 // eslint-disable-next-line react/prop-types
 function PerformanceBarCell({row}) {
+  // eslint-disable-next-line react/prop-types
   const {score} = row;
   const percent = getPercent(score);
   // 1 star per 100M
