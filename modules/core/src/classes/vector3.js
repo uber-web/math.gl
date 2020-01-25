@@ -27,8 +27,13 @@ import * as vec3 from 'gl-matrix/vec3';
 import {vec3_transformMat2, vec3_transformMat4AsVector} from '../lib/gl-matrix-extras';
 
 const ORIGIN = [0, 0, 0];
+const constants = {};
 
 export default class Vector3 extends Vector {
+  static get ZERO() {
+    return (constants.ZERO = constants.ZERO || Object.freeze(new Vector3(0, 0, 0, 0)));
+  }
+
   /**
    * @class
    * @param {Number | [Number, Number, Number]} x

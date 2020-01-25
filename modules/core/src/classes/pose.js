@@ -22,23 +22,6 @@ import Vector3 from './vector3';
 import Euler from './euler';
 
 export default class Pose {
-  /**
-   * A pose contains both rotation and rotations.
-   * Note that every single pose defines its own coordinate system
-   * (with the position of the pose in the origin, and zero rotations).
-   * These "pose relative" coordinate will be centered on the defining
-   * pose's position and with with the defining pose's orientation
-   * aligned with axis.
-   * @param {Object} options
-   * @param {Number[]} [options.position]
-   * @param {Number[]} [options.orientation]
-   * @param {Number} [options.x]
-   * @param {Number} [options.y]
-   * @param {Number} [options.z]
-   * @param {Number} [options.roll]
-   * @param {Number} [options.pitch]
-   * @param {Number} [options.yaw]
-   */
   // @ts-ignore TS2740: Type '{}' is missing the following properties from type
   constructor({
     x = 0,
@@ -62,7 +45,6 @@ export default class Pose {
     }
   }
 
-  /* eslint-disable no-multi-spaces, brace-style, no-return-assign */
   get x() {
     return this.position.x;
   }
@@ -99,7 +81,6 @@ export default class Pose {
   set yaw(value) {
     this.orientation.yaw = value;
   }
-  /* eslint-enable no-multi-spaces, brace-style, no-return-assign */
 
   getPosition() {
     return this.position;
@@ -125,13 +106,6 @@ export default class Pose {
     );
   }
 
-  /*
-   * Returns a 4x4 matrix that transforms a coordinates (in the same
-   * coordinate system as this pose) into the "pose-relative" coordinate
-   * system defined by this pose.
-   * The pose relative coordinates with have origin in the position of this
-   * pose, and axis will be aligned with the rotation of this pose.
-   */
   getTransformationMatrix() {
     // setup precomputations for the sin/cos of the angles
     const sr = Math.sin(this.roll);
@@ -167,25 +141,12 @@ export default class Pose {
     return matrix;
   }
 
-  /*
-   * Given a second pose that represent the same object in a second coordinate
-   * system, this method returns a 4x4 matrix that transforms coordinates in the
-   * second coordinate system into the coordinate system of this pose.
-   */
   getTransformationMatrixFromPose(pose) {
     return new Matrix4()
       .multiplyRight(this.getTransformationMatrix())
       .multiplyRight(pose.getTransformationMatrix().invert());
   }
 
-  /*
-   * Given a second pose that represent the same object in a second coordinate
-   * system, this method returns a 4x4 matrix that transforms coordinates in the
-   * coordinate system of this pose into the coordinate system of the second pose.
-   *
-   * Note: This method returns the inverse of that returned by
-   * this.getTransformationMatrixFromPose(pose)
-   */
   getTransformationMatrixToPose(pose) {
     return new Matrix4()
       .multiplyRight(pose.getTransformationMatrix())

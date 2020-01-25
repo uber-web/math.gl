@@ -33,9 +33,9 @@ export default function geospatialBench(suite, addReferenceBenchmarks) {
 
   if (addReferenceBenchmarks) {
     suite
-      .add('fromCartographicToRadians#Object', () =>
-        fromCartographicToRadians(vector3, objectVector)
-      )
+      // .add('fromCartographicToRadians#Object', () =>
+      //   fromCartographicToRadians(vector3, objectVector)
+      // )
       .add('toCartographicFromRadians#Object', () =>
         toCartographicFromRadians(vector3, objectVector)
       )

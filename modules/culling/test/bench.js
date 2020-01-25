@@ -8,6 +8,8 @@ const plane = new Plane();
 const boundingSphere = new BoundingSphere();
 const transform = new Matrix4();
 
+// @ts-ignore ts6133
+// eslint-disable-next-line
 export default function cullingBench(suite, addReferenceBenchmarks) {
   suite
     .group('BoundingSphere')

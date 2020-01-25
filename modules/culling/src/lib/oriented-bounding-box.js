@@ -3,7 +3,7 @@
 
 import {Vector3, Matrix3} from '@math.gl/core';
 import BoundingSphere from './bounding-sphere';
-import {Intersect} from '../constants';
+import {INTERSECTION} from '../constants';
 import makeOrientedBoundingBoxfromPoints from '../algorithms/bounding-box-from-points';
 
 const scratchVector = new Vector3();
@@ -32,7 +32,6 @@ const MATRIX3 = {
 };
 
 export default class OrientedBoundingBox {
-  // An OrientedBoundingBox of some object is a closed and convex cuboid. It can provide a tighter bounding volume than {@link BoundingSphere} or {@link AxisAlignedBoundingBox} in many cases.
   constructor(center = [0, 0, 0], halfAxes = [0, 0, 0, 0, 0, 0, 0, 0, 0]) {
     this.center = new Vector3().from(center);
     this.halfAxes = new Matrix3(halfAxes);
@@ -77,8 +76,11 @@ export default class OrientedBoundingBox {
   /**
    * Determines which side of a plane the oriented bounding box is located.
    *
-   * @param {Plane} plane The plane to test against.
-   * @returns {Intersect} {@link Intersect.INSIDE} if the entire box is on the side of the plane the normal is pointing, {@link Intersect.OUTSIDE} if the entire box is on the opposite side, and {@link Intersect.INTERSECTING} if the box intersects the plane.
+   * @param plane The plane to test against.
+   * @returns
+   *  - `INTERSECTION.INSIDE` if the entire box is on the side of the plane the normal is pointing.
+   *  - `INTERSECTION.OUTSIDE` if the entire box is on the opposite side.
+   *  - `INTERSECTION.INTERSECTING` if the box intersects the plane.
    */
   intersectPlane(plane) {
     const center = this.center;
@@ -110,12 +112,12 @@ export default class OrientedBoundingBox {
 
     if (distanceToPlane <= -radEffective) {
       // The entire box is on the negative side of the plane normal
-      return Intersect.OUTSIDE;
+      return INTERSECTION.OUTSIDE;
     } else if (distanceToPlane >= radEffective) {
       // The entire box is on the positive side of the plane normal
-      return Intersect.INSIDE;
+      return INTERSECTION.INSIDE;
     }
-    return Intersect.INTERSECTING;
+    return INTERSECTION.INTERSECTING;
   }
 
   // Computes the estimated distance from the closest point on a bounding box to a point.
@@ -182,7 +184,7 @@ export default class OrientedBoundingBox {
   // to position projected onto direction.
 
   // eslint-disable-next-line max-statements
-  computePlaneDistances(position, direction, result = [[], []]) {
+  computePlaneDistances(position, direction, result = [-0, -0]) {
     let minDist = Number.POSITIVE_INFINITY;
     let maxDist = Number.NEGATIVE_INFINITY;
 

@@ -37,7 +37,7 @@ Determines whether a bounding volume intersects the culling volume.
 - `boundingVolume` The bounding volume whose intersection with the culling volume is to be tested.
 
 Returns
-- `Intersect.OUTSIDE`, `Intersect.INTERSECTING`, or `Intersect.INSIDE`.
+- `INTERSECTION.OUTSIDE`, `INTERSECTION.INTERSECTING`, or `INTERSECTION.INSIDE`.
 
 ### computeVisibilityWithPlaneMask(boundingVolume : Object, parentPlaneMask : Number) : Number
 

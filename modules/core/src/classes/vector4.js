@@ -26,7 +26,13 @@ import {checkNumber} from '../lib/validators';
 import * as vec4 from 'gl-matrix/vec3';
 import {vec4_transformMat2, vec4_transformMat3} from '../lib/gl-matrix-extras';
 
+const constants = {};
+
 export default class Vector4 extends Vector {
+  static get ZERO() {
+    return (constants.ZERO = constants.ZERO || Object.freeze(new Vector4(0, 0, 0, 0)));
+  }
+
   constructor(x = 0, y = 0, z = 0, w = 0) {
     // PERF NOTE: initialize elements as double precision numbers
     super(-0, -0, -0, -0);

@@ -98,7 +98,7 @@ Compares the provided OrientedBoundingBox componentwise and returns `true` if th
 
 returns `true` if left and right are equal, `false` otherwise.
 
-### intersectPlane(plane : Plane) : Intersect
+### intersectPlane(plane : Plane) : INTERSECTION
 
 Determines which side of a plane the oriented bounding box is located.
 
@@ -106,9 +106,9 @@ Determines which side of a plane the oriented bounding box is located.
 - {Plane} plane The plane to test against.
 
 Returns
-- `Intersect.INSIDE` if the entire box is on the side of the plane the normal is pointing
-- `Intersect.OUTSIDE` if the entire box is on the opposite side, and
-- `Intersect.INTERSECTING` if the box intersects the plane.
+- `INTERSECTION.INSIDE` if the entire box is on the side of the plane the normal is pointing
+- `INTERSECTION.OUTSIDE` if the entire box is on the opposite side, and
+- `INTERSECTION.INTERSECTING` if the box intersects the plane.
 
 ### distanceTo(point : Number[3]) : Number
 
@@ -144,7 +144,7 @@ Returns
 
 - The nearest and farthest distances on the bounding box from position in direction.
 
-### intersectPlane(plane : Plane) : Intersect
+### intersectPlane(plane : Plane) : INTERSECTION
 
 Determines which side of a plane the oriented bounding box is located.
 
@@ -152,9 +152,9 @@ Determines which side of a plane the oriented bounding box is located.
 
 Returns
 
-- `Intersect.INSIDE` if the entire box is on the side of the plane the normal is pointing
-- `Intersect.OUTSIDE` if the entire box is on the opposite side, and
-- `Intersect.INTERSECTING` if the box intersects the plane.
+- `INTERSECTION.INSIDE` if the entire box is on the side of the plane the normal is pointing
+- `INTERSECTION.OUTSIDE` if the entire box is on the opposite side, and
+- `INTERSECTION.INTERSECTING` if the box intersects the plane.
 
 ### getModelMatrix() : Matrix4
 

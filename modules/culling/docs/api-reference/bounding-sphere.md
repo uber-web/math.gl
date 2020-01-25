@@ -110,15 +110,15 @@ Computes a bounding sphere by enlarging the provided sphere to contain the provi
 
 - `point` A point to enclose in a bounding sphere.
 
-### intersectPlane(plane : Plane) : Intersect
+### intersectPlane(plane : Plane) : INTERSECTION
 
 Determines which side of a plane a sphere is located.
 
 - `plane` The plane to test against.
 Returns
-- `Intersect.INSIDE` if the entire sphere is on the side of the plane the normal is pointing
-- `Intersect.OUTSIDE` if the entire sphere is on the opposite side
-- `Intersect.INTERSECTING` if the sphere intersects the plane.
+- `INTERSECTION.INSIDE` if the entire sphere is on the side of the plane the normal is pointing
+- `INTERSECTION.OUTSIDE` if the entire sphere is on the opposite side
+- `INTERSECTION.INTERSECTING` if the sphere intersects the plane.
 
 ### transform(transform : Number[16]) : BoundingSphere
 

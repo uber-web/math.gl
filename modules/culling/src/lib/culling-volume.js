@@ -3,7 +3,7 @@
 
 /* eslint-disable */
 import {Vector3, Vector4, assert} from '@math.gl/core';
-import {Intersect} from '../constants';
+import {INTERSECTION} from '../constants';
 import Plane from './plane';
 
 // X, Y, Z Unit vectors
@@ -89,17 +89,17 @@ export default class CullingVolume {
   computeVisibility(boundingVolume) {
     assert(boundingVolume);
     // const planes = this.planes;
-    let intersect = Intersect.INSIDE;
+    let intersect = INTERSECTION.INSIDE;
     for (const plane of this.planes) {
       const result = boundingVolume.intersectPlane(plane);
       switch (result) {
-        case Intersect.OUTSIDE:
+        case INTERSECTION.OUTSIDE:
           // We are done
-          return Intersect.OUTSIDE;
+          return INTERSECTION.OUTSIDE;
 
-        case Intersect.INTERSECTING:
+        case INTERSECTION.INTERSECTING:
           // If no other intersection is outside, return INTERSECTING
-          intersect = Intersect.INTERSECTING;
+          intersect = INTERSECTION.INTERSECTING;
           break;
 
         default:
@@ -143,9 +143,9 @@ export default class CullingVolume {
 
       const plane = planes[k];
       const result = boundingVolume.intersectPlane(plane);
-      if (result === Intersect.OUTSIDE) {
+      if (result === INTERSECTION.OUTSIDE) {
         return CullingVolume.MASK_OUTSIDE;
-      } else if (result === Intersect.INTERSECTING) {
+      } else if (result === INTERSECTION.INTERSECTING) {
         mask |= flag;
       }
     }

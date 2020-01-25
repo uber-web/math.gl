@@ -19,7 +19,7 @@ function Star() {
   return <span style={{fontSize: '100%', color: 'yellow'}}>★</span>;
 }
 
-function BarCell({color, percent, stars = 0, children = []}) {
+function BarCell({color, percent, stars = 0, children = undefined}) {
   return (
     <div
       style={{
@@ -79,7 +79,7 @@ export default class BenchResults extends Component {
           </BarCell>
           <div style={{width: 20}} />
           <BarCell color={ORANGE} percent={100}>
-            1M - 10M iterations/s
+            <div>1M - 10M iterations/s</div>
           </BarCell>
           <div style={{width: 20}} />
           <BarCell color={GREEN} percent={100}>

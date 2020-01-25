@@ -115,7 +115,12 @@ export class MapboxTransform extends Transform {
     return [lng, lat];
   }
 
-  // Uses map to get position for panning
+  /**
+   * Uses map to get position for panning.
+   * @param {object} options
+   * @param {number[]} options.lngLat
+   * @param {number[]} options.pos
+   */
   mapboxGetLngLatAtPoint({lngLat: [lng, lat], pos: [x, y]}) {
     const mapboxLngLat = new LngLat(lng, lat);
     const mapboxPoint = new Point(x, y);
