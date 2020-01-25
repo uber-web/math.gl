@@ -22,7 +22,7 @@
 import test from 'tape-catch';
 import {tapeEquals} from 'test/utils/tape-assertions';
 
-import {Quaternion, Vector3, Matrix4, Pose, equals} from 'math.gl';
+import {Quaternion, Vector3, Matrix4} from '@math.gl/core';
 
 function extendToMatrix4(arr) {
   const matrix4 = new Matrix4();
@@ -171,11 +171,13 @@ test('Quaternion#identity', t => {
 });
 
 test('Quaternion#dot', t => {
+  // @ts-ignore TS2554: Expected 1 arguments, but got 2.
   t.throws(() => new Quaternion(1, 1, 1, 1).dot([1, 1, 1, 1], [1, 1, 1, 1]));
   t.end();
 });
 
 test('Quaternion#rotationTo', t => {
+  // @ts-ignore TS2554: Expected 1 arguments, but got 2.
   t.doesNotThrow(() => new Quaternion().rotationTo([1, 1, 1, 1], [2, 2, 2, 2]));
   t.end();
 });
@@ -229,6 +231,7 @@ test('Quaternion#rotateZ', t => {
 
 test('Quaternion#add', t => {
   const quat = new Quaternion(1, 1, 1, 1).identity();
+  // @ts-ignore
   t.throws(() => quat.add([0, 0, 0, 0], [0, 0, 0, 0]));
   tapeEquals(t, quat.add([0, 0, 0, 0]), quat, 'should add quaternion');
   t.end();
@@ -250,9 +253,10 @@ test('Quaternion#transform', t => {
 
 test.skip('getAxisAngle', tt => {
   test('Quaternion#getAxisAngle for a quaternion representing no rotation', t => {
-    const quat = new Quaternion().setAxisAngle(out[(0, 1, 0)], 0.0);
     const out = [0, 0, 0];
-    deg90 = quat.getAxisAngle(out);
+    const quat = new Quaternion().setAxisAngle([0, 1, 0], 0.0);
+    // @ts-ignore
+    const deg90 = quat.getAxisAngle(out);
     tapeEquals(
       t,
       deg90 % (Math.PI * 2.0),

@@ -221,6 +221,4 @@ export default class Matrix3 extends Matrix {
     deprecated('Matrix3.transformVector');
     return this.transform(vector, result);
   }
-
-  // Deprecations in v3.0
 }

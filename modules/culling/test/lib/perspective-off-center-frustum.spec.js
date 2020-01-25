@@ -5,7 +5,7 @@ import test from 'tape-catch';
 import {tapeEquals} from 'test/utils/tape-assertions';
 
 import {_PerspectiveOffCenterFrustum as PerspectiveOffCenterFrustum} from '@math.gl/culling';
-import {Vector2, Vector3, Vector4, Matrix4, _MathUtils, equals} from 'math.gl';
+import {Vector2, Vector3, Vector4, Matrix4, _MathUtils, equals} from '@math.gl/core';
 
 const VECTOR3_UNIT_Y = Object.freeze(new Vector3(0, 1, 0));
 const VECTOR3_UNIT_Z = Object.freeze(new Vector3(0, 0, 1));

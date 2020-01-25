@@ -1,4 +1,4 @@
-import {Vector3, assert, equals as equalsEpsilon} from 'math.gl';
+import {Vector3, assert, equals as equalsEpsilon} from '@math.gl/core';
 
 const EPSILON14 = 1e-14;
 

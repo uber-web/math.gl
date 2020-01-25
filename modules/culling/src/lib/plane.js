@@ -2,7 +2,7 @@
 // See LICENSE.md and https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md
 
 /* eslint-disable */
-import {Vector3, equals, assert, MathUtils} from 'math.gl';
+import {Vector3, equals, assert} from '@math.gl/core';
 
 const scratchPosition = new Vector3();
 const scratchNormal = new Vector3();

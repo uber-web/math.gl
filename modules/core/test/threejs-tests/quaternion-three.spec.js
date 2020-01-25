@@ -25,9 +25,10 @@
 // @author tschw
 // @author TristanVALCKE / https://github.com/Itee
 
+// @ts-nocheck
 /* eslint-disable */
 import test from 'tape-catch';
-import {Quaternion, Vector3, Vector4, Matrix4, _Euler as Euler} from 'math.gl';
+import {Quaternion, Vector3, Vector4, Matrix4, _Euler as Euler} from '@math.gl/core';
 import {x, y, z, w, eps} from './constants';
 
 const orders = ['XYZ', 'YXZ', 'ZXY', 'ZYX', 'YZX', 'XZY'];

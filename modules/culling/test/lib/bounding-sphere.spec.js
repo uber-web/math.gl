@@ -5,11 +5,11 @@
 import test from 'tape-catch';
 import {tapeEquals} from 'test/utils/tape-assertions';
 
-import {Vector3, Matrix4, /* Matrix3, Quaternion, */ toRadians} from 'math.gl';
-import {OrientedBoundingBox, BoundingSphere, Intersect, Plane} from '@math.gl/culling'; // '@math.gl/culling';
+import {Vector3, Matrix4} from '@math.gl/core';
+import {BoundingSphere, Intersect, Plane} from '@math.gl/culling'; // '@math.gl/culling';
 
-const positionsRadius = 1.0;
-const positionsCenter = new Vector3(10000001.0, 0.0, 0.0);
+// const positionsRadius = 1.0;
+// const positionsCenter = new Vector3(10000001.0, 0.0, 0.0);
 
 const center = [10000000.0, 0.0, 0.0];
 
@@ -28,6 +28,7 @@ function getPositions() {
   ];
 }
 
+/*
 function getPositionsAsFlatArray() {
   const positions = getPositions();
   const result = [];
@@ -70,6 +71,7 @@ function getPositionsAsEncodedFlatArray() {
     low
   };
 }
+*/
 
 test('BoundingSphere#default constructing produces expected values', t => {
   const sphere = new BoundingSphere();
@@ -257,7 +259,7 @@ test('BoundingSphere#estimated distance to point', t => {
 });
 
 test('BoundingSphere#union throws with no parameter', t => {
-  const left = new BoundingSphere();
+  const sphere = new BoundingSphere();
   t.throws(() => sphere.union(undefined));
 
   t.end();

@@ -4,14 +4,13 @@
 //
 // This enables using the examples to debug the main library source
 // without publishing or npm linking, with conveniences such hot reloading etc.
+
 const webpack = require('webpack');
 const resolve = require('path').resolve;
-// eslint-disable-next-line import/no-extraneous-dependencies
 const ALIASES = require('ocular-dev-tools/config/ocular.config')({
   root: resolve(__dirname, '..')
 }).aliases;
 
-// eslint-disable-next-line import/no-extraneous-dependencies
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 // Support for hot reloading changes to the library:
@@ -80,7 +79,7 @@ function addAnalyzerSettings(config) {
   return config;
 }
 
-module.exports = (baseConfig, opts = {}) => env => {
+module.exports = baseConfig => env => {
   let config = baseConfig;
 
   if (env && env.analyze) {
@@ -88,7 +87,7 @@ module.exports = (baseConfig, opts = {}) => env => {
   }
 
   if (env && env.local) {
-    config = addLocalDevSettings(config, opts);
+    config = addLocalDevSettings(config);
   }
 
   // uncomment to debug

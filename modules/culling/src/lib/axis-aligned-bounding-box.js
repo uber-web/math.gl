@@ -1,4 +1,4 @@
-import {Vector3} from 'math.gl';
+import {Vector3} from '@math.gl/core';
 import {Intersect} from '../constants';
 
 const scratchVector = new Vector3();
@@ -9,9 +9,9 @@ const scratchNormal = new Vector3();
  * @alias AxisAlignedBoundingBox
  * @constructor
  *
- * @param {Vector3} [minimum=0, 0, 0] The minimum point along the x, y, and z axes.
- * @param {Vector3} [maximum=0, 0, 0] The maximum point along the x, y, and z axes.
- * @param {Vector3} [center] The center of the box; automatically computed if not supplied.
+ * @param {number[]} [minimum=0, 0, 0] The minimum point along the x, y, and z axes.
+ * @param {number[]} [maximum=0, 0, 0] The maximum point along the x, y, and z axes.
+ * @param {number[]} [center] The center of the box; automatically computed if not supplied.
  *
  * @see BoundingSphere
  * @see BoundingRectangle
@@ -52,7 +52,6 @@ export default class AxisAlignedBoundingBox {
    * finding the points spaced the farthest apart on the x, y, and z axes.
    *
    * @param {Vector3[]} positions List of points that the bounding box will enclose.  Each point must have a <code>x</code>, <code>y</code>, and <code>z</code> properties.
-   * @param {AxisAlignedBoundingBox} [result] The object onto which to store the result.
    * @returns {AxisAlignedBoundingBox} The modified result parameter or a new AxisAlignedBoundingBox instance if one was not provided.
    *
    * @example

@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import {configure, Vector2, Vector3, Vector4, Matrix3, Matrix4} from 'math.gl';
+import {configure, Vector2, Vector3, Vector4, Matrix3, Matrix4} from '@math.gl/core';
 
 configure({debug: false});
 

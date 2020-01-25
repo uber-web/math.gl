@@ -6,12 +6,12 @@ GLSL math function equivalents. Work on both single values and vectors.
 ## Usage
 
 ```js
-import {config, equals} from 'math.gl';
+import {config, equals} from '@math.gl/core';
 ```
 
 Setting configuration
 ```js
-import {config} from 'math.gl';
+import {config} from '@math.gl/core';
 config.EPSILON = 1e-12;
 config.debug = true;
 config.printRowMajor = true;

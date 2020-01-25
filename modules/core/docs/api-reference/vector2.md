@@ -6,7 +6,7 @@ A two dimensional vector
 ## Usage
 
 ```js
-import {Vector2} from 'math.gl';
+import {Vector2} from '@math.gl/core';
 const vector = new Vector2(1, 1);
 ```
 

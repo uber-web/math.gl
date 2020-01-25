@@ -1,7 +1,7 @@
 // This file is derived from the Cesium math library under Apache 2 license
 // See LICENSE.md and https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md
 
-import {Vector3} from 'math.gl';
+import {Vector3} from '@math.gl/core';
 import BoundingSphere from '../lib/bounding-sphere';
 
 /* eslint-disable */
@@ -24,7 +24,7 @@ Computes a tight-fitting bounding sphere enclosing a list of 3D Cartesian points
 The bounding sphere is computed by running two algorithms, a naive algorithm and
 Ritter's algorithm. The smaller of the two spheres is used to ensure a tight fit.
    *
-@param {Vector3[]} [positions] An array of points that the bounding sphere will enclose.  Each point must have <code>x</code>, <code>y</code>, and <code>z</code> properties.
+@param {number[][]} [positions] An array of points that the bounding sphere will enclose.  Each point must have <code>x</code>, <code>y</code>, and <code>z</code> properties.
 @param {BoundingSphere} [result] The object onto which to store the result.
 @returns {BoundingSphere} The modified result parameter or a new BoundingSphere instance if one was not provided.
    *
@@ -172,9 +172,11 @@ export function makeBoundingSphereFromPoints(positions, result = new BoundingSph
 
   if (ritterRadius < naiveRadius) {
     ritterCenter.to(result.center);
+    // @ts-ignore TS2540: Cannot assign to 'radius' because it is a read-only property.
     result.radius = ritterRadius;
   } else {
     naiveCenter.to(result.center);
+    // @ts-ignore TS2540: Cannot assign to 'radius' because it is a read-only property.
     result.radius = naiveRadius;
   }
 

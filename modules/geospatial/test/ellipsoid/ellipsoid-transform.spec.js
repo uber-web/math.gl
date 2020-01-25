@@ -2,7 +2,7 @@
 // See LICENSE.md and https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md
 
 import test from 'tape-catch';
-import {Vector3, Vector4, Matrix4} from 'math.gl';
+import {Vector3, Vector4, Matrix4} from '@math.gl/core';
 import {Ellipsoid} from '@math.gl/geospatial';
 
 const negativeX = new Vector4(-1, 0, 0, 0);
@@ -82,7 +82,7 @@ test('Ellipsoid#transforms#northEastDownToFixedFrame works without a result para
 test('Ellipsoid#transforms#northEastDownToFixedFrame works with a result parameter', t => {
   const origin = new Vector3(1.0, 0.0, 0.0);
   const expectedTranslation = new Vector4(origin.x, origin.y, origin.z, 1.0);
-  const result = new Matrix4(2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2);
+  const result = new Matrix4().set(2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2);
 
   const returnedResult = UNIT_SPHERE.localFrameToFixedFrame(
     'north',
@@ -182,29 +182,30 @@ test('Ellipsoid#transforms#northUpEastToFixedFrame works at the south pole', t =
   const expectedTranslation = new Vector4(southPole.x, southPole.y, southPole.z, 1.0);
 
   const returnedResult = UNIT_SPHERE.localFrameToFixedFrame('north', 'up', 'east', southPole);
-  t.deepEquals(returnedResult.getColumn(0), Vector4.UNIT_X); // north
-  t.deepEquals(returnedResult.getColumn(1), negativeZ); // up
-  t.deepEquals(returnedResult.getColumn(2), Vector4.UNIT_Y); // east
-  t.deepEquals(returnedResult.getColumn(3), expectedTranslation); // translation
+  const matrix4 = new Matrix4(returnedResult);
+  t.deepEquals(matrix4.getColumn(0), Vector4.UNIT_X); // north
+  t.deepEquals(matrix4.getColumn(1), negativeZ); // up
+  t.deepEquals(matrix4.getColumn(2), Vector4.UNIT_Y); // east
+  t.deepEquals(matrix4.getColumn(3), expectedTranslation); // translation
   t.end();
 });
 
 test('Ellipsoid#transforms#northWestUpToFixedFrame works without a result parameter', t => {
   const origin = new Vector3(1.0, 0.0, 0.0);
   const expectedTranslation = new Vector4(origin.x, origin.y, origin.z, 1.0);
-
   const returnedResult = UNIT_SPHERE.localFrameToFixedFrame('north', 'west', 'up', origin);
-  t.deepEquals(returnedResult.getColumn(0), Vector4.UNIT_Z); // north
-  t.deepEquals(returnedResult.getColumn(1), negativeY); // west
-  t.deepEquals(returnedResult.getColumn(2), Vector4.UNIT_X); // up
-  t.deepEquals(returnedResult.getColumn(3), expectedTranslation); // translation
+  const matrix4 = new Matrix4(returnedResult);
+  t.deepEquals(matrix4.getColumn(0), Vector4.UNIT_Z); // north
+  t.deepEquals(matrix4.getColumn(1), negativeY); // west
+  t.deepEquals(matrix4.getColumn(2), Vector4.UNIT_X); // up
+  t.deepEquals(matrix4.getColumn(3), expectedTranslation); // translation
   t.end();
 });
 
 test('Ellipsoid#transforms#northWestUpToFixedFrame works with a result parameter', t => {
   const origin = new Vector3(1.0, 0.0, 0.0);
   const expectedTranslation = new Vector4(origin.x, origin.y, origin.z, 1.0);
-  const result = new Matrix4(2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2);
+  const result = new Matrix4().set(2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2);
 
   const returnedResult = UNIT_SPHERE.localFrameToFixedFrame('north', 'west', 'up', origin, result);
   t.equals(result, returnedResult);
@@ -239,7 +240,13 @@ test('Ellipsoid#transforms#northWestUpToFixedFrame works at the south pole', t =
   const southPole = new Vector3(0.0, 0.0, -1.0);
   const expectedTranslation = new Vector4(southPole.x, southPole.y, southPole.z, 1.0);
 
-  const returnedResult = UNIT_SPHERE.localFrameToFixedFrame('north', 'west', 'up', southPole);
+  const returnedResult = UNIT_SPHERE.localFrameToFixedFrame(
+    'north',
+    'west',
+    'up',
+    southPole,
+    new Matrix4()
+  );
   t.deepEquals(returnedResult.getColumn(0), Vector4.UNIT_X); // north
   t.deepEquals(returnedResult.getColumn(1), negativeY); // west
   t.deepEquals(returnedResult.getColumn(2), negativeZ); // up

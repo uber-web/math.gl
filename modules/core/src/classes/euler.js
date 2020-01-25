@@ -98,15 +98,17 @@ export default class Euler extends MathArray {
 
   /**
    * @class
-   * @param {Number | [Number, Number, Number, Number] =} x
-   * @param {Number=} y
-   * @param {Number=} z
-   * @param {Number=} order
+   * @param {Number | Number[]} x
+   * @param {Number=} [y]
+   * @param {Number=} [z]
+   * @param {Number=} [order]
    */
   constructor(x = 0, y = 0, z = 0, order = Euler.DefaultOrder) {
     // PERF NOTE: initialize elements as double precision numbers
     super(-0, -0, -0, -0);
+    // eslint-disable-next-line prefer-rest-params
     if (arguments.length > 0 && Array.isArray(arguments[0])) {
+      // eslint-disable-next-line prefer-rest-params
       this.fromVector3(...arguments);
     } else {
       // @ts-ignore error TS2345: Argument of type 'number | [number, number, number, number]' not assignable to 'number'
@@ -193,6 +195,7 @@ export default class Euler extends MathArray {
   /* eslint-disable no-multi-spaces, brace-style, no-return-assign */
 
   // x, y, z angle notation (note: only corresponds to axis in XYZ orientation)
+  /** @type {number} */
   get x() {
     return this[0];
   }
@@ -201,6 +204,7 @@ export default class Euler extends MathArray {
     this[0] = checkNumber(value);
   }
 
+  /** @type {number} */
   get y() {
     return this[1];
   }
@@ -209,6 +213,7 @@ export default class Euler extends MathArray {
     this[1] = checkNumber(value);
   }
 
+  /** @type {number} */
   get z() {
     return this[2];
   }
@@ -268,6 +273,7 @@ export default class Euler extends MathArray {
   }
 
   // roll, pitch, yaw angle notation
+  /** @type {number} */
   get roll() {
     return this[0];
   }
@@ -276,6 +282,7 @@ export default class Euler extends MathArray {
     this[0] = checkNumber(value);
   }
 
+  /** @type {number} */
   get pitch() {
     return this[1];
   }
@@ -284,6 +291,7 @@ export default class Euler extends MathArray {
     this[1] = checkNumber(value);
   }
 
+  /** @type {number} */
   get yaw() {
     return this[2];
   }

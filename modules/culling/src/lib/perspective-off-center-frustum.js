@@ -5,7 +5,9 @@
 // - It has not been fully adapted to math.gl conventions
 // - Documentation has not been ported
 
-import {Vector3, Matrix4, assert} from 'math.gl';
+// @ts-nocheck
+
+import {Vector3, Matrix4, assert} from '@math.gl/core';
 import CullingVolume from './culling-volume';
 import Plane from './plane';
 

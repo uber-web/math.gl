@@ -15,7 +15,7 @@ The math behind `Vector4` comes from projective geometry, which significantly ge
 ## Usage
 
 ```js
-import {Vector4} from 'math.gl';
+import {Vector4} from '@math.gl/core';
 const vector = new Vector4(1, 1, 1, 0);
 const point = new Vector4(0, 0, 0, 1);
 ```

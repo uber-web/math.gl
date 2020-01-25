@@ -9,7 +9,7 @@ A class to handle Quaternions. More information on quternions can be found [here
 ## Usage
 
 ```js
-import {Quaternion} from 'math.gl';
+import {Quaternion} from '@math.gl/core';
 ```
 
 ## Members

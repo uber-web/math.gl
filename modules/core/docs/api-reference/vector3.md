@@ -7,7 +7,7 @@ class Vector3 extends MathArray extends Array
 ## Usage
 
 ```js
-import {Vector3} from 'math.gl';
+import {Vector3} from '@math.gl/core';
 const vector = new Vector3(1, 1, 1);
 ```
 

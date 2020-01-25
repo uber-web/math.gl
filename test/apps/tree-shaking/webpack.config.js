@@ -20,10 +20,10 @@
 
 // NOTE: To use this example standalone (e.g. outside of this repo)
 // delete the local development overrides at the bottom of this file
+
 const {resolve} = require('path');
 const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 const webpack = require('webpack');
-// const BabiliWebpackPlugin = require('babili-webpack-plugin');
 
 module.exports = {
   entry: {

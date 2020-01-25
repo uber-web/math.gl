@@ -4,7 +4,7 @@
 /* eslint-disable */
 import test from 'tape-catch';
 
-import {Vector3} from 'math.gl';
+import {Vector3} from '@math.gl/core';
 import {
   CullingVolume,
   BoundingSphere,

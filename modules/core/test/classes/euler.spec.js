@@ -1,4 +1,4 @@
-import {_Euler as Euler, Matrix4, Quaternion, _Pose as Pose} from 'math.gl';
+import {_Euler as Euler, Matrix4, Quaternion, _Pose as Pose} from '@math.gl/core';
 import test from 'tape-catch';
 import {tapeEquals} from 'test/utils/tape-assertions';
 
@@ -115,7 +115,7 @@ test('Euler#toQuaternion', t => {
   quaternions.every((q, i) => {
     tapeEquals(
       t,
-      new Euler().fromQuaternion(q, Euler.RollPitchYaw),
+      new Euler().fromQuaternion(q),
       eulers[i],
       'Euler.fromQuaternion returns correct value'
     );

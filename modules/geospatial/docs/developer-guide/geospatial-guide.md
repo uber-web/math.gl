@@ -23,7 +23,7 @@ A major use of this library is to convert between "cartesian" (`x`, `y`, `z`) an
 
 Determine the Cartesian representation of a Cartographic position on a WGS84 ellipsoid.
 ```js
-import {toRadians} from 'math.gl';
+import {toRadians} from '@math.gl/core';
 import {Ellipsoid} from '@math.gl/geospatial';
 const cartographicPosition = [toRadians(21), toRadians(78), 5000];
 const cartesianPosition = Ellipsoid.WGS84.cartographicToCartesian(cartographicPosition);

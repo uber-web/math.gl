@@ -47,6 +47,7 @@ export default class Vector3 extends Vector {
         checkNumber(y);
         checkNumber(z);
       }
+      // @ts-ignore TS2412: Property '0' of type 'number | [number, number, number]' is not assignable to numeric index type 'number'
       this[0] = x;
       this[1] = y;
       this[2] = z;

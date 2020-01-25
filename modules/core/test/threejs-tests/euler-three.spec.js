@@ -25,6 +25,7 @@
 // @author bhouston / http://exocortex.com
 // @author TristanVALCKE / https://github.com/Itee
 
+// @ts-nocheck
 /* eslint-disable */
 /* global QUnit */
 import {Euler} from 'math.gl/Euler';

@@ -1,12 +1,12 @@
 // This file is derived from the Cesium math library under Apache 2 license
 // See LICENSE.md and https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md
 
-import {Vector3, Matrix3} from 'math.gl';
+import {Vector3, Matrix3} from '@math.gl/core';
 import BoundingSphere from './bounding-sphere';
 import {Intersect} from '../constants';
 import makeOrientedBoundingBoxfromPoints from '../algorithms/bounding-box-from-points';
-const scratchVector = new Vector3();
 
+const scratchVector = new Vector3();
 const scratchOffset = new Vector3();
 const scratchVectorU = new Vector3();
 const scratchVectorV = new Vector3();
@@ -39,7 +39,7 @@ export default class OrientedBoundingBox {
   }
 
   // Duplicates a OrientedBoundingBox instance.
-  clone(result) {
+  clone() {
     return new OrientedBoundingBox(this.center, this.halfAxes);
   }
 
@@ -77,7 +77,6 @@ export default class OrientedBoundingBox {
   /**
    * Determines which side of a plane the oriented bounding box is located.
    *
-   * @param {OrientedBoundingBox} box The oriented bounding box to test.
    * @param {Plane} plane The plane to test against.
    * @returns {Intersect} {@link Intersect.INSIDE} if the entire box is on the side of the plane the normal is pointing, {@link Intersect.OUTSIDE} if the entire box is on the opposite side, and {@link Intersect.INTERSECTING} if the box intersects the plane.
    */
@@ -298,8 +297,8 @@ export default class OrientedBoundingBox {
     minDist = Math.min(mag, minDist);
     maxDist = Math.max(mag, maxDist);
 
-    result.start = minDist;
-    result.stop = maxDist;
+    result[0] = minDist;
+    result[1] = maxDist;
     return result;
   }
 

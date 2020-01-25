@@ -21,7 +21,7 @@
 /* eslint-disable max-statements, max-depth */
 import test from 'tape-catch';
 import {tapeEquals} from 'test/utils/tape-assertions';
-import {_SphericalCoordinates as SphericalCoordinates} from 'math.gl';
+import {_SphericalCoordinates as SphericalCoordinates} from '@math.gl/core';
 
 const REPRESENTATION_TEST_CASES = [
   {
@@ -71,6 +71,7 @@ test('SphericalCoordinates#constructor', t => {
   const spherical = new SphericalCoordinates();
   t.ok(spherical, 'SphericalCoordinates default constructor OK');
   t.throws(() => new SphericalCoordinates({bearing: NaN}));
+  // @ts-ignore
   t.throws(() => new SphericalCoordinates({bearing: 0, pitch: 'a'}));
   t.end();
 });
@@ -82,8 +83,10 @@ test('SphericalCoordinates#representations', t => {
       const spherical = new SphericalCoordinates(rep1);
       // Checkl various representations
       for (const rep2 of tc.representations) {
-        for (const key in Object.keys(rep2)) {
-          t.equals(spherical[key], rep2[key]);
+        for (const key of Object.keys(rep2)) {
+          if (key !== 'radius' && key !== 'altitude') {
+            t.equals(spherical[key], rep2[key], `${key}`);
+          }
         }
       }
       // Check vector

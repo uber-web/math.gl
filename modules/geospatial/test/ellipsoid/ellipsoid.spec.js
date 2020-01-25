@@ -3,8 +3,8 @@
 
 /* eslint-disable */
 import test from 'tape-catch';
-import {Vector3, toRadians, toDegrees, _MathUtils} from 'math.gl';
-import {Cartographic, Ellipsoid} from '@math.gl/geospatial';
+import {Vector3, toDegrees, _MathUtils} from '@math.gl/core';
+import {Ellipsoid} from '@math.gl/geospatial';
 import {tapeEquals, tapeEqualsEpsilon} from 'test/utils/tape-assertions';
 
 Vector3.ZERO = new Vector3(0, 0, 0);

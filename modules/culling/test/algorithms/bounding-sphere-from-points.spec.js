@@ -4,7 +4,7 @@
 import test from 'tape-catch';
 import {tapeEquals} from 'test/utils/tape-assertions';
 
-import {Vector3} from 'math.gl';
+import {Vector3} from '@math.gl/core';
 import {makeBoundingSphereFromPoints} from '@math.gl/culling';
 
 const positionsRadius = 1.0;

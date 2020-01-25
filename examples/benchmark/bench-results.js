@@ -19,7 +19,7 @@ function Star() {
   return <span style={{fontSize: '100%', color: 'yellow'}}>★</span>;
 }
 
-function BarCell({color, percent, stars = 0, children}) {
+function BarCell({color, percent, stars = 0, children = []}) {
   return (
     <div
       style={{

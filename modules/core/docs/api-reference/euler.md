@@ -12,7 +12,7 @@ A class to handle Euler rotation. More information on rotation using a Euler vec
 ## Usage
 
 ```js
-import {_Euler as Euler} from 'math.gl'
+import {_Euler as Euler} from '@math.gl/core'
 ```
 
 ## Constants

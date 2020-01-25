@@ -19,7 +19,7 @@
 // THE SOFTWARE.
 
 /* eslint-disable max-statements */
-import {Vector2, Vector3, Vector4} from 'math.gl';
+import {Vector2, Vector3, Vector4} from '@math.gl/core';
 import test from 'tape-catch';
 
 // FOR TAPE TESTING
