@@ -17,8 +17,6 @@ export default class Viewport {
    *
    * @class
    * @param {Object} opt - options
-   * @param {Boolean} mercator=true - Whether to use mercator projection
-   *
    * @param {Number} opt.width=1 - Width of "viewport" or window
    * @param {Number} opt.height=1 - Height of "viewport" or window
    * @param {Array} opt.center=[0, 0] - Center of viewport
@@ -86,6 +84,7 @@ export default class Viewport {
     this.pixelUnprojectionMatrix = mInverse;
 
     // Bind methods for easy access
+    /* eslint-disable @typescript-eslint/unbound-method */
     this.equals = this.equals.bind(this);
     this.project = this.project.bind(this);
     this.unproject = this.unproject.bind(this);
@@ -93,8 +92,8 @@ export default class Viewport {
     this.unprojectPosition = this.unprojectPosition.bind(this);
     this.projectFlat = this.projectFlat.bind(this);
     this.unprojectFlat = this.unprojectFlat.bind(this);
+    /* eslint-enable @typescript-eslint/unbound-method */
   }
-  /* eslint-enable complexity */
 
   // Two viewports are equal if width and height are identical, and if
   // their view and projection matrices are (approximately) equal.
@@ -180,7 +179,7 @@ export default class Viewport {
    * @param {Array} xyz - map coordinates
    * @return {Array} [x,y,z] world coordinates.
    */
-  projectFlat(xyz, scale = this.scale) {
+  projectFlat(xyz) {
     return xyz;
   }
 
@@ -191,7 +190,7 @@ export default class Viewport {
    * @param {Array} xyz - world coordinates
    * @return {Array} [x,y,z] map coordinates.
    */
-  unprojectFlat(xyz, scale = this.scale) {
+  unprojectFlat(xyz) {
     return xyz;
   }
 }

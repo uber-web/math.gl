@@ -1,7 +1,7 @@
 import test from 'tape-catch';
 import destination from '@turf/destination';
 import {toLowPrecision} from '../utils/test-utils';
-import {config, equals} from 'math.gl';
+import {config, equals} from '@math.gl/core';
 
 import {
   lngLatToWorld,

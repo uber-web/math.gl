@@ -1,6 +1,6 @@
 import {WebMercatorViewport} from '@math.gl/web-mercator';
 import test from 'tape-catch';
-import {config, equals} from 'math.gl';
+import {config, equals} from '@math.gl/core';
 
 const viewportProps = {
   latitude: 37.75,

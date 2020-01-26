@@ -43,8 +43,8 @@ test('FP32 & Offset Comparison', t => {
 
       // Calculate real position
       const realPixelPos = [
-        lngLatToWorld(point, scale)[0] - lngLatToWorld([longitude, latitude], scale)[0],
-        -(lngLatToWorld(point, scale)[1] - lngLatToWorld([longitude, latitude], scale)[1])
+        lngLatToWorld(point)[0] - lngLatToWorld([longitude, latitude])[0],
+        -(lngLatToWorld(point)[1] - lngLatToWorld([longitude, latitude])[1])
       ];
 
       // Calculate using FP32 mode
@@ -52,11 +52,11 @@ test('FP32 & Offset Comparison', t => {
       const latitudeFP32 = Math.fround(latitude);
       const pointFP32 = point.map(f => Math.fround(f));
       const coordsFP32 = [
-        Math.fround(lngLatToWorld(pointFP32, scale)[0]) -
-          Math.fround(lngLatToWorld([longitudeFP32, latitudeFP32], scale)[0]),
+        Math.fround(lngLatToWorld(pointFP32)[0]) -
+          Math.fround(lngLatToWorld([longitudeFP32, latitudeFP32])[0]),
         -(
-          Math.fround(lngLatToWorld(pointFP32, scale)[1]) -
-          Math.fround(lngLatToWorld([longitudeFP32, latitudeFP32], scale)[1])
+          Math.fround(lngLatToWorld(pointFP32)[1]) -
+          Math.fround(lngLatToWorld([longitudeFP32, latitudeFP32])[1])
         )
       ];
 
@@ -84,12 +84,8 @@ test('FP32 & Offset Comparison', t => {
 
       // We need to recalculate the "real" one because we re-centered
       const realPixelPos2 = [
-        lngLatToWorld(point, scale)[0] -
-          lngLatToWorld([centerPointFP32[0], centerPointFP32[1]], scale)[0],
-        -(
-          lngLatToWorld(point, scale)[1] -
-          lngLatToWorld([centerPointFP32[0], centerPointFP32[1]], scale)[1]
-        )
+        lngLatToWorld(point)[0] - lngLatToWorld([centerPointFP32[0], centerPointFP32[1]])[0],
+        -(lngLatToWorld(point)[1] - lngLatToWorld([centerPointFP32[0], centerPointFP32[1]])[1])
       ];
 
       t.comment(`- Offset Coordinates FP32+64: ${getDiff(offsetPixelPos, realPixelPos2).message}`);
