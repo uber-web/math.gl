@@ -1,5 +1,5 @@
 /* eslint-disable */
-import {Vector3, assert, _MathUtils} from 'math.gl';
+import {Vector3, assert, _MathUtils} from '@math.gl/core';
 import * as vec3 from 'gl-matrix/vec3';
 
 const scratchVector = new Vector3();

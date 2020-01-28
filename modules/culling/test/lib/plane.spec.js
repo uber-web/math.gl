@@ -5,7 +5,7 @@
 import test from 'tape-catch';
 import {tapeEquals} from 'test/utils/tape-assertions';
 
-import {configure, _MathUtils, Vector3, Matrix4, Matrix3} from 'math.gl';
+import {configure, _MathUtils, Vector3, Matrix4, Matrix3} from '@math.gl/core';
 import {Plane} from '@math.gl/culling';
 
 const UNIT_X = [1, 0, 0];

@@ -12,7 +12,7 @@ class Pose
 ## Usage
 
 ```js
-import {_Pose as Pose} from 'math.gl';
+import {_Pose as Pose} from '@math.gl/core';
 ```
 
 ##  Members

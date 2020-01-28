@@ -22,7 +22,7 @@
 import test from 'tape-catch';
 import {tapeEquals} from 'test/utils/tape-assertions';
 
-import {Vector2, Matrix4, Matrix3} from 'math.gl';
+import {Vector2, Matrix4, Matrix3} from '@math.gl/core';
 
 test('Vector2#import', t => {
   t.equals(typeof Vector2, 'function');
@@ -67,7 +67,7 @@ test('Vector2#to', t => {
 test('Vector2#toString', t => {
   const TEST_CASES = [{input: [0, 1], precision: 5, string: '[0, 1]'}];
   for (const tc of TEST_CASES) {
-    const v = new Vector2(...tc.input);
+    const v = new Vector2(tc.input);
     t.equals(String(v), tc.string);
     t.equals(`${v}`, tc.string);
   }
@@ -80,7 +80,7 @@ test('Vector2#scale', t => {
     {input: [1, 2], scale: [2, -1], result: [2, -2]}
   ];
   for (const tc of TEST_CASES) {
-    const result = new Vector2(...tc.input).scale(tc.scale);
+    const result = new Vector2(tc.input).scale(tc.scale);
     tapeEquals(t, result, tc.result);
   }
   t.end();
@@ -89,7 +89,7 @@ test('Vector2#scale', t => {
 test('Vector2#distance', t => {
   const TEST_CASES = [{start: [0, 0], end: [3, 4], result: 5}];
   for (const tc of TEST_CASES) {
-    const result = new Vector2(...tc.start).distance(tc.end);
+    const result = new Vector2(tc.start).distance(tc.end);
     t.equals(result, tc.result);
   }
   t.end();
@@ -98,7 +98,7 @@ test('Vector2#distance', t => {
 test('Vector2#len', t => {
   const TEST_CASES = [{input: [0, 0], result: 0}, {input: [3, 4], result: 5}];
   for (const tc of TEST_CASES) {
-    const result = new Vector2(...tc.input).len();
+    const result = new Vector2(tc.input).len();
     t.equals(result, tc.result);
   }
   t.end();
@@ -107,7 +107,7 @@ test('Vector2#len', t => {
 test('Vector2#dot', t => {
   const TEST_CASES = [{input1: [1, 3], input2: [4, -2], result: -2}];
   for (const tc of TEST_CASES) {
-    const result = new Vector2(...tc.input1).dot(tc.input2);
+    const result = new Vector2(tc.input1).dot(tc.input2);
     t.equals(result, tc.result);
   }
   t.end();
@@ -121,7 +121,7 @@ test('Vector2#normalize', t => {
     {input: [1, 1], result: [1 / Math.sqrt(2), 1 / Math.sqrt(2)]}
   ];
   for (const tc of TEST_CASES) {
-    const v = new Vector2(...tc.input);
+    const v = new Vector2(tc.input);
     const result = v.normalize();
     t.ok(result.equals(tc.result));
   }
@@ -135,7 +135,7 @@ test('Vector2#horizontalAngle', t => {
     {input: [1, 1], result: 0.7853981633974483}
   ];
   for (const tc of TEST_CASES) {
-    const result = new Vector2(...tc.input).horizontalAngle();
+    const result = new Vector2(tc.input).horizontalAngle();
     tapeEquals(t, result, tc.result);
   }
   t.end();
@@ -148,7 +148,7 @@ test('Vector2#verticalAngle', t => {
     {input: [1, 1], result: 0.7853981633974483}
   ];
   for (const tc of TEST_CASES) {
-    const result = new Vector2(...tc.input).verticalAngle();
+    const result = new Vector2(tc.input).verticalAngle();
     tapeEquals(t, result, tc.result);
   }
   t.end();
@@ -164,7 +164,7 @@ test('Vector2#transform', t => {
     {input: [1, 1], result: [1, 1]}
   ];
   for (const testCase of TEST_CASES) {
-    const v = new Vector2(...testCase.input);
+    const v = new Vector2(testCase.input);
     const result = v.transform(transform);
     tapeEquals(t, result, testCase.result);
   }
@@ -176,7 +176,7 @@ test('Vector2#transformAsVector', t => {
 
   const TEST_CASES = [{input: [0, 0], result: [0, 0]}, {input: [1, 0], result: [0.5, 0]}];
   for (const testCase of TEST_CASES) {
-    const v = new Vector2(...testCase.input);
+    const v = new Vector2(testCase.input);
     const result = v.transformAsVector(transform);
     tapeEquals(t, result, testCase.result);
   }
@@ -193,7 +193,7 @@ test('Vector2#transformByMatrix3', t => {
     {input: [1, 1], result: [1, 1]}
   ];
   for (const testCase of TEST_CASES) {
-    const v = new Vector2(...testCase.input);
+    const v = new Vector2(testCase.input);
     const result = v.transformByMatrix3(transform);
     tapeEquals(t, result, testCase.result);
   }
@@ -210,7 +210,7 @@ test('Vector2#transformByMatrix2x3', t => {
     {input: [1, 1], result: [1, 1]}
   ];
   for (const testCase of TEST_CASES) {
-    const v = new Vector2(...testCase.input);
+    const v = new Vector2(testCase.input);
     const result = v.transformByMatrix2x3(transform);
     tapeEquals(t, result, testCase.result);
   }
@@ -227,7 +227,7 @@ test('Vector2#transformByMatrix2', t => {
     {input: [1, 1], result: [0.5, 0.5]}
   ];
   for (const testCase of TEST_CASES) {
-    const v = new Vector2(...testCase.input);
+    const v = new Vector2(testCase.input);
     const result = v.transformByMatrix2(transform);
     tapeEquals(t, result, testCase.result);
   }

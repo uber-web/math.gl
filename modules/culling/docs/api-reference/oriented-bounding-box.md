@@ -7,7 +7,7 @@ An OrientedBoundingBox is a closed and convex cuboid. It can provide a tighter b
 Create an OrientedBoundingBox using a transformation matrix, a position where the box will be translated, and a scale.
 
 ```js
-import {Vector3} from 'math.gl';
+import {Vector3} from '@math.gl/core';
 import {OrientedBoundingBox} from '@math.gl/culling';
 
 const center = new Vector3(1.0, 0.0, 0.0);

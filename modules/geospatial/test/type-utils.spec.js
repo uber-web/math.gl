@@ -2,7 +2,7 @@
 // See LICENSE.md and https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md
 
 import test from 'tape-catch';
-import {toRadians} from 'math.gl';
+import {toRadians} from '@math.gl/core';
 import {
   isWGS84,
   fromCartographicToRadians,

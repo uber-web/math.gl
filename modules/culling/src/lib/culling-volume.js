@@ -2,7 +2,7 @@
 // See LICENSE.md and https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md
 
 /* eslint-disable */
-import {Vector3, Vector4, assert} from 'math.gl';
+import {Vector3, Vector4, assert} from '@math.gl/core';
 import {Intersect} from '../constants';
 import Plane from './plane';
 

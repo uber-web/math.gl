@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import {Vector3} from 'math.gl';
+import {Vector3} from '@math.gl/core';
 
 class ObjectVector {
   constructor(x = -0, y = -0, z = -0) {

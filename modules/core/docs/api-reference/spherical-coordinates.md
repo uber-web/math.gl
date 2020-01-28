@@ -57,7 +57,7 @@ Ranges
 ## Usage
 
 ```js
-import {_SphericalCoordinates as SphericalCoordinates} from 'math.gl';
+import {_SphericalCoordinates as SphericalCoordinates} from '@math.gl/core';
 ```
 
 Creating a SphericalCoordinates object

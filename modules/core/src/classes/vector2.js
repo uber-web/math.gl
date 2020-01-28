@@ -43,7 +43,7 @@ export default class Vector2 extends Vector {
     }
   }
 
-  set(x, y, z) {
+  set(x, y) {
     this[0] = x;
     this[1] = y;
     return this.check();

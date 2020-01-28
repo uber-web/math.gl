@@ -18,8 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import {Vector3, toRadians, radians} from 'math.gl';
-import {isArray} from 'math.gl';
+import {Vector3, toRadians, radians} from '@math.gl/core';
+import {isArray} from '@math.gl/core';
 
 const classicArray = [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1];
 const float32Array = new Float32Array([1, 0, 0]);

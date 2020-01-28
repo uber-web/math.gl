@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import {Vector2} from 'math.gl';
+import {Vector2} from '@math.gl/core';
 
 const array = [0, 0];
 const float32Array = new Float32Array([0, 0]);

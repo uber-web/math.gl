@@ -2,7 +2,7 @@
 import {it, expect} from 'test/utils/expect-assertions';
 
 import {AxisAlignedBoundingBox, Intersect, Plane} from '@math.gl/culling';
-import {Vector3} from 'math.gl';
+import {Vector3} from '@math.gl/core';
 
 const positions = [
   new Vector3(3, -1, -3),

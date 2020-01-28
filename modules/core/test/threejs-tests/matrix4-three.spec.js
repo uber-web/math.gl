@@ -24,9 +24,10 @@
 // @author bhouston / http://exocortex.com
 // @author TristanVALCKE / https://github.com/Itee
 
+// @ts-nocheck
 /* eslint-disable */
 import test from 'tape-catch';
-import {Matrix4, Vector3, Quaternion, _Euler as Euler, toRadians} from 'math.gl';
+import {Matrix4, Vector3, Quaternion, _Euler as Euler, toRadians} from '@math.gl/core';
 import {eps} from './constants';
 
 function matrixEquals4(a, b, tolerance) {

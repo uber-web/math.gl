@@ -35,6 +35,7 @@ export default class Quaternion extends MathArray {
   constructor(x = 0, y = 0, z = 0, w = 1) {
     // PERF NOTE: initialize elements as double precision numbers
     super(-0, -0, -0, -0);
+    // eslint-disable-next-line prefer-rest-params
     if (Array.isArray(x) && arguments.length === 1) {
       this.copy(x);
     } else {
@@ -134,7 +135,7 @@ export default class Quaternion extends MathArray {
   }
 
   // Calculates the squared length of a quat
-  lengthSquared(a) {
+  lengthSquared() {
     return quat.squaredLength(this);
   }
 
@@ -272,11 +273,14 @@ export default class Quaternion extends MathArray {
 
   // Performs a spherical linear interpolation between two quat
   slerp(start, target, ratio) {
+    // eslint-disable-next-line prefer-rest-params
     switch (arguments.length) {
       case 1: // Deprecated signature ({start, target, ratio})
+        // eslint-disable-next-line prefer-rest-params
         ({start = IDENTITY_QUATERNION, target, ratio} = arguments[0]);
         break;
       case 2: // THREE.js compatibility signature (target, ration)
+        // eslint-disable-next-line prefer-rest-params
         [target, ratio] = arguments;
         start = this; // eslint-disable-line
         break;
@@ -307,14 +311,4 @@ export default class Quaternion extends MathArray {
   multiply(a, b) {
     return this.multiplyRight(a, b);
   }
-
-  // DEPRECATED
-
-  // fromValues(x, y, z, w) {
-  //   return this.set(x, y, z, w);
-  // }
-
-  // squaredLength() {
-  //   return this.lengthSquared();
-  // }
 }

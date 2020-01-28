@@ -1,6 +1,6 @@
 import test from 'tape-catch';
-import {Matrix4, Vector3, equals} from 'math.gl';
-import {_Euler as Euler, _Pose as Pose} from 'math.gl';
+import {Matrix4, Vector3, equals} from '@math.gl/core';
+import {_Euler as Euler, _Pose as Pose} from '@math.gl/core';
 import {tapeEquals} from 'test/utils/tape-assertions';
 
 const MATRIX_TEST_CASES = [

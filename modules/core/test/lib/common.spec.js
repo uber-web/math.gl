@@ -18,10 +18,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import {Vector2, Vector3, _Pose as Pose, _MathUtils} from 'math.gl';
-import {config, configure, isArray, clone, equals, exactEquals, formatValue} from 'math.gl';
-import {toRadians, toDegrees} from 'math.gl';
-import {radians, degrees, sin, cos, tan, asin, acos, atan, clamp, lerp} from 'math.gl';
+import {Vector2, Vector3, _Pose as Pose, _MathUtils} from '@math.gl/core';
+import {config, configure, isArray, clone, equals, exactEquals, formatValue} from '@math.gl/core';
+import {toRadians, toDegrees} from '@math.gl/core';
+import {radians, degrees, sin, cos, tan, asin, acos, atan, clamp, lerp} from '@math.gl/core';
 import {tapeEquals} from 'test/utils/tape-assertions';
 import test from 'tape-catch';
 

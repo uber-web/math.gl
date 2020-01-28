@@ -24,6 +24,7 @@
 // @author bhouston / http://exocortex.com
 // @author TristanVALCKE / https://github.com/Itee
 
+// @ts-nocheck
 /* eslint-disable quotes, no-var */
 import test from 'tape-catch';
 

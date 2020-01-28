@@ -22,7 +22,7 @@
 import test from 'tape-catch';
 import {tapeEquals} from 'test/utils/tape-assertions';
 
-import {Vector3, Matrix4, Matrix3, Quaternion} from 'math.gl';
+import {Vector3, Matrix4, Matrix3, Quaternion} from '@math.gl/core';
 
 test('Vector3#import', t => {
   t.equals(typeof Vector3, 'function');
@@ -71,7 +71,7 @@ test('Vector3#rotates', t => {
     {input: [0, 0, 1], radians: Math.PI / 2, rotateX: [0, -1, 0]}
   ];
   for (const tc of TEST_CASES) {
-    const v = new Vector3(...tc.input);
+    const v = new Vector3(tc.input);
     tapeEquals(t, v.rotateX({radians: tc.radians}), tc.rotateX);
   }
   t.end();
@@ -80,7 +80,7 @@ test('Vector3#rotates', t => {
 test('Vector3#toString', t => {
   const TEST_CASES = [{input: [0, 0, 1], precision: 5, string: '[0, 0, 1]'}];
   for (const tc of TEST_CASES) {
-    const v = new Vector3(...tc.input);
+    const v = new Vector3(tc.input);
     t.equals(String(v), tc.string);
     t.equals(`${v}`, tc.string);
   }
@@ -93,7 +93,7 @@ test('Vector3#scale', t => {
     {input: [1, 2, 3], scale: [2, 0, -1], result: [2, 0, -3]}
   ];
   for (const tc of TEST_CASES) {
-    const result = new Vector3(...tc.input).scale(tc.scale);
+    const result = new Vector3(tc.input).scale(tc.scale);
     tapeEquals(t, result, tc.result);
   }
   t.end();
@@ -102,7 +102,7 @@ test('Vector3#scale', t => {
 test('Vector3#distance', t => {
   const TEST_CASES = [{start: [0, 0, 0], end: [3, 4, 0], result: 5}];
   for (const tc of TEST_CASES) {
-    const result = new Vector3(...tc.start).distance(tc.end);
+    const result = new Vector3(tc.start).distance(tc.end);
     t.equals(result, tc.result);
   }
   t.end();
@@ -111,7 +111,7 @@ test('Vector3#distance', t => {
 test('Vector3#len', t => {
   const TEST_CASES = [{input: [0, 0, 0], result: 0}, {input: [3, 4, 0], result: 5}];
   for (const tc of TEST_CASES) {
-    const result = new Vector3(...tc.input).len();
+    const result = new Vector3(tc.input).len();
     t.equals(result, tc.result);
   }
   t.end();
@@ -120,7 +120,7 @@ test('Vector3#len', t => {
 test('Vector3#dot', t => {
   const TEST_CASES = [{input1: [1, 3, -5], input2: [4, -2, -1], result: 3}];
   for (const tc of TEST_CASES) {
-    const result = new Vector3(...tc.input1).dot(tc.input2);
+    const result = new Vector3(tc.input1).dot(tc.input2);
     t.equals(result, tc.result);
   }
   t.end();
@@ -143,7 +143,7 @@ test('Vector3#normalize', t => {
     {input: [1, 1, 1], result: [1 / Math.sqrt(3), 1 / Math.sqrt(3), 1 / Math.sqrt(3)]}
   ];
   for (const tc of TEST_CASES) {
-    const v = new Vector3(...tc.input);
+    const v = new Vector3(tc.input);
     const result = v.normalize();
     t.ok(result.equals(tc.result));
   }
@@ -190,7 +190,7 @@ test('Vector3#transform', t => {
     {input: [1, 1, 1], result: [1, 1, 1]}
   ];
   for (const testCase of TEST_CASES) {
-    const v = new Vector3(...testCase.input);
+    const v = new Vector3(testCase.input);
     const result = v.transform(transform);
     tapeEquals(t, result, testCase.result);
   }
@@ -207,7 +207,7 @@ test('Vector3#transformByMatrix3', t => {
     {input: [1, 1, 1], result: [1, 1, 1]}
   ];
   for (const testCase of TEST_CASES) {
-    const v = new Vector3(...testCase.input);
+    const v = new Vector3(testCase.input);
     const result = v.transformByMatrix3(transform);
     tapeEquals(t, result, testCase.result);
   }
@@ -224,7 +224,7 @@ test('Vector3#transformByMatrix2', t => {
     {input: [1, 1, 1], result: [0.5, 0.5, 1]}
   ];
   for (const testCase of TEST_CASES) {
-    const v = new Vector3(...testCase.input);
+    const v = new Vector3(testCase.input);
     const result = v.transformByMatrix2(transform);
     tapeEquals(t, result, testCase.result);
   }
@@ -241,7 +241,7 @@ test('Vector3#transformByQuaternion', t => {
     {input: [1, 1, 1], result: [1, 1, 1]}
   ];
   for (const testCase of TEST_CASES) {
-    const v = new Vector3(...testCase.input);
+    const v = new Vector3(testCase.input);
     const result = v.transformByQuaternion(transform);
     tapeEquals(t, result, testCase.result);
   }

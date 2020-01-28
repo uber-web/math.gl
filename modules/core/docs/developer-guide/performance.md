@@ -11,7 +11,7 @@ In cases where javascript math calculations are performance critical, you can al
 If debug mode has been turned on, math.gl checks that objects after every operation. Enabling the checks has a modest impact on performance.
 
 ```js
-import {configure, Vector2} from 'math.gl';
+import {configure, Vector2} from '@math.gl/core';
 configure({debug: false});
 let vector = new Vector2(NaN, NaN); // Initializes an "invalid" vector
 
@@ -21,7 +21,7 @@ let vector = new Vector2(NaN, NaN); // Now throws an error. The check
 
 Verifying that error checks are not turned on.
 ```js
-import {configure} from 'math.gl';
+import {configure} from '@math.gl/core';
 console.log('Debug status', configure().debug);
 ```
 

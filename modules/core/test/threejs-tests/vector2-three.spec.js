@@ -24,10 +24,11 @@
 // @author bhouston / http://exocortex.com
 // @author TristanVALCKE / https://github.com/Itee
 
+// @ts-nocheck
 /* eslint-disable quotes, no-var */
 import test from 'tape-catch';
 
-import {Vector2, Matrix3} from 'math.gl';
+import {Vector2, Matrix3} from '@math.gl/core';
 import {x, y} from './constants';
 
 // INSTANCING

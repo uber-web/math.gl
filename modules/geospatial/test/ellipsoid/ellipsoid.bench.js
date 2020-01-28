@@ -1,7 +1,7 @@
 // This file is derived from the Cesium math library under Apache 2 license
 // See LICENSE.md and https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md
 
-import {Vector3, Matrix4} from 'math.gl';
+import {Vector3, Matrix4} from '@math.gl/core';
 import {Ellipsoid} from '@math.gl/geospatial';
 // import {externalVector3ToArray, setExternalVector3} from '@math.gl/geospatial/type-utils';
 // import * as vec3 from 'gl-matrix/vec3';

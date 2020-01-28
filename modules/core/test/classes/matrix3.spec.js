@@ -19,7 +19,7 @@
 // THE SOFTWARE.
 
 /* eslint-disable max-statements */
-import {Matrix3, config} from 'math.gl';
+import {Matrix3, config} from '@math.gl/core';
 import test from 'tape-catch';
 import {tapeEquals} from 'test/utils/tape-assertions';
 
@@ -84,7 +84,7 @@ test('Matrix3#set', t => {
   const INPUT = INDICES_MATRIX;
   const RESULT = INDICES_MATRIX;
 
-  const m = new Matrix3().set(...INPUT);
+  const m = new Matrix3().copy(INPUT);
 
   tapeEquals(t, m, RESULT, 'set gave the right result');
 
@@ -97,16 +97,12 @@ test('Matrix3#getElement and setElement', t => {
 
   const INPUT = INDICES_MATRIX;
 
-  const m = new Matrix3().set(...INPUT);
+  const m = new Matrix3().copy(INPUT);
 
   const VALUE = 10;
 
   m.setElement(2, 1, VALUE);
-  let result = m.getElement(2, 1);
-  tapeEquals(t, result, VALUE, 'getElement gave the right result');
-
-  m.setElement(2, 1, VALUE, true);
-  result = m.getElement(2, 1, true);
+  const result = m.getElement(2, 1);
   tapeEquals(t, result, VALUE, 'getElement gave the right result');
 
   t.end();
@@ -118,7 +114,7 @@ test('Matrix3#getColumn and setColumn', t => {
 
   const INPUT = INDICES_MATRIX;
 
-  const m = new Matrix3().set(...INPUT);
+  const m = new Matrix3().copy(INPUT);
 
   tapeEquals(t, m.getColumn(0), [1, 2, 3]);
   tapeEquals(t, m.getColumn(1), [4, 5, 6]);
@@ -202,7 +198,7 @@ test('Matrix3#transpose', t => {
   const INPUT = INDICES_MATRIX;
   const RESULT = TRANSPOSED_INDICES_MATRIX;
 
-  const m = new Matrix3().set(...INPUT);
+  const m = new Matrix3().copy(INPUT);
 
   const result = m.transpose();
 
@@ -215,7 +211,7 @@ test('Matrix3#invert', t => {
   const RESULT = [-6, 3.6, 1.4, 5, -3, -1, -1, 0.8, 0.2];
 
   t.equals(typeof Matrix3.prototype.invert, 'function');
-  const m = new Matrix3().set(...INPUT);
+  const m = new Matrix3().copy(INPUT);
   const result = m.invert();
 
   tapeEquals(t, result, RESULT, 'invert gave the right result');
@@ -228,8 +224,8 @@ test('Matrix3#multiplyLeft', t => {
   const RESULT = [16, 22, 13, 34, 49, 37, 52, 76, 61];
 
   t.equals(typeof Matrix3.prototype.multiplyLeft, 'function');
-  const ma = new Matrix3().set(...INPUT_A);
-  const mb = new Matrix3().set(...INPUT_B);
+  const ma = new Matrix3().copy(INPUT_A);
+  const mb = new Matrix3().copy(INPUT_B);
   const result = ma.multiplyLeft(mb);
 
   tapeEquals(t, result, RESULT, 'multiplyLeft gave the right result');
@@ -242,8 +238,8 @@ test('Matrix3#multiplyRight', t => {
   const RESULT = [30, 36, 42, 39, 45, 51, 29, 40, 51];
 
   t.equals(typeof Matrix3.prototype.multiplyRight, 'function');
-  const ma = new Matrix3().set(...INPUT_A);
-  const mb = new Matrix3().set(...INPUT_B);
+  const ma = new Matrix3().copy(INPUT_A);
+  const mb = new Matrix3().copy(INPUT_B);
   const result = ma.multiplyRight(mb);
 
   tapeEquals(t, result, RESULT, 'invert gave the right result');
@@ -266,8 +262,9 @@ test('Matrix3#scale', t => {
   const M2_RESULT = [2, 0, 0, 0, 2, 0, 0, 0, 1];
 
   t.equals(typeof Matrix3.prototype.scale, 'function');
+
   const m1 = new Matrix3().identity();
-  const m1Result = m1.scale([1, 2]);
+  const m1Result = m1.scale([1, 2, 1]);
 
   tapeEquals(t, m1Result, M1_RESULT, 'scale gave the right result');
 
@@ -291,8 +288,6 @@ test('Matrix3#translate', t => {
 });
 
 test('Matrix3#transform', t => {
-  const matrix = new Matrix3().scale([2, 2, 2]);
-
   const TEST_CASES = [
     {
       method: 'transform',
@@ -327,6 +322,8 @@ test('Matrix3#transform', t => {
     }
   ];
 
+  const matrix = new Matrix3().scale([2, 2, 2]);
+
   for (const testCase of TEST_CASES) {
     const p4 = matrix[testCase.method](testCase.input);
     tapeEquals(t, p4, testCase.expected, 'transform gave the right result');
@@ -335,7 +332,9 @@ test('Matrix3#transform', t => {
   t.throws(() => matrix.transform([NaN, 0, 0, 0]));
   t.throws(() => matrix.transform([0]));
   t.throws(() => matrix.transform([0, 0, 0, 0, 0]));
+  // @ts-ignore TS2551: Property 'transformAsVector' does not exist
   t.throws(() => matrix.transformAsVector([0, 0, 0, 0, 0]));
+  // @ts-ignore TS2551: Property 'transformAsVector' does not exist
   t.throws(() => matrix.transformAsPoint([0, 0, 0, 0, 0]));
 
   t.end();

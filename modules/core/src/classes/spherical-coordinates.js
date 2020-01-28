@@ -39,13 +39,13 @@ export default class SphericalCoordinates {
    * The equator starts at positive z.
    * @class
    * @param {Object} options
-   * @param {Number} options.phi=0 - rotation around X (latitude)
-   * @param {Number} options.theta=0 - rotation around Y (longitude)
-   * @param {Number} options.radius=1 - Distance from center
-   * @param {Number} options.bearing
-   * @param {Number} options.pitch
-   * @param {Number} options.altitude
-   * @param {Number} options.radiusScale -
+   * @param {Number} [options.phi] =0 - rotation around X (latitude)
+   * @param {Number} [options.theta] =0 - rotation around Y (longitude)
+   * @param {Number} [options.radius] =1 - Distance from center
+   * @param {Number} [options.bearing]
+   * @param {Number} [options.pitch]
+   * @param {Number} [options.altitude]
+   * @param {Number} [options.radiusScale] =1
    */
   // @ts-ignore TS2740: Type '{}' is missing the following properties from type
   // eslint-disable-next-line complexity
@@ -77,7 +77,7 @@ export default class SphericalCoordinates {
     return this.formatString(config);
   }
 
-  formatString({printTypes, printDegrees}) {
+  formatString({printTypes = false}) {
     const f = formatValue;
     return `${printTypes ? 'Spherical' : ''}\
 [rho:${f(this.radius)},theta:${f(this.theta)},phi:${f(this.phi)}]`;
@@ -173,6 +173,7 @@ export default class SphericalCoordinates {
   // restrict phi to be betwee EPS and PI-EPS
   makeSafe() {
     this.phi = Math.max(EPSILON, Math.min(Math.PI - EPSILON, this.phi));
+    return this;
   }
 
   check() {

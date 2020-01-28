@@ -30,14 +30,14 @@ export default class Pose {
    * pose's position and with with the defining pose's orientation
    * aligned with axis.
    * @param {Object} options
-   * @param {[Number, Number, Number]} options.position
-   * @param {[Number, Number, Number, Number]} options.orientation
-   * @param {Number} options.x
-   * @param {Number} options.y
-   * @param {Number} options.z
-   * @param {Number} options.roll
-   * @param {Number} options.pitch
-   * @param {Number} options.yaw
+   * @param {Number[]} [options.position]
+   * @param {Number[]} [options.orientation]
+   * @param {Number} [options.x]
+   * @param {Number} [options.y]
+   * @param {Number} [options.z]
+   * @param {Number} [options.roll]
+   * @param {Number} [options.pitch]
+   * @param {Number} [options.yaw]
    */
   // @ts-ignore TS2740: Type '{}' is missing the following properties from type
   constructor({

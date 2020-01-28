@@ -19,7 +19,7 @@
 // THE SOFTWARE.
 
 /* eslint-disable max-statements */
-import {Matrix4, Vector3, config, configure} from 'math.gl';
+import {Matrix4, Vector3, config, configure} from '@math.gl/core';
 import test from 'tape-catch';
 import {tapeEquals, tapeEqualsEpsilon} from 'test/utils/tape-assertions';
 
@@ -66,7 +66,7 @@ test('Matrix4#from', t => {
 });
 
 test('Matrix4#to', t => {
-  const matrix = new Matrix4(...INDICES_MATRIX);
+  const matrix = new Matrix4(INDICES_MATRIX);
   t.ok(matrix.to(matrix), 'Handles copy to self');
   // tapeEquals(t, matrix.to([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]), INDICES_MATRIX);
   // t.deepEquals(matrix.to({x: 0, y: 0, z: 0, w: 0}), {x: 1, y: 2, z: 4});
@@ -138,7 +138,7 @@ test('Matrix4#set', t => {
   const INPUT = INDICES_MATRIX;
   const RESULT = INDICES_MATRIX;
 
-  const m = new Matrix4().set(...INPUT);
+  const m = new Matrix4().copy(INPUT);
 
   tapeEquals(t, m, RESULT, 'set gave the right result');
 
@@ -149,6 +149,7 @@ test('Matrix4#setRowMajor', t => {
   const INPUT = INDICES_MATRIX;
   const RESULT = TRANSPOSED_INDICES_MATRIX;
 
+  // @ts-ignore TS2556: Expected 16 arguments, but got 0 or more.
   const m = new Matrix4().setRowMajor(...INPUT);
   tapeEquals(t, m, RESULT, 'setRowMajor gave the right result');
 
@@ -356,6 +357,7 @@ test('Matrix4.transpose', t => {
   const INPUT = INDICES_MATRIX;
   const RESULT = TRANSPOSED_INDICES_MATRIX;
 
+  // @ts-ignore TS2556: Expected 16 arguments, but got 0 or more.
   const m = new Matrix4().set(...INPUT);
 
   const result = m.transpose();
@@ -671,10 +673,15 @@ test('Matrix4#transform', t => {
     tapeEquals(t, p4, testCase.expected, 'transform gave the right result');
   }
 
+  // @ts-ignore
   t.throws(() => matrix.transform([NaN, 0, 0, 0]));
+  // @ts-ignore
   t.throws(() => matrix.transform([0]));
+  // @ts-ignore
   t.throws(() => matrix.transform([0, 0, 0, 0, 0]));
+  // @ts-ignore
   t.throws(() => matrix.transformAsVector([0, 0, 0, 0, 0]));
+  // @ts-ignore
   t.throws(() => matrix.transformAsPoint([0, 0, 0, 0, 0]));
 
   t.end();

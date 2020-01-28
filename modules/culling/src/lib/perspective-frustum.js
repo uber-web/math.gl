@@ -5,7 +5,9 @@
 // - It has not been fully adapted to math.gl conventions
 // - Documentation has not been ported
 
-import {assert} from 'math.gl';
+// @ts-nocheck
+
+import {assert} from '@math.gl/core';
 import PerspectiveOffCenterFrustum from './perspective-off-center-frustum';
 
 const defined = val => val !== null && typeof val !== 'undefined';
@@ -147,8 +149,6 @@ export default class PerspectiveFrustum {
    * @memberof PerspectiveFrustum.prototype
    * @type {Matrix4}
    * @readonly
-   *
-   * @see PerspectiveFrustum#infiniteProjectionMatrix
    */
   get projectionMatrix() {
     update(this);

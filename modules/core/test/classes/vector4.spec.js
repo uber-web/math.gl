@@ -22,7 +22,7 @@
 import test from 'tape-catch';
 import {tapeEquals} from 'test/utils/tape-assertions';
 
-import {configure, Vector4, Matrix4, Matrix3, Quaternion} from 'math.gl';
+import {configure, Vector4, Matrix4, Matrix3, Quaternion} from '@math.gl/core';
 
 test('Vector4#import', t => {
   t.equals(typeof Vector4, 'function');
@@ -79,7 +79,7 @@ test('Vector4#members and methods', t => {
 test('Vector4#toString', t => {
   const TEST_CASES = [{input: [0, 0, 0, 1], precision: 5, string: '[0, 0, 0, 1]'}];
   for (const testCase of TEST_CASES) {
-    const v = new Vector4(...testCase.input);
+    const v = new Vector4(testCase.input);
     t.equals(String(v), testCase.string);
     t.equals(`${v}`, testCase.string);
   }
@@ -92,7 +92,7 @@ test.skip('Vector4#scale', t => {
     {input: [1, 2, 3, 4], scale: [2, 0, -1], result: [2, 0, -3]}
   ];
   for (const testCase of TEST_CASES) {
-    const result = new Vector4(...testCase.input).scale(testCase.scale);
+    const result = new Vector4(testCase.input).scale(testCase.scale);
     tapeEquals(t, result, testCase.result);
   }
   t.end();
@@ -101,16 +101,16 @@ test.skip('Vector4#scale', t => {
 test('Vector4#distance', t => {
   const TEST_CASES = [{start: [0, 0, 0, 0], end: [3, 4, 0, 0], result: 5}];
   for (const testCase of TEST_CASES) {
-    const result = new Vector4(...testCase.start).distance(testCase.end);
+    const result = new Vector4(testCase.start).distance(testCase.end);
     t.equals(result, testCase.result);
   }
   t.end();
 });
 
 test('Vector4#len', t => {
-  const TEST_CASES = [{input: [0, 0, 0], result: 0}, {input: [3, 4, 0], result: 5}];
+  const TEST_CASES = [{input: [0, 0, 0, 0], result: 0}, {input: [3, 4, 0, 0], result: 5}];
   for (const testCase of TEST_CASES) {
-    const result = new Vector4(...testCase.input).len();
+    const result = new Vector4(testCase.input).len();
     t.equals(result, testCase.result);
   }
   t.end();
@@ -119,7 +119,7 @@ test('Vector4#len', t => {
 test('Vector4#dot', t => {
   const TEST_CASES = [{input1: [1, 3, -5, 0], input2: [4, -2, -1, 0], result: 3}];
   for (const testCase of TEST_CASES) {
-    const result = new Vector4(...testCase.input1).dot(testCase.input2);
+    const result = new Vector4(testCase.input1).dot(testCase.input2);
     t.equals(result, testCase.result);
   }
   t.end();
@@ -133,7 +133,7 @@ test('Vector4#normalize', t => {
     {input: [1, 1, 1, 0], result: [1 / Math.sqrt(3), 1 / Math.sqrt(3), 1 / Math.sqrt(3), 0]}
   ];
   for (const testCase of TEST_CASES) {
-    const v = new Vector4(...testCase.input);
+    const v = new Vector4(testCase.input);
     const result = v.normalize();
     tapeEquals(t, result, testCase.result);
   }
@@ -150,7 +150,7 @@ test('Vector4#transform', t => {
     {input: [1, 1, 1, 0], result: [1, 1, 1, 0]}
   ];
   for (const testCase of TEST_CASES) {
-    const v = new Vector4(...testCase.input);
+    const v = new Vector4(testCase.input);
     const result = v.transform(transform);
     tapeEquals(t, result, testCase.result);
   }
@@ -167,7 +167,7 @@ test('Vector4#transformByMatrix3', t => {
     {input: [1, 1, 1, 0], result: [1, 1, 1, 0]}
   ];
   for (const testCase of TEST_CASES) {
-    const v = new Vector4(...testCase.input);
+    const v = new Vector4(testCase.input);
     const result = v.transformByMatrix3(transform);
     tapeEquals(t, result, testCase.result);
   }
@@ -184,7 +184,7 @@ test('Vector4#transformByMatrix2', t => {
     {input: [1, 1, 1, 0], result: [0.5, 0.5, 1, 0]}
   ];
   for (const testCase of TEST_CASES) {
-    const v = new Vector4(...testCase.input);
+    const v = new Vector4(testCase.input);
     const result = v.transformByMatrix2(transform);
     tapeEquals(t, result, testCase.result);
   }
@@ -201,7 +201,7 @@ test('Vector4#transformByQuaternion', t => {
     {input: [1, 1, 1, 0], result: [1, 1, 1, 0]}
   ];
   for (const testCase of TEST_CASES) {
-    const v = new Vector4(...testCase.input);
+    const v = new Vector4(testCase.input);
     const result = v.transformByQuaternion(transform);
     tapeEquals(t, result, testCase.result);
   }
