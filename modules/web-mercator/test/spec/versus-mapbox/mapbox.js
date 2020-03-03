@@ -1,4 +1,5 @@
-/* global global,window */
+// @ts-nocheck
+/* global global, window */
 let mapbox;
 
 function noop() {}

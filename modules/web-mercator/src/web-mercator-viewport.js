@@ -24,17 +24,17 @@ export default class WebMercatorViewport extends Viewport {
    * @class
    * @param {Object} opt - options
    *
-   * @param {Number} opt.width=1 - Width of "viewport" or window
-   * @param {Number} opt.height=1 - Height of "viewport" or window
-   * @param {Number} opt.scale=1 - Either use scale or zoom
-   * @param {Number} opt.pitch=0 - Camera angle in degrees (0 is straight down)
-   * @param {Number} opt.bearing=0 - Map rotation in degrees (0 means north is up)
-   * @param {Number} opt.altitude= - Altitude of camera in screen units
+   * @param {Number} [opt.width=1] - Width of "viewport" or window
+   * @param {Number} [opt.height=1] - Height of "viewport" or window
+   * @param {Number} [opt.scale=1] - Either use scale or zoom
+   * @param {Number} [opt.pitch=0] - Camera angle in degrees (0 is straight down)
+   * @param {Number} [opt.bearing=0] - Map rotation in degrees (0 means north is up)
+   * @param {Number} [opt.altitude=] - Altitude of camera in screen units
    *
    * Web mercator projection short-hand parameters
-   * @param {Number} opt.latitude - Center of viewport on map (alternative to opt.center)
-   * @param {Number} opt.longitude - Center of viewport on map (alternative to opt.center)
-   * @param {Number} opt.zoom - Scale = Math.pow(2,zoom) on map (alternative to opt.scale)
+   * @param {Number} opt.latitude - Center of viewport on map
+   * @param {Number} opt.longitude - Center of viewport on map
+   * @param {Number} opt.zoom - Scale = Math.pow(2,zoom) on map
 
    * Notes:
    *  - Only one of center or [latitude, longitude] can be specified
@@ -123,9 +123,9 @@ export default class WebMercatorViewport extends Viewport {
   /**
    * Unproject world point [x,y] on map onto {lat, lon} on sphere
    *
-   * @param {object|Vector} xy - object with {x,y} members
+   * @param {number[]} xy - array with [x,y] members
    *  representing point on projected map plane
-   * @return {GeoCoordinates} - object with {lat,lon} of point on sphere.
+   * @return {number[]} - array with [lat,lon] of point on sphere.
    *   Has toArray method if you need a GeoJSON Array.
    *   Per cartographic tradition, lat and lon are specified as degrees.
    */
@@ -137,11 +137,12 @@ export default class WebMercatorViewport extends Viewport {
    * Get the map center that place a given [lng, lat] coordinate at screen
    * point [x, y]
    *
-   * @param {Array} lngLat - [lng,lat] coordinates
+   * @param {object} opt
+   * @param {number[]} opt.lngLat - [lng,lat] coordinates
    *   Specifies a point on the sphere.
-   * @param {Array} pos - [x,y] coordinates
+   * @param {number[]} opt.pos - [x,y] coordinates
    *   Specifies a point on the screen.
-   * @return {Array} [lng,lat] new map center.
+   * @return {number[]} [lng,lat] new map center.
    */
   getMapCenterByLngLatPosition({lngLat, pos}) {
     const fromLocation = pixelsToWorld(pos, this.pixelUnprojectionMatrix);
@@ -150,7 +151,7 @@ export default class WebMercatorViewport extends Viewport {
     const translate = vec2.add([], toLocation, vec2.negate([], fromLocation));
     const newCenter = vec2.add([], this.center, translate);
 
-    return worldToLngLat(newCenter, this.scale);
+    return worldToLngLat(newCenter);
   }
 
   // Legacy method name
@@ -162,6 +163,7 @@ export default class WebMercatorViewport extends Viewport {
    * Returns a new viewport that fit around the given rectangle.
    * Only supports non-perspective mode.
    * @param {Array} bounds - [[lon, lat], [lon, lat]]
+   * @param {Object} [options]
    * @param {Number} [options.padding] - The amount of padding in pixels to add to the given bounds.
    * @param {Array} [options.offset] - The center of the given bounds relative to the map's center,
    *    [x, y] measured in pixels.

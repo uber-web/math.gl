@@ -3,7 +3,7 @@ import {MapboxTransform} from './mapbox-transform';
 import {WebMercatorViewport} from '@math.gl/web-mercator';
 import test from 'tape-catch';
 import {toLowPrecision} from '../../utils/test-utils';
-import {equals, config} from 'math.gl';
+import {equals, config} from '@math.gl/core';
 
 import VIEWPORT_PROPS from '../../utils/sample-viewports';
 

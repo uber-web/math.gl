@@ -14,14 +14,15 @@ import assert from './assert';
  * Returns map settings {latitude, longitude, zoom}
  * that will contain the provided corners within the provided width.
  * Only supports non-perspective mode.
- * @param {Number} width - viewport width
- * @param {Number} height - viewport height
- * @param {Array} bounds - [[lon, lat], [lon, lat]]
- * @param {Array} minExtent - The width/height of the bounded area will never be smaller than this
- * @param {Number|PaddingObject} [padding] - The amount of padding in pixels
+ * @param {Object} options
+ * @param {Number} options.width - viewport width
+ * @param {Number} options.height - viewport height
+ * @param {Array} options.bounds - [[lon, lat], [lon, lat]]
+ * @param {Array} [options.minExtent] - The width/height of the bounded area will never be smaller than this
+ * @param {Number|Object} [options.padding] - The amount of padding in pixels
  *  to add to the given bounds. Can also be an object with top, bottom, left and right
  *  properties defining the padding.
- * @param {Array} [offset] - The center of the given bounds relative to the map's center,
+ * @param {Array} [options.offset] - The center of the given bounds relative to the map's center,
  *    [x, y] measured in pixels.
  * @returns {Object} - latitude, longitude and zoom
  */
