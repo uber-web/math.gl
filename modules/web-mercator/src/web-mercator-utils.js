@@ -148,7 +148,7 @@ export function addMetersToLngLat(lngLatZ, xyz) {
   });
 
   const worldspace = lngLatToWorld(lngLatZ);
-  worldspace[0] += x * (unitsPerMeter[0] + unitsPerMeter2[0] * y);
+  worldspace[0] += x * (unitsPerMeter[0] + unitsPerMeter2[0] * x);
   worldspace[1] += y * (unitsPerMeter[1] + unitsPerMeter2[1] * y);
 
   const newLngLat = worldToLngLat(worldspace);
