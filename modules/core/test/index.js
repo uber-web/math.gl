@@ -32,7 +32,5 @@ import './classes/quaternion.spec';
 import './classes/euler.spec';
 import './classes/spherical-coordinates.spec';
 
-import './addons/polygon.spec';
-
 // Run the three.js math test suites on math.gl classes
 import './threejs-tests';

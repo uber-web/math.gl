@@ -60,7 +60,6 @@ export {default as _MathUtils} from './lib/math-utils';
 export {default as _SphericalCoordinates} from './classes/spherical-coordinates';
 export {default as _Pose} from './classes/pose';
 export {default as _Euler} from './classes/euler';
-export {default as _Polygon} from './addons/polygon';
 
 export {default as assert} from './lib/assert';
 
