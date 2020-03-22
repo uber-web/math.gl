@@ -1,5 +1,4 @@
 // @ts-nocheck
-/* eslint-disable @typescript-eslint/no-var-requires */
 const {resolve} = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -62,7 +61,6 @@ function getDist(env) {
 }
 
 const CONFIGS = {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   test: env =>
     Object.assign({}, TEST_CONFIG, {
       // Bundle the tests for running in the browser
@@ -72,7 +70,6 @@ const CONFIGS = {
       // plugins: [new HtmlWebpackPlugin()]
     }),
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   bench: env =>
     Object.assign({}, TEST_CONFIG, {
       entry: {
@@ -82,7 +79,6 @@ const CONFIGS = {
       plugins: [new HtmlWebpackPlugin()]
     }),
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   render: env =>
     Object.assign({}, TEST_CONFIG, {
       // Bundle the tests for running in the browser
@@ -92,7 +88,6 @@ const CONFIGS = {
       plugins: [new HtmlWebpackPlugin()]
     }),
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   renderReact: env =>
     Object.assign({}, TEST_CONFIG, {
       // Bundle the tests for running in the browser

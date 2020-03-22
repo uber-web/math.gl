@@ -1,6 +1,8 @@
 // This file is derived from the Cesium math library under Apache 2 license
 // See LICENSE.md and https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md
 
+// @ts-nocheck
+
 import test from 'tape-catch';
 import {tapeEquals} from 'test/utils/tape-assertions';
 

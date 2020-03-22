@@ -6,15 +6,18 @@ import test from 'tape-catch';
 import {tapeEquals} from 'test/utils/tape-assertions';
 
 import {Vector3, Matrix4} from '@math.gl/core';
-import {BoundingSphere, Intersect, Plane} from '@math.gl/culling'; // '@math.gl/culling';
+import {BoundingSphere, Plane, INTERSECTION} from '@math.gl/culling';
 
 // const positionsRadius = 1.0;
 // const positionsCenter = new Vector3(10000001.0, 0.0, 0.0);
 
 const center = [10000000.0, 0.0, 0.0];
 
-const VECTOR3_UNIT_X = Object.freeze(new Vector3(1, 0, 0));
-const VECTOR3_ZERO = Object.freeze(new Vector3(0, 0, 0));
+const VECTOR3_UNIT_X = new Vector3(1, 0, 0);
+Object.freeze(VECTOR3_UNIT_X);
+
+const VECTOR3_ZERO = new Vector3(0, 0, 0);
+Object.freeze(VECTOR3_ZERO);
 
 function getPositions() {
   return [
@@ -94,6 +97,7 @@ test('BoundingSphere#constructor sets expected values (array)', t => {
 test('BoundingSphere#constructor sets expected values (object)', t => {
   const expectedCenter = {x: 1.0, y: 2.0, z: 3.0};
   const expectedRadius = 1.0;
+  // @ts-ignore TODO - add XYZ types
   const sphere = new BoundingSphere(expectedCenter, expectedRadius);
   tapeEquals(t, sphere.center, [1, 2, 3]);
   t.equals(sphere.radius, expectedRadius);
@@ -113,6 +117,7 @@ test('BoundingSphere#fromCornerPoints', t => {
 
 test('BoundingSphere#fromCornerPoints throws without corner', t => {
   const sphere = new BoundingSphere();
+  // @ts-ignore
   t.throws(() => sphere.fromCornerPoints());
 
   t.end();
@@ -120,6 +125,7 @@ test('BoundingSphere#fromCornerPoints throws without corner', t => {
 
 test('BoundingSphere#fromCornerPoints throws without oppositeCorner', t => {
   const sphere = new BoundingSphere();
+  // @ts-ignore
   t.throws(() => sphere.fromCornerPoints(VECTOR3_UNIT_X));
 
   t.end();
@@ -151,7 +157,7 @@ test('BoundingSphere#intersectPlane with sphere on the positive side of a plane'
   const normal = new Vector3(VECTOR3_UNIT_X).negate();
   const position = VECTOR3_UNIT_X;
   const plane = new Plane(normal, -normal.dot(position));
-  t.equals(sphere.intersectPlane(plane), Intersect.INSIDE);
+  t.equals(sphere.intersectPlane(plane), INTERSECTION.INSIDE);
 
   t.end();
 });
@@ -161,7 +167,7 @@ test('BoundingSphere#intersectPlane with sphere on the negative side of a plane'
   const normal = VECTOR3_UNIT_X;
   const position = VECTOR3_UNIT_X;
   const plane = new Plane(normal, -normal.dot(position));
-  t.equals(sphere.intersectPlane(plane), Intersect.OUTSIDE);
+  t.equals(sphere.intersectPlane(plane), INTERSECTION.OUTSIDE);
 
   t.end();
 });
@@ -171,7 +177,7 @@ test('BoundingSphere#intersectPlane with sphere intersecting a plane', t => {
   const normal = VECTOR3_UNIT_X;
   const position = VECTOR3_UNIT_X;
   const plane = new Plane(normal, -normal.dot(position));
-  t.equals(sphere.intersectPlane(plane), Intersect.INTERSECTING);
+  t.equals(sphere.intersectPlane(plane), INTERSECTION.INTERSECTING);
 
   t.end();
 });
@@ -281,6 +287,7 @@ test('BoundingSphere#intersectPlane throws without a plane', t => {
 
 test('BoundingSphere#transform throws without a transform', t => {
   const sphere = new BoundingSphere();
+  // @ts-ignore
   t.throws(() => sphere.transform());
 
   t.end();
@@ -288,6 +295,7 @@ test('BoundingSphere#transform throws without a transform', t => {
 
 test('BoundingSphere#distanceSquaredTo throws without a cartesian', t => {
   const sphere = new BoundingSphere();
+  // @ts-ignore
   t.throws(() => sphere.distanceSquaredTo(new BoundingSphere()));
 
   t.end();

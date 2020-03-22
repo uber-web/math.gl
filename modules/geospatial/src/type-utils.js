@@ -1,36 +1,36 @@
 // This file is derived from the Cesium math library under Apache 2 license
 // See LICENSE.md and https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md
 
-import {Vector3, isArray, toRadians, toDegrees, config} from 'math.gl';
+import {Vector3, isArray, toRadians, toDegrees, config} from '@math.gl/core';
 import {WGS84_CONSTANTS} from './constants';
 
 const noop = x => x;
 
 const scratchVector = new Vector3();
 
-export function fromCartographic(cartographic, vector, map = noop) {
+export function fromCartographic(cartographic, result, map = noop) {
   if (isArray(cartographic)) {
-    vector[0] = map(cartographic[0]);
-    vector[1] = map(cartographic[1]);
-    vector[2] = cartographic[2];
+    result[0] = map(cartographic[0]);
+    result[1] = map(cartographic[1]);
+    result[2] = cartographic[2];
   } else if ('longitude' in cartographic) {
-    vector[0] = map(cartographic.longitude);
-    vector[1] = map(cartographic.latitude);
-    vector[2] = cartographic.height;
+    result[0] = map(cartographic.longitude);
+    result[1] = map(cartographic.latitude);
+    result[2] = cartographic.height;
   } else {
-    vector[0] = map(cartographic.x);
-    vector[1] = map(cartographic.y);
-    vector[2] = cartographic.z;
+    result[0] = map(cartographic.x);
+    result[1] = map(cartographic.y);
+    result[2] = cartographic.z;
   }
-  return vector;
+  return result;
 }
 
 export function fromCartographicToRadians(cartographic, vector = scratchVector) {
-  return fromCartographic(cartographic, vector, config.cartographicRadians ? noop : toRadians);
+  return fromCartographic(cartographic, vector, config._cartographicRadians ? noop : toRadians);
 }
 
 export function fromCartographicToDegrees(cartographic, vector = scratchVector) {
-  return fromCartographic(cartographic, vector, config.cartographicRadians ? toDegrees : noop);
+  return fromCartographic(cartographic, vector, config._cartographicRadians ? toDegrees : noop);
 }
 
 export function toCartographic(vector, cartographic, map = noop) {
@@ -51,11 +51,11 @@ export function toCartographic(vector, cartographic, map = noop) {
 }
 
 export function toCartographicFromRadians(vector, cartographic) {
-  return toCartographic(vector, cartographic, config.cartographicRadians ? noop : toDegrees);
+  return toCartographic(vector, cartographic, config._cartographicRadians ? noop : toDegrees);
 }
 
 export function toCartographicFromDegrees(vector, cartographic) {
-  return toCartographic(vector, cartographic, config.cartographicRadians ? toRadians : noop);
+  return toCartographic(vector, cartographic, config._cartographicRadians ? toRadians : noop);
 }
 
 export function isWGS84(vector) {

@@ -12,9 +12,6 @@ const positionsCenter = new Vector3(10000001.0, 0.0, 0.0);
 
 const center = [10000000.0, 0.0, 0.0];
 
-Vector3.UNIT_X = Object.freeze(new Vector3(1, 0, 0));
-Vector3.ZERO = Object.freeze(new Vector3(0, 0, 0));
-
 function getPositions() {
   return [
     new Vector3(center).add([1, 0, 0]),
@@ -28,7 +25,7 @@ function getPositions() {
 }
 
 test('makeBoundingSphereFromPoints without positions returns an empty sphere', t => {
-  const sphere = makeBoundingSphereFromPoints();
+  const sphere = makeBoundingSphereFromPoints([]);
   tapeEquals(t, sphere.center, Vector3.ZERO);
   t.equals(sphere.radius, 0.0);
 

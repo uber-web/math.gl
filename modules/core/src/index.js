@@ -50,8 +50,7 @@ export {
   atan,
   clamp,
   lerp,
-  // experimental
-  withEpsilon as _withEpsilon
+  withEpsilon
 } from './lib/common';
 
 export {checkNumber} from './lib/validators';

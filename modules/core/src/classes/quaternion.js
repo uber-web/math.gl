@@ -30,8 +30,6 @@ import * as vec4 from 'gl-matrix/vec4';
 const IDENTITY_QUATERNION = [0, 0, 0, 1];
 
 export default class Quaternion extends MathArray {
-  // Creates a new identity quaternion
-  // w^2 + x^2 + y^2 + z^2 = 1
   constructor(x = 0, y = 0, z = 0, w = 1) {
     // PERF NOTE: initialize elements as double precision numbers
     super(-0, -0, -0, -0);

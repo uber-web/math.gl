@@ -1,21 +1,9 @@
 import {Vector3} from '@math.gl/core';
-import {Intersect} from '../constants';
+import {INTERSECTION} from '../constants';
 
 const scratchVector = new Vector3();
 const scratchNormal = new Vector3();
 
-/**
- * Creates an instance of an AxisAlignedBoundingBox from the minimum and maximum points along the x, y, and z axes.
- * @alias AxisAlignedBoundingBox
- * @constructor
- *
- * @param {number[]} [minimum=0, 0, 0] The minimum point along the x, y, and z axes.
- * @param {number[]} [maximum=0, 0, 0] The maximum point along the x, y, and z axes.
- * @param {number[]} [center] The center of the box; automatically computed if not supplied.
- *
- * @see BoundingSphere
- * @see BoundingRectangle
- */
 export default class AxisAlignedBoundingBox {
   constructor(minimum = [0, 0, 0], maximum = [0, 0, 0], center = null) {
     // If center was not defined, compute it.
@@ -126,12 +114,6 @@ export default class AxisAlignedBoundingBox {
 
   /**
    * Determines which side of a plane a box is located.
-   *
-   * @param {Plane} plane The plane to test against.
-   * @returns {Intersect} {@link Intersect.INSIDE} if the entire box is on the side of the plane
-   *                      the normal is pointing, {@link Intersect.OUTSIDE} if the entire box is
-   *                      on the opposite side, and {@link Intersect.INTERSECTING} if the box
-   *                      intersects the plane.
    */
   intersectPlane(plane) {
     const h = scratchVector
@@ -143,14 +125,14 @@ export default class AxisAlignedBoundingBox {
     const s = this.center.dot(normal) + plane.distance; // signed distance from center
 
     if (s - e > 0) {
-      return Intersect.INSIDE;
+      return INTERSECTION.INSIDE;
     }
 
     if (s + e < 0) {
       // Not in front because normals point inward
-      return Intersect.OUTSIDE;
+      return INTERSECTION.OUTSIDE;
     }
 
-    return Intersect.INTERSECTING;
+    return INTERSECTION.INTERSECTING;
   }
 }

@@ -1,5 +1,17 @@
 # What's New
 
+# v3.1 (In development)
+
+> v3.1 is still in development. The goal is to release v3.1 in sync with deck.gl v8.2. Alpha releases are available.
+
+Target Date: Not decided: The math.gl 3.1 release is intended to be synchronized with deck.gl v8.2.
+
+New Features:
+
+- Typescript type definitions are now provided for all math.gl modules.
+
+# v3.0.x
+
 Date: Oct 1, 2019
 
 - `viewport-mercator-project` has been added to math.gl a new sub-module.

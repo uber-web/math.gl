@@ -101,8 +101,8 @@ test('getDistanceScales#unitsPerDegree', t => {
       const pt = [longitude + delta, latitude + delta];
 
       const realCoords = [
-        lngLatToWorld(pt, scale)[0] - lngLatToWorld([longitude, latitude], scale)[0],
-        lngLatToWorld(pt, scale)[1] - lngLatToWorld([longitude, latitude], scale)[1],
+        lngLatToWorld(pt)[0] - lngLatToWorld([longitude, latitude])[0],
+        lngLatToWorld(pt)[1] - lngLatToWorld([longitude, latitude])[1],
         z * getDistanceScales({longitude: pt[0], latitude: pt[1]}).unitsPerMeter[2]
       ];
 
@@ -133,7 +133,6 @@ test('getDistanceScales#unitsPerMeter', t => {
     const {unitsPerMeter, unitsPerMeter2} = getDistanceScales({
       latitude,
       longitude,
-      scale,
       highPrecision: true
     });
 
@@ -151,13 +150,13 @@ test('getDistanceScales#unitsPerMeter', t => {
 
       let pt = [longitude, latitude];
       // turf unit is kilometers
-      pt = destination(pt, (delta / 1000) * Math.sqrt(2), 45);
-      pt = pt.geometry.coordinates;
+      const feature = destination(pt, (delta / 1000) * Math.sqrt(2), 45);
+      pt = feature.geometry.coordinates;
 
       const realCoords = [
-        lngLatToWorld(pt, scale)[0] - lngLatToWorld([longitude, latitude], scale)[0],
-        lngLatToWorld(pt, scale)[1] - lngLatToWorld([longitude, latitude], scale)[1],
-        z * getDistanceScales({longitude: pt[0], latitude: pt[1], scale}).unitsPerMeter[2]
+        lngLatToWorld(pt)[0] - lngLatToWorld([longitude, latitude])[0],
+        lngLatToWorld(pt)[1] - lngLatToWorld([longitude, latitude])[1],
+        z * getDistanceScales({longitude: pt[0], latitude: pt[1]}).unitsPerMeter[2]
       ];
 
       const diff = getDiff(coords, realCoords, scale);
@@ -189,8 +188,8 @@ test('addMetersToLngLat', t => {
 
       const origin = [longitude, latitude];
       // turf unit is kilometers
-      let pt = destination(origin, (delta / 1000) * Math.sqrt(2), 45);
-      pt = pt.geometry.coordinates.concat(delta);
+      const feature = destination(origin, (delta / 1000) * Math.sqrt(2), 45);
+      const pt = feature.geometry.coordinates.concat(delta);
 
       const result = addMetersToLngLat(origin, [delta, delta, delta]);
 
@@ -209,7 +208,7 @@ test('getMeterZoom', t => {
     const zoom = getMeterZoom({latitude});
     const scale = zoomToScale(zoom);
 
-    const {unitsPerMeter} = getDistanceScales({latitude, longitude: 0, zoom});
+    const {unitsPerMeter} = getDistanceScales({latitude, longitude: 0});
     t.deepEqual(
       toLowPrecision(unitsPerMeter.map(x => x * scale)),
       [1, 1, 1],

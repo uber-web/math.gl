@@ -5,8 +5,8 @@
 import test from 'tape-catch';
 import {tapeEquals, tapeEqualsEpsilon} from 'test/utils/tape-assertions';
 
-import {Vector3, Matrix3, Quaternion, toRadians, _MathUtils} from '@math.gl/core';
-import {BoundingSphere, OrientedBoundingBox, Intersect, Plane} from '@math.gl/culling';
+import {Vector3, Matrix3, toRadians, _MathUtils} from '@math.gl/core';
+import {BoundingSphere, OrientedBoundingBox, Plane, INTERSECTION} from '@math.gl/culling';
 
 const ZERO_VECTOR3 = Object.freeze(new Vector3(0, 0, 0));
 const ZERO_MATRIX3 = Object.freeze(new Matrix3([0, 0, 0, 0, 0, 0, 0, 0, 0]));
@@ -156,136 +156,136 @@ function intersectPlaneTestCornersEdgesFaces(t, center, axes) {
   // prettier-ignore-start
   pl = planeNormXform(+1.0, +0.0, +0.0, 0.50001);
   if (pl) {
-    t.equals(box.intersectPlane(pl), Intersect.INSIDE);
+    t.equals(box.intersectPlane(pl), INTERSECTION.INSIDE);
   }
   pl = planeNormXform(-1.0, +0.0, +0.0, 0.50001);
   if (pl) {
-    t.equals(box.intersectPlane(pl), Intersect.INSIDE);
+    t.equals(box.intersectPlane(pl), INTERSECTION.INSIDE);
   }
   pl = planeNormXform(+0.0, +1.0, +0.0, 0.50001);
   if (pl) {
-    t.equals(box.intersectPlane(pl), Intersect.INSIDE);
+    t.equals(box.intersectPlane(pl), INTERSECTION.INSIDE);
   }
   pl = planeNormXform(+0.0, -1.0, +0.0, 0.50001);
   if (pl) {
-    t.equals(box.intersectPlane(pl), Intersect.INSIDE);
+    t.equals(box.intersectPlane(pl), INTERSECTION.INSIDE);
   }
   /*
-  pl = planeNormXform(+0.0, +0.0, +1.0,  0.50001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INSIDE); }
-  pl = planeNormXform(+0.0, +0.0, -1.0,  0.50001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INSIDE); }
+  pl = planeNormXform(+0.0, +0.0, +1.0,  0.50001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INSIDE); }
+  pl = planeNormXform(+0.0, +0.0, -1.0,  0.50001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INSIDE); }
 
-  pl = planeNormXform(+1.0, +0.0, +0.0,  0.49999); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(-1.0, +0.0, +0.0,  0.49999); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(+0.0, +1.0, +0.0,  0.49999); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(+0.0, -1.0, +0.0,  0.49999); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(+0.0, +0.0, +1.0,  0.49999); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(+0.0, +0.0, -1.0,  0.49999); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
+  pl = planeNormXform(+1.0, +0.0, +0.0,  0.49999); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(-1.0, +0.0, +0.0,  0.49999); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(+0.0, +1.0, +0.0,  0.49999); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(+0.0, -1.0, +0.0,  0.49999); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(+0.0, +0.0, +1.0,  0.49999); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(+0.0, +0.0, -1.0,  0.49999); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
 
-  pl = planeNormXform(+1.0, +0.0, +0.0, -0.49999); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(-1.0, +0.0, +0.0, -0.49999); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(+0.0, +1.0, +0.0, -0.49999); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(+0.0, -1.0, +0.0, -0.49999); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(+0.0, +0.0, +1.0, -0.49999); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(+0.0, +0.0, -1.0, -0.49999); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
+  pl = planeNormXform(+1.0, +0.0, +0.0, -0.49999); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(-1.0, +0.0, +0.0, -0.49999); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(+0.0, +1.0, +0.0, -0.49999); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(+0.0, -1.0, +0.0, -0.49999); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(+0.0, +0.0, +1.0, -0.49999); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(+0.0, +0.0, -1.0, -0.49999); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
 
-  pl = planeNormXform(+1.0, +0.0, +0.0, -0.50001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.OUTSIDE); }
-  pl = planeNormXform(-1.0, +0.0, +0.0, -0.50001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.OUTSIDE); }
-  pl = planeNormXform(+0.0, +1.0, +0.0, -0.50001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.OUTSIDE); }
-  pl = planeNormXform(+0.0, -1.0, +0.0, -0.50001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.OUTSIDE); }
-  pl = planeNormXform(+0.0, +0.0, +1.0, -0.50001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.OUTSIDE); }
-  pl = planeNormXform(+0.0, +0.0, -1.0, -0.50001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.OUTSIDE); }
+  pl = planeNormXform(+1.0, +0.0, +0.0, -0.50001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.OUTSIDE); }
+  pl = planeNormXform(-1.0, +0.0, +0.0, -0.50001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.OUTSIDE); }
+  pl = planeNormXform(+0.0, +1.0, +0.0, -0.50001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.OUTSIDE); }
+  pl = planeNormXform(+0.0, -1.0, +0.0, -0.50001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.OUTSIDE); }
+  pl = planeNormXform(+0.0, +0.0, +1.0, -0.50001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.OUTSIDE); }
+  pl = planeNormXform(+0.0, +0.0, -1.0, -0.50001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.OUTSIDE); }
 
   // Tests against edges
 
-  pl = planeNormXform(+1.0, +1.0, +0.0,  SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INSIDE); }
-  pl = planeNormXform(+1.0, -1.0, +0.0,  SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INSIDE); }
-  pl = planeNormXform(-1.0, +1.0, +0.0,  SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INSIDE); }
-  pl = planeNormXform(-1.0, -1.0, +0.0,  SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INSIDE); }
-  pl = planeNormXform(+1.0, +0.0, +1.0,  SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INSIDE); }
-  pl = planeNormXform(+1.0, +0.0, -1.0,  SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INSIDE); }
-  pl = planeNormXform(-1.0, +0.0, +1.0,  SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INSIDE); }
-  pl = planeNormXform(-1.0, +0.0, -1.0,  SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INSIDE); }
-  pl = planeNormXform(+0.0, +1.0, +1.0,  SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INSIDE); }
-  pl = planeNormXform(+0.0, +1.0, -1.0,  SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INSIDE); }
-  pl = planeNormXform(+0.0, -1.0, +1.0,  SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INSIDE); }
-  pl = planeNormXform(+0.0, -1.0, -1.0,  SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INSIDE); }
+  pl = planeNormXform(+1.0, +1.0, +0.0,  SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INSIDE); }
+  pl = planeNormXform(+1.0, -1.0, +0.0,  SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INSIDE); }
+  pl = planeNormXform(-1.0, +1.0, +0.0,  SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INSIDE); }
+  pl = planeNormXform(-1.0, -1.0, +0.0,  SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INSIDE); }
+  pl = planeNormXform(+1.0, +0.0, +1.0,  SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INSIDE); }
+  pl = planeNormXform(+1.0, +0.0, -1.0,  SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INSIDE); }
+  pl = planeNormXform(-1.0, +0.0, +1.0,  SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INSIDE); }
+  pl = planeNormXform(-1.0, +0.0, -1.0,  SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INSIDE); }
+  pl = planeNormXform(+0.0, +1.0, +1.0,  SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INSIDE); }
+  pl = planeNormXform(+0.0, +1.0, -1.0,  SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INSIDE); }
+  pl = planeNormXform(+0.0, -1.0, +1.0,  SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INSIDE); }
+  pl = planeNormXform(+0.0, -1.0, -1.0,  SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INSIDE); }
 
-  pl = planeNormXform(+1.0, +1.0, +0.0,  SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(+1.0, -1.0, +0.0,  SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(-1.0, +1.0, +0.0,  SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(-1.0, -1.0, +0.0,  SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(+1.0, +0.0, +1.0,  SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(+1.0, +0.0, -1.0,  SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(-1.0, +0.0, +1.0,  SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(-1.0, +0.0, -1.0,  SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(+0.0, +1.0, +1.0,  SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(+0.0, +1.0, -1.0,  SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(+0.0, -1.0, +1.0,  SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(+0.0, -1.0, -1.0,  SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
+  pl = planeNormXform(+1.0, +1.0, +0.0,  SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(+1.0, -1.0, +0.0,  SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(-1.0, +1.0, +0.0,  SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(-1.0, -1.0, +0.0,  SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(+1.0, +0.0, +1.0,  SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(+1.0, +0.0, -1.0,  SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(-1.0, +0.0, +1.0,  SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(-1.0, +0.0, -1.0,  SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(+0.0, +1.0, +1.0,  SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(+0.0, +1.0, -1.0,  SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(+0.0, -1.0, +1.0,  SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(+0.0, -1.0, -1.0,  SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
 
-  pl = planeNormXform(+1.0, +1.0, +0.0, -SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(+1.0, -1.0, +0.0, -SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(-1.0, +1.0, +0.0, -SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(-1.0, -1.0, +0.0, -SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(+1.0, +0.0, +1.0, -SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(+1.0, +0.0, -1.0, -SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(-1.0, +0.0, +1.0, -SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(-1.0, +0.0, -1.0, -SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(+0.0, +1.0, +1.0, -SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(+0.0, +1.0, -1.0, -SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(+0.0, -1.0, +1.0, -SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(+0.0, -1.0, -1.0, -SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
+  pl = planeNormXform(+1.0, +1.0, +0.0, -SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(+1.0, -1.0, +0.0, -SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(-1.0, +1.0, +0.0, -SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(-1.0, -1.0, +0.0, -SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(+1.0, +0.0, +1.0, -SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(+1.0, +0.0, -1.0, -SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(-1.0, +0.0, +1.0, -SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(-1.0, +0.0, -1.0, -SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(+0.0, +1.0, +1.0, -SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(+0.0, +1.0, -1.0, -SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(+0.0, -1.0, +1.0, -SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(+0.0, -1.0, -1.0, -SQRT1_2 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
 
-  pl = planeNormXform(+1.0, +1.0, +0.0, -SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.OUTSIDE); }
-  pl = planeNormXform(+1.0, -1.0, +0.0, -SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.OUTSIDE); }
-  pl = planeNormXform(-1.0, +1.0, +0.0, -SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.OUTSIDE); }
-  pl = planeNormXform(-1.0, -1.0, +0.0, -SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.OUTSIDE); }
-  pl = planeNormXform(+1.0, +0.0, +1.0, -SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.OUTSIDE); }
-  pl = planeNormXform(+1.0, +0.0, -1.0, -SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.OUTSIDE); }
-  pl = planeNormXform(-1.0, +0.0, +1.0, -SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.OUTSIDE); }
-  pl = planeNormXform(-1.0, +0.0, -1.0, -SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.OUTSIDE); }
-  pl = planeNormXform(+0.0, +1.0, +1.0, -SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.OUTSIDE); }
-  pl = planeNormXform(+0.0, +1.0, -1.0, -SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.OUTSIDE); }
-  pl = planeNormXform(+0.0, -1.0, +1.0, -SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.OUTSIDE); }
-  pl = planeNormXform(+0.0, -1.0, -1.0, -SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.OUTSIDE); }
+  pl = planeNormXform(+1.0, +1.0, +0.0, -SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.OUTSIDE); }
+  pl = planeNormXform(+1.0, -1.0, +0.0, -SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.OUTSIDE); }
+  pl = planeNormXform(-1.0, +1.0, +0.0, -SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.OUTSIDE); }
+  pl = planeNormXform(-1.0, -1.0, +0.0, -SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.OUTSIDE); }
+  pl = planeNormXform(+1.0, +0.0, +1.0, -SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.OUTSIDE); }
+  pl = planeNormXform(+1.0, +0.0, -1.0, -SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.OUTSIDE); }
+  pl = planeNormXform(-1.0, +0.0, +1.0, -SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.OUTSIDE); }
+  pl = planeNormXform(-1.0, +0.0, -1.0, -SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.OUTSIDE); }
+  pl = planeNormXform(+0.0, +1.0, +1.0, -SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.OUTSIDE); }
+  pl = planeNormXform(+0.0, +1.0, -1.0, -SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.OUTSIDE); }
+  pl = planeNormXform(+0.0, -1.0, +1.0, -SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.OUTSIDE); }
+  pl = planeNormXform(+0.0, -1.0, -1.0, -SQRT1_2 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.OUTSIDE); }
 
   // Tests against corners
 
-  pl = planeNormXform(+1.0, +1.0, +1.0,  SQRT3_4 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INSIDE); }
-  pl = planeNormXform(+1.0, +1.0, -1.0,  SQRT3_4 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INSIDE); }
-  pl = planeNormXform(+1.0, -1.0, +1.0,  SQRT3_4 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INSIDE); }
-  pl = planeNormXform(+1.0, -1.0, -1.0,  SQRT3_4 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INSIDE); }
-  pl = planeNormXform(-1.0, +1.0, +1.0,  SQRT3_4 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INSIDE); }
-  pl = planeNormXform(-1.0, +1.0, -1.0,  SQRT3_4 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INSIDE); }
-  pl = planeNormXform(-1.0, -1.0, +1.0,  SQRT3_4 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INSIDE); }
-  pl = planeNormXform(-1.0, -1.0, -1.0,  SQRT3_4 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INSIDE); }
+  pl = planeNormXform(+1.0, +1.0, +1.0,  SQRT3_4 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INSIDE); }
+  pl = planeNormXform(+1.0, +1.0, -1.0,  SQRT3_4 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INSIDE); }
+  pl = planeNormXform(+1.0, -1.0, +1.0,  SQRT3_4 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INSIDE); }
+  pl = planeNormXform(+1.0, -1.0, -1.0,  SQRT3_4 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INSIDE); }
+  pl = planeNormXform(-1.0, +1.0, +1.0,  SQRT3_4 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INSIDE); }
+  pl = planeNormXform(-1.0, +1.0, -1.0,  SQRT3_4 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INSIDE); }
+  pl = planeNormXform(-1.0, -1.0, +1.0,  SQRT3_4 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INSIDE); }
+  pl = planeNormXform(-1.0, -1.0, -1.0,  SQRT3_4 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INSIDE); }
 
-  pl = planeNormXform(+1.0, +1.0, +1.0,  SQRT3_4 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(+1.0, +1.0, -1.0,  SQRT3_4 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(+1.0, -1.0, +1.0,  SQRT3_4 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(+1.0, -1.0, -1.0,  SQRT3_4 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(-1.0, +1.0, +1.0,  SQRT3_4 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(-1.0, +1.0, -1.0,  SQRT3_4 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(-1.0, -1.0, +1.0,  SQRT3_4 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(-1.0, -1.0, -1.0,  SQRT3_4 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
+  pl = planeNormXform(+1.0, +1.0, +1.0,  SQRT3_4 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(+1.0, +1.0, -1.0,  SQRT3_4 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(+1.0, -1.0, +1.0,  SQRT3_4 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(+1.0, -1.0, -1.0,  SQRT3_4 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(-1.0, +1.0, +1.0,  SQRT3_4 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(-1.0, +1.0, -1.0,  SQRT3_4 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(-1.0, -1.0, +1.0,  SQRT3_4 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(-1.0, -1.0, -1.0,  SQRT3_4 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
 
-  pl = planeNormXform(+1.0, +1.0, +1.0, -SQRT3_4 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(+1.0, +1.0, -1.0, -SQRT3_4 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(+1.0, -1.0, +1.0, -SQRT3_4 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(+1.0, -1.0, -1.0, -SQRT3_4 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(-1.0, +1.0, +1.0, -SQRT3_4 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(-1.0, +1.0, -1.0, -SQRT3_4 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(-1.0, -1.0, +1.0, -SQRT3_4 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
-  pl = planeNormXform(-1.0, -1.0, -1.0, -SQRT3_4 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.INTERSECTING); }
+  pl = planeNormXform(+1.0, +1.0, +1.0, -SQRT3_4 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(+1.0, +1.0, -1.0, -SQRT3_4 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(+1.0, -1.0, +1.0, -SQRT3_4 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(+1.0, -1.0, -1.0, -SQRT3_4 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(-1.0, +1.0, +1.0, -SQRT3_4 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(-1.0, +1.0, -1.0, -SQRT3_4 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(-1.0, -1.0, +1.0, -SQRT3_4 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
+  pl = planeNormXform(-1.0, -1.0, -1.0, -SQRT3_4 + 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.INTERSECTING); }
 
-  pl = planeNormXform(+1.0, +1.0, +1.0, -SQRT3_4 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.OUTSIDE); }
-  pl = planeNormXform(+1.0, +1.0, -1.0, -SQRT3_4 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.OUTSIDE); }
-  pl = planeNormXform(+1.0, -1.0, +1.0, -SQRT3_4 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.OUTSIDE); }
-  pl = planeNormXform(+1.0, -1.0, -1.0, -SQRT3_4 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.OUTSIDE); }
-  pl = planeNormXform(-1.0, +1.0, +1.0, -SQRT3_4 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.OUTSIDE); }
-  pl = planeNormXform(-1.0, +1.0, -1.0, -SQRT3_4 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.OUTSIDE); }
-  pl = planeNormXform(-1.0, -1.0, +1.0, -SQRT3_4 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.OUTSIDE); }
-  pl = planeNormXform(-1.0, -1.0, -1.0, -SQRT3_4 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), Intersect.OUTSIDE); }
+  pl = planeNormXform(+1.0, +1.0, +1.0, -SQRT3_4 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.OUTSIDE); }
+  pl = planeNormXform(+1.0, +1.0, -1.0, -SQRT3_4 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.OUTSIDE); }
+  pl = planeNormXform(+1.0, -1.0, +1.0, -SQRT3_4 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.OUTSIDE); }
+  pl = planeNormXform(+1.0, -1.0, -1.0, -SQRT3_4 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.OUTSIDE); }
+  pl = planeNormXform(-1.0, +1.0, +1.0, -SQRT3_4 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.OUTSIDE); }
+  pl = planeNormXform(-1.0, +1.0, -1.0, -SQRT3_4 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.OUTSIDE); }
+  pl = planeNormXform(-1.0, -1.0, +1.0, -SQRT3_4 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.OUTSIDE); }
+  pl = planeNormXform(-1.0, -1.0, -1.0, -SQRT3_4 - 0.00001); if (pl) { t.equals(box.intersectPlane(pl), INTERSECTION.OUTSIDE); }
   */
   // prettier-ignore-end
 }

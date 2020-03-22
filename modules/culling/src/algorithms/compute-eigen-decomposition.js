@@ -4,47 +4,12 @@
 import {Matrix3, _MathUtils} from '@math.gl/core';
 
 const scratchMatrix = new Matrix3();
-
 const scratchUnitary = new Matrix3();
 const scratchDiagonal = new Matrix3();
 
 const jMatrix = new Matrix3();
 const jMatrixTranspose = new Matrix3();
 
-/**
- * Computes the eigenvectors and eigenvalues of a symmetric matrix.
- * <p>
- * Returns a diagonal matrix and unitary matrix such that:
- * <code>matrix = unitary matrix * diagonal matrix * transpose(unitary matrix)</code>
- * </p>
- * <p>
- * The values along the diagonal of the diagonal matrix are the eigenvalues. The columns
- * of the unitary matrix are the corresponding eigenvectors.
- * </p>
- *
- * @param {Matrix3} matrix The matrix to decompose into diagonal and unitary matrix. Expected to be symmetric.
- * @param {Object} [result] An object with unitary and diagonal properties which are matrices onto which to store the result.
- * @returns {Object} An object with unitary and diagonal properties which are the unitary and diagonal matrices, respectively.
- *
- * @example
- * const a = //... symmetric matrix
- * const result = {
- *   unitary : new Matrix3(),
- *   diagonal : new Matrix3()
- * };
- * computeEigenDecomposition(a, result);
- *
- * const unitaryTranspose = Matrix3.transpose(result.unitary, new Matrix3());
- * const b = Matrix3.multiply(result.unitary, result.diagonal, new Matrix3());
- * Matrix3.multiply(b, unitaryTranspose, b); // b is now equal to a
- *
- * const lambda = result.diagonal.getColumn(0, new Vector3()).x;  // first eigenvalue
- * const v = result.unitary.getColumn(0, new Vector3());          // first eigenvector
- * const c = v.multiplyByScalar(lambda);                          // equal to v.transformByMatrix3(a)
- */
-
-// This routine was created based upon Matrix Computations, 3rd ed., by Golub and Van Loan,
-// section 8.4.3 The Classical Jacobi Algorithm
 export default function computeEigenDecomposition(matrix, result = {}) {
   const EIGEN_TOLERANCE = _MathUtils.EPSILON20;
   const EIGEN_MAX_SWEEPS = 10;

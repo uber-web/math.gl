@@ -88,6 +88,7 @@ const FITBOUNDS_TEST_CASES = [
 
 test('fitBounds', t => {
   for (const [input, expected] of FITBOUNDS_TEST_CASES) {
+    // @ts-ignore
     const result = fitBounds(input);
 
     t.ok(Number.isFinite(result.longitude), 'get valid longitude');
@@ -107,6 +108,7 @@ test('WebMercatorViewport.fitBounds', t => {
       height: input.height,
       zoom: 11
     });
+    // @ts-ignore
     const result = viewport.fitBounds(input.bounds, input);
 
     t.ok(result instanceof WebMercatorViewport, 'get viewport');
@@ -140,10 +142,12 @@ test('fitBounds#degenerate', t => {
     'degenerate bounds do not throw by default'
   );
   t.throws(
+    // @ts-ignore
     () => viewport.fitBounds([[-70, 10], [-70, 10]], {maxZoom: Infinity}),
     'degenerate bounds throw if maxZoom removed'
   );
   t.doesNotThrow(
+    // @ts-ignore
     () => viewport.fitBounds([[-70, 10], [-70, 10]], {minExtent: 0.01, maxZoom: Infinity}),
     'degenerate bounds does not throw if maxZoom removed and minExtents added'
   );

@@ -17,19 +17,6 @@ export default class Viewport {
    *
    * @class
    * @param {Object} opt - options
-   * @param {Number} opt.width=1 - Width of "viewport" or window
-   * @param {Number} opt.height=1 - Height of "viewport" or window
-   * @param {Array} opt.center=[0, 0] - Center of viewport
-   *   [longitude, latitude] or [x, y]
-   * @param {Number} opt.scale=1 - Either use scale or zoom
-   * @param {Number} opt.pitch=0 - Camera angle in degrees (0 is straight down)
-   * @param {Number} opt.bearing=0 - Map rotation in degrees (0 means north is up)
-   * @param {Number} opt.altitude= - Altitude of camera in screen units
-   *
-   * Web mercator projection short-hand parameters
-   * @param {Number} opt.latitude - Center of viewport on map (alternative to opt.center)
-   * @param {Number} opt.longitude - Center of viewport on map (alternative to opt.center)
-   * @param {Number} opt.zoom - Scale = Math.pow(2,zoom) on map (alternative to opt.scale)
    */
   // eslint-disable-next-line complexity, max-statements
   constructor({
@@ -84,7 +71,6 @@ export default class Viewport {
     this.pixelUnprojectionMatrix = mInverse;
 
     // Bind methods for easy access
-    /* eslint-disable @typescript-eslint/unbound-method */
     this.equals = this.equals.bind(this);
     this.project = this.project.bind(this);
     this.unproject = this.unproject.bind(this);
@@ -92,7 +78,6 @@ export default class Viewport {
     this.unprojectPosition = this.unprojectPosition.bind(this);
     this.projectFlat = this.projectFlat.bind(this);
     this.unprojectFlat = this.unprojectFlat.bind(this);
-    /* eslint-enable @typescript-eslint/unbound-method */
   }
 
   // Two viewports are equal if width and height are identical, and if
@@ -110,18 +95,8 @@ export default class Viewport {
     );
   }
 
-  /**
-   * Projects xyz (possibly latitude and longitude) to pixel coordinates in window
-   * using viewport projection parameters
-   * - [longitude, latitude] to [x, y]
-   * - [longitude, latitude, Z] => [x, y, z]
-   * Note: By default, returns top-left coordinates for canvas/SVG type render
-   *
-   * @param {Array} lngLatZ - [lng, lat] or [lng, lat, Z]
-   * @param {Object} opts - options
-   * @param {Object} opts.topLeft=true - Whether projected coords are top left
-   * @return {Array} - screen coordinates [x, y] or [x, y, z], z as pixel depth
-   */
+  // Projects xyz (possibly latitude and longitude) to pixel coordinates in window
+  // using viewport projection parameters
   project(xyz, {topLeft = true} = {}) {
     const worldPosition = this.projectPosition(xyz);
     const coord = worldToPixels(worldPosition, this.pixelProjectionMatrix);
@@ -131,19 +106,9 @@ export default class Viewport {
     return xyz.length === 2 ? [x, y2] : [x, y2, coord[2]];
   }
 
-  /**
-   * Unproject pixel coordinates on screen onto world coordinates,
-   * (possibly [lon, lat]) on map.
-   * - [x, y] => [lng, lat]
-   * - [x, y, z] => [lng, lat, Z]
-   * @param {Array} xyz - screen coordinates, z as pixel depth
-   * @param {Object} opts - options
-   * @param {Object} opts.topLeft=true - Whether projected coords are top left
-   * @param {Object} opts.targetZ=0 - If pixel depth is unknown, targetZ is used as
-   *   the elevation plane to unproject onto
-   * @return {Array} - [lng, lat, Z] or [X, Y, Z]
-   */
-  unproject(xyz, {topLeft = true, targetZ} = {}) {
+  // Unproject pixel coordinates on screen onto world coordinates,
+  // (possibly [lon, lat]) on map.
+  unproject(xyz, {topLeft = true, targetZ = undefined} = {}) {
     const [x, y, z] = xyz;
 
     const y2 = topLeft ? y : this.height - y;
@@ -176,8 +141,8 @@ export default class Viewport {
    * Project map coordinates to world coordinates.
    * This should be overridden by each viewport that implements a specific
    * geographic projection.
-   * @param {Array} xyz - map coordinates
-   * @return {Array} [x,y,z] world coordinates.
+   * @param xyz - map coordinates
+   * @return [x,y,z] world coordinates.
    */
   projectFlat(xyz) {
     return xyz;
@@ -187,8 +152,8 @@ export default class Viewport {
    * Project world coordinates to map coordinates.
    * This should be overridden by each viewport that implements a specific
    * geographic projection.
-   * @param {Array} xyz - world coordinates
-   * @return {Array} [x,y,z] map coordinates.
+   * @param xyz - world coordinates
+   * @return [x,y,z] map coordinates.
    */
   unprojectFlat(xyz) {
     return xyz;

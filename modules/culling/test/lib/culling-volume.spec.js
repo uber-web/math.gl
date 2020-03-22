@@ -11,11 +11,12 @@ import {
   AxisAlignedBoundingBox,
   makeBoundingSphereFromPoints,
   _PerspectiveFrustum as PerspectiveFrustum,
-  Intersect
+  INTERSECTION
 } from '@math.gl/culling';
 
 const VECTOR3_UNIT_Z = Object.freeze(new Vector3(0, 0, 1));
 
+// @ts-ignore
 const frustum = new PerspectiveFrustum();
 frustum.near = 1.0;
 frustum.far = 2.0;
@@ -37,6 +38,7 @@ test('CullingVolume#constructor', t => {
 });
 
 test('CullingVolume#computeVisibility throws without a bounding volume', t => {
+  // @ts-ignore
   t.throws(() => new CullingVolume().computeVisibility());
   t.end();
 });
@@ -69,9 +71,9 @@ function testWithAndWithoutPlaneMask(t, culling, bound, intersect) {
   t.equals(actualIntersect, intersect);
 
   const mask = culling.computeVisibilityWithPlaneMask(bound, CullingVolume.MASK_INDETERMINATE);
-  if (intersect === Intersect.INSIDE) {
+  if (intersect === INTERSECTION.INSIDE) {
     t.equals(mask, CullingVolume.MASK_INSIDE);
-  } else if (intersect === Intersect.OUTSIDE) {
+  } else if (intersect === INTERSECTION.OUTSIDE) {
     t.equals(mask, CullingVolume.MASK_OUTSIDE);
   } else {
     t.notOk(mask === CullingVolume.MASK_INSIDE);
@@ -88,7 +90,7 @@ test('CullingVolume#box intersections', ttt => {
       new Vector3(-0.5, 0, -1.75),
       new Vector3(0.5, 0, -1.75)
     ]);
-    testWithAndWithoutPlaneMask(t, cullingVolume, box1, Intersect.INSIDE);
+    testWithAndWithoutPlaneMask(t, cullingVolume, box1, INTERSECTION.INSIDE);
     t.end();
   });
 
@@ -100,7 +102,7 @@ test('CullingVolume#box intersections', ttt => {
         new Vector3(-0.5, 0, -2.5),
         new Vector3(0.5, 0, -2.5)
       ]);
-      testWithAndWithoutPlaneMask(t, cullingVolume, box2, Intersect.INTERSECTING);
+      testWithAndWithoutPlaneMask(t, cullingVolume, box2, INTERSECTION.INTERSECTING);
       t.end();
     });
 
@@ -111,7 +113,7 @@ test('CullingVolume#box intersections', ttt => {
         new Vector3(-0.5, 0, -1.5),
         new Vector3(0.5, 0, -1.5)
       ]);
-      testWithAndWithoutPlaneMask(t, cullingVolume, box3, Intersect.INTERSECTING);
+      testWithAndWithoutPlaneMask(t, cullingVolume, box3, INTERSECTION.INTERSECTING);
       t.end();
     });
 
@@ -122,7 +124,7 @@ test('CullingVolume#box intersections', ttt => {
         new Vector3(-1.5, 0, -1.5),
         new Vector3(0, 0, -1.5)
       ]);
-      testWithAndWithoutPlaneMask(t, cullingVolume, box4, Intersect.INTERSECTING);
+      testWithAndWithoutPlaneMask(t, cullingVolume, box4, INTERSECTION.INTERSECTING);
       t.end();
     });
 
@@ -133,7 +135,7 @@ test('CullingVolume#box intersections', ttt => {
         new Vector3(0, 0, -1.5),
         new Vector3(1.5, 0, -1.5)
       ]);
-      testWithAndWithoutPlaneMask(t, cullingVolume, box5, Intersect.INTERSECTING);
+      testWithAndWithoutPlaneMask(t, cullingVolume, box5, INTERSECTION.INTERSECTING);
       t.end();
     });
 
@@ -144,7 +146,7 @@ test('CullingVolume#box intersections', ttt => {
         new Vector3(-0.5, 2.0, -1.75),
         new Vector3(0.5, 2.0, -1.75)
       ]);
-      testWithAndWithoutPlaneMask(t, cullingVolume, box6, Intersect.INTERSECTING);
+      testWithAndWithoutPlaneMask(t, cullingVolume, box6, INTERSECTION.INTERSECTING);
       t.end();
     });
 
@@ -155,7 +157,7 @@ test('CullingVolume#box intersections', ttt => {
         new Vector3(-0.5, -2.0, -1.5),
         new Vector3(0.5, 0, -1.5)
       ]);
-      testWithAndWithoutPlaneMask(t, cullingVolume, box7, Intersect.INTERSECTING);
+      testWithAndWithoutPlaneMask(t, cullingVolume, box7, INTERSECTION.INTERSECTING);
       t.end();
     });
     tt.end();
@@ -169,7 +171,7 @@ test('CullingVolume#box intersections', ttt => {
         new Vector3(-0.5, 0, -2.75),
         new Vector3(0.5, 0, -2.75)
       ]);
-      testWithAndWithoutPlaneMask(t, cullingVolume, box8, Intersect.OUTSIDE);
+      testWithAndWithoutPlaneMask(t, cullingVolume, box8, INTERSECTION.OUTSIDE);
       t.end();
     });
 
@@ -180,7 +182,7 @@ test('CullingVolume#box intersections', ttt => {
         new Vector3(-0.5, 0, -0.75),
         new Vector3(0.5, 0, -0.75)
       ]);
-      testWithAndWithoutPlaneMask(t, cullingVolume, box9, Intersect.OUTSIDE);
+      testWithAndWithoutPlaneMask(t, cullingVolume, box9, INTERSECTION.OUTSIDE);
       t.end();
     });
 
@@ -191,7 +193,7 @@ test('CullingVolume#box intersections', ttt => {
         new Vector3(-5, 0, -1.75),
         new Vector3(-3, 0, -1.75)
       ]);
-      testWithAndWithoutPlaneMask(t, cullingVolume, box10, Intersect.OUTSIDE);
+      testWithAndWithoutPlaneMask(t, cullingVolume, box10, INTERSECTION.OUTSIDE);
       t.end();
     });
 
@@ -202,7 +204,7 @@ test('CullingVolume#box intersections', ttt => {
         new Vector3(3, 0, -1.75),
         new Vector3(5, 0, -1.75)
       ]);
-      testWithAndWithoutPlaneMask(t, cullingVolume, box11, Intersect.OUTSIDE);
+      testWithAndWithoutPlaneMask(t, cullingVolume, box11, INTERSECTION.OUTSIDE);
       t.end();
     });
 
@@ -213,7 +215,7 @@ test('CullingVolume#box intersections', ttt => {
         new Vector3(-0.5, 5, -1.75),
         new Vector3(0.5, 5, -1.75)
       ]);
-      testWithAndWithoutPlaneMask(t, cullingVolume, box12, Intersect.OUTSIDE);
+      testWithAndWithoutPlaneMask(t, cullingVolume, box12, INTERSECTION.OUTSIDE);
       t.end();
     });
 
@@ -224,7 +226,7 @@ test('CullingVolume#box intersections', ttt => {
         new Vector3(-0.5, -5, -1.75),
         new Vector3(0.5, -5, -1.75)
       ]);
-      testWithAndWithoutPlaneMask(t, cullingVolume, box13, Intersect.OUTSIDE);
+      testWithAndWithoutPlaneMask(t, cullingVolume, box13, INTERSECTION.OUTSIDE);
       t.end();
     });
     tt.end();
@@ -238,7 +240,7 @@ test('CullingVolume#sphere intersection', ttt => {
       new Vector3(0, 0, -1.25),
       new Vector3(0, 0, -1.75)
     ]);
-    testWithAndWithoutPlaneMask(t, cullingVolume, sphere1, Intersect.INSIDE);
+    testWithAndWithoutPlaneMask(t, cullingVolume, sphere1, INTERSECTION.INSIDE);
     t.end();
   });
 
@@ -248,7 +250,7 @@ test('CullingVolume#sphere intersection', ttt => {
         new Vector3(0, 0, -1.5),
         new Vector3(0, 0, -2.5)
       ]);
-      testWithAndWithoutPlaneMask(t, cullingVolume, sphere2, Intersect.INTERSECTING);
+      testWithAndWithoutPlaneMask(t, cullingVolume, sphere2, INTERSECTION.INTERSECTING);
       t.end();
     });
 
@@ -257,7 +259,7 @@ test('CullingVolume#sphere intersection', ttt => {
         new Vector3(0, 0, -0.5),
         new Vector3(0, 0, -1.5)
       ]);
-      testWithAndWithoutPlaneMask(t, cullingVolume, sphere3, Intersect.INTERSECTING);
+      testWithAndWithoutPlaneMask(t, cullingVolume, sphere3, INTERSECTION.INTERSECTING);
       t.end();
     });
 
@@ -266,7 +268,7 @@ test('CullingVolume#sphere intersection', ttt => {
         new Vector3(-1.0, 0, -1.5),
         new Vector3(0, 0, -1.5)
       ]);
-      testWithAndWithoutPlaneMask(t, cullingVolume, sphere4, Intersect.INTERSECTING);
+      testWithAndWithoutPlaneMask(t, cullingVolume, sphere4, INTERSECTION.INTERSECTING);
       t.end();
     });
 
@@ -275,7 +277,7 @@ test('CullingVolume#sphere intersection', ttt => {
         new Vector3(0, 0, -1.5),
         new Vector3(1.0, 0, -1.5)
       ]);
-      testWithAndWithoutPlaneMask(t, cullingVolume, sphere5, Intersect.INTERSECTING);
+      testWithAndWithoutPlaneMask(t, cullingVolume, sphere5, INTERSECTION.INTERSECTING);
       t.end();
     });
 
@@ -284,7 +286,7 @@ test('CullingVolume#sphere intersection', ttt => {
         new Vector3(0, 0, -1.5),
         new Vector3(0, 2.0, -1.5)
       ]);
-      testWithAndWithoutPlaneMask(t, cullingVolume, sphere6, Intersect.INTERSECTING);
+      testWithAndWithoutPlaneMask(t, cullingVolume, sphere6, INTERSECTION.INTERSECTING);
       t.end();
     });
 
@@ -293,7 +295,7 @@ test('CullingVolume#sphere intersection', ttt => {
         new Vector3(0, -2.0, -1.5),
         new Vector3(0, 0, -1.5)
       ]);
-      testWithAndWithoutPlaneMask(t, cullingVolume, sphere7, Intersect.INTERSECTING);
+      testWithAndWithoutPlaneMask(t, cullingVolume, sphere7, INTERSECTION.INTERSECTING);
       t.end();
     });
     tt.end();
@@ -305,7 +307,7 @@ test('CullingVolume#sphere intersection', ttt => {
         new Vector3(0, 0, -2.25),
         new Vector3(0, 0, -2.75)
       ]);
-      testWithAndWithoutPlaneMask(t, cullingVolume, sphere8, Intersect.OUTSIDE);
+      testWithAndWithoutPlaneMask(t, cullingVolume, sphere8, INTERSECTION.OUTSIDE);
       t.end();
     });
 
@@ -314,7 +316,7 @@ test('CullingVolume#sphere intersection', ttt => {
         new Vector3(0, 0, -0.25),
         new Vector3(0, 0, -0.5)
       ]);
-      testWithAndWithoutPlaneMask(t, cullingVolume, sphere9, Intersect.OUTSIDE);
+      testWithAndWithoutPlaneMask(t, cullingVolume, sphere9, INTERSECTION.OUTSIDE);
       t.end();
     });
 
@@ -323,7 +325,7 @@ test('CullingVolume#sphere intersection', ttt => {
         new Vector3(-5, 0, -1.25),
         new Vector3(-4.5, 0, -1.75)
       ]);
-      testWithAndWithoutPlaneMask(t, cullingVolume, sphere10, Intersect.OUTSIDE);
+      testWithAndWithoutPlaneMask(t, cullingVolume, sphere10, INTERSECTION.OUTSIDE);
       t.end();
     });
 
@@ -332,7 +334,7 @@ test('CullingVolume#sphere intersection', ttt => {
         new Vector3(4.5, 0, -1.25),
         new Vector3(5, 0, -1.75)
       ]);
-      testWithAndWithoutPlaneMask(t, cullingVolume, sphere11, Intersect.OUTSIDE);
+      testWithAndWithoutPlaneMask(t, cullingVolume, sphere11, INTERSECTION.OUTSIDE);
       t.end();
     });
 
@@ -341,7 +343,7 @@ test('CullingVolume#sphere intersection', ttt => {
         new Vector3(-0.5, 4.5, -1.25),
         new Vector3(-0.5, 5, -1.25)
       ]);
-      testWithAndWithoutPlaneMask(t, cullingVolume, sphere12, Intersect.OUTSIDE);
+      testWithAndWithoutPlaneMask(t, cullingVolume, sphere12, INTERSECTION.OUTSIDE);
       t.end();
     });
 
@@ -350,7 +352,7 @@ test('CullingVolume#sphere intersection', ttt => {
         new Vector3(-0.5, -4.5, -1.25),
         new Vector3(-0.5, -5, -1.25)
       ]);
-      testWithAndWithoutPlaneMask(t, cullingVolume, sphere13, Intersect.OUTSIDE);
+      testWithAndWithoutPlaneMask(t, cullingVolume, sphere13, INTERSECTION.OUTSIDE);
       t.end();
     });
     tt.end();
@@ -366,6 +368,7 @@ test('CullingVolume#construct from bounding sphere', ttt => {
   const cullingVolume = new CullingVolume().fromBoundingSphere(boundingSphereCullingVolume);
 
   ttt.test('CullingVolume#throws without a boundingSphere', t => {
+    // @ts-ignore
     t.throws(() => new CullingVolume().fromBoundingSphere());
     t.end();
   });
@@ -373,7 +376,7 @@ test('CullingVolume#construct from bounding sphere', ttt => {
   ttt.test('CullingVolume#can contain a volume', t => {
     const sphere1 = boundingSphereCullingVolume.clone();
     sphere1.radius *= 0.5;
-    testWithAndWithoutPlaneMask(t, cullingVolume, sphere1, Intersect.INSIDE);
+    testWithAndWithoutPlaneMask(t, cullingVolume, sphere1, INTERSECTION.INSIDE);
     t.end();
   });
 
@@ -384,7 +387,7 @@ test('CullingVolume#construct from bounding sphere', ttt => {
       const radius = boundingSphereCullingVolume.radius * 0.5;
       const sphere2 = new BoundingSphere(center, radius);
 
-      testWithAndWithoutPlaneMask(t, cullingVolume, sphere2, Intersect.INTERSECTING);
+      testWithAndWithoutPlaneMask(t, cullingVolume, sphere2, INTERSECTION.INTERSECTING);
       t.end();
     });
 
@@ -394,7 +397,7 @@ test('CullingVolume#construct from bounding sphere', ttt => {
       const radius = boundingSphereCullingVolume.radius * 0.5;
       const sphere3 = new BoundingSphere(center, radius);
 
-      testWithAndWithoutPlaneMask(t, cullingVolume, sphere3, Intersect.INTERSECTING);
+      testWithAndWithoutPlaneMask(t, cullingVolume, sphere3, INTERSECTION.INTERSECTING);
       t.end();
     });
 
@@ -404,7 +407,7 @@ test('CullingVolume#construct from bounding sphere', ttt => {
       const radius = boundingSphereCullingVolume.radius * 0.5;
       const sphere4 = new BoundingSphere(center, radius);
 
-      testWithAndWithoutPlaneMask(t, cullingVolume, sphere4, Intersect.INTERSECTING);
+      testWithAndWithoutPlaneMask(t, cullingVolume, sphere4, INTERSECTION.INTERSECTING);
       t.end();
     });
 
@@ -414,7 +417,7 @@ test('CullingVolume#construct from bounding sphere', ttt => {
       const radius = boundingSphereCullingVolume.radius * 0.5;
       const sphere5 = new BoundingSphere(center, radius);
 
-      testWithAndWithoutPlaneMask(t, cullingVolume, sphere5, Intersect.INTERSECTING);
+      testWithAndWithoutPlaneMask(t, cullingVolume, sphere5, INTERSECTION.INTERSECTING);
       t.end();
     });
 
@@ -424,7 +427,7 @@ test('CullingVolume#construct from bounding sphere', ttt => {
       const radius = boundingSphereCullingVolume.radius * 0.5;
       const sphere6 = new BoundingSphere(center, radius);
 
-      testWithAndWithoutPlaneMask(t, cullingVolume, sphere6, Intersect.INTERSECTING);
+      testWithAndWithoutPlaneMask(t, cullingVolume, sphere6, INTERSECTION.INTERSECTING);
       t.end();
     });
 
@@ -434,7 +437,7 @@ test('CullingVolume#construct from bounding sphere', ttt => {
       const radius = boundingSphereCullingVolume.radius * 0.5;
       const sphere7 = new BoundingSphere(center, radius);
 
-      testWithAndWithoutPlaneMask(t, cullingVolume, sphere7, Intersect.INTERSECTING);
+      testWithAndWithoutPlaneMask(t, cullingVolume, sphere7, INTERSECTION.INTERSECTING);
       t.end();
     });
     tt.end();
@@ -447,7 +450,7 @@ test('CullingVolume#construct from bounding sphere', ttt => {
       const radius = boundingSphereCullingVolume.radius * 0.5;
       const sphere8 = new BoundingSphere(center, radius);
 
-      testWithAndWithoutPlaneMask(t, cullingVolume, sphere8, Intersect.OUTSIDE);
+      testWithAndWithoutPlaneMask(t, cullingVolume, sphere8, INTERSECTION.OUTSIDE);
       t.end();
     });
 
@@ -457,7 +460,7 @@ test('CullingVolume#construct from bounding sphere', ttt => {
       const radius = boundingSphereCullingVolume.radius * 0.5;
       const sphere9 = new BoundingSphere(center, radius);
 
-      testWithAndWithoutPlaneMask(t, cullingVolume, sphere9, Intersect.OUTSIDE);
+      testWithAndWithoutPlaneMask(t, cullingVolume, sphere9, INTERSECTION.OUTSIDE);
       t.end();
     });
 
@@ -467,7 +470,7 @@ test('CullingVolume#construct from bounding sphere', ttt => {
       const radius = boundingSphereCullingVolume.radius * 0.5;
       const sphere10 = new BoundingSphere(center, radius);
 
-      testWithAndWithoutPlaneMask(t, cullingVolume, sphere10, Intersect.OUTSIDE);
+      testWithAndWithoutPlaneMask(t, cullingVolume, sphere10, INTERSECTION.OUTSIDE);
       t.end();
     });
 
@@ -477,7 +480,7 @@ test('CullingVolume#construct from bounding sphere', ttt => {
       const radius = boundingSphereCullingVolume.radius * 0.5;
       const sphere11 = new BoundingSphere(center, radius);
 
-      testWithAndWithoutPlaneMask(t, cullingVolume, sphere11, Intersect.OUTSIDE);
+      testWithAndWithoutPlaneMask(t, cullingVolume, sphere11, INTERSECTION.OUTSIDE);
       t.end();
     });
 
@@ -487,7 +490,7 @@ test('CullingVolume#construct from bounding sphere', ttt => {
       const radius = boundingSphereCullingVolume.radius * 0.5;
       const sphere12 = new BoundingSphere(center, radius);
 
-      testWithAndWithoutPlaneMask(t, cullingVolume, sphere12, Intersect.OUTSIDE);
+      testWithAndWithoutPlaneMask(t, cullingVolume, sphere12, INTERSECTION.OUTSIDE);
       t.end();
     });
 
@@ -497,7 +500,7 @@ test('CullingVolume#construct from bounding sphere', ttt => {
       const radius = boundingSphereCullingVolume.radius * 0.5;
       const sphere13 = new BoundingSphere(center, radius);
 
-      testWithAndWithoutPlaneMask(t, cullingVolume, sphere13, Intersect.OUTSIDE);
+      testWithAndWithoutPlaneMask(t, cullingVolume, sphere13, INTERSECTION.OUTSIDE);
       t.end();
     });
     tt.end();

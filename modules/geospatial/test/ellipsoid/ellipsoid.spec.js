@@ -7,8 +7,6 @@ import {Vector3, toDegrees, _MathUtils} from '@math.gl/core';
 import {Ellipsoid} from '@math.gl/geospatial';
 import {tapeEquals, tapeEqualsEpsilon} from 'test/utils/tape-assertions';
 
-Vector3.ZERO = new Vector3(0, 0, 0);
-
 const radii = new Vector3(1.0, 2.0, 3.0);
 const radiiSquared = new Vector3(radii).multiply(radii);
 const radiiToTheFourth = new Vector3(radiiSquared).multiply(radiiSquared);
@@ -143,6 +141,7 @@ test('Ellipsoid#cartographicToCartesian works with a result parameter', t => {
 test('Ellipsoid#cartographicToCartesian works with an Object result parameter', t => {
   const ellipsoid = Ellipsoid.WGS84;
   const result = {x: 0, y: 0, z: 0};
+  // @ts-ignore ADD XYZ TYPE
   const returnedResult = ellipsoid.cartographicToCartesian(spaceCartographic, result);
   t.ok(result === returnedResult);
   tapeEqualsEpsilon(t, returnedResult.x, spaceCartesian.x, _MathUtils.EPSILON7);
@@ -168,6 +167,7 @@ test('Ellipsoid#cartesianToCartographic works with a result parameter', t => {
 
 test('Ellipsoid#cartesianToCartographic works with an Object result parameter', t => {
   const result = {x: 0, y: 0, z: 0};
+  // @ts-ignore
   const returnedResult = Ellipsoid.WGS84.cartesianToCartographic(surfaceCartesian, result);
   t.ok(result === returnedResult);
   tapeEqualsEpsilon(t, returnedResult.x, surfaceCartographic.x, _MathUtils.EPSILON8);
@@ -178,6 +178,7 @@ test('Ellipsoid#cartesianToCartographic works with an Object result parameter', 
 
 test('Ellipsoid#cartesianToCartographic works with a Cartesian result parameter', t => {
   const result = {longitude: 0, latitude: 0, height: 0};
+  // @ts-ignore
   const returnedResult = Ellipsoid.WGS84.cartesianToCartographic(surfaceCartesian, result);
   t.ok(result === returnedResult);
   tapeEqualsEpsilon(t, returnedResult.longitude, surfaceCartographic.x, _MathUtils.EPSILON8);
@@ -318,7 +319,9 @@ test('Ellipsoid#scaleToGeocentricSurface works with an Object result parameter',
   const expected = new Vector3(0.7807200583588266, 0.9759000729485333, 1.1710800875382399);
   const cartesian = new Vector3(4.0, 5.0, 6.0);
   const result = {x: 0, y: 0, z: 0};
+  // @ts-ignore TODO - remove
   const returnedResult = ellipsoid.scaleToGeocentricSurface(cartesian, result);
+  // @ts-ignore
   t.ok(returnedResult === result);
   tapeEqualsEpsilon(t, result.x, expected.x, _MathUtils.EPSILON16);
   tapeEqualsEpsilon(t, result.y, expected.y, _MathUtils.EPSILON16);
@@ -417,6 +420,7 @@ test('Ellipsoid#cartographicToCartesian throws with no cartographic', t => {
 });
 
 test('Ellipsoid#cartographicArrayToCartesianArray throws with no cartographics', t => {
+  // @ts-ignore
   t.throws(() => Ellipsoid.WGS84.cartographicArrayToCartesianArray(undefined));
   t.end();
 });
@@ -427,6 +431,7 @@ test('Ellipsoid#cartesianToCartographic throws with no cartesian', t => {
 });
 
 test('Ellipsoid#cartesianArrayToCartographicArray throws with no cartesians', t => {
+  // @ts-ignore
   t.throws(() => Ellipsoid.WGS84.cartesianArrayToCartographicArray(undefined));
   t.end();
 });
@@ -442,6 +447,7 @@ test('Ellipsoid#scaleToGeocentricSurface throws with no cartesian', t => {
 });
 
 test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis throws with no position', t => {
+  // @ts-ignore
   t.throws(() => Ellipsoid.WGS84.getSurfaceNormalIntersectionWithZAxis(undefined));
   t.end();
 });
@@ -449,6 +455,7 @@ test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis throws with no position', 
 test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis throws if the ellipsoid is not an ellipsoid of revolution', t => {
   const ellipsoid = new Ellipsoid(1, 2, 3);
   const cartesian = new Vector3();
+  // @ts-ignore
   t.throws(() => ellipsoid.getSurfaceNormalIntersectionWithZAxis(cartesian));
   t.end();
 });
@@ -456,6 +463,7 @@ test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis throws if the ellipsoid is
 test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis throws if the ellipsoid has radii.z === 0', t => {
   const ellipsoid = new Ellipsoid(1, 2, 0);
   const cartesian = new Vector3();
+  // @ts-ignore
   t.throws(() => ellipsoid.getSurfaceNormalIntersectionWithZAxis(cartesian));
   t.end();
 });

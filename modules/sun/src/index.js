@@ -1,1 +1,1 @@
-export {getSun, getSunDirection} from './suncalc';
+export {getSunPosition, getSunDirection} from './suncalc';

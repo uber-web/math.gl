@@ -33,20 +33,6 @@ const EARTH_RADIUS_METERS = 6.371e6;
 
 // Todo [rho, theta, phi] ?
 export default class SphericalCoordinates {
-  /**
-   * Ref: https://en.wikipedia.org/wiki/Spherical_coordinate_system
-   * The poles (phi) are at the positive and negative y axis.
-   * The equator starts at positive z.
-   * @class
-   * @param {Object} options
-   * @param {Number} [options.phi] =0 - rotation around X (latitude)
-   * @param {Number} [options.theta] =0 - rotation around Y (longitude)
-   * @param {Number} [options.radius] =1 - Distance from center
-   * @param {Number} [options.bearing]
-   * @param {Number} [options.pitch]
-   * @param {Number} [options.altitude]
-   * @param {Number} [options.radiusScale] =1
-   */
   // @ts-ignore TS2740: Type '{}' is missing the following properties from type
   // eslint-disable-next-line complexity
   constructor({
