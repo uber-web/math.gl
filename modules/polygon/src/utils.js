@@ -16,13 +16,15 @@ export function push(target, source) {
     }
   }
 
-  copy(target, source, startIndex);
-}
-
-export function copy(target, source, startIndex = 0) {
-  const size = source.length;
   for (let i = 0; i < size; i++) {
     target[startIndex + i] = source[i];
+  }
+}
+
+export function copy(target, source) {
+  const size = source.length;
+  for (let i = 0; i < size; i++) {
+    target[i] = source[i];
   }
 }
 

@@ -23,8 +23,8 @@ Arguments:
 - `bbox` (Array) - the bounding box, in `[minX, minY, maxX, maxY]`
 - `options` (Object, optional)
   + `size` (Number) - the number of elements in each vertex. Size `2` will interpret `positions` as `[x0, y0, x1, y1, ...]` and size `3` will interpret `positions` as `[x0, y0, z0, x1, y1, z1, ...]`. Default `2`.
-  + `startIndex` (Number) - the index in `positions` to start reading vertices. Default `0`.
-  + `endIndex` (Number) - the index in `positions` to stop reading vertices. Default `positions.length`.
+  + `startIndex` (Number, optional) - the index in `positions` to start reading vertices. Default `0`.
+  + `endIndex` (Number, optional) - the index in `positions` to stop reading vertices. Default `positions.length`.
 
 Returns:
 

@@ -1,0 +1,582 @@
+
+{
+  "header": {
+    "reportVersion": 1,
+    "event": "Allocation failed - JavaScript heap out of memory",
+    "trigger": "FatalError",
+    "filename": "report.20200322.112426.20481.0.001.json",
+    "dumpEventTime": "2020-03-22T11:24:26Z",
+    "dumpEventTimeStamp": "1584901466606",
+    "processId": 20481,
+    "cwd": "/Users/missx/Source/math.gl",
+    "commandLine": [
+      "/Users/missx/.nvm/versions/node/v12.12.0/bin/node",
+      "/Users/missx/Source/math.gl/node_modules/ocular-dev-tools/node/test.js",
+      "node"
+    ],
+    "nodejsVersion": "v12.12.0",
+    "wordSize": 64,
+    "arch": "x64",
+    "platform": "darwin",
+    "componentVersions": {
+      "node": "12.12.0",
+      "v8": "7.7.299.13-node.12",
+      "uv": "1.32.0",
+      "zlib": "1.2.11",
+      "brotli": "1.0.7",
+      "ares": "1.15.0",
+      "modules": "72",
+      "nghttp2": "1.39.2",
+      "napi": "5",
+      "llhttp": "1.1.4",
+      "http_parser": "2.8.0",
+      "openssl": "1.1.1d",
+      "cldr": "35.1",
+      "icu": "64.2",
+      "tz": "2019a",
+      "unicode": "12.1"
+    },
+    "release": {
+      "name": "node",
+      "headersUrl": "https://nodejs.org/download/release/v12.12.0/node-v12.12.0-headers.tar.gz",
+      "sourceUrl": "https://nodejs.org/download/release/v12.12.0/node-v12.12.0.tar.gz"
+    },
+    "osName": "Darwin",
+    "osRelease": "19.2.0",
+    "osVersion": "Darwin Kernel Version 19.2.0: Sat Nov  9 03:47:04 PST 2019; root:xnu-6153.61.1~20/RELEASE_X86_64",
+    "osMachine": "x86_64",
+    "cpus": [
+      {
+        "model": "Intel(R) Core(TM) i7-8700B CPU @ 3.20GHz",
+        "speed": 3200,
+        "user": 5842370,
+        "nice": 0,
+        "sys": 7099710,
+        "idle": 80502600,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-8700B CPU @ 3.20GHz",
+        "speed": 3200,
+        "user": 430380,
+        "nice": 0,
+        "sys": 157520,
+        "idle": 92848270,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-8700B CPU @ 3.20GHz",
+        "speed": 3200,
+        "user": 4367010,
+        "nice": 0,
+        "sys": 2624130,
+        "idle": 86447040,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-8700B CPU @ 3.20GHz",
+        "speed": 3200,
+        "user": 435610,
+        "nice": 0,
+        "sys": 143430,
+        "idle": 92856890,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-8700B CPU @ 3.20GHz",
+        "speed": 3200,
+        "user": 3579040,
+        "nice": 0,
+        "sys": 1801330,
+        "idle": 88057370,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-8700B CPU @ 3.20GHz",
+        "speed": 3200,
+        "user": 441840,
+        "nice": 0,
+        "sys": 131080,
+        "idle": 92862790,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-8700B CPU @ 3.20GHz",
+        "speed": 3200,
+        "user": 2761970,
+        "nice": 0,
+        "sys": 1203710,
+        "idle": 89471610,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-8700B CPU @ 3.20GHz",
+        "speed": 3200,
+        "user": 443760,
+        "nice": 0,
+        "sys": 121460,
+        "idle": 92870260,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-8700B CPU @ 3.20GHz",
+        "speed": 3200,
+        "user": 2377920,
+        "nice": 0,
+        "sys": 949700,
+        "idle": 90109230,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-8700B CPU @ 3.20GHz",
+        "speed": 3200,
+        "user": 443390,
+        "nice": 0,
+        "sys": 114830,
+        "idle": 92877010,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-8700B CPU @ 3.20GHz",
+        "speed": 3200,
+        "user": 1769000,
+        "nice": 0,
+        "sys": 585650,
+        "idle": 91081750,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Core(TM) i7-8700B CPU @ 3.20GHz",
+        "speed": 3200,
+        "user": 441600,
+        "nice": 0,
+        "sys": 107220,
+        "idle": 92886180,
+        "irq": 0
+      }
+    ],
+    "networkInterfaces": [
+      {
+        "name": "lo0",
+        "internal": true,
+        "mac": "00:00:00:00:00:00",
+        "address": "127.0.0.1",
+        "netmask": "255.0.0.0",
+        "family": "IPv4"
+      },
+      {
+        "name": "lo0",
+        "internal": true,
+        "mac": "00:00:00:00:00:00",
+        "address": "::1",
+        "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+        "family": "IPv6",
+        "scopeid": 0
+      },
+      {
+        "name": "lo0",
+        "internal": true,
+        "mac": "00:00:00:00:00:00",
+        "address": "fe80::1",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 1
+      },
+      {
+        "name": "en6",
+        "internal": false,
+        "mac": "ac:de:48:00:11:22",
+        "address": "fe80::aede:48ff:fe00:1122",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 5
+      },
+      {
+        "name": "en1",
+        "internal": false,
+        "mac": "f8:ff:c2:2f:b0:2f",
+        "address": "fe80::803:66d3:7f9d:32e9",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 7
+      },
+      {
+        "name": "en1",
+        "internal": false,
+        "mac": "f8:ff:c2:2f:b0:2f",
+        "address": "192.168.0.8",
+        "netmask": "255.255.255.0",
+        "family": "IPv4"
+      },
+      {
+        "name": "awdl0",
+        "internal": false,
+        "mac": "4a:e9:3e:55:65:d6",
+        "address": "fe80::48e9:3eff:fe55:65d6",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 9
+      },
+      {
+        "name": "llw0",
+        "internal": false,
+        "mac": "4a:e9:3e:55:65:d6",
+        "address": "fe80::48e9:3eff:fe55:65d6",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 10
+      },
+      {
+        "name": "utun0",
+        "internal": false,
+        "mac": "00:00:00:00:00:00",
+        "address": "fe80::efc9:8319:6b3f:64f0",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 16
+      },
+      {
+        "name": "utun1",
+        "internal": false,
+        "mac": "00:00:00:00:00:00",
+        "address": "fe80::241:2fdc:d7f:59cb",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 17
+      },
+      {
+        "name": "utun2",
+        "internal": false,
+        "mac": "00:00:00:00:00:00",
+        "address": "fe80::494e:922d:9cdb:90d1",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 18
+      },
+      {
+        "name": "utun3",
+        "internal": false,
+        "mac": "00:00:00:00:00:00",
+        "address": "fe80::6cbf:f0ad:40f2:1714",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 19
+      }
+    ],
+    "host": "MiniX.local"
+  },
+  "javascriptStack": {
+    "message": "No stack.",
+    "stack": [
+      "Unavailable."
+    ]
+  },
+  "nativeStack": [
+    {
+      "pc": "0x000000010014d93c",
+      "symbol": "report::TriggerNodeReport(v8::Isolate*, node::Environment*, char const*, char const*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&, v8::Local<v8::String>) [/Users/missx/.nvm/versions/node/v12.12.0/bin/node]"
+    },
+    {
+      "pc": "0x000000010007e87b",
+      "symbol": "node::OnFatalError(char const*, char const*) [/Users/missx/.nvm/versions/node/v12.12.0/bin/node]"
+    },
+    {
+      "pc": "0x0000000100176137",
+      "symbol": "v8::Utils::ReportOOMFailure(v8::internal::Isolate*, char const*, bool) [/Users/missx/.nvm/versions/node/v12.12.0/bin/node]"
+    },
+    {
+      "pc": "0x00000001001760d3",
+      "symbol": "v8::internal::V8::FatalProcessOutOfMemory(v8::internal::Isolate*, char const*, bool) [/Users/missx/.nvm/versions/node/v12.12.0/bin/node]"
+    },
+    {
+      "pc": "0x00000001002fa185",
+      "symbol": "v8::internal::Heap::FatalProcessOutOfMemory(char const*) [/Users/missx/.nvm/versions/node/v12.12.0/bin/node]"
+    },
+    {
+      "pc": "0x00000001002cfe9b",
+      "symbol": "v8::internal::Factory::NewFixedDoubleArray(int, v8::internal::AllocationType) [/Users/missx/.nvm/versions/node/v12.12.0/bin/node]"
+    },
+    {
+      "pc": "0x000000010043ca87",
+      "symbol": "v8::internal::(anonymous namespace)::ElementsAccessorBase<v8::internal::(anonymous namespace)::FastPackedDoubleElementsAccessor, v8::internal::(anonymous namespace)::ElementsKindTraits<(v8::internal::ElementsKind)4> >::GrowCapacity(v8::internal::Handle<v8::internal::JSObject>, unsigned int) [/Users/missx/.nvm/versions/node/v12.12.0/bin/node]"
+    },
+    {
+      "pc": "0x00000001005d1bc4",
+      "symbol": "v8::internal::Runtime_GrowArrayElements(int, unsigned long*, v8::internal::Isolate*) [/Users/missx/.nvm/versions/node/v12.12.0/bin/node]"
+    },
+    {
+      "pc": "0x000000010092fa99",
+      "symbol": "Builtins_CEntry_Return1_DontSaveFPRegs_ArgvOnStack_NoBuiltinExit [/Users/missx/.nvm/versions/node/v12.12.0/bin/node]"
+    },
+    {
+      "pc": "0x000023c0e5cb822c",
+      "symbol": ""
+    },
+    {
+      "pc": "0x00000001008a977c",
+      "symbol": "Builtins_ArgumentsAdaptorTrampoline [/Users/missx/.nvm/versions/node/v12.12.0/bin/node]"
+    },
+    {
+      "pc": "0x00000001008b00e4",
+      "symbol": "Builtins_InterpreterEntryTrampoline [/Users/missx/.nvm/versions/node/v12.12.0/bin/node]"
+    }
+  ],
+  "javascriptHeap": {
+    "totalMemory": 971722752,
+    "totalCommittedMemory": 970605240,
+    "usedMemory": 952555144,
+    "availableMemory": 1244392264,
+    "memoryLimit": 2197815296,
+    "heapSpaces": {
+      "read_only_space": {
+        "memorySize": 262144,
+        "committedMemory": 32568,
+        "capacity": 261872,
+        "used": 32296,
+        "available": 229576
+      },
+      "new_space": {
+        "memorySize": 33554432,
+        "committedMemory": 33550264,
+        "capacity": 16759808,
+        "used": 16506368,
+        "available": 253440
+      },
+      "old_space": {
+        "memorySize": 29995008,
+        "committedMemory": 29300296,
+        "capacity": 29948200,
+        "used": 28891304,
+        "available": 1056896
+      },
+      "code_space": {
+        "memorySize": 425984,
+        "committedMemory": 390784,
+        "capacity": 277152,
+        "used": 277152,
+        "available": 0
+      },
+      "map_space": {
+        "memorySize": 1576960,
+        "committedMemory": 1423104,
+        "capacity": 1004960,
+        "used": 1004960,
+        "available": 0
+      },
+      "large_object_space": {
+        "memorySize": 905859072,
+        "committedMemory": 905859072,
+        "capacity": 905839512,
+        "used": 905839512,
+        "available": 0
+      },
+      "code_large_object_space": {
+        "memorySize": 49152,
+        "committedMemory": 49152,
+        "capacity": 3552,
+        "used": 3552,
+        "available": 0
+      },
+      "new_large_object_space": {
+        "memorySize": 0,
+        "committedMemory": 0,
+        "capacity": 16759808,
+        "used": 0,
+        "available": 16759808
+      }
+    }
+  },
+  "resourceUsage": {
+    "userCpuSeconds": 4.92807,
+    "kernelCpuSeconds": 0.964751,
+    "cpuConsumptionPercent": 117.856,
+    "maxRss": 1740564856832,
+    "pageFaults": {
+      "IORequired": 30,
+      "IONotRequired": 803567
+    },
+    "fsActivity": {
+      "reads": 0,
+      "writes": 0
+    }
+  },
+  "libuv": [
+  ],
+  "environmentVariables": {
+    "NVM_INC": "/Users/missx/.nvm/versions/node/v12.12.0/include/node",
+    "npm_package_scripts_cover": "ocular-test cover",
+    "TERM_PROGRAM": "iTerm.app",
+    "NODE": "/Users/missx/.nvm/versions/node/v12.12.0/bin/node",
+    "npm_config_version_git_tag": "true",
+    "npm_package_devDependencies_typescript": "^3.5.2",
+    "NVM_CD_FLAGS": "-q",
+    "INIT_CWD": "/Users/missx/Source/math.gl",
+    "SHELL": "/bin/zsh",
+    "TERM": "xterm-256color",
+    "npm_package_devDependencies_reify": "^0.18.1",
+    "TMPDIR": "/var/folders/8k/rhgt4bhj273929ychxrr9cnr0000gn/T/",
+    "npm_config_init_license": "MIT",
+    "npm_package_scripts_lint": "ocular-lint",
+    "TERM_PROGRAM_VERSION": "3.3.9",
+    "npm_package_devDependencies__probe_gl_bench": "^3.0.2",
+    "TERM_SESSION_ID": "w0t1p0:291EEED1-0A01-416F-886F-626D5D08792B",
+    "npm_config_registry": "https://registry.yarnpkg.com",
+    "npm_package_private": "true",
+    "npm_package_repository_url": "https://github.com/uber-web/math.gl.git",
+    "npm_package_dependencies_gl_matrix": "^3.0.0",
+    "npm_package_devDependencies_ocular_dev_tools": "^0.1.0",
+    "npm_package_readmeFilename": "README.md",
+    "npm_config_python": "/usr/bin/python",
+    "npm_package_description": "Array-based 3D Math Classes optimized for WebGL applications",
+    "USER": "missx",
+    "NVM_DIR": "/Users/missx/.nvm",
+    "npm_package_license": "MIT",
+    "PUPPETEER_EXECUTABLE_PATH": "/Users/missx/.config/yarn/global/node_modules/puppeteer/.local-chromium/mac-722234/chrome-mac/Chromium.app/Contents/MacOS/Chromium",
+    "SSH_AUTH_SOCK": "/private/tmp/com.apple.launchd.S27XOJIhRz/Listeners",
+    "__CF_USER_TEXT_ENCODING": "0x1F5:0x0:0x0",
+    "npm_package_devDependencies__typescript_eslint_eslint_plugin": "^2.24.0",
+    "npm_execpath": "/usr/local/Cellar/yarn/1.22.4/libexec/bin/yarn.js",
+    "npm_package_dependencies__babel_runtime": "^7.0.0",
+    "npm_config_argv": "{\"remain\":[],\"cooked\":[\"run\",\"test\"],\"original\":[\"test\",\"node\"]}",
+    "PATH": "/var/folders/8k/rhgt4bhj273929ychxrr9cnr0000gn/T/yarn--1584901460648-0.2860454573582458:/Users/missx/Source/math.gl/node_modules/.bin:/Users/missx/.config/yarn/link/node_modules/.bin:/Users/missx/Source/math.gl/node_modules/.bin:/Users/missx/.nvm/versions/node/v12.12.0/libexec/lib/node_modules/npm/bin/node-gyp-bin:/Users/missx/.nvm/versions/node/v12.12.0/lib/node_modules/npm/bin/node-gyp-bin:/Users/missx/.nvm/versions/node/v12.12.0/bin/node_modules/npm/bin/node-gyp-bin:/Users/missx/.nvm/versions/node/v12.12.0/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+    "_": "/var/folders/8k/rhgt4bhj273929ychxrr9cnr0000gn/T/yarn--1584901460648-0.2860454573582458/node",
+    "npm_package_devDependencies_coveralls": "^3.0.0",
+    "PWD": "/Users/missx/Source/math.gl",
+    "npm_package_scripts_test_size": "npm run build && webpack --config test/webpack.config.js --env.import-nothing",
+    "npm_lifecycle_event": "test",
+    "npm_package_name": "math.gl",
+    "npm_package_repository_type": "git",
+    "npm_package_devDependencies__probe_gl_test_utils": "^3.0.2",
+    "LANG": "en_US.UTF-8",
+    "ITERM_PROFILE": "Default",
+    "npm_config_version_commit_hooks": "true",
+    "npm_package_scripts_build": "ocular-build",
+    "XPC_FLAGS": "0x0",
+    "npm_config_bin_links": "true",
+    "npm_package_devDependencies_pre_commit": "^1.2.2",
+    "npm_package_version": "",
+    "XPC_SERVICE_NAME": "0",
+    "COLORFGBG": "7;0",
+    "HOME": "/Users/missx",
+    "SHLVL": "3",
+    "npm_package_scripts_test": "ocular-test",
+    "npm_package_devDependencies_babel_plugin_transform_builtin_extend": "^1.1.2",
+    "npm_config_strict_ssl": "true",
+    "npm_config_save_prefix": "^",
+    "LC_TERMINAL_VERSION": "3.3.9",
+    "npm_config_version_git_message": "v%s",
+    "npm_package_scripts_bootstrap": "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true yarn && ocular-bootstrap",
+    "BABEL_ENV": "test",
+    "npm_package_scripts_test_size_explicit": "npm run build && webpack --config test/webpack.config.js --env.import-vec4-mat4-explicit",
+    "NPM_CONFIG_PYTHON": "/usr/bin/python",
+    "ITERM_SESSION_ID": "w0t1p0:291EEED1-0A01-416F-886F-626D5D08792B",
+    "npm_package_devDependencies__turf_destination": "^6.0.1",
+    "YARN_WRAP_OUTPUT": "false",
+    "LOGNAME": "missx",
+    "npm_lifecycle_script": "ocular-test",
+    "PREFIX": "/usr/local",
+    "NVM_BIN": "/Users/missx/.nvm/versions/node/v12.12.0/bin",
+    "npm_config_user_agent": "yarn/1.22.4 npm/? node/v12.12.0 darwin x64",
+    "npm_config_ignore_scripts": "",
+    "npm_config_version_git_sign": "",
+    "LC_TERMINAL": "iTerm2",
+    "npm_package_scripts_publish": "ocular-publish",
+    "npm_config_ignore_optional": "",
+    "npm_config_init_version": "1.0.0",
+    "npm_package_scripts_clean": "ocular-clean",
+    "npm_package_scripts_metrics": "ocular-metrics",
+    "npm_package_workspaces_0": "modules/*",
+    "npm_config_version_tag_prefix": "v",
+    "npm_package_devDependencies_eslint_plugin_react": "^7.10",
+    "npm_node_execpath": "/Users/missx/.nvm/versions/node/v12.12.0/bin/node",
+    "COLORTERM": "truecolor"
+  },
+  "userLimits": {
+    "core_file_size_blocks": {
+      "soft": 0,
+      "hard": "unlimited"
+    },
+    "data_seg_size_kbytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "file_size_blocks": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "max_locked_memory_bytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "max_memory_size_kbytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "open_files": {
+      "soft": 10240,
+      "hard": "unlimited"
+    },
+    "stack_size_bytes": {
+      "soft": 8388608,
+      "hard": 67104768
+    },
+    "cpu_time_seconds": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "max_user_processes": {
+      "soft": 1392,
+      "hard": 1392
+    },
+    "virtual_memory_kbytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    }
+  },
+  "sharedObjects": [
+    "/Users/missx/.nvm/versions/node/v12.12.0/bin/node",
+    "/System/Library/Frameworks/CoreFoundation.framework/Versions/A/CoreFoundation",
+    "/usr/lib/libSystem.B.dylib",
+    "/usr/lib/libc++.1.dylib",
+    "/usr/lib/libobjc.A.dylib",
+    "/usr/lib/libfakelink.dylib",
+    "/usr/lib/libDiagnosticMessagesClient.dylib",
+    "/usr/lib/libicucore.A.dylib",
+    "/usr/lib/libz.1.dylib",
+    "/usr/lib/libc++abi.dylib",
+    "/usr/lib/system/libcache.dylib",
+    "/usr/lib/system/libcommonCrypto.dylib",
+    "/usr/lib/system/libcompiler_rt.dylib",
+    "/usr/lib/system/libcopyfile.dylib",
+    "/usr/lib/system/libcorecrypto.dylib",
+    "/usr/lib/system/libdispatch.dylib",
+    "/usr/lib/system/libdyld.dylib",
+    "/usr/lib/system/libkeymgr.dylib",
+    "/usr/lib/system/liblaunch.dylib",
+    "/usr/lib/system/libmacho.dylib",
+    "/usr/lib/system/libquarantine.dylib",
+    "/usr/lib/system/libremovefile.dylib",
+    "/usr/lib/system/libsystem_asl.dylib",
+    "/usr/lib/system/libsystem_blocks.dylib",
+    "/usr/lib/system/libsystem_c.dylib",
+    "/usr/lib/system/libsystem_configuration.dylib",
+    "/usr/lib/system/libsystem_coreservices.dylib",
+    "/usr/lib/system/libsystem_darwin.dylib",
+    "/usr/lib/system/libsystem_dnssd.dylib",
+    "/usr/lib/system/libsystem_featureflags.dylib",
+    "/usr/lib/system/libsystem_info.dylib",
+    "/usr/lib/system/libsystem_m.dylib",
+    "/usr/lib/system/libsystem_malloc.dylib",
+    "/usr/lib/system/libsystem_networkextension.dylib",
+    "/usr/lib/system/libsystem_notify.dylib",
+    "/usr/lib/system/libsystem_sandbox.dylib",
+    "/usr/lib/system/libsystem_secinit.dylib",
+    "/usr/lib/system/libsystem_kernel.dylib",
+    "/usr/lib/system/libsystem_platform.dylib",
+    "/usr/lib/system/libsystem_pthread.dylib",
+    "/usr/lib/system/libsystem_symptoms.dylib",
+    "/usr/lib/system/libsystem_trace.dylib",
+    "/usr/lib/system/libunwind.dylib",
+    "/usr/lib/system/libxpc.dylib"
+  ]
+}

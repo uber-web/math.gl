@@ -130,7 +130,7 @@ export function clipPolygon(positions, bbox, options = {}) {
 
 // intersect a segment against one of the 4 lines that make up the bbox
 
-function intersect(a, b, edge, bbox, out = []) {
+export function intersect(a, b, edge, bbox, out = []) {
   let t;
   // Forces out[snapI] to be on the bbox edge
   // Interpolation introduces precision issue which may cause lineclip to be
@@ -168,7 +168,7 @@ function intersect(a, b, edge, bbox, out = []) {
 //    mid  0001  0000  0010
 // bottom  0101  0100  0110
 
-function bitCode(p, bbox) {
+export function bitCode(p, bbox) {
   let code = 0;
 
   if (p[0] < bbox[0]) code |= 1;

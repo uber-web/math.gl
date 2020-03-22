@@ -2,7 +2,7 @@ import test from 'tape-catch';
 import {equals} from '@math.gl/core';
 import {clipPolyline, clipPolygon} from '@math.gl/polygon';
 
-function flatten(arr, result = []) {
+export function flatten(arr, result = []) {
   if (Array.isArray(arr)) {
     for (let i = 0; i < arr.length; i++) {
       flatten(arr[i], result);
