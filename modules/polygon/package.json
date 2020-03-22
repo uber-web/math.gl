@@ -1,6 +1,6 @@
 {
-  "name": "@math.gl/geometry",
-  "description": "Geometry utilities",
+  "name": "@math.gl/polygon",
+  "description": "Polygon/polyline processing utilities",
   "license": "MIT",
   "publishConfig": {
     "access": "public"

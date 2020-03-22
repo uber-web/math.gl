@@ -2,7 +2,7 @@
   "name": "math.gl",
   "description": "Array-based 3D Math Classes optimized for WebGL applications",
   "license": "MIT",
-  "private": "true",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/uber-web/math.gl.git"
@@ -30,10 +30,11 @@
     "@probe.gl/bench": "^3.0.2",
     "@probe.gl/test-utils": "^3.0.2",
     "@turf/destination": "^6.0.1",
+    "@typescript-eslint/eslint-plugin": "^2.24.0",
     "babel-plugin-transform-builtin-extend": "^1.1.2",
     "coveralls": "^3.0.0",
     "eslint-plugin-react": "^7.10",
-    "ocular-dev-tools": "0.0.29",
+    "ocular-dev-tools": "^0.1.0",
     "pre-commit": "^1.2.2",
     "reify": "^0.18.1",
     "typescript": "^3.5.2"
