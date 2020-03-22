@@ -2,20 +2,21 @@
   "name": "math.gl",
   "description": "Array-based 3D Math Classes optimized for WebGL applications",
   "license": "MIT",
-  "private": "true",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/uber-web/math.gl.git"
   },
   "workspaces": [
-    "modules/*"
+    "modules/*",
+    "examples/*"
   ],
   "scripts": {
     "bootstrap": "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true yarn && ocular-bootstrap",
     "clean": "ocular-clean",
     "build": "ocular-build",
     "cover": "ocular-test cover",
-    "lint": "ocular-lint",
+    "lint": "tsc && ocular-lint",
     "metrics": "ocular-metrics",
     "publish": "ocular-publish",
     "test": "ocular-test",
@@ -36,6 +37,9 @@
     "ocular-dev-tools": "0.0.29",
     "pre-commit": "^1.2.2",
     "reify": "^0.18.1",
-    "typescript": "^3.5.2"
+    "typescript": "^3.7.4"
+  },
+  "resolutions": {
+    "eslint": "^6.8.0"
   }
 }
