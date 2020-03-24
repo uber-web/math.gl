@@ -21,6 +21,7 @@
  */
 
 /* eslint-disable max-statements, max-depth */
+import {push, copy, getPointAtIndex} from './utils';
 
 // Cohen-Sutherland line clipping algorithm, adapted to efficiently
 // handle polylines rather than just segments
@@ -46,11 +47,11 @@ export function lineclip(positions, bbox, options = {}, result = []) {
     while (true) {
       if (!(codeA | codeB)) {
         // accept
-        copy(part, a);
+        push(part, a);
 
         if (codeB !== lastCode) {
           // segment went outside
-          copy(part, b);
+          push(part, b);
 
           if (i < numPoints - 1) {
             // start a new line
@@ -58,7 +59,7 @@ export function lineclip(positions, bbox, options = {}, result = []) {
             part = [];
           }
         } else if (i === numPoints - 1) {
-          copy(part, b);
+          push(part, b);
         }
         break;
       } else if (codeA & codeB) {
@@ -106,16 +107,16 @@ export function polygonclip(positions, bbox, options = {}) {
       inside = !(bitCode(p, bbox) & edge);
 
       // if segment goes through the clip window, add an intersection
-      if (inside !== prevInside) copy(result, intersect(prev, p, edge, bbox));
+      if (inside !== prevInside) push(result, intersect(prev, p, edge, bbox));
 
-      if (inside) copy(result, p); // add a point if it's inside
+      if (inside) push(result, p); // add a point if it's inside
 
-      copy(prev, p, 0);
+      copy(prev, p);
       prevInside = inside;
     }
 
     // close loop
-    copy(result, result.slice(0, size));
+    push(result, result.slice(0, size));
     positions = result;
     startIndex = 0;
     numPoints = result.length / size;
@@ -124,24 +125,6 @@ export function polygonclip(positions, bbox, options = {}) {
   }
 
   return result;
-}
-
-function copy(target, source, startIndex) {
-  if (startIndex === undefined) {
-    startIndex = target.length;
-  }
-  const len = source.length;
-  for (let i = 0; i < len; i++) {
-    target[startIndex + i] = source[i];
-  }
-}
-
-function getPointAtIndex(positions, index, size, offset, out = []) {
-  const startI = offset + index * size;
-  for (let i = 0; i < size; i++) {
-    out[i] = positions[startI + i];
-  }
-  return out;
 }
 
 // intersect a segment against one of the 4 lines that make up the bbox
