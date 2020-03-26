@@ -1,9 +1,9 @@
 import React, {PureComponent} from 'react';
 import {render} from 'react-dom';
 
-import BenchResults from './bench-results';
-
+import {BenchResults} from '@probe.gl/react-bench';
 import {Bench} from '@probe.gl/bench';
+
 import addBenchmarks from '../../test/modules.bench';
 
 const addReferenceBenchmarks = false;
