@@ -70,8 +70,7 @@
             {"entry": "modules/core/docs/api-reference/vector"},
             {"entry": "modules/core/docs/api-reference/vector2"},
             {"entry": "modules/core/docs/api-reference/vector3"},
-            {"entry": "modules/core/docs/api-reference/vector4"},
-            {"entry": "modules/core/docs/api-reference/addons/polygon"}
+            {"entry": "modules/core/docs/api-reference/vector4"}
           ]
         },
         {
@@ -88,6 +87,14 @@
           "entries": [
             {"entry": "modules/geospatial/docs/api-reference/ellipsoid"},
             {"entry": "modules/geospatial/docs/api-reference/helpers"}
+          ]
+        },
+        {
+          "title": "@math.gl/polygon",
+          "entries": [
+            {"entry": "modules/core/docs/api-reference/clip-polygon"},
+            {"entry": "modules/core/docs/api-reference/clip-polyline"},
+            {"entry": "modules/core/docs/api-reference/polygon"}
           ]
         },
         {

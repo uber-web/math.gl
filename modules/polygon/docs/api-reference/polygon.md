@@ -9,7 +9,7 @@ Implements the [Shoelace formula](https://en.wikipedia.org/wiki/Shoelace_formula
 ## Usage
 
 ```js
-import {_Polygon as Polygon} from '@math.gl/core';
+import {_Polygon as Polygon} from '@math.gl/polygon';
 ```
 
 

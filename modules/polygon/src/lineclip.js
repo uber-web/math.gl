@@ -26,9 +26,10 @@ import {push, copy, getPointAtIndex} from './utils';
 
 // Cohen-Sutherland line clipping algorithm, adapted to efficiently
 // handle polylines rather than just segments
-export function lineclip(positions, bbox, options = {}, result = []) {
+export function clipPolyline(positions, bbox, options = {}) {
   const {size = 2, startIndex = 0, endIndex = positions.length} = options;
   const numPoints = (endIndex - startIndex) / size;
+  const result = [];
   let part = [];
   let a;
   let b;
@@ -87,7 +88,7 @@ export function lineclip(positions, bbox, options = {}, result = []) {
 
 // Sutherland-Hodgeman polygon clipping algorithm
 // polygon must be closed (first vertex == last vertex)
-export function polygonclip(positions, bbox, options = {}) {
+export function clipPolygon(positions, bbox, options = {}) {
   const {size = 2, endIndex = positions.length} = options;
   let {startIndex = 0} = options;
   let numPoints = (endIndex - startIndex) / size;
