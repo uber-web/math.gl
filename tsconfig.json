@@ -1,18 +1,37 @@
 {
   "compilerOptions": {
-
     "target": "es2020",
+    "jsx": "react",
     "allowJs": true,
     "checkJs": true,
-
-    "noEmit": true
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "noEmit": true,
+    "baseUrl": ".",
+    "paths": {
+      "@math.gl/core/*": ["modules/core/src/*"],
+      "@math.gl/core/test/*": ["modules/core/test/*"],
+      "@math.gl/culling/*": ["modules/culling/src/*"],
+      "@math.gl/culling/test/*": ["modules/culling/test/*"],
+      "@math.gl/geospatial/*": ["modules/geospatial/src/*"],
+      "@math.gl/geospatial/test/*": ["modules/geospatial/test/*"],
+      "@math.gl/sun/*": ["modules/sun/src/*"],
+      "@math.gl/sun/test/*": ["modules/sun/test/*"],
+      "@math.gl/web-mercator/*": ["modules/web-mercator/src/*"],
+      "@math.gl/web-mercator/test/*": ["modules/web-mercator/test/*"],
+      "test/*": ["test/*"]
+    }
   },
   "include":[
-    "./modules/core"
+    "modules/**/src/**/*",
+    "modules/**/test/**/*",
+    "test/**/*",
+    "examples_TODO/**/*"
   ],
   "exclude":[
-    "./modules/**/test",
-    "./modules/**/wip",
-    "./modules/**/dist"
+    "test/apps/**/*",
+    "node_modules",
+    "**/dist/**/*"
   ]
 }

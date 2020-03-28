@@ -2,9 +2,10 @@ import test from 'tape-catch';
 // import {tapeEqualsEpsilon} from 'test/utils/tape-assertions';
 
 import {Matrix3} from '@math.gl/core';
-import computeEigenDecomposition from '@math.gl/culling/algorithms/compute-eigen-decomposition';
+import {computeEigenDecomposition} from '@math.gl/culling';
 
 test('computeEigenDecomposition#throws without a matrix', t => {
+  // @ts-ignore
   t.throws(() => computeEigenDecomposition());
   t.end();
 });

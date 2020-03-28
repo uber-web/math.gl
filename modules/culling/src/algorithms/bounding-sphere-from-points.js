@@ -19,19 +19,7 @@ const fromPointsMaxBoxPt = new Vector3();
 const fromPointsNaiveCenterScratch = new Vector3();
 const volumeConstant = (4.0 / 3.0) * Math.PI;
 
-/*
-Computes a tight-fitting bounding sphere enclosing a list of 3D Cartesian points.
-The bounding sphere is computed by running two algorithms, a naive algorithm and
-Ritter's algorithm. The smaller of the two spheres is used to ensure a tight fit.
-   *
-@param {number[][]} [positions] An array of points that the bounding sphere will enclose.  Each point must have <code>x</code>, <code>y</code>, and <code>z</code> properties.
-@param {BoundingSphere} [result] The object onto which to store the result.
-@returns {BoundingSphere} The modified result parameter or a new BoundingSphere instance if one was not provided.
-   *
-@see {@link http://blogs.agi.com/insight3d/index.php/2008/02/04/a-bounding/|Bounding Sphere computation article}
-*/
-
-export function makeBoundingSphereFromPoints(positions, result = new BoundingSphere()) {
+export default function makeBoundingSphereFromPoints(positions, result = new BoundingSphere()) {
   if (!positions || positions.length === 0) {
     return result.fromCenterRadius([0, 0, 0], 0);
   }

@@ -1,31 +1,11 @@
+// @ts-nocheck TODO padding
 import WebMercatorViewport from './web-mercator-viewport';
 import assert from './assert';
 
-/**
- * * An object describing the padding to add to the bounds.
- * @typedef {Object} PaddingObject
- * @property {Number} top - Padding from top in pixels to add to the given bounds
- * @property {Number} bottom - Padding from bottom in pixels to add to the given bounds
- * @property {Number} left - Padding from left in pixels to add to the given bounds
- * @property {Number} right - Padding from right in pixels to add to the given bounds
- */
+// Returns map settings {latitude, longitude, zoom}
+// that will contain the provided corners within the provided width.
+// Only supports non-perspective mode.
 
-/**
- * Returns map settings {latitude, longitude, zoom}
- * that will contain the provided corners within the provided width.
- * Only supports non-perspective mode.
- * @param {Object} options
- * @param {Number} options.width - viewport width
- * @param {Number} options.height - viewport height
- * @param {Array} options.bounds - [[lon, lat], [lon, lat]]
- * @param {Array} [options.minExtent] - The width/height of the bounded area will never be smaller than this
- * @param {Number|Object} [options.padding] - The amount of padding in pixels
- *  to add to the given bounds. Can also be an object with top, bottom, left and right
- *  properties defining the padding.
- * @param {Array} [options.offset] - The center of the given bounds relative to the map's center,
- *    [x, y] measured in pixels.
- * @returns {Object} - latitude, longitude and zoom
- */
 export default function fitBounds({
   width,
   height,

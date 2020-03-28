@@ -1,4 +1,4 @@
-import {equals, _withEpsilon} from 'math.gl';
+import {equals, withEpsilon} from '@math.gl/core';
 
 function isEqual(a, b) {
   if (a && a.equals) {
@@ -35,10 +35,5 @@ export function tapeNotEquals(t, a, b, msg, extra) {
 
 // eslint-disable-next-line max-params
 export function tapeEqualsEpsilon(t, a, b, epsilon, msg, extra) {
-  return _withEpsilon(epsilon, () => tapeEquals(t, a, b, msg, extra));
+  return withEpsilon(epsilon, () => tapeEquals(t, a, b, msg, extra));
 }
-
-// eslint-disable-next-line max-params
-// export function tapeEqualsExact(t, a, b, msg, extra) {
-//   return t.deepE;
-// }

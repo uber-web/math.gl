@@ -88,6 +88,7 @@ test.skip('Plane#fromPointNormal throws if normal is not normalized', t => {
 });
 
 test('Plane#fromCoefficients throws without coefficients', t => {
+  // @ts-ignore
   t.throws(() => new Plane().fromCoefficients(undefined));
   t.end();
 });
@@ -108,6 +109,7 @@ test('Plane#gets the distance to a point', t => {
 
 test('Plane#getPointDistance throws without a plane', t => {
   const point = Vector3.ZERO;
+  // @ts-ignore
   t.throws(() => new Plane().getPointDistance(undefined, point));
   t.end();
 });
@@ -160,19 +162,19 @@ test('Plane#clones a plane instance', t => {
 
 test('Plane#equals returns true only if two planes are equal by normal and distance', t => {
   const left = new Plane(UNIT_X, 0.0);
-  const right = new Plane(UNIT_Y, 1.0);
+  let right = new Plane(UNIT_Y, 1.0);
 
   t.equals(left.equals(right), false);
 
-  right.distance = 0.0;
+  right = new Plane(UNIT_Y, 0.0);
 
   t.equals(left.equals(right), false);
 
-  right.normal = UNIT_X;
+  right = new Plane(UNIT_X, 0.0);
 
   t.equals(left.equals(right), true);
 
-  right.distance = 1.0;
+  right = new Plane(UNIT_X, 1.0);
 
   t.equals(left.equals(right), false);
   t.end();

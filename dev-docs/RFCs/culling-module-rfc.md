@@ -15,4 +15,4 @@ The vis.gl stack has traditionally relied on GPU processing of geometries but wi
 ## Proposal: New Classes
 
 * CPU side mathematical helper classes (`BoundingBoxes` etc)
-* CPU side geometry calculations (`Frustum` Intersection, ...)
+* CPU side geometry calculations (`Frustum` intersection, ...)

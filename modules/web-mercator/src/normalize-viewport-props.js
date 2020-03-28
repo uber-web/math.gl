@@ -6,7 +6,7 @@ const MAX_LATITUDE = 85.05113;
 const MIN_LATITUDE = -85.05113;
 
 // Apply mathematical constraints to viewport props
-/* eslint-disable complexity */
+// eslint-disable-next-line complexity
 export default function normalizeViewportProps({
   width,
   height,

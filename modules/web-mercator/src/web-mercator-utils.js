@@ -34,9 +34,9 @@ export function scaleToZoom(scale) {
  * Remaining projection is done with 4x4 matrices which also handles
  * perspective.
  *
- * @param {Array} lngLat - [lng, lat] coordinates
+ * @param lngLat - [lng, lat] coordinates
  *   Specifies a point on the sphere to project onto the map.
- * @return {Array} [x,y] coordinates.
+ * @return [x,y] coordinates.
  */
 export function lngLatToWorld([lng, lat]) {
   assert(Number.isFinite(lng));
@@ -49,15 +49,7 @@ export function lngLatToWorld([lng, lat]) {
   return [x, y];
 }
 
-/**
- * Unproject world point [x,y] on map onto {lat, lon} on sphere
- *
- * @param {number[]} xy - array with [x,y] members
- *  representing point on projected map plane
- * @return {number[]} - array with [x,y] of point on sphere.
- *   Has toArray method if you need a GeoJSON Array.
- *   Per cartographic tradition, lat and lon are specified as degrees.
- */
+// Unproject world point [x,y] on map onto {lat, lon} on sphere
 export function worldToLngLat([x, y]) {
   const lambda2 = (x / TILE_SIZE) * (2 * PI) - PI;
   const phi2 = 2 * (Math.atan(Math.exp((y / TILE_SIZE) * (2 * PI) - PI)) - PI_4);
@@ -151,6 +143,7 @@ export function addMetersToLngLat(lngLatZ, xyz) {
   worldspace[0] += x * (unitsPerMeter[0] + unitsPerMeter2[0] * y);
   worldspace[1] += y * (unitsPerMeter[1] + unitsPerMeter2[1] * y);
 
+  // @ts-ignore
   const newLngLat = worldToLngLat(worldspace);
   const newZ = (z0 || 0) + (z || 0);
 
@@ -257,13 +250,7 @@ export function getProjectionMatrix({
   return projectionMatrix;
 }
 
-/**
- * Project flat coordinates to pixels on screen.
- *
- * @param {Array} xyz - flat coordinate on 512*512 Mercator Zoom 0 tile
- * @param {Matrix4} pixelProjectionMatrix - projection matrix
- * @return {Array} [x, y, depth] pixel coordinate on screen.
- */
+// Project flat coordinates to pixels on screen.
 export function worldToPixels(xyz, pixelProjectionMatrix) {
   const [x, y, z = 0] = xyz;
   assert(Number.isFinite(x) && Number.isFinite(y) && Number.isFinite(z));
@@ -271,15 +258,7 @@ export function worldToPixels(xyz, pixelProjectionMatrix) {
   return transformVector(pixelProjectionMatrix, [x, y, z, 1]);
 }
 
-/**
- * Unproject pixels on screen to flat coordinates.
- *
- * @param {Array} xyz - pixel coordinate on screen.
- * @param {Matrix4} pixelUnprojectionMatrix - unprojection matrix
- * @param {Number} targetZ - if pixel coordinate does not have a 3rd component (depth),
- *    targetZ is used as the elevation plane to unproject onto
- * @return {Array} [x, y, Z] flat coordinates on 512*512 Mercator Zoom 0 tile.
- */
+// Unproject pixels on screen to flat coordinates.
 export function pixelsToWorld(xyz, pixelUnprojectionMatrix, targetZ = 0) {
   const [x, y, z] = xyz;
   assert(Number.isFinite(x) && Number.isFinite(y), 'invalid pixel coordinate');

@@ -1,6 +1,6 @@
 {
   "name": "math.gl-benchmark-example",
-  "version": "0.0.0",
+  "version": "3.2.0-alpha.1",
   "license": "MIT",
   "private": true,
   "scripts": {

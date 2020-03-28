@@ -15,49 +15,21 @@ import fitBounds from './fit-bounds';
 import * as vec2 from 'gl-matrix/vec2';
 
 export default class WebMercatorViewport extends Viewport {
-  /**
-   * @classdesc
-   * Creates view/projection matrices from mercator params
-   * Note: The Viewport is immutable in the sense that it only has accessors.
-   * A new viewport instance should be created if any parameters have changed.
-   *
-   * @class
-   * @param {Object} opt - options
-   *
-   * @param {Number} [opt.width=1] - Width of "viewport" or window
-   * @param {Number} [opt.height=1] - Height of "viewport" or window
-   * @param {Number} [opt.scale=1] - Either use scale or zoom
-   * @param {Number} [opt.pitch=0] - Camera angle in degrees (0 is straight down)
-   * @param {Number} [opt.bearing=0] - Map rotation in degrees (0 means north is up)
-   * @param {Number} [opt.altitude=] - Altitude of camera in screen units
-   *
-   * Web mercator projection short-hand parameters
-   * @param {Number} opt.latitude - Center of viewport on map
-   * @param {Number} opt.longitude - Center of viewport on map
-   * @param {Number} opt.zoom - Scale = Math.pow(2,zoom) on map
-
-   * Notes:
-   *  - Only one of center or [latitude, longitude] can be specified
-   *  - [latitude, longitude] can only be specified when "mercator" is true
-   *  - Altitude has a default value that matches assumptions in mapbox-gl
-   *  - width and height are forced to 1 if supplied as 0, to avoid
-   *    division by zero. This is intended to reduce the burden of apps to
-   *    to check values before instantiating a Viewport.
-   */
-  /* eslint-disable complexity */
-  constructor({
-    // Map state
-    width,
-    height,
-    latitude = 0,
-    longitude = 0,
-    zoom = 0,
-    pitch = 0,
-    bearing = 0,
-    altitude = 1.5,
-    nearZMultiplier = 0.02,
-    farZMultiplier = 1.01
-  } = {}) {
+  constructor(
+    {
+      // Map state
+      width,
+      height,
+      latitude = 0,
+      longitude = 0,
+      zoom = 0,
+      pitch = 0,
+      bearing = 0,
+      altitude = 1.5,
+      nearZMultiplier = 0.02,
+      farZMultiplier = 1.01
+    } = {width: 1, height: 1}
+  ) {
     // Silently allow apps to send in 0,0 to facilitate isomorphic render etc
     width = width || 1;
     height = height || 1;
@@ -74,7 +46,6 @@ export default class WebMercatorViewport extends Viewport {
       width,
       height,
       pitch,
-      bearing,
       altitude,
       nearZMultiplier,
       farZMultiplier
@@ -104,46 +75,18 @@ export default class WebMercatorViewport extends Viewport {
 
     Object.freeze(this);
   }
-  /* eslint-enable complexity */
 
-  /**
-   * Project [lng,lat] on sphere onto [x,y] on 512*512 Mercator Zoom 0 tile.
-   * Performs the nonlinear part of the web mercator projection.
-   * Remaining projection is done with 4x4 matrices which also handles
-   * perspective.
-   *
-   * @param {Array} lngLat - [lng, lat] coordinates
-   *   Specifies a point on the sphere to project onto the map.
-   * @return {Array} [x,y] coordinates.
-   */
+  // Project [lng,lat] on sphere onto [x,y] on 512*512 Mercator Zoom 0 tile.
   projectFlat(lngLat) {
     return lngLatToWorld(lngLat);
   }
 
-  /**
-   * Unproject world point [x,y] on map onto {lat, lon} on sphere
-   *
-   * @param {number[]} xy - array with [x,y] members
-   *  representing point on projected map plane
-   * @return {number[]} - array with [lat,lon] of point on sphere.
-   *   Has toArray method if you need a GeoJSON Array.
-   *   Per cartographic tradition, lat and lon are specified as degrees.
-   */
+  // Unproject world point [x,y] on map onto {lat, lon} on sphere
   unprojectFlat(xy) {
     return worldToLngLat(xy);
   }
 
-  /**
-   * Get the map center that place a given [lng, lat] coordinate at screen
-   * point [x, y]
-   *
-   * @param {object} opt
-   * @param {number[]} opt.lngLat - [lng,lat] coordinates
-   *   Specifies a point on the sphere.
-   * @param {number[]} opt.pos - [x,y] coordinates
-   *   Specifies a point on the screen.
-   * @return {number[]} [lng,lat] new map center.
-   */
+  // Get the map center that place a given [lng, lat] coordinate at screen point [x, y]
   getMapCenterByLngLatPosition({lngLat, pos}) {
     const fromLocation = pixelsToWorld(pos, this.pixelUnprojectionMatrix);
     const toLocation = lngLatToWorld(lngLat);
@@ -159,16 +102,7 @@ export default class WebMercatorViewport extends Viewport {
     return this.getMapCenterByLngLatPosition({lngLat, pos});
   }
 
-  /**
-   * Returns a new viewport that fit around the given rectangle.
-   * Only supports non-perspective mode.
-   * @param {Array} bounds - [[lon, lat], [lon, lat]]
-   * @param {Object} [options]
-   * @param {Number} [options.padding] - The amount of padding in pixels to add to the given bounds.
-   * @param {Array} [options.offset] - The center of the given bounds relative to the map's center,
-   *    [x, y] measured in pixels.
-   * @returns {WebMercatorViewport}
-   */
+  // Returns a new viewport that fit around the given rectangle.
   fitBounds(bounds, options = {}) {
     const {width, height} = this;
     const {longitude, latitude, zoom} = fitBounds(Object.assign({width, height, bounds}, options));

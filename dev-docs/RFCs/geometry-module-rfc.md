@@ -25,7 +25,7 @@ This includes:
 * Typed Array geometry processing (rimitive Iteration, Normal Calculation, Index Expansion, ...)
 * Typed Array geometries (Cubes, Spheres, ...)
 * CPU side mathematical helper classes (BoundingBoxes etc)
-* CPU side geometry calculations (Ray Casting, Frustum Intersection, ...)
+* CPU side geometry calculations (Ray Casting, Frustum intersection, ...)
 
 ### Monorepo setup
 

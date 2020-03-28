@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-
 // Note: This script is started from root: cwd is not this folder
 const SRC_DIR = './src';
 

@@ -4,7 +4,7 @@
 /* eslint-disable */
 import {Vector3, Matrix4} from '@math.gl/core';
 import * as mat4 from 'gl-matrix/mat4';
-import {Intersect} from '../constants';
+import {INTERSECTION} from '../constants';
 
 // import Rectangle from './rectangle';
 
@@ -111,14 +111,14 @@ export default class BoundingSphere {
 
     // The center point is negative side of the plane normal
     if (distanceToPlane < -radius) {
-      return Intersect.OUTSIDE;
+      return INTERSECTION.OUTSIDE;
     }
     // The center point is positive side of the plane, but radius extends beyond it; partial overlap
     if (distanceToPlane < radius) {
-      return Intersect.INTERSECTING;
+      return INTERSECTION.INTERSECTING;
     }
     // The center point and radius is positive side of the plane
-    return Intersect.INSIDE;
+    return INTERSECTION.INSIDE;
   }
 
   // Applies a 4x4 affine transformation matrix to a bounding sphere.
