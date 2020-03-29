@@ -1,10 +1,10 @@
 # What's New
 
-# v3.2 (In Development)
+# v3.2
 
-> v3.2 is still in development. Alpha releases will be made available.
+> v3.2 is still in development. Alpha releases will be made available. The intention is to synchronize the release of math.gl 3.2 with deck.gl v8.2.
 
-Target Release Date: TBD: The intention is to synchronize the release of math.gl 3.2 with deck.gl v8.2.
+Target Release Date: TBD
 
 ### Typescript Type Definitions
 

@@ -11,12 +11,16 @@ math.gl is a toolbox that offers a range of modules for
 | `@math.gl/core` | Basic 3D math classes (vectors, matrices etc) and utilities (`equals`, `toRadians` etc) |
 | `@math.gl/culling` | Bounding volumes and intersection testing. |
 | `@math.gl/geospatial` | Ellipsoidal geospatial math, primarily for WGS84 cartesian to cartographic transformations. |
-| `viewport-mercator-project` | Web Mercator projection utilities |
+| `@math.gl/sun` | Calculate solar position and direction. |
+| `@math.gl/web-mercator` | Support for 3D / perspective Web Mercator projections. |
 
-Remarks:
+There are also some legacy modules that are not recommended for new code, but are provided to avoid breaking older applications:
 
-- The `math.gl` module is now deprecated. It is still available as an "alias" for `math.gl/core` but should not be used in new applications.
-- The `viewport-mercator-project` module was consolidated with math.gl in Oct 2019. It was orignally developed indendently in the [https://github.com/uber-common/viewport-mercator-project] repository.
+| Legacy Module    | Description |
+| ---       | --- |
+| `math.gl` |  Re-exports the API from `@math.gl/core`. The `math.gl` module is now considered deprecated. It is still available as an "alias" for `@math.gl/core` but should not be used in new applications. |
+| `viewport-mercator-project` | Re-exports the Web Mercator projection utilities in `@math.gl/web-mercator`. This code was orignally developed indendently in the [https://github.com/uber-common/viewport-mercator-project] repository, however the module was consolidated with math.gl in Oct 2019. |
+
 
 ## Core Library Features
 
@@ -51,11 +55,6 @@ Note that Internet Explorer < 10 will not work. If your application needs to sup
 - math.gl was then broken out into its own module to allow it to mature in terms of functionality and stability.
 - Through a collaboration with the Cesium team, parts of the Cesium math library are ported and published as independently usable math.gl modules (geospatial and culling).
 
-## Roadmap
-
-- The intention is that math.gl should be able to serve a general purpose 3D math library.
-- math.gl modules (such as geospatial math) should be usable by applications using other frameworks, without having to use the core math.gl classes.
-
 ## Attributions
 
 math.gl was inspired by and built upon some of the most proven open source JavaScript math libraries:
@@ -68,4 +67,4 @@ math.gl was inspired by and built upon some of the most proven open source JavaS
 
 MIT license. The libraries that the core `math.gl` module are built on (e.g. gl-matrix) are also all open source and MIT licensed.
 
-The `@math.gl/geospatial` and `@math.gl/culling` include Cesium-derived code which is Apache2 licensed.
+The `@math.gl/geospatial` and `@math.gl/culling` models include Cesium-derived code which is Apache2 licensed.
