@@ -99,8 +99,7 @@ test('clips polygon', t => {
       [20, 40],
       [10, 40],
       [10, 20],
-      [5, 20],
-      [-10, 20]
+      [5, 20]
     ]),
     [0, 0, 30, 30]
   );
@@ -110,6 +109,10 @@ test('clips polygon', t => {
     equals(
       result,
       flatten([
+        [0, 20],
+        [0, 10],
+        [10, 10],
+        [10, 5],
         [10, 0],
         [20, 0],
         [20, 10],
@@ -119,12 +122,7 @@ test('clips polygon', t => {
         [20, 30],
         [10, 30],
         [10, 20],
-        [5, 20],
-        [0, 20],
-        [0, 10],
-        [10, 10],
-        [10, 5],
-        [10, 0]
+        [5, 20]
       ])
     )
   );
@@ -133,22 +131,17 @@ test('clips polygon', t => {
 });
 
 test('polygon contains bbox', t => {
-  const result = clipPolygon(flatten([[10, 40], [40, 10], [10, -20], [-20, 10], [10, 40]]), [
-    0,
-    0,
-    20,
-    20
-  ]);
+  const result = clipPolygon(flatten([[10, 40], [40, 10], [10, -20], [-20, 10]]), [0, 0, 20, 20]);
 
   t.comment(result);
-  t.ok(equals(result, flatten([[0, 20], [20, 20], [20, 0], [0, 0], [0, 20]])));
+  t.ok(equals(result, flatten([[0, 0], [0, 20], [20, 20], [20, 0]])));
 
   t.end();
 });
 
 test('clips 3d polygon', t => {
   const result = clipPolygon(
-    flatten([[10, -5, 0], [25, 10, 12], [10, 25, 24], [-5, 10, 12], [10, -5, 0]]),
+    flatten([[10, -5, 0], [25, 10, 12], [10, 25, 24], [-5, 10, 12]]),
     [0, 0, 20, 20],
     {size: 3}
   );
@@ -158,15 +151,14 @@ test('clips 3d polygon', t => {
     equals(
       result,
       flatten([
-        [5, 20, 20],
-        [0, 15, 16],
         [0, 5, 8],
         [5, 0, 4],
         [15, 0, 4],
         [20, 5, 8],
         [20, 15, 16],
         [15, 20, 20],
-        [5, 20, 20]
+        [5, 20, 20],
+        [0, 15, 16]
       ])
     )
   );
@@ -175,17 +167,17 @@ test('clips 3d polygon', t => {
 });
 
 test('clips polygon fom partial array', t => {
-  const polygon = flatten([[10, -5], [25, 10], [10, 25], [-5, 10], [10, -5]]);
+  const polygon = flatten([[10, -5], [25, 10], [10, 25], [-5, 10]]);
   const result = clipPolygon([].concat([0, 0, 0, 20], polygon, [20, 0, 20, 20]), [0, 0, 20, 20], {
     startIndex: 4,
-    endIndex: 14
+    endIndex: 12
   });
 
   t.comment(result);
   t.ok(
     equals(
       result,
-      flatten([[5, 20], [0, 15], [0, 5], [5, 0], [15, 0], [20, 5], [20, 15], [15, 20], [5, 20]])
+      flatten([[0, 5], [5, 0], [15, 0], [20, 5], [20, 15], [15, 20], [5, 20], [0, 15]])
     )
   );
 
@@ -239,7 +231,7 @@ test('clips without leaving empty parts', t => {
 });
 
 test('still works when polygon never crosses bbox', t => {
-  const result = clipPolygon(flatten([[3, 3], [5, 3], [5, 5], [3, 5], [3, 3]]), [0, 0, 2, 2]);
+  const result = clipPolygon(flatten([[3, 3], [5, 3], [5, 5], [3, 5]]), [0, 0, 2, 2]);
 
   t.deepEquals(result, []);
 

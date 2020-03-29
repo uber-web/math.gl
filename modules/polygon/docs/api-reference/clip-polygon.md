@@ -19,7 +19,7 @@ clipPolygon(positions, bbox, [options])
 
 Arguments:
 
-- `positions` (Array|TypedArray) - a flat array of the vertex positions that define the polygon. The first vertex and the last vertex must be identical.
+- `positions` (Array|TypedArray) - a flat array of the vertex positions that define the polygon.
 - `bbox` (Array) - the bounding box, in `[minX, minY, maxX, maxY]`
 - `options` (Object, optional)
   + `size` (Number) - the number of elements in each vertex. Size `2` will interpret `positions` as `[x0, y0, x1, y1, ...]` and size `3` will interpret `positions` as `[x0, y0, z0, x1, y1, z1, ...]`. Default `2`.

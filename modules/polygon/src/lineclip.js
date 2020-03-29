@@ -101,10 +101,10 @@ export function clipPolygon(positions, bbox, options = {}) {
   // clip against each side of the clip rectangle
   for (let edge = 1; edge <= 8; edge *= 2) {
     result = [];
-    prev = getPointAtIndex(positions, 0, size, startIndex, prev);
+    prev = getPointAtIndex(positions, numPoints - 1, size, startIndex, prev);
     prevInside = !(bitCode(prev, bbox) & edge);
 
-    for (let i = 1; i < numPoints; i++) {
+    for (let i = 0; i < numPoints; i++) {
       p = getPointAtIndex(positions, i, size, startIndex, p);
       inside = !(bitCode(p, bbox) & edge);
 
@@ -118,7 +118,6 @@ export function clipPolygon(positions, bbox, options = {}) {
     }
 
     // close loop
-    push(result, result.slice(0, size));
     positions = result;
     startIndex = 0;
     numPoints = result.length / size;
