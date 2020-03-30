@@ -6,23 +6,25 @@
   ],
   "main": "index.js",
   "scripts": {
-    "start": "yarn clean-examples && yarn clean && yarn develop",
+    "start": "yarn clean && yarn develop",
+    "build": "yarn clean-examples && yarn clean && gatsby build",
     "clean": "rm -rf ./.cache ./public",
-    "develop": "gatsby develop",
-    "debug": "node --inspect-brk --no-lazy node_modules/gatsby/dist/bin/gatsby develop --no-uglify",
-    "build": "yarn clean-examples && yarn clean && gatsby build --no-uglify --prefix-paths",
+    "clean-examples": "find ../examples -name node_modules -exec rm -r {} \\; || true",
+    "develop": "yarn clean-examples && gatsby develop",
     "serve": "gatsby serve",
-    "deploy": "NODE_DEBUG=gh-pages gh-pages -d public",
-    "clean-examples": "rm -rf examples ; (find ../examples -name node_modules -exec rm -rf {} \\; || true)"
+    "deploy": "NODE_DEBUG=gh-pages gh-pages -d public"
   },
   "dependencies": {
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
-    "react-table": "^6.10.0"
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-map-gl": "^5.1.5",
+    "styled-components": "^4.4.1",
+    "@probe.gl/react-bench": "^3.3.0-alpha.8"
   },
   "devDependencies": {
-    "gatsby": "^2.18.0",
-    "gatsby-theme-ocular": "^1.1.0-alpha.4",
-    "gh-pages": "^2.0.1"
+    "gatsby": "~2.18.25",
+    "gatsby-plugin-no-sourcemaps": "^2.1.2",
+    "gatsby-theme-ocular": "^1.2.0-beta.8",
+    "gh-pages": "^2.2.0"
   }
 }
