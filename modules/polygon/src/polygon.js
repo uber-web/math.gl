@@ -1,4 +1,4 @@
-import {equals} from '../lib/common';
+import {equals} from '@math.gl/core';
 
 export default class Polygon {
   constructor(points) {
