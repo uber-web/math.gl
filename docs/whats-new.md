@@ -2,17 +2,19 @@
 
 # v3.3
 
-Release Date: TBD, still in development
+Release Date: TBD. v3.3 is still in development. Alpha releases are available.
 
 ### `@math.gl/proj4`
 
-A new module supporting conversion between geospatial coordinate systems.
+A new module supporting conversion between a wide range of geospatial coordinate systems.
 
 # v3.2
 
 Release Date: July 18, 2020
 
-### Typescript Type Definitions
+Release Date: TBD
+
+### Typescript Support
 
 Typescript type definitions (`.d.ts` files) are now provided for all math.gl modules.
 
@@ -22,13 +24,16 @@ A new module offering geospatial polygon clipping functions.
 
 # v3.1
 
-Date: Dec 16, 2019
+Release date: Dec 16, 2019
 
-- `viewport-mercator-project` has been added to math.gl a new sub-module.
+### `@math.gl/web-mercator`
+
+- WebMercator projection support is now available through the new `@math.gl/web-mercator` npm sub-module.
+- This new module is an evolution of the [`viewport-mercator-project`](https://github.com/uber-archive/viewport-mercator-project) repository.
 
 ## v3.0
 
-Date: Aug 8, 2019
+Release date: Aug 8, 2019
 
 The 3.0 release brings support for geospatial math, culling, performance improvements, and some API consolidation.
 
@@ -47,7 +52,7 @@ A new module (developed in collaboration with the Cesium engineering team) provi
 - New class `BoundingSphere`
 - New class `CullingVolume`
 
-### `math.gl`
+### `@math.gl/core`
 
 **Transform API Consolidation**
 
@@ -74,7 +79,7 @@ A [benchmarking example](https://math.gl/examples/benchmarks) has been added to 
 
 ## v2.3
 
-Date: Jan 29, 2019
+Release date: Jan 29, 2019
 
 - New class: `Matrix3`
 - New: Add `scale` factor support to `Matrix3` and `Matrix4`
@@ -83,14 +88,14 @@ Date: Jan 29, 2019
 
 ## v2.2
 
-Date: Sep 20, 2018
+Release date: Sep 20, 2018
 
 - Use `@babel/runtime` to reduce bundle size
 - `equals` function fix on arrays
 
 ## v2.0
 
-Date: June 25, 2018
+Release date: June 25, 2018
 
 ### New Naming Convention for Experimental Exports
 
@@ -101,14 +106,14 @@ The change was made to make it possible for tree-shaking bundlers to remove unus
 
 ## v1.2
 
-Date: May 4, 2018
+Release date: May 4, 2018
 - New `lerp` utility
 - Experimental `Pose` class
 
 
 ## v1.1
 
-Date: April 16, 2018
+Release date: April 16, 2018
 
 ### Matrix4 Improvements
 
@@ -127,6 +132,6 @@ math.gl classes now pass large parts of the THREE.js test suite, which should ma
 
 ## v1.0
 
-Date: Jan 9, 2018
+Release date: Jan 9, 2018
 
 Initial release.
