@@ -1,11 +1,11 @@
 import test from 'tape-catch';
 import {equals} from '@math.gl/core';
-import {subdividePolyline, subdividePolygon} from '@math.gl/polygon';
+import {cutPolylineByGrid, cutPolygonByGrid} from '@math.gl/polygon';
 
 import {flatten} from './lineclip.spec';
 
 test('subdivide line', t => {
-  const result = subdividePolyline([0, 0, 25, 40]);
+  const result = cutPolylineByGrid([0, 0, 25, 40]);
   t.comment(result);
   t.ok(
     equals(
@@ -18,7 +18,7 @@ test('subdivide line', t => {
 });
 
 test('subdivide polyline', t => {
-  const result = subdividePolyline(flatten([[30, 20], [25, 25], [5, 5], [10, 20]]));
+  const result = cutPolylineByGrid(flatten([[30, 20], [25, 25], [5, 5], [10, 20]]));
   t.comment(result);
   t.ok(
     equals(
@@ -31,9 +31,9 @@ test('subdivide polyline', t => {
 });
 
 test('subdivide polyline - custom grid', t => {
-  const result = subdividePolyline(flatten([[30, 20], [25, 25], [5, 5], [10, 20]]), {
-    resolution: 20,
-    offset: [-5, -5]
+  const result = cutPolylineByGrid(flatten([[30, 20], [25, 25], [5, 5], [10, 20]]), {
+    gridResolution: 20,
+    gridOffset: [-5, -5]
   });
   t.comment(result);
   t.ok(equals(result, flatten([[30, 20], [25, 25], [15, 15], [5, 5], [8.3333333, 15], [10, 20]])));
@@ -42,7 +42,7 @@ test('subdivide polyline - custom grid', t => {
 });
 
 test('subdivide polyline - multiple parts', t => {
-  const result = subdividePolyline(flatten([[30, 20], [25, 25], [5, 5], [10, 20]]), {broken: true});
+  const result = cutPolylineByGrid(flatten([[30, 20], [25, 25], [5, 5], [10, 20]]), {broken: true});
   t.comment(result);
   t.ok(
     equals(result, [
@@ -57,7 +57,7 @@ test('subdivide polyline - multiple parts', t => {
 });
 
 test('subdivide 3d polyline', t => {
-  const result = subdividePolyline(flatten([[30, 20, 0], [25, 25, 0], [5, 5, 20], [10, 20, 30]]), {
+  const result = cutPolylineByGrid(flatten([[30, 20, 0], [25, 25, 0], [5, 5, 20], [10, 20, 30]]), {
     size: 3
   });
   t.comment(result);
@@ -81,7 +81,7 @@ test('subdivide 3d polyline', t => {
 
 test('subdivide polyline from partial array', t => {
   const polyline = flatten([[30, 20], [25, 25], [5, 5], [10, 20]]);
-  const result = subdividePolyline([].concat([0, 0, 0, 20], polyline, [20, 20, 20, 0]), {
+  const result = cutPolylineByGrid([].concat([0, 0, 0, 20], polyline, [20, 20, 20, 0]), {
     startIndex: 4,
     endIndex: 12
   });
@@ -106,7 +106,7 @@ function arePolygonsEqual(p1, p2) {
 }
 
 test('subdivide polygon', t => {
-  const result = subdividePolygon(flatten([[5, 20], [20, 5], [5, -10]]));
+  const result = cutPolygonByGrid(flatten([[5, 20], [20, 5], [5, -10]]));
 
   t.comment(result);
   const expected = [
@@ -127,14 +127,14 @@ test('subdivide polygon', t => {
 });
 
 test('subdivide polygon - empty', t => {
-  t.deepEqual(subdividePolygon([]), [], 'returns empty array');
+  t.deepEqual(cutPolygonByGrid([]), [], 'returns empty array');
   t.end();
 });
 
 test('subdivide polygon with custom grid', t => {
-  const result = subdividePolygon(flatten([[5, 20], [20, 5], [5, -10]]), {
-    resolution: 20,
-    offset: [5, 5]
+  const result = cutPolygonByGrid(flatten([[5, 20], [20, 5], [5, -10]]), null, {
+    gridResolution: 20,
+    gridOffset: [5, 5]
   });
 
   t.comment(result);
@@ -149,10 +149,10 @@ test('subdivide polygon with custom grid', t => {
 });
 
 test('subdivide 3D polygon', t => {
-  const result = subdividePolygon(flatten([[5, 20, 0], [20, 5, 15], [5, -10, 30]]), {
+  const result = cutPolygonByGrid(flatten([[5, 20, 0], [20, 5, 15], [5, -10, 30]]), null, {
     size: 3,
-    resolution: 20,
-    offset: [5, 5]
+    gridResolution: 20,
+    gridOffset: [5, 5]
   });
 
   t.comment(result);
@@ -167,7 +167,7 @@ test('subdivide 3D polygon', t => {
 });
 
 test('subdivide polygon with holes', t => {
-  const result = subdividePolygon(
+  const result = cutPolygonByGrid(
     flatten([[5, 5], [20, 5], [20, 15], [5, 15], [10, 10], [10, 12], [15, 12], [15, 10]]),
     [8]
   );

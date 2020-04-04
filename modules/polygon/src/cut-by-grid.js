@@ -2,12 +2,12 @@
 import {bitCode, intersect} from './lineclip';
 import {getPointAtIndex, copy, push} from './utils';
 
-export function subdividePolyline(positions, options = {}) {
+export function cutPolylineByGrid(positions, options = {}) {
   const {
     size = 2,
     broken = false,
-    resolution = 10,
-    offset = [0, 0],
+    gridResolution = 10,
+    gridOffset = [0, 0],
     startIndex = 0,
     endIndex = positions.length
   } = options;
@@ -17,7 +17,7 @@ export function subdividePolyline(positions, options = {}) {
   const a = getPointAtIndex(positions, 0, size, startIndex);
   let b;
   let codeB;
-  const cell = getGridCell(a, resolution, offset, []);
+  const cell = getGridCell(a, gridResolution, gridOffset, []);
   const scratchPoint = [];
   push(part, a);
 
@@ -37,7 +37,7 @@ export function subdividePolyline(positions, options = {}) {
       // move to the next cell
       copy(a, scratchPoint);
 
-      moveToNeighborCell(cell, resolution, codeB);
+      moveToNeighborCell(cell, gridResolution, codeB);
       if (broken && part.length > size) {
         part = [];
         result.push(part);
@@ -54,17 +54,13 @@ export function subdividePolyline(positions, options = {}) {
   return broken ? result : result[0];
 }
 
-export function subdividePolygon(positions, holeIndices, options) {
+export function cutPolygonByGrid(positions, holeIndices, options) {
   if (!positions.length) {
     // input is empty
     return [];
   }
-  if (!Array.isArray(holeIndices)) {
-    options = holeIndices;
-    holeIndices = null;
-  }
   options = options || {};
-  const {size = 2, resolution = 10, offset = [0, 0]} = options;
+  const {size = 2, gridResolution = 10, gridOffset = [0, 0]} = options;
   const result = [];
   const queue = [{pos: positions, holes: holeIndices || []}];
   const bbox = [[], []];
@@ -75,7 +71,7 @@ export function subdividePolygon(positions, holeIndices, options) {
     const {pos, holes} = queue.shift();
 
     getBoundingBox(pos, size, bbox);
-    getGridCell(bbox[0], resolution, offset, cell);
+    getGridCell(bbox[0], gridResolution, gridOffset, cell);
     const code = bitCode(bbox[1], cell);
 
     if (code) {
@@ -147,33 +143,34 @@ function bisectPolygon(positions, size, startIndex, endIndex, bbox, edge) {
   return [lowPointCount ? resultLow : null, highPointCount ? resultHigh : null];
 }
 
-function getGridCell(p, resolution, offset, out) {
-  const left = Math.floor((p[0] - offset[0]) / resolution) * resolution + offset[0];
-  const bottom = Math.floor((p[1] - offset[1]) / resolution) * resolution + offset[1];
+function getGridCell(p, gridResolution, gridOffset, out) {
+  const left = Math.floor((p[0] - gridOffset[0]) / gridResolution) * gridResolution + gridOffset[0];
+  const bottom =
+    Math.floor((p[1] - gridOffset[1]) / gridResolution) * gridResolution + gridOffset[1];
   out[0] = left;
   out[1] = bottom;
-  out[2] = left + resolution;
-  out[3] = bottom + resolution;
+  out[2] = left + gridResolution;
+  out[3] = bottom + gridResolution;
   return out;
 }
 
-function moveToNeighborCell(cell, resolution, edge) {
+function moveToNeighborCell(cell, gridResolution, edge) {
   if (edge & 8) {
     // top
-    cell[1] += resolution;
-    cell[3] += resolution;
+    cell[1] += gridResolution;
+    cell[3] += gridResolution;
   } else if (edge & 4) {
     // bottom
-    cell[1] -= resolution;
-    cell[3] -= resolution;
+    cell[1] -= gridResolution;
+    cell[3] -= gridResolution;
   } else if (edge & 2) {
     // right
-    cell[0] += resolution;
-    cell[2] += resolution;
+    cell[0] += gridResolution;
+    cell[2] += gridResolution;
   } else if (edge & 1) {
     // left
-    cell[0] -= resolution;
-    cell[2] -= resolution;
+    cell[0] -= gridResolution;
+    cell[2] -= gridResolution;
   }
 }
 
