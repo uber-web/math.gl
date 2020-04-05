@@ -1,4 +1,3 @@
-/* eslint-disable max-statements */
 import {cutPolylineByGrid, cutPolygonByGrid} from './cut-by-grid';
 import {getPointAtIndex, push} from './utils';
 
@@ -7,8 +6,9 @@ const MAX_LATITUDE = 85.051129;
 const GRID_RESOLUTION = 360;
 const GRID_OFFSET = [-180, -180];
 
+// https://user-images.githubusercontent.com/2059298/78465769-938b7a00-76ae-11ea-9b95-1f4c26425ab9.png
 export function cutPolylineByMercatorWorld(positions, options = {}) {
-  const {size = 2, startIndex = 0, endIndex = positions.length} = options;
+  const {size = 2, startIndex = 0, endIndex = positions.length, normalize = true} = options;
 
   // Remap longitudes so that each segment takes the shorter path
   const newPositions = positions.slice(startIndex, endIndex);
@@ -20,16 +20,20 @@ export function cutPolylineByMercatorWorld(positions, options = {}) {
     gridResolution: GRID_RESOLUTION,
     gridOffset: GRID_OFFSET
   });
-  // Each part is guaranteed to be in a single copy of the world
-  // Map longitudes back to [-180, 180]
-  for (const part of parts) {
-    shiftLongitudesIntoRange(part, size);
+
+  if (normalize) {
+    // Each part is guaranteed to be in a single copy of the world
+    // Map longitudes back to [-180, 180]
+    for (const part of parts) {
+      shiftLongitudesIntoRange(part, size);
+    }
   }
   return parts;
 }
 
+// https://user-images.githubusercontent.com/2059298/78465770-94241080-76ae-11ea-809a-6a8534dac1d9.png
 export function cutPolygonByMercatorWorld(positions, holeIndices, options = {}) {
-  const {size = 2} = options;
+  const {size = 2, normalize = true} = options;
   holeIndices = holeIndices || [];
   const newPositions = [];
   const newHoleIndices = [];
@@ -57,22 +61,7 @@ export function cutPolygonByMercatorWorld(positions, holeIndices, options = {}) 
     wrapLongitudesForShortestPath(newPositions, size, targetStartIndex, targetIndex);
 
     // Handle the case when the ring contains a pole
-    const firstLng = newPositions[targetStartIndex];
-    const lastLng = newPositions[targetIndex - size];
-    if (Math.abs(firstLng - lastLng) > 180) {
-      // The ring does not make a round trip
-      // Add the nearest pole to the vertices so that the polygon tesselates correctly
-      const p = getPointAtIndex(newPositions, 0, size, targetStartIndex);
-      // Copy the first vertex to the world of the last vertex
-      p[0] += Math.round((lastLng - firstLng) / 360) * 360;
-      push(newPositions, p);
-      // Project the copied vertex to the edge of the map
-      p[1] = Math.sign(p[1]) * MAX_LATITUDE;
-      push(newPositions, p);
-      // Project the first vertex to the edge of the map
-      p[0] = firstLng;
-      push(newPositions, p);
-    }
+    insertPoleVertices(newPositions, size, targetStartIndex, targetIndex);
 
     srcStartIndex = srcEndIndex;
     newHoleIndices[ringIndex] = targetIndex;
@@ -84,10 +73,13 @@ export function cutPolygonByMercatorWorld(positions, holeIndices, options = {}) 
     gridResolution: GRID_RESOLUTION,
     gridOffset: GRID_OFFSET
   });
-  // Each part is guaranteed to be in a single copy of the world
-  // Map longitudes back to [-180, 180]
-  for (const part of parts) {
-    shiftLongitudesIntoRange(part.positions || part, size);
+
+  if (normalize) {
+    // Each part is guaranteed to be in a single copy of the world
+    // Map longitudes back to [-180, 180]
+    for (const part of parts) {
+      shiftLongitudesIntoRange(part.positions || part, size);
+    }
   }
   return parts;
 }
@@ -117,6 +109,26 @@ function wrapLongitudesForShortestPath(positions, size, startIndex, endIndex) {
       lng -= Math.round(delta / 360) * 360;
     }
     positions[i] = prevLng = lng;
+  }
+}
+
+function insertPoleVertices(positions, size, startIndex, endIndex) {
+  // Check if the ring contains a pole
+  const firstLng = positions[startIndex];
+  const lastLng = positions[endIndex - size];
+  if (Math.abs(firstLng - lastLng) > 180) {
+    // The ring does not make a round trip
+    // Add the nearest pole to the vertices so that the polygon tesselates correctly
+    const p = getPointAtIndex(positions, 0, size, startIndex);
+    // Copy the first vertex to the world of the last vertex
+    p[0] += Math.round((lastLng - firstLng) / 360) * 360;
+    push(positions, p);
+    // Project the copied vertex to the edge of the map
+    p[1] = Math.sign(p[1]) * MAX_LATITUDE;
+    push(positions, p);
+    // Project the first vertex to the edge of the map
+    p[0] = firstLng;
+    push(positions, p);
   }
 }
 

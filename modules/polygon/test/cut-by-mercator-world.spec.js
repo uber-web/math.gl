@@ -21,6 +21,14 @@ test('cutPolylineByMercatorWorld - simple', t => {
     '3d'
   );
 
+  t.ok(
+    equals(cutPolylineByMercatorWorld([-170, 0, 170, 20], {normalize: false}), [
+      [-170, 0, -180, 10],
+      [-180, 10, -190, 20]
+    ]),
+    'normalize: false'
+  );
+
   t.end();
 });
 
@@ -74,16 +82,23 @@ test('cutPolygonByMercatorWorld - simple', t => {
     '2d'
   );
 
-  polygon.forEach(p => (p[2] = 100));
-  expectedA.forEach(p => (p[2] = 100));
-  expectedB.forEach(p => (p[2] = 100));
+  const flatten2 = (ring, accessPosition) => flatten(ring.map(accessPosition));
+  const addZ = p => [p[0], p[1], 100];
 
   t.ok(
-    equals(cutPolygonByMercatorWorld(flatten(polygon), null, {size: 3}), [
-      flatten(expectedA),
-      flatten(expectedB)
+    equals(cutPolygonByMercatorWorld(flatten2(polygon, addZ), null, {size: 3}), [
+      flatten2(expectedA, addZ),
+      flatten2(expectedB, addZ)
     ]),
     '3d'
+  );
+
+  t.ok(
+    equals(cutPolygonByMercatorWorld(flatten(polygon), null, {normalize: false}), [
+      flatten(expectedA),
+      flatten2(expectedB, p => [p[0] + 360, p[1]])
+    ]),
+    'normalize: false'
   );
 
   t.end();

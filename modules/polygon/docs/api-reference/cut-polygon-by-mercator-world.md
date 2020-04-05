@@ -25,6 +25,7 @@ Arguments:
 - `holeIndices` (Array) - the indices in `positions` where each hole starts. If `null`, the polygon has no holes.
 - `options` (Object, optional)
   + `size` (Number) - the number of elements in each vertex. Size `2` will interpret `positions` as `[x0, y0, x1, y1, ...]` and size `3` will interpret `positions` as `[x0, y0, z0, x1, y1, z1, ...]`. Default `2`.
+  + `normalize` (Boolean) - make sure the output longitudes are within `[-180, 180]`. Default `true`.
 
 Returns:
 
