@@ -1,11 +1,11 @@
-# subdividePolygon
+# cutPolygonByGrid
 
 Subdivides a polygon by intersecting with a uniform grid.
 
 ```js
-import {subdividePolygon} from '@math.gl/polygon';
+import {cutPolygonByGrid} from '@math.gl/polygon';
 
-subdividePolygon([0, 15, 15, 0, 0, -15, 0, 15], {size: 2, gridResolution: 20});
+cutPolygonByGrid([0, 15, 15, 0, 0, -15, 0, 15], {size: 2, gridResolution: 20});
 // returns [
 //   [15, 0, 0, -15, 0, 0, 15, 0],
 //   [15, 0, 0, 0, 0, 15, 15, 0]
@@ -16,7 +16,7 @@ subdividePolygon([0, 15, 15, 0, 0, -15, 0, 15], {size: 2, gridResolution: 20});
 ## Usage
 
 ```js
-subdividePolygon(positions, holeIndices, [options])
+cutPolygonByGrid(positions, holeIndices, [options])
 ```
 
 Arguments:

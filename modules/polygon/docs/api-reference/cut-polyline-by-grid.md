@@ -1,18 +1,18 @@
-# subdividePolyline
+# cutPolylineByGrid
 
 Subdivides a polyline by intersecting with a uniform grid.
 
 ```js
-import {subdividePolyline} from '@math.gl/polygon';
+import {cutPolylineByGrid} from '@math.gl/polygon';
 
-subdividePolyline([-10, -10, 10, 10, 30, -10], {size: 2, gridResolution: 10});
+cutPolylineByGrid([-10, -10, 10, 10, 30, -10], {size: 2, gridResolution: 10});
 // returns [-10, -10, 0, 0, 10, 10, 20, 0, 30, -10]
 ```
 
 ## Usage
 
 ```js
-subdividePolyline(positions, [options])
+cutPolylineByGrid(positions, [options])
 ```
 
 Arguments:

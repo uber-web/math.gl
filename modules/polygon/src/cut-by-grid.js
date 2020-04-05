@@ -54,12 +54,11 @@ export function cutPolylineByGrid(positions, options = {}) {
   return broken ? result : result[0];
 }
 
-export function cutPolygonByGrid(positions, holeIndices, options) {
+export function cutPolygonByGrid(positions, holeIndices, options = {}) {
   if (!positions.length) {
     // input is empty
     return [];
   }
-  options = options || {};
   const {size = 2, gridResolution = 10, gridOffset = [0, 0]} = options;
   const result = [];
   const queue = [{pos: positions, holes: holeIndices || []}];
