@@ -134,12 +134,12 @@ function insertPoleVertices(positions, size, startIndex, endIndex) {
 
 function shiftLongitudesIntoRange(positions, size) {
   let refLng;
-  const n = positions.length;
+  const pointCount = positions.length / size;
 
   // Find a longitude that is not on the edge of a world
   // Which we will use to determine which world copy it is
-  for (let i = 0; i < n; i += size) {
-    refLng = positions[i];
+  for (let i = 0; i < pointCount; i++) {
+    refLng = positions[i * size];
     if ((refLng + 180) % 360 !== 0) {
       break;
     }
@@ -149,7 +149,7 @@ function shiftLongitudesIntoRange(positions, size) {
   if (delta === 0) {
     return;
   }
-  for (let i = 0; i < n; i += size) {
-    positions[i] += delta;
+  for (let i = 0; i < pointCount; i++) {
+    positions[i * size] += delta;
   }
 }
