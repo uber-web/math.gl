@@ -1,12 +1,12 @@
 import test from 'tape-catch';
-import {cutPolylineByMercatorWorld, cutPolygonByMercatorWorld} from '@math.gl/polygon';
+import {cutPolylineByMercatorBounds, cutPolygonByMercatorBounds} from '@math.gl/polygon';
 
 import {flatten} from './lineclip.spec';
 import {equals} from '@math.gl/core';
 
-test('cutPolylineByMercatorWorld - simple', t => {
+test('cutPolylineByMercatorBounds - simple', t => {
   t.ok(
-    equals(cutPolylineByMercatorWorld([-170, 0, 170, 20]), [
+    equals(cutPolylineByMercatorBounds([-170, 0, 170, 20]), [
       [-170, 0, -180, 10],
       [180, 10, 170, 20]
     ]),
@@ -14,7 +14,7 @@ test('cutPolylineByMercatorWorld - simple', t => {
   );
 
   t.ok(
-    equals(cutPolylineByMercatorWorld([-170, 0, 100, 170, 20, 200], {size: 3}), [
+    equals(cutPolylineByMercatorBounds([-170, 0, 100, 170, 20, 200], {size: 3}), [
       [-170, 0, 100, -180, 10, 150],
       [180, 10, 150, 170, 20, 200]
     ]),
@@ -22,7 +22,7 @@ test('cutPolylineByMercatorWorld - simple', t => {
   );
 
   t.ok(
-    equals(cutPolylineByMercatorWorld([-170, 0, 170, 20], {normalize: false}), [
+    equals(cutPolylineByMercatorBounds([-170, 0, 170, 20], {normalize: false}), [
       [-170, 0, -180, 10],
       [-180, 10, -190, 20]
     ]),
@@ -32,8 +32,8 @@ test('cutPolylineByMercatorWorld - simple', t => {
   t.end();
 });
 
-test('cutPolylineByMercatorWorld - multiple crossings', t => {
-  const result = cutPolylineByMercatorWorld([-170, 0, 170, 20, -175, 35, 175, 45]);
+test('cutPolylineByMercatorBounds - multiple crossings', t => {
+  const result = cutPolylineByMercatorBounds([-170, 0, 170, 20, -175, 35, 175, 45]);
 
   t.comment(result);
   t.ok(
@@ -48,14 +48,14 @@ test('cutPolylineByMercatorWorld - multiple crossings', t => {
   t.end();
 });
 
-test('cutPolylineByMercatorWorld - multiple worlds', t => {
+test('cutPolylineByMercatorBounds - multiple worlds', t => {
   const polyline = [];
   const N = 30;
 
   for (let i = 0; i < N; i++) {
     polyline.push([((i * 60 + 30) % 360) - 180, i]);
   }
-  const result = cutPolylineByMercatorWorld(flatten(polyline));
+  const result = cutPolylineByMercatorBounds(flatten(polyline));
 
   t.is(result.length, Math.ceil((N * 60) / 360), 'returns correct number of parts');
 
@@ -72,13 +72,13 @@ test('cutPolylineByMercatorWorld - multiple worlds', t => {
   t.end();
 });
 
-test('cutPolygonByMercatorWorld - simple', t => {
+test('cutPolygonByMercatorBounds - simple', t => {
   const polygon = [[-170, 0], [170, 0], [170, 20], [-170, 20]];
   const expectedA = [[170, 20], [180, 20], [180, 0], [170, 0]];
   const expectedB = [[-180, 20], [-170, 20], [-170, 0], [-180, 0]];
 
   t.ok(
-    equals(cutPolygonByMercatorWorld(flatten(polygon)), [flatten(expectedA), flatten(expectedB)]),
+    equals(cutPolygonByMercatorBounds(flatten(polygon)), [flatten(expectedA), flatten(expectedB)]),
     '2d'
   );
 
@@ -86,7 +86,7 @@ test('cutPolygonByMercatorWorld - simple', t => {
   const addZ = p => [p[0], p[1], 100];
 
   t.ok(
-    equals(cutPolygonByMercatorWorld(flatten2(polygon, addZ), null, {size: 3}), [
+    equals(cutPolygonByMercatorBounds(flatten2(polygon, addZ), null, {size: 3}), [
       flatten2(expectedA, addZ),
       flatten2(expectedB, addZ)
     ]),
@@ -94,7 +94,7 @@ test('cutPolygonByMercatorWorld - simple', t => {
   );
 
   t.ok(
-    equals(cutPolygonByMercatorWorld(flatten(polygon), null, {normalize: false}), [
+    equals(cutPolygonByMercatorBounds(flatten(polygon), null, {normalize: false}), [
       flatten(expectedA),
       flatten2(expectedB, p => [p[0] + 360, p[1]])
     ]),
@@ -104,7 +104,7 @@ test('cutPolygonByMercatorWorld - simple', t => {
   t.end();
 });
 
-test('cutPolygonByMercatorWorld - with holes', t => {
+test('cutPolygonByMercatorBounds - with holes', t => {
   const polygon = [[-170, 0], [170, 0], [170, 20], [-170, 20]];
   const expectedA = [[170, 20], [180, 20], [180, 0], [170, 0]];
   const expectedB = [[-180, 20], [-170, 20], [-170, 0], [-180, 0]];
@@ -112,7 +112,7 @@ test('cutPolygonByMercatorWorld - with holes', t => {
   const holeA = [[175, 10], [173, 10], [175, 8], [173, 8]];
   const holeB = [[-175, 10], [-173, 10], [-175, 8], [-173, 8]];
 
-  let result = cutPolygonByMercatorWorld(flatten([polygon, holeA]), [8]);
+  let result = cutPolygonByMercatorBounds(flatten([polygon, holeA]), [8]);
   t.is(result.length, 2, 'Returns correct number of parts');
   t.ok(
     equals(result[0].positions, flatten([expectedA, holeA])) &&
@@ -120,7 +120,7 @@ test('cutPolygonByMercatorWorld - with holes', t => {
       equals(result[1], flatten(expectedB))
   );
 
-  result = cutPolygonByMercatorWorld(flatten([polygon, holeB]), [8]);
+  result = cutPolygonByMercatorBounds(flatten([polygon, holeB]), [8]);
   t.is(result.length, 2, 'Returns correct number of parts');
   t.ok(
     equals(result[0], flatten(expectedA)) &&
@@ -131,10 +131,10 @@ test('cutPolygonByMercatorWorld - with holes', t => {
   t.end();
 });
 
-test('cutPolygonByMercatorWorld - contains pole', t => {
+test('cutPolygonByMercatorBounds - contains pole', t => {
   const polygon = [[-150, 75], [-90, 80], [-30, 70], [30, 60], [90, 70], [150, 75]];
 
-  const result = cutPolygonByMercatorWorld(flatten(polygon));
+  const result = cutPolygonByMercatorBounds(flatten(polygon));
 
   t.ok(
     equals(result, [

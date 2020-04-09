@@ -4,4 +4,4 @@ export {clipPolygon, clipPolyline} from './lineclip';
 
 export {cutPolygonByGrid, cutPolylineByGrid} from './cut-by-grid';
 
-export {cutPolylineByMercatorWorld, cutPolygonByMercatorWorld} from './cut-by-mercator-world';
+export {cutPolylineByMercatorBounds, cutPolygonByMercatorBounds} from './cut-by-mercator-bounds';

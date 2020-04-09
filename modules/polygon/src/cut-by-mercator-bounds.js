@@ -2,12 +2,12 @@ import {cutPolylineByGrid, cutPolygonByGrid} from './cut-by-grid';
 import {getPointAtIndex, push} from './utils';
 
 // https://en.wikipedia.org/wiki/Web_Mercator_projection
-const MAX_LATITUDE = 85.051129;
+const DEFAULT_MAX_LATITUDE = 85.051129;
 const GRID_RESOLUTION = 360;
 const GRID_OFFSET = [-180, -180];
 
 // https://user-images.githubusercontent.com/2059298/78465769-938b7a00-76ae-11ea-9b95-1f4c26425ab9.png
-export function cutPolylineByMercatorWorld(positions, options = {}) {
+export function cutPolylineByMercatorBounds(positions, options = {}) {
   const {size = 2, startIndex = 0, endIndex = positions.length, normalize = true} = options;
 
   // Remap longitudes so that each segment takes the shorter path
@@ -32,7 +32,7 @@ export function cutPolylineByMercatorWorld(positions, options = {}) {
 }
 
 // https://user-images.githubusercontent.com/2059298/78465770-94241080-76ae-11ea-809a-6a8534dac1d9.png
-export function cutPolygonByMercatorWorld(positions, holeIndices, options = {}) {
+export function cutPolygonByMercatorBounds(positions, holeIndices, options = {}) {
   const {size = 2, normalize = true} = options;
   holeIndices = holeIndices || [];
   const newPositions = [];
@@ -61,7 +61,7 @@ export function cutPolygonByMercatorWorld(positions, holeIndices, options = {}) 
     wrapLongitudesForShortestPath(newPositions, size, targetStartIndex, targetIndex);
 
     // Handle the case when the ring contains a pole
-    insertPoleVertices(newPositions, size, targetStartIndex, targetIndex);
+    insertPoleVertices(newPositions, size, targetStartIndex, targetIndex, options.maxLatitude);
 
     srcStartIndex = srcEndIndex;
     newHoleIndices[ringIndex] = targetIndex;
@@ -86,6 +86,7 @@ export function cutPolygonByMercatorWorld(positions, holeIndices, options = {}) 
 
 /* Helpers */
 
+// See comments for insertPoleVertices
 function findSplitIndex(positions, size, startIndex, endIndex) {
   let maxLat = -1;
   let pointIndex = -1;
@@ -99,20 +100,22 @@ function findSplitIndex(positions, size, startIndex, endIndex) {
   return pointIndex;
 }
 
-function wrapLongitudesForShortestPath(positions, size, startIndex, endIndex) {
-  let prevLng = positions[0];
-  let lng;
-  for (let i = startIndex; i < endIndex; i += size) {
-    lng = positions[i];
-    const delta = lng - prevLng;
-    if (delta > 180 || delta < -180) {
-      lng -= Math.round(delta / 360) * 360;
-    }
-    positions[i] = prevLng = lng;
-  }
-}
-
-function insertPoleVertices(positions, size, startIndex, endIndex) {
+// https://user-images.githubusercontent.com/2059298/78857483-5987e400-79de-11ea-98fc-0631287a8431.png
+//
+// If the polygon contains a pole, to tesselate it correctly, we need to insert the edge
+// of map into the polygon. This requires adding two vertices that represent the pole, by
+// drawing a perpendicular line to the Mercator map edge from a selected vertex on the ring.
+//
+// We select the insertion position carefully so that the inserted line segments do not
+// intersect with the ring itself. This is ensured by findSplitIndex, which returns the
+// vertex closest to the pole.
+function insertPoleVertices(
+  positions,
+  size,
+  startIndex,
+  endIndex,
+  maxLatitude = DEFAULT_MAX_LATITUDE
+) {
   // Check if the ring contains a pole
   const firstLng = positions[startIndex];
   const lastLng = positions[endIndex - size];
@@ -124,11 +127,24 @@ function insertPoleVertices(positions, size, startIndex, endIndex) {
     p[0] += Math.round((lastLng - firstLng) / 360) * 360;
     push(positions, p);
     // Project the copied vertex to the edge of the map
-    p[1] = Math.sign(p[1]) * MAX_LATITUDE;
+    p[1] = Math.sign(p[1]) * maxLatitude;
     push(positions, p);
     // Project the first vertex to the edge of the map
     p[0] = firstLng;
     push(positions, p);
+  }
+}
+
+function wrapLongitudesForShortestPath(positions, size, startIndex, endIndex) {
+  let prevLng = positions[0];
+  let lng;
+  for (let i = startIndex; i < endIndex; i += size) {
+    lng = positions[i];
+    const delta = lng - prevLng;
+    if (delta > 180 || delta < -180) {
+      lng -= Math.round(delta / 360) * 360;
+    }
+    positions[i] = prevLng = lng;
   }
 }
 

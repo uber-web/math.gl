@@ -1,18 +1,18 @@
-# cutPolylineByMercatorWorld
+# cutPolylineByMercatorBounds
 
 Splits a geospatial polyline at the [180th meridian](https://en.wikipedia.org/wiki/180th_meridian).
 
 ```js
-import {cutPolylineByMercatorWorld} from '@math.gl/polygon';
+import {cutPolylineByMercatorBounds} from '@math.gl/polygon';
 
-cutPolylineByMercatorWorld([-10, -10, 10, 10, 30, -10], {size: 2, gridResolution: 10});
+cutPolylineByMercatorBounds([-10, -10, 10, 10, 30, -10], {size: 2, gridResolution: 10});
 // returns [-10, -10, 0, 0, 10, 10, 20, 0, 30, -10]
 ```
 
 ## Usage
 
 ```js
-cutPolylineByMercatorWorld(positions, [options])
+cutPolylineByMercatorBounds(positions, [options])
 ```
 
 Arguments:

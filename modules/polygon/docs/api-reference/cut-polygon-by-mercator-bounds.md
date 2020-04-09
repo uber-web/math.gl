@@ -1,11 +1,11 @@
-# cutPolygonByMercatorWorld
+# cutPolygonByMercatorBounds
 
-Splits a geospatial polygon at the [180th meridian](https://en.wikipedia.org/wiki/180th_meridian) and the top (`latitude=85.051129`) and bottom (`latitude=-85.051129`) edges of the Web Mercator map.
+Splits a geospatial polygon at the [180th meridian](https://en.wikipedia.org/wiki/180th_meridian) and the top (`latitude=90`) and bottom (`latitude=-90`) edges of the Web Mercator map.
 
 ```js
-import {cutPolygonByMercatorWorld} from '@math.gl/polygon';
+import {cutPolygonByMercatorBounds} from '@math.gl/polygon';
 
-cutPolygonByMercatorWorld([-170, 0, 170, 0, 170, 20, -170, 20], {size: 2});
+cutPolygonByMercatorBounds([-170, 0, 170, 0, 170, 20, -170, 20], {size: 2});
 // returns [
 //   [170, 20, 180, 20, 180, 0, 170, 0],
 //   [-180, 20, -170, 20, -170, 0, -180, 0]
@@ -16,7 +16,7 @@ cutPolygonByMercatorWorld([-170, 0, 170, 0, 170, 20, -170, 20], {size: 2});
 ## Usage
 
 ```js
-cutPolygonByMercatorWorld(positions, holeIndices, [options])
+cutPolygonByMercatorBounds(positions, holeIndices, [options])
 ```
 
 Arguments:
@@ -26,6 +26,7 @@ Arguments:
 - `options` (Object, optional)
   + `size` (Number) - the number of elements in each vertex. Size `2` will interpret `positions` as `[x0, y0, x1, y1, ...]` and size `3` will interpret `positions` as `[x0, y0, z0, x1, y1, z1, ...]`. Default `2`.
   + `normalize` (Boolean) - make sure the output longitudes are within `[-180, 180]`. Default `true`.
+  + `maxLatitude` (Number) - since latitude=90 projects to infinity in Web Mercator projection, `maxLatitude` will be used to represent the pole. Default `85.051129` which makes the map square.
 
 Returns:
 
