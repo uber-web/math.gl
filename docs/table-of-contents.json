@@ -97,6 +97,8 @@
             {"entry": "modules/core/docs/api-reference/clip-polyline"},
             {"entry": "modules/core/docs/api-reference/cut-polygon-by-grid"},
             {"entry": "modules/core/docs/api-reference/cut-polyline-by-grid"},
+            {"entry": "modules/core/docs/api-reference/cut-polygon-by-mercator-bounds"},
+            {"entry": "modules/core/docs/api-reference/cut-polyline-by-mercator-bounds"},
             {"entry": "modules/core/docs/api-reference/polygon"}
           ]
         },
