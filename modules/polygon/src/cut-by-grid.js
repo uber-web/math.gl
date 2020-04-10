@@ -63,14 +63,14 @@ export function cutPolygonByGrid(positions, holeIndices, options = {}) {
   const result = [];
   const queue = [{pos: positions, holes: holeIndices || []}];
   const bbox = [[], []];
-  const cell = [];
+  let cell = [];
 
   // Recursively bisect polygon until every part fit in a single grid cell
   while (queue.length) {
     const {pos, holes} = queue.shift();
 
     getBoundingBox(pos, size, bbox);
-    getGridCell(bbox[0], gridResolution, gridOffset, cell);
+    cell = getGridCell(bbox[0], gridResolution, gridOffset, cell);
     const code = bitCode(bbox[1], cell);
 
     if (code) {
