@@ -3,8 +3,6 @@ import {getPointAtIndex, push} from './utils';
 
 // https://en.wikipedia.org/wiki/Web_Mercator_projection
 const DEFAULT_MAX_LATITUDE = 85.051129;
-const GRID_RESOLUTION = 360;
-const GRID_OFFSET = [-180, -180];
 
 // https://user-images.githubusercontent.com/2059298/78465769-938b7a00-76ae-11ea-9b95-1f4c26425ab9.png
 export function cutPolylineByMercatorBounds(positions, options = {}) {
@@ -17,8 +15,8 @@ export function cutPolylineByMercatorBounds(positions, options = {}) {
   const parts = cutPolylineByGrid(newPositions, {
     size,
     broken: true,
-    gridResolution: GRID_RESOLUTION,
-    gridOffset: GRID_OFFSET
+    gridResolution: 360,
+    gridOffset: [-180, -180]
   });
 
   if (normalize) {
@@ -70,15 +68,15 @@ export function cutPolygonByMercatorBounds(positions, holeIndices, options = {})
 
   const parts = cutPolygonByGrid(newPositions, newHoleIndices, {
     size,
-    gridResolution: GRID_RESOLUTION,
-    gridOffset: GRID_OFFSET
+    gridResolution: 360,
+    gridOffset: [-180, -180]
   });
 
   if (normalize) {
     // Each part is guaranteed to be in a single copy of the world
     // Map longitudes back to [-180, 180]
     for (const part of parts) {
-      shiftLongitudesIntoRange(part.positions || part, size);
+      shiftLongitudesIntoRange(Array.isArray(part) ? part : part.positions, size);
     }
   }
   return parts;
