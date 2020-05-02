@@ -243,8 +243,8 @@ test('getProjectionParameters', t => {
     t.ok(Number.isFinite(fov), 'getProjectionParameters: fov is a number');
     t.ok(Number.isFinite(aspect), 'getProjectionParameters: aspect is a number');
     t.ok(Number.isFinite(focalDistance), 'getProjectionParameters: focalDistance is a number');
-    t.ok(Number.isFinite(near), 'getProjectionParameters: near is a number');
-    t.ok(Number.isFinite(far), 'getProjectionParameters: far is a number');
+    t.ok(Number.isFinite(near) && near > 0, 'getProjectionParameters: near is a number');
+    t.ok(Number.isFinite(far) && far > near, 'getProjectionParameters: far is a number');
   }
   t.end();
 });
