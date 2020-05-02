@@ -1,4 +1,5 @@
 // Classic web-mercator-project
+export {default} from './web-mercator-viewport';
 export {default as WebMercatorViewport} from './web-mercator-viewport';
 
 export {default as fitBounds} from './fit-bounds';
