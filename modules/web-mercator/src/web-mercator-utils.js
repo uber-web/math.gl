@@ -211,10 +211,11 @@ export function getProjectionParameters({
   const pitchRadians = pitch * DEGREES_TO_RADIANS;
   const halfFov = Math.atan(0.5 / altitude);
   const topHalfSurfaceDistance =
-    (Math.sin(halfFov) * altitude) / Math.sin(Math.PI / 2 - pitchRadians - halfFov);
+    (Math.sin(halfFov) * altitude) /
+    Math.sin(Math.min(Math.max(Math.PI / 2 - pitchRadians - halfFov, 0.01), Math.PI - 0.01));
 
   // Calculate z value of the farthest fragment that should be rendered.
-  const farZ = Math.cos(Math.PI / 2 - pitchRadians) * topHalfSurfaceDistance + altitude;
+  const farZ = Math.sin(pitchRadians) * topHalfSurfaceDistance + altitude;
 
   return {
     fov: 2 * halfFov,
