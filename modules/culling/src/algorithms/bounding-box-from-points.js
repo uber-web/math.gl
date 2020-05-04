@@ -3,6 +3,8 @@
 
 import {Vector3, Matrix3} from '@math.gl/core';
 import computeEigenDecomposition from './compute-eigen-decomposition';
+import OrientedBoundingBox from '../lib/oriented-bounding-box';
+import AxisAlignedBoundingBox from '../lib/axis-aligned-bounding-box';
 
 const scratchVector2 = new Vector3();
 
@@ -21,8 +23,8 @@ const scratchEigenResult = {
   unitary: new Matrix3()
 };
 
-// eslint-disable-next-line max-statements
-export default function makeOrientedBoundingBoxfromPoints(positions, result) {
+/* eslint-disable max-statements */
+export function makeOrientedBoundingBoxFromPoints(positions, result = new OrientedBoundingBox()) {
   if (!positions || positions.length === 0) {
     result.halfAxes = new Matrix3([0, 0, 0, 0, 0, 0, 0, 0, 0]);
     result.center = new Vector3();
@@ -107,6 +109,50 @@ export default function makeOrientedBoundingBoxfromPoints(positions, result) {
 
   const scale = scratchVector3.set(u1 - l1, u2 - l2, u3 - l3).multiplyByScalar(0.5);
   result.halfAxes.multiplyByScalar(scale);
+
+  return result;
+}
+
+export function makeAxisAlignedBoundingBoxFromPoints(
+  positions,
+  result = new AxisAlignedBoundingBox()
+) {
+  if (!positions || positions.length === 0) {
+    result.minimum.set(0, 0, 0);
+    result.maximum.set(0, 0, 0);
+    result.center.set(0, 0, 0);
+    result.halfDiagonal.set(0, 0, 0);
+    return result;
+  }
+
+  let minimumX = positions[0][0];
+  let minimumY = positions[0][1];
+  let minimumZ = positions[0][2];
+
+  let maximumX = positions[0][0];
+  let maximumY = positions[0][1];
+  let maximumZ = positions[0][2];
+
+  for (const p of positions) {
+    const x = p[0];
+    const y = p[1];
+    const z = p[2];
+
+    minimumX = Math.min(x, minimumX);
+    maximumX = Math.max(x, maximumX);
+    minimumY = Math.min(y, minimumY);
+    maximumY = Math.max(y, maximumY);
+    minimumZ = Math.min(z, minimumZ);
+    maximumZ = Math.max(z, maximumZ);
+  }
+
+  result.minimum.set(minimumX, minimumY, minimumZ);
+  result.maximum.set(maximumX, maximumY, maximumZ);
+  result.center
+    .copy(result.minimum)
+    .add(result.maximum)
+    .scale(0.5);
+  result.halfDiagonal.copy(result.maximum).subtract(result.center);
 
   return result;
 }

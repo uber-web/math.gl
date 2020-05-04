@@ -13,6 +13,16 @@ export default class AxisAlignedBoundingBox {
         .copy(minimum)
         .add(maximum)
         .scale(0.5);
+    /**
+     * The center point of the bounding box.
+     * @type {Vector3}
+     */
+    this.center = new Vector3(center);
+    /**
+     * The positive half diagonal of the bounding box.
+     * @type {Vector3}
+     */
+    this.halfDiagonal = new Vector3(maximum).subtract(this.center);
 
     /**
      * The minimum point defining the bounding box.
@@ -27,63 +37,6 @@ export default class AxisAlignedBoundingBox {
      * @default {@link 0, 0, 0}
      */
     this.maximum = new Vector3(maximum);
-
-    /**
-     * The center point of the bounding box.
-     * @type {Vector3}
-     */
-    this.center = new Vector3(center);
-  }
-
-  /**
-   * Computes an instance of an AxisAlignedBoundingBox. The box is determined by
-   * finding the points spaced the farthest apart on the x, y, and z axes.
-   *
-   * @param {Vector3[]} positions List of points that the bounding box will enclose.  Each point must have a <code>x</code>, <code>y</code>, and <code>z</code> properties.
-   * @returns {AxisAlignedBoundingBox} The modified result parameter or a new AxisAlignedBoundingBox instance if one was not provided.
-   *
-   * @example
-   * // Compute an axis aligned bounding box enclosing two points.
-   * const box = Cesium.AxisAlignedBoundingBox.fromPoints([new Cesium.Vector3(2, 0, 0), new Cesium.Vector3(-2, 0, 0)]);
-   */
-  // eslint-disable-next-line
-  fromPoints(positions) {
-    if (!positions || positions.length === 0) {
-      this.minimum.set(0, 0, 0);
-      this.maximum.set(0, 0, 0);
-      this.center.set(0, 0, 0);
-      return this;
-    }
-
-    let minimumX = positions[0][0];
-    let minimumY = positions[0][1];
-    let minimumZ = positions[0][2];
-
-    let maximumX = positions[0][0];
-    let maximumY = positions[0][1];
-    let maximumZ = positions[0][2];
-
-    for (const p of positions) {
-      const x = p[0];
-      const y = p[1];
-      const z = p[2];
-
-      minimumX = Math.min(x, minimumX);
-      maximumX = Math.max(x, maximumX);
-      minimumY = Math.min(y, minimumY);
-      maximumY = Math.max(y, maximumY);
-      minimumZ = Math.min(z, minimumZ);
-      maximumZ = Math.max(z, maximumZ);
-    }
-
-    this.minimum.set(minimumX, minimumY, minimumZ);
-    this.maximum.set(maximumX, maximumY, maximumZ);
-    this.center
-      .copy(this.minimum)
-      .add(this.maximum)
-      .scale(0.5);
-
-    return this;
   }
 
   /**
@@ -105,10 +58,7 @@ export default class AxisAlignedBoundingBox {
   equals(right) {
     return (
       this === right ||
-      (Boolean(right) &&
-        this.center.equals(right.center) &&
-        this.minimum.equals(right.minimum) &&
-        this.maximum.equals(right.maximum))
+      (Boolean(right) && this.minimum.equals(right.minimum) && this.maximum.equals(right.maximum))
     );
   }
 
@@ -116,12 +66,12 @@ export default class AxisAlignedBoundingBox {
    * Determines which side of a plane a box is located.
    */
   intersectPlane(plane) {
-    const h = scratchVector
-      .copy(this.maximum)
-      .subtract(this.minimum)
-      .scale(0.5); // The positive half diagonal
+    const {halfDiagonal} = this;
     const normal = scratchNormal.from(plane.normal);
-    const e = h.x * Math.abs(normal.x) + h.y * Math.abs(normal.y) + h.z * Math.abs(normal.z);
+    const e =
+      halfDiagonal.x * Math.abs(normal.x) +
+      halfDiagonal.y * Math.abs(normal.y) +
+      halfDiagonal.z * Math.abs(normal.z);
     const s = this.center.dot(normal) + plane.distance; // signed distance from center
 
     if (s - e > 0) {
@@ -134,5 +84,37 @@ export default class AxisAlignedBoundingBox {
     }
 
     return INTERSECTION.INTERSECTING;
+  }
+
+  // Computes the estimated distance from the closest point on a bounding box to a point.
+  distanceTo(point) {
+    return Math.sqrt(this.distanceSquaredTo(point));
+  }
+
+  // Computes the estimated distance squared from the closest point on a bounding box to a point.
+  // A simplified version of OrientedBoundingBox.distanceSquaredTo
+  distanceSquaredTo(point) {
+    const offset = scratchVector.from(point).subtract(this.center);
+    const {halfDiagonal} = this;
+
+    let distanceSquared = 0.0;
+    let d;
+
+    d = Math.abs(offset.x) - halfDiagonal.x;
+    if (d > 0) {
+      distanceSquared += d * d;
+    }
+
+    d = Math.abs(offset.y) - halfDiagonal.y;
+    if (d > 0) {
+      distanceSquared += d * d;
+    }
+
+    d = Math.abs(offset.z) - halfDiagonal.z;
+    if (d > 0) {
+      distanceSquared += d * d;
+    }
+
+    return distanceSquared;
   }
 }

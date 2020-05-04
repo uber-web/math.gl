@@ -1,7 +1,12 @@
 // import test from 'tape-catch';
 import {it, expect} from 'test/utils/expect-assertions';
 
-import {AxisAlignedBoundingBox, INTERSECTION, Plane} from '@math.gl/culling';
+import {
+  AxisAlignedBoundingBox,
+  makeAxisAlignedBoundingBoxFromPoints,
+  INTERSECTION,
+  Plane
+} from '@math.gl/culling';
 import {Vector3} from '@math.gl/core';
 
 const positions = [
@@ -50,22 +55,22 @@ it('AxisAlignedBoundingBox#constructor computes center if not supplied', () => {
   expect(box.center).toEqual(expectedCenter);
 });
 
-it('AxisAlignedBoundingBox#fromPoints constructs empty box with undefined positions', () => {
-  const box = new AxisAlignedBoundingBox().fromPoints(undefined);
+it('makeAxisAlignedBoundingBoxFromPoints constructs empty box with undefined positions', () => {
+  const box = makeAxisAlignedBoundingBoxFromPoints(undefined);
   expect(box.minimum).toEqual(VECTOR3_ZERO);
   expect(box.maximum).toEqual(VECTOR3_ZERO);
   expect(box.center).toEqual(VECTOR3_ZERO);
 });
 
-it('AxisAlignedBoundingBox#fromPoints constructs empty box with empty positions', () => {
-  const box = new AxisAlignedBoundingBox().fromPoints([]);
+it('makeAxisAlignedBoundingBoxFromPoints constructs empty box with empty positions', () => {
+  const box = makeAxisAlignedBoundingBoxFromPoints([]);
   expect(box.minimum).toEqual(VECTOR3_ZERO);
   expect(box.maximum).toEqual(VECTOR3_ZERO);
   expect(box.center).toEqual(VECTOR3_ZERO);
 });
 
-it('AxisAlignedBoundingBox#fromPoints computes the correct values', () => {
-  const box = new AxisAlignedBoundingBox().fromPoints(positions);
+it('makeAxisAlignedBoundingBoxFromPoints computes the correct values', () => {
+  const box = makeAxisAlignedBoundingBoxFromPoints(positions);
   expect(box.minimum).toEqual(positionsMinimum);
   expect(box.maximum).toEqual(positionsMaximum);
   expect(box.center).toEqual(positionsCenter);
@@ -86,25 +91,17 @@ it('AxisAlignedBoundingBox#clone with box of offset center', () => {
 });
 
 it('AxisAlignedBoundingBox#equals works in all cases', () => {
-  const box = new AxisAlignedBoundingBox(VECTOR3_UNIT_X, VECTOR3_UNIT_Y, VECTOR3_UNIT_Z);
+  const box = new AxisAlignedBoundingBox(VECTOR3_UNIT_X, VECTOR3_UNIT_Y);
   const bogie = new Vector3(2, 3, 4);
-  expect(
-    box.equals(new AxisAlignedBoundingBox(VECTOR3_UNIT_X, VECTOR3_UNIT_Y, VECTOR3_UNIT_Z))
-  ).toEqual(true);
-  expect(box.equals(new AxisAlignedBoundingBox(bogie, VECTOR3_UNIT_Y, VECTOR3_UNIT_Y))).toEqual(
-    false
-  );
-  expect(box.equals(new AxisAlignedBoundingBox(VECTOR3_UNIT_X, bogie, VECTOR3_UNIT_Z))).toEqual(
-    false
-  );
-  expect(box.equals(new AxisAlignedBoundingBox(VECTOR3_UNIT_X, VECTOR3_UNIT_Y, bogie))).toEqual(
-    false
-  );
+  expect(box.equals(new AxisAlignedBoundingBox(VECTOR3_UNIT_X, VECTOR3_UNIT_Y))).toEqual(true);
+  expect(box.equals(new AxisAlignedBoundingBox(bogie, VECTOR3_UNIT_Y))).toEqual(false);
+  expect(box.equals(new AxisAlignedBoundingBox(VECTOR3_UNIT_X, bogie))).toEqual(false);
+  expect(box.equals(new AxisAlignedBoundingBox(VECTOR3_UNIT_X, VECTOR3_UNIT_Y))).toEqual(true);
   expect(box.equals(undefined)).toEqual(false);
 });
 
-it('AxisAlignedBoundingBox#computes the bounding box for a single position', () => {
-  const box = new AxisAlignedBoundingBox().fromPoints([positions[0]]);
+it('makeAxisAlignedBoundingBoxFromPoints computes the bounding box for a single position', () => {
+  const box = makeAxisAlignedBoundingBoxFromPoints([positions[0]]);
   expect(box.minimum).toEqual(positions[0]);
   expect(box.maximum).toEqual(positions[0]);
   expect(box.center).toEqual(positions[0]);
@@ -143,4 +140,15 @@ it('AxisAlignedBoundingBox#intersectPlane throws without a plane', () => {
   expect(() => {
     box.intersectPlane(undefined);
   }).toThrow();
+});
+
+it('AxisAlignedBoundingBox#distanceTo', () => {
+  const minimum = new Vector3(1, 2, 3);
+  const maximum = new Vector3(4, 5, 6);
+  const center = new Vector3(2.5, 3.5, 4.5);
+  const box = new AxisAlignedBoundingBox(minimum, maximum, center);
+
+  expect(box.distanceTo([2.5, 3.5, 4.5])).toEqual(0);
+  expect(box.distanceTo([1, 2, 3])).toEqual(0);
+  expect(box.distanceTo([0, 0, 0])).toEqual(Math.sqrt(14));
 });

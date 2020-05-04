@@ -10,6 +10,7 @@ import {
   BoundingSphere,
   AxisAlignedBoundingBox,
   makeBoundingSphereFromPoints,
+  makeAxisAlignedBoundingBoxFromPoints,
   _PerspectiveFrustum as PerspectiveFrustum,
   INTERSECTION
 } from '@math.gl/culling';
@@ -84,7 +85,7 @@ function testWithAndWithoutPlaneMask(t, culling, bound, intersect) {
 
 test('CullingVolume#box intersections', ttt => {
   ttt.test('CullingVolume#can contain an axis aligned bounding box', t => {
-    const box1 = new AxisAlignedBoundingBox().fromPoints([
+    const box1 = makeAxisAlignedBoundingBoxFromPoints([
       new Vector3(-0.5, 0, -1.25),
       new Vector3(0.5, 0, -1.25),
       new Vector3(-0.5, 0, -1.75),
@@ -96,7 +97,7 @@ test('CullingVolume#box intersections', ttt => {
 
   ttt.test('CullingVolume#can partially contain an axis aligned bounding box', tt => {
     tt.test('CullingVolume#on the far plane', t => {
-      const box2 = new AxisAlignedBoundingBox().fromPoints([
+      const box2 = makeAxisAlignedBoundingBoxFromPoints([
         new Vector3(-0.5, 0, -1.5),
         new Vector3(0.5, 0, -1.5),
         new Vector3(-0.5, 0, -2.5),
@@ -107,7 +108,7 @@ test('CullingVolume#box intersections', ttt => {
     });
 
     tt.test('CullingVolume#on the near plane', t => {
-      const box3 = new AxisAlignedBoundingBox().fromPoints([
+      const box3 = makeAxisAlignedBoundingBoxFromPoints([
         new Vector3(-0.5, 0, -0.5),
         new Vector3(0.5, 0, -0.5),
         new Vector3(-0.5, 0, -1.5),
@@ -118,7 +119,7 @@ test('CullingVolume#box intersections', ttt => {
     });
 
     tt.test('CullingVolume#on the left plane', t => {
-      const box4 = new AxisAlignedBoundingBox().fromPoints([
+      const box4 = makeAxisAlignedBoundingBoxFromPoints([
         new Vector3(-1.5, 0, -1.25),
         new Vector3(0, 0, -1.25),
         new Vector3(-1.5, 0, -1.5),
@@ -129,7 +130,7 @@ test('CullingVolume#box intersections', ttt => {
     });
 
     tt.test('CullingVolume#on the right plane', t => {
-      const box5 = new AxisAlignedBoundingBox().fromPoints([
+      const box5 = makeAxisAlignedBoundingBoxFromPoints([
         new Vector3(0, 0, -1.25),
         new Vector3(1.5, 0, -1.25),
         new Vector3(0, 0, -1.5),
@@ -140,7 +141,7 @@ test('CullingVolume#box intersections', ttt => {
     });
 
     tt.test('CullingVolume#on the top plane', t => {
-      const box6 = new AxisAlignedBoundingBox().fromPoints([
+      const box6 = makeAxisAlignedBoundingBoxFromPoints([
         new Vector3(-0.5, 0, -1.25),
         new Vector3(0.5, 0, -1.25),
         new Vector3(-0.5, 2.0, -1.75),
@@ -151,7 +152,7 @@ test('CullingVolume#box intersections', ttt => {
     });
 
     tt.test('CullingVolume#on the bottom plane', t => {
-      const box7 = new AxisAlignedBoundingBox().fromPoints([
+      const box7 = makeAxisAlignedBoundingBoxFromPoints([
         new Vector3(-0.5, -2.0, -1.25),
         new Vector3(0.5, 0, -1.25),
         new Vector3(-0.5, -2.0, -1.5),
@@ -165,7 +166,7 @@ test('CullingVolume#box intersections', ttt => {
 
   test('CullingVolume#can not contain an axis aligned bounding box', tt => {
     test('CullingVolume#past the far plane', t => {
-      const box8 = new AxisAlignedBoundingBox().fromPoints([
+      const box8 = makeAxisAlignedBoundingBoxFromPoints([
         new Vector3(-0.5, 0, -2.25),
         new Vector3(0.5, 0, -2.25),
         new Vector3(-0.5, 0, -2.75),
@@ -176,7 +177,7 @@ test('CullingVolume#box intersections', ttt => {
     });
 
     test('CullingVolume#before the near plane', t => {
-      const box9 = new AxisAlignedBoundingBox().fromPoints([
+      const box9 = makeAxisAlignedBoundingBoxFromPoints([
         new Vector3(-0.5, 0, -0.25),
         new Vector3(0.5, 0, -0.25),
         new Vector3(-0.5, 0, -0.75),
@@ -187,7 +188,7 @@ test('CullingVolume#box intersections', ttt => {
     });
 
     test('CullingVolume#past the left plane', t => {
-      const box10 = new AxisAlignedBoundingBox().fromPoints([
+      const box10 = makeAxisAlignedBoundingBoxFromPoints([
         new Vector3(-5, 0, -1.25),
         new Vector3(-3, 0, -1.25),
         new Vector3(-5, 0, -1.75),
@@ -198,7 +199,7 @@ test('CullingVolume#box intersections', ttt => {
     });
 
     test('CullingVolume#past the right plane', t => {
-      const box11 = new AxisAlignedBoundingBox().fromPoints([
+      const box11 = makeAxisAlignedBoundingBoxFromPoints([
         new Vector3(3, 0, -1.25),
         new Vector3(5, 0, -1.25),
         new Vector3(3, 0, -1.75),
@@ -209,7 +210,7 @@ test('CullingVolume#box intersections', ttt => {
     });
 
     test('CullingVolume#past the top plane', t => {
-      const box12 = new AxisAlignedBoundingBox().fromPoints([
+      const box12 = makeAxisAlignedBoundingBoxFromPoints([
         new Vector3(-0.5, 3, -1.25),
         new Vector3(0.5, 3, -1.25),
         new Vector3(-0.5, 5, -1.75),
@@ -220,7 +221,7 @@ test('CullingVolume#box intersections', ttt => {
     });
 
     test('CullingVolume#past the bottom plane', t => {
-      const box13 = new AxisAlignedBoundingBox().fromPoints([
+      const box13 = makeAxisAlignedBoundingBoxFromPoints([
         new Vector3(-0.5, -3, -1.25),
         new Vector3(0.5, -3, -1.25),
         new Vector3(-0.5, -5, -1.75),

@@ -13,7 +13,10 @@ export {default as _PerspectiveOffCenterFrustum} from './lib/perspective-off-cen
 export {default as _PerspectiveFrustum} from './lib/perspective-frustum';
 
 export {default as makeBoundingSphereFromPoints} from './algorithms/bounding-sphere-from-points';
-export {default as makeOrientedBoundingBoxFromPoints} from './algorithms/bounding-box-from-points';
+export {
+  makeAxisAlignedBoundingBoxFromPoints,
+  makeOrientedBoundingBoxFromPoints
+} from './algorithms/bounding-box-from-points';
 export {default as computeEigenDecomposition} from './algorithms/compute-eigen-decomposition';
 
 // Deprecated

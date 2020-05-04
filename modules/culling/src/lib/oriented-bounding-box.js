@@ -4,14 +4,12 @@
 import {Vector3, Matrix3} from '@math.gl/core';
 import BoundingSphere from './bounding-sphere';
 import {INTERSECTION} from '../constants';
-import makeOrientedBoundingBoxfromPoints from '../algorithms/bounding-box-from-points';
 
 const scratchVector = new Vector3();
 const scratchOffset = new Vector3();
 const scratchVectorU = new Vector3();
 const scratchVectorV = new Vector3();
 const scratchVectorW = new Vector3();
-const scratchPPrime = new Vector3();
 const scratchCorner = new Vector3();
 const scratchToCenter = new Vector3();
 
@@ -40,10 +38,6 @@ export default class OrientedBoundingBox {
   // Duplicates a OrientedBoundingBox instance.
   clone() {
     return new OrientedBoundingBox(this.center, this.halfAxes);
-  }
-
-  fromPoints(points, result = new OrientedBoundingBox()) {
-    return makeOrientedBoundingBoxfromPoints(points, result);
   }
 
   // Compares the provided OrientedBoundingBox componentwise and returns
@@ -145,35 +139,21 @@ export default class OrientedBoundingBox {
     v.normalize();
     w.normalize();
 
-    const pPrime = scratchPPrime;
-    pPrime.x = offset.dot(u);
-    pPrime.y = offset.dot(v);
-    pPrime.z = offset.dot(w);
-
     let distanceSquared = 0.0;
     let d;
 
-    if (pPrime.x < -uHalf) {
-      d = pPrime.x + uHalf;
-      distanceSquared += d * d;
-    } else if (pPrime.x > uHalf) {
-      d = pPrime.x - uHalf;
+    d = Math.abs(offset.dot(u)) - uHalf;
+    if (d > 0) {
       distanceSquared += d * d;
     }
 
-    if (pPrime.y < -vHalf) {
-      d = pPrime.y + vHalf;
-      distanceSquared += d * d;
-    } else if (pPrime.y > vHalf) {
-      d = pPrime.y - vHalf;
+    d = Math.abs(offset.dot(v)) - vHalf;
+    if (d > 0) {
       distanceSquared += d * d;
     }
 
-    if (pPrime.z < -wHalf) {
-      d = pPrime.z + wHalf;
-      distanceSquared += d * d;
-    } else if (pPrime.z > wHalf) {
-      d = pPrime.z - wHalf;
+    d = Math.abs(offset.dot(w)) - wHalf;
+    if (d > 0) {
       distanceSquared += d * d;
     }
 

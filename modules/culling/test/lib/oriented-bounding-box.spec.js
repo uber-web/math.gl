@@ -6,7 +6,13 @@ import test from 'tape-catch';
 import {tapeEquals, tapeEqualsEpsilon} from 'test/utils/tape-assertions';
 
 import {Vector3, Matrix3, toRadians, _MathUtils} from '@math.gl/core';
-import {BoundingSphere, OrientedBoundingBox, Plane, INTERSECTION} from '@math.gl/culling';
+import {
+  BoundingSphere,
+  OrientedBoundingBox,
+  makeOrientedBoundingBoxFromPoints,
+  Plane,
+  INTERSECTION
+} from '@math.gl/culling';
 
 const ZERO_VECTOR3 = Object.freeze(new Vector3(0, 0, 0));
 const ZERO_MATRIX3 = Object.freeze(new Matrix3([0, 0, 0, 0, 0, 0, 0, 0, 0]));
@@ -84,7 +90,7 @@ test('OrientedBoundingBox#equals works in all cases', t => {
 });
 
 test('OrientedBoundingBox#getBoundingSphere works with a result', t => {
-  const box = new OrientedBoundingBox().fromPoints(spherePositions);
+  const box = makeOrientedBoundingBoxFromPoints(spherePositions);
   const sphere = new BoundingSphere();
   box.getBoundingSphere(sphere);
   tapeEquals(t, sphere.center, positionsCenter);
@@ -94,7 +100,7 @@ test('OrientedBoundingBox#getBoundingSphere works with a result', t => {
 });
 
 test('OrientedBoundingBox#getBoundingSphere works without a result parameter', t => {
-  const box = new OrientedBoundingBox().fromPoints(spherePositions);
+  const box = makeOrientedBoundingBoxFromPoints(spherePositions);
   const sphere = box.getBoundingSphere();
   tapeEquals(t, sphere.center, positionsCenter);
   t.ok(sphere.radius > 1.5);
