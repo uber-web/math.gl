@@ -1,4 +1,3 @@
-/* eslint-disable no-continue */
 import {MapboxTransform} from './mapbox-transform';
 
 import {WebMercatorViewport} from '@math.gl/web-mercator';
@@ -26,7 +25,6 @@ test('Viewport vs Mapbox project', t => {
 
   for (const viewportName in VIEWPORT_PROPS) {
     const viewportProps = VIEWPORT_PROPS[viewportName];
-    if (viewportProps.pitch > 60) continue;
 
     for (const {title, lngLat} of TEST_CASES) {
       const viewport = new WebMercatorViewport(viewportProps);
@@ -49,7 +47,6 @@ test('Viewport vs Mapbox unproject', t => {
 
   for (const viewportName in VIEWPORT_PROPS) {
     const viewportProps = VIEWPORT_PROPS[viewportName];
-    if (viewportProps.pitch > 60) continue;
 
     for (const {title, lngLat} of TEST_CASES) {
       const transform = new MapboxTransform(viewportProps);
@@ -71,7 +68,6 @@ test('Viewport vs Mapbox unproject', t => {
 test('Viewport vs Mapbox project 3D', t => {
   for (const viewportName in VIEWPORT_PROPS) {
     const viewportProps = VIEWPORT_PROPS[viewportName];
-    if (viewportProps.pitch > 60) continue;
 
     const viewport = new WebMercatorViewport(viewportProps);
     const transform = new MapboxTransform(viewportProps);
@@ -93,8 +89,6 @@ test('Viewport vs Mapbox project 3D', t => {
 test('Viewport/Mapbox getLocationAtPoint', t => {
   for (const viewportName in VIEWPORT_PROPS) {
     const viewportProps = VIEWPORT_PROPS[viewportName];
-    if (viewportProps.pitch > 60) continue;
-
     for (const {title, lngLat} of TEST_CASES) {
       const viewport = new WebMercatorViewport(viewportProps);
       const llp = viewport.getLocationAtPoint({lngLat, pos: [100, 100]});

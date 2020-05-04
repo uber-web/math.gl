@@ -235,8 +235,21 @@ function getDiff(value, baseValue, scale) {
 }
 
 test('getProjectionParameters', t => {
-  for (const vc in VIEWPORT_PROPS) {
-    const props = VIEWPORT_PROPS[vc];
+  const TEST_CASES = {
+    ...VIEWPORT_PROPS,
+    extremePitched: {
+      latitude: 37.75,
+      longitude: -122.43,
+      zoom: 11.5,
+      pitch: 80,
+      bearing: 0,
+      width: 800,
+      height: 600
+    }
+  };
+
+  for (const vc in TEST_CASES) {
+    const props = TEST_CASES[vc];
 
     // TODO - for now, just tests that fields are valid number
     const {fov, aspect, focalDistance, near, far} = getProjectionParameters(props);

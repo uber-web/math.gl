@@ -16,15 +16,6 @@ export default {
     width: 800,
     height: 600
   },
-  extremePitched: {
-    latitude: 37.75,
-    longitude: -122.43,
-    zoom: 11.5,
-    pitch: 80,
-    bearing: 0,
-    width: 800,
-    height: 600
-  },
   rotated: {
     latitude: 37.7749,
     longitude: -122.4194,
