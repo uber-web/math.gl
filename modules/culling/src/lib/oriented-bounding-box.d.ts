@@ -20,8 +20,6 @@ export default class OrientedBoundingBox {
   // Duplicates a OrientedBoundingBox instance.
   clone(): OrientedBoundingBox;
 
-  fromPoints(points: readonly number[][]): OrientedBoundingBox;
-
   // Compares the provided OrientedBoundingBox componentwise and returns
   equals(right: OrientedBoundingBox): boolean;
 
