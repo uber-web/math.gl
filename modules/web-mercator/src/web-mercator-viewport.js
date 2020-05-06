@@ -1,20 +1,23 @@
 // View and Projection Matrix calculations for mapbox-js style map view properties
-import Viewport from './viewport';
+import {createMat4} from './math-utils';
 
 import {
   zoomToScale,
   pixelsToWorld,
   lngLatToWorld,
   worldToLngLat,
+  worldToPixels,
   getProjectionMatrix,
   getDistanceScales,
   getViewMatrix
 } from './web-mercator-utils';
 import fitBounds from './fit-bounds';
 
+import * as mat4 from 'gl-matrix/mat4';
 import * as vec2 from 'gl-matrix/vec2';
 
-export default class WebMercatorViewport extends Viewport {
+export default class WebMercatorViewport {
+  // eslint-disable-next-line max-statements
   constructor(
     {
       // Map state
@@ -42,7 +45,7 @@ export default class WebMercatorViewport extends Viewport {
     const center = lngLatToWorld([longitude, latitude]);
     center[2] = 0;
 
-    const projectionMatrix = getProjectionMatrix({
+    this.projectionMatrix = getProjectionMatrix({
       width,
       height,
       pitch,
@@ -51,7 +54,7 @@ export default class WebMercatorViewport extends Viewport {
       farZMultiplier
     });
 
-    const viewMatrix = getViewMatrix({
+    this.viewMatrix = getViewMatrix({
       height,
       scale,
       center,
@@ -60,20 +63,124 @@ export default class WebMercatorViewport extends Viewport {
       altitude
     });
 
-    super({width, height, scale, viewMatrix, projectionMatrix});
-
     // Save parameters
+    this.width = width;
+    this.height = height;
+    this.scale = scale;
+
     this.latitude = latitude;
     this.longitude = longitude;
     this.zoom = zoom;
     this.pitch = pitch;
     this.bearing = bearing;
     this.altitude = altitude;
-
     this.center = center;
-    this.unitsPerMeter = getDistanceScales(this).unitsPerMeter[2];
+
+    this.distanceScales = getDistanceScales(this);
+
+    this._initMatrices();
+
+    // Bind methods for easy access
+    this.equals = this.equals.bind(this);
+    this.project = this.project.bind(this);
+    this.unproject = this.unproject.bind(this);
+    this.projectPosition = this.projectPosition.bind(this);
+    this.unprojectPosition = this.unprojectPosition.bind(this);
 
     Object.freeze(this);
+  }
+
+  _initMatrices() {
+    const {width, height, projectionMatrix, viewMatrix} = this;
+
+    // Note: As usual, matrix operations should be applied in "reverse" order
+    // since vectors will be multiplied in from the right during transformation
+    const vpm = createMat4();
+    mat4.multiply(vpm, vpm, projectionMatrix);
+    mat4.multiply(vpm, vpm, viewMatrix);
+    this.viewProjectionMatrix = vpm;
+
+    // Calculate matrices and scales needed for projection
+    /**
+     * Builds matrices that converts preprojected lngLats to screen pixels
+     * and vice versa.
+     * Note: Currently returns bottom-left coordinates!
+     * Note: Starts with the GL projection matrix and adds steps to the
+     *       scale and translate that matrix onto the window.
+     * Note: WebGL controls clip space to screen projection with gl.viewport
+     *       and does not need this step.
+     */
+    const m = createMat4();
+
+    // matrix for conversion from location to screen coordinates
+    mat4.scale(m, m, [width / 2, -height / 2, 1]);
+    mat4.translate(m, m, [1, -1, 0]);
+    mat4.multiply(m, m, vpm);
+
+    const mInverse = mat4.invert(createMat4(), m);
+    if (!mInverse) {
+      throw new Error('Pixel project matrix not invertible');
+    }
+
+    this.pixelProjectionMatrix = m;
+    this.pixelUnprojectionMatrix = mInverse;
+  }
+
+  // Two viewports are equal if width and height are identical, and if
+  // their view and projection matrices are (approximately) equal.
+  equals(viewport) {
+    if (!(viewport instanceof WebMercatorViewport)) {
+      return false;
+    }
+
+    return (
+      viewport.width === this.width &&
+      viewport.height === this.height &&
+      mat4.equals(viewport.projectionMatrix, this.projectionMatrix) &&
+      mat4.equals(viewport.viewMatrix, this.viewMatrix)
+    );
+  }
+
+  // Projects xyz (possibly latitude and longitude) to pixel coordinates in window
+  // using viewport projection parameters
+  project(xyz, {topLeft = true} = {}) {
+    const worldPosition = this.projectPosition(xyz);
+    const coord = worldToPixels(worldPosition, this.pixelProjectionMatrix);
+
+    const [x, y] = coord;
+    const y2 = topLeft ? y : this.height - y;
+    return xyz.length === 2 ? [x, y2] : [x, y2, coord[2]];
+  }
+
+  // Unproject pixel coordinates on screen onto world coordinates,
+  // (possibly [lon, lat]) on map.
+  unproject(xyz, {topLeft = true, targetZ = undefined} = {}) {
+    const [x, y, z] = xyz;
+
+    const y2 = topLeft ? y : this.height - y;
+    const targetZWorld = targetZ && targetZ * this.distanceScales.unitsPerMeter[2];
+    const coord = pixelsToWorld([x, y2, z], this.pixelUnprojectionMatrix, targetZWorld);
+    const [X, Y, Z] = this.unprojectPosition(coord);
+
+    if (Number.isFinite(z)) {
+      return [X, Y, Z];
+    }
+    return Number.isFinite(targetZ) ? [X, Y, targetZ] : [X, Y];
+  }
+
+  // NON_LINEAR PROJECTION HOOKS
+  // Used for web meractor projection
+
+  projectPosition(xyz) {
+    const [X, Y] = lngLatToWorld(xyz);
+    const Z = (xyz[2] || 0) * this.distanceScales.unitsPerMeter[2];
+    return [X, Y, Z];
+  }
+
+  unprojectPosition(xyz) {
+    const [X, Y] = worldToLngLat(xyz);
+    const Z = (xyz[2] || 0) * this.distanceScales.metersPerUnit[2];
+    return [X, Y, Z];
   }
 
   // Project [lng,lat] on sphere onto [x,y] on 512*512 Mercator Zoom 0 tile.

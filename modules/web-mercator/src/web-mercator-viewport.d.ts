@@ -1,5 +1,3 @@
-import Viewport from './viewport';
-
 type WebMercatorViewportOptions = {
   // Map state
   width: number;
@@ -20,7 +18,7 @@ type WebMercatorViewportOptions = {
  * Note: `Viewport` instances are immutable in the sense that they only have accessors.
  * A new viewport instance should be created if any parameters have changed.
  */
-export default class WebMercatorViewport extends Viewport {
+export default class WebMercatorViewport {
   latitude: number;
   longitude: number;
   zoom: number;
@@ -29,6 +27,20 @@ export default class WebMercatorViewport extends Viewport {
   altitude: number;
 
   center: number[];
+
+  width: number;
+  height: number;
+  scale: number;
+  distanceScales: {
+    unitsPerMeter: number[]
+  };
+
+  viewMatrix: number[];
+  projectionMatrix: number[];
+
+  viewProjectionMatrix: number[];
+  pixelProjectionMatrix: number[];
+  pixelUnprojectionMatrix: number[];
 
   /**
    * @classdesc
@@ -60,6 +72,40 @@ export default class WebMercatorViewport extends Viewport {
    *    to check values before instantiating a Viewport.
    */
   constructor(options?: WebMercatorViewportOptions);
+
+  /** Two viewports are equal if width and height are identical, and if
+   * their view and projection matrices are (approximately) equal.
+   */
+  equals(viewport: WebMercatorViewport | null): boolean;
+
+  /**
+   * Projects xyz (possibly latitude and longitude) to pixel coordinates in window
+   * using viewport projection parameters
+   * - [longitude, latitude] to [x, y]
+   * - [longitude, latitude, Z] => [x, y, z]
+   * Note: By default, returns top-left coordinates for canvas/SVG type render
+   *
+   * @param lngLatZ - [lng, lat] or [lng, lat, Z]
+   * @param options - options
+   * @param options.topLeft=true - Whether projected coords are top left
+   * @return - screen coordinates [x, y] or [x, y, z], z as pixel depth
+   */
+  project(lngLatZ: number[], options?: {topLeft?: boolean}): number[];
+
+  /**
+   * Unproject pixel coordinates on screen onto world coordinates, possibly `[lon, lat]` on map.
+   *
+   * - [x, y] => [lng, lat]
+   * - [x, y, z] => [lng, lat, Z]
+   *
+   * @param xyz - screen coordinates, z as pixel depth
+   * @param options - options
+   * @param options.topLeft=true - Whether projected coords are top left
+   * @param options.targetZ=0 - If pixel depth is unknown, targetZ is used as
+   *   the elevation plane to unproject onto
+   * @return - [lng, lat, Z] or [X, Y, Z]
+   */
+  unproject(xyz: number[], options?: {topLeft?: boolean; targetZ?: number}): number[];
 
   /**
    * Project [lng,lat] on sphere onto [x,y] on 512*512 Mercator Zoom 0 tile.

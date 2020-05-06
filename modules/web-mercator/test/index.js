@@ -1,7 +1,5 @@
 // Mercator Utils
 require('./spec/web-mercator-utils.spec');
-// Viewport base class test cases
-require('./spec/viewport.spec');
 // Perspective Viewport test cases
 require('./spec/web-mercator-viewport.spec');
 // Specific mercator test cases
