@@ -91,6 +91,19 @@ Returns:
  - `[longitude, latitude]`
 
 
+##### `getBounds(options)`
+
+Returns the bounding box of the current visible area.
+
+* `options` (Object, optional)
+  + `options.z` (Number, optional) - The altitude at which the bounds should be calculated. Default `0`.
+  + `options.quad` (Boolean, optional) - If `pitch` or `bearing` is not zero, the visible region is not an axis-aligned rectangle. This option controls the format of the returned bounding box, see below. Default `false`.
+
+Returns:
+* By default: `[[lon, lat], [lon, lat]]` as the south west and north east corners of the smallest orthogonal bounds that encompasses the visible region.
+* If `options.quad` is `true`: an array of 4 corners in `[lon, lat]` that define the visible region.
+
+
 ##### `fitBounds(bounds, options)`
 
 Get a new flat viewport that fits around the given bounding box.
