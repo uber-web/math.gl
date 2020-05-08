@@ -6,12 +6,10 @@
 // without publishing or npm linking, with conveniences such hot reloading etc.
 const webpack = require('webpack');
 const resolve = require('path').resolve;
-// eslint-disable-next-line import/no-extraneous-dependencies
 const ALIASES = require('ocular-dev-tools/config/ocular.config')({
   root: resolve(__dirname, '..')
 }).aliases;
 
-// eslint-disable-next-line import/no-extraneous-dependencies
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 // Support for hot reloading changes to the library:
