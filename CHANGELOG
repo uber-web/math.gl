@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v3.1.5 - May 11, 2020
+
+- Remove TypeScript definitions (#148)
+
 ## v3.1.4 - May 7, 2020
 
 - Fix web mercator projection far plane at high pitch (#142)
