@@ -12,8 +12,7 @@
   ],
   "scripts": {
     "bootstrap": "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true yarn && ocular-bootstrap",
-    "clean": "ocular-clean",
-    "build": "ocular-build",
+    "build": "ocular-clean && ocular-build",
     "cover": "ocular-test cover",
     "lint": "ocular-lint",
     "metrics": "ocular-metrics",
