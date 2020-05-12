@@ -1,3 +1,5 @@
+import { Bounds, FitBoundsOptions } from "./fit-bounds";
+
 type WebMercatorViewportOptions = {
   // Map state
   width: number;
@@ -141,7 +143,7 @@ export default class WebMercatorViewport {
    *   Specifies a point on the screen.
    * @return [lng,lat] new map center.
    */
-  getMapCenterByLngLatPosition({lngLat, pos}): number[];
+  getMapCenterByLngLatPosition({lngLat, pos}: {lngLat: number[], pos: number[]}): number[];
 
   /** @deprecated Legacy method name */
   getLocationAtPoint({lngLat, pos}): number[];
@@ -156,5 +158,8 @@ export default class WebMercatorViewport {
    *    [x, y] measured in pixels.
    * @returns {WebMercatorViewport}
    */
-  fitBounds(bounds, options?: {padding?: number; offset?: [number, number]}): WebMercatorViewport;
+  fitBounds(
+    bounds: [[number, number], [number, number]],
+    options?: Omit<FitBoundsOptions, 'width' | 'height' | 'bounds'>,
+  ): WebMercatorViewport;
 }
