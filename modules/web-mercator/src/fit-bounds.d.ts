@@ -29,7 +29,7 @@ type Padding = {
 type FitBoundsOptions = {
   width: number;
   height: number;
-  bounds: number;
+  bounds: [[number, number], [number, number]];
   minExtent?: number; // 0.01 would be about 1000 meters (degree is ~110KM)
   maxZoom?: number; // ~x4,000,000 => About 10 meter extents
   // options
