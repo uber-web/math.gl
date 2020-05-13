@@ -6,7 +6,7 @@
  * @property left - Padding from left in pixels to add to the given bounds
  * @property right - Padding from right in pixels to add to the given bounds
  */
-type Padding = {
+export type Padding = {
   top: number;
   bottom: number;
   left: number;
@@ -26,10 +26,10 @@ type Padding = {
  *  properties defining the padding.
  * @param [options.offset] - The center of the given bounds relative to the map's center,
  */
-type FitBoundsOptions = {
+export type FitBoundsOptions = {
   width: number;
   height: number;
-  bounds: number;
+  bounds: [[number, number], [number, number]];
   minExtent?: number; // 0.01 would be about 1000 meters (degree is ~110KM)
   maxZoom?: number; // ~x4,000,000 => About 10 meter extents
   // options
@@ -37,7 +37,7 @@ type FitBoundsOptions = {
   offset?: number[];
 };
 
-type Bounds = {
+export type Bounds = {
   longitude: number;
   latitude: number;
   zoom: number;
