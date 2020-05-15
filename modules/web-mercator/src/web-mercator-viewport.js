@@ -217,17 +217,17 @@ export default class WebMercatorViewport {
     return new WebMercatorViewport({width, height, longitude, latitude, zoom});
   }
 
-  getBounds(options = {}) {
-    const {quad = false, z = 0} = options;
+  getBounds(options) {
+    const corners = this.getBoundingRegion(options);
 
-    const corners = getBounds(this, z);
-    if (quad) {
-      return corners;
-    }
     const west = Math.min(...corners.map(p => p[0]));
     const east = Math.max(...corners.map(p => p[0]));
     const south = Math.min(...corners.map(p => p[1]));
     const north = Math.max(...corners.map(p => p[1]));
     return [[west, south], [east, north]];
+  }
+
+  getBoundingRegion(options = {}) {
+    return getBounds(this, options.z || 0);
   }
 }

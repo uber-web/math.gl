@@ -109,22 +109,21 @@ test('getBounds', t => {
   t.end();
 });
 
-test('WebMercatorViewport.fitBounds', t => {
+test('WebMercatorViewport.getBounds/getBoundingRegion', t => {
   for (const testCase of GETBOUNDS_TEST_CASES) {
     // @ts-ignore
     const viewport = new WebMercatorViewport(testCase.viewportProps);
-    let opts = testCase.z ? {z: testCase.z} : undefined;
+    const opts = testCase.z ? {z: testCase.z} : undefined;
 
-    let result = viewport.getBounds(opts);
+    const bounds = viewport.getBounds(opts);
     t.deepEqual(
-      toLowPrecision(result),
+      toLowPrecision(bounds),
       toLowPrecision(testCase.rect),
       `${testCase.title}: bounding box`
     );
 
-    opts = {...opts, quad: true};
-    result = viewport.getBounds(opts);
-    t.deepEqual(toLowPrecision(result), toLowPrecision(testCase.quad), `${testCase.title}: quad`);
+    const region = viewport.getBoundingRegion(opts);
+    t.deepEqual(toLowPrecision(region), toLowPrecision(testCase.quad), `${testCase.title}: quad`);
   }
   t.end();
 });

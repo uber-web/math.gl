@@ -4,7 +4,11 @@ import {transformVector} from './math-utils';
 
 const DEGREES_TO_RADIANS = Math.PI / 180;
 
-// Returns the quad at the intersection of the frustum and the goven z plane
+/*
+ * Returns the quad at the intersection of the frustum and the given z plane
+ * @param {WebMercatorViewport} viewport
+ * @param {Number} z - elevation in meters
+ */
 export default function getBounds(viewport, z = 0) {
   const {width, height, unproject} = viewport;
   const unprojectOps = {targetZ: z};
@@ -29,6 +33,12 @@ export default function getBounds(viewport, z = 0) {
   return [bottomLeft, bottomRight, topRight, topLeft];
 }
 
+/*
+ * Find a point on the far clipping plane of the viewport
+ * @param {WebMercatorViewport} viewport
+ * @param {Number} x - projected x in screen space
+ * @param {Number} targetZ - the elevation of the point in meters
+ */
 function unprojectOnFarPlane(viewport, x, targetZ) {
   const {pixelUnprojectionMatrix} = viewport;
   const coord0 = transformVector(pixelUnprojectionMatrix, [x, 0, 1, 1]);

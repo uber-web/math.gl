@@ -167,8 +167,15 @@ export default class WebMercatorViewport {
    * Returns the bounding box of the viewport.
    * @param {Object} [options]
    * @param {Number} [options.z] - The altitude at which the bounds should be calculated.
-   * @param {Boolean} [options.quad] - If `true`, returns the four corners of the bounds instead of an aligned rectangle.
-   * @returns {Array} bounds - [[lon, lat], [lon, lat]], or 4 points if `options.quad: true`
+   * @returns {Array} bounds - [[lon, lat], [lon, lat]]
    */
-  getBounds(options?: {z?: number; quad?: boolean}) : Array<number[]>;
+  getBounds(options?: {z?: number}) : Array<number[]>;
+
+  /**
+   * Returns the bounding box of the viewport.
+   * @param {Object} [options]
+   * @param {Number} [options.z] - The altitude at which the bounds should be calculated.
+   * @returns {Array} an array of 4 points that define the visible region
+   */
+  getBoundingRegion(options?: {z?: number}) : Array<number[]>;
 }
