@@ -12,6 +12,7 @@ import {
   getViewMatrix
 } from './web-mercator-utils';
 import fitBounds from './fit-bounds';
+import getBounds from './get-bounds';
 
 import * as mat4 from 'gl-matrix/mat4';
 import * as vec2 from 'gl-matrix/vec2';
@@ -214,5 +215,19 @@ export default class WebMercatorViewport {
     const {width, height} = this;
     const {longitude, latitude, zoom} = fitBounds(Object.assign({width, height, bounds}, options));
     return new WebMercatorViewport({width, height, longitude, latitude, zoom});
+  }
+
+  getBounds(options) {
+    const corners = this.getBoundingRegion(options);
+
+    const west = Math.min(...corners.map(p => p[0]));
+    const east = Math.max(...corners.map(p => p[0]));
+    const south = Math.min(...corners.map(p => p[1]));
+    const north = Math.max(...corners.map(p => p[1]));
+    return [[west, south], [east, north]];
+  }
+
+  getBoundingRegion(options = {}) {
+    return getBounds(this, options.z || 0);
   }
 }

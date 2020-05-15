@@ -162,4 +162,20 @@ export default class WebMercatorViewport {
     bounds: [[number, number], [number, number]],
     options?: Omit<FitBoundsOptions, 'width' | 'height' | 'bounds'>,
   ): WebMercatorViewport;
+
+  /**
+   * Returns the bounding box of the viewport.
+   * @param {Object} [options]
+   * @param {Number} [options.z] - The altitude at which the bounds should be calculated.
+   * @returns {Array} bounds - [[lon, lat], [lon, lat]]
+   */
+  getBounds(options?: {z?: number}) : Array<number[]>;
+
+  /**
+   * Returns the bounding box of the viewport.
+   * @param {Object} [options]
+   * @param {Number} [options.z] - The altitude at which the bounds should be calculated.
+   * @returns {Array} an array of 4 points that define the visible region
+   */
+  getBoundingRegion(options?: {z?: number}) : Array<number[]>;
 }

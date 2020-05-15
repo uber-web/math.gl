@@ -4,6 +4,8 @@ require('./spec/web-mercator-utils.spec');
 require('./spec/web-mercator-viewport.spec');
 // Specific mercator test cases
 require('./spec/mercator-project-unproject.spec');
+// Get bounds
+require('./spec/get-bounds.spec');
 // Fit bounds
 require('./spec/fit-bounds.spec');
 // Normalization

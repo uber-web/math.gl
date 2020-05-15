@@ -91,6 +91,26 @@ Returns:
  - `[longitude, latitude]`
 
 
+##### `getBounds(options)`
+
+Returns the axis-aligned bounding box of the current visible area.
+
+* `options` (Object, optional)
+  + `options.z` (Number, optional) - To calculate a bounding volume for fetching 3D data, this option can be used to get the bounding box at a specific elevation. Default `0`.
+
+Returns:
+* `[[lon, lat], [lon, lat]]` as the south west and north east corners of the smallest orthogonal bounds that encompasses the visible region.
+
+##### `getBoundingRegion(options)`
+
+Returns the vertices of the current visible region.
+
+* `options` (Object, optional)
+  + `options.z` (Number, optional) - To calculate a bounding volume for fetching 3D data, this option can be used to get the bounding region at a specific elevation. Default `0`.
+
+Returns:
+* An array of 4 corners in `[longitude, latitude, altitude]` that define the visible region.
+
 ##### `fitBounds(bounds, options)`
 
 Get a new flat viewport that fits around the given bounding box.
