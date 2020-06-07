@@ -2,7 +2,7 @@ import {Polygon} from "./cut-by-grid";
 
 export function cutPolylineByMercatorBounds(
   positions : Array<number>,
-  options : {
+  options? : {
     size? : number,
     startIndex? : number,
     endIndex? : number,
@@ -13,10 +13,11 @@ export function cutPolylineByMercatorBounds(
 export function cutPolygonByMercatorBounds(
   positions : Array<number>,
   holeIndices : Array<number> | null,
-  options : {
+  options? : {
     size? : number,
     normalize? : boolean,
-    maxLatitude: number
+    maxLatitude?: number,
+    vertexTypes? : boolean
   }
 ) : Array<Polygon>;
 

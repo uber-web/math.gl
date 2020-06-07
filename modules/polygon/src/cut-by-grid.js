@@ -54,20 +54,26 @@ export function cutPolylineByGrid(positions, options = {}) {
   return broken ? result : result[0];
 }
 
+const TYPE_VERTEX = 0;
+const TYPE_EDGE = 1;
+const TYPE_INSIDE = 2;
+const FLAG_NEW_EDGE = 4;
+const TYPE_ALL = TYPE_VERTEX | TYPE_EDGE | TYPE_INSIDE;
+
 export function cutPolygonByGrid(positions, holeIndices, options = {}) {
   if (!positions.length) {
     // input is empty
     return [];
   }
-  const {size = 2, gridResolution = 10, gridOffset = [0, 0]} = options;
+  const {size = 2, gridResolution = 10, gridOffset = [0, 0], vertexTypes = false} = options;
   const result = [];
-  const queue = [{pos: positions, holes: holeIndices || []}];
+  const queue = [{pos: positions, types: vertexTypes && [], holes: holeIndices || []}];
   const bbox = [[], []];
   let cell = [];
 
   // Recursively bisect polygon until every part fit in a single grid cell
   while (queue.length) {
-    const {pos, holes} = queue.shift();
+    const {pos, types, holes} = queue.shift();
 
     getBoundingBox(pos, size, bbox);
     cell = getGridCell(bbox[0], gridResolution, gridOffset, cell);
@@ -75,55 +81,90 @@ export function cutPolygonByGrid(positions, holeIndices, options = {}) {
 
     if (code) {
       // Split the outer ring at the boundary
-      let parts = bisectPolygon(pos, size, 0, holes[0] || pos.length, cell, code);
-      const polygonLow = {pos: parts[0], holes: []};
-      const polygonHigh = {pos: parts[1], holes: []};
+      let parts = bisectPolygon(pos, types, size, 0, holes[0] || pos.length, cell, code);
+      const polygonLow = {pos: parts[0].pos, types: parts[0].types, holes: []};
+      const polygonHigh = {pos: parts[1].pos, types: parts[1].types, holes: []};
       queue.push(polygonLow, polygonHigh);
 
       // Split each hole at the boundary
       for (let i = 0; i < holes.length; i++) {
-        parts = bisectPolygon(pos, size, holes[i], holes[i + 1] || pos.length, cell, code);
+        parts = bisectPolygon(pos, types, size, holes[i], holes[i + 1] || pos.length, cell, code);
 
         if (parts[0]) {
           polygonLow.holes.push(polygonLow.pos.length);
-          polygonLow.pos = polygonLow.pos.concat(parts[0]);
+          polygonLow.pos = polygonLow.pos.concat(parts[0].pos);
+          if (vertexTypes) {
+            polygonLow.types = polygonLow.types.concat(parts[0].types);
+          }
         }
         if (parts[1]) {
           polygonHigh.holes.push(polygonHigh.pos.length);
-          polygonHigh.pos = polygonHigh.pos.concat(parts[1]);
+          polygonHigh.pos = polygonHigh.pos.concat(parts[1].pos);
+          if (vertexTypes) {
+            polygonHigh.types = polygonHigh.types.concat(parts[1].types);
+          }
         }
       }
     } else {
       // Polygon fits in a single cell, no more processing required
-      result.push(holes.length ? {positions: pos, holeIndices: holes} : pos);
+      const polygon = {positions: pos};
+      if (vertexTypes) {
+        for (let i = 0; i < types.length; i++) {
+          types[i] = types[i] & TYPE_ALL;
+        }
+        polygon.vertexTypes = types;
+      }
+      if (holes.length) {
+        polygon.holeIndices = holes;
+      }
+
+      result.push(polygon);
     }
   }
   return result;
 }
 
+// vertexTypes:
+// TYPE_VERTEX - vertex from the original polygon
+// TYPE_EDGE - interpolated point on the edge of the original polygon
+// TYPE_INSIDE - inside the original polygon
+// FLAG_NEW_EDGE marks a vertex if the edge between this vertex and the next is added by slicing
 // eslint-disable-next-line max-params
-function bisectPolygon(positions, size, startIndex, endIndex, bbox, edge) {
+function bisectPolygon(positions, vertexTypes, size, startIndex, endIndex, bbox, edge) {
   const numPoints = (endIndex - startIndex) / size;
   const resultLow = [];
   const resultHigh = [];
+  const typesLow = vertexTypes && [];
+  const typesHigh = vertexTypes && [];
   const scratchPoint = [];
 
   let p;
   let side;
+  let type;
   const prev = getPointAtIndex(positions, numPoints - 1, size, startIndex);
   let prevSide = Math.sign(edge & 8 ? prev[1] - bbox[3] : prev[0] - bbox[2]);
+  let prevType = vertexTypes && vertexTypes[endIndex / size - 1];
   let lowPointCount = 0;
   let highPointCount = 0;
 
   for (let i = 0; i < numPoints; i++) {
     p = getPointAtIndex(positions, i, size, startIndex, p);
     side = Math.sign(edge & 8 ? p[1] - bbox[3] : p[0] - bbox[2]);
+    type = (vertexTypes && vertexTypes[startIndex / size + i]) || TYPE_VERTEX;
 
     // if segment goes through the boundary, add an intersection
     if (side && prevSide && prevSide !== side) {
       intersect(prev, p, edge, bbox, scratchPoint);
       push(resultLow, scratchPoint);
       push(resultHigh, scratchPoint);
+      if (vertexTypes) {
+        const insertedType =
+          type & TYPE_INSIDE || prevType & TYPE_INSIDE || prevType & FLAG_NEW_EDGE
+            ? TYPE_INSIDE
+            : TYPE_EDGE;
+        typesLow.push(insertedType);
+        typesHigh.push(insertedType);
+      }
     }
 
     if (side <= 0) {
@@ -135,11 +176,28 @@ function bisectPolygon(positions, size, startIndex, endIndex, bbox, edge) {
       highPointCount += side;
     }
 
+    if (vertexTypes) {
+      if (side <= 0) {
+        typesLow.push(type);
+      } else {
+        typesLow[typesLow.length - 1] |= FLAG_NEW_EDGE;
+      }
+      if (side >= 0) {
+        typesHigh.push(type);
+      } else {
+        typesHigh[typesHigh.length - 1] |= FLAG_NEW_EDGE;
+      }
+    }
+
     copy(prev, p);
     prevSide = side;
+    prevType = type;
   }
 
-  return [lowPointCount ? resultLow : null, highPointCount ? resultHigh : null];
+  return [
+    lowPointCount ? {pos: resultLow, types: typesLow} : null,
+    highPointCount ? {pos: resultHigh, types: typesHigh} : null
+  ];
 }
 
 function getGridCell(p, gridResolution, gridOffset, out) {

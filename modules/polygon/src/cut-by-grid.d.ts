@@ -1,8 +1,8 @@
-type Polygon = Array<number> | {positions: Array<number>, holeIndices: Array<number>};
+type Polygon = {positions: Array<number>, holeIndices?: Array<number>, vertexTypes?: Array<Number>};
 
 export function cutPolylineByGrid(
   positions : Array<number>,
-  options : {
+  options? : {
     size? : number,
     broken? : boolean,
     gridResolution? : number,
@@ -15,9 +15,10 @@ export function cutPolylineByGrid(
 export function cutPolygonByGrid(
   positions : Array<number>,
   holeIndices : Array<number> | null,
-  options : {
+  options? : {
     size? : number,
     gridResolution? : number,
-    gridOffset? : [number, number]
+    gridOffset? : [number, number],
+    vertexTypes? : boolean
   }
 ) : Array<Polygon>;

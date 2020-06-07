@@ -97,25 +97,26 @@ test('subdivide polyline from partial array', t => {
 });
 
 function arePolygonsEqual(p1, p2) {
-  const positions1 = p1.positions || p1;
-  const positions2 = p2.positions || p2;
-  const holeIndices1 = p1.holeIndices || [];
-  const holeIndices2 = p2.holeIndices || [];
+  const positions1 = p1.positions;
+  const positions2 = p2.positions;
+  const holeIndices1 = p1.holeIndices || null;
+  const holeIndices2 = p2.holeIndices || null;
 
   return equals(positions1, positions2) && equals(holeIndices1, holeIndices2);
 }
 
+// Debug with https://codepen.io/Pessimistress/pen/BaNOmKM
 test('subdivide polygon', t => {
   const result = cutPolygonByGrid(flatten([[5, 20], [20, 5], [5, -10]]));
 
   t.comment(result);
   const expected = [
-    [5, 0, 10, 0, 10, -5, 5, -10],
-    [10, 0, 15, 0, 10, -5],
-    [10, 0, 5, 0, 5, 10, 10, 10],
-    [10, 0, 10, 10, 15, 10, 20, 5, 15, 0],
-    [10, 10, 5, 10, 5, 20, 10, 15],
-    [10, 10, 10, 15, 15, 10]
+    {positions: [5, 0, 10, 0, 10, -5, 5, -10]},
+    {positions: [10, 0, 15, 0, 10, -5]},
+    {positions: [10, 0, 5, 0, 5, 10, 10, 10]},
+    {positions: [10, 0, 10, 10, 15, 10, 20, 5, 15, 0]},
+    {positions: [10, 10, 5, 10, 5, 20, 10, 15]},
+    {positions: [10, 10, 10, 15, 15, 10]}
   ];
 
   t.is(result.length, expected.length, `should return ${expected.length} polygons`);
@@ -131,6 +132,54 @@ test('subdivide polygon - empty', t => {
   t.end();
 });
 
+test('subdivide polygon#vertexTypes', t => {
+  // This polygon tests:
+  // - vertex on grid intersection
+  // - interpolated edge point on grid intersection
+  // - subpolygon that is entirely inside
+  const testPolygon = [[-10, 20], [20, 10], [5, -10], [5, 5], [12, 5], [5, 12]];
+  const testPolygonEdges = [
+    [testPolygon[0], testPolygon[1]],
+    [testPolygon[1], testPolygon[2]],
+    [testPolygon[2], testPolygon[0]],
+    [testPolygon[3], testPolygon[4]],
+    [testPolygon[4], testPolygon[5]],
+    [testPolygon[5], testPolygon[3]]
+  ];
+  const displayString = {
+    0: 'vertex',
+    1: 'on edge',
+    2: 'inside'
+  };
+  const getType = p => {
+    if (testPolygon.find(p0 => p0[0] === p[0] && p0[1] === p[1])) {
+      return 0;
+    }
+    if (
+      testPolygonEdges.find(([p0, p1]) =>
+        equals(Math.atan2(p0[1] - p[1], p0[0] - p[0]), Math.atan2(p[1] - p1[1], p[0] - p1[0]))
+      )
+    ) {
+      return 1;
+    }
+    return 2;
+  };
+
+  const result = cutPolygonByGrid(flatten(testPolygon), [6], {
+    vertexTypes: true
+  });
+
+  for (const polygon of result) {
+    for (let i = 0; i < polygon.vertexTypes.length; i++) {
+      const position = polygon.positions.slice(i * 2, i * 2 + 2);
+      const type = polygon.vertexTypes[i];
+      t.is(type, getType(position), `vertex should be ${displayString[type]}`);
+    }
+  }
+
+  t.end();
+});
+
 test('subdivide polygon with custom grid', t => {
   const result = cutPolygonByGrid(flatten([[5, 20], [20, 5], [5, -10]]), null, {
     gridResolution: 20,
@@ -138,7 +187,7 @@ test('subdivide polygon with custom grid', t => {
   });
 
   t.comment(result);
-  const expected = [[5, 5, 20, 5, 5, -10], [5, 5, 5, 20, 20, 5]];
+  const expected = [{positions: [5, 5, 20, 5, 5, -10]}, {positions: [5, 5, 5, 20, 20, 5]}];
 
   t.is(result.length, expected.length, `should return ${expected.length} polygons`);
   for (let i = 0; i < expected.length; i++) {
@@ -156,7 +205,10 @@ test('subdivide 3D polygon', t => {
   });
 
   t.comment(result);
-  const expected = [[5, 5, 15, 20, 5, 15, 5, -10, 30], [5, 5, 15, 5, 20, 0, 20, 5, 15]];
+  const expected = [
+    {positions: [5, 5, 15, 20, 5, 15, 5, -10, 30]},
+    {positions: [5, 5, 15, 5, 20, 0, 20, 5, 15]}
+  ];
 
   t.is(result.length, expected.length, `should return ${expected.length} polygons`);
   for (let i = 0; i < expected.length; i++) {
@@ -175,9 +227,9 @@ test('subdivide polygon with holes', t => {
   t.comment(result);
 
   const expected = [
-    [10, 10, 5, 10, 5, 5, 10, 5],
-    [10, 10, 10, 5, 20, 5, 20, 10],
-    [5, 10, 10, 10, 10, 15, 5, 15],
+    {positions: [10, 10, 5, 10, 5, 5, 10, 5]},
+    {positions: [10, 10, 10, 5, 20, 5, 20, 10]},
+    {positions: [5, 10, 10, 10, 10, 15, 5, 15]},
     {
       positions: [10, 10, 20, 10, 20, 15, 10, 15, 10, 10, 10, 12, 15, 12, 15, 10],
       holeIndices: [8]
