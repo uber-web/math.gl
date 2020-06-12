@@ -77,27 +77,21 @@ test('cutPolygonByMercatorBounds - simple', t => {
   const expectedA = [[170, 20], [180, 20], [180, 0], [170, 0]];
   const expectedB = [[-180, 20], [-170, 20], [-170, 0], [-180, 0]];
 
-  t.ok(
-    equals(cutPolygonByMercatorBounds(flatten(polygon)), [flatten(expectedA), flatten(expectedB)]),
-    '2d'
-  );
+  let parts = cutPolygonByMercatorBounds(flatten(polygon));
+  t.ok(equals(parts[0].positions, flatten(expectedA)), '2d');
+  t.ok(equals(parts[1].positions, flatten(expectedB)), '2d');
 
   const flatten2 = (ring, accessPosition) => flatten(ring.map(accessPosition));
   const addZ = p => [p[0], p[1], 100];
 
-  t.ok(
-    equals(cutPolygonByMercatorBounds(flatten2(polygon, addZ), null, {size: 3}), [
-      flatten2(expectedA, addZ),
-      flatten2(expectedB, addZ)
-    ]),
-    '3d'
-  );
+  parts = cutPolygonByMercatorBounds(flatten2(polygon, addZ), null, {size: 3});
+  t.ok(equals(parts[0].positions, flatten2(expectedA, addZ)), '3d');
+  t.ok(equals(parts[1].positions, flatten2(expectedB, addZ)), '3d');
 
+  parts = cutPolygonByMercatorBounds(flatten(polygon), null, {normalize: false});
+  t.ok(equals(parts[0].positions, flatten(expectedA)), 'normalize: false');
   t.ok(
-    equals(cutPolygonByMercatorBounds(flatten(polygon), null, {normalize: false}), [
-      flatten(expectedA),
-      flatten2(expectedB, p => [p[0] + 360, p[1]])
-    ]),
+    equals(parts[1].positions, flatten2(expectedB, p => [p[0] + 360, p[1]])),
     'normalize: false'
   );
 
@@ -117,13 +111,13 @@ test('cutPolygonByMercatorBounds - with holes', t => {
   t.ok(
     equals(result[0].positions, flatten([expectedA, holeA])) &&
       equals(result[0].holeIndices, [8]) &&
-      equals(result[1], flatten(expectedB))
+      equals(result[1].positions, flatten(expectedB))
   );
 
   result = cutPolygonByMercatorBounds(flatten([polygon, holeB]), [8]);
   t.is(result.length, 2, 'Returns correct number of parts');
   t.ok(
-    equals(result[0], flatten(expectedA)) &&
+    equals(result[0].positions, flatten(expectedA)) &&
       equals(result[1].positions, flatten([expectedB, holeB])) &&
       equals(result[1].holeIndices, [8])
   );
@@ -135,9 +129,9 @@ test('cutPolygonByMercatorBounds - contains pole', t => {
   const polygon = [[-150, 75], [-90, 80], [-30, 70], [30, 60], [90, 70], [150, 75]];
 
   const result = cutPolygonByMercatorBounds(flatten(polygon));
-
   t.ok(
-    equals(result, [
+    equals(
+      result[0].positions,
       flatten([
         [-90, 80],
         [-30, 70],
@@ -147,9 +141,14 @@ test('cutPolygonByMercatorBounds - contains pole', t => {
         [180, 75],
         [180, 85.051129],
         [-90, 85.051129]
-      ]),
+      ])
+    )
+  );
+  t.ok(
+    equals(
+      result[1].positions,
       flatten([[-180, 75], [-150, 75], [-90, 80], [-90, 85.051129], [-180, 85.051129]])
-    ])
+    )
   );
 
   t.end();

@@ -31,7 +31,7 @@ export function cutPolylineByMercatorBounds(positions, options = {}) {
 
 // https://user-images.githubusercontent.com/2059298/78465770-94241080-76ae-11ea-809a-6a8534dac1d9.png
 export function cutPolygonByMercatorBounds(positions, holeIndices, options = {}) {
-  const {size = 2, normalize = true} = options;
+  const {size = 2, normalize = true, edgeTypes = false} = options;
   holeIndices = holeIndices || [];
   const newPositions = [];
   const newHoleIndices = [];
@@ -69,14 +69,15 @@ export function cutPolygonByMercatorBounds(positions, holeIndices, options = {})
   const parts = cutPolygonByGrid(newPositions, newHoleIndices, {
     size,
     gridResolution: 360,
-    gridOffset: [-180, -180]
+    gridOffset: [-180, -180],
+    edgeTypes
   });
 
   if (normalize) {
     // Each part is guaranteed to be in a single copy of the world
     // Map longitudes back to [-180, 180]
     for (const part of parts) {
-      shiftLongitudesIntoRange(Array.isArray(part) ? part : part.positions, size);
+      shiftLongitudesIntoRange(part.positions, size);
     }
   }
   return parts;

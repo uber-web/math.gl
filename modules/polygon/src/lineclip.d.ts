@@ -3,7 +3,7 @@ type BoundingBox = [number, number, number, number];
 export function clipPolyline(
   positions : Array<number>,
   bbox : BoundingBox,
-  options : {
+  options? : {
     size? : number,
     startIndex? : number,
     endIndex? : number
@@ -13,7 +13,7 @@ export function clipPolyline(
 export function clipPolygon(
   positions: Array<number>,
   bbox: BoundingBox,
-  options : {
+  options? : {
     size? : number,
     startIndex? : number,
     endIndex? : number
