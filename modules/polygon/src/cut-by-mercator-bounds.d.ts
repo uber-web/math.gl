@@ -17,7 +17,7 @@ export function cutPolygonByMercatorBounds(
     size? : number,
     normalize? : boolean,
     maxLatitude?: number,
-    vertexTypes? : boolean
+    edgeTypes? : boolean
   }
 ) : Array<Polygon>;
 

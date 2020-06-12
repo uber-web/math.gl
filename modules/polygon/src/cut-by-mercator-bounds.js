@@ -31,7 +31,7 @@ export function cutPolylineByMercatorBounds(positions, options = {}) {
 
 // https://user-images.githubusercontent.com/2059298/78465770-94241080-76ae-11ea-809a-6a8534dac1d9.png
 export function cutPolygonByMercatorBounds(positions, holeIndices, options = {}) {
-  const {size = 2, normalize = true, vertexTypes = false} = options;
+  const {size = 2, normalize = true, edgeTypes = false} = options;
   holeIndices = holeIndices || [];
   const newPositions = [];
   const newHoleIndices = [];
@@ -70,7 +70,7 @@ export function cutPolygonByMercatorBounds(positions, holeIndices, options = {})
     size,
     gridResolution: 360,
     gridOffset: [-180, -180],
-    vertexTypes
+    edgeTypes
   });
 
   if (normalize) {

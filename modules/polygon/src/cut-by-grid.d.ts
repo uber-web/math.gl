@@ -19,6 +19,6 @@ export function cutPolygonByGrid(
     size? : number,
     gridResolution? : number,
     gridOffset? : [number, number],
-    vertexTypes? : boolean
+    edgeTypes? : boolean
   }
 ) : Array<Polygon>;

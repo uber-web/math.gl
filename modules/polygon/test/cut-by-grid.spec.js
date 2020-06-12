@@ -132,7 +132,7 @@ test('subdivide polygon - empty', t => {
   t.end();
 });
 
-test('subdivide polygon#vertexTypes', t => {
+test('subdivide polygon#edgeTypes', t => {
   // This polygon tests:
   // - vertex on grid intersection
   // - interpolated edge point on grid intersection
@@ -147,33 +147,45 @@ test('subdivide polygon#vertexTypes', t => {
     [testPolygon[5], testPolygon[3]]
   ];
   const displayString = {
-    0: 'vertex',
-    1: 'on edge',
-    2: 'inside'
+    0: 'inside',
+    1: 'border'
   };
-  const getType = p => {
-    if (testPolygon.find(p0 => p0[0] === p[0] && p0[1] === p[1])) {
-      return 0;
-    }
-    if (
-      testPolygonEdges.find(([p0, p1]) =>
+  const findEdges = p => {
+    return testPolygonEdges.filter(
+      ([p0, p1]) =>
+        equals(p, p0) ||
+        equals(p, p1) ||
         equals(Math.atan2(p0[1] - p[1], p0[0] - p[0]), Math.atan2(p[1] - p1[1], p[0] - p1[0]))
-      )
-    ) {
-      return 1;
-    }
-    return 2;
+    );
+  };
+  const getType = (p, pNext) => {
+    const edges = findEdges(p);
+    const edgesNext = findEdges(pNext);
+    // console.log(p, pNext)
+    // console.log(edges, edgesNext)
+    return edges.some(edge => edgesNext.includes(edge)) ? 1 : 0;
   };
 
   const result = cutPolygonByGrid(flatten(testPolygon), [6], {
-    vertexTypes: true
+    edgeTypes: true
   });
 
-  for (const polygon of result) {
-    for (let i = 0; i < polygon.vertexTypes.length; i++) {
-      const position = polygon.positions.slice(i * 2, i * 2 + 2);
-      const type = polygon.vertexTypes[i];
-      t.is(type, getType(position), `vertex should be ${displayString[type]}`);
+  for (const {positions, edgeTypes, holeIndices} of result) {
+    let loopStart = 0;
+    let loopEnd = (holeIndices && holeIndices[0]) || positions.length;
+    for (let i = 0, loop = 0; i < edgeTypes.length; i++) {
+      const position = positions.slice(i * 2, i * 2 + 2);
+      const nextPosition =
+        i * 2 + 2 < loopEnd
+          ? positions.slice(i * 2 + 2, i * 2 + 4)
+          : positions.slice(loopStart, loopStart + 2);
+      const type = edgeTypes[i];
+      t.is(type, getType(position, nextPosition), `edge should be ${displayString[type]}`);
+
+      if (i * 2 + 2 === loopEnd) {
+        loopStart = loopEnd;
+        loopEnd = (holeIndices && holeIndices[++loop]) || positions.length;
+      }
     }
   }
 
