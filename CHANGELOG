@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v3.2.0-alpha.4 - June 12, 2020
+
+- cutPolygonByGrid: add option to generate edge type flags (#151)
+
 ## v3.2.0-alpha.3 - May 14, 2020
 
 - [web-mercator] Add getBounds utility (#146)
