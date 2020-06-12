@@ -12,13 +12,14 @@ export function push(target, source) {
       }
     }
     if (isDuplicate) {
-      return;
+      return false;
     }
   }
 
   for (let i = 0; i < size; i++) {
     target[startIndex + i] = source[i];
   }
+  return true;
 }
 
 export function copy(target, source) {

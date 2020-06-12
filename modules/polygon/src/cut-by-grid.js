@@ -1,4 +1,4 @@
-/* eslint-disable max-statements, max-depth, complexity */
+/* eslint-disable max-statements, max-depth, complexity, no-unused-expressions */
 import {bitCode, intersect} from './lineclip';
 import {getPointAtIndex, copy, push} from './utils';
 
@@ -132,8 +132,8 @@ function bisectPolygon(positions, edgeTypes, size, startIndex, endIndex, bbox, e
   const numPoints = (endIndex - startIndex) / size;
   const resultLow = [];
   const resultHigh = [];
-  const typesLow = edgeTypes && [];
-  const typesHigh = edgeTypes && [];
+  const typesLow = [];
+  const typesHigh = [];
   const scratchPoint = [];
 
   let p;
@@ -153,34 +153,21 @@ function bisectPolygon(positions, edgeTypes, size, startIndex, endIndex, bbox, e
     // if segment goes through the boundary, add an intersection
     if (side && prevSide && prevSide !== side) {
       intersect(prev, p, edge, bbox, scratchPoint);
-      push(resultLow, scratchPoint);
-      push(resultHigh, scratchPoint);
-      if (edgeTypes) {
-        typesLow.push(prevType);
-        typesHigh.push(prevType);
-      }
+      push(resultLow, scratchPoint) && typesLow.push(prevType);
+      push(resultHigh, scratchPoint) && typesHigh.push(prevType);
     }
 
     if (side <= 0) {
-      push(resultLow, p);
+      push(resultLow, p) && typesLow.push(type);
       lowPointCount -= side;
+    } else if (typesLow.length) {
+      typesLow[typesLow.length - 1] = TYPE_INSIDE;
     }
     if (side >= 0) {
-      push(resultHigh, p);
+      push(resultHigh, p) && typesHigh.push(type);
       highPointCount += side;
-    }
-
-    if (edgeTypes) {
-      if (side <= 0) {
-        typesLow.push(type);
-      } else if (typesLow.length) {
-        typesLow[typesLow.length - 1] = TYPE_INSIDE;
-      }
-      if (side >= 0) {
-        typesHigh.push(type);
-      } else if (typesHigh.length) {
-        typesHigh[typesHigh.length - 1] = TYPE_INSIDE;
-      }
+    } else if (typesHigh.length) {
+      typesHigh[typesHigh.length - 1] = TYPE_INSIDE;
     }
 
     copy(prev, p);
@@ -189,8 +176,8 @@ function bisectPolygon(positions, edgeTypes, size, startIndex, endIndex, bbox, e
   }
 
   return [
-    lowPointCount ? {pos: resultLow, types: typesLow} : null,
-    highPointCount ? {pos: resultHigh, types: typesHigh} : null
+    lowPointCount ? {pos: resultLow, types: edgeTypes && typesLow} : null,
+    highPointCount ? {pos: resultHigh, types: edgeTypes && typesHigh} : null
   ];
 }
 
