@@ -3,7 +3,7 @@
   "description": "Utilities for perspective-enabled Web Mercator projections",
   "author": "Uber Technologies, Inc.",
   "license": "MIT",
-  "version": "3.2.0-alpha.4",
+  "version": "3.2.0-alpha.5",
   "keywords": [
     "webgl",
     "javascript",

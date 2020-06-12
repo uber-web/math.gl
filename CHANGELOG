@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v3.2.0-alpha.5 - June 12, 2020
+
+- [polygon] Fix edgeType bug (#152)
+
 ## v3.2.0-alpha.4 - June 12, 2020
 
 - cutPolygonByGrid: add option to generate edge type flags (#151)
