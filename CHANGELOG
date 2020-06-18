@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v3.2.1 - June 18, 2020
+
+- Upgrade dependencies
+
+## v3.2.0 - June 18, 2020
+
 ## v3.2.0-alpha.5 - June 12, 2020
 
 - [polygon] Fix edgeType bug (#152)
