@@ -2,13 +2,15 @@
 
 # v3.2
 
-> v3.2 is still in development. Alpha releases will be made available. The intention is to synchronize the release of math.gl 3.2 with deck.gl v8.2.
-
-Target Release Date: TBD
+Release Date: July 18, 2020
 
 ### Typescript Type Definitions
 
 Typescript type definitions (`.d.ts` files) are now provided for all math.gl modules.
+
+### `@math.gl/polygon`
+
+A new module offering geospatial polygon clipping functions.
 
 # v3.1
 
