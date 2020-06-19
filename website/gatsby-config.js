@@ -55,7 +55,13 @@ module.exports = {
 
       LINK_TO_GET_STARTED: '/modules/core/docs/developer-guide/core-overview',
 
-      ADDITIONAL_LINKS: [{name: 'Blog', href: 'http://medium.com/vis-gl'}],
+      ADDITIONAL_LINKS: [{
+        name: 'Blog',
+        href: 'http://medium.com/vis-gl',
+        index: 1
+      }],
+
+      STYLESHEETS: [''],
 
       EXAMPLES: [
         {
