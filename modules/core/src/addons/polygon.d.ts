@@ -1,4 +1,4 @@
-type SegmentVisitor = (p1: number[], p2: number, i1: number, i2: number) => void;
+type SegmentVisitor = (p1: number[], p2: number[], i1: number, i2: number) => void;
 
 export default class Polygon {
   constructor(points: number[][]);
