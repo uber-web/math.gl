@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v3.2.2 - July 7, 2020
+
+- Update SegmentVisitor in polygon.d.ts
+
 ## v3.2.1 - June 18, 2020
 
 - Upgrade dependencies
