@@ -1,0 +1,43 @@
+{
+  "name": "@math.gl/proj4",
+  "description": "Proj4js wrapper for conversion between geospatial CRS (coordinate reference systems)",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "version": "3.2.2",
+  "keywords": [
+    "webgl",
+    "javascript",
+    "math",
+    "geospatial",
+    "WGS84",
+    "ellipsoid",
+    "cartographic",
+    "cartesian",
+    "projection",
+    "web mercator",
+    "geographic",
+    "proj4",
+    "proj4js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/uber-web/math.gl.git"
+  },
+  "types": "src/index.js",
+  "main": "dist/es5/index.js",
+  "module": "dist/esm/index.js",
+  "esnext": "dist/es6/index.js",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.0.0",
+    "@math.gl/core": "3.2.2",
+    "proj4": "^2.6.2",
+    "@types/proj4": "^2.5.0"
+  },
+  "gitHead": "e1a95300cb225a90da6e90333d4adf290f7ba501"
+}

@@ -1,0 +1,39 @@
+# Ellipsoid
+
+
+## Usage
+
+Reproject WGS84 coordinates in another CRS
+```js
+import {Proj4Projection} from '@math.gl/proj4';
+
+const projection = new Proj4Projection({from: 'WGS84', to: '...'});
+
+const wgs84Position = [toRadians(21), toRadians(78), 5000];
+const reprojectedPosition = projection.project(wgs84Position);
+```
+
+Define Projection Aliases
+
+```js
+import {Proj4Projection} from '@math.gl/proj4';
+
+Proj4Projection.defineProjectionAliases({
+  'EPSG:4326': '+title=WGS 84 (long/lat) +proj=longlat +ellps=WGS84 +datum=WGS84 +units=degrees',
+  'EPSG:4269': '+title=NAD83 (long/lat) +proj=longlat +a=6378137.0 +b=6356752.31414036 +ellps=GRS80 +datum=NAD83 +units=degrees'
+})
+```
+
+## Static Fields
+
+### Proj4Projection.defineProjectionAliases(projections: {[alias: string]: string});
+
+Defines projection aliases
+
+## Methods
+
+### constructor(options: {from?: string, to?: string})
+
+### project(coord: number[]): number[]
+
+### unproject(coord: number[]): number[]

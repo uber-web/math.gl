@@ -38,6 +38,12 @@
           ]
         },
         {
+          "title": "@math.gl/proj4",
+          "entries": [
+            {"entry": "modules/geospatial/docs/developer-guide/proj4-guide"}
+          ]
+        },
+        {
           "title": "@math.gl/sun",
           "entries": [
             {"entry": "modules/sun/docs/developer-guide/sun-guide"}
@@ -100,6 +106,12 @@
             {"entry": "modules/core/docs/api-reference/cut-polygon-by-mercator-bounds"},
             {"entry": "modules/core/docs/api-reference/cut-polyline-by-mercator-bounds"},
             {"entry": "modules/core/docs/api-reference/polygon"}
+          ]
+        },
+        {
+          "title": "@math.gl/proj4",
+          "entries": [
+            {"entry": "modules/geospatial/docs/api-reference/proj4-projection"}
           ]
         },
         {
