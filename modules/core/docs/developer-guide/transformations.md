@@ -6,7 +6,7 @@ math.gl allows you to create mathematical objects and then apply transformations
 
 Transformations can be represented in many different notations but for computational purposes it is efficient to express them as matrices, or in some cases as quaternions.
 
-The most general transform is a 4x4 matrix. See [docs/developer-guide/concepts](./'homogeneous-coordinates.md') regarding some advantages with using 4x4 matrices to represent transformations.
+The most general transform is a 4x4 matrix. See the article on [homogeneous coordinates](../concepts/homogeneous-coordinates.md) for some advantages in using 4x4 matrices to represent transformations.
 
 ## Applying transformations
 
@@ -78,7 +78,7 @@ const v = fullTransform.transformVector(new Vector4(...));
 
 ## About Rotations
 
-For more in-depth background about rotations, see the separate article on [rotations](./rotations.md).
+For more in-depth background about rotations, see the separate article on [rotations](../concepts/rotations.md).
 
 If you have a vector with 3 elements you can rotate it around an axis and a point like so:
 ```js
