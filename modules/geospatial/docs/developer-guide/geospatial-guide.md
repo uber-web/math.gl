@@ -10,7 +10,7 @@ It provides classes and utilities to facilitate working with the major geospatia
 
 ## Ellipsoid and WGS84
 
-| Class                   | Dewscription |
+| Class                   | Description |
 | ---                     | --- |
 | `Ellipsoid`             | Implements ellipsoid |
 | `Ellipsoid.WSG84`       | An `Ellipsoid` instance initialized with Earth radii per WGS84. |

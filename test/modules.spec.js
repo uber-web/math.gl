@@ -3,3 +3,5 @@ import '../modules/geospatial/test';
 import '../modules/culling/test';
 import '../modules/web-mercator/test';
 import '../modules/polygon/test';
+import '../modules/proj4/test';
+import '../modules/sun/test';

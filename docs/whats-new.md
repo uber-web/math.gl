@@ -1,5 +1,13 @@
 # What's New
 
+# v3.3
+
+Release Date: TBD, still in development
+
+### `@math.gl/proj4`
+
+A new module supporting conversion between geospatial coordinate systems.
+
 # v3.2
 
 Release Date: July 18, 2020
