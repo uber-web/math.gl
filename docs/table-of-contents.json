@@ -40,7 +40,7 @@
         {
           "title": "@math.gl/proj4",
           "entries": [
-            {"entry": "modules/geospatial/docs/developer-guide/proj4-guide"}
+            {"entry": "modules/proj4/docs/developer-guide/proj4-guide"}
           ]
         },
         {
@@ -111,7 +111,7 @@
         {
           "title": "@math.gl/proj4",
           "entries": [
-            {"entry": "modules/geospatial/docs/api-reference/proj4-projection"}
+            {"entry": "modules/proj4/docs/api-reference/proj4-projection"}
           ]
         },
         {
