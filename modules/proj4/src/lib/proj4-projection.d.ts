@@ -17,8 +17,8 @@ export class Proj4Projection {
   /** Create a projection between two coordinate systems */
   constructor(projections: {from?: string, to?: string});
 
-  /** Project a coordinate between two coordinate systems */
+  /** Project a coordinate project from first to second coordinate system */
   project(coord: number[]): number[];
-  /** Unproject a coordinate between two coordinate systems */
+  /** Project a coordinate project from second to first coordinate system */
   unproject(coord: number[]): number[];
 }

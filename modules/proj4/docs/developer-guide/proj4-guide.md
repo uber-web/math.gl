@@ -7,7 +7,7 @@ The `@math.gl/proj4` librarys provides support for conversion between major geos
 
 ## Ellipsoid and WGS84
 
-| Class                   | Dewscription |
+| Class                   | Description |
 | ---                     | --- |
 | `Proj4Projection`       | A projection class |
 
@@ -19,7 +19,7 @@ import {Proj4Projection} from '@math.gl/proj4';
 
 const projection = new Proj4Projection({from: 'WGS84', to: '...'});
 
-const wgs84Position = [toRadians(21), toRadians(78), 5000];
+const wgs84Position = [21, 78, 5000];
 const reprojectedPosition = projection.project(wgs84Position);
 ```
 

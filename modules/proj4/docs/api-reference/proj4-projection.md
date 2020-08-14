@@ -34,6 +34,12 @@ Defines projection aliases
 
 ### constructor(options: {from?: string, to?: string})
 
+Create a new `Proj4Projection` instance that can convert between the specified coordinate systems.
+
 ### project(coord: number[]): number[]
 
+Project a coordinate project from first to second coordinate system
+  
 ### unproject(coord: number[]): number[]
+
+Project a coordinate project from second to first coordinate system

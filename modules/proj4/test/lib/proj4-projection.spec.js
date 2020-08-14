@@ -1,5 +1,5 @@
-// This file is derived from the Cesium math library under Apache 2 license
-// See LICENSE.md and https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md
+// This file is derived from  https://github.com/proj4js
+// under this permissive license: https://github.com/proj4js/proj4js/blob/master/LICENSE.md
 
 /* eslint-disable */
 import test from 'tape-catch';
