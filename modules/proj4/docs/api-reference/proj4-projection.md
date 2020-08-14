@@ -9,7 +9,7 @@ import {Proj4Projection} from '@math.gl/proj4';
 
 const projection = new Proj4Projection({from: 'WGS84', to: '...'});
 
-const wgs84Position = [toRadians(21), toRadians(78), 5000];
+const wgs84Position = [21, 78, 5000];
 const reprojectedPosition = projection.project(wgs84Position);
 ```
 
