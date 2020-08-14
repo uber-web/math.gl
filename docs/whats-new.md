@@ -12,11 +12,9 @@ A new module supporting conversion between a wide range of geospatial coordinate
 
 Release Date: July 18, 2020
 
-Release Date: TBD
+### Typescript
 
-### Typescript Support
-
-Typescript type definitions (`.d.ts` files) are now provided for all math.gl modules.
+Typescript type definitions (`.d.ts` files) are now exported for all math.gl modules.
 
 ### `@math.gl/polygon`
 
@@ -29,7 +27,7 @@ Release date: Dec 16, 2019
 ### `@math.gl/web-mercator`
 
 - WebMercator projection support is now available through the new `@math.gl/web-mercator` npm sub-module.
-- This new module is an evolution of the [`viewport-mercator-project`](https://github.com/uber-archive/viewport-mercator-project) repository.
+- The `@math.gl/web-mercator` module is an evolution of the now archived [`viewport-mercator-project`](https://github.com/uber-archive/viewport-mercator-project) repository.
 
 ## v3.0
 
