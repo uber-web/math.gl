@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v3.3.0-alpha.0 - Aug 14, 2020
+
+- proj4: new module for coordinate system conversion (#161)
+- Bump elliptic from 6.5.1 to 6.5.3 (#160)
+- Bump lodash from 4.17.15 to 4.17.19 (#159)
+
 ## v3.2.2 - July 7, 2020
 
 - Update SegmentVisitor in polygon.d.ts
