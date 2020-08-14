@@ -28,7 +28,7 @@ module.exports = {
       PROJECT_ORG: 'uber-web',
       PROJECT_ORG_LOGO: 'images/uber-logo.png',
       PROJECT_URL: 'https://github.com/uber-web/math.gl',
-      PROJECT_DESC: 'A collection of math modules for Geospatial and 3D visualization',
+      PROJECT_DESC: 'A collection of math modules for Geospatial and 3D/WebGL visualization use cases',
     
       HOME_PATH: '/',
 
@@ -50,7 +50,7 @@ module.exports = {
         },
         {
           name: 'deck.gl',
-          url: 'https://luma.gl'
+          url: 'https://deck.gl'
         },
         {
           name: 'loaders.gl',
