@@ -1,4 +1,4 @@
-# Ellipsoid
+# Proj4Projection
 
 ## Usage
 
