@@ -1,6 +1,6 @@
-const resolve = require('path').resolve;
-
-const DOCS = require('../docs/table-of-contents.json');
+const {resolve} = require('path');
+const DOC_TABLE_OF_CONTENTS = require('../docs/table-of-contents.json');
+const ROOT_DIR = resolve('..');
 
 module.exports = {
   plugins: [{
@@ -8,20 +8,20 @@ module.exports = {
     options: {
       logLevel: 2,
     
+      // Folders
       DIR_NAME: __dirname,
-      ROOT_FOLDER: `${__dirname}/../`,
-    
-      DOCS,
-      DOC_FOLDERS: [`${__dirname}/../docs/`, `${__dirname}/../modules`],
-      SOURCE: [`${__dirname}/static`, `${__dirname}/src`],
-    
-      PATH_PREFIX: '/',
+      ROOT_FOLDER: ROOT_DIR,
 
-      GA_TRACKING: null,
-      // For showing star counts and contributors.
-      // Should be like btoa('YourUsername:YourKey') and should be readonly.
-      GITHUB_KEY: null,
-
+      DOCS: DOC_TABLE_OF_CONTENTS,
+      DOC_FOLDERS: [
+        resolve(ROOT_DIR, 'docs'),
+        resolve(ROOT_DIR, 'modules')
+      ],
+      SOURCE: [
+        resolve('./static'),
+        resolve('./src')
+      ],
+  
       PROJECT_TYPE: 'github',
 
       PROJECT_NAME: 'math.gl',
@@ -34,7 +34,16 @@ module.exports = {
 
       INDEX_PAGE_URL: resolve(__dirname, './templates/index.jsx'),
 
+      GA_TRACKING_ID: 'UA-74374017-2',
+      // For showing star counts and contributors.
+      // Should be like btoa('YourUsername:YourKey') and should be readonly.
+      GITHUB_KEY: null,
+
       PROJECTS: [
+        {
+          name: 'vis.gl',
+          url: 'https://vis.gl'
+        },
         {
           name: 'luma.gl',
           url: 'https://luma.gl'
@@ -46,10 +55,6 @@ module.exports = {
         {
           name: 'loaders.gl',
           url: 'https://loaders.gl'
-        },
-        {
-          name: 'nebula.gl',
-          url: 'https://nebula.gl'
         }
       ], // Other linked projects
 
@@ -58,7 +63,7 @@ module.exports = {
       ADDITIONAL_LINKS: [{
         name: 'Blog',
         href: 'http://medium.com/vis-gl',
-        index: 1
+        index: 4
       }],
 
       STYLESHEETS: [''],

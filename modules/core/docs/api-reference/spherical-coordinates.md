@@ -14,6 +14,7 @@ See also [Wikipedia](https://en.wikipedia.org/wiki/Spherical_coordinate_system),
 
 Conversion from spherical to Cartesian (rectilinear) coordinates:
 
+```
 <math xmlns="http://www.w3.org/1998/Math/MathML">
 <mfenced open="{" close="">
 <mtable columnalign="left">
@@ -23,10 +24,11 @@ Conversion from spherical to Cartesian (rectilinear) coordinates:
 </mtable>
 </mfenced>
 </math>
-
+```
 
 Conversion from Cartesian (rectilinear) to spherical coordinates:
 
+```
 <math xmlns="http://www.w3.org/1998/Math/MathML">
 <mfenced open="{" close="">
 <mtable columnalign="left">
@@ -40,9 +42,11 @@ Conversion from Cartesian (rectilinear) to spherical coordinates:
 </mtable>
 </mfenced>
 </math>
+```
 
 Ranges
 
+```
 <math xmlns="http://www.w3.org/1998/Math/MathML">
 <mfenced open="{" close="">
 <mtable columnalign="left">
@@ -52,7 +56,7 @@ Ranges
 </mtable>
 </mfenced>
 </math>
-
+```
 
 ## Usage
 
@@ -140,7 +144,7 @@ SphericalCoordinates({longitude = 0, latitude = 0, z = 1.0})
 
 // TODO - add parameter for orientation of sphere? up vector etc?
 
-### check()
+### check
 
 
 ## Remarks
