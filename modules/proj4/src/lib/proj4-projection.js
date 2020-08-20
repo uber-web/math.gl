@@ -13,6 +13,9 @@ export class Proj4Projection {
 
   constructor({from = 'WGS84', to = 'WGS84'}) {
     this.projection = proj4(from, to);
+    if (!this.projection) {
+      throw new Error('Undefined alias');
+    }
   }
 
   project(coords) {
