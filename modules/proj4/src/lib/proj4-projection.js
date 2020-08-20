@@ -16,6 +16,9 @@ export class Proj4Projection {
     if (!this.projection) {
       throw new Error('Undefined alias');
     }
+
+    this.project = this.project.bind(this);
+    this.unproject = this.unproject.bind(this);
   }
 
   project(coords) {
