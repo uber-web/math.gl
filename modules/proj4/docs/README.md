@@ -1,5 +1,9 @@
 # Overview
 
+<p class="badges">
+  <img src="https://img.shields.io/badge/From-v3.3-blue.svg?style=flat-square" alt="From-v3.3" />
+</p>
+
 The `@math.gl/proj4` module provides support for conversion between major geospatial coordinate reference systems (CRS) and projections used with computer maps, such as:
 
 - [WGS84](https://en.wikipedia.org/wiki/World_Geodetic_System) (World Geodetic System) coordinates.
@@ -67,7 +71,6 @@ GEOGCS["WGS 84",DATUM["WGS_1984",SPHEROID["WGS 84",6378137,298.257223563,AUTHORI
 // https://epsg.io/4326.proj4
 +proj=longlat +datum=WGS84 +no_defs
 ```
-
 
 ### Aliases
 

@@ -8,7 +8,7 @@ This is on track for 3.2 release.
 
 - Move the primitives from luma.gl
 
-### Geometry Processing 
+### Geometry Processing
 
 - Provide a library for CPU side geometry processing, for calculating normals, ray casting etc.
 - There is initial code in `@loaders.gl/math` that should be cleaned up and moved to math.gl.

@@ -12,59 +12,24 @@
     },
     {
       "title": "Developer Guide",
-      "chapters": [
-        {
-          "title": "math.gl",
-          "entries": [
-            {"entry": "modules/core/docs/developer-guide/core-overview"},
-            {"entry": "modules/core/docs/developer-guide/transformations"},
-            {"entry": "modules/core/docs/developer-guide/view-and-projection"},
-            {"entry": "modules/core/docs/developer-guide/debugging"},
-            {"entry": "modules/core/docs/developer-guide/floating-point"},
-            {"entry": "modules/core/docs/developer-guide/performance"},
-            {"entry": "modules/core/docs/developer-guide/external-frameworks"}
-          ]
-        },
-        {
-          "title": "@math.gl/culling",
-          "entries": [
-            {"entry": "modules/culling/docs/developer-guide/culling-guide"}
-          ]
-        },
-        {
-          "title": "@math.gl/geospatial",
-          "entries": [
-            {"entry": "modules/geospatial/docs/developer-guide/geospatial-guide"}
-          ]
-        },
-        {
-          "title": "@math.gl/proj4",
-          "entries": [
-            {"entry": "modules/proj4/docs/developer-guide/proj4-guide"}
-          ]
-        },
-        {
-          "title": "@math.gl/sun",
-          "entries": [
-            {"entry": "modules/sun/docs/developer-guide/sun-guide"}
-          ]
-        },
-        {
-          "title": "@math.gl/web-mercator",
-          "entries": [
-            {"entry": "modules/web-mercator/docs/developer-guide/web-mercator-guide"},
-            {"entry": "modules/web-mercator/docs/developer-guide/about-coordinates"},
-            {"entry": "modules/web-mercator/docs/developer-guide/offset-projection-accuracy"}
-          ]
-        }
+      "entries": [
+        {"entry": "modules/core/docs/developer-guide/transformations"},
+        {"entry": "modules/core/docs/developer-guide/view-and-projection"},
+        {"entry": "modules/core/docs/developer-guide/debugging"},
+        {"entry": "modules/core/docs/developer-guide/floating-point"},
+        {"entry": "modules/core/docs/developer-guide/performance"},
+        {"entry": "modules/core/docs/developer-guide/external-frameworks"}, 
+        {"entry": "modules/web-mercator/docs/developer-guide/about-coordinates"},
+        {"entry": "modules/web-mercator/docs/developer-guide/offset-projection-accuracy"}
       ]
     },
     {
       "title": "API Reference",
       "chapters": [
         {
-          "title": "math.gl",
+          "title": "@math.gl/core",
           "entries": [
+            {"entry": "modules/core/docs"},
             {"entry": "modules/core/docs/api-reference/euler"},
             {"entry": "modules/core/docs/api-reference/math-array"},
             {"entry": "modules/core/docs/api-reference/matrix"},
@@ -83,6 +48,7 @@
         {
           "title": "@math.gl/culling",
           "entries": [
+            {"entry": "modules/culling/docs"},
             {"entry": "modules/culling/docs/api-reference/bounding-sphere"},
             {"entry": "modules/culling/docs/api-reference/culling-volume"},
             {"entry": "modules/culling/docs/api-reference/oriented-bounding-box"},
@@ -92,6 +58,7 @@
         {
           "title": "@math.gl/geospatial",
           "entries": [
+            {"entry": "modules/geospatial/docs"},
             {"entry": "modules/geospatial/docs/api-reference/ellipsoid"},
             {"entry": "modules/geospatial/docs/api-reference/helpers"}
           ]
@@ -99,24 +66,26 @@
         {
           "title": "@math.gl/polygon",
           "entries": [
-            {"entry": "modules/core/docs/api-reference/clip-polygon"},
-            {"entry": "modules/core/docs/api-reference/clip-polyline"},
-            {"entry": "modules/core/docs/api-reference/cut-polygon-by-grid"},
-            {"entry": "modules/core/docs/api-reference/cut-polyline-by-grid"},
-            {"entry": "modules/core/docs/api-reference/cut-polygon-by-mercator-bounds"},
-            {"entry": "modules/core/docs/api-reference/cut-polyline-by-mercator-bounds"},
-            {"entry": "modules/core/docs/api-reference/polygon"}
+            {"entry": "modules/polygon/docs/api-reference/clip-polygon"},
+            {"entry": "modules/polygon/docs/api-reference/clip-polyline"},
+            {"entry": "modules/polygon/docs/api-reference/cut-polygon-by-grid"},
+            {"entry": "modules/polygon/docs/api-reference/cut-polyline-by-grid"},
+            {"entry": "modules/polygon/docs/api-reference/cut-polygon-by-mercator-bounds"},
+            {"entry": "modules/polygon/docs/api-reference/cut-polyline-by-mercator-bounds"},
+            {"entry": "modules/polygon/docs/api-reference/polygon"}
           ]
         },
         {
           "title": "@math.gl/proj4",
           "entries": [
+            {"entry": "modules/proj4/docs"},
             {"entry": "modules/proj4/docs/api-reference/proj4-projection"}
           ]
         },
         {
           "title": "@math.gl/sun",
           "entries": [
+            {"entry": "modules/sun/docs"},
             {"entry": "modules/sun/docs/api-reference/get-sun"},
             {"entry": "modules/sun/docs/api-reference/get-sun-direction"}
           ]
@@ -124,8 +93,9 @@
         {
           "title": "@math.gl/web-mercator",
           "entries": [
+            {"entry": "modules/web-mercator/docs"},
             {"entry": "modules/web-mercator/docs/api-reference/web-mercator-utils"},
-            {"entry": "modules/web-mercator/docs/api-reference/web-mercator"}
+            {"entry": "modules/web-mercator/docs/api-reference/web-mercator-viewport"}
           ]
         }
       ]

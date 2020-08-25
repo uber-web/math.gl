@@ -11,6 +11,7 @@ Matrix setter functions no longer support ommitted parameters. (Motivation: Incr
 The `Matrix4` and `Matrix3` classes no longer by default create new `Vector2`, `Vector3` and `Vector4` instances. Instead they create standard JavaScript arrays.
 
 Previously a new `Vector4` would be allocated if no `result` parameter was provided.
+
 ```js
 import {Matrix4, Vector4} from 'math.gl';
 const vector = new Matrix4().transform([0, 0, 0, 1]);
@@ -18,6 +19,7 @@ assert(vector instanceof Vector4);
 ```
 
 Now a plain JavaScript `Array` is allocated
+
 ```js
 import {Matrix4} from 'math.gl';
 const vector = new Matrix4().transform([0, 0, 0, 1]);
@@ -25,6 +27,7 @@ assert(vector instanceof Array);
 ```
 
 The old behavior can be restored by providing the result parameter
+
 ```js
 import {Matrix4, Vector4} from 'math.gl';
 const vector = new Matrix4().transform([0, 0, 0, 1], new Vector4());
@@ -39,33 +42,34 @@ Motivation: This change increases rigor, facilitates debugging, and improves lib
 
 The following functions have been deprecated:
 
-| Method | Replacement | Reason |
-| --- |  --- | --- |
+| Method                       | Replacement                 | Reason             |
+| ---------------------------- | --------------------------- | ------------------ |
 | `Matrix*.setColumnMajor`     | `Matrix*.set`               | API simplification |
-| `Matrix4.transformPoint`     | `Matrix4.transform`         | Name alignment |
-| `Matrix4.transformVector`    | `Matrix4.transform`         | Name alignment |
-| `Matrix4.transformDirection` | `Matrix4.transformAsVector` | Name alignment |
-| `Matrix3.transformVector`    | `Matrix3.transform`         | Name alignment |
-| `Matrix3.transformVector2`   | `Matrix3.transform`         | Generalize |
-| `Matrix3.transformVector3`   | `Matrix3.transform`         | Generalize |
+| `Matrix4.transformPoint`     | `Matrix4.transform`         | Name alignment     |
+| `Matrix4.transformVector`    | `Matrix4.transform`         | Name alignment     |
+| `Matrix4.transformDirection` | `Matrix4.transformAsVector` | Name alignment     |
+| `Matrix3.transformVector`    | `Matrix3.transform`         | Name alignment     |
+| `Matrix3.transformVector2`   | `Matrix3.transform`         | Generalize         |
+| `Matrix3.transformVector3`   | `Matrix3.transform`         | Generalize         |
 
 The following functions have been removed:
 
-| Method | Replacement | Reason |
-| --- | --- | --- |
+| Method          | Replacement     | Reason                                                      |
+| --------------- | --------------- | ----------------------------------------------------------- |
 | `Vector2.cross` | `Vector3.cross` | Cross products by definition work on 3 dimensional vectors. |
-
 
 ## Upgrading to v2.0
 
 Experimental exports are now exported with a leading underscore (\_), instead of as members of the `experimental` namespace:
 
 NOW: math.gl v2
+
 ```js
 import {_Euler as Euler} from 'math.gl';
 ```
 
 BEFORE: math.gl v1.x
+
 ```js
 import {experimental} from 'math.gl';
 const {Euler} = experimental;

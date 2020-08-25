@@ -5,6 +5,7 @@
 A main feature of vectors is that they can be transformed by matrices and quaternions. And `Vector4`s are particular general when transformed with 4x4 matrices (`Matrix4` or just arrays of 16 numbers), as those can include translations, projections and other transformations that cannot be expressed by e.g. 3x3 matrices or quaternions alone.
 
 Note that the fourth element `w` is not a coordinate but a scaling factor. The fourth component (`w`) is usually set to either
+
 - `0` to represent a vector
 - `1` to represent a point
 
@@ -30,25 +31,23 @@ const point = new Vector4(0, 0, 0, 1);
 
 Gets or sets element 0, 1, 2 or 3 respectively
 
-
 ## Methods
 
 Many of the most commonly used `Vector2` methods are inherited from [`MathArray`](./docs/api-reference/math-array.md):
 
-* `Vector4.clone()`
-* `Vector4.copy(array)`
-* `Vector4.set(...args)`
-* `Vector4.fromArray(array, offset = 0)`
-* `Vector4.toString()`
-* `Vector4.toArray(array = [], offset = 0)`
-* `Vector4.equals(array)`
-* `Vector4.exactEquals(array)`
-* `Vector4.validate(array = this)`
-* `Vector4.check(array = this)`
-* `Vector4.normalize()`
+- `Vector4.clone()`
+- `Vector4.copy(array)`
+- `Vector4.set(...args)`
+- `Vector4.fromArray(array, offset = 0)`
+- `Vector4.toString()`
+- `Vector4.toArray(array = [], offset = 0)`
+- `Vector4.equals(array)`
+- `Vector4.exactEquals(array)`
+- `Vector4.validate(array = this)`
+- `Vector4.check(array = this)`
+- `Vector4.normalize()`
 
 Note that `Vector2` is a subclass of the built in JavaScript `Array` and can thus e.g. be supplied as a parameter to any function expecting an `Array`.
-
 
 ### constructor(x? : Number, y? : Number, z? : Number, w? : Number)
 

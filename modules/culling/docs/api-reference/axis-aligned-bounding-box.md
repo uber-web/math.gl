@@ -29,7 +29,6 @@ Computes an instance of an `AxisAlignedBoundingBox` of the given positions.
 - `positions` List of `Vector3` points that the bounding box will enclose.
 - `result` Optional object onto which to store the result.
 
-
 ## Fields
 
 ### center: Vector3 = [0, 0, 0]
@@ -48,7 +47,6 @@ The minimum corner of the bounding box.
 
 The maximum corner of the bounding box.
 
-
 ## Methods
 
 ### constructor(minimum = [0, 0, 0], maximum = [0, 0, 0]) {
@@ -63,6 +61,7 @@ The maximum corner of the bounding box.
 Duplicates a `AxisAlignedBoundingBox` instance.
 
 Returns
+
 - A new `AxisAlignedBoundingBox` instance.
 
 ### equals(right : AxisAlignedBoundingBox) : Boolean
@@ -72,6 +71,7 @@ Compares the provided `AxisAlignedBoundingBox` componentwise and returns `true` 
 - `right` The second `AxisAlignedBoundingBox`
 
 Returns
+
 - `true` if left and right are equal, `false` otherwise.
 
 ### intersectPlane(plane : Plane) : INTERSECTION
@@ -81,6 +81,7 @@ Determines which side of a plane the axis-aligned bounding box is located.
 - `plane` The plane to test against.
 
 Returns
+
 - `INTERSECTION.INSIDE` if the entire box is on the side of the plane the normal is pointing
 - `INTERSECTION.OUTSIDE` if the entire box is on the opposite side, and
 - `INTERSECTION.INTERSECTING` if the box intersects the plane.

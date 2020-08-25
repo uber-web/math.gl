@@ -35,5 +35,3 @@ viewport.project([-122.45, 37.78]);
 viewport.unproject([400, 300]);
 // returns map coordinates [-122.45, 37.78]
 ```
-
-

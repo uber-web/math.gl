@@ -5,6 +5,7 @@ A [bounding sphere](https://en.wikipedia.org/wiki/Bounding_sphere) with a center
 ## Usage
 
 Create a bounding sphere around the unit cube
+
 ```js
 import {BoundingSphere} from '@math.gl/culling';
 cont sphere = new BoundingSphere().fromCornerPoints(
@@ -14,6 +15,7 @@ cont sphere = new BoundingSphere().fromCornerPoints(
 ```
 
 Sort bounding spheres from back to front
+
 ```js
 import {BoundingSphere} from '@math.gl/culling';
 const spheres = [new BoundingSphere(...), new BoundingSphere(...), ...];
@@ -33,10 +35,10 @@ Computes a tight-fitting bounding sphere enclosing a list of 3D Cartesian points
 - `result` Optional object onto which to store the result.
 
 Returns
+
 - The modified `result` parameter or a new `BoundingSphere` instance if one was not provided.
 
 See [Bounding Sphere computation article](http://blogs.agi.com/insight3d/index.php/2008/02/04/a-bounding/)
-
 
 ## Fields
 
@@ -47,8 +49,6 @@ The center point of the sphere.
 ### radius : Number
 
 The radius of the sphere.
-
-
 
 ## Members
 
@@ -68,7 +68,7 @@ Sets the `BoundingSphere` from center and radius
 
 ### fromCornerPoints(corner : Number[3], oppositeCorner : Number[3], result? : BoundingSphere) : BoundingSphere
 
-Computes a bounding sphere from the two corner points of an axis-aligned bounding box.  The sphere tighly and fully encompases the box.
+Computes a bounding sphere from the two corner points of an axis-aligned bounding box. The sphere tighly and fully encompases the box.
 
 - `corner` The minimum height over the rectangle.
 - `oppositeCorner` The maximum height over the rectangle.
@@ -80,6 +80,7 @@ Computes a tight-fitting bounding sphere enclosing the provided array of boundin
 - `boundingSpheres` The array of bounding spheres.
 
 Returns
+
 - The modified `result` parameter or a new `BoundingSphere` instance if none was provided.
 
 ### clone()
@@ -87,6 +88,7 @@ Returns
 Duplicates a `BoundingSphere` instance.
 
 Returns
+
 - A new `BoundingSphere` instance
 
 ### equals(right : BoundingSphere) Boolean
@@ -96,6 +98,7 @@ Compares the provided `BoundingSphere` componentwise and returns `true` if they 
 - `right` The second `BoundingSphere`.
 
 Returns
+
 - `true` if left and right are equal, `false` otherwise.
 
 ### union(right : BoundingSphere) : BoundingSphere
@@ -115,7 +118,7 @@ Computes a bounding sphere by enlarging the provided sphere to contain the provi
 Determines which side of a plane a sphere is located.
 
 - `plane` The plane to test against.
-Returns
+  Returns
 - `INTERSECTION.INSIDE` if the entire sphere is on the side of the plane the normal is pointing
 - `INTERSECTION.OUTSIDE` if the entire sphere is on the opposite side
 - `INTERSECTION.INTERSECTING` if the sphere intersects the plane.
@@ -133,8 +136,8 @@ Computes the estimated distance squared from the closest point on a bounding sph
 - `point` The point
 
 Returns
-- The estimated distance squared from the bounding sphere to the point.
 
+- The estimated distance squared from the bounding sphere to the point.
 
 ### transformWithoutScale(sphere, transform, result)
 
@@ -144,16 +147,17 @@ This method is faster than computing the general bounding sphere transform using
 
 @param {BoundingSphere} sphere The bounding sphere to apply the transformation to.
 @param {Matrix4} transform The transformation matrix to apply to the bounding sphere.
+
 - `result` Optional object onto which to store the result.
 
 Returns
+
 - The modified `result` parameter or a new `BoundingSphere` instance if none was provided.
 
 @example
 var modelMatrix = Transforms.eastNorthUpToFixedFrame(positionOnEllipsoid);
 var boundingSphere = new BoundingSphere();
 var newBoundingSphere = BoundingSphere.transformWithoutScale(boundingSphere, modelMatrix);
-
 
 ### computePlaneDistances (sphere, position, direction, result)
 
@@ -167,16 +171,17 @@ If you imagine the infinite number of planes with normal direction, this compute
 @param {Interval} [result] A Interval to store the nearest and farthest distances.
 @returns {Interval} The nearest and farthest distances on the bounding sphere from position in direction.
 
-
 ### projectTo2D(sphere, projection, result)
 
 Creates a bounding sphere in 2D from a bounding sphere in 3D world coordinates.
 
 @param {BoundingSphere} sphere The bounding sphere to transform to 2D.
 @param {Object} [projection=GeographicProjection] The projection to 2D.
+
 - `result` Optional object onto which to store the result.
 
 Returns
+
 - The modified `result` parameter or a new `BoundingSphere` instance if none was provided.
 
 ## Attribution

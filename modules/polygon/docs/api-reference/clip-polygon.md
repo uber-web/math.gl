@@ -1,5 +1,9 @@
 # clipPolygon
 
+<p class="badges">
+  <img src="https://img.shields.io/badge/From-v3.2-blue.svg?style=flat-square" alt="From-v3.2" />
+</p>
+
 Clips a polygon with a bounding box.
 
 ```js
@@ -14,7 +18,7 @@ The clipping bounds are defined as an orthoganal rectangle on the XY plane. If a
 ## Usage
 
 ```js
-clipPolygon(positions, bbox, [options])
+clipPolygon(positions, bbox, [options]);
 ```
 
 Arguments:
@@ -22,9 +26,9 @@ Arguments:
 - `positions` (Array|TypedArray) - a flat array of the vertex positions that define the polygon.
 - `bbox` (Array) - the bounding box, in `[minX, minY, maxX, maxY]`
 - `options` (Object, optional)
-  + `size` (Number) - the number of elements in each vertex. Size `2` will interpret `positions` as `[x0, y0, x1, y1, ...]` and size `3` will interpret `positions` as `[x0, y0, z0, x1, y1, z1, ...]`. Default `2`.
-  + `startIndex` (Number, optional) - the index in `positions` to start reading vertices. Default `0`.
-  + `endIndex` (Number, optional) - the index in `positions` to stop reading vertices. Default `positions.length`.
+  - `size` (Number) - the number of elements in each vertex. Size `2` will interpret `positions` as `[x0, y0, x1, y1, ...]` and size `3` will interpret `positions` as `[x0, y0, z0, x1, y1, z1, ...]`. Default `2`.
+  - `startIndex` (Number, optional) - the index in `positions` to start reading vertices. Default `0`.
+  - `endIndex` (Number, optional) - the index in `positions` to stop reading vertices. Default `positions.length`.
 
 Returns:
 

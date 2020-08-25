@@ -34,7 +34,7 @@
     "babel-plugin-transform-builtin-extend": "^1.1.2",
     "coveralls": "^3.0.0",
     "eslint-plugin-react": "^7.10",
-    "ocular-dev-tools": "^0.1.0",
+    "ocular-dev-tools": "^0.1.10",
     "pre-commit": "^1.2.2",
     "reify": "^0.18.1",
     "typescript": "^3.9.6"

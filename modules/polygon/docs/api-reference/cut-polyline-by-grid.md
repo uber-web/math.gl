@@ -1,5 +1,9 @@
 # cutPolylineByGrid
 
+<p class="badges">
+  <img src="https://img.shields.io/badge/From-v3.2-blue.svg?style=flat-square" alt="From-v3.2" />
+</p>
+
 Subdivides a polyline by intersecting with a uniform grid.
 
 ```js
@@ -12,19 +16,19 @@ cutPolylineByGrid([-10, -10, 10, 10, 30, -10], {size: 2, gridResolution: 10});
 ## Usage
 
 ```js
-cutPolylineByGrid(positions, [options])
+cutPolylineByGrid(positions, [options]);
 ```
 
 Arguments:
 
 - `positions` (Array|TypedArray) - a flat array of the vertex positions that define the polyline.
 - `options` (Object, optional)
-  + `size` (Number) - the number of elements in each vertex. Size `2` will interpret `positions` as `[x0, y0, x1, y1, ...]` and size `3` will interpret `positions` as `[x0, y0, z0, x1, y1, z1, ...]`. Default `2`.
-  + `startIndex` (Number, optional) - the index in `positions` to start reading vertices. Default `0`.
-  + `endIndex` (Number, optional) - the index in `positions` to stop reading vertices. Default `positions.length`.
-  + `gridResolution` (Number, optional) - the grid size. Default `10`.
-  + `gridOffset` (Array, optional) - the grid offset in `[x, y]`. Default `[0, 0]` i.e. the grid starts from the coordinate origin.
-  + `broken` (Boolean, optional) - if `true`, the polyline is broken into multiple polylines at the subdivision points. If `false`, subdivision points are inserted into the original polyline. Default `false`.
+  - `size` (Number) - the number of elements in each vertex. Size `2` will interpret `positions` as `[x0, y0, x1, y1, ...]` and size `3` will interpret `positions` as `[x0, y0, z0, x1, y1, z1, ...]`. Default `2`.
+  - `startIndex` (Number, optional) - the index in `positions` to start reading vertices. Default `0`.
+  - `endIndex` (Number, optional) - the index in `positions` to stop reading vertices. Default `positions.length`.
+  - `gridResolution` (Number, optional) - the grid size. Default `10`.
+  - `gridOffset` (Array, optional) - the grid offset in `[x, y]`. Default `[0, 0]` i.e. the grid starts from the coordinate origin.
+  - `broken` (Boolean, optional) - if `true`, the polyline is broken into multiple polylines at the subdivision points. If `false`, subdivision points are inserted into the original polyline. Default `false`.
 
 Returns:
 

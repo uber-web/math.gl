@@ -66,6 +66,7 @@ The transformation matrix, to rotate the box to the right position.
 Duplicates a OrientedBoundingBox instance.
 
 Returns
+
 - A new `OrientedBoundingBox` instance.
 
 ### equals(right: OrientedBoundingBox) : Boolean
@@ -75,6 +76,7 @@ Compares the provided OrientedBoundingBox componentwise and returns `true` if th
 - `right` The second `OrientedBoundingBox`
 
 Returns
+
 - `true` if left and right are equal, `false` otherwise.
 
 ### intersectPlane(plane : Plane) : INTERSECTION
@@ -84,6 +86,7 @@ Determines which side of a plane the oriented bounding box is located.
 - `plane` The plane to test against.
 
 Returns
+
 - `INTERSECTION.INSIDE` if the entire box is on the side of the plane the normal is pointing
 - `INTERSECTION.OUTSIDE` if the entire box is on the opposite side, and
 - `INTERSECTION.INTERSECTING` if the box intersects the plane.
@@ -108,7 +111,7 @@ Returns
 
 - The estimated distance squared from the bounding sphere to the point.
 
-### computePlaneDistances(position : Number[3], direction : Number[3] [, result : Number[2]]) : Number[2]
+### computePlaneDistances(position : Number[3], direction : Number[3], result : Number[2]]) : Number[2]
 
 The distances calculated by the vector from the center of the bounding box to position projected onto direction.
 
@@ -121,7 +124,6 @@ If you imagine the infinite number of planes with normal direction, this compute
 Returns
 
 - The nearest and farthest distances on the bounding box from position in direction.
-
 
 ## Attribution
 

@@ -6,23 +6,22 @@ math.gl is a JavaScript class library focused on 3D and geospatial math. It prov
 
 math.gl is a toolbox that offers a range of modules for
 
-| Module    | Description |
-| ---       | --- |
-| `@math.gl/core` | Basic 3D math classes (vectors, matrices etc) and utilities (`equals`, `toRadians` etc) |
-| `@math.gl/culling` | Bounding volumes and intersection testing. |
-| `@math.gl/geospatial` | Ellipsoidal geospatial math, primarily for WGS84 cartesian to cartographic transformations. |
-| `@math.gl/polygon` | Polygon math. |
-| `@math.gl/proj4` | Conversion between geospatial coordinate systems. |
-| `@math.gl/sun` | Calculate solar position and direction. |
-| `@math.gl/web-mercator` | Support for 3D / perspective Web Mercator projections. |
+| Module                  | Description                                                                                 |
+| ----------------------- | ------------------------------------------------------------------------------------------- |
+| `@math.gl/core`         | Basic 3D math classes (vectors, matrices etc) and utilities (`equals`, `toRadians` etc)     |
+| `@math.gl/culling`      | Bounding volumes and intersection testing.                                                  |
+| `@math.gl/geospatial`   | Ellipsoidal geospatial math, primarily for WGS84 cartesian to cartographic transformations. |
+| `@math.gl/polygon`      | Polygon math.                                                                               |
+| `@math.gl/proj4`        | Conversion between geospatial coordinate systems.                                           |
+| `@math.gl/sun`          | Calculate solar position and direction.                                                     |
+| `@math.gl/web-mercator` | Support for 3D / perspective Web Mercator projections.                                      |
 
 There are also some legacy modules that are not recommended for new code, but are provided to avoid breaking older applications:
 
-| Legacy Module    | Description |
-| ---       | --- |
-| `math.gl` |  Re-exports the API from `@math.gl/core`. The `math.gl` module is now considered deprecated. It is still available as an "alias" for `@math.gl/core` but should not be used in new applications. |
+| Legacy Module               | Description                                                                                                                                                                                                                                                            |
+| --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `math.gl`                   | Re-exports the API from `@math.gl/core`. The `math.gl` module is now considered deprecated. It is still available as an "alias" for `@math.gl/core` but should not be used in new applications.                                                                        |
 | `viewport-mercator-project` | Re-exports the Web Mercator projection utilities in `@math.gl/web-mercator`. This code was orignally developed indendently in the [https://github.com/uber-common/viewport-mercator-project] repository, however the module was consolidated with math.gl in Oct 2019. |
-
 
 ## Core Library Features
 
@@ -39,6 +38,7 @@ There are also some legacy modules that are not recommended for new code, but ar
 ## Supported Browsers and Node Versions
 
 math.gl is fully supported on:
+
 - Evergreen browsers: Recent versions of Chrome, Safari, Firefox, Edge etc.
 - Node.js: Active and Maintenance [LTS releases](https://nodejs.org/en/about/releases/)
 - IE11: Supported (with certain performance caveats) using math.gl's fully transpiled `es5` distribution and `@babel/polyfills`.

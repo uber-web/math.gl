@@ -3,7 +3,7 @@
 ## Installation
 
 ```bash
-npm install math.gl
+npm install @math.gl/core
 ```
 
 ## Usage

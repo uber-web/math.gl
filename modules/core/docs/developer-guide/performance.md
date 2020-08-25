@@ -20,6 +20,7 @@ let vector = new Vector2(NaN, NaN); // Now throws an error. The check
 ```
 
 Verifying that error checks are not turned on.
+
 ```js
 import {configure} from '@math.gl/core';
 console.log('Debug status', configure().debug);
@@ -64,6 +65,7 @@ for (...) {
   // v now contains a reference to a newly allocated `Vector3` which was updated with the result of the `tranformVector` operation.
 }
 ```
+
 vs.
 
 ```js
@@ -77,7 +79,6 @@ for (...) {
 ## Browser, OS version etc
 
 The JavaScript engine powering Chrome and Node is still improving. The performance difference between e.g. Node 8 and Node 11 is rather staggering.
-
 
 ## Benchmarking
 

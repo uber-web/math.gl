@@ -9,13 +9,23 @@
 ## Methods
 
 ### Vector.clone()
+
 ### Vector.copy(array)
+
 ### Vector.set(...args)
+
 ### Vector.fromArray(array, offset = 0)
+
 ### Vector.toString()
+
 ### Vector.toArray(array = [], offset = 0)
+
 ### Vector.equals(array)
+
 ### Vector.exactEquals(array)
+
 ### Vector.validate(array = this)
+
 ### Vector.check(array = this)
+
 ### Vector.normalize()

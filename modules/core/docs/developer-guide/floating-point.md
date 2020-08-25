@@ -11,7 +11,7 @@ Due to small rounding errors, exact equality is often not a reliable way to comp
 There is also an `exactEquals` method that compares the floating point values directly.
 
 ```js
- return Math.abs(a - b) <= config.EPSILON * Math.max(1.0, Math.abs(a), Math.abs(b));
+return Math.abs(a - b) <= config.EPSILON * Math.max(1.0, Math.abs(a), Math.abs(b));
 ```
 
 - Floating point comparison implementation in gl-matrix and alternatives (links)

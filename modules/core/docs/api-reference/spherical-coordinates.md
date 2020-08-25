@@ -9,8 +9,8 @@ class SphericalCoordinates
 
 See also [Wikipedia](https://en.wikipedia.org/wiki/Spherical_coordinate_system), [Wolfram MathWorld](http://mathworld.wolfram.com/SphericalCoordinates.html).
 
-* The poles (phi) are at the positive and negative y axis.
-* The equator starts at positive z.
+- The poles (phi) are at the positive and negative y axis.
+- The equator starts at positive z.
 
 Conversion from spherical to Cartesian (rectilinear) coordinates:
 
@@ -65,6 +65,7 @@ import {_SphericalCoordinates as SphericalCoordinates} from '@math.gl/core';
 ```
 
 Creating a SphericalCoordinates object
+
 ```js
 const spherical = new SphericalCoordinates({phi: 0, theta: 0});
 const spherical = new SphericalCoordinates({pitch: 0, bearing: 0});
@@ -72,30 +73,37 @@ const spherical = new SphericalCoordinates({longitude: 0, latitude: 0});
 ```
 
 Converting to a direction `Vector3`
+
 ```js
 const direction = new SphericalCoordinates().toVector3();
 ```
 
 Manipulating spherical coordinates;
+
 ```js
 spherical.bearing += 3; // Add three degrees to bearing
 spherical.theta -= Math.PI / 4; // Subtract PI/4 radians from theta.
 ```
 
-
 ## Members
 
 // Standard spherical coordinates
+
 ### phi
+
 ### theta
+
 ### radius
+
 ### altitude
 
 // lnglatZ coordinates
-### lng
-### lat
-### z
 
+### lng
+
+### lat
+
+### z
 
 ## Methods
 
@@ -107,9 +115,9 @@ SphericalCoordinates({bearing = 0, pitch = 0, altitude = 1.0})
 SphericalCoordinates({longitude = 0, latitude = 0, z = 1.0})
 ```
 
-* phi=0 - rotation around X (latitude)
-* theta=0 - rotation around Y (longitude)
-* radius=1 - Distance from center
+- phi=0 - rotation around X (latitude)
+- theta=0 - rotation around Y (longitude)
+- radius=1 - Distance from center
 
 ### set
 
@@ -137,7 +145,6 @@ SphericalCoordinates({longitude = 0, latitude = 0, z = 1.0})
 
 // restrict phi to be betwee EPS and PI-EPS
 
-
 ### toVector3
 
 `toVector3(center = [0, 0, 0])`
@@ -146,7 +153,6 @@ SphericalCoordinates({longitude = 0, latitude = 0, z = 1.0})
 
 ### check
 
-
 ## Remarks
 
-* Inspired by THREE.js `THREE.Spherical` class
+- Inspired by THREE.js `THREE.Spherical` class

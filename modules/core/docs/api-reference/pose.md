@@ -15,7 +15,7 @@ class Pose
 import {_Pose as Pose} from '@math.gl/core';
 ```
 
-##  Members
+## Members
 
 ### x, y z
 
@@ -24,7 +24,6 @@ Gets or sets position components respectively
 ### roll, pitch, yaw
 
 Gets or sets rotation components respectively
-
 
 ## Methods
 
@@ -35,10 +34,10 @@ new Pose({x, y, z, roll, pitch, yaw});
 new Pose({position, orientation});
 ```
 
- * `x`, `y`, `z` - position
- * `roll`, `pitch`, `yaw` - rotation in radians
- * `position` - `Vector3` or array of 3 that represents the position
- * `orientation` - `Euler` or array of 4 that represents the rotation
+- `x`, `y`, `z` - position
+- `roll`, `pitch`, `yaw` - rotation in radians
+- `position` - `Vector3` or array of 3 that represents the position
+- `orientation` - `Euler` or array of 4 that represents the rotation
 
 ### getPosition
 

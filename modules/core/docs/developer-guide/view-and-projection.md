@@ -15,7 +15,8 @@ Note: while a projection matrix may generate coordinates with `w !== 1`, the GPU
 ### Creating a View Matrix
 
 To create a view matrix
-* `Matrix4.lookAt({...})`
+
+- `Matrix4.lookAt({...})`
 
 Normally positions are transformed by the view matrix. If doing work (e.g. lighting) in view space you will also want to transform other geometry such as normals.
 
@@ -27,22 +28,21 @@ Projection matrices typically show everything inside a frustum (truncated pyrami
 
 To create a projection matrix use:
 
-* `Matrix4.perspective({fov, aspect, near, far})`
+- `Matrix4.perspective({fov, aspect, near, far})`
 
 ### Creating an Orthographic Projection Matrix
 
 math.gl provides the traditional function create an orhtographic projection matrix by providing the "box" extents:
 
-* `Matrix4.ortho({right, left, top, bottom, near, far})`
+- `Matrix4.ortho({right, left, top, bottom, near, far})`
 
 The extents are specified in "view space" (which is typically translated and rotated, but not scaled, world space).
-
 
 ### Switching between Perspective and Orthographic Views
 
 In applications it is not unusual to want to offer both perspective and orthographic views. To support this case, math.gl offers an additional method for creating orthographic projection matrix, that takes the same parameters as `Matrix4.perspective()`, with the addition of one additional parameter, `focalDistance` that selects which plane in the perspective view frustum should be used to calculate the size of the orthographic view box.
 
-* `Matrix4.orthographic({fovy, aspect, focalDistance, near, far})`
+- `Matrix4.orthographic({fovy, aspect, focalDistance, near, far})`
 
 ## About Projection Matrices
 
@@ -109,9 +109,9 @@ An ortograhic projection matrix essentially just scales your view to show everyt
       </mtr>
     </mtable>
     </mfenced>
+
   </mrow>
 </math>
-
 
 ## Decomposing a ViewProjection Matrix
 
@@ -119,4 +119,4 @@ TBA
 
 ## Remarks
 
-* As always, matrices are presented here in row major notation, however math.gl stores them internally in column major format to match WebGL requirements.
+- As always, matrices are presented here in row major notation, however math.gl stores them internally in column major format to match WebGL requirements.

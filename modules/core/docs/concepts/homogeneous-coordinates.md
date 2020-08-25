@@ -8,22 +8,20 @@ Mathematically, in projective geometry, each `Vector4` is interpreted as a point
 
 The main reason homogeneous coordinates and projective geometry are used in 3D graphics programming is that they allow perspective projection and translations to be represented as linear transformations using 4x4 matrices.
 
-
 ### The W Coordinate
 
 Mathematically, homogeneous coordinates add one extra dimension to represent a number. In the 3 dimensional computer graphics case, it is customary to refer to the extra (4th) components as `w`. Mathematically, the `w` coordinate indicates which representative along the projective line.
 
 There is a straightforward graphical interpretation of the `w` coordinate: During projection of a set of homogeneous vectors onto a plane at distance 1 from the origin, all the vectors are normalized so that their `w` coordinates are `1` by dividing `xyz` with `w`. which leads to the following graphical interpretation:
 
-| `w`     | Graphical Interpretation  |
-| ---     | --- |
-| > `1`   | your object will look smaller |
-| < `1`   | your object will look bigger |
-| = `0`   | will cause a crash or undefined behavior |
-| < `0`   | will flip your object (upside-down, back-to-front, ...) |
+| `w`   | Graphical Interpretation                                |
+| ----- | ------------------------------------------------------- |
+| > `1` | your object will look smaller                           |
+| < `1` | your object will look bigger                            |
+| = `0` | will cause a crash or undefined behavior                |
+| < `0` | will flip your object (upside-down, back-to-front, ...) |
 
 Both math.gl and typical GPUs do not support calculations on homogeneous coordinates with a `w` component of zero. (However, zero `w`coordinates play a very important role in general projective geometry, see "Background" below).
-
 
 ## Practical Usage
 
@@ -72,9 +70,9 @@ A general projective transformation matrix has the following format
         <mtr><mtd columnalign="center"><mi>w</mi></mtd></mtr>
       </mtable>
     </mfenced>
+
   </mrow>
 </math>
-
 
 ### Translation of 3D coordinates
 
@@ -84,13 +82,11 @@ Translations leave the `w` coordinate unchanged.
 
 As can be seen in the general format of the projection matrix, setting `w` to 0 prevents a vector from picking up the translations when multiplied with a 4x4 matrix. (easy to see as the translations are stored in the final column of the transposed matrix)
 
-
 ### Perspective Transformation
 
 Note that in general, a perspective transformation (i.e. multipliying) do change the `w` coordinate of the `Vector4`, so vectors must be "scaled" after transformation when used in JavaScript.
 
 GPU Note: the GPU automatically divides `vec4` `xyz` components with `w` when they are returned from the vertex shader (when homogeneous coordinates are returned from the vertex shader (typically by assigning a `vec4` to `gl_Position`). This can be an important detail to be aware of when comparing JavaScript and GLSL code, and also when working in screen space (post-projection) in the vertex shader, in which case you typically do need to perform the `w` scaling yourself.
-
 
 ## Background Information
 

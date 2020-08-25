@@ -18,30 +18,27 @@ import {Quaternion} from '@math.gl/core';
 
 Gets or sets element 0, 1, 2 or 3 respectively
 
-
 ## Methods
 
 Many of the most commonly used methods are inherited from [`MathArray`](./docs/api-reference/math-array.md):
 
-* `quaternion.clone()`
-* `quaternion.copy(array)`
-* `quaternion.set(...args)`
-* `quaternion.fromArray(array, offset = 0)`
-* `quaternion.toString()`
-* `quaternion.toArray(array = [], offset = 0)`
-* `quaternion.equals(array)`
-* `quaternion.exactEquals(array)`
-* `quaternion.validate(array = this)`
-* `quaternion.check(array = this)`
-* `quaternion.normalize()`
+- `quaternion.clone()`
+- `quaternion.copy(array)`
+- `quaternion.set(...args)`
+- `quaternion.fromArray(array, offset = 0)`
+- `quaternion.toString()`
+- `quaternion.toArray(array = [], offset = 0)`
+- `quaternion.equals(array)`
+- `quaternion.exactEquals(array)`
+- `quaternion.validate(array = this)`
+- `quaternion.check(array = this)`
+- `quaternion.normalize()`
 
 Note that `Quaternion` is a subclass of the built in JavaScript `Array` and can thus technically be supplied as a parameter to any function expecting an `Array`.
-
 
 ### constructor
 
 `constructor(x = 0, y = 0, z = 0, w = 1)`
-
 
 ### fromMatrix3
 
@@ -49,13 +46,11 @@ Creates a quaternion from the given 3x3 rotation matrix. NOTE: The resultant qua
 
 `fromMatrix3(m)`
 
-
 ### fromValues
 
 Creates a new quat initialized with the given values
 
 `fromValues(x, y, z, w)`
-
 
 ### identity
 
@@ -63,13 +58,11 @@ Set a quat to the identity quaternion
 
 `identity()`
 
-
 ### length
 
 Calculates the length of a quaternion
 
 `length()`
-
 
 ### squaredLength
 
@@ -79,13 +72,11 @@ Calculates the squared length of a quaternion
 
 @returnNumber}
 
-
 ### dot
 
 Calculates the dot product of two quat's
 
 `quaternion.dot(a, b)`
-
 
 ### getAxisAngle
 
@@ -97,13 +88,11 @@ If a quaternion is created with setAxisAngle, this method will return the same v
 
 Example: The quaternion formed by axis [0, 0, 1] and angle -90 is the same as the quaternion formed by [0, 0, 1] and 270. This method favors the latter.
 
-
 ### rotationTo
 
 Sets a quaternion to represent the shortest rotation from one vector to another. Both vectors are assumed to be unit length.
 
 `quaternion.rotationTo(vectorA, vectorB)`
-
 
 ### add
 
@@ -111,13 +100,11 @@ Adds two quaternions
 
 `quaternion.add(a, b)`
 
-
 ### calculateW
 
 Calculates the W component of a quat from the X, Y, and Z components. Any existing W component will be ignored.
 
 `quaternion.calculateW()`
-
 
 ### conjugate
 
@@ -125,13 +112,11 @@ Calculates the conjugate of a quat If the quaternion is normalized, this functio
 
 `quaternion.conjugate()`
 
-
 ### invert
 
 Calculates the inverse of a quat
 
 `quaternion.invert()`
-
 
 ### lerp
 
@@ -139,18 +124,15 @@ Performs a linear interpolation between two quat's
 
 `quaternion.lerp(a, b, t)`
 
-
 ### multiply
 
 Multiplies two quat's
 
 `multiply(a, b)`
 
-
 ### normalize
 
 Normalize a quat
-
 
 ### rotateX
 
@@ -158,13 +140,11 @@ Rotates a quaternion by the given angle about the X axis
 
 `rotateX(rad)`
 
-
 ### rotateY
 
 Rotates a quaternion by the given angle about the Y axis
 
 `rotateY(rad)`
-
 
 ### rotateZ
 
@@ -172,13 +152,11 @@ Rotates a quaternion by the given angle about the Z axis
 
 `rotateZ(rad)`
 
-
 ### scale
 
 Scales a quat by a scalar number
 
 `scale(b)`
-
 
 ### set
 
@@ -186,13 +164,11 @@ Set the components of a quat to the given values
 
 `set(i, j, k, l)`
 
-
 ### setAxisAngle
 
 Sets a quat from the given angle and rotation axis, then returns it.
 
 `setAxisAngle(axis, rad)`
-
 
 ### slerp
 

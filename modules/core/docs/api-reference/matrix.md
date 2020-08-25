@@ -14,7 +14,6 @@ Sets the element at "conceptual position" `M[i][j]`, row major indices by defaul
 
 `matrix3.set(i, j, value, columnMajor = false)`
 
-
 ### getElement
 
 Gets the element at "conceptual position" `M[i][j]`, row major indices by default

@@ -10,18 +10,17 @@ The culling module does not attempt to be a general "physics-based" collision de
 ## Classes
 
 | Class                 | Description |
-| ---                   | --- |
-| `CullingVolume`       | |
-| `BoundingSphere`      | |
-| `OrientedBoundingBox` | |
-| `Plane`               | |
+| --------------------- | ----------- |
+| `CullingVolume`       |             |
+| `BoundingSphere`      |             |
+| `OrientedBoundingBox` |             |
+| `Plane`               |             |
 
 ## Example Usage
 
 - Create bounding volumes for your objects/geometries, and create `BoundingSphere` or `OrientedBoundingBox` instances.
 - Extract your camera view frustum parameters and create a `PerspectiveFrustum` instance.
 - You can now test your bounding volumes to see if the intersect the view frustum.
-
 
 ## Framework Independence
 
