@@ -13,6 +13,12 @@ export class Proj4Projection {
 
   constructor({from = 'WGS84', to = 'WGS84'}) {
     this.projection = proj4(from, to);
+    if (!this.projection) {
+      throw new Error('Invalid projection');
+    }
+
+    this.project = this.project.bind(this);
+    this.unproject = this.unproject.bind(this);
   }
 
   project(coords) {
