@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import {Vector2, Vector3, _Pose as Pose, _MathUtils} from '@math.gl/core';
+import {Vector2, Vector3, Pose, _MathUtils} from '@math.gl/core';
 import {config, configure, isArray, clone, equals, exactEquals, formatValue} from '@math.gl/core';
 import {toRadians, toDegrees} from '@math.gl/core';
 import {radians, degrees, sin, cos, tan, asin, acos, atan, clamp, lerp} from '@math.gl/core';

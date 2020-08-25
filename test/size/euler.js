@@ -1,3 +1,3 @@
-import {_Euler as Euler} from 'math.gl';
+import {Euler} from '@math.gl/core';
 
 console.log(Euler); // eslint-disable-line

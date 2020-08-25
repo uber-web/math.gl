@@ -1,4 +1,4 @@
-import {_Euler as Euler, Matrix4, Quaternion, _Pose as Pose} from '@math.gl/core';
+import {Euler, Matrix4, Quaternion, Pose} from '@math.gl/core';
 import test from 'tape-catch';
 import {tapeEquals} from 'test/utils/tape-assertions';
 

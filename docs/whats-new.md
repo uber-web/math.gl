@@ -1,26 +1,26 @@
 # What's New
 
-# v3.3
+## v3.3 (In Development)
 
 Release Date: TBD. v3.3 is still in development. Alpha releases are available.
 
-### `@math.gl/proj4`
+**`@math.gl/proj4`**
 
 A new module supporting conversion between a wide range of geospatial coordinate systems.
 
-# v3.2
+## v3.2
 
 Release Date: July 18, 2020
 
-### Typescript
+**Typescript**
 
 Typescript type definitions (`.d.ts` files) are now exported for all math.gl modules.
 
-### `@math.gl/polygon`
+**`@math.gl/polygon`**
 
 A new module offering geospatial polygon clipping functions.
 
-# v3.1
+## v3.1
 
 Release date: Dec 16, 2019
 

@@ -1,6 +1,4 @@
-# Euler (Experimental)
-
-> Note this class is experimental and may change or be removed in minor math.gl versions.
+# Euler
 
 ```js
 class Euler extends MathArray extends Array
@@ -11,7 +9,7 @@ A class to handle Euler rotation. More information on rotation using a Euler vec
 ## Usage
 
 ```js
-import {_Euler as Euler} from '@math.gl/core';
+import {Euler} from '@math.gl/core';
 ```
 
 ## Constants
