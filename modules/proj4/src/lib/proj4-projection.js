@@ -12,20 +12,12 @@ export class Proj4Projection {
   }
 
   constructor({from = 'WGS84', to = 'WGS84'}) {
-    this.projection = proj4(from, to);
-    if (!this.projection) {
+    const projection = proj4(from, to);
+    if (!projection) {
       throw new Error('Invalid projection');
     }
 
-    this.project = this.project.bind(this);
-    this.unproject = this.unproject.bind(this);
-  }
-
-  project(coords) {
-    return this.projection.forward(coords);
-  }
-
-  unproject(coord) {
-    return this.projection.inverse(coord);
+    this.project = projection.forward;
+    this.unproject = projection.inverse;
   }
 }

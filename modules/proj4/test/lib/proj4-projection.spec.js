@@ -77,7 +77,7 @@ test('Proj4Projection', t => {
     var ll = proj4.transform(proj, proj4.WGS84, proj4.toPoint(testPoint.xy));
     tapeEqualsEpsilon(t, ll.x, testPoint.ll[0], llEPSLN, 'lng is close');
     tapeEqualsEpsilon(t, ll.y, testPoint.ll[1], llEPSLN, 'lat is close');
-    
+
     // describe('new method 2 param', it('shortcut method should work with an array', t => {
     var xy = proj4(testPoint.code, testPoint.ll);
     tapeEqualsEpsilon(t, xy[0], testPoint.xy[0], xyEPSLN, 'x is close');
@@ -99,7 +99,7 @@ test('Proj4Projection', t => {
       tapeEqualsEpsilon(t, xy.x, testPoint.xy[0], xyEPSLN, 'x is close');
       tapeEqualsEpsilon(t, xy.y, testPoint.xy[1], xyEPSLN, 'y is close');
     }
-    
+
     // describe('new method 3 param', it('shortcut method should work with an array', t => {
     var xy = proj4(proj4.WGS84, testPoint.code, testPoint.ll);
     tapeEqualsEpsilon(t, xy[0], testPoint.xy[0], xyEPSLN, 'x is close');
@@ -172,6 +172,15 @@ test('Proj4Projection', t => {
     tapeEqualsEpsilon(t, ll.y, testPoint.ll[1], llEPSLN, 'y is close');
     */
   }
+  t.end();
+});
+
+test('Proj4Projection is bound', t => {
+  const projection = new Proj4Projection({from: 'WGS84', to: 'WGS84'});
+  const coords = [[0, 0]];
+  const reprojectedCooords = coords.map(projection.project);
+  tapeEqualsEpsilon(t, reprojectedCooords[0][0], 0, 0.000001);
+  tapeEqualsEpsilon(t, reprojectedCooords[0][1], 0, 0.000001);
   t.end();
 });
 
