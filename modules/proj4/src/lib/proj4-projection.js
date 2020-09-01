@@ -17,7 +17,7 @@ export class Proj4Projection {
       throw new Error('Invalid projection');
     }
 
-    this.project = projection.forward.bind(this);
-    this.unproject = projection.inverse.bind(this);
+    this.project = projection.forward;
+    this.unproject = projection.inverse;
   }
 }
