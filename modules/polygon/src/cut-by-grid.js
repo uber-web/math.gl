@@ -78,7 +78,8 @@ export function cutPolygonByGrid(positions, holeIndices, options = {}) {
   while (queue.length) {
     const {pos, types, holes} = queue.shift();
 
-    getBoundingBox(pos, size, bbox);
+    // Get the bounding box of the outer polygon
+    getBoundingBox(pos, size, holes[0] || pos.length, bbox);
     cell = getGridCell(bbox[0], gridResolution, gridOffset, cell);
     const code = bitCode(bbox[1], cell);
 
@@ -212,13 +213,13 @@ function moveToNeighborCell(cell, gridResolution, edge) {
   }
 }
 
-function getBoundingBox(positions, size, out) {
+function getBoundingBox(positions, size, endIndex, out) {
   let minX = Infinity;
   let maxX = -Infinity;
   let minY = Infinity;
   let maxY = -Infinity;
 
-  for (let i = 0; i < positions.length; i += size) {
+  for (let i = 0; i < endIndex; i += size) {
     const x = positions[i];
     const y = positions[i + 1];
     minX = x < minX ? x : minX;
