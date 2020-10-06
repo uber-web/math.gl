@@ -17,6 +17,9 @@ export default class OrientedBoundingBox {
   // An OrientedBoundingBox of some object is a closed and convex cuboid. It can provide a tighter bounding volume than {@link BoundingSphere} or {@link AxisAlignedBoundingBox} in many cases.
   constructor(center?: readonly number[], halfAxes?: readonly number[]);
 
+  // Create OrientedBoundingBox from I3S OBB (https://github.com/Esri/i3s-spec/blob/master/docs/1.7/obb.cmn.md)
+  static fromQuaternionObb(quaternionObb: {center: number[]; halfSize: number[], quaternion: number[]}): OrientedBoundingBox;
+
   // Duplicates a OrientedBoundingBox instance.
   clone(): OrientedBoundingBox;
 

@@ -1,7 +1,7 @@
 // This file is derived from the Cesium math library under Apache 2 license
 // See LICENSE.md and https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md
 
-import {Vector3, Matrix3} from '@math.gl/core';
+import {Vector3, Matrix3, Quaternion} from '@math.gl/core';
 import BoundingSphere from './bounding-sphere';
 import {INTERSECTION} from '../constants';
 
@@ -33,6 +33,22 @@ export default class OrientedBoundingBox {
   constructor(center = [0, 0, 0], halfAxes = [0, 0, 0, 0, 0, 0, 0, 0, 0]) {
     this.center = new Vector3().from(center);
     this.halfAxes = new Matrix3(halfAxes);
+  }
+
+  // Create OrientedBoundingBox from OBB based on quaternion
+  static fromQuaternionObb(quaternionObb) {
+    const quaternion = new Quaternion(quaternionObb.quaternion);
+    const directionsMatrix = new Matrix3().fromQuaternion(quaternion);
+    directionsMatrix[0] = directionsMatrix[0] * quaternionObb.halfSize[0];
+    directionsMatrix[1] = directionsMatrix[1] * quaternionObb.halfSize[0];
+    directionsMatrix[2] = directionsMatrix[2] * quaternionObb.halfSize[0];
+    directionsMatrix[3] = directionsMatrix[3] * quaternionObb.halfSize[1];
+    directionsMatrix[4] = directionsMatrix[4] * quaternionObb.halfSize[1];
+    directionsMatrix[5] = directionsMatrix[5] * quaternionObb.halfSize[1];
+    directionsMatrix[6] = directionsMatrix[6] * quaternionObb.halfSize[2];
+    directionsMatrix[7] = directionsMatrix[7] * quaternionObb.halfSize[2];
+    directionsMatrix[8] = directionsMatrix[8] * quaternionObb.halfSize[2];
+    return new OrientedBoundingBox(quaternionObb.center, directionsMatrix.toArray());
   }
 
   // Duplicates a OrientedBoundingBox instance.
