@@ -35,20 +35,39 @@ export default class OrientedBoundingBox {
     this.halfAxes = new Matrix3(halfAxes);
   }
 
-  // Create OrientedBoundingBox from OBB based on quaternion
-  static fromQuaternionObb(quaternionObb) {
-    const quaternion = new Quaternion(quaternionObb.quaternion);
-    const directionsMatrix = new Matrix3().fromQuaternion(quaternion);
-    directionsMatrix[0] = directionsMatrix[0] * quaternionObb.halfSize[0];
-    directionsMatrix[1] = directionsMatrix[1] * quaternionObb.halfSize[0];
-    directionsMatrix[2] = directionsMatrix[2] * quaternionObb.halfSize[0];
-    directionsMatrix[3] = directionsMatrix[3] * quaternionObb.halfSize[1];
-    directionsMatrix[4] = directionsMatrix[4] * quaternionObb.halfSize[1];
-    directionsMatrix[5] = directionsMatrix[5] * quaternionObb.halfSize[1];
-    directionsMatrix[6] = directionsMatrix[6] * quaternionObb.halfSize[2];
-    directionsMatrix[7] = directionsMatrix[7] * quaternionObb.halfSize[2];
-    directionsMatrix[8] = directionsMatrix[8] * quaternionObb.halfSize[2];
-    return new OrientedBoundingBox(quaternionObb.center, directionsMatrix.toArray());
+  get halfSize() {
+    const xAxis = this.halfAxes.getColumn(0);
+    const yAxis = this.halfAxes.getColumn(1);
+    const zAxis = this.halfAxes.getColumn(2);
+    return [new Vector3(xAxis).len(), new Vector3(yAxis).len(), new Vector3(zAxis).len()];
+  }
+
+  get quaternion() {
+    const xAxis = this.halfAxes.getColumn(0);
+    const yAxis = this.halfAxes.getColumn(1);
+    const zAxis = this.halfAxes.getColumn(2);
+    const normXAxis = new Vector3(xAxis).normalize();
+    const normYAxis = new Vector3(yAxis).normalize();
+    const normZAxis = new Vector3(zAxis).normalize();
+    return new Quaternion().fromMatrix3(new Matrix3([...normXAxis, ...normYAxis, ...normZAxis]));
+  }
+
+  // Generate OrientedBoundingBox from OBB based on quaternion
+  fromCenterHalfSizeQuaternion(center, halfSize, quaternion) {
+    const quaternionObject = new Quaternion(quaternion);
+    const directionsMatrix = new Matrix3().fromQuaternion(quaternionObject);
+    directionsMatrix[0] = directionsMatrix[0] * halfSize[0];
+    directionsMatrix[1] = directionsMatrix[1] * halfSize[0];
+    directionsMatrix[2] = directionsMatrix[2] * halfSize[0];
+    directionsMatrix[3] = directionsMatrix[3] * halfSize[1];
+    directionsMatrix[4] = directionsMatrix[4] * halfSize[1];
+    directionsMatrix[5] = directionsMatrix[5] * halfSize[1];
+    directionsMatrix[6] = directionsMatrix[6] * halfSize[2];
+    directionsMatrix[7] = directionsMatrix[7] * halfSize[2];
+    directionsMatrix[8] = directionsMatrix[8] * halfSize[2];
+    this.center = new Vector3().from(center);
+    this.halfAxes = directionsMatrix;
+    return this;
   }
 
   // Duplicates a OrientedBoundingBox instance.
