@@ -1,7 +1,7 @@
 // This file is derived from the Cesium math library under Apache 2 license
 // See LICENSE.md and https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md
 
-import {Vector3, Matrix3} from '@math.gl/core';
+import {Vector3, Matrix3, Quaternion} from '@math.gl/core';
 import BoundingSphere from './bounding-sphere';
 import Plane from './plane';
 import {INTERSECTION_ENUM} from '../constants';
@@ -17,8 +17,14 @@ export default class OrientedBoundingBox {
   // An OrientedBoundingBox of some object is a closed and convex cuboid. It can provide a tighter bounding volume than {@link BoundingSphere} or {@link AxisAlignedBoundingBox} in many cases.
   constructor(center?: readonly number[], halfAxes?: readonly number[]);
 
+  // Returns halfSize array corresponding to I3S OBB halfSize (https://github.com/Esri/i3s-spec/blob/master/docs/1.7/obb.cmn.md)
+  get halfSize(): number[];
+
+  // Returns quaternion corresponding to I3S OBB quaternion (https://github.com/Esri/i3s-spec/blob/master/docs/1.7/obb.cmn.md)
+  get quaternion(): Quaternion;
+
   // Create OrientedBoundingBox from I3S OBB (https://github.com/Esri/i3s-spec/blob/master/docs/1.7/obb.cmn.md)
-  static fromQuaternionObb(quaternionObb: {center: number[]; halfSize: number[], quaternion: number[]}): OrientedBoundingBox;
+  fromCenterHalfSizeQuaternion(center: number[], halfSize: number[], quaternion: number[]): OrientedBoundingBox;
 
   // Duplicates a OrientedBoundingBox instance.
   clone(): OrientedBoundingBox;

@@ -5,7 +5,7 @@
 import test from 'tape-catch';
 import {tapeEquals, tapeEqualsEpsilon} from 'test/utils/tape-assertions';
 
-import {Vector3, Matrix3, toRadians, _MathUtils} from '@math.gl/core';
+import {Vector3, Vector4, Matrix3, toRadians, _MathUtils} from '@math.gl/core';
 import {
   BoundingSphere,
   OrientedBoundingBox,
@@ -73,7 +73,42 @@ test('OrientedBoundingBox#constructor sets expected default values', t => {
   t.end();
 });
 
-test('OrientedBoundingBox#fromQuaternionObb - constructs new OrientedBoundingBox from quaternion-based OBB', t => {
+test('OrientedBoundingBox#halfSize - should return halfSize of quaternion based OBB', t => {
+  const originalHalfSize = [100.45386505126953, 91.120384216308594, 426.03338623046875];
+  const box = new OrientedBoundingBox().fromCenterHalfSizeQuaternion(
+    [-122.40277014424709, 37.795204290863012, 134.5439856108278],
+    originalHalfSize,
+    [0.64432936906814575, 0.76474469900131226, -0.0020481476094573736, 0.0010012148413807154]
+  );
+  const delta = 0.0001;
+  const halfSize = box.halfSize;
+  const originalHalfSizeVector = new Vector3(originalHalfSize);
+  const halfSizeVector = new Vector3(halfSize);
+  t.ok(Math.abs(originalHalfSizeVector.len() - halfSizeVector.len()) < delta);
+  t.end();
+});
+
+test('OrientedBoundingBox#quaternion - should return quaternion of quaternion based OBB', t => {
+  const originalQuaternion = [
+    0.64432936906814575,
+    0.76474469900131226,
+    -0.0020481476094573736,
+    0.0010012148413807154
+  ];
+  const box = new OrientedBoundingBox().fromCenterHalfSizeQuaternion(
+    [-122.40277014424709, 37.795204290863012, 134.5439856108278],
+    [100.45386505126953, 91.120384216308594, 426.03338623046875],
+    originalQuaternion
+  );
+  const delta = 0.00000001;
+  const quaternion = box.quaternion;
+  const originalQuaternionVector = new Vector4(originalQuaternion);
+  const quaternionVector = new Vector4(quaternion);
+  t.ok(Math.abs(originalQuaternionVector.len() - quaternionVector.len()) < delta);
+  t.end();
+});
+
+test('OrientedBoundingBox#fromCenterHalfSizeQuaternion - constructs new OrientedBoundingBox from quaternion-based OBB', t => {
   const TEST_CENTER = Object.freeze(
     new Vector3(-122.40277014424709, 37.795204290863012, 134.5439856108278)
   );
@@ -91,16 +126,11 @@ test('OrientedBoundingBox#fromQuaternionObb - constructs new OrientedBoundingBox
     ])
   );
 
-  const box = OrientedBoundingBox.fromQuaternionObb({
-    center: [-122.40277014424709, 37.795204290863012, 134.5439856108278],
-    halfSize: [100.45386505126953, 91.120384216308594, 426.03338623046875],
-    quaternion: [
-      0.64432936906814575,
-      0.76474469900131226,
-      -0.0020481476094573736,
-      0.0010012148413807154
-    ]
-  });
+  const box = new OrientedBoundingBox().fromCenterHalfSizeQuaternion(
+    [-122.40277014424709, 37.795204290863012, 134.5439856108278],
+    [100.45386505126953, 91.120384216308594, 426.03338623046875],
+    [0.64432936906814575, 0.76474469900131226, -0.0020481476094573736, 0.0010012148413807154]
+  );
   tapeEquals(t, box.center, TEST_CENTER);
   tapeEquals(t, box.halfAxes, TEST_MATRIX3);
   t.end();
