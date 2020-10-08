@@ -1,8 +1,20 @@
 # CHANGELOG
 
-- Typescript 3.9 test suite errors
+## v3.3.0-beta.2 - Oct 7, 2020
 
-## v3.3.0-alpha.0 - Aug 14, 2020
+- culling: construct obb from quaternion based obb (#172)
+- culling: enhance quanternion based methods (#173)
+
+## v3.3.0-beta.1 - Sep 26, 2020
+
+- [Polygon] safety check in edge cases (#169)
+- Bind project/unproject functions in Proj4Projection (#165)
+
+## v3.3.0-alpha.2 - Aug 25, 2020
+
+- Proj updates (#163)
+
+## v3.3.0-alpha.1 - Aug 14, 2020
 
 - proj4: new module for coordinate system conversion (#161)
 - Bump elliptic from 6.5.1 to 6.5.3 (#160)
