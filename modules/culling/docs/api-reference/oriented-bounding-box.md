@@ -52,6 +52,14 @@ The center position of the box.
 
 The transformation matrix, to rotate the box to the right position.
 
+### readonly halfSize: number[]
+
+The array corresponding to I3S OBB halfSize (https://github.com/Esri/i3s-spec/blob/master/docs/1.7/obb.cmn.md)
+
+### readonly quaternion: Quaternion
+
+The quaternoin corresponding to I3S OBB quaternion (https://github.com/Esri/i3s-spec/blob/master/docs/1.7/obb.cmn.md)
+
 ## Methods
 
 ### constructor(center = [0, 0, 0], halfAxes = [0, 0, 0, 0, 0, 0, 0, 0, 0]) {
@@ -60,6 +68,10 @@ The transformation matrix, to rotate the box to the right position.
 
 - `center`=`Vector3.ZERO` The center of the box.
 - `halfAxes`=`Matrix3.ZERO` The three orthogonal half-axes of the bounding box. Equivalently, the transformation matrix, to rotate and scale a cube centered at the origin.
+
+### fromCenterHalfSizeQuaternion(center : number[], halfSize : number[], quaternion : number[]) : OrientedBoundingBox
+
+Create OrientedBoundingBox from I3S OBB (https://github.com/Esri/i3s-spec/blob/master/docs/1.7/obb.cmn.md)
 
 ### clone() : OrientedBoundingBox
 
