@@ -2,6 +2,11 @@
 
 An `OrientedBoundingBox` is a closed and convex cuboid. It can provide a tighter bounding volume than a bounding sphere or an axis aligned bounding box in many cases.
 
+The class support two representations of an oriented bounding box:
+
+- A half-axes based representation. 3 half axes vectors (`halfAxes: Matrix3`) describe size and orientation of a bounding box. This approach is used in the 3DTiles specification (https://github.com/CesiumGS/3d-tiles/tree/master/specification#box)
+- A half-size-quaternion based representation. A `halfSize: number[3]` array describes size, a `quaternion: Quaternion` describes orientation of a bounding box. This approach is used in the Indexed 3d Scene Layer (I3S) specification (https://github.com/Esri/i3s-spec/blob/master/docs/1.7/obb.cmn.md).
+
 # Usage
 
 Create an `OrientedBoundingBox` using a transformation matrix, a position where the box will be translated, and a scale.
@@ -54,11 +59,11 @@ The transformation matrix, to rotate the box to the right position.
 
 ### readonly halfSize: number[]
 
-The array corresponding to I3S OBB halfSize (https://github.com/Esri/i3s-spec/blob/master/docs/1.7/obb.cmn.md)
+The array with three half-sizes for the bounding box
 
 ### readonly quaternion: Quaternion
 
-The quaternoin corresponding to I3S OBB quaternion (https://github.com/Esri/i3s-spec/blob/master/docs/1.7/obb.cmn.md)
+The quaternion describing the orientation of the bounding box
 
 ## Methods
 
@@ -71,7 +76,7 @@ The quaternoin corresponding to I3S OBB quaternion (https://github.com/Esri/i3s-
 
 ### fromCenterHalfSizeQuaternion(center : number[], halfSize : number[], quaternion : number[]) : OrientedBoundingBox
 
-Create OrientedBoundingBox from I3S OBB (https://github.com/Esri/i3s-spec/blob/master/docs/1.7/obb.cmn.md)
+Create an OrientedBoundingBox from a half-size-quaternion based OBB
 
 ### clone() : OrientedBoundingBox
 
