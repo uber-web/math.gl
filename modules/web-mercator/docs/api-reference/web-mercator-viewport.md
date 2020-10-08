@@ -68,24 +68,24 @@ Returns: `[lng, lat]` or `[longitude, lat, Z]` in map coordinates. `Z` is elevat
 
 Project longitude and latitude onto Web Mercator coordinates.
 
-| Parameter | Type     | Default      | Description                   |
+| Parameter | Type | Default | Description |
 | --------- | -------- | ------------ | ----------------------------- |
-| `lngLat`  | `Array`  | (required)   | map coordinates, `[lng, lat]` |
-| `scale`   | `number` | `this.scale` | Web Mercator scale            |
+| `lngLat` | `Array` | (required) | map coordinates, `[lng, lat]` |
+| `scale` | `number` | `this.scale` | Web Mercator scale |
 
 Returns:
 
 - `[x, y]`, representing Web Mercator coordinates.
 
 ##### `unprojectFlat(xy, scale)`
-<!-- prettier-ignore-start -->
+
 Unprojects a Web Mercator coordinate to longitude and latitude.
 
 | Parameter | Type | Default | Description |
 | -------------- | --------- | -------- | ------------------------------- |
 | `xy` | `Array` | (required) | Web Mercator coordinates, `[x, y]` |
 | `scale` | `number` | `this.scale` | Web Mercator scale |
-<!-- prettier-ignore-end -->
+
 Returns:
 
 - `[longitude, latitude]`
