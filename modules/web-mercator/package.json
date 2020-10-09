@@ -33,5 +33,6 @@
   "devDependencies": {
     "mapbox-gl": "^1.0.0",
     "mock-browser": "^0.92.14"
-  }
+  },
+  "gitHead": "58260e0261adb660955a22ff495e479f7b6cd347"
 }

@@ -2,7 +2,7 @@
 
 # v3.3
 
-Release Date: TBD. v3.3 is still in development. Alpha releases are available.
+Release Date: Oct 9, 2020
 
 ### `@math.gl/proj4`
 
