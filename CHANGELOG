@@ -1,5 +1,7 @@
 # CHANGELOG
 
+## v3.3.0 - Oct 9, 2020
+
 ## v3.3.0-beta.2 - Oct 7, 2020
 
 - culling: construct obb from quaternion based obb (#172)
