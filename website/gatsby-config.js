@@ -58,7 +58,7 @@ module.exports = {
         }
       ], // Other linked projects
 
-      LINK_TO_GET_STARTED: '/modules/core/docs/developer-guide/core-overview',
+      LINK_TO_GET_STARTED: '/docs',
 
       ADDITIONAL_LINKS: [{
         name: 'Blog',
