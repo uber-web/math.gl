@@ -80,10 +80,11 @@ Returns:
 ##### `unprojectFlat(xy, scale)`
 
 Unprojects a Web Mercator coordinate to longitude and latitude.
-| Parameter | Type | Default | Description |
-| -------------- | --------- | -------- | ------------------------------- |
-| `xy` | `Array` | (required) | Web Mercator coordinates, `[x, y]` |
-| `scale` | `number` | `this.scale` | Web Mercator scale |
+
+| Parameter | Type     | Default      | Description                        |
+| --------- | -------- | ------------ | ---------------------------------- |
+| `xy`      | `Array`  | (required)   | Web Mercator coordinates, `[x, y]` |
+| `scale`   | `number` | `this.scale` | Web Mercator scale                 |
 
 Returns:
 
