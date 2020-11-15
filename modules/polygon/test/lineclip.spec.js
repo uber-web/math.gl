@@ -1,5 +1,4 @@
 import test from 'tape-catch';
-import {equals} from '@math.gl/core';
 import {clipPolyline, clipPolygon} from '@math.gl/polygon';
 
 export function flatten(arr, result = []) {
@@ -34,14 +33,12 @@ test('clips line', t => {
   );
 
   t.comment(result);
-  t.ok(
-    equals(result, [
-      [0, 10, 10, 10, 10, 0],
-      [20, 0, 20, 10, 30, 10],
-      [30, 20, 20, 20, 20, 30],
-      [10, 30, 10, 20, 5, 20, 0, 20]
-    ])
-  );
+  t.deepEquals(result, [
+    [0, 10, 10, 10, 10, 0],
+    [20, 0, 20, 10, 30, 10],
+    [30, 20, 20, 20, 20, 30],
+    [10, 30, 10, 20, 5, 20, 0, 20]
+  ]);
 
   t.end();
 });
@@ -50,7 +47,7 @@ test('clips line crossing through many times', t => {
   const result = clipPolyline(flatten([[10, -10], [10, 30], [20, 30], [20, -10]]), [0, 0, 20, 20]);
 
   t.comment(result);
-  t.ok(equals(result, [[10, 0, 10, 20], [20, 20, 20, 0]]));
+  t.deepEquals(result, [[10, 0, 10, 20], [20, 20, 20, 0]]);
 
   t.end();
 });
@@ -63,7 +60,7 @@ test('clips 3d line', t => {
   );
 
   t.comment(result);
-  t.ok(equals(result, [[10, 0, 5, 10, 20, 15], [20, 20, 5, 20, 0, -5]]));
+  t.deepEquals(result, [[10, 0, 5, 10, 20, 15], [20, 20, 5, 20, 0, -5]]);
 
   t.end();
 });
@@ -76,7 +73,7 @@ test('clips line from partial array', t => {
   });
 
   t.comment(result);
-  t.ok(equals(result, [[10, 0, 10, 20], [20, 20, 20, 0]]));
+  t.deepEquals(result, [[10, 0, 10, 20], [20, 20, 20, 0]]);
 
   t.end();
 });
@@ -105,26 +102,24 @@ test('clips polygon', t => {
   );
 
   t.comment(result);
-  t.ok(
-    equals(
-      result,
-      flatten([
-        [0, 20],
-        [0, 10],
-        [10, 10],
-        [10, 5],
-        [10, 0],
-        [20, 0],
-        [20, 10],
-        [30, 10],
-        [30, 20],
-        [20, 20],
-        [20, 30],
-        [10, 30],
-        [10, 20],
-        [5, 20]
-      ])
-    )
+  t.deepEquals(
+    result,
+    flatten([
+      [0, 20],
+      [0, 10],
+      [10, 10],
+      [10, 5],
+      [10, 0],
+      [20, 0],
+      [20, 10],
+      [30, 10],
+      [30, 20],
+      [20, 20],
+      [20, 30],
+      [10, 30],
+      [10, 20],
+      [5, 20]
+    ])
   );
 
   t.end();
@@ -134,7 +129,7 @@ test('polygon contains bbox', t => {
   const result = clipPolygon(flatten([[10, 40], [40, 10], [10, -20], [-20, 10]]), [0, 0, 20, 20]);
 
   t.comment(result);
-  t.ok(equals(result, flatten([[0, 0], [0, 20], [20, 20], [20, 0]])));
+  t.deepEquals(result, flatten([[0, 0], [0, 20], [20, 20], [20, 0]]));
 
   t.end();
 });
@@ -147,20 +142,18 @@ test('clips 3d polygon', t => {
   );
 
   t.comment(result);
-  t.ok(
-    equals(
-      result,
-      flatten([
-        [0, 5, 8],
-        [5, 0, 4],
-        [15, 0, 4],
-        [20, 5, 8],
-        [20, 15, 16],
-        [15, 20, 20],
-        [5, 20, 20],
-        [0, 15, 16]
-      ])
-    )
+  t.deepEquals(
+    result,
+    flatten([
+      [0, 5, 8],
+      [5, 0, 4],
+      [15, 0, 4],
+      [20, 5, 8],
+      [20, 15, 16],
+      [15, 20, 20],
+      [5, 20, 20],
+      [0, 15, 16]
+    ])
   );
 
   t.end();
@@ -174,11 +167,9 @@ test('clips polygon fom partial array', t => {
   });
 
   t.comment(result);
-  t.ok(
-    equals(
-      result,
-      flatten([[0, 5], [5, 0], [15, 0], [20, 5], [20, 15], [15, 20], [5, 20], [0, 15]])
-    )
+  t.deepEquals(
+    result,
+    flatten([[0, 5], [5, 0], [15, 0], [20, 5], [20, 15], [15, 20], [5, 20], [0, 15]])
   );
 
   t.end();
@@ -200,15 +191,13 @@ test('clips floating point lines', t => {
   const result = clipPolyline(line, bbox);
 
   t.comment(result);
-  t.ok(
-    equals(result, [
-      flatten([
-        [-91.91208030440808, 42.29356419217009],
-        [-91.93359375, 42.32606244456202],
-        [-91.7578125, 42.3228109416169]
-      ])
+  t.deepEquals(result, [
+    flatten([
+      [-91.91208030440808, 42.29356419217009],
+      [-91.93359375, 42.32606244456202],
+      [-91.7578125, 42.3228109416169]
     ])
-  );
+  ]);
 
   t.end();
 });
@@ -217,7 +206,7 @@ test('preserves line if no protrusions exist', t => {
   const result = clipPolyline([1, 1, 2, 2, 3, 3], [0, 0, 30, 30]);
 
   t.comment(result);
-  t.ok(equals(result, [[1, 1, 2, 2, 3, 3]]));
+  t.deepEquals(result, [[1, 1, 2, 2, 3, 3]]);
 
   t.end();
 });
