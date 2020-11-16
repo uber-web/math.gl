@@ -21,7 +21,7 @@
 /* eslint-disable max-statements, max-depth */
 import test from 'tape-catch';
 import {tapeEquals} from 'test/utils/tape-assertions';
-import {_SphericalCoordinates as SphericalCoordinates} from '@math.gl/core';
+import {SphericalCoordinates} from '@math.gl/core';
 
 const REPRESENTATION_TEST_CASES = [
   {

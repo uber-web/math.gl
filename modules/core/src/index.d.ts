@@ -15,10 +15,9 @@ export {default as Quaternion} from './classes/quaternion';
 export function assert(condition: boolean, message?: string): void;
 
 // experimental
-export {default as _Polygon} from './addons/polygon';
-export {default as _SphericalCoordinates} from './classes/spherical-coordinates';
-export {default as _Pose} from './classes/pose';
-export {default as _Euler} from './classes/euler';
+export {default as SphericalCoordinates} from './classes/spherical-coordinates';
+export {default as Pose} from './classes/pose';
+export {default as Euler} from './classes/euler';
 
 export const _MathUtils: {
   EPSILON1: number;
@@ -48,3 +47,8 @@ export const _MathUtils: {
 
   TWO_PI: number;
 };
+
+// DEPRECATED
+export {default as _SphericalCoordinates} from './classes/spherical-coordinates';
+export {default as _Pose} from './classes/pose';
+export {default as _Euler} from './classes/euler';

@@ -1,6 +1,5 @@
-# SphericalCoordinates (Experimental)
+# SphericalCoordinates
 
-> Note this class is considered experimental and must be imported from the `experimental` namespace.
 > This documentation is incomplete and may be incorrect
 
 ```js
@@ -61,7 +60,7 @@ Ranges
 ## Usage
 
 ```js
-import {_SphericalCoordinates as SphericalCoordinates} from '@math.gl/core';
+import {SphericalCoordinates} from '@math.gl/core';
 ```
 
 Creating a SphericalCoordinates object

@@ -1,12 +1,8 @@
 # Roadmap
 
-## Typescript types
-
-This is on track for 3.2 release.
-
 ## 3D Primitives
 
-- Move the primitives from luma.gl
+- Add a submodule with the geometry primitives from luma.gl.
 
 ### Geometry Processing
 

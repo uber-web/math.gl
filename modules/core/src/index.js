@@ -57,9 +57,9 @@ export {checkNumber} from './lib/validators';
 
 export {default as _MathUtils} from './lib/math-utils';
 
-export {default as _SphericalCoordinates} from './classes/spherical-coordinates';
-export {default as _Pose} from './classes/pose';
-export {default as _Euler} from './classes/euler';
+export {default as SphericalCoordinates} from './classes/spherical-coordinates';
+export {default as Pose} from './classes/pose';
+export {default as Euler} from './classes/euler';
 
 export {default as assert} from './lib/assert';
 
@@ -80,3 +80,8 @@ const global_ = globals.global || globals.self || globals.window;
 global_.mathgl = {
   config
 };
+
+// DEPRECATED
+export {default as _SphericalCoordinates} from './classes/spherical-coordinates';
+export {default as _Pose} from './classes/pose';
+export {default as _Euler} from './classes/euler';
