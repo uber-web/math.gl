@@ -156,7 +156,7 @@ export function intersect(a, b, edge, bbox, out = []) {
     return null;
   }
   for (let i = 0; i < a.length; i++) {
-    out[i] = (snap & 1) === i ? bbox[snap] : t * b[i] + (1 - t) * a[i];
+    out[i] = (snap & 1) === i ? bbox[snap] : t * (b[i] - a[i]) + a[i];
   }
   return out;
 }
