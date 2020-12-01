@@ -58,7 +58,7 @@ const TYPE_INSIDE = 0;
 const TYPE_BORDER = 1;
 
 function concatInPlace(arr1, arr2) {
-  for (var i = 0; i < arr2.length; i++) {
+  for (let i = 0; i < arr2.length; i++) {
     arr1.push(arr2[i]);
   }
   return arr1;
