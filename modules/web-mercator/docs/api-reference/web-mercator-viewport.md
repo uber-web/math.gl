@@ -92,7 +92,7 @@ Returns:
 
 ##### `getBounds(options)`
 
-Returns the axis-aligned bounding box of the current visible area.
+Get the axis-aligned bounding box of the current visible area.
 
 - `options.z` (number, optional) - To calculate a bounding volume for fetching 3D data, this option can be used to get the bounding box at a specific elevation. Default `0`.
 
@@ -102,7 +102,7 @@ Returns:
 
 ##### `getBoundingRegion(options)`
 
-Returns the vertices of the current visible region.
+Get the vertices of the current visible region.
 
 - `options.z` (number, optional) - To calculate a bounding volume for fetching 3D data, this option can be used to get the bounding region at a specific elevation. Default `0`.
 
@@ -120,10 +120,16 @@ Get a new flat viewport that fits around the given bounding box.
   padding in pixels to add to the given bounds from the edge of the viewport. If padding is set as object, all parameters are
   required.
 - `options.offset` ([number,number], optional) - The center of the given bounds relative to the viewport's center, `[x, y]` measured in pixels.
+- `opts.minExtent` (number, optional) - If supplied, the bounds used to calculate the new map settings will be expanded if the delta width or height of the supplied `bounds` is smaller than this value.
+- `opts.maxZoom`=`24` (number, optional) - The returned zoom value will be capped to this value. Avoids returning infinite `zoom` when the supplied `bounds` have zero width or height deltas.
+
+Returns:
+
+- A new `WebMercatorViewport` instance
 
 ##### `getMapCenterByLngLatPosition(options: object): [number, number]`
 
-Returns the map center that place a given [lng, lat] coordinate at screen point [x, y].
+Get the map center that place a given [lng, lat] coordinate at screen point [x, y].
 
 Parameters:
 
@@ -132,4 +138,4 @@ Parameters:
 
 Returns:
 
-- `[longitude, latitude]` new map center
+- `[longitude, latitude]` as the new map center
