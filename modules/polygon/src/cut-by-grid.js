@@ -57,6 +57,13 @@ export function cutPolylineByGrid(positions, options = {}) {
 const TYPE_INSIDE = 0;
 const TYPE_BORDER = 1;
 
+function concatInPlace(arr1, arr2) {
+  for (var i = 0; i < arr2.length; i++) {
+    arr1.push(arr2[i]);
+  }
+  return arr1;
+}
+
 export function cutPolygonByGrid(positions, holeIndices, options = {}) {
   if (!positions.length) {
     // input is empty
@@ -96,16 +103,18 @@ export function cutPolygonByGrid(positions, holeIndices, options = {}) {
 
         if (parts[0]) {
           polygonLow.holes.push(polygonLow.pos.length);
-          polygonLow.pos = polygonLow.pos.concat(parts[0].pos);
+
+          polygonLow.pos = concatInPlace(polygonLow.pos, parts[0].pos);
           if (edgeTypes) {
-            polygonLow.types = polygonLow.types.concat(parts[0].types);
+            polygonLow.types = concatInPlace(polygonLow.types, parts[0].types);
           }
         }
         if (parts[1]) {
           polygonHigh.holes.push(polygonHigh.pos.length);
-          polygonHigh.pos = polygonHigh.pos.concat(parts[1].pos);
+          polygonHigh.pos = concatInPlace(polygonHigh.pos, parts[1].pos);
+
           if (edgeTypes) {
-            polygonHigh.types = polygonHigh.types.concat(parts[1].types);
+            polygonHigh.types = concatInPlace(polygonHigh.types, parts[1].types);
           }
         }
       }
