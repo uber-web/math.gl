@@ -103,7 +103,6 @@ export function cutPolygonByGrid(positions, holeIndices, options = {}) {
 
         if (parts[0]) {
           polygonLow.holes.push(polygonLow.pos.length);
-
           polygonLow.pos = concatInPlace(polygonLow.pos, parts[0].pos);
           if (edgeTypes) {
             polygonLow.types = concatInPlace(polygonLow.types, parts[0].types);
@@ -112,7 +111,6 @@ export function cutPolygonByGrid(positions, holeIndices, options = {}) {
         if (parts[1]) {
           polygonHigh.holes.push(polygonHigh.pos.length);
           polygonHigh.pos = concatInPlace(polygonHigh.pos, parts[1].pos);
-
           if (edgeTypes) {
             polygonHigh.types = concatInPlace(polygonHigh.types, parts[1].types);
           }
