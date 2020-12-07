@@ -23,28 +23,73 @@ import test from 'tape-catch';
 import {tapeEquals} from 'test/utils/tape-assertions';
 
 import {configure} from '@math.gl/core';
-import {_Polygon as Polygon} from '@math.gl/polygon';
+import {_Polygon as Polygon, WINDING_COUNTER_CLOCKWISE, WINDING_CLOCKWISE} from '@math.gl/polygon';
 
 const TEST_CASES = [
+  {
+    title: 'non-closed poly (flat)',
+    polygon: [5, 0, 6, 4, 4, 5, 1, 5, 1, 0],
+    area: 22,
+    sign: WINDING_COUNTER_CLOCKWISE,
+    segments: 5
+  },
+  {
+    title: 'exactly closed poly (flat)',
+    polygon: [5, 0, 6, 4, 4, 5, 1, 5, 1, 0, 5, 0],
+    area: 22,
+    sign: WINDING_COUNTER_CLOCKWISE,
+    segments: 5
+  },
+  {
+    title: 'EPSILON closed poly (flat)',
+    polygon: [5, 0, 6, 4, 4, 5, 1, 5, 1, 0, 5, 0.0000001],
+    area: 22,
+    sign: WINDING_COUNTER_CLOCKWISE,
+    segments: 5
+  },
+  {
+    title: 'Flat 2d array with custom start and end offsets',
+    polygon: [0, 0, 1, 1, 2, 1, 2, 2, 1, 2, 9, 5],
+    area: 1,
+    sign: WINDING_COUNTER_CLOCKWISE,
+    segments: 4,
+    options: {
+      start: 2,
+      end: 10,
+      size: 2
+    }
+  },
+  {
+    title: 'Flat 3d array with custom start and end offsets',
+    polygon: [0, 0, 0, 1, 1, 0, 1, 2, 0, 2, 2, 0, 2, 1, 0, 9, 5, 2],
+    area: 1,
+    sign: WINDING_CLOCKWISE,
+    segments: 4,
+    options: {
+      start: 3,
+      end: 15,
+      size: 3
+    }
+  },
   {
     title: 'non-closed poly',
     polygon: [[5, 0], [6, 4], [4, 5], [1, 5], [1, 0]],
     area: 22,
-    sign: -1,
+    sign: WINDING_COUNTER_CLOCKWISE,
     segments: 5
   },
   {
     title: 'exactly closed poly',
     polygon: [[5, 0], [6, 4], [4, 5], [1, 5], [1, 0], [5, 0]],
     area: 22,
-    sign: -1,
+    sign: WINDING_COUNTER_CLOCKWISE,
     segments: 5
   },
   {
     title: 'EPSILON closed poly',
     polygon: [[5, 0], [6, 4], [4, 5], [1, 5], [1, 0], [5, 0.0000001]],
     area: 22,
-    sign: -1,
+    sign: WINDING_COUNTER_CLOCKWISE,
     segments: 5
   }
 ];
@@ -63,7 +108,7 @@ test('Polygon#methods', t => {
   configure({EPSILON: 1e-4});
 
   for (const tc of TEST_CASES) {
-    const polygon = new Polygon(tc.polygon);
+    const polygon = new Polygon(tc.polygon, tc.options);
     t.ok(polygon, `${tc.title}: Created polygon`);
     tapeEquals(
       t,
@@ -88,7 +133,7 @@ test('Polygon#forEachSegment', t => {
   const config = configure({EPSILON: 1e-4});
 
   for (const tc of TEST_CASES) {
-    const polygon = new Polygon(tc.polygon);
+    const polygon = new Polygon(tc.polygon, tc.options);
     let count = 0;
     polygon.forEachSegment(() => {
       count++;
@@ -97,5 +142,32 @@ test('Polygon#forEachSegment', t => {
   }
 
   configure(config);
+  t.end();
+});
+
+test('Polygon#methods', t => {
+  const testPoints = [1, 1, 2, 2, 1, 3];
+  const testPolygonReversed = [1, 3, 2, 2, 1, 1];
+
+  const polygon = new Polygon(testPoints);
+
+  t.equals(
+    polygon.getWindingDirection(),
+    WINDING_COUNTER_CLOCKWISE,
+    'getWindingDirection() returned expected result'
+  );
+
+  polygon.ensureWindingDirection(WINDING_CLOCKWISE);
+  t.ok(
+    testPoints.every((value, index) => value === testPolygonReversed[index]),
+    'ensureWindingDirection() reversed polygon as expected'
+  );
+
+  t.equals(
+    polygon.getWindingDirection(),
+    WINDING_CLOCKWISE,
+    'getWindingDirection() returned expected result'
+  );
+
   t.end();
 });

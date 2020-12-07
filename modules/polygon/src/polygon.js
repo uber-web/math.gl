@@ -1,20 +1,33 @@
-import {equals} from '@math.gl/core';
+/* eslint-disable no-undef */
+/* eslint-disable no-console */
+import {
+  getPolygonSignedArea,
+  getPolygonSignedAreaFlat,
+  forEachSegmentInPolygon,
+  forEachSegmentInPolygonFlat,
+  ensurePolygonWindingDirection,
+  ensurePolygonWindingDirectionFlat
+} from './polygon-utilities';
 
 export default class Polygon {
-  constructor(points) {
+  constructor(points, options = {}) {
     this.points = points;
-    this.isClosed = equals(this.points[this.points.length - 1], this.points[0]);
+    this.isFlatArray = !Array.isArray(points[0]);
+
+    if (this.isFlatArray) {
+      this.start = options.start || 0;
+      this.end = options.end || points.length;
+      this.size = options.size || 2;
+    }
+
     Object.freeze(this);
   }
 
-  // https://en.wikipedia.org/wiki/Shoelace_formula
   getSignedArea() {
-    let area = 0;
-    this.forEachSegment((p1, p2) => {
-      // the "cancelling" cross-products: (p1.x + p2.x) * (p1.y - p2.y)
-      area += (p1[0] + p2[0]) * (p1[1] - p2[1]);
-    });
-    return area / 2;
+    if (this.isFlatArray)
+      return getPolygonSignedAreaFlat(this.points, this.start, this.end, this.size);
+
+    return getPolygonSignedArea(this.points);
   }
 
   getArea() {
@@ -26,13 +39,18 @@ export default class Polygon {
   }
 
   forEachSegment(visitor) {
-    const length = this.points.length;
-    for (let i = 0; i < length - 1; i++) {
-      visitor(this.points[i], this.points[i + 1], i, i + 1);
+    if (this.isFlatArray) {
+      forEachSegmentInPolygonFlat(this.points, this.start, this.end, this.size, visitor);
+    } else {
+      forEachSegmentInPolygon(this.points, visitor);
     }
-    if (!this.isClosed) {
-      // Call function with points and indices
-      visitor(this.points[length - 1], this.points[0], length - 1, 0);
+  }
+
+  ensureWindingDirection(direction) {
+    if (this.isFlatArray) {
+      ensurePolygonWindingDirectionFlat(this.points, this.start, this.end, this.size, direction);
+    } else {
+      ensurePolygonWindingDirection(this.points, direction);
     }
   }
 }
