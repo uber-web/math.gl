@@ -62,8 +62,8 @@ export function getPolygonWindingDirectionFlat(positions, start, end, size) {
 export function getPolygonSignedAreaFlat(positions, start, end, size) {
   // https://en.wikipedia.org/wiki/Shoelace_formula
   let area = 0;
-  forEachSegmentInPolygonFlat(positions, start, end, size, (p1, p2) => {
-    area += areaCallback(p1[0], p1[1], p2[0], p2[1]);
+  forEachSegmentInPolygonFlat(positions, start, end, size, (p1x, p1y, p2x, p2y) => {
+    area += areaCallback(p1x, p1y, p2x, p2y);
   });
 
   return area / 2;
@@ -75,8 +75,10 @@ export function forEachSegmentInPolygonFlat(positions, start, end, size, visitor
 
   for (let i = 0; i < numPoints - 1; i++) {
     visitor(
-      [positions[start + i * size], positions[start + i * size + 1]],
-      [positions[start + (i + 1) * size], positions[start + (i + 1) * size + 1]],
+      positions[start + i * size],
+      positions[start + i * size + 1],
+      positions[start + (i + 1) * size],
+      positions[start + (i + 1) * size + 1],
       i,
       i + 1
     );
@@ -88,8 +90,10 @@ export function forEachSegmentInPolygonFlat(positions, start, end, size, visitor
 
   if (!isClosed) {
     visitor(
-      [positions[start + (numPoints - 1) * size], positions[start + (numPoints - 1) * size + 1]],
-      [positions[start], positions[start + 1]],
+      positions[start + (numPoints - 1) * size],
+      positions[start + (numPoints - 1) * size + 1],
+      positions[start],
+      positions[start + 1],
       numPoints - 1,
       0
     );

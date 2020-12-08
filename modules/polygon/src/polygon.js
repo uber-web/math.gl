@@ -40,7 +40,17 @@ export default class Polygon {
 
   forEachSegment(visitor) {
     if (this.isFlatArray) {
-      forEachSegmentInPolygonFlat(this.points, this.start, this.end, this.size, visitor);
+      forEachSegmentInPolygonFlat(
+        this.points,
+        this.start,
+        this.end,
+        this.size,
+        // eslint-disable-next-line max-params
+        (x1, y1, x2, y2, i1, i2) => {
+          // TODO @igorDykhta original visitor uses arrays for each point, but with flat arrays performance degrades if we allocate points for each segment
+          visitor([x1, y1], [x2, y2], i1, i2);
+        }
+      );
     } else {
       forEachSegmentInPolygon(this.points, visitor);
     }
