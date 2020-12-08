@@ -7,10 +7,9 @@ export {
   getPolygonWindingDirectionFlat,
   forEachSegmentInPolygon,
   forEachSegmentInPolygonFlat,
-  ensurePolygonWindingDirection,
-  ensurePolygonWindingDirectionFlat,
-  WINDING_CLOCKWISE,
-  WINDING_COUNTER_CLOCKWISE
+  modifyPolygonWindingDirection,
+  modifyPolygonWindingDirectionFlat,
+  WINDING
 } from './polygon-utilities';
 
 export {clipPolygon, clipPolyline} from './lineclip';

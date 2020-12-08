@@ -1,8 +1,11 @@
-type SegmentVisitor = (p1: number[], p2: number[], i1: number, i2: number) => void;
+
+import {TypedArray} from "@math.gl/core/";
+
+type SegmentVisitor = (p1: number[] | TypedArray, p2: number[] | TypedArray, i1: number, i2: number) => void;
 
 export default class Polygon {
   constructor(
-    points: number[][] | number[], 
+    points: number[] | number[][] | TypedArray | TypedArray[], 
     options?: {start?: number; end?: number; size?: number;}
   );
 
@@ -11,5 +14,5 @@ export default class Polygon {
   getArea(): number;
   getWindingDirection(): number;
   forEachSegment(visitor: SegmentVisitor);
-  ensureWindingDirection(direction: number);
+  modifyWindingDirection(direction: number);
 }

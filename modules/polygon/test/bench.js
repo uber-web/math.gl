@@ -3,9 +3,9 @@
 
 import {
   Polygon,
-  ensurePolygonWindingDirectionFlat,
-  ensurePolygonWindingDirection,
-  WINDING_CLOCKWISE
+  modifyPolygonWindingDirectionFlat,
+  modifyPolygonWindingDirection,
+  WINDING
 } from '@math.gl/polygon';
 
 export default function polygonBench(suite, addReferenceBenchmarks) {
@@ -15,15 +15,15 @@ export default function polygonBench(suite, addReferenceBenchmarks) {
   suite
     .group('Polygon')
     .add('Polygon#new()', () => new Polygon(testDataFlat))
-    .add('Polygon#ensureWindingDirection()', () => {
+    .add('Polygon#modifyWindingDirection()', () => {
       const polygon = new Polygon(testDataFlat);
-      polygon.ensureWindingDirection(WINDING_CLOCKWISE);
+      polygon.modifyWindingDirection(WINDING.CLOCKWISE);
     })
-    .add('ensurePolygonWindingDirection()', () => {
-      ensurePolygonWindingDirection(testDataPoints, WINDING_CLOCKWISE);
+    .add('modifyPolygonWindingDirection()', () => {
+      modifyPolygonWindingDirection(testDataPoints, WINDING.CLOCKWISE);
     })
-    .add('ensurePolygonWindingDirectionFlat()', () => {
-      ensurePolygonWindingDirectionFlat(testDataFlat, 0, 10, 2, WINDING_CLOCKWISE);
+    .add('modifyPolygonWindingDirectionFlat()', () => {
+      modifyPolygonWindingDirectionFlat(testDataFlat, 0, 10, 2, WINDING.CLOCKWISE);
     });
 
   return suite;

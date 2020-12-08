@@ -2,13 +2,14 @@
 
 import {equals} from '@math.gl/core';
 
-/** @type {typeof import('./polygon-utilities').WINDING_CLOCKWISE} */
-export const WINDING_CLOCKWISE = 1;
-/** @type {typeof import('./polygon-utilities').WINDING_COUNTER_CLOCKWISE} */
-export const WINDING_COUNTER_CLOCKWISE = -1;
+/** @type {typeof import('./polygon-utilities').WINDING} */
+export const WINDING = {
+  CLOCKWISE: 1,
+  COUNTER_CLOCKWISE: -1
+};
 
-/** @type {typeof import('./polygon-utilities').ensurePolygonWindingDirection} */
-export function ensurePolygonWindingDirection(points, direction) {
+/** @type {typeof import('./polygon-utilities').modifyPolygonWindingDirection} */
+export function modifyPolygonWindingDirection(points, direction) {
   const currentDirection = getPolygonWindingDirection(points);
   if (currentDirection !== direction) {
     points.reverse();
@@ -43,8 +44,8 @@ export function forEachSegmentInPolygon(points, visitor) {
   }
 }
 
-/** @type {typeof import('./polygon-utilities').ensurePolygonWindingDirectionFlat} */
-export function ensurePolygonWindingDirectionFlat(points, start, end, size, direction) {
+/** @type {typeof import('./polygon-utilities').modifyPolygonWindingDirectionFlat} */
+export function modifyPolygonWindingDirectionFlat(points, start, end, size, direction) {
   const windingDirection = getPolygonWindingDirectionFlat(points, start, end, size);
   if (windingDirection !== direction) {
     reversePolygonFlat(points, start, end, size);

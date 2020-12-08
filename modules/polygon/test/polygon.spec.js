@@ -25,39 +25,59 @@ import {tapeEquals} from 'test/utils/tape-assertions';
 import {configure} from '@math.gl/core';
 import {
   _Polygon as Polygon,
-  WINDING_COUNTER_CLOCKWISE,
-  WINDING_CLOCKWISE,
+  WINDING,
   getPolygonSignedArea,
   getPolygonSignedAreaFlat
 } from '@math.gl/polygon';
 
 const TEST_CASES = [
   {
+    title: 'non-closed poly (flat TypedArray array)',
+    polygon: new Float32Array([5, 0, 6, 4, 4, 5, 1, 5, 1, 0]),
+    area: 22,
+    sign: WINDING.COUNTER_CLOCKWISE,
+    segments: 5
+  },
+  {
+    title: 'exactly closed poly (flat TypedArray array)',
+    polygon: new Float32Array([5, 0, 6, 4, 4, 5, 1, 5, 1, 0, 5, 0]),
+    area: 22,
+    sign: WINDING.COUNTER_CLOCKWISE,
+    segments: 5
+  },
+  {
+    title: 'EPSILON closed poly (flat TypedArray array)',
+    polygon: new Float32Array([5, 0, 6, 4, 4, 5, 1, 5, 1, 0, 5, 0.0000001]),
+    area: 22,
+    sign: WINDING.COUNTER_CLOCKWISE,
+    segments: 5
+  },
+  {
     title: 'non-closed poly (flat array)',
     polygon: [5, 0, 6, 4, 4, 5, 1, 5, 1, 0],
     area: 22,
-    sign: WINDING_COUNTER_CLOCKWISE,
+    sign: WINDING.COUNTER_CLOCKWISE,
     segments: 5
   },
   {
     title: 'exactly closed poly (flat array)',
     polygon: [5, 0, 6, 4, 4, 5, 1, 5, 1, 0, 5, 0],
     area: 22,
-    sign: WINDING_COUNTER_CLOCKWISE,
+    sign: WINDING.COUNTER_CLOCKWISE,
     segments: 5
   },
   {
     title: 'EPSILON closed poly (flat array)',
     polygon: [5, 0, 6, 4, 4, 5, 1, 5, 1, 0, 5, 0.0000001],
     area: 22,
-    sign: WINDING_COUNTER_CLOCKWISE,
+    sign: WINDING.COUNTER_CLOCKWISE,
     segments: 5
   },
   {
     title: 'Flat 2d array with custom start and end offsets',
     polygon: [0, 0, 1, 1, 2, 1, 2, 2, 1, 2, 9, 5],
     area: 1,
-    sign: WINDING_COUNTER_CLOCKWISE,
+    sign: WINDING.COUNTER_CLOCKWISE,
     segments: 4,
     options: {
       start: 2,
@@ -69,7 +89,7 @@ const TEST_CASES = [
     title: 'Flat 3d array with custom start and end offsets',
     polygon: [0, 0, 0, 1, 1, 0, 1, 2, 0, 2, 2, 0, 2, 1, 0, 9, 5, 2],
     area: 1,
-    sign: WINDING_CLOCKWISE,
+    sign: WINDING.CLOCKWISE,
     segments: 4,
     options: {
       start: 3,
@@ -81,21 +101,21 @@ const TEST_CASES = [
     title: 'non-closed poly',
     polygon: [[5, 0], [6, 4], [4, 5], [1, 5], [1, 0]],
     area: 22,
-    sign: WINDING_COUNTER_CLOCKWISE,
+    sign: WINDING.COUNTER_CLOCKWISE,
     segments: 5
   },
   {
     title: 'exactly closed poly',
     polygon: [[5, 0], [6, 4], [4, 5], [1, 5], [1, 0], [5, 0]],
     area: 22,
-    sign: WINDING_COUNTER_CLOCKWISE,
+    sign: WINDING.COUNTER_CLOCKWISE,
     segments: 5
   },
   {
     title: 'EPSILON closed poly',
     polygon: [[5, 0], [6, 4], [4, 5], [1, 5], [1, 0], [5, 0.0000001]],
     area: 22,
-    sign: WINDING_COUNTER_CLOCKWISE,
+    sign: WINDING.COUNTER_CLOCKWISE,
     segments: 5
   }
 ];
@@ -151,7 +171,7 @@ test('Polygon#forEachSegment', t => {
   t.end();
 });
 
-test('Polygon#ensureWindingDirection', t => {
+test('Polygon#modifyWindingDirection', t => {
   const testPolygon = [1, 1, 2, 2, 1, 3];
   const testPolygonReversed = [1, 3, 2, 2, 1, 1];
 
@@ -159,19 +179,19 @@ test('Polygon#ensureWindingDirection', t => {
 
   t.equals(
     polygon.getWindingDirection(),
-    WINDING_COUNTER_CLOCKWISE,
+    WINDING.COUNTER_CLOCKWISE,
     'getWindingDirection() returned expected result'
   );
 
-  polygon.ensureWindingDirection(WINDING_CLOCKWISE);
+  polygon.modifyWindingDirection(WINDING.CLOCKWISE);
   t.ok(
     testPolygon.every((value, index) => value === testPolygonReversed[index]),
-    'ensureWindingDirection() reversed polygon as expected'
+    'modifyWindingDirection() reversed polygon as expected'
   );
 
   t.equals(
     polygon.getWindingDirection(),
-    WINDING_CLOCKWISE,
+    WINDING.CLOCKWISE,
     'getWindingDirection() returned expected result'
   );
 

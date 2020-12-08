@@ -8,8 +8,8 @@ import {
   getPolygonSignedAreaFlat,
   forEachSegmentInPolygon,
   forEachSegmentInPolygonFlat,
-  ensurePolygonWindingDirection,
-  ensurePolygonWindingDirectionFlat
+  modifyPolygonWindingDirection,
+  modifyPolygonWindingDirectionFlat
 } from './polygon-utilities';
 
 export default class Polygon {
@@ -59,11 +59,11 @@ export default class Polygon {
     }
   }
 
-  ensureWindingDirection(direction) {
+  modifyWindingDirection(direction) {
     if (this.isFlatArray) {
-      ensurePolygonWindingDirectionFlat(this.points, this.start, this.end, this.size, direction);
+      modifyPolygonWindingDirectionFlat(this.points, this.start, this.end, this.size, direction);
     } else {
-      ensurePolygonWindingDirection(this.points, direction);
+      modifyPolygonWindingDirection(this.points, direction);
     }
   }
 }
