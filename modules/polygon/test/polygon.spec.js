@@ -23,7 +23,13 @@ import test from 'tape-catch';
 import {tapeEquals} from 'test/utils/tape-assertions';
 
 import {configure} from '@math.gl/core';
-import {_Polygon as Polygon, WINDING_COUNTER_CLOCKWISE, WINDING_CLOCKWISE} from '@math.gl/polygon';
+import {
+  _Polygon as Polygon,
+  WINDING_COUNTER_CLOCKWISE,
+  WINDING_CLOCKWISE,
+  getPolygonSignedArea,
+  getPolygonSignedAreaFlat
+} from '@math.gl/polygon';
 
 const TEST_CASES = [
   {
@@ -146,10 +152,10 @@ test('Polygon#forEachSegment', t => {
 });
 
 test('Polygon#ensureWindingDirection', t => {
-  const testPoints = [1, 1, 2, 2, 1, 3];
+  const testPolygon = [1, 1, 2, 2, 1, 3];
   const testPolygonReversed = [1, 3, 2, 2, 1, 1];
 
-  const polygon = new Polygon(testPoints);
+  const polygon = new Polygon(testPolygon);
 
   t.equals(
     polygon.getWindingDirection(),
@@ -159,7 +165,7 @@ test('Polygon#ensureWindingDirection', t => {
 
   polygon.ensureWindingDirection(WINDING_CLOCKWISE);
   t.ok(
-    testPoints.every((value, index) => value === testPolygonReversed[index]),
+    testPolygon.every((value, index) => value === testPolygonReversed[index]),
     'ensureWindingDirection() reversed polygon as expected'
   );
 
@@ -167,6 +173,25 @@ test('Polygon#ensureWindingDirection', t => {
     polygon.getWindingDirection(),
     WINDING_CLOCKWISE,
     'getWindingDirection() returned expected result'
+  );
+
+  t.end();
+});
+
+test('Polygon#Compare flat and complex input', t => {
+  const testFlatData = [0.5, 0.5, 2.0, 0.25, 4, 2, 5, 1, 6, 4, 3.5, 4.1, 1, 2.5, -6, 1];
+  const testPointsData = [];
+  for (let i = 0; i < testFlatData.length; i += 2) {
+    testPointsData.push([testFlatData[i], testFlatData[i + 1]]);
+  }
+
+  const area1 = getPolygonSignedArea(testPointsData);
+  const area2 = getPolygonSignedAreaFlat(testFlatData, 0, testFlatData.length, 2);
+
+  t.equals(
+    area1,
+    area2,
+    'getPolygonSignedArea() results are identical to getPolygonSignedAreaFlat()'
   );
 
   t.end();
