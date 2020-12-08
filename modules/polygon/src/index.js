@@ -10,7 +10,7 @@ export {
   modifyPolygonWindingDirection,
   modifyPolygonWindingDirectionFlat,
   WINDING
-} from './polygon-utilities';
+} from './polygon-utils';
 
 export {clipPolygon, clipPolyline} from './lineclip';
 

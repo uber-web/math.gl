@@ -2,13 +2,13 @@
 
 import {equals} from '@math.gl/core';
 
-/** @type {typeof import('./polygon-utilities').WINDING} */
+/** @type {typeof import('./polygon-utils').WINDING} */
 export const WINDING = {
   CLOCKWISE: 1,
   COUNTER_CLOCKWISE: -1
 };
 
-/** @type {typeof import('./polygon-utilities').modifyPolygonWindingDirection} */
+/** @type {typeof import('./polygon-utils').modifyPolygonWindingDirection} */
 export function modifyPolygonWindingDirection(points, direction) {
   const currentDirection = getPolygonWindingDirection(points);
   if (currentDirection !== direction) {
@@ -16,12 +16,12 @@ export function modifyPolygonWindingDirection(points, direction) {
   }
 }
 
-/** @type {typeof import('./polygon-utilities').getPolygonWindingDirection} */
+/** @type {typeof import('./polygon-utils').getPolygonWindingDirection} */
 export function getPolygonWindingDirection(points) {
   return Math.sign(getPolygonSignedArea(points));
 }
 
-/** @type {typeof import('./polygon-utilities').getPolygonSignedArea} */
+/** @type {typeof import('./polygon-utils').getPolygonSignedArea} */
 export function getPolygonSignedArea(points) {
   // https://en.wikipedia.org/wiki/Shoelace_formula
   let area = 0;
@@ -31,7 +31,7 @@ export function getPolygonSignedArea(points) {
   return area / 2;
 }
 
-/** @type {typeof import('./polygon-utilities').forEachSegmentInPolygon} */
+/** @type {typeof import('./polygon-utils').forEachSegmentInPolygon} */
 export function forEachSegmentInPolygon(points, visitor) {
   const numPoints = points.length;
   for (let i = 0; i < numPoints - 1; ++i) {
@@ -44,7 +44,7 @@ export function forEachSegmentInPolygon(points, visitor) {
   }
 }
 
-/** @type {typeof import('./polygon-utilities').modifyPolygonWindingDirectionFlat} */
+/** @type {typeof import('./polygon-utils').modifyPolygonWindingDirectionFlat} */
 export function modifyPolygonWindingDirectionFlat(points, start, end, size, direction) {
   const windingDirection = getPolygonWindingDirectionFlat(points, start, end, size);
   if (windingDirection !== direction) {
@@ -52,12 +52,12 @@ export function modifyPolygonWindingDirectionFlat(points, start, end, size, dire
   }
 }
 
-/** @type {typeof import('./polygon-utilities').getPolygonWindingDirectionFlat} */
+/** @type {typeof import('./polygon-utils').getPolygonWindingDirectionFlat} */
 export function getPolygonWindingDirectionFlat(points, start, end, size) {
   return Math.sign(getPolygonSignedAreaFlat(points, start, end, size));
 }
 
-/** @type {typeof import('./polygon-utilities').getPolygonSignedAreaFlat} */
+/** @type {typeof import('./polygon-utils').getPolygonSignedAreaFlat} */
 export function getPolygonSignedAreaFlat(points, start, end, size) {
   // https://en.wikipedia.org/wiki/Shoelace_formula
   let area = 0;
@@ -67,7 +67,7 @@ export function getPolygonSignedAreaFlat(points, start, end, size) {
   return area / 2;
 }
 
-/** @type {typeof import('./polygon-utilities').forEachSegmentInPolygonFlat} */
+/** @type {typeof import('./polygon-utils').forEachSegmentInPolygonFlat} */
 export function forEachSegmentInPolygonFlat(points, start, end, size, visitor) {
   const numPoints = (end - start) / size;
   for (let i = 0; i < numPoints - 1; ++i) {

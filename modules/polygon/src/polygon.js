@@ -10,7 +10,7 @@ import {
   forEachSegmentInPolygonFlat,
   modifyPolygonWindingDirection,
   modifyPolygonWindingDirectionFlat
-} from './polygon-utilities';
+} from './polygon-utils';
 
 export default class Polygon {
   constructor(points, options = {}) {
