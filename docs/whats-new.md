@@ -8,6 +8,12 @@ Release Date: TBD. v3.3 is still in development. Alpha releases are available.
 
 A new module supporting conversion between a wide range of geospatial coordinate systems.
 
+**`@math.gl/polygon`**
+
+Update to Polygon module to support flat arrays and to be able to call polygon-related utilities without an instance of Polygon.
+
+- new function `modifyPolygonWindingDirection()` to modify a polygon's winding direction in-place.
+
 ## v3.2
 
 Release Date: July 18, 2020
