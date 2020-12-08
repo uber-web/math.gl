@@ -1,5 +1,8 @@
 /* eslint-disable no-undef */
 /* eslint-disable no-console */
+
+import {isArray} from '@math.gl/core';
+
 import {
   getPolygonSignedArea,
   getPolygonSignedAreaFlat,
@@ -12,7 +15,7 @@ import {
 export default class Polygon {
   constructor(points, options = {}) {
     this.points = points;
-    this.isFlatArray = !Array.isArray(points[0]);
+    this.isFlatArray = !isArray(points[0]);
 
     if (this.isFlatArray) {
       this.start = options.start || 0;

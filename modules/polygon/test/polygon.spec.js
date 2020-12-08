@@ -27,21 +27,21 @@ import {_Polygon as Polygon, WINDING_COUNTER_CLOCKWISE, WINDING_CLOCKWISE} from 
 
 const TEST_CASES = [
   {
-    title: 'non-closed poly (flat)',
+    title: 'non-closed poly (flat array)',
     polygon: [5, 0, 6, 4, 4, 5, 1, 5, 1, 0],
     area: 22,
     sign: WINDING_COUNTER_CLOCKWISE,
     segments: 5
   },
   {
-    title: 'exactly closed poly (flat)',
+    title: 'exactly closed poly (flat array)',
     polygon: [5, 0, 6, 4, 4, 5, 1, 5, 1, 0, 5, 0],
     area: 22,
     sign: WINDING_COUNTER_CLOCKWISE,
     segments: 5
   },
   {
-    title: 'EPSILON closed poly (flat)',
+    title: 'EPSILON closed poly (flat array)',
     polygon: [5, 0, 6, 4, 4, 5, 1, 5, 1, 0, 5, 0.0000001],
     area: 22,
     sign: WINDING_COUNTER_CLOCKWISE,
@@ -145,7 +145,7 @@ test('Polygon#forEachSegment', t => {
   t.end();
 });
 
-test('Polygon#methods', t => {
+test('Polygon#ensureWindingDirection', t => {
   const testPoints = [1, 1, 2, 2, 1, 3];
   const testPolygonReversed = [1, 3, 2, 2, 1, 1];
 
