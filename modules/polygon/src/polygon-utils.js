@@ -9,66 +9,39 @@ export const WINDING = {
 };
 
 /** @type {typeof import('./polygon-utils').modifyPolygonWindingDirection} */
-export function modifyPolygonWindingDirection(points, direction) {
-  const currentDirection = getPolygonWindingDirection(points);
-  if (currentDirection !== direction) {
-    points.reverse();
+export function modifyPolygonWindingDirection(points, direction, options = {}) {
+  const windingDirection = getPolygonWindingDirection(points, options);
+  if (windingDirection !== direction) {
+    reversePolygon(points, options);
+    return true;
   }
+  return false;
 }
 
 /** @type {typeof import('./polygon-utils').getPolygonWindingDirection} */
-export function getPolygonWindingDirection(points) {
-  return Math.sign(getPolygonSignedArea(points));
+export function getPolygonWindingDirection(points, options = {}) {
+  return Math.sign(getPolygonSignedArea(points, options));
 }
 
 /** @type {typeof import('./polygon-utils').getPolygonSignedArea} */
-export function getPolygonSignedArea(points) {
+export function getPolygonSignedArea(points, options = {}) {
   // https://en.wikipedia.org/wiki/Shoelace_formula
   let area = 0;
-  forEachSegmentInPolygon(points, (p1, p2) => {
-    area += areaCalcCallback(p1[0], p1[1], p2[0], p2[1]);
-  });
+  forEachSegmentInPolygon(
+    points,
+    (p1x, p1y, p2x, p2y) => {
+      area += areaCalcCallback(p1x, p1y, p2x, p2y);
+    },
+    options
+  );
+
   return area / 2;
 }
 
 /** @type {typeof import('./polygon-utils').forEachSegmentInPolygon} */
-export function forEachSegmentInPolygon(points, visitor) {
-  const numPoints = points.length;
-  for (let i = 0; i < numPoints - 1; ++i) {
-    visitor(points[i], points[i + 1], i, i + 1);
-  }
+export function forEachSegmentInPolygon(points, visitor, options = {}) {
+  const {start = 0, end = points.length, size = 2, isClosed} = options;
 
-  const isClosed = equals(points[points.length - 1], points[0]);
-  if (!isClosed) {
-    visitor(points[numPoints - 1], points[0], numPoints - 1, 0);
-  }
-}
-
-/** @type {typeof import('./polygon-utils').modifyPolygonWindingDirectionFlat} */
-export function modifyPolygonWindingDirectionFlat(points, start, end, size, direction) {
-  const windingDirection = getPolygonWindingDirectionFlat(points, start, end, size);
-  if (windingDirection !== direction) {
-    reversePolygonFlat(points, start, end, size);
-  }
-}
-
-/** @type {typeof import('./polygon-utils').getPolygonWindingDirectionFlat} */
-export function getPolygonWindingDirectionFlat(points, start, end, size) {
-  return Math.sign(getPolygonSignedAreaFlat(points, start, end, size));
-}
-
-/** @type {typeof import('./polygon-utils').getPolygonSignedAreaFlat} */
-export function getPolygonSignedAreaFlat(points, start, end, size) {
-  // https://en.wikipedia.org/wiki/Shoelace_formula
-  let area = 0;
-  forEachSegmentInPolygonFlat(points, start, end, size, (p1x, p1y, p2x, p2y) => {
-    area += areaCalcCallback(p1x, p1y, p2x, p2y);
-  });
-  return area / 2;
-}
-
-/** @type {typeof import('./polygon-utils').forEachSegmentInPolygonFlat} */
-export function forEachSegmentInPolygonFlat(points, start, end, size, visitor) {
   const numPoints = (end - start) / size;
   for (let i = 0; i < numPoints - 1; ++i) {
     visitor(
@@ -82,11 +55,12 @@ export function forEachSegmentInPolygonFlat(points, start, end, size, visitor) {
   }
 
   const endPointIndex = start + (numPoints - 1) * size;
-  const isClosed =
-    equals(points[start], points[endPointIndex]) &&
-    equals(points[start + 1], points[endPointIndex + 1]);
+  const isClosedEx =
+    isClosed ||
+    (equals(points[start], points[endPointIndex]) &&
+      equals(points[start + 1], points[endPointIndex + 1]));
 
-  if (!isClosed) {
+  if (!isClosedEx) {
     visitor(
       points[endPointIndex],
       points[endPointIndex + 1],
@@ -98,7 +72,9 @@ export function forEachSegmentInPolygonFlat(points, start, end, size, visitor) {
   }
 }
 
-function reversePolygonFlat(points, start, end, size) {
+function reversePolygon(points, options) {
+  const {start = 0, end = points.length, size = 2} = options;
+
   const numPoints = (end - start) / size;
   const numSwaps = Math.floor(numPoints / 2);
   for (let i = 0; i < numSwaps; ++i) {
@@ -109,6 +85,48 @@ function reversePolygonFlat(points, start, end, size) {
       points[b1 + j] = points[b2 + j];
       points[b2 + j] = tmp;
     }
+  }
+}
+
+/** @type {typeof import('./polygon-utils').modifyPolygonWindingDirectionPoints} */
+export function modifyPolygonWindingDirectionPoints(points, direction, params = {}) {
+  const currentDirection = getPolygonWindingDirectionPoints(points, params);
+  if (currentDirection !== direction) {
+    points.reverse();
+    return true;
+  }
+  return false;
+}
+
+/** @type {typeof import('./polygon-utils').getPolygonWindingDirectionPoints} */
+export function getPolygonWindingDirectionPoints(points, params = {}) {
+  return Math.sign(getPolygonSignedAreaPoints(points, params));
+}
+
+/** @type {typeof import('./polygon-utils').getPolygonSignedAreaPoints} */
+export function getPolygonSignedAreaPoints(points, params = {}) {
+  // https://en.wikipedia.org/wiki/Shoelace_formula
+  let area = 0;
+  forEachSegmentInPolygonPoints(
+    points,
+    (p1, p2) => {
+      area += areaCalcCallback(p1[0], p1[1], p2[0], p2[1]);
+    },
+    params
+  );
+  return area / 2;
+}
+
+/** @type {typeof import('./polygon-utils').forEachSegmentInPolygonPoints} */
+export function forEachSegmentInPolygonPoints(points, visitor, params = {}) {
+  const {start = 0, end = points.length, isClosed} = params;
+  for (let i = start; i < end - 1; ++i) {
+    visitor(points[i], points[i + 1], i, i + 1);
+  }
+
+  const isClosedEx = isClosed || equals(points[end - 1], points[0]);
+  if (!isClosedEx) {
+    visitor(points[end - 1], points[0], end - 1, 0);
   }
 }
 

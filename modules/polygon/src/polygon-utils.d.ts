@@ -1,85 +1,120 @@
-import {TypedArray} from "@math.gl/core/";
+import {TypedArray} from '@math.gl/core/';
 
 export const WINDING: {
-    CLOCKWISE: number; 
-    COUNTER_CLOCKWISE: number
+  CLOCKWISE: number;
+  COUNTER_CLOCKWISE: number;
 };
 
+// Polygon representation where all positions are stored in one flat array.
+type FlatArray = TypedArray | number[];
+
+// Polygon representation where each point is represented as a separate array of positions.
 type PointsArray = TypedArray[] | number[][];
-type FlatPointsArray = TypedArray | number[];
 
-type SegmentVisitor = (p1: FlatPointsArray, p2: FlatPointsArray, i1: number, i2: number) => void;
-type SegmentVisitorFlat = (p1x: number, p1y: number, p2x: number, p2y: number, i1: number, i2: number) => void;
+// Segment visitor callback type for polygons defined with flat arrays,
+type SegmentVisitorFlat = (
+  p1x: number,
+  p1y: number,
+  p2x: number,
+  p2y: number,
+  i1: number,
+  i2: number
+) => void;
 
-/**
- * Checks winding direction of the polygon and reverses the polygon in case if opposite winding direction.
- * Note: points are modified in-place.
- * @param points Array of points.
- * @param direction Requested winding direction. 1 is for clockwise, -1 for counterclockwise winding direction.
- */
-export function modifyPolygonWindingDirection(points: PointsArray, direction: number): void;
+// Segment visitor callback type for polygons defined with array of points.
+type SegmentVisitorPoints = (p1: FlatArray, p2: FlatArray, i1: number, i2: number) => void;
 
-/**
- * Returns winding direction of the polygon.
- * @param points Array of points.
- * @param direction Requested winding direction.
- * @returns Winding direction of the polygon.
- */
-export function getPolygonWindingDirection(points: PointsArray): number;
-
-/**
- * Returns signed area of the polygon.
- * @param points Array of points.
- * @returns Signed area of the polygon.
- */
-export function getPolygonSignedArea(points: PointsArray): number;
+// Parameters of a polygon.
+type PolygonParams = {
+  start?: number; // Start index of the polygon in the array of positions. Defaults to 0.
+  end?: number; // End index of the polygon in the array of positions. Defaults to number of positions.
+  size?: number; // Size of a point, 2 (XZ) or 3 (XYZ). Defaults to 2. Affects only polygons stored in flat arrays.
+  isClosed?: boolean; // Indicates that the first point of the polygon is equal to the last point, and additional checks should be ommited.
+};
 
 /**
- * Calls visitor callback for each segment in the polygon.
- * @param points Array of points.
- * @param visitor A callback to call for each segment.
- */
-export function forEachSegmentInPolygon(points: PointsArray, visitor: SegmentVisitor): void;
-
-/**
- * Checks winding direction of the polygon and reverses the polygon in case if opposite winding direction.
+ * Checks winding direction of the polygon and reverses the polygon in case of opposite winding direction.
  * Note: points are modified in-place.
  * @param points An array that represents points of the polygon.
- * @param start Start index of the polygon in the points array.
- * @param end End index of the polygon in the points array.
- * @param size Size of a point, 2 (XZ) or 3 (XYZ).
  * @param direction Requested winding direction. 1 is for clockwise, -1 for counterclockwise winding direction.
+ * @param options Parameters of the polygon.
+ * @return Returns true if the winding direction was changed.
  */
-export function modifyPolygonWindingDirectionFlat(points: FlatPointsArray, start: number, end: number, size: number, direction: number): void;
+export function modifyPolygonWindingDirection(
+  points: FlatArray,
+  direction: number,
+  options?: PolygonParams
+): boolean;
 
 /**
  * Returns winding direction of the polygon.
  * @param points An array that represents points of the polygon.
- * @param start Start index of the polygon in the points array.
- * @param end End index of the polygon in the points array.
- * @param size Size of a point, 2 (XZ) or 3 (XYZ).
+ * @param options Parameters of the polygon.
  * @returns Winding direction of the polygon.
  */
-export function getPolygonWindingDirectionFlat(points: FlatPointsArray, start: number, end: number, size: number): number;
+export function getPolygonWindingDirection(points: FlatArray, options?: PolygonParams): number;
 
 /**
  * Returns signed area of the polygon.
  * @param points An array that represents points of the polygon.
- * @param start Start index of the polygon in the points array.
- * @param end End index of the polygon in the points array.
- * @param size Size of a point, 2 (XZ) or 3 (XYZ).
+ * @param options Parameters of the polygon.
  * @returns Signed area of the polygon.
  */
-export function getPolygonSignedAreaFlat(points: FlatPointsArray, start: number, end: number, size: number): number;
+export function getPolygonSignedArea(points: FlatArray, options?: PolygonParams): number;
 
 /**
- * Calls visitor callback for each segment in the polygon.
+ * Calls the visitor callback for each segment in the polygon.
  * @param points An array that represents points of the polygon
- * @param start Start index of the polygon in the points array.
- * @param end End index of the polygon in the points array.
- * @param size Size of a point, 2 (XZ) or 3 (XYZ).
  * @param visitor A callback to call for each segment.
+ * @param options Parameters of the polygon.
  */
-export function forEachSegmentInPolygonFlat(points: FlatPointsArray, start: number, end: number, size: number, visitor: SegmentVisitorFlat): void;
+export function forEachSegmentInPolygon(
+  points: FlatArray,
+  visitor: SegmentVisitorFlat,
+  options?: PolygonParams
+): void;
 
+/**
+ * Checks winding direction of the polygon and reverses the polygon in case of opposite winding direction.
+ * Note: points are modified in-place.
+ * @param points Array of points that represent the polygon.
+ * @param direction Requested winding direction. 1 is for clockwise, -1 for counterclockwise winding direction.
+ * @param options Parameters of the polygon.
+ * @return Returns true if the winding direction was changed.
+ */
+export function modifyPolygonWindingDirectionPoints(
+  points: PointsArray,
+  direction: number,
+  options?: PolygonParams
+): boolean;
 
+/**
+ * Returns winding direction of the polygon.
+ * @param points Array of points that represent the polygon.
+ * @param options Parameters of the polygon.
+ * @returns Winding direction of the polygon.
+ */
+export function getPolygonWindingDirectionPoints(
+  points: PointsArray,
+  options?: PolygonParams
+): number;
+
+/**
+ * Returns signed area of the polygon.
+ * @param points Array of points that represent the polygon.
+ * @param options Parameters of the polygon.
+ * @returns Signed area of the polygon.
+ */
+export function getPolygonSignedAreaPoints(points: PointsArray, options?: PolygonParams): number;
+
+/**
+ * Calls visitor callback for each segment in the polygon.
+ * @param points Array of points that represent the polygon.
+ * @param visitor A callback to call for each segment.
+ * @param options Parameters of the polygon.
+ */
+export function forEachSegmentInPolygonPoints(
+  points: PointsArray,
+  visitor: SegmentVisitorPoints,
+  options?: PolygonParams
+): void;

@@ -2,13 +2,9 @@ export {default as Polygon} from './polygon';
 
 export {
   getPolygonSignedArea,
-  getPolygonSignedAreaFlat,
   getPolygonWindingDirection,
-  getPolygonWindingDirectionFlat,
   forEachSegmentInPolygon,
-  forEachSegmentInPolygonFlat,
   modifyPolygonWindingDirection,
-  modifyPolygonWindingDirectionFlat,
   WINDING
 } from './polygon-utils';
 

@@ -23,12 +23,7 @@ import test from 'tape-catch';
 import {tapeEquals} from 'test/utils/tape-assertions';
 
 import {configure} from '@math.gl/core';
-import {
-  _Polygon as Polygon,
-  WINDING,
-  getPolygonSignedArea,
-  getPolygonSignedAreaFlat
-} from '@math.gl/polygon';
+import {_Polygon as Polygon, WINDING} from '@math.gl/polygon';
 
 const TEST_CASES = [
   {
@@ -205,13 +200,16 @@ test('Polygon#Compare flat and complex input', t => {
     testPointsData.push([testFlatData[i], testFlatData[i + 1]]);
   }
 
-  const area1 = getPolygonSignedArea(testPointsData);
-  const area2 = getPolygonSignedAreaFlat(testFlatData, 0, testFlatData.length, 2);
+  const flatPolygon = new Polygon(testFlatData);
+  const pointsPolygon = new Polygon(testPointsData);
+
+  const area1 = flatPolygon.getSignedArea();
+  const area2 = pointsPolygon.getSignedArea();
 
   t.equals(
     area1,
     area2,
-    'getPolygonSignedArea() results are identical to getPolygonSignedAreaFlat()'
+    'results from flat getSignedArea() results are identical to results of array of points getSignedArea()'
   );
 
   t.end();

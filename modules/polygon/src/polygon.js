@@ -5,11 +5,11 @@ import {isArray} from '@math.gl/core';
 
 import {
   getPolygonSignedArea,
-  getPolygonSignedAreaFlat,
   forEachSegmentInPolygon,
-  forEachSegmentInPolygonFlat,
   modifyPolygonWindingDirection,
-  modifyPolygonWindingDirectionFlat
+  getPolygonSignedAreaPoints,
+  forEachSegmentInPolygonPoints,
+  modifyPolygonWindingDirectionPoints
 } from './polygon-utils';
 
 export default class Polygon {
@@ -17,20 +17,20 @@ export default class Polygon {
     this.points = points;
     this.isFlatArray = !isArray(points[0]);
 
-    if (this.isFlatArray) {
-      this.start = options.start || 0;
-      this.end = options.end || points.length;
-      this.size = options.size || 2;
-    }
+    this.options = {
+      start: options.start || 0,
+      end: options.end || points.length,
+      size: options.size || 2,
+      isClosed: options.isClosed
+    };
 
     Object.freeze(this);
   }
 
   getSignedArea() {
-    if (this.isFlatArray)
-      return getPolygonSignedAreaFlat(this.points, this.start, this.end, this.size);
+    if (this.isFlatArray) return getPolygonSignedArea(this.points, this.options);
 
-    return getPolygonSignedArea(this.points);
+    return getPolygonSignedAreaPoints(this.points, this.options);
   }
 
   getArea() {
@@ -43,27 +43,25 @@ export default class Polygon {
 
   forEachSegment(visitor) {
     if (this.isFlatArray) {
-      forEachSegmentInPolygonFlat(
+      forEachSegmentInPolygon(
         this.points,
-        this.start,
-        this.end,
-        this.size,
         // eslint-disable-next-line max-params
         (x1, y1, x2, y2, i1, i2) => {
           // TODO @igorDykhta original visitor uses arrays for each point, but with flat arrays performance degrades if we allocate points for each segment
           visitor([x1, y1], [x2, y2], i1, i2);
-        }
+        },
+        this.options
       );
     } else {
-      forEachSegmentInPolygon(this.points, visitor);
+      forEachSegmentInPolygonPoints(this.points, visitor, this.options);
     }
   }
 
   modifyWindingDirection(direction) {
     if (this.isFlatArray) {
-      modifyPolygonWindingDirectionFlat(this.points, this.start, this.end, this.size, direction);
+      modifyPolygonWindingDirection(this.points, direction, this.options);
     } else {
-      modifyPolygonWindingDirection(this.points, direction);
+      modifyPolygonWindingDirectionPoints(this.points, direction, this.options);
     }
   }
 }
