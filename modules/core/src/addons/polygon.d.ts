@@ -17,6 +17,6 @@ export default class Polygon {
   getSignedArea(): number;
   getArea(): number;
   getWindingDirection(): number;
-  forEachSegment(visitor: SegmentVisitor);
-  modifyWindingDirection(direction: number);
+  forEachSegment(visitor: SegmentVisitor): void;
+  modifyWindingDirection(direction: number): boolean;
 }

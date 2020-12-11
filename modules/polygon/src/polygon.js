@@ -59,9 +59,8 @@ export default class Polygon {
 
   modifyWindingDirection(direction) {
     if (this.isFlatArray) {
-      modifyPolygonWindingDirection(this.points, direction, this.options);
-    } else {
-      modifyPolygonWindingDirectionPoints(this.points, direction, this.options);
+      return modifyPolygonWindingDirection(this.points, direction, this.options);
     }
+    return modifyPolygonWindingDirectionPoints(this.points, direction, this.options);
   }
 }
