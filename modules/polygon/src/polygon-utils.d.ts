@@ -1,15 +1,12 @@
-import {TypedArray} from '@math.gl/core/';
+import {NumberArray} from '@math.gl/core/';
 
 export const WINDING: {
   CLOCKWISE: number;
   COUNTER_CLOCKWISE: number;
 };
 
-// Polygon representation where all positions are stored in one flat array.
-type FlatArray = TypedArray | number[];
-
 // Polygon representation where each point is represented as a separate array of positions.
-type PointsArray = TypedArray[] | number[][];
+type PointsArray = NumberArray[];
 
 // Segment visitor callback type for polygons defined with flat arrays,
 type SegmentVisitorFlat = (
@@ -22,7 +19,7 @@ type SegmentVisitorFlat = (
 ) => void;
 
 // Segment visitor callback type for polygons defined with array of points.
-type SegmentVisitorPoints = (p1: FlatArray, p2: FlatArray, i1: number, i2: number) => void;
+type SegmentVisitorPoints = (p1: NumberArray, p2: NumberArray, i1: number, i2: number) => void;
 
 // Parameters of a polygon.
 type PolygonParams = {
@@ -41,7 +38,7 @@ type PolygonParams = {
  * @return Returns true if the winding direction was changed.
  */
 export function modifyPolygonWindingDirection(
-  points: FlatArray,
+  points: NumberArray,
   direction: number,
   options?: PolygonParams
 ): boolean;
@@ -52,7 +49,7 @@ export function modifyPolygonWindingDirection(
  * @param options Parameters of the polygon.
  * @returns Winding direction of the polygon.
  */
-export function getPolygonWindingDirection(points: FlatArray, options?: PolygonParams): number;
+export function getPolygonWindingDirection(points: NumberArray, options?: PolygonParams): number;
 
 /**
  * Returns signed area of the polygon.
@@ -60,7 +57,7 @@ export function getPolygonWindingDirection(points: FlatArray, options?: PolygonP
  * @param options Parameters of the polygon.
  * @returns Signed area of the polygon.
  */
-export function getPolygonSignedArea(points: FlatArray, options?: PolygonParams): number;
+export function getPolygonSignedArea(points: NumberArray, options?: PolygonParams): number;
 
 /**
  * Calls the visitor callback for each segment in the polygon.
@@ -69,7 +66,7 @@ export function getPolygonSignedArea(points: FlatArray, options?: PolygonParams)
  * @param options Parameters of the polygon.
  */
 export function forEachSegmentInPolygon(
-  points: FlatArray,
+  points: NumberArray,
   visitor: SegmentVisitorFlat,
   options?: PolygonParams
 ): void;

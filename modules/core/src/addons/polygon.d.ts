@@ -1,15 +1,10 @@
-import {TypedArray} from '@math.gl/core/';
+import {NumberArray} from '@math.gl/core/';
 
-type SegmentVisitor = (
-  p1: number[] | TypedArray,
-  p2: number[] | TypedArray,
-  i1: number,
-  i2: number
-) => void;
+type SegmentVisitor = (p1: NumberArray, p2: NumberArray, i1: number, i2: number) => void;
 
 export default class Polygon {
   constructor(
-    points: number[] | number[][] | TypedArray | TypedArray[],
+    points: NumberArray | NumberArray[],
     options?: {start?: number; end?: number; size?: number; isClosed?: boolean}
   );
 
