@@ -9,6 +9,8 @@ type TypedArray =
   | Float32Array
   | Float64Array;
 
+type NumberArray = TypedArray | number[];
+
 type ConfigurationOptions = {
   EPSILON?: number;
   debug?: boolean;

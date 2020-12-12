@@ -1,5 +1,13 @@
 export {default as Polygon} from './polygon';
 
+export {
+  getPolygonSignedArea,
+  getPolygonWindingDirection,
+  forEachSegmentInPolygon,
+  modifyPolygonWindingDirection,
+  WINDING
+} from './polygon-utils';
+
 export {clipPolygon, clipPolyline} from './lineclip';
 
 export {cutPolygonByGrid, cutPolylineByGrid} from './cut-by-grid';

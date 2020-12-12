@@ -1,20 +1,36 @@
-import {equals} from '@math.gl/core';
+/* eslint-disable no-undef */
+/* eslint-disable no-console */
+
+import {isArray} from '@math.gl/core';
+
+import {
+  getPolygonSignedArea,
+  forEachSegmentInPolygon,
+  modifyPolygonWindingDirection,
+  getPolygonSignedAreaPoints,
+  forEachSegmentInPolygonPoints,
+  modifyPolygonWindingDirectionPoints
+} from './polygon-utils';
 
 export default class Polygon {
-  constructor(points) {
+  constructor(points, options = {}) {
     this.points = points;
-    this.isClosed = equals(this.points[this.points.length - 1], this.points[0]);
+    this.isFlatArray = !isArray(points[0]);
+
+    this.options = {
+      start: options.start || 0,
+      end: options.end || points.length,
+      size: options.size || 2,
+      isClosed: options.isClosed
+    };
+
     Object.freeze(this);
   }
 
-  // https://en.wikipedia.org/wiki/Shoelace_formula
   getSignedArea() {
-    let area = 0;
-    this.forEachSegment((p1, p2) => {
-      // the "cancelling" cross-products: (p1.x + p2.x) * (p1.y - p2.y)
-      area += (p1[0] + p2[0]) * (p1[1] - p2[1]);
-    });
-    return area / 2;
+    if (this.isFlatArray) return getPolygonSignedArea(this.points, this.options);
+
+    return getPolygonSignedAreaPoints(this.points, this.options);
   }
 
   getArea() {
@@ -26,13 +42,25 @@ export default class Polygon {
   }
 
   forEachSegment(visitor) {
-    const length = this.points.length;
-    for (let i = 0; i < length - 1; i++) {
-      visitor(this.points[i], this.points[i + 1], i, i + 1);
+    if (this.isFlatArray) {
+      forEachSegmentInPolygon(
+        this.points,
+        // eslint-disable-next-line max-params
+        (x1, y1, x2, y2, i1, i2) => {
+          // TODO @igorDykhta original visitor uses arrays for each point, but with flat arrays performance degrades if we allocate points for each segment
+          visitor([x1, y1], [x2, y2], i1, i2);
+        },
+        this.options
+      );
+    } else {
+      forEachSegmentInPolygonPoints(this.points, visitor, this.options);
     }
-    if (!this.isClosed) {
-      // Call function with points and indices
-      visitor(this.points[length - 1], this.points[0], length - 1, 0);
+  }
+
+  modifyWindingDirection(direction) {
+    if (this.isFlatArray) {
+      return modifyPolygonWindingDirection(this.points, direction, this.options);
     }
+    return modifyPolygonWindingDirectionPoints(this.points, direction, this.options);
   }
 }

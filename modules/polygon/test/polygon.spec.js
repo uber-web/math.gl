@@ -23,28 +23,94 @@ import test from 'tape-catch';
 import {tapeEquals} from 'test/utils/tape-assertions';
 
 import {configure} from '@math.gl/core';
-import {_Polygon as Polygon} from '@math.gl/polygon';
+import {_Polygon as Polygon, WINDING} from '@math.gl/polygon';
 
 const TEST_CASES = [
+  {
+    title: 'non-closed poly (flat TypedArray array)',
+    polygon: new Float32Array([5, 0, 6, 4, 4, 5, 1, 5, 1, 0]),
+    area: 22,
+    sign: WINDING.COUNTER_CLOCKWISE,
+    segments: 5
+  },
+  {
+    title: 'exactly closed poly (flat TypedArray array)',
+    polygon: new Float32Array([5, 0, 6, 4, 4, 5, 1, 5, 1, 0, 5, 0]),
+    area: 22,
+    sign: WINDING.COUNTER_CLOCKWISE,
+    segments: 5
+  },
+  {
+    title: 'EPSILON closed poly (flat TypedArray array)',
+    polygon: new Float32Array([5, 0, 6, 4, 4, 5, 1, 5, 1, 0, 5, 0.0000001]),
+    area: 22,
+    sign: WINDING.COUNTER_CLOCKWISE,
+    segments: 5
+  },
+  {
+    title: 'non-closed poly (flat array)',
+    polygon: [5, 0, 6, 4, 4, 5, 1, 5, 1, 0],
+    area: 22,
+    sign: WINDING.COUNTER_CLOCKWISE,
+    segments: 5
+  },
+  {
+    title: 'exactly closed poly (flat array)',
+    polygon: [5, 0, 6, 4, 4, 5, 1, 5, 1, 0, 5, 0],
+    area: 22,
+    sign: WINDING.COUNTER_CLOCKWISE,
+    segments: 5
+  },
+  {
+    title: 'EPSILON closed poly (flat array)',
+    polygon: [5, 0, 6, 4, 4, 5, 1, 5, 1, 0, 5, 0.0000001],
+    area: 22,
+    sign: WINDING.COUNTER_CLOCKWISE,
+    segments: 5
+  },
+  {
+    title: 'Flat 2d array with custom start and end offsets',
+    polygon: [0, 0, 1, 1, 2, 1, 2, 2, 1, 2, 9, 5],
+    area: 1,
+    sign: WINDING.COUNTER_CLOCKWISE,
+    segments: 4,
+    options: {
+      start: 2,
+      end: 10,
+      size: 2
+    }
+  },
+  {
+    title: 'Flat 3d array with custom start and end offsets',
+    polygon: [0, 0, 0, 1, 1, 0, 1, 2, 0, 2, 2, 0, 2, 1, 0, 9, 5, 2],
+    area: 1,
+    sign: WINDING.CLOCKWISE,
+    segments: 4,
+    options: {
+      start: 3,
+      end: 15,
+      size: 3
+    }
+  },
   {
     title: 'non-closed poly',
     polygon: [[5, 0], [6, 4], [4, 5], [1, 5], [1, 0]],
     area: 22,
-    sign: -1,
+    sign: WINDING.COUNTER_CLOCKWISE,
     segments: 5
   },
   {
     title: 'exactly closed poly',
     polygon: [[5, 0], [6, 4], [4, 5], [1, 5], [1, 0], [5, 0]],
     area: 22,
-    sign: -1,
+    sign: WINDING.COUNTER_CLOCKWISE,
     segments: 5
   },
   {
     title: 'EPSILON closed poly',
     polygon: [[5, 0], [6, 4], [4, 5], [1, 5], [1, 0], [5, 0.0000001]],
     area: 22,
-    sign: -1,
+    sign: WINDING.COUNTER_CLOCKWISE,
     segments: 5
   }
 ];
@@ -63,7 +129,7 @@ test('Polygon#methods', t => {
   configure({EPSILON: 1e-4});
 
   for (const tc of TEST_CASES) {
-    const polygon = new Polygon(tc.polygon);
+    const polygon = new Polygon(tc.polygon, tc.options);
     t.ok(polygon, `${tc.title}: Created polygon`);
     tapeEquals(
       t,
@@ -88,7 +154,7 @@ test('Polygon#forEachSegment', t => {
   const config = configure({EPSILON: 1e-4});
 
   for (const tc of TEST_CASES) {
-    const polygon = new Polygon(tc.polygon);
+    const polygon = new Polygon(tc.polygon, tc.options);
     let count = 0;
     polygon.forEachSegment(() => {
       count++;
@@ -97,5 +163,54 @@ test('Polygon#forEachSegment', t => {
   }
 
   configure(config);
+  t.end();
+});
+
+test('Polygon#modifyWindingDirection', t => {
+  const testPolygon = [1, 1, 2, 2, 1, 3];
+  const testPolygonReversed = [1, 3, 2, 2, 1, 1];
+
+  const polygon = new Polygon(testPolygon);
+
+  t.equals(
+    polygon.getWindingDirection(),
+    WINDING.COUNTER_CLOCKWISE,
+    'getWindingDirection() returned expected result'
+  );
+
+  polygon.modifyWindingDirection(WINDING.CLOCKWISE);
+  t.ok(
+    testPolygon.every((value, index) => value === testPolygonReversed[index]),
+    'modifyWindingDirection() reversed polygon as expected'
+  );
+
+  t.equals(
+    polygon.getWindingDirection(),
+    WINDING.CLOCKWISE,
+    'getWindingDirection() returned expected result'
+  );
+
+  t.end();
+});
+
+test('Polygon#Compare flat and complex input', t => {
+  const testFlatData = [0.5, 0.5, 2.0, 0.25, 4, 2, 5, 1, 6, 4, 3.5, 4.1, 1, 2.5, -6, 1];
+  const testPointsData = [];
+  for (let i = 0; i < testFlatData.length; i += 2) {
+    testPointsData.push([testFlatData[i], testFlatData[i + 1]]);
+  }
+
+  const flatPolygon = new Polygon(testFlatData);
+  const pointsPolygon = new Polygon(testPointsData);
+
+  const area1 = flatPolygon.getSignedArea();
+  const area2 = pointsPolygon.getSignedArea();
+
+  t.equals(
+    area1,
+    area2,
+    'results from flat getSignedArea() results are identical to results of array of points getSignedArea()'
+  );
+
   t.end();
 });

@@ -51,6 +51,19 @@ Lets the application iterate over each segment.
 
 `polygon.forEachSegment((p1, p2) => ...);`
 
+### modifyWindingDirection
+
+Checks winding direction of the polygon and reverses the polygon in case if opposite winding direction. Note: points of the polygon are modified in-place.
+
+- A positive number is clockwise.
+- A negative number is counter clockwise.
+
+`polygon.modifyWindingDirection(direction);`
+
+Returns:
+
+Returns true if the winding direction was changed.
+
 ## Remarks
 
 - To avoid having to copy a non-closed path to be able to treat it as a polygon (by adding a copy of the first vertex to then end of the path),
