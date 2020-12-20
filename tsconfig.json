@@ -14,6 +14,8 @@
       "@math.gl/core/test/*": ["modules/core/test/*"],
       "@math.gl/culling/*": ["modules/culling/src/*"],
       "@math.gl/culling/test/*": ["modules/culling/test/*"],
+      "@math.gl/geoid/*": ["modules/geoid/src/*"],
+      "@math.gl/geoid/test/*": ["modules/geoid/test/*"],
       "@math.gl/geospatial/*": ["modules/geospatial/src/*"],
       "@math.gl/geospatial/test/*": ["modules/geospatial/test/*"],
       "@math.gl/sun/*": ["modules/sun/src/*"],
@@ -26,8 +28,7 @@
   "include":[
     "modules/**/src/**/*",
     "modules/**/test/**/*",
-    "test/**/*",
-    "examples_TODO/**/*"
+    "test/**/*"
   ],
   "exclude":[
     "test/apps/**/*",

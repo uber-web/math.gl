@@ -4,6 +4,12 @@
 
 Release Date: TBD. v3.4 is still in development. Alpha releases are available.
 
+**`@math.gl/geoid`** - New module
+
+- Support for irregular (non-ellipsoidal) earth gravity models.
+- New `Geoid` class calculates height offset from ellipsoidal model.
+- Support for parsing PGM encoded earth gravity model files
+
 **`@math.gl/polygon`** - Updates
 
 - Support for flat arrays (e.g. polygons stored in typed arrays)

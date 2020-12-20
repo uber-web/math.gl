@@ -1,0 +1,42 @@
+{
+  "name": "@math.gl/geoid",
+  "description": "Geoid class for working with irregular Earth surface defined by an earth gravity model file.",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "version": "3.4.0-alpha.1",
+  "keywords": [
+    "webgl",
+    "javascript",
+    "math",
+    "geospatial",
+    "EGM",
+    "geoid",
+    "cartographic",
+    "cartesian",
+    "projection",
+    "geographic",
+    "pgm",
+    "GeographicLib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/uber-web/math.gl.git"
+  },
+  "types": "src/index.js",
+  "main": "dist/es5/index.js",
+  "module": "dist/esm/index.js",
+  "esnext": "dist/es6/index.js",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.0.0",
+    "@math.gl/core": "3.4.0-alpha.1",
+    "@types/proj4": "^2.5.0",
+    "proj4": "^2.6.2"
+  },
+  "gitHead": "e1a95300cb225a90da6e90333d4adf290f7ba501"
+}
