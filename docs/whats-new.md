@@ -1,18 +1,22 @@
 # What's New
 
-## v3.3 (In Development)
+## v3.4 (In Development)
 
-Release Date: TBD. v3.3 is still in development. Alpha releases are available.
+Release Date: TBD. v3.4 is still in development. Alpha releases are available.
 
-**`@math.gl/proj4`**
+**`@math.gl/polygon`** - Updates
 
-A new module supporting conversion between a wide range of geospatial coordinate systems.
+- Support for flat arrays (e.g. polygons stored in typed arrays)
+- Support for calling polygon utilities directly on arrays, without a `Polygon` instance.
+- New function `modifyPolygonWindingDirection()` to modify polygon array winding direction in-place.
 
-**`@math.gl/polygon`**
+## v3.3
 
-Updates to Polygon module to support flat arrays and to be able to call polygon-related utilities without an instance of Polygon.
+Release Date: Oct 9, 2020
 
-- new function `modifyPolygonWindingDirection()` to modify a polygon's winding direction in-place.
+**`@math.gl/proj4`** - New module
+
+A new module supporting conversion between a wide range of geospatial coordinate reference systems specified e.g. using the OGC WKT-CRS specification.
 
 ## v3.2
 
@@ -22,7 +26,7 @@ Release Date: July 18, 2020
 
 Typescript type definitions (`.d.ts` files) are now exported for all math.gl modules.
 
-**`@math.gl/polygon`**
+**`@math.gl/polygon`** - New module
 
 A new module offering geospatial polygon clipping functions.
 

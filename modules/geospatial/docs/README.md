@@ -1,8 +1,8 @@
 # Overview
 
-The `@math.gl/geospatial` librarys provides support for geospatial math.
+The `@math.gl/geospatial` module provides support for ellipsoidal math, focusing on geospatial use cases.
 
-It provides classes and utilities to facilitate working with the major geospatial coordinate systems and projections used with computer maps, primarily:
+It provides classes and utilities to facilitate working with the major ellipsoidal geospatial coordinate systems and projections used with computer maps, primarily:
 
 - [WGS84](https://en.wikipedia.org/wiki/World_Geodetic_System) (World Geodetic System) coordinates.
 - [Web Mercator Projection](https://en.wikipedia.org/wiki/Web_Mercator_projection)
@@ -52,8 +52,8 @@ Like all non-core math.gl modules, this module can be used independently of core
 
 ## History
 
-This library was initially developed as a fork of selected classes from Cesium math library, as part of a collaboration between vis.gl and Cesium teams to provide framework-independent, portable support for the 3D tiles specification.
+This library was initially created as part of a bigger collaboration between the vis.gl and Cesium teams to provide framework-independent, portable support for the 3D Tiles specification, however it has been designed to provide generic support for WGS84 and ellipsoidal math.
 
 ## Attribution
 
-This code was initially forked from [Cesium](https://github.com/AnalyticalGraphicsInc/cesium) under the Apache 2 License.
+This code is a fork of selected classes in the [Cesium](https://github.com/AnalyticalGraphicsInc/cesium) code base, under the Apache 2 License.

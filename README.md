@@ -15,7 +15,9 @@
 
 # math.gl
 
-math.gl is an `Array`-based JavaScript 3D math library. In spite of its name it has no hard WebGL dependencies, but however both API and design are focused on the needs of typical WebGL applications
+math.gl is JavaScript math library focused on Geospatial and 3D use cases. It is highly modular and composable, providing a core module with classic vector and matrix classes, and a suite of optional modules implementing various aspects of geospatial or 3D math.
+
+In spite of its name, math.gl has no actual WebGL dependencies (e.g. it does not use WebGL or GPU to perform calculations), however its API is optimized for use with WebGL applications and GPU compute.
 
 ## Features
 
