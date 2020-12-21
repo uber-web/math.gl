@@ -2,7 +2,6 @@
   "extends": [
     "./node_modules/ocular-dev-tools/templates/.eslintrc"
   ],
-  "plugins": ["@typescript-eslint"],
   "parserOptions": {
     "ecmaVersion": 2018
   }
