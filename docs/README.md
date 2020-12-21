@@ -1,22 +1,24 @@
 # Introduction
 
-math.gl is a JavaScript class library focused on 3D and geospatial math. It provides a core module with traditional 3D library classes for vectors, matrices etc, and additional, optional modules providing geospatial math and .
+math.gl is JavaScript math library focused on Geospatial and 3D use cases. It is highly modular and composable toolbox, providing a core module with classic vector and matrix classes, and a suite of optional modules implementing various aspects of geospatial or 3D math.
+
+Note that in spite of its name, math.gl has no actual WebGL dependencies (e.g. it does not use WebGL or GPU to perform calculations), however its API is optimized for use with WebGL applications and GPU compute.
 
 ## Modules
 
 math.gl is a toolbox that offers a range of modules for
 
-| Module                  | Description                                                                                 |
-| ----------------------- | ------------------------------------------------------------------------------------------- |
-| `@math.gl/core`         | Basic 3D math classes (vectors, matrices etc) and utilities (`equals`, `toRadians` etc)     |
-| `@math.gl/culling`      | Bounding volumes and intersection testing.                                                  |
-| `@math.gl/geospatial`   | Ellipsoidal geospatial math, primarily for WGS84 cartesian to cartographic transformations. |
-| `@math.gl/polygon`      | Polygon math.                                                                               |
-| `@math.gl/proj4`        | Conversion between geospatial coordinate systems.                                           |
-| `@math.gl/sun`          | Calculate solar position and direction.                                                     |
-| `@math.gl/web-mercator` | Support for 3D / perspective Web Mercator projections.                                      |
+| Module                  | Category   | Description                                                                                                    |
+| ----------------------- | ---------- | -------------------------------------------------------------------------------------------------------------- |
+| `@math.gl/core`         | Core       | Basic 3D math classes (vectors, matrices etc) and utilities (`equals`, `toRadians` etc)                        |
+| `@math.gl/culling`      | 3D         | Bounding volumes and intersection testing.                                                                     |
+| `@math.gl/polygon`      | Geospatial | Polygon math, including geospatial cutting etc.                                                                |
+| `@math.gl/web-mercator` | Geospatial | Spherical Earth surface model. Supports 3D Web Mercator projections.                                           |
+| `@math.gl/geospatial`   | Geospatial | Ellipsoidal Earth surface model, e.g for transformations between WGS84 cartesian and cartographic coordinates. |
+| `@math.gl/proj4`        | Geospatial | Conversion between coordinate reference systems.                                                               |
+| `@math.gl/sun`          | Geospatial | Calculate solar position and direction based on position and time.                                             |
 
-There are also some legacy modules that are not recommended for new code, but are provided to avoid breaking older applications:
+In addition, math.gl provides some legacy modules that are not recommended for new code, but are still provided to avoid breaking older applications:
 
 | Legacy Module               | Description                                                                                                                                                                                                                                                            |
 | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
