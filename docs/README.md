@@ -11,8 +11,8 @@ math.gl is a toolbox that offers a range of modules for
 | Module                  | Category   | Description                                                                                                    |
 | ----------------------- | ---------- | -------------------------------------------------------------------------------------------------------------- |
 | `@math.gl/core`         | Core       | Basic 3D math classes (vectors, matrices etc) and utilities (`equals`, `toRadians` etc)                        |
-| `@math.gl/polygon`      | Geospatial | Polygon math, including geospatial cutting etc.                                                                |
 | `@math.gl/culling`      | 3D         | Bounding volumes and intersection testing.                                                                     |
+| `@math.gl/polygon`      | Geospatial | Polygon math, including geospatial cutting etc.                                                                |
 | `@math.gl/web-mercator` | Geospatial | Spherical Earth surface model. Supports 3D Web Mercator projections.                                           |
 | `@math.gl/geospatial`   | Geospatial | Ellipsoidal Earth surface model, e.g for transformations between WGS84 cartesian and cartographic coordinates. |
 | `@math.gl/proj4`        | Geospatial | Conversion between coordinate reference systems.                                                               |
