@@ -1,6 +1,7 @@
 # Introduction
 
-math.gl is JavaScript math library focused on Geospatial and 3D use cases. math.gl is designed as a modular and composable toolbox, providing: 
+math.gl is JavaScript math library focused on Geospatial and 3D use cases. math.gl is designed as a modular and composable toolbox, providing:
+
 - a core module with classic vector and matrix classes,
 - a suite of optional modules implementing various aspects of geospatial and 3D math.
 
