@@ -1,42 +1,72 @@
 import test from 'tape-promise/tape';
 import {Geoid} from '@math.gl/geoid';
+import {openFile} from './utils/file-utils';
 
-test('exports', t => {
+const PGM_FILE_PATH = 'modules/geoid/test/data/egm84-30.pgm';
+
+test('geoid - exports', t => {
   t.assert(Geoid, 'Geoid is defined');
   t.end();
 });
 
-/*
-import {load} from '@loaders.gl/core';
-import {i3sObbTo3dTilesObb} from '../../../src/3d-tiles-converter/helpers/i3s-obb-to-3d-tiles-obb';
-import {default as PGMLoader} from '../../../src/pgm-loader';
+test('geoid - get height model info', async t => {
+  const data = await openFile(PGM_FILE_PATH);
 
-const PGM_FILE_PATH = '@loaders.gl/tile-converter/test/data/egm84-30.pgm';
+  // If data is null - now ways to open the file
+  if (data === null) {
+    t.fail(`Can't open file: ${PGM_FILE_PATH}`);
+    return;
+  }
 
-test('cli - Converters#converts I3S OBB to 3D-Tiles OBB', async t => {
-  const geoidHeightModel = await load(PGM_FILE_PATH, PGMLoader);
-  // Frankfurt coordinates
-  const tiles3DObb = i3sObbTo3dTilesObb(
-    {
-      center: [8.67694237417622, 50.109450651843204, 172.017822265625],
-      halfSize: [2168.2265625, 1815.9986572265625, 86.135009765625],
-      quaternion: [0.222949889965723, 0.2582940697615177, 0.7147233311767448, 0.610938663688116]
-    },
-    geoidHeightModel
-  );
-  t.deepEqual(tiles3DObb, [
-    4051761.1851145783,
-    618337.9522269954,
-    4870774.44126969,
-    -336.2714136867215,
-    2143.2431775188084,
-    6.702657086033947,
-    -1376.7648141647935,
-    -219.86692925233362,
-    1165.2083195250113,
-    54.63531987122361,
-    8.337884469955748,
-    66.07890687770515
-  ]);
+  const geoid = new Geoid({
+    cubic: false,
+    _width: 720,
+    _height: 361,
+    _rlonres: 2,
+    _rlatres: 2,
+    _offset: -108,
+    _scale: 0.003,
+    _swidth: 720,
+    _datastart: 416,
+    _maxerror: 1.546,
+    _rmserror: 0.07,
+    _description: 'WGS84 EGM84, 30-minute grid',
+    _datetime: '2009-08-29 18:45:02',
+    data
+  });
+
+  const center = [8.67694237417622, 50.109450651843204, 172.017822265625];
+  t.equal(geoid.getHeight(center[1], center[0]), 48.093804428091886);
+  t.end();
 });
-*/
+
+test('geoid - cubic approximation', async t => {
+  const data = await openFile(PGM_FILE_PATH);
+
+  // If data is null - now ways to open the file
+  if (data === null) {
+    t.fail(`Can't open file: ${PGM_FILE_PATH}`);
+    return;
+  }
+
+  const geoid = new Geoid({
+    cubic: true,
+    _width: 720,
+    _height: 361,
+    _rlonres: 2,
+    _rlatres: 2,
+    _offset: -108,
+    _scale: 0.003,
+    _swidth: 720,
+    _datastart: 416,
+    _maxerror: 1.546,
+    _rmserror: 0.07,
+    _description: 'WGS84 EGM84, 30-minute grid',
+    _datetime: '2009-08-29 18:45:02',
+    data
+  });
+
+  const center = [8.67694237417622, 50.109450651843204, 172.017822265625];
+  t.equal(geoid.getHeight(center[1], center[0]), 48.09178497292629);
+  t.end();
+});

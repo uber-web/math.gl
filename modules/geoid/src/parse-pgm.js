@@ -10,7 +10,7 @@ const ENDL = 10;
 const PIXEL_MAX = 65535;
 
 // eslint-disable-next-line
-export function parsePgm(data, options) {
+export function parsePGM(data, options) {
   const getline = _getLineGenerator(data);
   let currentLine = getline.next();
   if (currentLine.done || currentLine.value.line !== 'P5') {
