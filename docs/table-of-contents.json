@@ -56,6 +56,14 @@
           ]
         },
         {
+          "title": "@math.gl/geoid",
+          "entries": [
+            {"entry": "modules/geoid/docs"},
+            {"entry": "modules/geoid/docs/api-reference/geoid"},
+            {"entry": "modules/geoid/docs/api-reference/parse-pgm"}
+          ]
+        },
+        {
           "title": "@math.gl/geospatial",
           "entries": [
             {"entry": "modules/geospatial/docs"},

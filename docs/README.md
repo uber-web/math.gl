@@ -1,8 +1,11 @@
 # Introduction
 
-math.gl is JavaScript math library focused on Geospatial and 3D use cases. It is highly modular and composable toolbox, providing a core module with classic vector and matrix classes, and a suite of optional modules implementing various aspects of geospatial or 3D math.
+math.gl is JavaScript math library focused on Geospatial and 3D use cases. math.gl is designed as a modular and composable toolbox, providing:
 
-Note that in spite of its name, math.gl has no actual WebGL dependencies (e.g. it does not use WebGL or GPU to perform calculations), however its API is optimized for use with WebGL applications and GPU compute.
+- a core module with classic vector and matrix classes,
+- a suite of optional modules implementing various aspects of geospatial and 3D math.
+
+Note that in spite of its name, math.gl has no actual WebGL dependencies (e.g. it does not use WebGL or GPU to perform calculations). However, the math.gl API is optimized for use in WebGL applications and GPU compute use cases.
 
 ## Modules
 
@@ -15,6 +18,7 @@ math.gl is a toolbox that offers a range of modules for
 | `@math.gl/polygon`      | Geospatial | Polygon math, including geospatial cutting etc.                                                                |
 | `@math.gl/web-mercator` | Geospatial | Spherical Earth surface model. Supports 3D Web Mercator projections.                                           |
 | `@math.gl/geospatial`   | Geospatial | Ellipsoidal Earth surface model, e.g for transformations between WGS84 cartesian and cartographic coordinates. |
+| `@math.gl/geoid`        | Geospatial | Irregular Earth surface model (defined by Earth Gravity Model files).                                          |
 | `@math.gl/proj4`        | Geospatial | Conversion between coordinate reference systems.                                                               |
 | `@math.gl/sun`          | Geospatial | Calculate solar position and direction based on position and time.                                             |
 
