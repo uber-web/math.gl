@@ -3,79 +3,84 @@ const DOC_TABLE_OF_CONTENTS = require('../docs/table-of-contents.json');
 const ROOT_DIR = resolve('..');
 
 module.exports = {
-  plugins: [{
-    resolve: `gatsby-theme-ocular`, 
-    options: {
-      logLevel: 2,
-    
-      // Folders
-      DIR_NAME: __dirname,
-      ROOT_FOLDER: ROOT_DIR,
+  plugins: [
+    {
+      resolve: `gatsby-plugin-favicon`,
+      options: {
+        logo: './static/images/favicon.png'
+      }
+    },
+    {
+      resolve: `gatsby-theme-ocular`,
+      options: {
+        logLevel: 2,
 
-      DOCS: DOC_TABLE_OF_CONTENTS,
-      DOC_FOLDERS: [
-        resolve(ROOT_DIR, 'docs'),
-        resolve(ROOT_DIR, 'modules')
-      ],
-      SOURCE: [
-        resolve('./static'),
-        resolve('./src')
-      ],
-  
-      PROJECT_TYPE: 'github',
+        // Folders
+        DIR_NAME: __dirname,
+        ROOT_FOLDER: ROOT_DIR,
 
-      PROJECT_NAME: 'math.gl',
-      PROJECT_ORG: 'uber-web',
-      PROJECT_ORG_LOGO: 'images/uber-logo.png',
-      PROJECT_URL: 'https://github.com/uber-web/math.gl',
-      PROJECT_DESC: 'A collection of math modules for Geospatial and 3D/WebGL visualization use cases',
-    
-      HOME_PATH: '/',
+        DOCS: DOC_TABLE_OF_CONTENTS,
+        DOC_FOLDERS: [resolve(ROOT_DIR, 'docs'), resolve(ROOT_DIR, 'modules')],
+        SOURCE: [resolve('./static'), resolve('./src')],
 
-      INDEX_PAGE_URL: resolve(__dirname, './templates/index.jsx'),
+        PROJECT_TYPE: 'github',
 
-      GA_TRACKING_ID: 'UA-74374017-2',
-      // For showing star counts and contributors.
-      // Should be like btoa('YourUsername:YourKey') and should be readonly.
-      GITHUB_KEY: null,
+        PROJECT_NAME: 'math.gl',
+        PROJECT_ORG: 'uber-web',
+        PROJECT_ORG_LOGO: 'images/uber-logo.png',
+        PROJECT_URL: 'https://github.com/uber-web/math.gl',
+        PROJECT_DESC:
+          'A collection of math modules for Geospatial and 3D/WebGL visualization use cases',
 
-      PROJECTS: [
-        {
-          name: 'vis.gl',
-          url: 'https://vis.gl'
-        },
-        {
-          name: 'luma.gl',
-          url: 'https://luma.gl'
-        },
-        {
-          name: 'deck.gl',
-          url: 'https://deck.gl'
-        },
-        {
-          name: 'loaders.gl',
-          url: 'https://loaders.gl'
-        }
-      ], // Other linked projects
+        HOME_PATH: '/',
 
-      LINK_TO_GET_STARTED: '/docs',
+        INDEX_PAGE_URL: resolve(__dirname, './templates/index.jsx'),
 
-      ADDITIONAL_LINKS: [{
-        name: 'Blog',
-        href: 'http://medium.com/vis-gl',
-        index: 4
-      }],
+        GA_TRACKING_ID: 'UA-74374017-2',
+        // For showing star counts and contributors.
+        // Should be like btoa('YourUsername:YourKey') and should be readonly.
+        GITHUB_KEY: null,
 
-      STYLESHEETS: [''],
+        PROJECTS: [
+          {
+            name: 'vis.gl',
+            url: 'https://vis.gl'
+          },
+          {
+            name: 'luma.gl',
+            url: 'https://luma.gl'
+          },
+          {
+            name: 'deck.gl',
+            url: 'https://deck.gl'
+          },
+          {
+            name: 'loaders.gl',
+            url: 'https://loaders.gl'
+          }
+        ], // Other linked projects
 
-      EXAMPLES: [
-        {
-          title: 'Benchmark',
-          image: 'images/benchmark.png',
-          componentUrl: resolve(__dirname, '../examples/benchmarks/app.js'),
-          path: 'examples/benchmarks'
-        }
-      ]    
+        LINK_TO_GET_STARTED: '/docs/developer-guide/get-started',
+
+        ADDITIONAL_LINKS: [
+          {
+            name: 'Blog',
+            href: 'http://medium.com/vis-gl',
+            index: 4
+          }
+        ],
+
+        STYLESHEETS: [''],
+
+        EXAMPLES: [
+          {
+            title: 'Benchmark',
+            image: 'images/benchmark.png',
+            componentUrl: resolve(__dirname, '../examples/benchmarks/app.js'),
+            path: 'examples/benchmarks'
+          }
+        ]
+      }
     }
-  }],
+  ]
 };

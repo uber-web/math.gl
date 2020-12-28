@@ -6,7 +6,7 @@ This section introduces some basic concepts used when modeling the Earth. The te
 
 | Earth Model | Modeled By          | Description                                                                                                                                                                                      |
 | ----------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `Sphere`    | Web Mercator        | Earth is a sphere. Permits fast visualization. Gives up to 0.5% error when projecting ellipsoidal coordinates on a flat surface.                                                                 |
+| `Sphere`    | Web Mercator        | Earth is a sphere. Permits fast visualization. Mainly used in the web mercator projection to quickly project ellipsoidal coordinates on a flat surface, with less than 0.5% error.               |
 | `Ellipsoid` | WGS84               | Earth is a (rotationally) flattened ellipsoid centered at Earth's center of gravity. This model is normally used to express WGS coordinates.                                                     |
 | `Geoid`     | Earth Gravity Model | The shape that the ocean surface (extended through the continents) would take because of gravity and rotation of the Earth (ignoring winds, tides etc). It is a lumpy, roughly spherical object. |
 

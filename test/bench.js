@@ -35,7 +35,6 @@ suite
   .run()
   // when running in browser, notify test the driver that it's done
   .then(() => {
-    /* global window */
     // @ts-ignore TS2339: Property 'browserTestDriver_finish' does not exist
     if (typeof window !== 'undefined' && window.browserTestDriver_finish) {
       // @ts-ignore TS2339: Property 'browserTestDriver_finish' does not exist

@@ -18,7 +18,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-/* global window */
 const test = require('tape');
 
 // @ts-ignore TS2339: Property 'browserTestDriver_finish' does not exist on type 'Window & typeof globalThis'

@@ -12,15 +12,32 @@
     },
     {
       "title": "Developer Guide",
-      "entries": [
-        {"entry": "modules/core/docs/developer-guide/transformations"},
-        {"entry": "modules/core/docs/developer-guide/view-and-projection"},
-        {"entry": "modules/core/docs/developer-guide/debugging"},
-        {"entry": "modules/core/docs/developer-guide/floating-point"},
-        {"entry": "modules/core/docs/developer-guide/performance"},
-        {"entry": "modules/core/docs/developer-guide/external-frameworks"}, 
-        {"entry": "modules/web-mercator/docs/developer-guide/about-coordinates"},
-        {"entry": "modules/web-mercator/docs/developer-guide/offset-projection-accuracy"}
+      "chapters": [
+        {
+          "title": "Basics",
+          "entries": [
+            {"entry": "docs/developer-guide/get-started"},
+            {"entry": "modules/core/docs/developer-guide/debugging"},
+            {"entry": "modules/core/docs/developer-guide/floating-point"},
+            {"entry": "modules/core/docs/developer-guide/performance"},
+            {"entry": "modules/core/docs/developer-guide/external-frameworks"}
+          ]
+        },
+        {
+          "title": "3D Math",
+          "entries": [
+            {"entry": "modules/core/docs/developer-guide/transformations"},
+            {"entry": "modules/core/docs/developer-guide/view-and-projection"}
+          ]
+        },
+        {
+          "title": "Geospatial Math",
+          "entries": [
+            {"entry": "docs/developer-guide/geospatial-models"},
+            {"entry": "modules/web-mercator/docs/developer-guide/about-coordinates"},
+            {"entry": "modules/web-mercator/docs/developer-guide/offset-projection-accuracy"}
+          ]
+        }
       ]
     },
     {
