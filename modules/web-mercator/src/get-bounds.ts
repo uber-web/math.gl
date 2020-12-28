@@ -43,7 +43,7 @@ export default function getBounds(viewport: WebMercatorViewport, z: number = 0):
  * @param {Number} x - projected x in screen space
  * @param {Number} targetZ - the elevation of the point in meters
  */
-function unprojectOnFarPlane(viewport, x, targetZ) {
+function unprojectOnFarPlane(viewport: WebMercatorViewport, x: number, targetZ) {
   const {pixelUnprojectionMatrix} = viewport;
   const coord0 = transformVector(pixelUnprojectionMatrix, [x, 0, 1, 1]);
   const coord1 = transformVector(pixelUnprojectionMatrix, [x, viewport.height, 1, 1]);

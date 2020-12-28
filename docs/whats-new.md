@@ -25,6 +25,14 @@
   </tbody>
 </table>
 
+## v3.6 (In Development)
+
+Target Release Date: Q4, 2021
+
+**`@math.gl/types` (NEW)
+
+- New module that exports a couple of typescript types that simplify handling of e.g. numeric arrays.
+
 ## v3.5
 
 Release Date: July 14, 2021
