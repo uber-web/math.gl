@@ -1,5 +1,9 @@
 # Ellipsoid
 
+<p class="badges">
+  <img src="https://img.shields.io/badge/From-v3.0-blue.svg?style=flat-square" alt="From-v3.0" />
+</p>
+
 A quadratic surface defined in Cartesian coordinates by the equation `(x / a)^2 + (y / b)^2 + (z / c)^2 = 1`. Primarily used to represent the shape of planetary bodies.
 
 The main use of this class is to convert between the "cartesian" and "cartographic" coordinate systems.

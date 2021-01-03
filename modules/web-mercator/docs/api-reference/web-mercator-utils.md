@@ -1,5 +1,9 @@
 # Web Mercator Utility Functions
 
+<p class="badges">
+  <img src="https://img.shields.io/badge/From-v3.1-blue.svg?style=flat-square" alt="From-v3.1" />
+</p>
+
 ### `lngLatToWorld(lngLat)`
 
 Project a coordinate on sphere onto the 512x512 Web Mercator plane.

@@ -9,20 +9,27 @@ Note that in spite of its name, math.gl has no actual WebGL dependencies (e.g. i
 
 ## Modules
 
-math.gl is a toolbox that offers a range of modules for
+math.gl is a toolbox that offers a suite of composable modules.
+
+3D math is supported by
+
+| Module             | Category | Description                                                                             |
+| ------------------ | -------- | --------------------------------------------------------------------------------------- |
+| `@math.gl/core`    | Core     | Basic 3D math classes (vectors, matrices etc) and utilities (`equals`, `toRadians` etc) |
+| `@math.gl/culling` | 3D       | Bounding volumes and intersection testing.                                              |
+
+[Geospatial calculations](docs/user-guide/geospatial-models) are supported by
 
 | Module                  | Category   | Description                                                                                                    |
 | ----------------------- | ---------- | -------------------------------------------------------------------------------------------------------------- |
-| `@math.gl/core`         | Core       | Basic 3D math classes (vectors, matrices etc) and utilities (`equals`, `toRadians` etc)                        |
-| `@math.gl/culling`      | 3D         | Bounding volumes and intersection testing.                                                                     |
-| `@math.gl/polygon`      | Geospatial | Polygon math, including geospatial cutting etc.                                                                |
-| `@math.gl/web-mercator` | Geospatial | Spherical Earth surface model. Supports 3D Web Mercator projections.                                           |
 | `@math.gl/geospatial`   | Geospatial | Ellipsoidal Earth surface model, e.g for transformations between WGS84 cartesian and cartographic coordinates. |
 | `@math.gl/geoid`        | Geospatial | Irregular Earth surface model (defined by Earth Gravity Model files).                                          |
+| `@math.gl/polygon`      | Geospatial | Polygon math, including geospatial cutting etc.                                                                |
 | `@math.gl/proj4`        | Geospatial | Conversion between coordinate reference systems.                                                               |
 | `@math.gl/sun`          | Geospatial | Calculate solar position and direction based on position and time.                                             |
+| `@math.gl/web-mercator` | Geospatial | Spherical Earth surface model. Supports 3D Web Mercator projections.                                           |
 
-In addition, math.gl provides some legacy modules that are not recommended for new code, but are still provided to avoid breaking older applications:
+In addition, math.gl provides a few legacy modules. These are not recommended for new code, but are still provided to avoid breaking older applications.
 
 | Legacy Module               | Description                                                                                                                                                                                                                                                            |
 | --------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

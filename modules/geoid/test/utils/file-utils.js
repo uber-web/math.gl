@@ -1,4 +1,3 @@
-/* global fetch  */
 import {promises as fs} from 'fs';
 
 export async function openFile(filePath) {

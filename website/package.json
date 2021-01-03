@@ -15,16 +15,17 @@
     "deploy": "NODE_DEBUG=gh-pages gh-pages -d public"
   },
   "dependencies": {
+    "@probe.gl/react-bench": "^3.3.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-map-gl": "^5.1.5",
-    "styled-components": "^4.4.1",
-    "@probe.gl/react-bench": "^3.3.0"
+    "styled-components": "^4.4.1"
   },
   "devDependencies": {
     "gatsby": "^2.22.17",
+    "gatsby-plugin-favicon": "^3.1.6",
     "gatsby-plugin-no-sourcemaps": "^2.1.2",
-    "gatsby-theme-ocular": "^1.2.1",
+    "gatsby-theme-ocular": "^1.2.4",
     "gh-pages": "^2.2.0"
   }
 }

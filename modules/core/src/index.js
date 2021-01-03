@@ -63,7 +63,6 @@ export {default as Euler} from './classes/euler';
 
 export {default as assert} from './lib/assert';
 
-/* global self, window, global */
 const globals = {
   // eslint-disable-next-line no-restricted-globals
   self: typeof self !== 'undefined' && self,

@@ -1,10 +1,15 @@
-# @math.gl/geoid
+# Overview
 
 <p class="badges">
   <img src="https://img.shields.io/badge/From-v3.4-blue.svg?style=flat-square" alt="From-v3.4" />
 </p>
 
 The `@math.gl/geoid` module provides support for irregular Earth models defined by earth gravity model files.
+
+![Earth Gravitational Model 1996](./images/Earth_Gravitational_Model_1996.png)
+
+<center>A view of the Earth's geoid, as provided by EGM96 (Earth Gravitational Model 1996). <br/>
+Attribution: From <a href="https://en.wikipedia.org/wiki/Earth_Gravitational_Model#/media/File:Earth_Gravitational_Model_1996.png">wikipedia</a>, Public Domain.</center>
 
 ## Background
 

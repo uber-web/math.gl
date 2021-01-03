@@ -1,14 +1,29 @@
 # What's New
 
-## v3.4 (In Development)
+<table style="border: 0;" align="center">
+  <tbody>
+    <tr>
+      <td>
+        <img style="max-height:200px" src="https://raw.github.com/uber-web/math.gl/master/modules/geoid/docs/images/Earth_Gravitational_Model_1996.png" />
+        <p><i>EGM + <a target="_blank" href="https://math.gl/modules/geoid/docs"><b>Geoid</b></a>.</i> (v3.4)</p>
+      </td>
+      <td>
+        <img style="max-height:200px" src="https://raw.github.com/uber-web/math.gl/master/modules/geospatial/docs/images/WGS84_mean_Earth_radius.svg" />
+        <p><i>WGS84 + <a target="_blank" href="https://math.gl/modules/geoid/docs"><b>Ellipsoid</b></a>.</i> (v3.0)</p>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
-Release Date: TBD. v3.4 is still in development. Alpha releases are available.
+## v3.4 alpha
+
+Release Date: TBD. v3.4 is still in development. Alpha releases are available on npm.
 
 **`@math.gl/geoid`** - New module
 
-- Support for irregular (non-ellipsoidal) earth gravity models.
-- New `Geoid` class calculates height offset from ellipsoidal model.
-- Support for parsing PGM encoded earth gravity model files
+- Support for [geoid](https://en.wikipedia.org/wiki/Geoid)-based [earth gravity models](https://en.wikipedia.org/wiki/Earth_Gravitational_Model).
+- New `Geoid` class calculates the height offset (aka "undulation") from the pure ellipsoid for a given lng/lat (using sherical harmonics).
+- `Geoid` instances can be initialized with PGM-encoded earth gravity model coefficient files from standard sources.
 
 **`@math.gl/polygon`** - Updates
 
@@ -22,7 +37,7 @@ Release Date: Oct 9, 2020
 
 **`@math.gl/proj4`** - New module
 
-A new module supporting conversion between a wide range of geospatial coordinate reference systems specified e.g. using the OGC WKT-CRS specification.
+- A new module supporting conversion between a wide range of geospatial coordinate reference systems specified e.g. using the OGC WKT-CRS specification.
 
 ## v3.2
 
@@ -30,11 +45,11 @@ Release Date: July 18, 2020
 
 **Typescript**
 
-Typescript type definitions (`.d.ts` files) are now exported for all math.gl modules.
+- Typescript type definitions (`.d.ts` files) are now exported for all math.gl modules.
 
 **`@math.gl/polygon`** - New module
 
-A new module offering geospatial polygon clipping functions.
+- A new module offering geospatial polygon clipping functions.
 
 ## v3.1
 
