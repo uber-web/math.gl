@@ -8,6 +8,7 @@
   "scripts": {
     "start": "yarn clean && yarn develop",
     "build": "yarn clean-examples && yarn clean && gatsby build",
+    "build-fast": "yarn clean-examples && gatsby build",
     "clean": "rm -rf ./.cache ./public",
     "clean-examples": "find ../examples -name node_modules -exec rm -r {} \\; || true",
     "develop": "yarn clean-examples && gatsby develop",

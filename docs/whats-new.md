@@ -4,12 +4,22 @@
   <tbody>
     <tr>
       <td>
-        <img style="max-height:200px" src="https://raw.github.com/uber-web/math.gl/master/modules/geoid/docs/images/Earth_Gravitational_Model_1996.png" />
-        <p><i>EGM + <a target="_blank" href="https://math.gl/modules/geoid/docs"><b>Geoid</b></a>.</i> (v3.4)</p>
+        <center>
+          <img style="height:200px" src="https://raw.github.com/uber-web/math.gl/master/modules/geoid/docs/images/Earth_Gravitational_Model_1996.png" />
+          <p><b>v3.4</b> <i><a target="_blank" href="https://math.gl/modules/geoid/docs">Geoid (Earth Gravity Model)</a></i></p>
+        </center>
       </td>
       <td>
-        <img style="max-height:200px" src="https://raw.github.com/uber-web/math.gl/master/modules/geospatial/docs/images/WGS84_mean_Earth_radius.svg" />
-        <p><i>WGS84 + <a target="_blank" href="https://math.gl/modules/geoid/docs"><b>Ellipsoid</b></a>.</i> (v3.0)</p>
+        <center>
+          <img style="height:200px" src="https://raw.github.com/uber-web/math.gl/master/docs/images/ts-logo-256.png" />
+          <p><b>v3.2</b> <i>TypeScript</i></p>
+        </center>
+      </td>
+      <td>
+        <center>
+          <img style="height:200px; max-width:200px;" src="https://raw.github.com/uber-web/math.gl/master/modules/geospatial/docs/images/WGS84_mean_Earth_radius.svg" />
+          <p><b>v3.0</b> <i><a target="_blank" href="https://math.gl/modules/geospatial/docs">WGS84 & Ellipsoid</a></i></p>
+        </center>
       </td>
     </tr>
   </tbody>
