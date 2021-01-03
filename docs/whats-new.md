@@ -6,9 +6,9 @@ Release Date: TBD. v3.4 is still in development. Alpha releases are available.
 
 **`@math.gl/geoid`** - New module
 
-- Support for irregular (non-ellipsoidal) earth gravity models.
-- New `Geoid` class calculates height offset from ellipsoidal model.
-- Support for parsing PGM encoded earth gravity model files
+- Support for [geoid](https://en.wikipedia.org/wiki/Geoid)-based [earth gravity models](https://en.wikipedia.org/wiki/Earth_Gravitational_Model).
+- New `Geoid` class calculates the height offset (aka "undulation") from the pure ellipsoid for a given lng/lat (using sherical harmonics).
+- `Geoid` instances can be initialized with PGM-encoded earth gravity model coefficient files from standard sources.
 
 **`@math.gl/polygon`** - Updates
 
@@ -22,7 +22,7 @@ Release Date: Oct 9, 2020
 
 **`@math.gl/proj4`** - New module
 
-A new module supporting conversion between a wide range of geospatial coordinate reference systems specified e.g. using the OGC WKT-CRS specification.
+- A new module supporting conversion between a wide range of geospatial coordinate reference systems specified e.g. using the OGC WKT-CRS specification.
 
 ## v3.2
 
@@ -30,11 +30,11 @@ Release Date: July 18, 2020
 
 **Typescript**
 
-Typescript type definitions (`.d.ts` files) are now exported for all math.gl modules.
+- Typescript type definitions (`.d.ts` files) are now exported for all math.gl modules.
 
 **`@math.gl/polygon`** - New module
 
-A new module offering geospatial polygon clipping functions.
+- A new module offering geospatial polygon clipping functions.
 
 ## v3.1
 

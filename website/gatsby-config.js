@@ -32,7 +32,7 @@ module.exports = {
         PROJECT_DESC:
           'A collection of math modules for Geospatial and 3D/WebGL visualization use cases',
 
-        HOME_PATH: '/',
+        HOME_PATH: '',
 
         INDEX_PAGE_URL: resolve(__dirname, './templates/index.jsx'),
 
