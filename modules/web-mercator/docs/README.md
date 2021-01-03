@@ -1,5 +1,9 @@
 # Overview
 
+<p class="badges">
+  <img src="https://img.shields.io/badge/From-v3.1-blue.svg?style=flat-square" alt="From-v3.1" />
+</p>
+
 > The `@math.gl/web-mercator` module is the new home for the now archived[`viewport-mercator-project`](https://github.com/uber-common/viewport-mercator-project/blob/master/docs/whats-new.md) repository, as of Oct 1, 2019.
 
 The `@math.gl/web-mercator` module offers projection and camera utilities supporting the spherical Web Mercator Projection. At its core, this is a utility for converting to and from map coordinates (i.e. latitude, longitude) to screen coordinates and back.

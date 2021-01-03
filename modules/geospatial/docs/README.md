@@ -1,13 +1,18 @@
 # Overview
 
+<p class="badges">
+  <img src="https://img.shields.io/badge/From-v3.0-blue.svg?style=flat-square" alt="From-v3.0" />
+</p>
+
 The `@math.gl/geospatial` module provides support for ellipsoidal math, focusing on geospatial use cases.
 
-It provides classes and utilities to facilitate working with the major ellipsoidal geospatial coordinate systems and projections used with computer maps, primarily:
+It provides classes and utilities to facilitate working with ellipsoidal geospatial coordinate systems and projections used with computer maps, primarily [WGS84](https://en.wikipedia.org/wiki/World_Geodetic_System) (World Geodetic System) coordinates.
 
-- [WGS84](https://en.wikipedia.org/wiki/World_Geodetic_System) (World Geodetic System) coordinates.
-- [Web Mercator Projection](https://en.wikipedia.org/wiki/Web_Mercator_projection)
+![WGS84: The 1984 World Geodetic System Ellipsoid](./images/WGS84_mean_Earth_radius.svg)
+<center>WGS84: The 1984 World Geodetic System Ellipsoid. <br/>
+Attribution: From <a href="https://en.wikipedia.org/wiki/World_Geodetic_System#/media/File:WGS84_mean_Earth_radius.svg">wikipedia</a>, Creative Commons 4.0.</center>
 
-## Ellipsoid and WGS84
+## Classes
 
 | Class             | Description                                                     |
 | ----------------- | --------------------------------------------------------------- |

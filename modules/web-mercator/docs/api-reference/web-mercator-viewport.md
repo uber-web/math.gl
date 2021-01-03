@@ -1,5 +1,9 @@
 # WebMercatorViewport
 
+<p class="badges">
+  <img src="https://img.shields.io/badge/From-v3.1-blue.svg?style=flat-square" alt="From-v3.1" />
+</p>
+
 The `WebMercatorViewport` class takes map camera states (`latitude`, `longitude`, `zoom`, `pitch`, `bearing` etc.),
 and performs projections between world and screen coordinates.
 
