@@ -1,4 +1,4 @@
-# @math.gl/culling
+# Overview
 
 [math.gl](https://math.gl/docs) is a suite of math modules for 3D applications.
 
