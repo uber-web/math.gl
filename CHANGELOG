@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v3.4.0 - Jan 7, 2020
+
+- chore: bump babel/runtime version to fix mjs issue (#193)
+- chore: Cleanup READMEs and eslint defs (#192)
+- feat: geoid module (#191)
+
 ## v3.4.0-alpha.1 - Dec 14, 2020
 
 - [Polygon] Add support for flat arrays for polygons (#186)
