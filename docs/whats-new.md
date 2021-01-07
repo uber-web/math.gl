@@ -25,9 +25,9 @@
   </tbody>
 </table>
 
-## v3.4 alpha
+## v3.4
 
-Release Date: TBD. v3.4 is still in development. Alpha releases are available on npm.
+Release Date: Jan 7, 2020
 
 **`@math.gl/geoid`** - New module
 
@@ -35,7 +35,7 @@ Release Date: TBD. v3.4 is still in development. Alpha releases are available on
 - New `Geoid` class calculates the height offset (aka "undulation") from the pure ellipsoid for a given lng/lat (using sherical harmonics).
 - `Geoid` instances can be initialized with PGM-encoded earth gravity model coefficient files from standard sources.
 
-**`@math.gl/polygon`** - Updates
+**`@math.gl/polygon`**
 
 - Support for flat arrays (e.g. polygons stored in typed arrays)
 - Support for calling polygon utilities directly on arrays, without a `Polygon` instance.

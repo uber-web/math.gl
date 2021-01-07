@@ -23,16 +23,16 @@ export default class IndexPage extends React.Component {
       <Home HeroExample={HeroExample} >
         <ul>
           <Bullet>
-            Geospatial coordinate system support, solar calculations, etc.
+            Toolbox of 3D math modules
           </Bullet>
           <Bullet>
-            3D math modules for geometry primitives, processing, culling etc.
+            Matrices and vectors, bounding boxes, frustum culling etc.
           </Bullet>
           <Bullet>
-            Typescript prevents incorrect API usage, run-time checks pinpoint bad data.
+            Geospatial coordinate reprojection, gravity models, solar calculations, etc.
           </Bullet>
           <Bullet>
-            <code>Vector3</code>, <code>Matrix4</code> etc inherit built-in <code>Array</code> class for maximal interoperability.
+            TypeScript ensures correct API usage. Run-time checks detect bad data.
           </Bullet>
         </ul>
       </Home>
