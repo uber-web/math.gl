@@ -27,7 +27,7 @@
     "src"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.0.0"
+    "@babel/runtime": "^7.12.0"
   },
   "gitHead": "58260e0261adb660955a22ff495e479f7b6cd347"
 }

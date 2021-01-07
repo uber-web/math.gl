@@ -27,7 +27,7 @@
     "src"
   ],
   "dependencies": {
-    "@babel/runtime": "^7.0.0",
+    "@babel/runtime": "^7.12.0",
     "gl-matrix": "^3.0.0"
   },
   "devDependencies": {
