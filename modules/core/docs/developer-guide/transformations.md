@@ -110,4 +110,10 @@ const v = new Vector3([1, 2, 3]).rotateZ({radians: ..., origin: [1, 1, 0]});
 
 The ability to compose transformations naturally leads to the possibility of _decomposing_ a composite transformations into constituent parts. This is possible with certain caveats.
 
-TBA..
+Sepcifically, the math.gl `Matrix4` object exposes the `getScale`, `getTranslation` and `getRotation` (or `getRotationMatrix3`) methods for this purpose:
+
+```js
+const transform = new Matrix4().translate([10, 10, 0]).rotateX(Math.PI / 4).scale(5)
+transform.getScale() // [ 5, 5, 5 ]
+transform.getTranslation() // [ 10, 10, 0 ]
+```
