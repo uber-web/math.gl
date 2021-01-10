@@ -318,6 +318,14 @@ Returns rotation matrix (4 \* 4).
 
 Returns rotation matrix (3 \* 3).
 
+### getTranslation([result : Number[3]]) : Number[3]
+
+Returns translation vector (1 \* 3).
+
+### getScale([result : Number[3]]) : Number[3]
+
+Returns non-uniform scale vector (1 \* 3).
+
 ## Remarks
 
 - All transforms are effectively "right multiplied" onto the matrix (meaning that during transform they will be applied in opposite order).
