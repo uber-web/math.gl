@@ -59,25 +59,25 @@ Many of the most commonly used methods are inherited from [`MathArray`](./docs/a
 
 Note that `Matrix3` is a subclass of the built in JavaScript `Array` and can thus e.g. be supplied as a parameter to any function expecting an `Array`.
 
-### constructor
+### constructor()
 
 Creates an empty `Matrix3`
 
 `new Matrix3()`
 
-### identity
+### identity(): this
 
 Sets the matrix to the multiplicative identity matrix.
 
 `matrix3.identity()`
 
-### set
+### set(...number): this
 
 Sets the elements of the matrix.
 
 `matrix3.set(m00, m01, m02, m10, m11, m12, m20, m21, m22)`
 
-### fromQuaternion
+### fromQuaternion(q: Quaternion): this
 
 Sets the matrix to a transformation corresponding to the rotations represented by the given quaternion.
 
@@ -85,7 +85,7 @@ Sets the matrix to a transformation corresponding to the rotations represented b
 
 - `quaternion` (`Quaternion`) - the quaternion to create matrix from
 
-### determinant()
+### determinant(): number
 
 Returns the determinant of the matrix (does not modify the matrix).
 
@@ -96,7 +96,7 @@ Returns (`Number`) - the determinant
 - If the determinant is zero, the matrix is not invertible.
 - Determinant calculation is somewhat expensive.
 
-### transpose
+### transpose(): this
 
 Sets this matrix to its transpose matrix.
 
@@ -104,7 +104,7 @@ Sets this matrix to its transpose matrix.
 
 - The transpose matrix mirrors the original matrix elements in the diagonal.
 
-### invert
+### invert(): this
 
 Sets this matrix to its inverse matrix.
 
@@ -112,7 +112,7 @@ Sets this matrix to its inverse matrix.
 
 - The inverse matrix times its original matrix is an identity matrix of the same size.
 
-### multiplyLeft
+### multiplyLeft(matrix: number[9]): this
 
 Multiplies in another matrix from the left
 
@@ -120,19 +120,19 @@ Multiplies in another matrix from the left
 
 - When using `Matrix3` to transform vectors, the vectors are multiplied in from the right. This means that the multiplying in a matrix from the left will cause it to be applied last during transformation (unless additional matrices are multiplied in from the left of course).
 
-### multiplyRight
+### multiplyRight(matrix: number[9]): this
 
 `matrix3.multiplyRight(matrix3)`
 
 - When using `Matrix3` to transform vectors, the vectors are multiplied in from the right. This means that the multiplying in a matrix from the left will cause it to be applied last during transformation (unless additional matrices are multiplied in from the left of course).
 
-### rotate
+### rotate(): this
 
 Adds a rotation by the given angle. Equivalent to right multiplying the new transform into the matrix but more performant.
 
 `matrix3.rotate(radians)`
 
-### scale
+### scale(factor: number[2]): this
 
 Adds a scaling transform, each axis can be scaled independently.
 
@@ -151,7 +151,7 @@ Equivalent to right multiplying the new transform into the matrix but more perfo
 - Scale with `-1` will flip the coordinate system in that axis.
 - Scale with `0` will drop that component.
 
-### translate
+### translate(offset: number[2]): this
 
 Adds a translation to the matrix.
 
@@ -164,7 +164,7 @@ Equivalent to right multiplying the new transform into the matrix but more perfo
 
 During vector transformation the given translation values are added to each component of the vector being transformed.
 
-### transformVector
+### transformVector()
 
 `transformVector(vector, out)`
 

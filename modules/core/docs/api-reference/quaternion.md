@@ -40,31 +40,31 @@ Note that `Quaternion` is a subclass of the built in JavaScript `Array` and can 
 
 `constructor(x = 0, y = 0, z = 0, w = 1)`
 
-### fromMatrix3
+### fromMatrix3(m: number[9]): this
 
 Creates a quaternion from the given 3x3 rotation matrix. NOTE: The resultant quaternion is not normalized, so you should be sure to renormalize the quaternion yourself where necessary.
 
 `fromMatrix3(m)`
 
-### fromValues
+### fromValues(x: number, y: number, z: number, w): number: this
 
 Creates a new quat initialized with the given values
 
 `fromValues(x, y, z, w)`
 
-### identity
+### identity(): this
 
 Set a quat to the identity quaternion
 
 `identity()`
 
-### length
+### length(): number
 
 Calculates the length of a quaternion
 
 `length()`
 
-### squaredLength
+### squaredLength(): number
 
 Calculates the squared length of a quaternion
 
@@ -72,7 +72,7 @@ Calculates the squared length of a quaternion
 
 @returnNumber}
 
-### dot
+### dot(): number
 
 Calculates the dot product of two quat's
 
@@ -112,7 +112,7 @@ Calculates the conjugate of a quat If the quaternion is normalized, this functio
 
 `quaternion.conjugate()`
 
-### invert
+### invert(): this
 
 Calculates the inverse of a quat
 

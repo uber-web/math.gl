@@ -49,82 +49,82 @@ Many of the most commonly used `Vector2` methods are inherited from [`MathArray`
 
 Note that `Vector2` is a subclass of the built in JavaScript `Array` and can thus e.g. be supplied as a parameter to any function expecting an `Array`.
 
-### constructor(x? : Number, y? : Number, z? : Number, w? : Number)
+### constructor(x?: number, y?: number, z?: number, w?: number)
 
 `new Vector4(x = 0, y = 0, z = 0, w = 0)`
 
 Creates a new, empty `Vector4`
 
-### set(x? : Number, y? : Number, z? : Number, w? : Number) : Vector4
+### set(x?: number, y?: number, z?: number, w?: number): thos
 
 Updates a `Vector4`
 
-### distance(vector : Number[4]) : Vector4
+### distance(vector: number[4]): number
 
 Returns the distance to the specifed Vector.
 
-### distanceSquared(vector : Number[4]) : Vector4
+### distanceSquared(vector: number[4]): number
 
 Returns the squared distance to the specifed Vector. Fast to calculate than distance and often sufficient for e.g. sorting etc.
 
-### dot(vector : Number[4]) : Number
+### dot(vector: number[4]): number
 
 Calculates the dot product with the supplied `vector`.
 
-### add(vector : Number[4]) : Vector4
+### add(vector: number[4]): Vector4
 
 `add(...vectors)`
 
-### subtract(vector : Number[4]) : Vector4
+### subtract(vector: number[4]): Vector4
 
 `subtract(...vectors)`
 
-### multiply(vector : Number[4]) : Vector4
+### multiply(vector: number[4]): Vector4
 
 `multiply(...vectors)`
 
-### divide(vector : Number[4]) : Vector4
+### divide(vector: number[4]): Vector4
 
 `divide(...vectors)`
 
-### scale(vector : Number[4]) : Vector4
+### scale(vector: number[4]): Vector4
 
 `scale(scale)`
 
-### negate() : Vector4
+### negate(): this
 
 Negates each element in the vector.
 
-### inverse() : Vector4
+### inverse(): this
 
 Inverses (`x = 1/x`) each element in the vector.
 
-### normalize() : Vector4
+### normalize(): this
 
 Normalizes the vector. Same direction but `len()` will now return `1`.
 
-### lerp(vector : Number[4], coefficient : Number) : Vector4
+### lerp(vector: number[4], coefficient: number): this
 
 Linearly interpolates between the vectors current value and the supplied `vector`.
 
-### transform(matrix4 : Number[16]) : Vector4
+### transform(matrix4: number[16]): Vector4
 
 Equivalent to `transformByMatrix4`.
 
-### transformByMatrix4(matrix4 : Number[16]) : Vector4
+### transformByMatrix4(matrix4: number[16]): Vector4
 
 Transforms a vector by the provided 4x4 matrix.
 
 Note: Scales the resulting vector to ensure that `w`, if non-zero, is set to `1`.
 
-### transformByMatrix3(matrix3 : Number[9]) : Vector4
+### transformByMatrix3(matrix3: number[9]): Vector4
 
 Transforms the vector's `x`, `y` and `z` values by the provided 3x3 matrix.
 
-### transformByMatrix2(matrix2 : Number[4]) : Vector4
+### transformByMatrix2(matrix2: number[4]): Vector4
 
 Transform the vector's `x` and `y` values by the provided 2x2 matrix.
 
-### transformByQuaternion(quaternion : Number[4]) : Vector4
+### transformByQuaternion(quaternion: number[4]): Vector4
 
 Transform the vector by the provided `quaternion`.

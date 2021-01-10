@@ -13,23 +13,12 @@ The most general transform is a 4x4 matrix. See the article on [homogeneous coor
 Most math.gl classes offer a `transform` method that accepts matrices and quaternions.
 
 ```js
+// prettier-ignore
 const transformedVector1 = new Vector4(1, 0, 0, 1).transform([
-  1,
-  0,
-  0,
-  0,
-  0,
-  1,
-  0,
-  0,
-  0,
-  0,
-  1,
-  0,
-  0,
-  0,
-  0,
-  1
+  1, 0, 0, 0,
+  0, 1, 0, 0,
+  0, 0, 1, 0,
+  0, 0, 0, 1
 ]);
 // or
 const transformedVector2 = new Vector4(1, 0, 0, 1).transform(
@@ -108,12 +97,15 @@ const v = new Vector3([1, 2, 3]).rotateZ({radians: ..., origin: [1, 1, 0]});
 
 ## Decomposing Transformations
 
-The ability to compose transformations naturally leads to the possibility of _decomposing_ a composite transformations into constituent parts. This is possible with certain caveats.
+The ability to compose transformations naturally leads to the possibility of _decomposing_ a composite transformations into its constituent parts. This is possible, with certain caveats (not all matrices are directly decomposable into rotation, translation and scale. Shear is currently not handled).
 
-Sepcifically, the math.gl `Matrix4` object exposes the `getScale`, `getTranslation` and `getRotation` (or `getRotationMatrix3`) methods for this purpose:
+Sepcifically, the math.gl `Matrix4` object exposes the `getScale`, `getTranslation` and `getRotation` (or `getRotationMatrix3`) methods are provided for this purpose:
 
 ```js
-const transform = new Matrix4().translate([10, 10, 0]).rotateX(Math.PI / 4).scale(5)
-transform.getScale() // [ 5, 5, 5 ]
-transform.getTranslation() // [ 10, 10, 0 ]
+const transform = new Matrix4()
+  .translate([10, 10, 0])
+  .rotateX(Math.PI / 4)
+  .scale(5);
+transform.getScale(); // [5, 5, 5]
+transform.getTranslation(); // [ 10, 10, 0]
 ```
