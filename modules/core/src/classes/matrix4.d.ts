@@ -72,7 +72,7 @@ export default class Matrix4 extends Matrix<Matrix4> {
   }): Matrix4;
 
   // Generates a look-at matrix with the given eye position, focal point, and up axis
-  lookAt(eye: number[], center: number[], up: number[]): Matrix4;
+  lookAt(eye: number[], center?: number[], up?: number[]): Matrix4;
   lookAt(args: {eye: number[]; center?: number[]; up?: number[]}): Matrix4;
 
   // Generates a orthogonal projection matrix with the given bounds
