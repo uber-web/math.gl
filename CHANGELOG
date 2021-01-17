@@ -1,6 +1,10 @@
 # CHANGELOG
 
-## v3.4.0 - Jan 7, 2020
+## v3.4.2 - Jan 17, 2021
+
+- Fix Matrix4.lookAt() types (#197)
+
+## v3.4.0 - Jan 7, 2021
 
 - chore: bump babel/runtime version to fix mjs issue (#193)
 - chore: Cleanup READMEs and eslint defs (#192)
