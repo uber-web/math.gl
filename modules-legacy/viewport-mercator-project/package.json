@@ -18,6 +18,7 @@
     "type": "git",
     "url": "https://github.com/uber-web/math.gl.git"
   },
+  "types": "index.d.ts",
   "main": "index.js",
   "module": "module.js",
   "dependencies": {
