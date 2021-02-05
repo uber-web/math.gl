@@ -18,13 +18,9 @@
     "type": "git",
     "url": "https://github.com/uber-web/math.gl.git"
   },
-  "files": [
-    "index.js",
-    "module.js"
-  ],
   "main": "index.js",
   "module": "module.js",
   "dependencies": {
-    "@math.gl/web-mercator": "^3.1.3"
+    "@math.gl/web-mercator": "^3.2.0"
   }
 }
