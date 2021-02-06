@@ -110,12 +110,16 @@ export default class Matrix4 extends Matrix<Matrix4> {
   // Decomposition
   // Extracts the non-uniform scale assuming the matrix is an affine transformation.
   // The scales are the "lengths" of the column vectors in the upper-left 3x3 matrix.
-  getScale(result?: number[]): Matrix4;
+  getScale(): number[];
+  getScale<T extends number[]>(result: T): T;
   // Gets the translation portion, assuming the matrix is a affine transformation matrix.
-  getTranslation(result?: number[]): Matrix4;
+  getTranslation(): number[];
+  getTranslation<T extends number[]>(result: T): T;
   // Gets upper left 3x3 pure rotation matrix (non-scaling), assume affine transformation matrix
-  getRotation(result?: number[], scaleResult?: number[]);
-  getRotationMatrix3(result?: number[], scaleResult?: number[]);
+  getRotation(): number[];
+  getRotation<T extends number[]>(result: T, scaleResult?: number[]): T;
+  getRotationMatrix3(): number[];
+  getRotationMatrix3<T extends number[]>(result: T, scaleResult?: number[]): T;
 
   // Modifiers
   transpose(): Matrix4;
