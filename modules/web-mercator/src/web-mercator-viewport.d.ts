@@ -146,7 +146,7 @@ export default class WebMercatorViewport {
   getMapCenterByLngLatPosition({lngLat, pos}: {lngLat: number[], pos: number[]}): number[];
 
   /** @deprecated Legacy method name */
-  getLocationAtPoint({lngLat, pos}): number[];
+  getLocationAtPoint({lngLat, pos}: {lngLat: number[], pos: number[]}): number[];
 
   /**
    * Returns a new viewport that fit around the given rectangle.
