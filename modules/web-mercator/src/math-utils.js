@@ -20,3 +20,6 @@ export function mod(value, divisor) {
 export function lerp(start, end, step) {
   return step * end + (1 - step) * start;
 }
+
+// Handle missing log2 in IE 11
+export const log2 = Math.log2 || function(x){ return Math.log(x) * Math.LOG2E; };

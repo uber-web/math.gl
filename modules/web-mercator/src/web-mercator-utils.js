@@ -1,6 +1,6 @@
 // TODO - THE UTILITIES IN THIS FILE SHOULD BE IMPORTED FROM WEB-MERCATOR-VIEWPORT MODULE
 
-import {createMat4, transformVector} from './math-utils';
+import {createMat4, transformVector, log2} from './math-utils';
 
 import * as mat4 from 'gl-matrix/mat4';
 import * as vec2 from 'gl-matrix/vec2';
@@ -25,7 +25,7 @@ export function zoomToScale(zoom) {
 }
 
 export function scaleToZoom(scale) {
-  return Math.log2(scale);
+  return log2(scale);
 }
 
 /**
