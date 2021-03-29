@@ -1,6 +1,7 @@
 // @ts-nocheck TODO padding
 import WebMercatorViewport from './web-mercator-viewport';
 import assert from './assert';
+import {log2} from './math-utils';
 
 // Returns map settings {latitude, longitude, zoom}
 // that will contain the provided corners within the provided width.
@@ -71,7 +72,7 @@ export default function fitBounds({
   const center = [(se[0] + nw[0]) / 2 + offsetX, (se[1] + nw[1]) / 2 + offsetY];
 
   const centerLngLat = viewport.unproject(center);
-  const zoom = Math.min(maxZoom, viewport.zoom + Math.log2(Math.abs(Math.min(scaleX, scaleY))));
+  const zoom = Math.min(maxZoom, viewport.zoom + log2(Math.abs(Math.min(scaleX, scaleY))));
 
   assert(Number.isFinite(zoom));
 

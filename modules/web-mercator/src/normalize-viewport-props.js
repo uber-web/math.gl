@@ -1,5 +1,5 @@
 import WebMercatorViewport from './web-mercator-viewport';
-import {mod} from './math-utils';
+import {mod, log2} from './math-utils';
 
 // defined by mapbox-gl
 const MAX_LATITUDE = 85.05113;
@@ -33,7 +33,7 @@ export default function normalizeViewportProps({
   if (bottomY - topY < height) {
     // Map height must not be smaller than viewport height
     // Zoom out map to fit map height into viewport
-    zoom += Math.log2(height / (bottomY - topY));
+    zoom += log2(height / (bottomY - topY));
 
     // Calculate top and bottom using new zoom
     flatViewport = new WebMercatorViewport({width, height, longitude, latitude, zoom});
