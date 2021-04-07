@@ -1,4 +1,5 @@
 // import test from 'tape-promise/tape';
+// import {tapeEquals} from 'test/utils/tape-assertions';
 import {it, expect} from 'test/utils/expect-assertions';
 
 import {
@@ -7,7 +8,7 @@ import {
   INTERSECTION,
   Plane
 } from '@math.gl/culling';
-import {Vector3} from '@math.gl/core';
+import {Vector3, Matrix4} from '@math.gl/core';
 
 const positions = [
   new Vector3(3, -1, -3),
@@ -105,6 +106,25 @@ it('makeAxisAlignedBoundingBoxFromPoints computes the bounding box for a single 
   expect(box.minimum).toEqual(positions[0]);
   expect(box.maximum).toEqual(positions[0]);
   expect(box.center).toEqual(positions[0]);
+});
+
+it('AxisAlignedBoundingBox#applies transform: translation, rotation, scale', () => {
+  const min = new Vector3(1, 1, 1);
+  const max = new Vector3(3, 3, 3);
+  const abb = new AxisAlignedBoundingBox(min, max);
+  const transform = new Matrix4()
+    .translate(new Vector3(1.0, 2.0, 3.0))
+    .rotateZ(Math.PI / 2)
+    .scale(2);
+  const center = new Vector3(-2.9999999999999996, 6, 7);
+  const halfDiagonal = new Vector3(-0.9999999999999998, 4, 5);
+  const minimum = new Vector3(-0.9999999999999998, 4, 5);
+  const maximum = new Vector3(-5, 8, 9);
+  const result = abb.transform(transform);
+  expect(center).toEqual(result.center);
+  expect(halfDiagonal).toEqual(result.halfDiagonal);
+  expect(minimum).toEqual(result.minimum);
+  expect(maximum).toEqual(result.maximum);
 });
 
 it('AxisAlignedBoundingBox#intersectPlane works with box on the positive side of a plane', () => {
