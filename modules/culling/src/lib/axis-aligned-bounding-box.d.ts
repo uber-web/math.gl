@@ -22,8 +22,18 @@ export default class AxisAlignedBoundingBox {
 
   /** Duplicates a AxisAlignedBoundingBox instance. */
   clone(): AxisAlignedBoundingBox;
+
   /** Compares the provided AxisAlignedBoundingBox componentwise */
   equals(right: AxisAlignedBoundingBox): boolean;
+
+  /**
+   * Apply a transformation (e.g. Matrix4) to the bounding box
+   *
+   * @param transform The transformation to apply to the bounding sphere.
+   * @returns itself, i.e. the modified BoundingSphere.
+   */
+  transform(transformation: number[]): AxisAlignedBoundingBox;
+
   /** Determines which side of a plane a box is located. */
   intersectPlane(plane: Plane): INTERSECTION_ENUM;
 
