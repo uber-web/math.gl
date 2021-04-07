@@ -650,8 +650,7 @@ test('OrientedBoundingBox#computePlaneDistances throws without a direction', t =
   t.end();
 });
 
-/*
-test.skip('OrientedBoundingBox#applies transform: translation, rotation, scale', t => {
+test('OrientedBoundingBox#applies transform: translation, rotation, scale', t => {
   const VECTOR3_ZERO = new Vector3(0, 0, 0);
   const obb = new OrientedBoundingBox(VECTOR3_ZERO, [1, 0, 0, 0, 1, 0, 0, 0, 1]);
   const transform = new Matrix4()
@@ -670,10 +669,10 @@ test.skip('OrientedBoundingBox#applies transform: translation, rotation, scale',
     5
   ]);
   const result = obb.transform(transform);
-  tapeEquals(t, result, expected);
+  tapeEquals(t, result.center, expected.center);
+  tapeEquals(t, result.halfAxes, expected.halfAxes);
   t.end();
 });
-*/
 
 /*
 test('OrientedBoundingBox#isOccluded', t => {

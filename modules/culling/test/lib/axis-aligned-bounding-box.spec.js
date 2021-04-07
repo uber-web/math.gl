@@ -8,8 +8,7 @@ import {
   INTERSECTION,
   Plane
 } from '@math.gl/culling';
-import {Vector3} from '@math.gl/core';
-// import {Vector3, Matrix4} from '@math.gl/core';
+import {Vector3, Matrix4} from '@math.gl/core';
 
 const positions = [
   new Vector3(3, -1, -3),
@@ -109,7 +108,6 @@ it('makeAxisAlignedBoundingBoxFromPoints computes the bounding box for a single 
   expect(box.center).toEqual(positions[0]);
 });
 
-/*
 it('AxisAlignedBoundingBox#applies transform: translation, rotation, scale', () => {
   const min = new Vector3(1, 1, 1);
   const max = new Vector3(3, 3, 3);
@@ -118,11 +116,16 @@ it('AxisAlignedBoundingBox#applies transform: translation, rotation, scale', () 
     .translate(new Vector3(1.0, 2.0, 3.0))
     .rotateZ(Math.PI / 2)
     .scale(2);
-  const expected = new AxisAlignedBoundingBox(min, max, new Vector3(-2.9999999999999996, 6, 7));
+  const center = new Vector3(-2.9999999999999996, 6, 7);
+  const halfDiagonal = new Vector3(-0.9999999999999998, 4, 5);
+  const minimum = new Vector3(-0.9999999999999998, 4, 5);
+  const maximum = new Vector3(-5, 8, 9);
   const result = abb.transform(transform);
-  expect(expected).toEqual(result);
+  expect(center).toEqual(result.center);
+  expect(halfDiagonal).toEqual(result.halfDiagonal);
+  expect(minimum).toEqual(result.minimum);
+  expect(maximum).toEqual(result.maximum);
 });
-*/
 
 it('AxisAlignedBoundingBox#intersectPlane works with box on the positive side of a plane', () => {
   const box = new AxisAlignedBoundingBox(new Vector3(VECTOR3_UNIT_X).negate(), VECTOR3_ZERO);
