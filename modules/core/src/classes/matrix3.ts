@@ -1,37 +1,12 @@
 // Copyright (c) 2017 Uber Technologies, Inc.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
+// MIT License
 import Matrix from './base/matrix';
 import {checkVector, deprecated} from '../lib/validators';
-// eslint-disable-next-line camelcase
 import {vec4_transformMat3} from '../lib/gl-matrix-extras';
-
-// @ts-ignore: error TS2307: Cannot find module 'gl-matrix/...'.
 import * as mat3 from 'gl-matrix/mat3';
-// @ts-ignore: error TS2307: Cannot find module 'gl-matrix/...'.
 import * as vec2 from 'gl-matrix/vec2';
-// @ts-ignore: error TS2307: Cannot find module 'gl-matrix/...'.
 import * as vec3 from 'gl-matrix/vec3';
-
-const IDENTITY = Object.freeze([1, 0, 0, 0, 1, 0, 0, 0, 1]);
-const ZERO = Object.freeze([0, 0, 0, 0, 0, 0, 0, 0, 0]);
+import {NumericArray} from '../lib/types';
 
 const INDICES = Object.freeze({
   COL0ROW0: 0,
@@ -44,25 +19,22 @@ const INDICES = Object.freeze({
   COL2ROW1: 7,
   COL2ROW2: 8
 });
-
 const constants = {};
 
 export default class Matrix3 extends Matrix {
-  static get IDENTITY() {
-    constants.IDENTITY = constants.IDENTITY || Object.freeze(new Matrix3(IDENTITY));
-    return constants.IDENTITY;
+  static get IDENTITY(): Readonly<Matrix3> {
+    return IDENTITY_MATRIX3;
   }
 
-  static get ZERO() {
-    constants.ZERO = constants.ZERO || Object.freeze(new Matrix3(ZERO));
-    return constants.ZERO;
+  static get ZERO(): Readonly<Matrix3> {
+    return ZERO_MATRIX3;
   }
 
-  get ELEMENTS() {
+  get ELEMENTS(): number {
     return 9;
   }
 
-  get RANK() {
+  get RANK(): number {
     return 3;
   }
 
@@ -70,17 +42,24 @@ export default class Matrix3 extends Matrix {
     return INDICES;
   }
 
-  constructor(array) {
+  constructor(array?: Readonly<NumericArray>);
+  /** @deprecated */
+  constructor(...args: number[]);
+
+  constructor(array?: number | Readonly<NumericArray>, ...args: number[]) {
     // PERF NOTE: initialize elements as double precision numbers
     super(-0, -0, -0, -0, -0, -0, -0, -0, -0);
     if (arguments.length === 1 && Array.isArray(array)) {
       this.copy(array);
+    } else if (args.length > 0) {
+      this.copy([array, ...args]);
     } else {
       this.identity();
     }
   }
 
-  copy(array) {
+  copy(array): this {
+    // Element wise copy for performance
     this[0] = array[0];
     this[1] = array[1];
     this[2] = array[2];
@@ -93,7 +72,31 @@ export default class Matrix3 extends Matrix {
     return this.check();
   }
 
-  // accepts column major order, stores in column major order
+  // Constructors
+
+  identity() {
+    return this.copy(IDENTITY_MATRIX3);
+  }
+
+  /**
+   *
+   * @param object
+   * @returns self
+   */
+  fromObject(object: {[key: string]: any}): this {
+    return this.check();
+  }
+
+  // Calculates a 3x3 matrix from the given quaternion
+  // q quat  Quaternion to create matrix from
+  fromQuaternion(q) {
+    mat3.fromQuat(this, q);
+    return this.check();
+  }
+
+  /**
+   * accepts column major order, stores in column major order
+   */
   // eslint-disable-next-line max-params
   set(m00, m10, m20, m01, m11, m21, m02, m12, m22) {
     this[0] = m00;
@@ -108,7 +111,9 @@ export default class Matrix3 extends Matrix {
     return this.check();
   }
 
-  // accepts row major order, stores as column major
+  /**
+   * accepts row major order, stores as column major
+   */
   // eslint-disable-next-line max-params
   setRowMajor(m00, m01, m02, m10, m11, m12, m20, m21, m22) {
     this[0] = m00;
@@ -129,33 +134,19 @@ export default class Matrix3 extends Matrix {
     return mat3.determinant(this);
   }
 
-  // Constructors
-
-  identity() {
-    return this.copy(IDENTITY);
-  }
-
-  // Calculates a 3x3 matrix from the given quaternion
-  // q quat  Quaternion to create matrix from
-  fromQuaternion(q) {
-    mat3.fromQuat(this, q);
-    return this.check();
-  }
-
   // Modifiers
-
   transpose() {
     mat3.transpose(this, this);
     return this.check();
   }
 
+  /** Invert a matrix. Note that this can fail if the matrix is not invertible */
   invert() {
     mat3.invert(this, this);
     return this.check();
   }
 
   // Operations
-
   multiplyLeft(a) {
     mat3.multiply(this, a, this);
     return this.check();
@@ -177,17 +168,13 @@ export default class Matrix3 extends Matrix {
     } else {
       mat3.scale(this, this, [factor, factor, factor]);
     }
-
     return this.check();
   }
-
   translate(vec) {
     mat3.translate(this, this, vec);
     return this.check();
   }
-
   // Transforms
-
   transform(vector, result) {
     switch (vector.length) {
       case 2:
@@ -205,21 +192,27 @@ export default class Matrix3 extends Matrix {
     checkVector(result, vector.length);
     return result;
   }
-
-  // DEPRECATED IN 3.0
-
-  transformVector(vector, result) {
-    deprecated('Matrix3.transformVector');
-    return this.transform(vector, result);
-  }
-
-  transformVector2(vector, result) {
-    deprecated('Matrix3.transformVector');
-    return this.transform(vector, result);
-  }
-
-  transformVector3(vector, result) {
-    deprecated('Matrix3.transformVector');
-    return this.transform(vector, result);
-  }
 }
+
+const ZERO_MATRIX3 = new Matrix3([0, 0, 0, 0, 0, 0, 0, 0, 0]);
+const IDENTITY_MATRIX3 = new Matrix3();
+Object.freeze(ZERO_MATRIX3);
+Object.freeze(IDENTITY_MATRIX3);
+
+/**
+function getZeroMatrix(): Readonly<Matrix3> {
+	if (!ZERO) {
+		ZERO = new Matrix3([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+		Object.freeze(ZERO);
+	}
+	return ZERO;
+}
+
+function getIdentityMatrix(): Matrix3 {
+	if (!IDENTITY) {
+		IDENTITY = new Matrix3([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
+		Object.freeze(IDENTITY);
+	}
+	return IDENTITY;
+}
+ */

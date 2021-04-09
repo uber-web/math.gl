@@ -1,44 +1,30 @@
 // Copyright (c) 2017 Uber Technologies, Inc.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
+// MIT License
 import Vector from './base/vector';
 import {config, isArray} from '../lib/common';
 import {checkNumber} from '../lib/validators';
-
-// @ts-ignore: error TS2307: Cannot find module 'gl-matrix/...'.
 import * as vec4 from 'gl-matrix/vec3';
-// eslint-disable-next-line camelcase
 import {vec4_transformMat2, vec4_transformMat3} from '../lib/gl-matrix-extras';
+import {NumericArray} from '../lib/types';
 
-const constants = {};
+const constants: {
+  ZERO?: any;
+} = {};
 
+/**
+ * Four-element vector class.
+ * Subclass of Array<number>
+ */
 export default class Vector4 extends Vector {
   static get ZERO() {
     return (constants.ZERO = constants.ZERO || Object.freeze(new Vector4(0, 0, 0, 0)));
   }
 
-  constructor(x = 0, y = 0, z = 0, w = 0) {
+  constructor(x: number | Readonly<NumericArray> = 0, y: number = 0, z: number = 0, w: number = 0) {
     // PERF NOTE: initialize elements as double precision numbers
     super(-0, -0, -0, -0);
     if (isArray(x) && arguments.length === 1) {
-      this.copy(x);
+      this.copy(x as Readonly<NumericArray>);
     } else {
       // this.set(x, y, z, w);
       if (config.debug) {
@@ -47,14 +33,14 @@ export default class Vector4 extends Vector {
         checkNumber(z);
         checkNumber(w);
       }
-      this[0] = x;
+      this[0] = x as number;
       this[1] = y;
       this[2] = z;
       this[3] = w;
     }
   }
 
-  set(x, y, z, w) {
+  set(x: number, y: number, z: number, w: number): this {
     this[0] = x;
     this[1] = y;
     this[2] = z;
@@ -62,7 +48,7 @@ export default class Vector4 extends Vector {
     return this.check();
   }
 
-  copy(array) {
+  copy(array: Readonly<NumericArray>): this {
     this[0] = array[0];
     this[1] = array[1];
     this[2] = array[2];
@@ -70,7 +56,7 @@ export default class Vector4 extends Vector {
     return this.check();
   }
 
-  fromObject(object) {
+  fromObject(object: {[key: string]: any}): this {
     if (config.debug) {
       checkNumber(object.x);
       checkNumber(object.y);
@@ -94,51 +80,45 @@ export default class Vector4 extends Vector {
 
   // Getters/setters
   /* eslint-disable no-multi-spaces, brace-style, no-return-assign */
-  get ELEMENTS() {
+  get ELEMENTS(): number {
     return 4;
   }
 
-  // x,y inherited from Vector
-
-  get z() {
+  get z(): number {
     return this[2];
   }
-
-  set z(value) {
+  set z(value: number) {
     this[2] = checkNumber(value);
   }
-
-  get w() {
+  get w(): number {
     return this[3];
   }
-
-  set w(value) {
+  set w(value: number) {
     this[3] = checkNumber(value);
   }
-  /* eslint-enable no-multi-spaces, brace-style, no-return-assign */
 
-  transform(matrix4) {
+  transform(matrix4: Readonly<NumericArray>): this {
     vec4.transformMat4(this, this, matrix4);
     return this.check();
   }
 
-  transformByMatrix3(matrix3) {
+  transformByMatrix3(matrix3: Readonly<NumericArray>): this {
     vec4_transformMat3(this, this, matrix3);
     return this.check();
   }
 
-  transformByMatrix2(matrix2) {
+  transformByMatrix2(matrix2: Readonly<NumericArray>): this {
     vec4_transformMat2(this, this, matrix2);
     return this.check();
   }
 
-  transformByQuaternion(quaternion) {
+  transformByQuaternion(quaternion: Readonly<NumericArray>): this {
     vec4.transformQuat(this, this, quaternion);
     return this.check();
   }
 
   // three.js compatibility
-  applyMatrix4(m) {
+  applyMatrix4(m): this {
     m.transform(this, this);
     return this;
   }

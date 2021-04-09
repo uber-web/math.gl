@@ -20,7 +20,7 @@
 
 import {config} from './common';
 
-export function validateVector(v, length) {
+export function validateVector(v, length: number): boolean {
   if (v.length !== length) {
     return false;
   }
@@ -33,14 +33,14 @@ export function validateVector(v, length) {
   return true;
 }
 
-export function checkNumber(value) {
+export function checkNumber(value: unknown): number {
   if (!Number.isFinite(value)) {
     throw new Error(`Invalid number ${value}`);
   }
-  return value;
+  return value as number;
 }
 
-export function checkVector(v, length, callerName = '') {
+export function checkVector(v, length: number, callerName: string = '') {
   if (config.debug && !validateVector(v, length)) {
     throw new Error(`math.gl: ${callerName} some fields set to invalid numbers'`);
   }
@@ -49,7 +49,7 @@ export function checkVector(v, length, callerName = '') {
 
 const map = {};
 
-export function deprecated(method, version) {
+export function deprecated(method: string, version: string): void {
   if (!map[method]) {
     map[method] = true;
     // eslint-disable-next-line

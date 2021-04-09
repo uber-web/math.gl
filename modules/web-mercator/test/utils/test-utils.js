@@ -13,7 +13,7 @@ export function toLowPrecision(input, precision = 7) {
   } else if (Array.isArray(input)) {
     input = input.map((item) => toLowPrecision(item, precision));
   } else if (ArrayBuffer.isView(input)) {
-    // @ts-ignore
+    // @ts-expect-error
     input = Array.from(input).map((item) => toLowPrecision(item, precision));
   } else if (typeof input === 'object') {
     for (const key in input) {

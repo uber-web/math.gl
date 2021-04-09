@@ -141,7 +141,7 @@ test('Ellipsoid#cartographicToCartesian works with a result parameter', (t) => {
 test('Ellipsoid#cartographicToCartesian works with an Object result parameter', (t) => {
   const ellipsoid = Ellipsoid.WGS84;
   const result = {x: 0, y: 0, z: 0};
-  // @ts-ignore ADD XYZ TYPE
+  // @ts-expect-error ADD XYZ TYPE
   const returnedResult = ellipsoid.cartographicToCartesian(spaceCartographic, result);
   t.ok(result === returnedResult);
   tapeEqualsEpsilon(t, returnedResult.x, spaceCartesian.x, _MathUtils.EPSILON7);
@@ -169,7 +169,6 @@ test('Ellipsoid#cartesianToCartographic works with an Object result parameter', 
   const result = {x: 0, y: 0, z: 0};
   // @ts-ignore
   const returnedResult = Ellipsoid.WGS84.cartesianToCartographic(surfaceCartesian, result);
-  // @ts-ignore
   t.ok(result === returnedResult);
   tapeEqualsEpsilon(t, returnedResult.x, surfaceCartographic.x, _MathUtils.EPSILON8);
   tapeEqualsEpsilon(t, returnedResult.y, surfaceCartographic.y, _MathUtils.EPSILON8);
@@ -324,9 +323,9 @@ test('Ellipsoid#scaleToGeocentricSurface works with an Object result parameter',
   const expected = new Vector3(0.7807200583588266, 0.9759000729485333, 1.1710800875382399);
   const cartesian = new Vector3(4.0, 5.0, 6.0);
   const result = {x: 0, y: 0, z: 0};
-  // @ts-ignore TODO - remove
+  // @ts-expect-error TODO - remove
   const returnedResult = ellipsoid.scaleToGeocentricSurface(cartesian, result);
-  // @ts-ignore
+  // @ts-expect-error
   t.ok(returnedResult === result);
   tapeEqualsEpsilon(t, result.x, expected.x, _MathUtils.EPSILON16);
   tapeEqualsEpsilon(t, result.y, expected.y, _MathUtils.EPSILON16);
@@ -425,7 +424,7 @@ test('Ellipsoid#cartographicToCartesian throws with no cartographic', (t) => {
 });
 
 test('Ellipsoid#cartographicArrayToCartesianArray throws with no cartographics', (t) => {
-  // @ts-ignore
+  // @ts-expect-error
   t.throws(() => Ellipsoid.WGS84.cartographicArrayToCartesianArray(undefined));
   t.end();
 });

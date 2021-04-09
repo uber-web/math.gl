@@ -97,7 +97,7 @@ test('BoundingSphere#constructor sets expected values (array)', (t) => {
 test('BoundingSphere#constructor sets expected values (object)', (t) => {
   const expectedCenter = {x: 1.0, y: 2.0, z: 3.0};
   const expectedRadius = 1.0;
-  // @ts-ignore TODO - add XYZ types
+  // @ts-expect-error TODO - add XYZ types
   const sphere = new BoundingSphere(expectedCenter, expectedRadius);
   tapeEquals(t, sphere.center, [1, 2, 3]);
   t.equals(sphere.radius, expectedRadius);
@@ -117,7 +117,7 @@ test('BoundingSphere#fromCornerPoints', (t) => {
 
 test('BoundingSphere#fromCornerPoints throws without corner', (t) => {
   const sphere = new BoundingSphere();
-  // @ts-ignore
+  // @ts-expect-error
   t.throws(() => sphere.fromCornerPoints());
 
   t.end();
@@ -125,7 +125,7 @@ test('BoundingSphere#fromCornerPoints throws without corner', (t) => {
 
 test('BoundingSphere#fromCornerPoints throws without oppositeCorner', (t) => {
   const sphere = new BoundingSphere();
-  // @ts-ignore
+  // @ts-expect-error
   t.throws(() => sphere.fromCornerPoints(VECTOR3_UNIT_X));
 
   t.end();
@@ -289,7 +289,7 @@ test('BoundingSphere#intersectPlane throws without a plane', (t) => {
 
 test('BoundingSphere#transform throws without a transform', (t) => {
   const sphere = new BoundingSphere();
-  // @ts-ignore
+  // @ts-expect-error
   t.throws(() => sphere.transform());
 
   t.end();
@@ -297,7 +297,7 @@ test('BoundingSphere#transform throws without a transform', (t) => {
 
 test('BoundingSphere#distanceSquaredTo throws without a cartesian', (t) => {
   const sphere = new BoundingSphere();
-  // @ts-ignore
+  // @ts-expect-error
   t.throws(() => sphere.distanceSquaredTo(new BoundingSphere()));
 
   t.end();

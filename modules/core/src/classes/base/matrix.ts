@@ -1,32 +1,26 @@
+// Copyright (c) 2017 Uber Technologies, Inc.
+// MIT License
+import {NumericArray} from '../../lib/types';
 import MathArray from './math-array';
 import {checkNumber} from '../../lib/validators';
 import {config} from '../../lib/common';
-import assert from '../../lib/assert';
 
-export default class Matrix extends MathArray {
-  // Defined by derived class
-  get ELEMENTS() {
-    assert(false);
-    return 0;
-  }
-
-  get RANK() {
-    assert(false);
-    return 0;
-  }
+/** Base class for matrices */
+export default abstract class Matrix extends MathArray {
+  abstract get RANK(): number;
 
   // fromObject(object) {
   //   const array = object.elements;
   //   return this.fromRowMajor(array);
   // }
-
   // toObject(object) {
   //   const array = object.elements;
   //   this.toRowMajor(array);
   //   return object;
   // }
 
-  toString() {
+  // TODO better override formatString?
+  toString(): string {
     let string = '[';
     if (config.printRowMajor) {
       string += 'row-major:';
@@ -45,22 +39,24 @@ export default class Matrix extends MathArray {
     return string;
   }
 
-  getElementIndex(row, col) {
+  getElementIndex(row: number, col: number): number {
     return col * this.RANK + row;
   }
 
   // By default assumes row major indices
-  getElement(row, col) {
+  getElement(row: number, col: number): number {
     return this[col * this.RANK + row];
   }
 
   // By default assumes row major indices
-  setElement(row, col, value) {
+  setElement(row: number, col: number, value: number): this {
     this[col * this.RANK + row] = checkNumber(value);
     return this;
   }
+  getColumn<NumArrayT>(columnIndex: number, result: NumArrayT): NumArrayT;
+  getColumn(columnIndex: number): number[];
 
-  getColumn(columnIndex, result = new Array(this.RANK).fill(-0)) {
+  getColumn(columnIndex: number, result: number[] = new Array(this.RANK).fill(-0)): number[] {
     const firstIndex = columnIndex * this.RANK;
     for (let i = 0; i < this.RANK; ++i) {
       result[i] = this[firstIndex + i];
@@ -68,7 +64,7 @@ export default class Matrix extends MathArray {
     return result;
   }
 
-  setColumn(columnIndex, columnVector) {
+  setColumn(columnIndex: number, columnVector: Readonly<NumericArray>): this {
     const firstIndex = columnIndex * this.RANK;
     for (let i = 0; i < this.RANK; ++i) {
       this[firstIndex + i] = columnVector[i];

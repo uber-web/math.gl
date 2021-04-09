@@ -43,11 +43,8 @@ test('WebMercatorViewport#constructor - camera offset', (t) => {
 
 test('WebMercatorViewport#equals', (t) => {
   // TODO - fix types
-  // @ts-ignore
   const viewport1 = new WebMercatorViewport(VIEWPORT_PROPS.flat);
-  // @ts-ignore
   const viewport2 = new WebMercatorViewport(VIEWPORT_PROPS.flat);
-  // @ts-ignore
   const viewport3 = new WebMercatorViewport(Object.assign({}, VIEWPORT_PROPS.flat, {height: 33}));
 
   t.ok(viewport1.equals(viewport1), 'Viewport equality correct');

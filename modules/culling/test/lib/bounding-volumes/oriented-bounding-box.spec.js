@@ -543,7 +543,7 @@ test('OrientedBoundingBox#computePlaneDistances', (t) => {
 
   const rotation = r0.multiplyLeft(r1);
   const scale = new Vector3(2.0, 3.0, 4.0);
-  const rotationScale = rotation.multiplyByScalar(scale);
+  const rotationScale = rotation.scale(scale);
 
   const center = new Vector3(4.0, 3.0, 2.0);
 
