@@ -108,7 +108,8 @@ export function makeOrientedBoundingBoxFromPoints(positions, result = new Orient
     .add(v3);
 
   const scale = scratchVector3.set(u1 - l1, u2 - l2, u3 - l3).multiplyByScalar(0.5);
-  result.halfAxes.multiplyByScalar(scale);
+  const scaleMatrix = new Matrix3([scale[0], 0, 0, 0, scale[1], 0, 0, 0, scale[2]]);
+  result.halfAxes.multiplyRight(scaleMatrix);
 
   return result;
 }
