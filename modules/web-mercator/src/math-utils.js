@@ -21,5 +21,8 @@ export function lerp(start, end, step) {
   return step * end + (1 - step) * start;
 }
 
+function ieLog2(x) {
+  return Math.log(x) * Math.LOG2E;
+}
 // Handle missing log2 in IE 11
-export const log2 = Math.log2 || function(x){ return Math.log(x) * Math.LOG2E; };
+export const log2 = Math.log2 || ieLog2;
