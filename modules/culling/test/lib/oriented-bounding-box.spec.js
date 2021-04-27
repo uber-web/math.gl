@@ -13,6 +13,7 @@ import {
   Plane,
   INTERSECTION
 } from '@math.gl/culling';
+import Matrix from '@math.gl/core/classes/base/matrix';
 
 const ZERO_VECTOR3 = Object.freeze(new Vector3(0, 0, 0));
 const ZERO_MATRIX3 = Object.freeze(new Matrix3([0, 0, 0, 0, 0, 0, 0, 0, 0]));
@@ -168,6 +169,27 @@ test('OrientedBoundingBox#getBoundingSphere works without a result parameter', t
   tapeEquals(t, sphere.center, positionsCenter);
   t.ok(sphere.radius > 1.5);
   t.ok(sphere.radius < 2.0);
+  t.end();
+});
+
+test('OrientedBoundingBox#Calculate half sizes and half axes properly', t => {
+  const halfAxes = new Matrix3([2, 0, 0, 0, 2, 0, 0, 0, 2]);
+  const halfSize = [2, 2, 2];
+  const volume = 8;
+  const box = makeOrientedBoundingBoxFromPoints([
+    new Vector3(2, -2, -2),
+    new Vector3(-2, 2, 2),
+    new Vector3(-2, -2, -2),
+    new Vector3(2, 2, 2),
+    new Vector3(2, -2, 2),
+    new Vector3(-2, 2, -2),
+    new Vector3(2, 2, -2),
+    new Vector3(-2, -2, 2)
+  ]);
+  t.deepEqual(box.halfAxes, halfAxes);
+  t.deepEqual(box.halfSize, halfSize);
+  t.notEquals(box.halfSize[2], 1);
+  t.equal(box.halfSize.reduce((res, hs) => res * hs), volume);
   t.end();
 });
 
