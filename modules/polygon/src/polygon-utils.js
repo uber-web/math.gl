@@ -26,15 +26,14 @@ export function getPolygonWindingDirection(points, options = {}) {
 /** @type {typeof import('./polygon-utils').getPolygonSignedArea} */
 export function getPolygonSignedArea(points, options = {}) {
   // https://en.wikipedia.org/wiki/Shoelace_formula
+  const start = options.start || 0;
+  const end = options.end || points.length;
+  const dim = options.size || 2;
   let area = 0;
-  forEachSegmentInPolygon(
-    points,
-    (p1x, p1y, p2x, p2y) => {
-      area += areaCalcCallback(p1x, p1y, p2x, p2y);
-    },
-    options
-  );
-
+  for (let i = start, j = end - dim; i < end; i += dim) {
+    area += (points[i] - points[j]) * (points[i + 1] + points[j + 1]);
+    j = i;
+  }
   return area / 2;
 }
 
