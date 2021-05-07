@@ -20,6 +20,8 @@
 
  */
 
+import {getPolygonSignedArea} from './polygon-utils';
+
 export function earcut(data, holeIndices, dim) {
 
     dim = dim || 2;
@@ -63,7 +65,7 @@ export function earcut(data, holeIndices, dim) {
 function linkedList(data, start, end, dim, clockwise) {
     var i, last;
 
-    if (clockwise === (signedArea(data, start, end, dim) > 0)) {
+    if (clockwise === (getPolygonSignedArea(data, {start, end, size: dim}) < 0)) {
         for (i = start; i < end; i += dim) last = insertNode(i, data[i], data[i + 1], last);
     } else {
         for (i = end - dim; i >= start; i -= dim) last = insertNode(i, data[i], data[i + 1], last);
@@ -637,13 +639,4 @@ function Node(i, x, y) {
 
     // indicates whether this is a steiner point
     this.steiner = false;
-}
-
-function signedArea(data, start, end, dim) {
-    var sum = 0;
-    for (var i = start, j = end - dim; i < end; i += dim) {
-        sum += (data[j] - data[i]) * (data[i + 1] + data[j + 1]);
-        j = i;
-    }
-    return sum;
 }
