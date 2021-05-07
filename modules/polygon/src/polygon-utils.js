@@ -88,8 +88,8 @@ function reversePolygon(points, options) {
 }
 
 /** @type {typeof import('./polygon-utils').modifyPolygonWindingDirectionPoints} */
-export function modifyPolygonWindingDirectionPoints(points, direction, params = {}) {
-  const currentDirection = getPolygonWindingDirectionPoints(points, params);
+export function modifyPolygonWindingDirectionPoints(points, direction, options = {}) {
+  const currentDirection = getPolygonWindingDirectionPoints(points, options);
   if (currentDirection !== direction) {
     points.reverse();
     return true;
@@ -98,8 +98,8 @@ export function modifyPolygonWindingDirectionPoints(points, direction, params = 
 }
 
 /** @type {typeof import('./polygon-utils').getPolygonWindingDirectionPoints} */
-export function getPolygonWindingDirectionPoints(points, params = {}) {
-  return Math.sign(getPolygonSignedAreaPoints(points, params));
+export function getPolygonWindingDirectionPoints(points, options = {}) {
+  return Math.sign(getPolygonSignedAreaPoints(points, options));
 }
 
 /** @type {typeof import('./polygon-utils').getPolygonSignedAreaPoints} */
@@ -116,8 +116,8 @@ export function getPolygonSignedAreaPoints(points, options = {}) {
 }
 
 /** @type {typeof import('./polygon-utils').forEachSegmentInPolygonPoints} */
-export function forEachSegmentInPolygonPoints(points, visitor, params = {}) {
-  const {start = 0, end = points.length, isClosed} = params;
+export function forEachSegmentInPolygonPoints(points, visitor, options = {}) {
+  const {start = 0, end = points.length, isClosed} = options;
   for (let i = start; i < end - 1; ++i) {
     visitor(points[i], points[i + 1], i, i + 1);
   }
