@@ -103,16 +103,15 @@ export function getPolygonWindingDirectionPoints(points, params = {}) {
 }
 
 /** @type {typeof import('./polygon-utils').getPolygonSignedAreaPoints} */
-export function getPolygonSignedAreaPoints(points, params = {}) {
+export function getPolygonSignedAreaPoints(points, options = {}) {
   // https://en.wikipedia.org/wiki/Shoelace_formula
+  const start = options.start || 0;
+  const end = options.end || points.length;
   let area = 0;
-  forEachSegmentInPolygonPoints(
-    points,
-    (p1, p2) => {
-      area += areaCalcCallback(p1[0], p1[1], p2[0], p2[1]);
-    },
-    params
-  );
+  for (let i = start, j = end - 1; i < end; ++i) {
+    area += (points[i][0] - points[j][0]) * (points[i][1] + points[j][1]);
+    j = i;
+  }
   return area / 2;
 }
 
@@ -127,9 +126,4 @@ export function forEachSegmentInPolygonPoints(points, visitor, params = {}) {
   if (!isClosedEx) {
     visitor(points[end - 1], points[0], end - 1, 0);
   }
-}
-
-function areaCalcCallback(p1x, p1y, p2x, p2y) {
-  // the "cancelling" cross-products: (p1.x + p2.x) * (p1.y - p2.y)
-  return (p1x + p2x) * (p1y - p2y);
 }
