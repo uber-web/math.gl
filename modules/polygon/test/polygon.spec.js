@@ -21,6 +21,7 @@
 /* eslint-disable max-statements */
 import test from 'tape-catch';
 import {tapeEquals} from 'test/utils/tape-assertions';
+import {toNested} from './utils.js';
 
 import {configure} from '@math.gl/core';
 import {_Polygon as Polygon, WINDING} from '@math.gl/polygon';
@@ -195,10 +196,7 @@ test('Polygon#modifyWindingDirection', t => {
 
 test('Polygon#Compare flat and complex input', t => {
   const testFlatData = [0.5, 0.5, 2.0, 0.25, 4, 2, 5, 1, 6, 4, 3.5, 4.1, 1, 2.5, -6, 1];
-  const testPointsData = [];
-  for (let i = 0; i < testFlatData.length; i += 2) {
-    testPointsData.push([testFlatData[i], testFlatData[i + 1]]);
-  }
+  const testPointsData = toNested(testFlatData);
 
   const flatPolygon = new Polygon(testFlatData);
   const pointsPolygon = new Polygon(testPointsData);
@@ -210,6 +208,25 @@ test('Polygon#Compare flat and complex input', t => {
     area1,
     area2,
     'results from flat getSignedArea() results are identical to results of array of points getSignedArea()'
+  );
+
+  t.end();
+});
+
+test('Polygon#Compare open and closed', t => {
+  const testDataOpen = [0.5, 0.5, 2.0, 0.25, 4, 2, 5, 1, 6, 4, 3.5, 4.1, 1, 2.5, -6, 1];
+  const testDataClosed = [...testDataOpen, ...testDataOpen.slice(0, 2)];
+
+  const openPolygon = new Polygon(testDataOpen);
+  const closedPolygon = new Polygon(testDataClosed);
+
+  const area1 = openPolygon.getSignedArea();
+  const area2 = closedPolygon.getSignedArea();
+
+  t.equals(
+    area1,
+    area2,
+    'area of an open polygon are the same as for a closed one'
   );
 
   t.end();
