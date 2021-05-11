@@ -1,6 +1,8 @@
 /*
   Adapted from https://github.com/mapbox/earcut to allow passing in
-  of outline and hole areas
+  of outline and hole areas using the `areas` parameter. As the
+  areas are calcuted as part of classifying the polygon rings
+  we can pass them in again to avoid recomputation
 
   ISC License
 
@@ -22,20 +24,20 @@
 
 import {getPolygonSignedArea} from './polygon-utils';
 
-export function earcut(data, holeIndices, dim) {
+export function earcut(data, holeIndices, dim, areas) {
 
     dim = dim || 2;
 
     var hasHoles = holeIndices && holeIndices.length,
         outerLen = hasHoles ? holeIndices[0] * dim : data.length,
-        outerNode = linkedList(data, 0, outerLen, dim, true),
+        outerNode = linkedList(data, 0, outerLen, dim, true, areas && areas[0]),
         triangles = [];
 
     if (!outerNode || outerNode.next === outerNode.prev) return triangles;
 
     var minX, minY, maxX, maxY, x, y, invSize;
 
-    if (hasHoles) outerNode = eliminateHoles(data, holeIndices, outerNode, dim);
+    if (hasHoles) outerNode = eliminateHoles(data, holeIndices, outerNode, dim, areas);
 
     // if the shape is not too simple, we'll use z-order curve hash later; calculate polygon bbox
     if (data.length > 80 * dim) {
@@ -62,13 +64,16 @@ export function earcut(data, holeIndices, dim) {
 }
 
 // create a circular doubly linked list from polygon points in the specified winding order
-function linkedList(data, start, end, dim, clockwise) {
+function linkedList(data, start, end, dim, clockwise, area) {
     var i, last;
+    if (area === undefined) {
+      area = getPolygonSignedArea(data, {start, end, size: dim});
+    }
 
     // Note that the signed area calculation in math.gl
     // has the opposite sign to that which was originally
     // present in earcut, thus the `< 0` is reversed
-    if (clockwise === (getPolygonSignedArea(data, {start, end, size: dim}) < 0)) {
+    if (clockwise === (area < 0)) {
         for (i = start; i < end; i += dim) last = insertNode(i, data[i], data[i + 1], last);
     } else {
         for (i = end - dim; i >= start; i -= dim) last = insertNode(i, data[i], data[i + 1], last);
@@ -283,14 +288,14 @@ function splitEarcut(start, triangles, dim, minX, minY, invSize) {
 }
 
 // link every hole into the outer loop, producing a single-ring polygon without holes
-function eliminateHoles(data, holeIndices, outerNode, dim) {
+function eliminateHoles(data, holeIndices, outerNode, dim, areas) {
     var queue = [],
         i, len, start, end, list;
 
     for (i = 0, len = holeIndices.length; i < len; i++) {
         start = holeIndices[i] * dim;
         end = i < len - 1 ? holeIndices[i + 1] * dim : data.length;
-        list = linkedList(data, start, end, dim, false);
+        list = linkedList(data, start, end, dim, false, areas && areas[i + 1]);
         if (list === list.next) list.steiner = true;
         queue.push(getLeftmost(list));
     }
