@@ -65,6 +65,9 @@ export function earcut(data, holeIndices, dim) {
 function linkedList(data, start, end, dim, clockwise) {
     var i, last;
 
+    // Note that the signed area calculation in math.gl
+    // has the opposite sign to that which was originally
+    // present in earcut, thus the `< 0` is reversed
     if (clockwise === (getPolygonSignedArea(data, {start, end, size: dim}) < 0)) {
         for (i = start; i < end; i += dim) last = insertNode(i, data[i], data[i + 1], last);
     } else {
