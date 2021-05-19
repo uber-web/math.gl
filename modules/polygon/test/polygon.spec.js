@@ -223,11 +223,7 @@ test('Polygon#Compare open and closed', t => {
   const area1 = openPolygon.getSignedArea();
   const area2 = closedPolygon.getSignedArea();
 
-  t.equals(
-    area1,
-    area2,
-    'area of an open polygon are the same as for a closed one'
-  );
+  t.equals(area1, area2, 'area of an open polygon are the same as for a closed one');
 
   t.end();
 });

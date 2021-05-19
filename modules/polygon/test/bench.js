@@ -82,7 +82,7 @@ export default function polygonBench(suite, addReferenceBenchmarks) {
     .add('Polygon#getSignedArea() nested', () => {
       const polygon = new Polygon(polygonMediumNested);
       polygon.getSignedArea();
-    })
+    });
 
   return suite;
 }
