@@ -2,6 +2,7 @@
 // See LICENSE.md and https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md
 
 import {Polygon, modifyPolygonWindingDirection, WINDING} from '@math.gl/polygon';
+import {toNested} from './utils.js';
 
 const polygonSmall = [0, 0, 1, 1, 0, 2, -1, 1, -1.25, 0.5, 0, 0];
 
@@ -37,6 +38,7 @@ const polygonMedium = [
   4.2625,
   2.24125
 ];
+const polygonMediumNested = toNested(polygonMedium);
 
 // A helper function to swap winding direction on each iteration.
 let winding = WINDING.CLOCKWISE;
@@ -72,6 +74,14 @@ export default function polygonBench(suite, addReferenceBenchmarks) {
         end: polygonMedium.length,
         size: 2
       });
+    })
+    .add('Polygon#getSignedArea()', () => {
+      const polygon = new Polygon(polygonMedium);
+      polygon.getSignedArea();
+    })
+    .add('Polygon#getSignedArea() nested', () => {
+      const polygon = new Polygon(polygonMediumNested);
+      polygon.getSignedArea();
     });
 
   return suite;
