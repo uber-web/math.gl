@@ -227,3 +227,23 @@ test('Polygon#Compare open and closed', t => {
 
   t.end();
 });
+
+test('Polygon#Compare 2D and 3D input', t => {
+  const testFlatData = [0.5, 0.5, 2.0, 0.25, 4, 2, 5, 1, 6, 4, 3.5, 4.1, 1, 2.5, -6, 1];
+  const testPointsData2D = toNested(testFlatData);
+  const testPointsData3D = toNested(testFlatData, {addZ: true});
+
+  const polygon2D = new Polygon(testPointsData2D);
+  const polygon3D = new Polygon(testPointsData3D);
+
+  const area1 = polygon2D.getSignedArea();
+  const area2 = polygon3D.getSignedArea();
+
+  t.equals(
+    area1,
+    area2,
+    'results from 2D Polygon.getSignedArea() results are identical to results 3D Polygon.getSignedArea()'
+  );
+
+  t.end();
+});
