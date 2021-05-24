@@ -19,7 +19,7 @@
 // THE SOFTWARE.
 
 /* eslint-disable max-statements */
-import test from 'tape-catch';
+import test from 'tape-promise/tape';
 import {tapeEquals} from 'test/utils/tape-assertions';
 import {toNested} from './utils.js';
 
@@ -95,21 +95,41 @@ const TEST_CASES = [
   },
   {
     title: 'non-closed poly',
-    polygon: [[5, 0], [6, 4], [4, 5], [1, 5], [1, 0]],
+    polygon: [
+      [5, 0],
+      [6, 4],
+      [4, 5],
+      [1, 5],
+      [1, 0]
+    ],
     area: 22,
     sign: WINDING.COUNTER_CLOCKWISE,
     segments: 5
   },
   {
     title: 'exactly closed poly',
-    polygon: [[5, 0], [6, 4], [4, 5], [1, 5], [1, 0], [5, 0]],
+    polygon: [
+      [5, 0],
+      [6, 4],
+      [4, 5],
+      [1, 5],
+      [1, 0],
+      [5, 0]
+    ],
     area: 22,
     sign: WINDING.COUNTER_CLOCKWISE,
     segments: 5
   },
   {
     title: 'EPSILON closed poly',
-    polygon: [[5, 0], [6, 4], [4, 5], [1, 5], [1, 0], [5, 0.0000001]],
+    polygon: [
+      [5, 0],
+      [6, 4],
+      [4, 5],
+      [1, 5],
+      [1, 0],
+      [5, 0.0000001]
+    ],
     area: 22,
     sign: WINDING.COUNTER_CLOCKWISE,
     segments: 5
@@ -122,7 +142,12 @@ test('Polygon#import', t => {
 });
 
 test('Polygon#construct', t => {
-  t.ok(new Polygon([[0, 0], [1, 1]]));
+  t.ok(
+    new Polygon([
+      [0, 0],
+      [1, 1]
+    ])
+  );
   t.end();
 });
 

@@ -20,7 +20,7 @@
 
 /* eslint-disable max-statements */
 import {Vector2, Vector3, Vector4} from '@math.gl/core';
-import test from 'tape-catch';
+import test from 'tape-promise/tape';
 
 // FOR TAPE TESTING
 // Use tape assert to compares using a.equals(b)

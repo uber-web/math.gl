@@ -19,7 +19,7 @@
 // THE SOFTWARE.
 
 /* eslint-disable max-statements */
-import test from 'tape-catch';
+import test from 'tape-promise/tape';
 import {tapeEquals} from 'test/utils/tape-assertions';
 
 import {Vector2, Matrix4, Matrix3} from '@math.gl/core';
@@ -96,7 +96,10 @@ test('Vector2#distance', t => {
 });
 
 test('Vector2#len', t => {
-  const TEST_CASES = [{input: [0, 0], result: 0}, {input: [3, 4], result: 5}];
+  const TEST_CASES = [
+    {input: [0, 0], result: 0},
+    {input: [3, 4], result: 5}
+  ];
   for (const tc of TEST_CASES) {
     const result = new Vector2(tc.input).len();
     t.equals(result, tc.result);
@@ -174,7 +177,10 @@ test('Vector2#transform', t => {
 test('Vector2#transformAsVector', t => {
   const transform = new Matrix4().scale([0.5, 0.5, 0.5]).translate([1, 1, 1]);
 
-  const TEST_CASES = [{input: [0, 0], result: [0, 0]}, {input: [1, 0], result: [0.5, 0]}];
+  const TEST_CASES = [
+    {input: [0, 0], result: [0, 0]},
+    {input: [1, 0], result: [0.5, 0]}
+  ];
   for (const testCase of TEST_CASES) {
     const v = new Vector2(testCase.input);
     const result = v.transformAsVector(transform);

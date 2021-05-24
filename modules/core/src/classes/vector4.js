@@ -24,6 +24,7 @@ import {checkNumber} from '../lib/validators';
 
 // @ts-ignore: error TS2307: Cannot find module 'gl-matrix/...'.
 import * as vec4 from 'gl-matrix/vec3';
+// eslint-disable-next-line camelcase
 import {vec4_transformMat2, vec4_transformMat3} from '../lib/gl-matrix-extras';
 
 const constants = {};

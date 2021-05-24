@@ -6,8 +6,8 @@ export default class Matrix3 extends Matrix<Matrix3> {
   static ZERO: Matrix3;
 
   // inherited
-  // ELEMENTS: number;
-  // RANK: number;
+  get ELEMENTS(): number;
+  get RANK(): number;
   INDICES: number[];
 
   constructor();

@@ -224,7 +224,10 @@ export default class WebMercatorViewport {
     const east = Math.max(...corners.map(p => p[0]));
     const south = Math.min(...corners.map(p => p[1]));
     const north = Math.max(...corners.map(p => p[1]));
-    return [[west, south], [east, north]];
+    return [
+      [west, south],
+      [east, north]
+    ];
   }
 
   getBoundingRegion(options = {}) {

@@ -20,7 +20,7 @@
 
 import {checkVector, deprecated} from '../lib/validators';
 import Matrix from './base/matrix';
-
+// eslint-disable-next-line camelcase
 import {vec2_transformMat4AsVector, vec3_transformMat4AsVector} from '../lib/gl-matrix-extras';
 
 // @ts-ignore: error TS2307: Cannot find module 'gl-matrix/...'.

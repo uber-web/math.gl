@@ -3,8 +3,7 @@ import Vector from './base/vector';
 /** Four-element vector class */
 export default class Vector4 extends Vector<Vector4> {
   static ZERO: number[];
-
-  ELEMENTS: number;
+  get ELEMENTS(): number;
 
   /** construct a new Vector4 initialize to [0, 0, 0, 0] */
   constructor();

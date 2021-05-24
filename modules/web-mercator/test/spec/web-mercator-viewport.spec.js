@@ -1,4 +1,4 @@
-import test from 'tape-catch';
+import test from 'tape-promise/tape';
 import {WebMercatorViewport} from '@math.gl/web-mercator';
 import {equals, config} from '@math.gl/core';
 

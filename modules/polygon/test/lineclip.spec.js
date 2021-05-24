@@ -1,4 +1,4 @@
-import test from 'tape-catch';
+import test from 'tape-promise/tape';
 import {clipPolyline, clipPolygon} from '@math.gl/polygon';
 
 export function flatten(arr, result = []) {
@@ -44,36 +44,63 @@ test('clips line', t => {
 });
 
 test('clips line crossing through many times', t => {
-  const result = clipPolyline(flatten([[10, -10], [10, 30], [20, 30], [20, -10]]), [0, 0, 20, 20]);
+  const result = clipPolyline(
+    flatten([
+      [10, -10],
+      [10, 30],
+      [20, 30],
+      [20, -10]
+    ]),
+    [0, 0, 20, 20]
+  );
 
   t.comment(result);
-  t.deepEquals(result, [[10, 0, 10, 20], [20, 20, 20, 0]]);
+  t.deepEquals(result, [
+    [10, 0, 10, 20],
+    [20, 20, 20, 0]
+  ]);
 
   t.end();
 });
 
 test('clips 3d line', t => {
   const result = clipPolyline(
-    flatten([[10, -10, 0], [10, 30, 20], [20, 30, 10], [20, -10, -10]]),
+    flatten([
+      [10, -10, 0],
+      [10, 30, 20],
+      [20, 30, 10],
+      [20, -10, -10]
+    ]),
     [0, 0, 20, 20],
     {size: 3}
   );
 
   t.comment(result);
-  t.deepEquals(result, [[10, 0, 5, 10, 20, 15], [20, 20, 5, 20, 0, -5]]);
+  t.deepEquals(result, [
+    [10, 0, 5, 10, 20, 15],
+    [20, 20, 5, 20, 0, -5]
+  ]);
 
   t.end();
 });
 
 test('clips line from partial array', t => {
-  const polyline = flatten([[10, -10], [10, 30], [20, 30], [20, -10]]);
+  const polyline = flatten([
+    [10, -10],
+    [10, 30],
+    [20, 30],
+    [20, -10]
+  ]);
   const result = clipPolyline([].concat([0, 0, 0, 20], polyline, [20, 0, 20, 20]), [0, 0, 20, 20], {
     startIndex: 4,
     endIndex: 12
   });
 
   t.comment(result);
-  t.deepEquals(result, [[10, 0, 10, 20], [20, 20, 20, 0]]);
+  t.deepEquals(result, [
+    [10, 0, 10, 20],
+    [20, 20, 20, 0]
+  ]);
 
   t.end();
 });
@@ -126,17 +153,38 @@ test('clips polygon', t => {
 });
 
 test('polygon contains bbox', t => {
-  const result = clipPolygon(flatten([[10, 40], [40, 10], [10, -20], [-20, 10]]), [0, 0, 20, 20]);
+  const result = clipPolygon(
+    flatten([
+      [10, 40],
+      [40, 10],
+      [10, -20],
+      [-20, 10]
+    ]),
+    [0, 0, 20, 20]
+  );
 
   t.comment(result);
-  t.deepEquals(result, flatten([[0, 0], [0, 20], [20, 20], [20, 0]]));
+  t.deepEquals(
+    result,
+    flatten([
+      [0, 0],
+      [0, 20],
+      [20, 20],
+      [20, 0]
+    ])
+  );
 
   t.end();
 });
 
 test('clips 3d polygon', t => {
   const result = clipPolygon(
-    flatten([[10, -5, 0], [25, 10, 12], [10, 25, 24], [-5, 10, 12]]),
+    flatten([
+      [10, -5, 0],
+      [25, 10, 12],
+      [10, 25, 24],
+      [-5, 10, 12]
+    ]),
     [0, 0, 20, 20],
     {size: 3}
   );
@@ -160,7 +208,12 @@ test('clips 3d polygon', t => {
 });
 
 test('clips polygon fom partial array', t => {
-  const polygon = flatten([[10, -5], [25, 10], [10, 25], [-5, 10]]);
+  const polygon = flatten([
+    [10, -5],
+    [25, 10],
+    [10, 25],
+    [-5, 10]
+  ]);
   const result = clipPolygon([].concat([0, 0, 0, 20], polygon, [20, 0, 20, 20]), [0, 0, 20, 20], {
     startIndex: 4,
     endIndex: 12
@@ -169,7 +222,16 @@ test('clips polygon fom partial array', t => {
   t.comment(result);
   t.deepEquals(
     result,
-    flatten([[0, 5], [5, 0], [15, 0], [20, 5], [20, 15], [15, 20], [5, 20], [0, 15]])
+    flatten([
+      [0, 5],
+      [5, 0],
+      [15, 0],
+      [20, 5],
+      [20, 15],
+      [15, 20],
+      [5, 20],
+      [0, 15]
+    ])
   );
 
   t.end();
@@ -220,7 +282,15 @@ test('clips without leaving empty parts', t => {
 });
 
 test('still works when polygon never crosses bbox', t => {
-  const result = clipPolygon(flatten([[3, 3], [5, 3], [5, 5], [3, 5]]), [0, 0, 2, 2]);
+  const result = clipPolygon(
+    flatten([
+      [3, 3],
+      [5, 3],
+      [5, 5],
+      [3, 5]
+    ]),
+    [0, 0, 2, 2]
+  );
 
   t.deepEquals(result, []);
 

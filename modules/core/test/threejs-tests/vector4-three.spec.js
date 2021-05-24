@@ -25,7 +25,7 @@
 
 // @ts-nocheck
 /* eslint-disable quotes, no-var */
-import test from 'tape-catch';
+import test from 'tape-promise/tape';
 
 import {Vector4, Matrix4} from '@math.gl/core';
 import {x, y, z, w, eps} from './constants';

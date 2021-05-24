@@ -1,4 +1,4 @@
-import test from 'tape-catch';
+import test from 'tape-promise/tape';
 import {flyToViewport, getFlyToDuration} from '@math.gl/web-mercator';
 import {toLowPrecision} from '../utils/test-utils';
 

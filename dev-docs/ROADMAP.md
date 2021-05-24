@@ -3,8 +3,8 @@
 ## Performance
 
 TBA:
-* Quantify
-* Add bench target
 
+- Quantify
+- Add bench target
 
 ## About Library Size

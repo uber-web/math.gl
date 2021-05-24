@@ -19,7 +19,7 @@
 // THE SOFTWARE.
 
 /* eslint-disable*/
-import test from 'tape-catch';
+import test from 'tape-promise/tape';
 import {tapeEquals} from 'test/utils/tape-assertions';
 
 import {Quaternion, Vector3, Matrix4} from '@math.gl/core';

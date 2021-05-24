@@ -1,5 +1,5 @@
 import {getSunPosition} from '../src/suncalc';
-import test from 'tape-catch';
+import test from 'tape-promise/tape';
 
 function near(val1, val2, margin) {
   return Math.abs(val1 - val2) < (margin || 1e-15);

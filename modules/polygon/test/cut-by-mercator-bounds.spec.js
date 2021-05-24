@@ -1,4 +1,4 @@
-import test from 'tape-catch';
+import test from 'tape-promise/tape';
 import {cutPolylineByMercatorBounds, cutPolygonByMercatorBounds} from '@math.gl/polygon';
 
 import {flatten} from './lineclip.spec';
@@ -6,19 +6,28 @@ import {flatten} from './lineclip.spec';
 test('cutPolylineByMercatorBounds - simple', t => {
   t.deepEquals(
     cutPolylineByMercatorBounds([-170, 0, 170, 20]),
-    [[-170, 0, -180, 10], [180, 10, 170, 20]],
+    [
+      [-170, 0, -180, 10],
+      [180, 10, 170, 20]
+    ],
     '2d'
   );
 
   t.deepEquals(
     cutPolylineByMercatorBounds([-170, 0, 100, 170, 20, 200], {size: 3}),
-    [[-170, 0, 100, -180, 10, 150], [180, 10, 150, 170, 20, 200]],
+    [
+      [-170, 0, 100, -180, 10, 150],
+      [180, 10, 150, 170, 20, 200]
+    ],
     '3d'
   );
 
   t.deepEquals(
     cutPolylineByMercatorBounds([-170, 0, 170, 20], {normalize: false}),
-    [[-170, 0, -180, 10], [-180, 10, -190, 20]],
+    [
+      [-170, 0, -180, 10],
+      [-180, 10, -190, 20]
+    ],
     'normalize: false'
   );
 
@@ -64,9 +73,24 @@ test('cutPolylineByMercatorBounds - multiple worlds', t => {
 });
 
 test('cutPolygonByMercatorBounds - simple', t => {
-  const polygon = [[-170, 0], [170, 0], [170, 20], [-170, 20]];
-  const expectedA = [[170, 20], [180, 20], [180, 0], [170, 0]];
-  const expectedB = [[-180, 20], [-170, 20], [-170, 0], [-180, 0]];
+  const polygon = [
+    [-170, 0],
+    [170, 0],
+    [170, 20],
+    [-170, 20]
+  ];
+  const expectedA = [
+    [170, 20],
+    [180, 20],
+    [180, 0],
+    [170, 0]
+  ];
+  const expectedB = [
+    [-180, 20],
+    [-170, 20],
+    [-170, 0],
+    [-180, 0]
+  ];
 
   let parts = cutPolygonByMercatorBounds(flatten(polygon));
   t.deepEquals(parts[0].positions, flatten(expectedA), '2d');
@@ -91,12 +115,37 @@ test('cutPolygonByMercatorBounds - simple', t => {
 });
 
 test('cutPolygonByMercatorBounds - with holes', t => {
-  const polygon = [[-170, 0], [170, 0], [170, 20], [-170, 20]];
-  const expectedA = [[170, 20], [180, 20], [180, 0], [170, 0]];
-  const expectedB = [[-180, 20], [-170, 20], [-170, 0], [-180, 0]];
+  const polygon = [
+    [-170, 0],
+    [170, 0],
+    [170, 20],
+    [-170, 20]
+  ];
+  const expectedA = [
+    [170, 20],
+    [180, 20],
+    [180, 0],
+    [170, 0]
+  ];
+  const expectedB = [
+    [-180, 20],
+    [-170, 20],
+    [-170, 0],
+    [-180, 0]
+  ];
 
-  const holeA = [[175, 10], [173, 10], [175, 8], [173, 8]];
-  const holeB = [[-175, 10], [-173, 10], [-175, 8], [-173, 8]];
+  const holeA = [
+    [175, 10],
+    [173, 10],
+    [175, 8],
+    [173, 8]
+  ];
+  const holeB = [
+    [-175, 10],
+    [-173, 10],
+    [-175, 8],
+    [-173, 8]
+  ];
 
   let result = cutPolygonByMercatorBounds(flatten([polygon, holeA]), [8]);
   t.is(result.length, 2, 'Returns correct number of parts');
@@ -114,7 +163,14 @@ test('cutPolygonByMercatorBounds - with holes', t => {
 });
 
 test('cutPolygonByMercatorBounds - contains pole', t => {
-  const polygon = [[-150, 75], [-90, 80], [-30, 70], [30, 60], [90, 70], [150, 75]];
+  const polygon = [
+    [-150, 75],
+    [-90, 80],
+    [-30, 70],
+    [30, 60],
+    [90, 70],
+    [150, 75]
+  ];
 
   const result = cutPolygonByMercatorBounds(flatten(polygon));
   t.deepEquals(
@@ -132,7 +188,13 @@ test('cutPolygonByMercatorBounds - contains pole', t => {
   );
   t.deepEquals(
     result[1].positions,
-    flatten([[-180, 75], [-150, 75], [-90, 80], [-90, 85.051129], [-180, 85.051129]])
+    flatten([
+      [-180, 75],
+      [-150, 75],
+      [-90, 80],
+      [-90, 85.051129],
+      [-180, 85.051129]
+    ])
   );
 
   t.end();

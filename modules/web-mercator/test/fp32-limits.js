@@ -1,6 +1,6 @@
 import destination from '@turf/destination';
 import {lngLatToWorld, getDistanceScales} from '@math.gl/web-mercator';
-import test from 'tape-catch';
+import test from 'tape-promise/tape';
 
 import VIEWPORT_PROPS from './utils/sample-viewports';
 

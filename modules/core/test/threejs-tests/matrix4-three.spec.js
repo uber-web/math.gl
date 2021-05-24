@@ -26,7 +26,7 @@
 
 // @ts-nocheck
 /* eslint-disable */
-import test from 'tape-catch';
+import test from 'tape-promise/tape';
 import {Matrix4, Vector3, Quaternion, Euler, toRadians} from '@math.gl/core';
 import {eps} from './constants';
 
@@ -630,22 +630,14 @@ test.skip('three.js#Matrix4#compose/decompose', t => {
         const s = sValues[si];
         const r = rValues[ri];
 
-        const m = new Matrix4().compose(
-          t,
-          r,
-          s
-        );
+        const m = new Matrix4().compose(t, r, s);
         const t2 = new Vector3();
         const r2 = new Quaternion();
         const s2 = new Vector3();
 
         m.decompose(t2, r2, s2);
 
-        const m2 = new Matrix4().compose(
-          t2,
-          r2,
-          s2
-        );
+        const m2 = new Matrix4().compose(t2, r2, s2);
 
         /*
 				// debug code

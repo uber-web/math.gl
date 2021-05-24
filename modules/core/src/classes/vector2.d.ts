@@ -23,8 +23,7 @@ import Vector from './base/vector';
 /* Two-element vector class */
 export default class Vector2 extends Vector<Vector2> {
   static ZERO: number[];
-  // Getters/setters
-  ELEMENTS: number;
+  get ELEMENTS(): number;
 
   constructor();
   constructor(array: readonly number[]);

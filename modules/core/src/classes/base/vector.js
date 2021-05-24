@@ -3,6 +3,11 @@ import {checkNumber} from '../../lib/validators';
 import assert from '../../lib/assert';
 
 export default class Vector extends MathArray {
+  get ELEMENTS() {
+    assert(false);
+    return 0;
+  }
+
   // VIRTUAL METHODS
   copy(vector) {
     assert(false);
