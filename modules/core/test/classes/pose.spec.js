@@ -1,4 +1,4 @@
-import test from 'tape-catch';
+import test from 'tape-promise/tape';
 import {Matrix4, Vector3, equals} from '@math.gl/core';
 import {Euler, Pose} from '@math.gl/core';
 import {tapeEquals} from 'test/utils/tape-assertions';

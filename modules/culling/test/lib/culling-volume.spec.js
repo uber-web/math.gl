@@ -2,7 +2,7 @@
 // See LICENSE.md and https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md
 
 /* eslint-disable */
-import test from 'tape-catch';
+import test from 'tape-promise/tape';
 
 import {Vector3} from '@math.gl/core';
 import {

@@ -73,10 +73,26 @@ export default function matrix4Bench(suite, addReferenceBenchmarks) {
   suite
     // add tests
     .group('@math.gl/core: Matrix4 constructors')
-    .add('Matrix4#new Matrix4()', () => configure({debug: false}), () => new Matrix4())
-    .add('Matrix4#new Matrix4(debug)', () => configure({debug: true}), () => new Matrix4())
-    .add('Matrix4#copy()', () => configure({debug: false}), () => matrix4.copy(IDENTITY))
-    .add('Matrix4#copy(debug)', () => configure({debug: true}), () => matrix4.copy(IDENTITY))
+    .add(
+      'Matrix4#new Matrix4()',
+      () => configure({debug: false}),
+      () => new Matrix4()
+    )
+    .add(
+      'Matrix4#new Matrix4(debug)',
+      () => configure({debug: true}),
+      () => new Matrix4()
+    )
+    .add(
+      'Matrix4#copy()',
+      () => configure({debug: false}),
+      () => matrix4.copy(IDENTITY)
+    )
+    .add(
+      'Matrix4#copy(debug)',
+      () => configure({debug: true}),
+      () => matrix4.copy(IDENTITY)
+    )
     .add(
       'Matrix4#set()',
       () => configure({debug: false}),

@@ -1,4 +1,4 @@
-import test from 'tape-catch';
+import test from 'tape-promise/tape';
 import {normalizeViewportProps} from '@math.gl/web-mercator';
 import {config, equals} from '@math.gl/core';
 

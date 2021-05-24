@@ -2,7 +2,7 @@
 // under this permissive license: https://github.com/proj4js/proj4js/blob/master/LICENSE.md
 
 /* eslint-disable */
-import test from 'tape-catch';
+import test from 'tape-promise/tape';
 import {Proj4Projection} from '@math.gl/proj4';
 import {Vector3, toDegrees, _MathUtils} from '@math.gl/core';
 import {tapeEquals, tapeEqualsEpsilon} from 'test/utils/tape-assertions';

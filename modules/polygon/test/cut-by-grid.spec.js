@@ -1,4 +1,4 @@
-import test from 'tape-catch';
+import test from 'tape-promise/tape';
 import {equals} from '@math.gl/core';
 import {cutPolylineByGrid, cutPolygonByGrid} from '@math.gl/polygon';
 
@@ -10,7 +10,15 @@ test('subdivide line', t => {
   t.ok(
     equals(
       result,
-      flatten([[0, 0], [6.25, 10], [10, 16], [12.5, 20], [18.75, 30], [20, 32], [25, 40]])
+      flatten([
+        [0, 0],
+        [6.25, 10],
+        [10, 16],
+        [12.5, 20],
+        [18.75, 30],
+        [20, 32],
+        [25, 40]
+      ])
     )
   );
 
@@ -18,12 +26,27 @@ test('subdivide line', t => {
 });
 
 test('subdivide polyline', t => {
-  const result = cutPolylineByGrid(flatten([[30, 20], [25, 25], [5, 5], [10, 20]]));
+  const result = cutPolylineByGrid(
+    flatten([
+      [30, 20],
+      [25, 25],
+      [5, 5],
+      [10, 20]
+    ])
+  );
   t.comment(result);
   t.ok(
     equals(
       result,
-      flatten([[30, 20], [25, 25], [20, 20], [10, 10], [5, 5], [6.6666667, 10], [10, 20]])
+      flatten([
+        [30, 20],
+        [25, 25],
+        [20, 20],
+        [10, 10],
+        [5, 5],
+        [6.6666667, 10],
+        [10, 20]
+      ])
     )
   );
 
@@ -31,18 +54,46 @@ test('subdivide polyline', t => {
 });
 
 test('subdivide polyline - custom grid', t => {
-  const result = cutPolylineByGrid(flatten([[30, 20], [25, 25], [5, 5], [10, 20]]), {
-    gridResolution: 20,
-    gridOffset: [-5, -5]
-  });
+  const result = cutPolylineByGrid(
+    flatten([
+      [30, 20],
+      [25, 25],
+      [5, 5],
+      [10, 20]
+    ]),
+    {
+      gridResolution: 20,
+      gridOffset: [-5, -5]
+    }
+  );
   t.comment(result);
-  t.ok(equals(result, flatten([[30, 20], [25, 25], [15, 15], [5, 5], [8.3333333, 15], [10, 20]])));
+  t.ok(
+    equals(
+      result,
+      flatten([
+        [30, 20],
+        [25, 25],
+        [15, 15],
+        [5, 5],
+        [8.3333333, 15],
+        [10, 20]
+      ])
+    )
+  );
 
   t.end();
 });
 
 test('subdivide polyline - multiple parts', t => {
-  const result = cutPolylineByGrid(flatten([[30, 20], [25, 25], [5, 5], [10, 20]]), {broken: true});
+  const result = cutPolylineByGrid(
+    flatten([
+      [30, 20],
+      [25, 25],
+      [5, 5],
+      [10, 20]
+    ]),
+    {broken: true}
+  );
   t.comment(result);
   t.ok(
     equals(result, [
@@ -57,9 +108,17 @@ test('subdivide polyline - multiple parts', t => {
 });
 
 test('subdivide 3d polyline', t => {
-  const result = cutPolylineByGrid(flatten([[30, 20, 0], [25, 25, 0], [5, 5, 20], [10, 20, 30]]), {
-    size: 3
-  });
+  const result = cutPolylineByGrid(
+    flatten([
+      [30, 20, 0],
+      [25, 25, 0],
+      [5, 5, 20],
+      [10, 20, 30]
+    ]),
+    {
+      size: 3
+    }
+  );
   t.comment(result);
   t.ok(
     equals(
@@ -80,7 +139,12 @@ test('subdivide 3d polyline', t => {
 });
 
 test('subdivide polyline from partial array', t => {
-  const polyline = flatten([[30, 20], [25, 25], [5, 5], [10, 20]]);
+  const polyline = flatten([
+    [30, 20],
+    [25, 25],
+    [5, 5],
+    [10, 20]
+  ]);
   const result = cutPolylineByGrid([].concat([0, 0, 0, 20], polyline, [20, 20, 20, 0]), {
     startIndex: 4,
     endIndex: 12
@@ -89,7 +153,15 @@ test('subdivide polyline from partial array', t => {
   t.ok(
     equals(
       result,
-      flatten([[30, 20], [25, 25], [20, 20], [10, 10], [5, 5], [6.6666667, 10], [10, 20]])
+      flatten([
+        [30, 20],
+        [25, 25],
+        [20, 20],
+        [10, 10],
+        [5, 5],
+        [6.6666667, 10],
+        [10, 20]
+      ])
     )
   );
 
@@ -107,7 +179,13 @@ function arePolygonsEqual(p1, p2) {
 
 // Debug with https://codepen.io/Pessimistress/pen/BaNOmKM
 test('subdivide polygon', t => {
-  const result = cutPolygonByGrid(flatten([[5, 20], [20, 5], [5, -10]]));
+  const result = cutPolygonByGrid(
+    flatten([
+      [5, 20],
+      [20, 5],
+      [5, -10]
+    ])
+  );
 
   t.comment(result);
   const expected = [
@@ -137,7 +215,14 @@ test('subdivide polygon#edgeTypes', t => {
   // - vertex on grid intersection
   // - interpolated edge point on grid intersection
   // - subpolygon that is entirely inside
-  const testPolygon = [[-10, 20], [20, 10], [5, -10], [5, 5], [12, 5], [5, 12]];
+  const testPolygon = [
+    [-10, 20],
+    [20, 10],
+    [5, -10],
+    [5, 5],
+    [12, 5],
+    [5, 12]
+  ];
   const testPolygonEdges = [
     [testPolygon[0], testPolygon[1]],
     [testPolygon[1], testPolygon[2]],
@@ -193,10 +278,18 @@ test('subdivide polygon#edgeTypes', t => {
 });
 
 test('subdivide polygon with custom grid', t => {
-  const result = cutPolygonByGrid(flatten([[5, 20], [20, 5], [5, -10]]), null, {
-    gridResolution: 20,
-    gridOffset: [5, 5]
-  });
+  const result = cutPolygonByGrid(
+    flatten([
+      [5, 20],
+      [20, 5],
+      [5, -10]
+    ]),
+    null,
+    {
+      gridResolution: 20,
+      gridOffset: [5, 5]
+    }
+  );
 
   t.comment(result);
   const expected = [{positions: [5, 5, 20, 5, 5, -10]}, {positions: [5, 5, 5, 20, 20, 5]}];
@@ -210,11 +303,19 @@ test('subdivide polygon with custom grid', t => {
 });
 
 test('subdivide 3D polygon', t => {
-  const result = cutPolygonByGrid(flatten([[5, 20, 0], [20, 5, 15], [5, -10, 30]]), null, {
-    size: 3,
-    gridResolution: 20,
-    gridOffset: [5, 5]
-  });
+  const result = cutPolygonByGrid(
+    flatten([
+      [5, 20, 0],
+      [20, 5, 15],
+      [5, -10, 30]
+    ]),
+    null,
+    {
+      size: 3,
+      gridResolution: 20,
+      gridOffset: [5, 5]
+    }
+  );
 
   t.comment(result);
   const expected = [
@@ -232,7 +333,16 @@ test('subdivide 3D polygon', t => {
 
 test('subdivide polygon with holes', t => {
   const result = cutPolygonByGrid(
-    flatten([[5, 5], [20, 5], [20, 15], [5, 15], [10, 10], [10, 12], [15, 12], [15, 10]]),
+    flatten([
+      [5, 5],
+      [20, 5],
+      [20, 15],
+      [5, 15],
+      [10, 10],
+      [10, 12],
+      [15, 12],
+      [15, 10]
+    ]),
     [8]
   );
 

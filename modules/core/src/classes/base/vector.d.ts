@@ -1,7 +1,7 @@
 import MathArray from './math-array';
 
 /** Base class for vectors */
-export default class Vector<VectorType> extends MathArray<VectorType> {
+export default abstract class Vector<VectorType> extends MathArray<VectorType> {
   // VIRTUAL METHODS
   // copy(vector) {
 

@@ -27,7 +27,7 @@
 
 // @ts-nocheck
 /* eslint-disable */
-import test from 'tape-catch';
+import test from 'tape-promise/tape';
 import {Quaternion, Vector3, Vector4, Matrix4, Euler} from '@math.gl/core';
 import {x, y, z, w, eps} from './constants';
 

@@ -7,9 +7,10 @@ type Array16 = number[];
 export default class Matrix4 extends Matrix<Matrix4> {
   static IDENTITY: number[];
   static ZERO: number[];
+
   INDICES: number[];
-  // get ELEMENTS()
-  // get RANK()
+  get ELEMENTS(): number;
+  get RANK(): number;
 
   constructor();
   constructor(array: Array16);

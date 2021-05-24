@@ -34,7 +34,10 @@ Compute an oriented bounding box enclosing two points.
 ```js
 import {makeOrientedBoundingBoxFromPoints} from '@math.gl/culling';
 
-const box = makeOrientedBoundingBoxFromPoints([[2, 0, 0], [-2, 0, 0]]);
+const box = makeOrientedBoundingBoxFromPoints([
+  [2, 0, 0],
+  [-2, 0, 0]
+]);
 ```
 
 ## Global Functions

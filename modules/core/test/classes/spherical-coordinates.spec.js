@@ -19,13 +19,16 @@
 // THE SOFTWARE.
 
 /* eslint-disable max-statements, max-depth */
-import test from 'tape-catch';
+import test from 'tape-promise/tape';
 import {tapeEquals} from 'test/utils/tape-assertions';
 import {SphericalCoordinates} from '@math.gl/core';
 
 const REPRESENTATION_TEST_CASES = [
   {
-    representations: [{theta: 0, phi: 0, radius: 1}, {pitch: 0, bearing: 180, radius: 1}],
+    representations: [
+      {theta: 0, phi: 0, radius: 1},
+      {pitch: 0, bearing: 180, radius: 1}
+    ],
     vector: [0, 0, 1]
   },
   {
@@ -57,7 +60,10 @@ const REPRESENTATION_TEST_CASES = [
     vector: [-1, 0, 0]
   },
   {
-    representations: [{theta: Math.PI, phi: 0, radius: 1}, {pitch: 180, bearing: 180, altitude: 1}],
+    representations: [
+      {theta: Math.PI, phi: 0, radius: 1},
+      {pitch: 180, bearing: 180, altitude: 1}
+    ],
     vector: [0, 0, -1]
   }
 ];

@@ -2,8 +2,7 @@ const {resolve} = require('path');
 
 module.exports = {
   lint: {
-    // TODO - comment out while getting typescript to work
-    paths: ['dev-docs', 'docs', 'modules', 'examples'], // test', 'website', 'examples'],
+    paths: ['dev-docs', 'docs', 'modules', 'examples', 'test'], // 'website'
     extensions: ['js', 'md']
   },
 

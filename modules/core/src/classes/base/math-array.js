@@ -28,12 +28,6 @@ export default class MathArray extends Array {
     return 0;
   }
 
-  // Defined by derived class
-  get RANK() {
-    assert(false);
-    return 0;
-  }
-
   clone() {
     // @ts-ignore error TS2351: Cannot use 'new' with an expression whose type lacks a call or construct signature.
     return new this.constructor().copy(this);

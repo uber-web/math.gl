@@ -1,9 +1,8 @@
 
 /** Base class for vectors and matrices */
-export default class MathArray<DerivedType> extends Array<number> {
+export default abstract class MathArray<DerivedType> extends Array<number> {
   // Defined by derived class
-  ELEMENTS: number;
-  RANK: number;
+  abstract get ELEMENTS(): number;
 
   clone(): DerivedType;
 

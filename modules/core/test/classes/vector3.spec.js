@@ -19,7 +19,7 @@
 // THE SOFTWARE.
 
 /* eslint-disable max-statements */
-import test from 'tape-catch';
+import test from 'tape-promise/tape';
 import {tapeEquals} from 'test/utils/tape-assertions';
 
 import {Vector3, Matrix4, Matrix3, Quaternion} from '@math.gl/core';
@@ -109,7 +109,10 @@ test('Vector3#distance', t => {
 });
 
 test('Vector3#len', t => {
-  const TEST_CASES = [{input: [0, 0, 0], result: 0}, {input: [3, 4, 0], result: 5}];
+  const TEST_CASES = [
+    {input: [0, 0, 0], result: 0},
+    {input: [3, 4, 0], result: 5}
+  ];
   for (const tc of TEST_CASES) {
     const result = new Vector3(tc.input).len();
     t.equals(result, tc.result);

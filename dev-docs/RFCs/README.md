@@ -12,10 +12,9 @@ Writeups of directions in major areas of interest
 
 ## v3.0 RFCs
 
-
-| RFC                                                             | Author   | Status          | Description                                                                                                                          |
-| --------------------------------------------------------------- | -------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| [**Monorepo Module Structure**](./math-monorepo-rfc.md) | @ibgreen | **Draft**       | Proposes a module structure for math.gl to group similar math functionality into sub-libraries.                                              |
-| [**New Geometry Module**](./geometry-module-rfc.md)             | @ibgreen | **Drafr** | New loaders.gl submodule collecting framework-agnostic geometry utilities |
-| [**New Geospatial Module**](./geometry-module-rfc.md)             | @ibgreen | **Drafr** | New loaders.gl submodule collecting framework-agnostic geospatial utilities |
-| [**New Culling Module**](./geometry-module-rfc.md)             | @ibgreen | **Drafr** | New loaders.gl submodule collecting framework-agnostic culling utilities |
+| RFC                                                     | Author   | Status    | Description                                                                                     |
+| ------------------------------------------------------- | -------- | --------- | ----------------------------------------------------------------------------------------------- |
+| [**Monorepo Module Structure**](./math-monorepo-rfc.md) | @ibgreen | **Draft** | Proposes a module structure for math.gl to group similar math functionality into sub-libraries. |
+| [**New Geometry Module**](./geometry-module-rfc.md)     | @ibgreen | **Drafr** | New loaders.gl submodule collecting framework-agnostic geometry utilities                       |
+| [**New Geospatial Module**](./geometry-module-rfc.md)   | @ibgreen | **Drafr** | New loaders.gl submodule collecting framework-agnostic geospatial utilities                     |
+| [**New Culling Module**](./geometry-module-rfc.md)      | @ibgreen | **Drafr** | New loaders.gl submodule collecting framework-agnostic culling utilities                        |

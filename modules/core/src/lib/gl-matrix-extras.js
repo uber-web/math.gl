@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 // vec2 additions
 
 export function vec2_transformMat4AsVector(out, a, m) {

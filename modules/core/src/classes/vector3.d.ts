@@ -23,7 +23,7 @@ import Vector from './base/vector';
 /** Three-element vector class */
 export default class Vector3 extends Vector<Vector3> {
   static readonly ZERO: Vector3;
-  readonly ELEMENTS: number;
+  get ELEMENTS(): number;
 
   constructor();
   constructor(array: readonly number[]);

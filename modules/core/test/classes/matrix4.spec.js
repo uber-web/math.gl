@@ -20,7 +20,7 @@
 
 /* eslint-disable max-statements */
 import {Matrix4, Vector3, config, configure} from '@math.gl/core';
-import test from 'tape-catch';
+import test from 'tape-promise/tape';
 import {tapeEquals, tapeEqualsEpsilon} from 'test/utils/tape-assertions';
 
 config.EPSILON = 1e-6;

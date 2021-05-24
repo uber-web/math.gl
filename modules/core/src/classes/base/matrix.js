@@ -1,8 +1,20 @@
 import MathArray from './math-array';
 import {checkNumber} from '../../lib/validators';
 import {config} from '../../lib/common';
+import assert from '../../lib/assert';
 
 export default class Matrix extends MathArray {
+  // Defined by derived class
+  get ELEMENTS() {
+    assert(false);
+    return 0;
+  }
+
+  get RANK() {
+    assert(false);
+    return 0;
+  }
+
   // fromObject(object) {
   //   const array = object.elements;
   //   return this.fromRowMajor(array);

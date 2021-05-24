@@ -1,4 +1,4 @@
-import test from 'tape-catch';
+import test from 'tape-promise/tape';
 import {fitBounds} from '@math.gl/web-mercator';
 import {WebMercatorViewport} from '@math.gl/web-mercator';
 import {toLowPrecision} from '../utils/test-utils';
@@ -9,7 +9,10 @@ const FITBOUNDS_TEST_CASES = /** @type {[import('@math.gl/web-mercator/fit-bound
       width: 100,
       height: 100,
       // southwest bound first
-      bounds: [[-73.9876, 40.7661], [-72.9876, 41.7661]]
+      bounds: [
+        [-73.9876, 40.7661],
+        [-72.9876, 41.7661]
+      ]
     },
     {
       longitude: -73.48759999999997,
@@ -22,7 +25,10 @@ const FITBOUNDS_TEST_CASES = /** @type {[import('@math.gl/web-mercator/fit-bound
       width: 100,
       height: 100,
       // northeast bound first
-      bounds: [[-72.9876, 41.7661], [-73.9876, 40.7661]]
+      bounds: [
+        [-72.9876, 41.7661],
+        [-73.9876, 40.7661]
+      ]
     },
     {
       longitude: -73.48759999999997,
@@ -34,7 +40,10 @@ const FITBOUNDS_TEST_CASES = /** @type {[import('@math.gl/web-mercator/fit-bound
     {
       width: 100,
       height: 100,
-      bounds: [[-73, 10], [-73, 10]],
+      bounds: [
+        [-73, 10],
+        [-73, 10]
+      ],
       maxZoom: 22
     },
     {
@@ -47,7 +56,10 @@ const FITBOUNDS_TEST_CASES = /** @type {[import('@math.gl/web-mercator/fit-bound
     {
       width: 100,
       height: 100,
-      bounds: [[-73, 10], [-73, 10]],
+      bounds: [
+        [-73, 10],
+        [-73, 10]
+      ],
       minExtent: 0.01
     },
     {
@@ -60,7 +72,10 @@ const FITBOUNDS_TEST_CASES = /** @type {[import('@math.gl/web-mercator/fit-bound
     {
       width: 600,
       height: 400,
-      bounds: [[-23.407, 64.863], [-23.406, 64.874]],
+      bounds: [
+        [-23.407, 64.863],
+        [-23.406, 64.874]
+      ],
       padding: 20,
       offset: [0, -40]
     },
@@ -74,7 +89,10 @@ const FITBOUNDS_TEST_CASES = /** @type {[import('@math.gl/web-mercator/fit-bound
     {
       width: 600,
       height: 400,
-      bounds: [[-23.407, 64.863], [-23.406, 64.874]],
+      bounds: [
+        [-23.407, 64.863],
+        [-23.406, 64.874]
+      ],
       padding: {top: 100, bottom: 10, left: 30, right: 30},
       offset: [0, -40]
     },
@@ -136,15 +154,33 @@ test('fitBounds#degenerate', t => {
 
   const viewport = new WebMercatorViewport(OPTIONS);
   t.doesNotThrow(
-    () => viewport.fitBounds([[-70, 10], [-70, 10]]),
+    () =>
+      viewport.fitBounds([
+        [-70, 10],
+        [-70, 10]
+      ]),
     'degenerate bounds do not throw by default'
   );
   t.throws(
-    () => viewport.fitBounds([[-70, 10], [-70, 10]], {maxZoom: Infinity}),
+    () =>
+      viewport.fitBounds(
+        [
+          [-70, 10],
+          [-70, 10]
+        ],
+        {maxZoom: Infinity}
+      ),
     'degenerate bounds throw if maxZoom removed'
   );
   t.doesNotThrow(
-    () => viewport.fitBounds([[-70, 10], [-70, 10]], {minExtent: 0.01, maxZoom: Infinity}),
+    () =>
+      viewport.fitBounds(
+        [
+          [-70, 10],
+          [-70, 10]
+        ],
+        {minExtent: 0.01, maxZoom: Infinity}
+      ),
     'degenerate bounds does not throw if maxZoom removed and minExtents added'
   );
 

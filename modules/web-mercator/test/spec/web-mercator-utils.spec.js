@@ -1,4 +1,4 @@
-import test from 'tape-catch';
+import test from 'tape-promise/tape';
 import destination from '@turf/destination';
 import {toLowPrecision} from '../utils/test-utils';
 import {config, equals} from '@math.gl/core';
@@ -112,7 +112,10 @@ test('getDistanceScales#unitsPerDegree', t => {
       t.comment(`unadjusted: ${diff.message}`);
       t.comment(`adjusted: ${diffAdjusted.message}`);
 
-      t.ok(diffAdjusted.error.every(e => e < DISTANCE_TOLERANCE), 'Error within ratio tolerance');
+      t.ok(
+        diffAdjusted.error.every(e => e < DISTANCE_TOLERANCE),
+        'Error within ratio tolerance'
+      );
       t.ok(
         diffAdjusted.errorPixels.every(p => p < DISTANCE_TOLERANCE_PIXELS),
         'Error within pixel tolerance'
@@ -165,7 +168,10 @@ test('getDistanceScales#unitsPerMeter', t => {
       t.comment(`unadjusted: ${diff.message}`);
       t.comment(`adjusted: ${diffAdjusted.message}`);
 
-      t.ok(diffAdjusted.error.every(e => e < DISTANCE_TOLERANCE), 'Error within ratio tolerance');
+      t.ok(
+        diffAdjusted.error.every(e => e < DISTANCE_TOLERANCE),
+        'Error within ratio tolerance'
+      );
       t.ok(
         diffAdjusted.errorPixels.every(p => p < DISTANCE_TOLERANCE_PIXELS),
         'Error within pixel tolerance'

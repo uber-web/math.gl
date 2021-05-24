@@ -17,7 +17,10 @@ Or from a collection of points:
 ```js
 import {makeAxisAlignedBoundingBoxFromPoints} from '@math.gl/culling';
 
-const box = makeAxisAlignedBoundingBoxFromPoints([[2, 0, 0], [-2, 0, 0]]);
+const box = makeAxisAlignedBoundingBoxFromPoints([
+  [2, 0, 0],
+  [-2, 0, 0]
+]);
 ```
 
 ## Global Functions

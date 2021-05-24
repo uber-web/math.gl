@@ -1,8 +1,8 @@
 # Culling Module for math.gl RFC
 
-* **Authors**: Ib Green
-* **Date**: Apr 2019
-* **Status**: Unfinished Draft
+- **Authors**: Ib Green
+- **Date**: Apr 2019
+- **Status**: Unfinished Draft
 
 ## Summary
 
@@ -14,5 +14,5 @@ The vis.gl stack has traditionally relied on GPU processing of geometries but wi
 
 ## Proposal: New Classes
 
-* CPU side mathematical helper classes (`BoundingBoxes` etc)
-* CPU side geometry calculations (`Frustum` intersection, ...)
+- CPU side mathematical helper classes (`BoundingBoxes` etc)
+- CPU side geometry calculations (`Frustum` intersection, ...)

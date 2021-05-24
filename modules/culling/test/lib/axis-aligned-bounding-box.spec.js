@@ -1,4 +1,4 @@
-// import test from 'tape-catch';
+// import test from 'tape-promise/tape';
 import {it, expect} from 'test/utils/expect-assertions';
 
 import {

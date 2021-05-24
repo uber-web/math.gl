@@ -2,7 +2,7 @@
 // See LICENSE.md and https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md
 
 /* eslint-disable */
-import test from 'tape-catch';
+import test from 'tape-promise/tape';
 import {tapeEquals, tapeEqualsEpsilon} from 'test/utils/tape-assertions';
 
 import {Vector3, Vector4, Matrix3, toRadians, _MathUtils} from '@math.gl/core';
@@ -189,7 +189,10 @@ test('OrientedBoundingBox#Calculate half sizes and half axes properly', t => {
   t.deepEqual(box.halfAxes, halfAxes);
   t.deepEqual(box.halfSize, halfSize);
   t.notEquals(box.halfSize[2], 1);
-  t.equal(box.halfSize.reduce((res, hs) => res * hs), volume);
+  t.equal(
+    box.halfSize.reduce((res, hs) => res * hs),
+    volume
+  );
   t.end();
 });
 

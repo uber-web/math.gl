@@ -1,5 +1,5 @@
 import {Euler, Matrix4, Quaternion, Pose} from '@math.gl/core';
-import test from 'tape-catch';
+import test from 'tape-promise/tape';
 import {tapeEquals} from 'test/utils/tape-assertions';
 
 const DEGREE_TO_RADIANS = Math.PI / 180;

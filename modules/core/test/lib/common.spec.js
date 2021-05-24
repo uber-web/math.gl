@@ -23,7 +23,15 @@ import {config, configure, isArray, clone, equals, exactEquals, formatValue} fro
 import {toRadians, toDegrees} from '@math.gl/core';
 import {radians, degrees, sin, cos, tan, asin, acos, atan, clamp, lerp} from '@math.gl/core';
 import {tapeEquals} from 'test/utils/tape-assertions';
-import test from 'tape-catch';
+import test from 'tape-promise/tape';
+
+test.only('math.gl#tests', t => {
+  t.equals(0, 0, '0 and 0 compares equally');
+  t.equals(0, -0, '0 and -0 compares equally');
+  t.deepEquals([0], [0], '0 and 0 compares equally');
+  t.deepEquals([0], [-0], '0 and -0 compares equally');
+  t.end();
+});
 
 test('math.gl#types', t => {
   t.equals(typeof isArray, 'function');
@@ -227,7 +235,10 @@ test('math.gl#cos', t => {
 });
 
 test('math.gl#tan', t => {
-  runTests(t, tan, [{input: 0, result: 0}, {input: [Math.PI / 4, 0], result: [1, 0]}]);
+  runTests(t, tan, [
+    {input: 0, result: 0},
+    {input: [Math.PI / 4, 0], result: [1, 0]}
+  ]);
   t.end();
 });
 
@@ -248,7 +259,10 @@ test('math.gl#acos', t => {
 });
 
 test('math.gl#atan', t => {
-  runTests(t, atan, [{input: 0, result: 0}, {input: [1, 0], result: [Math.PI / 4, 0]}]);
+  runTests(t, atan, [
+    {input: 0, result: 0},
+    {input: [1, 0], result: [Math.PI / 4, 0]}
+  ]);
   t.end();
 });
 
