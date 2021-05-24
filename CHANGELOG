@@ -1,6 +1,23 @@
 # CHANGELOG
 
-## v3.4.0 - Jan 7, 2020
+# v3.5.0-alpha.1
+
+- Add earcut (#219)
+- Faster polygon area (#218)
+- Drop es6 entry points (#217)
+- Update build targets (#215)
+- Add a more detailed type definition for `getLocationAtPoint()`. (#201)
+- Bounding Box From Points - Fix for scaling method (#206)
+- ESLint fix in math-utils.js file (#207)
+- Handle missing log2 in IE 11 (#204)
+- [viewport-mercator-project] v7.0.2
+- [viewport-mercator-project] re-export typescript types (#198)
+- Fixes matrix4 decompose return types (#199)
+- Fix lookat types (#197)
+- documentation pass
+- Transformation docs (#196)
+
+## v3.4.1 - Jan 7, 2020
 
 - chore: bump babel/runtime version to fix mjs issue (#193)
 - chore: Cleanup READMEs and eslint defs (#192)
