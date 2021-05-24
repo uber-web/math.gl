@@ -1,7 +1,7 @@
 // This file is derived from the Cesium math library under Apache 2 license
 // See LICENSE.md and https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md
 
-import {Polygon, modifyPolygonWindingDirection, WINDING} from '@math.gl/polygon';
+import {earcut, Polygon, modifyPolygonWindingDirection, WINDING} from '@math.gl/polygon';
 import {toNested} from './utils.js';
 
 const polygonSmall = [0, 0, 1, 1, 0, 2, -1, 1, -1.25, 0.5, 0, 0];
@@ -82,6 +82,12 @@ export default function polygonBench(suite, addReferenceBenchmarks) {
     .add('Polygon#getSignedArea() nested', () => {
       const polygon = new Polygon(polygonMediumNested);
       polygon.getSignedArea();
+    })
+    .add('earcut with precomputed areas ', () => {
+      earcut(polygonMedium, [], 2, [-21.3664]);
+    })
+    .add('earcut', () => {
+      earcut(polygonMedium, [], 2);
     });
 
   return suite;

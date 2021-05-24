@@ -8,6 +8,8 @@ export {
   WINDING
 } from './polygon-utils';
 
+export {earcut} from './earcut';
+
 export {clipPolygon, clipPolyline} from './lineclip';
 
 export {cutPolygonByGrid, cutPolylineByGrid} from './cut-by-grid';
