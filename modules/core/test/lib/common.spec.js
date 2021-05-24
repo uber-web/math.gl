@@ -25,7 +25,9 @@ import {radians, degrees, sin, cos, tan, asin, acos, atan, clamp, lerp} from '@m
 import {tapeEquals} from 'test/utils/tape-assertions';
 import test from 'tape-promise/tape';
 
-test.only('math.gl#tests', t => {
+test('math.gl#tests', t => {
+  // Note: tape 4.12 and higher no longer compares 0 and -0 equally...
+  // Workaround is to pin tape to 4.11
   t.equals(0, 0, '0 and 0 compares equally');
   t.equals(0, -0, '0 and -0 compares equally');
   t.deepEquals([0], [0], '0 and 0 compares equally');
