@@ -26,8 +26,7 @@ export function getPolygonWindingDirection(points, options = {}) {
 /** @type {typeof import('./polygon-utils').getPolygonSignedArea} */
 export function getPolygonSignedArea(points, options = {}) {
   // https://en.wikipedia.org/wiki/Shoelace_formula
-  const start = options.start || 0;
-  const end = options.end || points.length;
+  const {start = 0, end = points.length} = options;
   const dim = options.size || 2;
   let area = 0;
   for (let i = start, j = end - dim; i < end; i += dim) {
@@ -105,8 +104,7 @@ export function getPolygonWindingDirectionPoints(points, options = {}) {
 /** @type {typeof import('./polygon-utils').getPolygonSignedAreaPoints} */
 export function getPolygonSignedAreaPoints(points, options = {}) {
   // https://en.wikipedia.org/wiki/Shoelace_formula
-  const start = options.start || 0;
-  const end = options.end || points.length;
+  const {start = 0, end = points.length} = options;
   let area = 0;
   for (let i = start, j = end - 1; i < end; ++i) {
     area += (points[i][0] - points[j][0]) * (points[i][1] + points[j][1]);
