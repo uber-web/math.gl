@@ -322,14 +322,17 @@ export default class OrientedBoundingBox {
   transform(transformation) {
     this.center.transformAsPoint(transformation);
 
-    const xAxis = this.halfAxes.getColumn(0, scratchVector3);
-    xAxis.transformAsVector(transformation);
+    const xAxis = this.halfAxes.getColumn(0);
+    xAxis.transform(transformation);
 
-    const yAxis = this.halfAxes.getColumn(1, scratchVector3);
-    yAxis.transformAsVector(transformation);
+    const yAxis = this.halfAxes.getColumn(1);
+    yAxis.transform(transformation);
 
-    const zAxis = this.halfAxes.getColumn(2, scratchVector3);
-    zAxis.transformAsVector(transformation);
+    const zAxis = this.halfAxes.getColumn(2);
+    zAxis.transform(transformation);
+
+    this.halfAxes = new Matrix3([...xAxis, ...yAxis, ...zAxis]);
+    return this;
   }
 
   getTransform() {

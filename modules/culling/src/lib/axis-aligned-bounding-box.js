@@ -64,7 +64,8 @@ export default class AxisAlignedBoundingBox {
 
   transform(transformation) {
     this.center.transformAsPoint(transformation);
-    this.halfDiagonal.transformAsVector(transformation);
+    this.halfDiagonal.transform(transformation);
+    return this;
   }
 
   /**

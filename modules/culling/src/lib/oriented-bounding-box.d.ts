@@ -32,14 +32,6 @@ export default class OrientedBoundingBox {
   // Compares the provided OrientedBoundingBox componentwise and returns
   equals(right: OrientedBoundingBox): boolean;
 
-  /**
-   * Applies a transformation (e.g. Matrix4) to the bounding box
-   *
-   * @param transform The transformation to apply to the bounding sphere.
-   * @returns itself, i.e. the modified AxisAlignedBoundingBox.
-   */
-  transform(transformation: number[]): OrientedBoundingBox;
-
   // Computes a tight-fitting bounding sphere enclosing the provided oriented bounding box.
   getBoundingSphere(result?: BoundingSphere): BoundingSphere;
 
@@ -70,4 +62,12 @@ export default class OrientedBoundingBox {
    *   on the bounding box from position in direction.
    */
   computePlaneDistances(position: readonly number[], direction: readonly number[], result?: number[]): number[];
+
+  /**
+   * Applies a transformation (e.g. Matrix4) to the bounding box
+   *
+   * @param transform The transformation to apply to the bounding sphere.
+   * @returns itself, i.e. the modified AxisAlignedBoundingBox.
+   */
+  transform(transformation: number[]): OrientedBoundingBox;
 }
