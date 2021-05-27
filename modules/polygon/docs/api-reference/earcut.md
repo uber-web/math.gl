@@ -32,4 +32,4 @@ Arguments:
 
 Returns:
 
-A array of indices into the `positions` array that describes the triangulation of the polygon
+An array of indices into the `positions` array that describes the triangulation of the polygon
