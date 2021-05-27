@@ -62,6 +62,11 @@ export default class AxisAlignedBoundingBox {
     );
   }
 
+  transform(transformation) {
+    this.center.transformAsPoint(transformation);
+    this.halfDiagonal.transformAsVector(transformation);
+  }
+
   /**
    * Determines which side of a plane a box is located.
    */

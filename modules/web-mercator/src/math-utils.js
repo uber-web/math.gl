@@ -25,4 +25,12 @@ function ieLog2(x) {
   return Math.log(x) * Math.LOG2E;
 }
 // Handle missing log2 in IE 11
+<<<<<<< HEAD
 export const log2 = Math.log2 || ieLog2;
+=======
+export const log2 =
+  Math.log2 ||
+  function(x) {
+    return Math.log(x) * Math.LOG2E;
+  };
+>>>>>>> d14aefb23ca25f8ef9080ca8fae61cf92a66b29a
