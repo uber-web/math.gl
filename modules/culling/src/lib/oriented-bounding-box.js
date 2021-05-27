@@ -149,6 +149,20 @@ export default class OrientedBoundingBox {
     return INTERSECTION.INTERSECTING;
   }
 
+  // Applies a 4x4 affine transformation matrix to a oriented bounding box.
+  //    *
+  // @param {OrientedBoundingBox} box The oriented bounding box to apply the transformation to.
+  // @param {Matrix4} transform The transformation matrix to apply to the oriented bounding box.
+  // @returns {OrientedBoundingBox} The modified this parameter or a new OrientedBoundingBox instance if none was provided.
+  transform(transform) {
+    transform.transform(this.center, this.center);
+    const xAxis = transform.transformAsVector(this.halfAxes.getColumn(0));
+    const yAxis = transform.transformAsVector(this.halfAxes.getColumn(1));
+    const zAxis = transform.transformAsVector(this.halfAxes.getColumn(2));
+    this.halfAxes = new Matrix3([...xAxis, ...yAxis, ...zAxis]);
+    return this;
+  }
+
   // Computes the estimated distance from the closest point on a bounding box to a point.
   distanceTo(point) {
     return Math.sqrt(this.distanceSquaredTo(point));

@@ -38,6 +38,15 @@ export default class OrientedBoundingBox {
   // Determines which side of a plane the oriented bounding box is located.
   intersectPlane(plane: Plane): INTERSECTION_ENUM;
 
+  /**
+   * Applies a 4x4 affine transformation matrix to a oriented bounding box.
+   *
+   * @param box The oriented bounding box to apply the transformation to.
+   * @param transform The transformation matrix to apply to the oriented bounding box.
+   * @returns itself, i.e. the modified OrientedBoundingBox.
+   */
+   transform(transform: readonly number[]): OrientedBoundingBox;  
+
   // Computes the estimated distance from the closest point on a bounding box to a point.
   distanceTo(point: readonly number[]): number;
 
