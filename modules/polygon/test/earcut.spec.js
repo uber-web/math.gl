@@ -19,8 +19,12 @@
 
  */
 
+import fs from 'fs';
+import {resolve} from 'path';
 import test from 'tape-promise/tape';
 import {earcut} from '@math.gl/polygon';
+import {deviation, flatten} from './earcut-utils';
+import expected from './earcut-testdata/expected';
 
 test('indices-2d', function(t) {
   const indices = earcut([10, 0, 0, 50, 60, 60, 70, 10]);
@@ -37,4 +41,31 @@ test('indices-3d', function(t) {
 test('empty', function(t) {
   t.same(earcut([]), []);
   t.end();
+});
+
+Object.keys(expected.triangles).forEach(id => {
+  test(id, t => {
+    const filepath = resolve(__dirname, './earcut-testdata/fixtures/', `${id}.json`);
+    const raw = fs.readFileSync(filepath).toString();
+    const data = flatten(JSON.parse(raw));
+    const indices = earcut(data.vertices, data.holes, data.dimensions);
+    const actualDeviation = deviation(data.vertices, data.holes, data.dimensions, indices);
+    const expectedTriangles = expected.triangles[id];
+    const expectedDeviation = expected.errors[id] || 0;
+
+    const numTriangles = indices.length / 3;
+    t.ok(
+      numTriangles === expectedTriangles,
+      `${numTriangles} triangles when expected ${expectedTriangles}`
+    );
+
+    if (expectedTriangles > 0) {
+      t.ok(
+        actualDeviation <= expectedDeviation,
+        `deviation ${actualDeviation} <= ${expectedDeviation}`
+      );
+    }
+
+    t.end();
+  });
 });
