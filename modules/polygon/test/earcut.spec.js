@@ -19,7 +19,7 @@
 
  */
 
-import fs from 'fs';
+import {promises as fs} from 'fs';
 import {resolve} from 'path';
 import test from 'tape-promise/tape';
 import {earcut} from '@math.gl/polygon';
@@ -43,11 +43,25 @@ test('empty', function(t) {
   t.end();
 });
 
+async function openFile(filePath) {
+  let data = null;
+  if (typeof fetch !== 'undefined') {
+    const request = await fetch(filePath);
+    data = await request.json();
+  } else if (fs) {
+    data = await fs.readFile(filePath);
+    data = JSON.parse(data.toString());
+  }
+  return data;
+}
+
+const FIXTURES_PATH = 'modules/polygon/test/earcut-testdata/fixtures/';
+
 Object.keys(expected.triangles).forEach(id => {
-  test(id, t => {
-    const filepath = resolve(__dirname, './earcut-testdata/fixtures/', `${id}.json`);
-    const raw = fs.readFileSync(filepath).toString();
-    const data = flatten(JSON.parse(raw));
+  test(id, async t => {
+    const filepath = resolve(FIXTURES_PATH, `${id}.json`);
+    const raw = await openFile(filepath);
+    const data = flatten(raw);
     const indices = earcut(data.vertices, data.holes, data.dimensions);
     const actualDeviation = deviation(data.vertices, data.holes, data.dimensions, indices);
     const expectedTriangles = expected.triangles[id];
