@@ -32,7 +32,7 @@ export function deviation(data, holeIndices, dim, triangles) {
   // Unlike original Mapbox implementation we use `getPolygonSignedArea`
   // which returns values of half the size and of opposite sign
   // Thus below when calculating the triangle area we also divide
-  // by two to obtain the corect result
+  // by two to obtain the correct result
   let polygonArea = Math.abs(getPolygonSignedArea(data, {start: 0, end: outerLen, size: dim}));
   if (hasHoles) {
     for (let i = 0, len = holeIndices.length; i < len; i++) {
@@ -47,10 +47,11 @@ export function deviation(data, holeIndices, dim, triangles) {
     const a = triangles[i] * dim;
     const b = triangles[i + 1] * dim;
     const c = triangles[i + 2] * dim;
-    trianglesArea += Math.abs(
-      (data[a] - data[c]) * (data[b + 1] - data[a + 1]) -
-        (data[a] - data[b]) * (data[c + 1] - data[a + 1])
-    ) / 2;
+    trianglesArea +=
+      Math.abs(
+        (data[a] - data[c]) * (data[b + 1] - data[a + 1]) -
+          (data[a] - data[b]) * (data[c + 1] - data[a + 1])
+      ) / 2;
   }
 
   return polygonArea === 0 && trianglesArea === 0
