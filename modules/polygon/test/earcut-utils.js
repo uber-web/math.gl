@@ -59,6 +59,9 @@ export function deviation(data, holeIndices, dim, triangles) {
     : Math.abs((trianglesArea - polygonArea) / polygonArea);
 }
 
+/**
+ * turn a polygon in a multi-dimensional array form (e.g. as in GeoJSON) into a form Earcut accepts
+ */
 export function flatten(data) {
   const dim = data[0][0].length;
   const result = {vertices: [], holes: [], dimensions: dim};
@@ -74,4 +77,22 @@ export function flatten(data) {
     }
   }
   return result;
+}
+
+export function extractAreas(data, holeIndices, dim) {
+  const hasHoles = holeIndices && holeIndices.length;
+  const outerLen = hasHoles ? holeIndices[0] * dim : data.length;
+
+  const polygonArea = getPolygonSignedArea(data, {start: 0, end: outerLen, size: dim});
+  const areas = [polygonArea];
+  if (hasHoles) {
+    for (let i = 0, len = holeIndices.length; i < len; i++) {
+      const start = holeIndices[i] * dim;
+      const end = i < len - 1 ? holeIndices[i + 1] * dim : data.length;
+      const holeArea = getPolygonSignedArea(data, {start, end, size: dim});
+      areas.push(holeArea);
+    }
+  }
+
+  return areas;
 }

@@ -23,7 +23,7 @@ import {promises as fs} from 'fs';
 import {resolve} from 'path';
 import test from 'tape-promise/tape';
 import {earcut} from '@math.gl/polygon';
-import {deviation, flatten} from './earcut-utils';
+import {extractAreas, deviation, flatten} from './earcut-utils';
 import expected from './earcut-testdata/expected';
 
 test('indices-2d', function(t) {
@@ -79,6 +79,15 @@ Object.keys(expected.triangles).forEach(id => {
         `deviation ${actualDeviation} <= ${expectedDeviation}`
       );
     }
+
+    // Compare to result obtained with precomputed areas
+    const areas = extractAreas(data.vertices, data.holes, data.dimensions);
+    const indices2 = earcut(data.vertices, data.holes, data.dimensions, areas);
+    t.deepEqual(
+      indices2,
+      indices,
+      'earcut triangulation with precomputed areas should match one without precomputation'
+    );
 
     t.end();
   });
