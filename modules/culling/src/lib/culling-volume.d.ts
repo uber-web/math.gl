@@ -1,5 +1,5 @@
 import {INTERSECTION_ENUM} from '../constants';
-import BoundingSphere from './bounding-sphere';
+import BoundingSphere from './bounding-volumes/bounding-sphere';
 import Plane from './plane';
 
 // A culling volume defined by planes.

@@ -25,6 +25,10 @@ spheres.sort(
 );
 ```
 
+## Inheritance
+
+`class BoundingSphere implements` [`BoundingVolume`](/modules/culling/docs/api-reference/bounding-volume).
+
 ## Global Functions
 
 ### makeBoundingSphereFromPoints(positions : iterator, result? : BoundingSphere) : BoundingSphere

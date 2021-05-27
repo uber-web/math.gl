@@ -1,5 +1,5 @@
 import {Vector3} from '@math.gl/core';
-import {INTERSECTION} from '../constants';
+import {INTERSECTION} from '../../constants';
 
 const scratchVector = new Vector3();
 const scratchNormal = new Vector3();
@@ -13,15 +13,7 @@ export default class AxisAlignedBoundingBox {
         .copy(minimum)
         .add(maximum)
         .scale(0.5);
-    /**
-     * The center point of the bounding box.
-     * @type {Vector3}
-     */
     this.center = new Vector3(center);
-    /**
-     * The positive half diagonal of the bounding box.
-     * @type {Vector3}
-     */
     this.halfDiagonal = new Vector3(maximum).subtract(this.center);
 
     /**

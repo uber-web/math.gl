@@ -66,10 +66,12 @@
           "title": "@math.gl/culling",
           "entries": [
             {"entry": "modules/culling/docs"},
+            {"entry": "modules/culling/docs/api-reference/axis-aligned-bounding-box"},
             {"entry": "modules/culling/docs/api-reference/bounding-sphere"},
+            {"entry": "modules/culling/docs/api-reference/bounding-volume"},
             {"entry": "modules/culling/docs/api-reference/culling-volume"},
             {"entry": "modules/culling/docs/api-reference/oriented-bounding-box"},
-            {"entry": "modules/culling/docs/api-reference/plane"}
+x            {"entry": "modules/culling/docs/api-reference/plane"}
           ]
         },
         {

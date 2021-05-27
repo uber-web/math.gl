@@ -3,8 +3,8 @@
 
 import {Vector3, Matrix3} from '@math.gl/core';
 import computeEigenDecomposition from './compute-eigen-decomposition';
-import OrientedBoundingBox from '../lib/oriented-bounding-box';
-import AxisAlignedBoundingBox from '../lib/axis-aligned-bounding-box';
+import OrientedBoundingBox from '../bounding-volumes/oriented-bounding-box';
+import AxisAlignedBoundingBox from '../bounding-volumes/axis-aligned-bounding-box';
 
 const scratchVector2 = new Vector3();
 
