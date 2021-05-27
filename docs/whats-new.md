@@ -25,6 +25,13 @@
   </tbody>
 </table>
 
+## v3.5 (In development)
+
+**`@math.gl/polygon`**
+
+- Improve performance of `getPolygonSignedArea()` by 3x
+- Addition of `earcut()` method for triangulating polygons
+
 ## v3.4
 
 Release Date: Jan 7, 2020
