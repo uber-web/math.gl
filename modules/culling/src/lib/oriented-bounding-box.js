@@ -10,6 +10,9 @@ const scratchOffset = new Vector3();
 const scratchVectorU = new Vector3();
 const scratchVectorV = new Vector3();
 const scratchVectorW = new Vector3();
+const transformScratchVectorU = new Vector3();
+const transformScratchVectorV = new Vector3();
+const transformScratchVectorW = new Vector3();
 const scratchCorner = new Vector3();
 const scratchToCenter = new Vector3();
 
@@ -322,13 +325,13 @@ export default class OrientedBoundingBox {
   transform(transformation) {
     this.center.transformAsPoint(transformation);
 
-    const xAxis = this.halfAxes.getColumn(0);
+    const xAxis = this.halfAxes.getColumn(0, transformScratchVectorU);
     xAxis.transform(transformation);
 
-    const yAxis = this.halfAxes.getColumn(1);
+    const yAxis = this.halfAxes.getColumn(1, transformScratchVectorV);
     yAxis.transform(transformation);
 
-    const zAxis = this.halfAxes.getColumn(2);
+    const zAxis = this.halfAxes.getColumn(2, transformScratchVectorW);
     zAxis.transform(transformation);
 
     this.halfAxes = new Matrix3([...xAxis, ...yAxis, ...zAxis]);

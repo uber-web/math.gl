@@ -669,7 +669,8 @@ test('OrientedBoundingBox#applies transform: translation, rotation, scale', t =>
     5
   ]);
   const result = obb.transform(transform);
-  tapeEquals(t, result, expected);
+  tapeEquals(t, result.center, expected.center);
+  tapeEquals(t, result.halfAxes, expected.halfAxes);
   t.end();
 });
 /*
