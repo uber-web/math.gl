@@ -25,6 +25,13 @@
   </tbody>
 </table>
 
+## v3.5 (In development)
+
+**`@math.gl/polygon`**
+
+- Improve performance of `getPolygonSignedArea()` by 3x
+- Addition of `earcut()` method for triangulating polygons
+
 ## v3.4
 
 Release Date: Jan 7, 2020
@@ -32,7 +39,7 @@ Release Date: Jan 7, 2020
 **`@math.gl/geoid`** - New module
 
 - Support for [geoid](https://en.wikipedia.org/wiki/Geoid)-based [earth gravity models](https://en.wikipedia.org/wiki/Earth_Gravitational_Model).
-- New `Geoid` class calculates the height offset (aka "undulation") from the pure ellipsoid for a given lng/lat (using sherical harmonics).
+- New `Geoid` class calculates the height offset (aka "undulation") from the pure ellipsoid for a given lng/lat (using spherical harmonics).
 - `Geoid` instances can be initialized with PGM-encoded earth gravity model coefficient files from standard sources.
 
 **`@math.gl/polygon`**
