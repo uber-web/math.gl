@@ -8,7 +8,8 @@ import {
   INTERSECTION,
   Plane
 } from '@math.gl/culling';
-import {Vector3, Matrix4} from '@math.gl/core';
+import {Vector3} from '@math.gl/core';
+// import {Vector3, Matrix4} from '@math.gl/core';
 
 const positions = [
   new Vector3(3, -1, -3),
