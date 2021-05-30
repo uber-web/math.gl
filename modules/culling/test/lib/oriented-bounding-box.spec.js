@@ -651,7 +651,6 @@ test('OrientedBoundingBox#computePlaneDistances throws without a direction', t =
 });
 
 test.skip('OrientedBoundingBox#applies transform: translation, rotation, scale', t => {
-  debugger
   const VECTOR3_ZERO = new Vector3(0, 0, 0);
   const obb = new OrientedBoundingBox(VECTOR3_ZERO, [1, 0, 0, 0, 1, 0, 0, 0, 1]);
   const transform = new Matrix4()
