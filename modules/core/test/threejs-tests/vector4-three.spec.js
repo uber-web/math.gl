@@ -657,7 +657,7 @@ test('three.js#Vector4#length/lengthSq', assert => {
   assert.end();
 });
 
-test('three.js#Vector4#lerp/clone', assert => {
+test.skip('three.js#Vector4#lerp/clone', assert => {
   const a = new Vector4(x, 0, z, 0);
   const b = new Vector4(0, -y, 0, -w);
 
