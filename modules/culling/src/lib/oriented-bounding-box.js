@@ -13,10 +13,6 @@ const scratchVectorW = new Vector3();
 const scratchCorner = new Vector3();
 const scratchToCenter = new Vector3();
 
-const fromOrientedBoundingBoxScratchU = new Vector3();
-const fromOrientedBoundingBoxScratchV = new Vector3();
-const fromOrientedBoundingBoxScratchW = new Vector3();
-
 const MATRIX3 = {
   COLUMN0ROW0: 0,
   COLUMN0ROW1: 1,
@@ -86,9 +82,9 @@ export default class OrientedBoundingBox {
   // Computes a tight-fitting bounding sphere enclosing the provided oriented bounding box.
   getBoundingSphere(result = new BoundingSphere()) {
     const halfAxes = this.halfAxes;
-    const u = halfAxes.getColumn(0, fromOrientedBoundingBoxScratchU);
-    const v = halfAxes.getColumn(1, fromOrientedBoundingBoxScratchV);
-    const w = halfAxes.getColumn(2, fromOrientedBoundingBoxScratchW);
+    const u = halfAxes.getColumn(0, scratchVectorU);
+    const v = halfAxes.getColumn(1, scratchVectorV);
+    const w = halfAxes.getColumn(2, scratchVectorW);
 
     // Calculate "corner" vector
     const cornerVector = scratchVector3
