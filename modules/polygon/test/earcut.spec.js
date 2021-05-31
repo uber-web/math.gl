@@ -24,7 +24,7 @@ import {resolve} from 'path';
 import test from 'tape-promise/tape';
 import {earcut} from '@math.gl/polygon';
 import {extractAreas, deviation, flatten} from './earcut-utils';
-import expected from './earcut-testdata/expected';
+import expected from './data/earcut/expected';
 
 test('indices-2d', function(t) {
   const indices = earcut([10, 0, 0, 50, 60, 60, 70, 10]);
@@ -55,7 +55,7 @@ async function openFile(filePath) {
   return data;
 }
 
-const FIXTURES_PATH = 'modules/polygon/test/earcut-testdata/fixtures/';
+const FIXTURES_PATH = 'modules/polygon/test/data/earcut/fixtures/';
 
 Object.keys(expected.triangles).forEach(id => {
   test(id, async t => {
