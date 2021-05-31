@@ -3,13 +3,14 @@
 
 // Cesium culling library port
 
-import './algorithms/compute-eigen-decomposition.spec';
-import './algorithms/bounding-sphere-from-points.spec';
+import './lib/algorithms/compute-eigen-decomposition.spec';
+import './lib/algorithms/bounding-sphere-from-points.spec';
 
-import './lib/axis-aligned-bounding-box.spec';
-import './lib/bounding-sphere.spec';
+import './lib/bounding-volumes/axis-aligned-bounding-box.spec';
+import './lib/bounding-volumes/bounding-sphere.spec';
+import './lib/bounding-volumes/oriented-bounding-box.spec';
+
 import './lib/plane.spec';
-import './lib/oriented-bounding-box.spec';
 import './lib/culling-volume.spec';
 
 import './lib/perspective-off-center-frustum.spec';

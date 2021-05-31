@@ -1,4 +1,4 @@
-import BoundingSphere from '../lib/bounding-sphere';
+import BoundingSphere from '../bounding-volumes/bounding-sphere';
 
 /**
  * Computes a tight-fitting bounding sphere enclosing a list of 3D Cartesian points.

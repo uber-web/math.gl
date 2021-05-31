@@ -27,10 +27,17 @@
 
 ## v3.5 (In development)
 
+Release Date: TBD
+
 **`@math.gl/polygon`**
 
 - Improve performance of `getPolygonSignedArea()` by 3x
 - Addition of `earcut()` method for triangulating polygons
+
+**`math.gl/culling`**
+
+- New TypeScript interface `BoundingVolume` with common operations for bounding volumes (`BoundingSphere`, `AxisAlignedBoundingBox`, `OrientedBoundingBox`).
+- `BoundingVolume.transform()` supported on all bounding volumes.
 
 ## v3.4
 

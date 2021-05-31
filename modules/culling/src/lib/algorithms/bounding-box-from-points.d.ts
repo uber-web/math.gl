@@ -1,5 +1,5 @@
-import OrientedBoundingBox from '../lib/oriented-bounding-box';
-import AxisAlignedBoundingBox from '../lib/axis-aligned-bounding-box';
+import OrientedBoundingBox from '../bounding-volumes/oriented-bounding-box';
+import AxisAlignedBoundingBox from '../bounding-volumes/axis-aligned-bounding-box';
 
 /**
  * Computes an instance of an OrientedBoundingBox of the given positions.

@@ -2,7 +2,7 @@
 // See LICENSE.md and https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md
 
 import {Vector3} from '@math.gl/core';
-import BoundingSphere from '../lib/bounding-sphere';
+import BoundingSphere from '../bounding-volumes/bounding-sphere';
 
 /* eslint-disable */
 const fromPointsXMin = new Vector3();

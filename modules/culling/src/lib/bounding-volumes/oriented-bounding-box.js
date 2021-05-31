@@ -3,7 +3,7 @@
 
 import {Vector3, Matrix3, Quaternion} from '@math.gl/core';
 import BoundingSphere from './bounding-sphere';
-import {INTERSECTION} from '../constants';
+import {INTERSECTION} from '../../constants';
 
 const scratchVector3 = new Vector3();
 const scratchOffset = new Vector3();
@@ -48,7 +48,6 @@ export default class OrientedBoundingBox {
     return new Quaternion().fromMatrix3(new Matrix3([...normXAxis, ...normYAxis, ...normZAxis]));
   }
 
-  // Generate OrientedBoundingBox from OBB based on quaternion
   fromCenterHalfSizeQuaternion(center, halfSize, quaternion) {
     const quaternionObject = new Quaternion(quaternion);
     const directionsMatrix = new Matrix3().fromQuaternion(quaternionObject);
@@ -66,12 +65,10 @@ export default class OrientedBoundingBox {
     return this;
   }
 
-  // Duplicates a OrientedBoundingBox instance.
   clone() {
     return new OrientedBoundingBox(this.center, this.halfAxes);
   }
 
-  // Compares the provided OrientedBoundingBox componentwise and returns
   equals(right) {
     return (
       this === right ||
@@ -79,7 +76,6 @@ export default class OrientedBoundingBox {
     );
   }
 
-  // Computes a tight-fitting bounding sphere enclosing the provided oriented bounding box.
   getBoundingSphere(result = new BoundingSphere()) {
     const halfAxes = this.halfAxes;
     const u = halfAxes.getColumn(0, scratchVectorU);
@@ -98,15 +94,6 @@ export default class OrientedBoundingBox {
     return result;
   }
 
-  /**
-   * Determines which side of a plane the oriented bounding box is located.
-   *
-   * @param plane The plane to test against.
-   * @returns
-   *  - `INTERSECTION.INSIDE` if the entire box is on the side of the plane the normal is pointing.
-   *  - `INTERSECTION.OUTSIDE` if the entire box is on the opposite side.
-   *  - `INTERSECTION.INTERSECTING` if the box intersects the plane.
-   */
   intersectPlane(plane) {
     const center = this.center;
     const normal = plane.normal;
@@ -145,16 +132,14 @@ export default class OrientedBoundingBox {
     return INTERSECTION.INTERSECTING;
   }
 
-  // Computes the estimated distance from the closest point on a bounding box to a point.
   distanceTo(point) {
     return Math.sqrt(this.distanceSquaredTo(point));
   }
 
-  // Computes the estimated distance squared from the closest point on a bounding box to a point.
-  // See Geometric Tools for Computer Graphics 10.4.2
-
-  // eslint-disable-next-line max-statements
   distanceSquaredTo(point) {
+    // Computes the estimated distance squared from the
+    // closest point on a bounding box to a point.
+    // See Geometric Tools for Computer Graphics 10.4.2
     const offset = scratchOffset.from(point).subtract(this.center);
 
     const halfAxes = this.halfAxes;
@@ -190,9 +175,6 @@ export default class OrientedBoundingBox {
 
     return distanceSquared;
   }
-
-  // The distances calculated by the vector from the center of the bounding box
-  // to position projected onto direction.
 
   // eslint-disable-next-line max-statements
   computePlaneDistances(position, direction, result = [-0, -0]) {
@@ -319,13 +301,13 @@ export default class OrientedBoundingBox {
     this.center.transformAsPoint(transformation);
 
     const xAxis = this.halfAxes.getColumn(0, scratchVectorU);
-    xAxis.transform(transformation);
+    xAxis.transformAsPoint(transformation);
 
     const yAxis = this.halfAxes.getColumn(1, scratchVectorV);
-    yAxis.transform(transformation);
+    yAxis.transformAsPoint(transformation);
 
     const zAxis = this.halfAxes.getColumn(2, scratchVectorW);
-    zAxis.transform(transformation);
+    zAxis.transformAsPoint(transformation);
 
     this.halfAxes = new Matrix3([...xAxis, ...yAxis, ...zAxis]);
     return this;

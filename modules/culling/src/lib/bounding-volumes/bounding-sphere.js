@@ -1,10 +1,9 @@
 // This file is derived from the Cesium math library under Apache 2 license
 // See LICENSE.md and https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md
 
-/* eslint-disable */
-import {Vector3, Matrix4} from '@math.gl/core';
+import {Vector3} from '@math.gl/core';
 import * as mat4 from 'gl-matrix/mat4';
-import {INTERSECTION} from '../constants';
+import {INTERSECTION} from '../../constants';
 
 // import Rectangle from './rectangle';
 
@@ -32,8 +31,6 @@ export default class BoundingSphere {
     return this;
   }
 
-  // Computes a bounding sphere from the corner points of an axis-aligned bounding box.  The sphere
-  // tighly and fully encompases the box.
   fromCornerPoints(corner, oppositeCorner) {
     oppositeCorner = scratchVector.from(oppositeCorner);
     this.center = new Vector3()
@@ -44,7 +41,6 @@ export default class BoundingSphere {
     return this;
   }
 
-  // Compares the provided BoundingSphere componentwise
   equals(right) {
     return (
       this === right ||
@@ -52,12 +48,10 @@ export default class BoundingSphere {
     );
   }
 
-  // Duplicates a BoundingSphere instance.
   clone() {
     return new BoundingSphere(this.center, this.radius);
   }
 
-  // Computes a bounding sphere that contains both the left and right bounding spheres.
   union(boundingSphere) {
     const leftCenter = this.center;
     const leftRadius = this.radius;
@@ -92,7 +86,6 @@ export default class BoundingSphere {
     return this;
   }
 
-  // Computes a bounding sphere by enlarging the provided sphere to contain the provided point.
   expand(point) {
     point = scratchVector.from(point);
     const radius = point.subtract(this.center).magnitude();
@@ -102,30 +95,6 @@ export default class BoundingSphere {
     return this;
   }
 
-  // Determines which side of a plane a sphere is located.
-  intersectPlane(plane) {
-    var center = this.center;
-    var radius = this.radius;
-    var normal = plane.normal;
-    var distanceToPlane = normal.dot(center) + plane.distance;
-
-    // The center point is negative side of the plane normal
-    if (distanceToPlane < -radius) {
-      return INTERSECTION.OUTSIDE;
-    }
-    // The center point is positive side of the plane, but radius extends beyond it; partial overlap
-    if (distanceToPlane < radius) {
-      return INTERSECTION.INTERSECTING;
-    }
-    // The center point and radius is positive side of the plane
-    return INTERSECTION.INSIDE;
-  }
-
-  // Applies a 4x4 affine transformation matrix to a bounding sphere.
-  //    *
-  // @param {BoundingSphere} sphere The bounding sphere to apply the transformation to.
-  // @param {Matrix4} transform The transformation matrix to apply to the bounding sphere.
-  // @returns {BoundingSphere} The modified this parameter or a new BoundingSphere instance if none was provided.
   transform(transform) {
     this.center.transform(transform);
     const scale = mat4.getScaling(scratchVector, transform);
@@ -142,5 +111,24 @@ export default class BoundingSphere {
 
   distanceTo(point) {
     return Math.sqrt(this.distanceSquaredTo(point));
+  }
+
+  // Determines which side of a plane a sphere is located.
+  intersectPlane(plane) {
+    const center = this.center;
+    const radius = this.radius;
+    const normal = plane.normal;
+    const distanceToPlane = normal.dot(center) + plane.distance;
+
+    // The center point is negative side of the plane normal
+    if (distanceToPlane < -radius) {
+      return INTERSECTION.OUTSIDE;
+    }
+    // The center point is positive side of the plane, but radius extends beyond it; partial overlap
+    if (distanceToPlane < radius) {
+      return INTERSECTION.INTERSECTING;
+    }
+    // The center point and radius is positive side of the plane
+    return INTERSECTION.INSIDE;
   }
 }
