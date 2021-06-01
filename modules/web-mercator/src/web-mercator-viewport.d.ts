@@ -6,6 +6,7 @@ type WebMercatorViewportOptions = {
   height: number;
   latitude?: number;
   longitude?: number;
+  position?: number[];
   zoom?: number;
   pitch?: number;
   bearing?: number;
@@ -28,6 +29,7 @@ export default class WebMercatorViewport {
   bearing: number;
   altitude: number;
 
+  meterOffset: number[];
   center: number[];
 
   width: number;
