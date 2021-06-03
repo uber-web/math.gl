@@ -31,6 +31,16 @@ test('WebMercatorViewport#constructor - 0 width/height', t => {
   t.end();
 });
 
+test('WebMercatorViewport#constructor - camera offset', t => {
+  const viewport = new WebMercatorViewport(
+    Object.assign({}, VIEWPORT_PROPS.flat, {
+      position: [0, 0, 300]
+    })
+  );
+  t.ok(viewport.center[2], 'WebMercatorViewport constructed successfully with camera offset');
+  t.end();
+});
+
 test('WebMercatorViewport#equals', t => {
   // TODO - fix types
   // @ts-ignore

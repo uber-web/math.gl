@@ -16,6 +16,7 @@ import getBounds from './get-bounds';
 
 import * as mat4 from 'gl-matrix/mat4';
 import * as vec2 from 'gl-matrix/vec2';
+import * as vec3 from 'gl-matrix/vec3';
 
 export default class WebMercatorViewport {
   // eslint-disable-next-line max-statements
@@ -30,6 +31,7 @@ export default class WebMercatorViewport {
       pitch = 0,
       bearing = 0,
       altitude = 1.5,
+      position = null,
       nearZMultiplier = 0.02,
       farZMultiplier = 1.01
     } = {width: 1, height: 1}
@@ -43,8 +45,14 @@ export default class WebMercatorViewport {
     // TODO - just throw an Error instead?
     altitude = Math.max(0.75, altitude);
 
+    const distanceScales = getDistanceScales({longitude, latitude});
+
     const center = lngLatToWorld([longitude, latitude]);
     center[2] = 0;
+
+    if (position) {
+      vec3.add(center, center, vec3.mul([], position, distanceScales.unitsPerMeter));
+    }
 
     this.projectionMatrix = getProjectionMatrix({
       width,
@@ -76,8 +84,9 @@ export default class WebMercatorViewport {
     this.bearing = bearing;
     this.altitude = altitude;
     this.center = center;
+    this.meterOffset = position || [0, 0, 0];
 
-    this.distanceScales = getDistanceScales(this);
+    this.distanceScales = distanceScales;
 
     this._initMatrices();
 
