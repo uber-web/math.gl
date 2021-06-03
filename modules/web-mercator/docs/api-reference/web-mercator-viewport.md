@@ -9,16 +9,17 @@ and performs projections between world and screen coordinates.
 
 ## Constructor
 
-| Parameter   | Type     | Default | Description                                                                                      |
-| ----------- | -------- | ------- | ------------------------------------------------------------------------------------------------ |
-| `width`     | `number` | `1`     | Width of viewport                                                                                |
-| `height`    | `number` | `1`     | Height of viewport                                                                               |
-| `latitude`  | `number` | `0`     | Latitude of viewport center                                                                      |
-| `longitude` | `number` | `0`     | Longitude of viewport center                                                                     |
-| `zoom`      | `number` | `11`    | Map zoom (scale is calculated as `2^zoom`)                                                       |
-| `pitch`     | `number` | `0`     | The pitch (tilt) of the map from the screen, in degrees (0 is straight down)                     |
-| `bearing`   | `number` | `0`     | The bearing (rotation) of the map from north, in degrees counter-clockwise (0 means north is up) |
-| `altitude`  | `number` | `1.5`   | Altitude of camera in screen units                                                               |
+| Parameter   | Type       | Default | Description                                                                                      |
+| ----------- | ---------- | ------- | ------------------------------------------------------------------------------------------------ |
+| `width`     | `number`   | `1`     | Width of viewport                                                                                |
+| `height`    | `number`   | `1`     | Height of viewport                                                                               |
+| `latitude`  | `number`   | `0`     | Latitude of viewport center                                                                      |
+| `longitude` | `number`   | `0`     | Longitude of viewport center                                                                     |
+| `zoom`      | `number`   | `11`    | Map zoom (scale is calculated as `2^zoom`)                                                       |
+| `pitch`     | `number`   | `0`     | The pitch (tilt) of the map from the screen, in degrees (0 is straight down)                     |
+| `bearing`   | `number`   | `0`     | The bearing (rotation) of the map from north, in degrees counter-clockwise (0 means north is up) |
+| `altitude`  | `number`   | `1.5`   | Altitude of camera in screen units                                                               |
+| `position`  | `number[]` | `null`  | Offset of the camera, in meters                                                                  |
 
 Remarks:
 
