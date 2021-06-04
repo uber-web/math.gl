@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v3.4.3 - Jun 4, 2021
+
+- WebMercatorViewport supports camera meter offset (#235)
+
 ## v3.4.2 - Jan 17, 2021
 
 - Fix Matrix4.lookAt() types (#197)
