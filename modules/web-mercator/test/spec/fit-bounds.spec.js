@@ -3,108 +3,109 @@ import {fitBounds} from '@math.gl/web-mercator';
 import {WebMercatorViewport} from '@math.gl/web-mercator';
 import {toLowPrecision} from '../utils/test-utils';
 
-const FITBOUNDS_TEST_CASES = /** @type {[import('@math.gl/web-mercator/fit-bounds').FitBoundsOptions, import('@math.gl/web-mercator/fit-bounds').Bounds][]} */ ([
-  [
-    {
-      width: 100,
-      height: 100,
-      // southwest bound first
-      bounds: [
-        [-73.9876, 40.7661],
-        [-72.9876, 41.7661]
-      ]
-    },
-    {
-      longitude: -73.48759999999997,
-      latitude: 41.26801443944763,
-      zoom: 5.723804361273887
-    }
-  ],
-  [
-    {
-      width: 100,
-      height: 100,
-      // northeast bound first
-      bounds: [
-        [-72.9876, 41.7661],
-        [-73.9876, 40.7661]
-      ]
-    },
-    {
-      longitude: -73.48759999999997,
-      latitude: 41.26801443944763,
-      zoom: 5.723804361273887
-    }
-  ],
-  [
-    {
-      width: 100,
-      height: 100,
-      bounds: [
-        [-73, 10],
-        [-73, 10]
-      ],
-      maxZoom: 22
-    },
-    {
-      longitude: -73,
-      latitude: 10,
-      zoom: 22
-    }
-  ],
-  [
-    {
-      width: 100,
-      height: 100,
-      bounds: [
-        [-73, 10],
-        [-73, 10]
-      ],
-      minExtent: 0.01
-    },
-    {
-      longitude: -73,
-      latitude: 10,
-      zoom: 13.28771238
-    }
-  ],
-  [
-    {
-      width: 600,
-      height: 400,
-      bounds: [
-        [-23.407, 64.863],
-        [-23.406, 64.874]
-      ],
-      padding: 20,
-      offset: [0, -40]
-    },
-    {
-      longitude: -23.406499999999973,
-      latitude: 64.86850056273362,
-      zoom: 12.89199533073045
-    }
-  ],
-  [
-    {
-      width: 600,
-      height: 400,
-      bounds: [
-        [-23.407, 64.863],
-        [-23.406, 64.874]
-      ],
-      padding: {top: 100, bottom: 10, left: 30, right: 30},
-      offset: [0, -40]
-    },
-    {
-      longitude: -23.406499999999973,
-      latitude: 64.870857602,
-      zoom: 12.476957831
-    }
-  ]
-]);
+const FITBOUNDS_TEST_CASES =
+  /** @type {[import('@math.gl/web-mercator/fit-bounds').FitBoundsOptions, import('@math.gl/web-mercator/fit-bounds').Bounds][]} */ ([
+    [
+      {
+        width: 100,
+        height: 100,
+        // southwest bound first
+        bounds: [
+          [-73.9876, 40.7661],
+          [-72.9876, 41.7661]
+        ]
+      },
+      {
+        longitude: -73.48759999999997,
+        latitude: 41.26801443944763,
+        zoom: 5.723804361273887
+      }
+    ],
+    [
+      {
+        width: 100,
+        height: 100,
+        // northeast bound first
+        bounds: [
+          [-72.9876, 41.7661],
+          [-73.9876, 40.7661]
+        ]
+      },
+      {
+        longitude: -73.48759999999997,
+        latitude: 41.26801443944763,
+        zoom: 5.723804361273887
+      }
+    ],
+    [
+      {
+        width: 100,
+        height: 100,
+        bounds: [
+          [-73, 10],
+          [-73, 10]
+        ],
+        maxZoom: 22
+      },
+      {
+        longitude: -73,
+        latitude: 10,
+        zoom: 22
+      }
+    ],
+    [
+      {
+        width: 100,
+        height: 100,
+        bounds: [
+          [-73, 10],
+          [-73, 10]
+        ],
+        minExtent: 0.01
+      },
+      {
+        longitude: -73,
+        latitude: 10,
+        zoom: 13.28771238
+      }
+    ],
+    [
+      {
+        width: 600,
+        height: 400,
+        bounds: [
+          [-23.407, 64.863],
+          [-23.406, 64.874]
+        ],
+        padding: 20,
+        offset: [0, -40]
+      },
+      {
+        longitude: -23.406499999999973,
+        latitude: 64.86850056273362,
+        zoom: 12.89199533073045
+      }
+    ],
+    [
+      {
+        width: 600,
+        height: 400,
+        bounds: [
+          [-23.407, 64.863],
+          [-23.406, 64.874]
+        ],
+        padding: {top: 100, bottom: 10, left: 30, right: 30},
+        offset: [0, -40]
+      },
+      {
+        longitude: -23.406499999999973,
+        latitude: 64.870857602,
+        zoom: 12.476957831
+      }
+    ]
+  ]);
 
-test('fitBounds', t => {
+test('fitBounds', (t) => {
   for (const [input, expected] of FITBOUNDS_TEST_CASES) {
     const result = fitBounds(input);
 
@@ -116,7 +117,7 @@ test('fitBounds', t => {
   t.end();
 });
 
-test('WebMercatorViewport.fitBounds', t => {
+test('WebMercatorViewport.fitBounds', (t) => {
   for (const [input, expected] of FITBOUNDS_TEST_CASES) {
     const viewport = new WebMercatorViewport({
       longitude: -122,
@@ -143,7 +144,7 @@ test('WebMercatorViewport.fitBounds', t => {
   t.end();
 });
 
-test('fitBounds#degenerate', t => {
+test('fitBounds#degenerate', (t) => {
   const OPTIONS = {
     height: 100,
     width: 100,

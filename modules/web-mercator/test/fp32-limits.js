@@ -14,13 +14,13 @@ function getDiff(value, baseValue) {
     errorPixels,
     error,
     message: `off by \
-      (${errorPixels.map(d => d.toFixed(3)).join(', ')}) pixels, \
-      (${error.map(d => `${(d * 100).toFixed(3)}%`).join(', ')})`
+      (${errorPixels.map((d) => d.toFixed(3)).join(', ')}) pixels, \
+      (${error.map((d) => `${(d * 100).toFixed(3)}%`).join(', ')})`
   };
 }
 
 // eslint-disable-next-line max-statements
-test('FP32 & Offset Comparison', t => {
+test('FP32 & Offset Comparison', (t) => {
   // Explore limits at different scales
   for (let zoom = 1; zoom <= 20; zoom++) {
     const scale = Math.pow(2, zoom);
@@ -50,7 +50,7 @@ test('FP32 & Offset Comparison', t => {
       // Calculate using FP32 mode
       const longitudeFP32 = Math.fround(longitude);
       const latitudeFP32 = Math.fround(latitude);
-      const pointFP32 = point.map(f => Math.fround(f));
+      const pointFP32 = point.map((f) => Math.fround(f));
       const coordsFP32 = [
         Math.fround(lngLatToWorld(pointFP32)[0]) -
           Math.fround(lngLatToWorld([longitudeFP32, latitudeFP32])[0]),
@@ -64,15 +64,15 @@ test('FP32 & Offset Comparison', t => {
 
       // Calculate using FP32+64 mixed offset mode (NEW WAY IN DECK.GL 6.0)
       // Select center point (the center is in 32-bit coords)
-      const centerPointFP32 = [longitude, latitude].map(f => Math.fround(f));
+      const centerPointFP32 = [longitude, latitude].map((f) => Math.fround(f));
       const {unitsPerDegree, unitsPerDegree2} = getDistanceScales({
         longitude: centerPointFP32[0],
         latitude: centerPointFP32[1],
         highPrecision: true
       });
       // these are passed as FP32
-      const unitsPerDegreeFP32 = unitsPerDegree.map(f => Math.fround(f));
-      const unitsPerDegree2FP32 = unitsPerDegree2.map(f => Math.fround(f));
+      const unitsPerDegreeFP32 = unitsPerDegree.map((f) => Math.fround(f));
+      const unitsPerDegree2FP32 = unitsPerDegree2.map((f) => Math.fround(f));
       // Only the offset is FP64
       const offsetFP64 = [point[0] - centerPointFP32[0], point[1] - centerPointFP32[1]];
 

@@ -348,35 +348,17 @@ export default class Euler extends MathArray {
     const q = new Quaternion();
     switch (this[4]) {
       case Euler.XYZ:
-        return q
-          .rotateX(this[0])
-          .rotateY(this[1])
-          .rotateZ(this[2]);
+        return q.rotateX(this[0]).rotateY(this[1]).rotateZ(this[2]);
       case Euler.YXZ:
-        return q
-          .rotateY(this[0])
-          .rotateX(this[1])
-          .rotateZ(this[2]);
+        return q.rotateY(this[0]).rotateX(this[1]).rotateZ(this[2]);
       case Euler.ZXY:
-        return q
-          .rotateZ(this[0])
-          .rotateX(this[1])
-          .rotateY(this[2]);
+        return q.rotateZ(this[0]).rotateX(this[1]).rotateY(this[2]);
       case Euler.ZYX:
-        return q
-          .rotateZ(this[0])
-          .rotateY(this[1])
-          .rotateX(this[2]);
+        return q.rotateZ(this[0]).rotateY(this[1]).rotateX(this[2]);
       case Euler.YZX:
-        return q
-          .rotateY(this[0])
-          .rotateZ(this[1])
-          .rotateX(this[2]);
+        return q.rotateY(this[0]).rotateZ(this[1]).rotateX(this[2]);
       case Euler.XZY:
-        return q
-          .rotateX(this[0])
-          .rotateZ(this[1])
-          .rotateY(this[2]);
+        return q.rotateX(this[0]).rotateZ(this[1]).rotateY(this[2]);
       default:
         throw new Error(ERR_UNKNOWN_ORDER);
     }

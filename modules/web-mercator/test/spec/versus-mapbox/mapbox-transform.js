@@ -30,7 +30,7 @@ let Transform;
 // Hack: mapbox-gl does not expose Transform class
 try {
   Map.prototype = Object.assign({}, Map.prototype, {
-    _setupContainer: function() {
+    _setupContainer: function () {
       Transform = this.transform.constructor;
     }
   });

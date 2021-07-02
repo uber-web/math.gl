@@ -4,7 +4,7 @@ import {openFile} from './utils/file-utils';
 
 const PGM_FILE_PATH = 'modules/geoid/test/data/egm84-30.pgm';
 
-test('parsePGM - returns correct instance of Geoid class', async t => {
+test('parsePGM - returns correct instance of Geoid class', async (t) => {
   const data = await openFile(PGM_FILE_PATH);
 
   // If data is null - now ways to open the file

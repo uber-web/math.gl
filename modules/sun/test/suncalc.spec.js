@@ -9,7 +9,7 @@ const date = new Date('2013-03-05UTC');
 const lat = 50.5;
 const lng = 30.5;
 
-test('getPosition returns azimuth and altitude for the given time and location', t => {
+test('getPosition returns azimuth and altitude for the given time and location', (t) => {
   const sunPos = getSunPosition(date, lat, lng);
   t.comment('Restore broken test case');
   // t.ok(near(sunPos.azimuth, -2.5003175907168385), 'azimuth');

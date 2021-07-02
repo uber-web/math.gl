@@ -4,7 +4,7 @@
 import {Vector3, isArray, toRadians, toDegrees, config} from '@math.gl/core';
 import {WGS84_CONSTANTS} from './constants';
 
-const noop = x => x;
+const noop = (x) => x;
 
 const scratchVector = new Vector3();
 

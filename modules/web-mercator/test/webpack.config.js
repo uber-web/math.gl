@@ -61,7 +61,7 @@ function getDist(env) {
 }
 
 const CONFIGS = {
-  test: env =>
+  test: (env) =>
     Object.assign({}, TEST_CONFIG, {
       // Bundle the tests for running in the browser
       entry: {
@@ -70,7 +70,7 @@ const CONFIGS = {
       // plugins: [new HtmlWebpackPlugin()]
     }),
 
-  bench: env =>
+  bench: (env) =>
     Object.assign({}, TEST_CONFIG, {
       entry: {
         'test-browser': resolve(__dirname, './test/bench/browser.js')
@@ -79,7 +79,7 @@ const CONFIGS = {
       plugins: [new HtmlWebpackPlugin()]
     }),
 
-  render: env =>
+  render: (env) =>
     Object.assign({}, TEST_CONFIG, {
       // Bundle the tests for running in the browser
       entry: {
@@ -88,7 +88,7 @@ const CONFIGS = {
       plugins: [new HtmlWebpackPlugin()]
     }),
 
-  renderReact: env =>
+  renderReact: (env) =>
     Object.assign({}, TEST_CONFIG, {
       // Bundle the tests for running in the browser
       entry: {
@@ -97,7 +97,7 @@ const CONFIGS = {
       plugins: [new HtmlWebpackPlugin()]
     }),
 
-  size: env => {
+  size: (env) => {
     const dist = getDist(env);
 
     const config = Object.assign({}, TEST_CONFIG, {
@@ -113,7 +113,7 @@ const CONFIGS = {
     return config;
   },
 
-  bundle: env => {
+  bundle: (env) => {
     const dist = getDist(env);
 
     const config = CONFIGS.size(env);
@@ -149,7 +149,7 @@ const CONFIGS = {
   },
 
   // Bundles a test app for size analysis and starts the webpack bundle analyzer
-  analyze: env => {
+  analyze: (env) => {
     const config = CONFIGS.bundle(env);
     config.plugins.push(new BundleAnalyzerPlugin());
     return config;

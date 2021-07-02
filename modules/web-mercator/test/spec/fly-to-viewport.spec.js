@@ -98,8 +98,8 @@ const DURATION_TEST_CASES = [
   }
 ];
 
-test('flyToViewport', t => {
-  FLY_TO_TEST_CASES.forEach(testCase => {
+test('flyToViewport', (t) => {
+  FLY_TO_TEST_CASES.forEach((testCase) => {
     const propsInTransition = flyToViewport(testCase.startProps, testCase.endProps, testCase.t);
     t.deepEqual(toLowPrecision(propsInTransition, 7), testCase.expect, 'interpolated correctly');
   });
@@ -107,8 +107,8 @@ test('flyToViewport', t => {
   t.end();
 });
 
-test('getFlyToDuration', t => {
-  DURATION_TEST_CASES.forEach(testCase => {
+test('getFlyToDuration', (t) => {
+  DURATION_TEST_CASES.forEach((testCase) => {
     const duration = getFlyToDuration(testCase.startProps, testCase.endProps, testCase.opts);
     t.deepEqual(
       toLowPrecision(duration, 8),

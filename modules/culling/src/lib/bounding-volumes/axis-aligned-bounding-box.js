@@ -7,12 +7,7 @@ const scratchNormal = new Vector3();
 export default class AxisAlignedBoundingBox {
   constructor(minimum = [0, 0, 0], maximum = [0, 0, 0], center = null) {
     // If center was not defined, compute it.
-    center =
-      center ||
-      scratchVector
-        .copy(minimum)
-        .add(maximum)
-        .scale(0.5);
+    center = center || scratchVector.copy(minimum).add(maximum).scale(0.5);
     this.center = new Vector3(center);
     this.halfDiagonal = new Vector3(maximum).subtract(this.center);
 

@@ -54,7 +54,7 @@ function eulerEquals(a, b, tolerance) {
 }
 
 // INSTANCING
-test('three.js#Matrix4#Instancing', t => {
+test('three.js#Matrix4#Instancing', (t) => {
   const a = new Matrix4();
   t.ok(a.determinant() == 1, 'Passed!');
 
@@ -86,12 +86,12 @@ test('three.js#Matrix4#Instancing', t => {
 });
 
 // PUBLIC STUFF
-test.skip('three.js#Matrix4#isMatrix4', t => {
+test.skip('three.js#Matrix4#isMatrix4', (t) => {
   t.ok(false, "everything's gonna be alright");
   t.end();
 });
 
-test('three.js#Matrix4#set', t => {
+test('three.js#Matrix4#set', (t) => {
   const b = new Matrix4();
   t.ok(b.determinant() == 1, 'Passed!');
 
@@ -120,7 +120,7 @@ test('three.js#Matrix4#set', t => {
   t.end();
 });
 
-test('three.js#Matrix4#identity', t => {
+test('three.js#Matrix4#identity', (t) => {
   const b = new Matrix4().set(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
 
   // NOTE THREE.js is row-major
@@ -152,7 +152,7 @@ test('three.js#Matrix4#identity', t => {
   t.end();
 });
 
-test('three.js#Matrix4#clone', t => {
+test('three.js#Matrix4#clone', (t) => {
   const a = new Matrix4().set(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
   const b = a.clone();
 
@@ -164,7 +164,7 @@ test('three.js#Matrix4#clone', t => {
   t.end();
 });
 
-test('three.js#Matrix4#copy', t => {
+test('three.js#Matrix4#copy', (t) => {
   const a = new Matrix4().set(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
   const b = new Matrix4().copy(a);
 
@@ -176,7 +176,7 @@ test('three.js#Matrix4#copy', t => {
   t.end();
 });
 
-test.skip('three.js#Matrix4#copyPosition', t => {
+test.skip('three.js#Matrix4#copyPosition', (t) => {
   const a = new Matrix4().set(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
   const b = new Matrix4().set(1, 2, 3, 0, 5, 6, 7, 0, 9, 10, 11, 0, 13, 14, 15, 16);
 
@@ -187,7 +187,7 @@ test.skip('three.js#Matrix4#copyPosition', t => {
   t.end();
 });
 
-test.skip('three.js#Matrix4#makeBasis/extractBasis', t => {
+test.skip('three.js#Matrix4#makeBasis/extractBasis', (t) => {
   const identityBasis = [new Vector3(1, 0, 0), new Vector3(0, 1, 0), new Vector3(0, 0, 1)];
   const a = new Matrix4().makeBasis(identityBasis[0], identityBasis[1], identityBasis[2]);
   const identity = new Matrix4();
@@ -217,12 +217,12 @@ test.skip('three.js#Matrix4#makeBasis/extractBasis', t => {
   t.end();
 });
 
-test.skip('three.js#Matrix4#extractRotation', t => {
+test.skip('three.js#Matrix4#extractRotation', (t) => {
   t.ok(false, "everything's gonna be alright");
   t.end();
 });
 
-test.skip('three.js#Matrix4#makeRotationFromEuler/extractRotation', t => {
+test.skip('three.js#Matrix4#makeRotationFromEuler/extractRotation', (t) => {
   const testValues = [
     new Euler(0, 0, 0, 'XYZ'),
     new Euler(1, 0, 0, 'XYZ'),
@@ -263,7 +263,7 @@ test.skip('three.js#Matrix4#makeRotationFromEuler/extractRotation', t => {
   t.end();
 });
 
-test.skip('three.js#Matrix4#lookAt', t => {
+test.skip('three.js#Matrix4#lookAt', (t) => {
   const a = new Matrix4();
   const expected = new Matrix4().identity();
   const eye = new Vector3(0, 0, 0);
@@ -288,17 +288,17 @@ test.skip('three.js#Matrix4#lookAt', t => {
   t.end();
 });
 
-test.skip('three.js#Matrix4#multiply', t => {
+test.skip('three.js#Matrix4#multiply', (t) => {
   t.ok(false, "everything's gonna be alright");
   t.end();
 });
 
-test.skip('three.js#Matrix4#premultiply', t => {
+test.skip('three.js#Matrix4#premultiply', (t) => {
   t.ok(false, "everything's gonna be alright");
   t.end();
 });
 
-test.skip('three.js#Matrix4#multiplyMatrices', t => {
+test.skip('three.js#Matrix4#multiplyMatrices', (t) => {
   // Reference:
   //
   // #!/usr/bin/env python
@@ -357,7 +357,7 @@ test.skip('three.js#Matrix4#multiplyMatrices', t => {
   t.end();
 });
 
-test('three.js#Matrix4#multiplyScalar', t => {
+test('three.js#Matrix4#multiplyScalar', (t) => {
   const b = new Matrix4().set(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15);
 
   // NOTE THREE.js is row-major
@@ -401,17 +401,13 @@ test('three.js#Matrix4#multiplyScalar', t => {
   t.end();
 });
 
-test.skip('three.js#Matrix4#applyToBufferAttribute', t => {
+test.skip('three.js#Matrix4#applyToBufferAttribute', (t) => {
   const a = new Matrix4().set(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
   const attr = new Float32BufferAttribute([1, 2, 1, 3, 0, 3], 3);
   const expected = new Float32BufferAttribute(
     [
-      0.1666666716337204,
-      0.4444444477558136,
-      0.7222222089767456,
-      0.1599999964237213,
-      0.4399999976158142,
-      0.7200000286102295
+      0.1666666716337204, 0.4444444477558136, 0.7222222089767456, 0.1599999964237213,
+      0.4399999976158142, 0.7200000286102295
     ],
     3
   );
@@ -432,7 +428,7 @@ test.skip('three.js#Matrix4#applyToBufferAttribute', t => {
   t.end();
 });
 
-test('three.js#Matrix4#determinant', t => {
+test('three.js#Matrix4#determinant', (t) => {
   const a = new Matrix4();
   t.ok(a.determinant() == 1, 'Passed!');
 
@@ -448,7 +444,7 @@ test('three.js#Matrix4#determinant', t => {
   t.end();
 });
 
-test('three.js#Matrix4#transpose', t => {
+test('three.js#Matrix4#transpose', (t) => {
   const a = new Matrix4();
   let b = a.clone().transpose();
   t.ok(matrixEquals4(a, b), 'Passed!');
@@ -461,12 +457,12 @@ test('three.js#Matrix4#transpose', t => {
   t.end();
 });
 
-test.skip('three.js#Matrix4#setPosition', t => {
+test.skip('three.js#Matrix4#setPosition', (t) => {
   t.ok(false, "everything's gonna be alright");
   t.end();
 });
 
-test.skip('three.js#Matrix4#getInverse', t => {
+test.skip('three.js#Matrix4#getInverse', (t) => {
   const identity = new Matrix4();
 
   const a = new Matrix4();
@@ -520,12 +516,12 @@ test.skip('three.js#Matrix4#getInverse', t => {
   t.end();
 });
 
-test.skip('three.js#Matrix4#scale', t => {
+test.skip('three.js#Matrix4#scale', (t) => {
   t.ok(false, "everything's gonna be alright");
   t.end();
 });
 
-test.skip('three.js#Matrix4#getMaxScaleOnAxis', t => {
+test.skip('three.js#Matrix4#getMaxScaleOnAxis', (t) => {
   const a = new Matrix4().set(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
   const expected = Math.sqrt(3 * 3 + 7 * 7 + 11 * 11);
 
@@ -533,27 +529,27 @@ test.skip('three.js#Matrix4#getMaxScaleOnAxis', t => {
   t.end();
 });
 
-test.skip('three.js#Matrix4#makeTranslation', t => {
+test.skip('three.js#Matrix4#makeTranslation', (t) => {
   t.ok(false, "everything's gonna be alright");
   t.end();
 });
 
-test.skip('three.js#Matrix4#makeRotationX', t => {
+test.skip('three.js#Matrix4#makeRotationX', (t) => {
   t.ok(false, "everything's gonna be alright");
   t.end();
 });
 
-test.skip('three.js#Matrix4#makeRotationY', t => {
+test.skip('three.js#Matrix4#makeRotationY', (t) => {
   t.ok(false, "everything's gonna be alright");
   t.end();
 });
 
-test.skip('three.js#Matrix4#makeRotationZ', t => {
+test.skip('three.js#Matrix4#makeRotationZ', (t) => {
   t.ok(false, "everything's gonna be alright");
   t.end();
 });
 
-test.skip('three.js#Matrix4#makeRotationAxis', t => {
+test.skip('three.js#Matrix4#makeRotationAxis', (t) => {
   const axis = new Vector3(1.5, 0.0, 1.0).normalize();
   const radians = toRadians(45);
   const a = new Matrix4().makeRotationAxis(axis, radians);
@@ -581,17 +577,17 @@ test.skip('three.js#Matrix4#makeRotationAxis', t => {
   t.end();
 });
 
-test.skip('three.js#Matrix4#makeScale', t => {
+test.skip('three.js#Matrix4#makeScale', (t) => {
   t.ok(false, "everything's gonna be alright");
   t.end();
 });
 
-test.skip('three.js#Matrix4#makeShear', t => {
+test.skip('three.js#Matrix4#makeShear', (t) => {
   t.ok(false, "everything's gonna be alright");
   t.end();
 });
 
-test.skip('three.js#Matrix4#compose/decompose', t => {
+test.skip('three.js#Matrix4#compose/decompose', (t) => {
   const tValues = [
     new Vector3(),
     new Vector3(3, 0, 0),
@@ -658,12 +654,12 @@ test.skip('three.js#Matrix4#compose/decompose', t => {
   t.end();
 });
 
-test.skip('three.js#Matrix4#makePerspective', t => {
+test.skip('three.js#Matrix4#makePerspective', (t) => {
   t.ok(false, "everything's gonna be alright");
   t.end();
 });
 
-test.skip('three.js#Matrix4#makeOrthographic', t => {
+test.skip('three.js#Matrix4#makeOrthographic', (t) => {
   const a = new Matrix4().makeOrthographic(-1, 1, -1, 1, 1, 100);
   const expected = new Matrix4().set(1, 0, 0, 0, 0, -1, 0, 0, 0, 0, -2 / 99, -101 / 99, 0, 0, 0, 1);
 
@@ -671,7 +667,7 @@ test.skip('three.js#Matrix4#makeOrthographic', t => {
   t.end();
 });
 
-test('three.js#Matrix4#equals', t => {
+test('three.js#Matrix4#equals', (t) => {
   const a = new Matrix4().set(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
   const b = new Matrix4().set(-1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
 
@@ -684,12 +680,12 @@ test('three.js#Matrix4#equals', t => {
   t.end();
 });
 
-test.skip('three.js#Matrix4#fromArray', t => {
+test.skip('three.js#Matrix4#fromArray', (t) => {
   t.ok(false, "everything's gonna be alright");
   t.end();
 });
 
-test('three.js#Matrix4#toArray', t => {
+test('three.js#Matrix4#toArray', (t) => {
   const a = new Matrix4().set(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16);
   // NOTE THREE.js is row-major
   a.transpose();

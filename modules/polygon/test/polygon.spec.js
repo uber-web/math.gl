@@ -136,12 +136,12 @@ const TEST_CASES = [
   }
 ];
 
-test('Polygon#import', t => {
+test('Polygon#import', (t) => {
   t.equals(typeof Polygon, 'function');
   t.end();
 });
 
-test('Polygon#construct', t => {
+test('Polygon#construct', (t) => {
   t.ok(
     new Polygon([
       [0, 0],
@@ -151,7 +151,7 @@ test('Polygon#construct', t => {
   t.end();
 });
 
-test('Polygon#methods', t => {
+test('Polygon#methods', (t) => {
   configure({EPSILON: 1e-4});
 
   for (const tc of TEST_CASES) {
@@ -176,7 +176,7 @@ test('Polygon#methods', t => {
   t.end();
 });
 
-test('Polygon#forEachSegment', t => {
+test('Polygon#forEachSegment', (t) => {
   const config = configure({EPSILON: 1e-4});
 
   for (const tc of TEST_CASES) {
@@ -192,7 +192,7 @@ test('Polygon#forEachSegment', t => {
   t.end();
 });
 
-test('Polygon#modifyWindingDirection', t => {
+test('Polygon#modifyWindingDirection', (t) => {
   const testPolygon = [1, 1, 2, 2, 1, 3];
   const testPolygonReversed = [1, 3, 2, 2, 1, 1];
 
@@ -219,7 +219,7 @@ test('Polygon#modifyWindingDirection', t => {
   t.end();
 });
 
-test('Polygon#Compare flat and complex input', t => {
+test('Polygon#Compare flat and complex input', (t) => {
   const testFlatData = [0.5, 0.5, 2.0, 0.25, 4, 2, 5, 1, 6, 4, 3.5, 4.1, 1, 2.5, -6, 1];
   const testPointsData = toNested(testFlatData);
 
@@ -238,7 +238,7 @@ test('Polygon#Compare flat and complex input', t => {
   t.end();
 });
 
-test('Polygon#Compare open and closed', t => {
+test('Polygon#Compare open and closed', (t) => {
   const testDataOpen = [0.5, 0.5, 2.0, 0.25, 4, 2, 5, 1, 6, 4, 3.5, 4.1, 1, 2.5, -6, 1];
   const testDataClosed = [...testDataOpen, ...testDataOpen.slice(0, 2)];
 
@@ -253,7 +253,7 @@ test('Polygon#Compare open and closed', t => {
   t.end();
 });
 
-test('Polygon#Compare 2D and 3D input', t => {
+test('Polygon#Compare 2D and 3D input', (t) => {
   const testFlatData = [0.5, 0.5, 2.0, 0.25, 4, 2, 5, 1, 6, 4, 3.5, 4.1, 1, 2.5, -6, 1];
   const testPointsData2D = toNested(testFlatData);
   const testPointsData3D = toNested(testFlatData, {addZ: true});

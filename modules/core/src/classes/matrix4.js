@@ -434,9 +434,7 @@ export default class Matrix4 extends Matrix {
   }
 
   rotateXYZ([rx, ry, rz]) {
-    return this.rotateX(rx)
-      .rotateY(ry)
-      .rotateZ(rz);
+    return this.rotateX(rx).rotateY(ry).rotateZ(rz);
   }
 
   rotateAxis(radians, axis) {

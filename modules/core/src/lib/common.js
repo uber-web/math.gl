@@ -96,45 +96,45 @@ export function toDegrees(radians) {
 //
 
 export function radians(degrees, result) {
-  return map(degrees, degrees => degrees * DEGREES_TO_RADIANS, result);
+  return map(degrees, (degrees) => degrees * DEGREES_TO_RADIANS, result);
 }
 
 export function degrees(radians, result) {
-  return map(radians, radians => radians * RADIANS_TO_DEGREES, result);
+  return map(radians, (radians) => radians * RADIANS_TO_DEGREES, result);
 }
 
 // GLSL equivalent: Works on single values and vectors
 export function sin(radians) {
-  return map(radians, angle => Math.sin(angle));
+  return map(radians, (angle) => Math.sin(angle));
 }
 
 // GLSL equivalent: Works on single values and vectors
 export function cos(radians) {
-  return map(radians, angle => Math.cos(angle));
+  return map(radians, (angle) => Math.cos(angle));
 }
 
 // GLSL equivalent: Works on single values and vectors
 export function tan(radians) {
-  return map(radians, angle => Math.tan(angle));
+  return map(radians, (angle) => Math.tan(angle));
 }
 
 // GLSL equivalent: Works on single values and vectors
 export function asin(radians) {
-  return map(radians, angle => Math.asin(angle));
+  return map(radians, (angle) => Math.asin(angle));
 }
 
 // GLSL equivalent: Works on single values and vectors
 export function acos(radians) {
-  return map(radians, angle => Math.acos(angle));
+  return map(radians, (angle) => Math.acos(angle));
 }
 
 // GLSL equivalent: Works on single values and vectors
 export function atan(radians) {
-  return map(radians, angle => Math.atan(angle));
+  return map(radians, (angle) => Math.atan(angle));
 }
 
 export function clamp(value, min, max) {
-  return map(value, value => Math.max(min, Math.min(max, value)));
+  return map(value, (value) => Math.max(min, Math.min(max, value)));
 }
 
 // Interpolate between two numbers or two arrays

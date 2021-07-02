@@ -6,6 +6,10 @@ module.exports = {
     extensions: ['js', 'md']
   },
 
+  babel: {
+    extensions: ['.js']
+  },
+
   aliases: {
     test: resolve(__dirname, 'test')
   },

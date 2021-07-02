@@ -10,7 +10,7 @@
 import {assert} from '@math.gl/core';
 import PerspectiveOffCenterFrustum from './perspective-off-center-frustum';
 
-const defined = val => val !== null && typeof val !== 'undefined';
+const defined = (val) => val !== null && typeof val !== 'undefined';
 
 /**
  * The viewing frustum is defined by 6 planes.

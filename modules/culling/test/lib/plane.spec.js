@@ -12,7 +12,7 @@ const UNIT_X = [1, 0, 0];
 const UNIT_Y = [0, 1, 0];
 const UNIT_Z = [0, 0, 1];
 
-test('Plane#constructs', t => {
+test('Plane#constructs', (t) => {
   const normal = UNIT_X;
   const distance = 1.0;
   const plane = new Plane(normal, distance);
@@ -21,22 +21,22 @@ test('Plane#constructs', t => {
   t.end();
 });
 
-test('Plane#constructor throws without a normal', t => {
+test('Plane#constructor throws without a normal', (t) => {
   t.throws(() => new Plane(null, 0.0));
   t.end();
 });
 
-test.skip('Plane#constructor throws if normal is not normalized', t => {
+test.skip('Plane#constructor throws if normal is not normalized', (t) => {
   t.throws(() => new Plane(new Vector3(1.0, 2.0, 3.0), 0.0));
   t.end();
 });
 
-test('Plane#constructor throws without a distance', t => {
+test('Plane#constructor throws without a distance', (t) => {
   t.throws(() => new Plane(UNIT_X, null));
   t.end();
 });
 
-test('Plane#constructs from a point and a normal', t => {
+test('Plane#constructs from a point and a normal', (t) => {
   const normal = new Vector3(1.0, 2.0, 3.0).normalize();
   const point = new Vector3(4.0, 5.0, 6.0);
   const plane = new Plane().fromPointNormal(point, normal);
@@ -45,7 +45,7 @@ test('Plane#constructs from a point and a normal', t => {
   t.end();
 });
 
-test('Plane#constructs from a point and a normal with result', t => {
+test('Plane#constructs from a point and a normal with result', (t) => {
   const normal = new Vector3(1.0, 2.0, 3.0).normalize();
   const point = new Vector3(4.0, 5.0, 6.0);
 
@@ -56,7 +56,7 @@ test('Plane#constructs from a point and a normal with result', t => {
   t.end();
 });
 
-test('Plane#constructs from coefficents without result', t => {
+test('Plane#constructs from coefficents without result', (t) => {
   const result = new Plane().fromCoefficients(1, 0, 0, 0);
 
   tapeEquals(t, result.normal, UNIT_X);
@@ -64,7 +64,7 @@ test('Plane#constructs from coefficents without result', t => {
   t.end();
 });
 
-test('Plane#constructs from coefficents with result', t => {
+test('Plane#constructs from coefficents with result', (t) => {
   const result = new Plane().fromCoefficients(1, 0, 0, 0);
 
   tapeEquals(t, result.normal, UNIT_X);
@@ -72,33 +72,33 @@ test('Plane#constructs from coefficents with result', t => {
   t.end();
 });
 
-test('Plane#fromPointNormal throws without a point', t => {
+test('Plane#fromPointNormal throws without a point', (t) => {
   t.throws(() => new Plane().fromPointNormal(undefined, UNIT_X));
   t.end();
 });
 
-test('Plane#fromPointNormal throws without a normal', t => {
+test('Plane#fromPointNormal throws without a normal', (t) => {
   t.throws(() => new Plane().fromPointNormal(UNIT_X, undefined));
   t.end();
 });
 
-test.skip('Plane#fromPointNormal throws if normal is not normalized', t => {
+test.skip('Plane#fromPointNormal throws if normal is not normalized', (t) => {
   t.throws(() => new Plane().fromPointNormal(Vector3.ZERO, Vector3.ZERO));
   t.end();
 });
 
-test('Plane#fromCoefficients throws without coefficients', t => {
+test('Plane#fromCoefficients throws without coefficients', (t) => {
   // @ts-ignore
   t.throws(() => new Plane().fromCoefficients(undefined));
   t.end();
 });
 
-test('Plane#fromCoefficients throws if normal is not normalized', t => {
+test('Plane#fromCoefficients throws if normal is not normalized', (t) => {
   t.throws(() => new Plane().fromCoefficients(1.0, 2.0, 3.0, 4.0));
   t.end();
 });
 
-test('Plane#gets the distance to a point', t => {
+test('Plane#gets the distance to a point', (t) => {
   const normal = new Vector3(1.0, 2.0, 3.0).normalize();
   const plane = new Plane(normal, 12.34);
   const point = new Vector3(4.0, 5.0, 6.0);
@@ -107,20 +107,20 @@ test('Plane#gets the distance to a point', t => {
   t.end();
 });
 
-test('Plane#getPointDistance throws without a plane', t => {
+test('Plane#getPointDistance throws without a plane', (t) => {
   const point = Vector3.ZERO;
   // @ts-ignore
   t.throws(() => new Plane().getPointDistance(undefined, point));
   t.end();
 });
 
-test('Plane#getPointDistance throws without a point', t => {
+test('Plane#getPointDistance throws without a point', (t) => {
   const plane = new Plane(UNIT_X, 0.0);
   t.throws(() => new Plane().getPointDistance(undefined));
   t.end();
 });
 
-test('Plane#projects a point onto the plane', t => {
+test('Plane#projects a point onto the plane', (t) => {
   const point = new Vector3(1.0, 1.0, 0.0);
 
   let plane = new Plane(UNIT_X, 0.0);
@@ -133,7 +133,7 @@ test('Plane#projects a point onto the plane', t => {
   t.end();
 });
 
-test('Plane#projectPointOntoPlane uses result parameter', t => {
+test('Plane#projectPointOntoPlane uses result parameter', (t) => {
   const point = new Vector3(1.0, 1.0, 0.0);
 
   const plane = new Plane(UNIT_X, 0.0);
@@ -144,12 +144,12 @@ test('Plane#projectPointOntoPlane uses result parameter', t => {
   t.end();
 });
 
-test('Plane#projectPointOntoPlane requires the point parameter', t => {
+test('Plane#projectPointOntoPlane requires the point parameter', (t) => {
   t.throws(() => new Plane(UNIT_X, 0).projectPointOntoPlane(undefined));
   t.end();
 });
 
-test('Plane#clones a plane instance', t => {
+test('Plane#clones a plane instance', (t) => {
   const normal = new Vector3(1.0, 2.0, 3.0).normalize();
   const distance = 4.0;
   const plane = new Plane(normal, distance);
@@ -160,7 +160,7 @@ test('Plane#clones a plane instance', t => {
   t.end();
 });
 
-test('Plane#equals returns true only if two planes are equal by normal and distance', t => {
+test('Plane#equals returns true only if two planes are equal by normal and distance', (t) => {
   const left = new Plane(UNIT_X, 0.0);
   let right = new Plane(UNIT_Y, 1.0);
 
@@ -180,13 +180,13 @@ test('Plane#equals returns true only if two planes are equal by normal and dista
   t.end();
 });
 
-test('Plane#equals throws is right is undefined', t => {
+test('Plane#equals throws is right is undefined', (t) => {
   const plane = new Plane(UNIT_X, 0.0);
   t.throws(() => plane.equals(undefined));
   t.end();
 });
 
-test('Plane#transforms a plane according to a transform', t => {
+test('Plane#transforms a plane according to a transform', (t) => {
   const normal = new Vector3(1.0, 2.0, 3.0).normalize();
   const plane = new Plane(normal, 12.34);
 
@@ -200,7 +200,7 @@ test('Plane#transforms a plane according to a transform', t => {
   t.end();
 });
 
-test('Plane#transform throws without a transform', t => {
+test('Plane#transform throws without a transform', (t) => {
   const plane = new Plane(UNIT_X, 0.0);
   t.throws(() => plane.transform(undefined));
   t.end();

@@ -193,10 +193,7 @@ export default class PerspectiveOffCenterFrustum {
     const planes = this._cullingVolume.planes;
 
     up = scratchPlaneUpVector.copy(up).normalize();
-    const right = scratchPlaneRightVector
-      .copy(direction)
-      .cross(up)
-      .normalize();
+    const right = scratchPlaneRightVector.copy(direction).cross(up).normalize();
 
     const nearCenter = scratchPlaneNearCenter
       .copy(direction)
@@ -211,12 +208,7 @@ export default class PerspectiveOffCenterFrustum {
     let normal = scratchPlaneNormal;
 
     // Left plane computation
-    normal
-      .copy(right)
-      .multiplyByScalar(this.left)
-      .add(nearCenter)
-      .subtract(position)
-      .cross(up);
+    normal.copy(right).multiplyByScalar(this.left).add(nearCenter).subtract(position).cross(up);
 
     planes[0].fromPointNormal(position, normal);
 
@@ -243,12 +235,7 @@ export default class PerspectiveOffCenterFrustum {
     planes[2].fromPointNormal(position, normal);
 
     // Top plane computation
-    normal
-      .copy(up)
-      .multiplyByScalar(this.top)
-      .add(nearCenter)
-      .subtract(position)
-      .cross(right);
+    normal.copy(up).multiplyByScalar(this.top).add(nearCenter).subtract(position).cross(right);
 
     planes[3].fromPointNormal(position, normal);
 

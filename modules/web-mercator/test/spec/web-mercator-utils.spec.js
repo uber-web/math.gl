@@ -23,7 +23,7 @@ const DISTANCE_TOLERANCE = 0.0005;
 const DISTANCE_TOLERANCE_PIXELS = 2;
 const DISTANCE_SCALE_TEST_ZOOM = 12;
 
-test('Viewport#imports', t => {
+test('Viewport#imports', (t) => {
   t.ok(lngLatToWorld, 'lngLatToWorld imports OK');
   t.ok(worldToLngLat, 'worldToLngLat imports OK');
   t.ok(getMeterZoom, 'getMeterZoom imports OK');
@@ -35,7 +35,7 @@ test('Viewport#imports', t => {
   t.end();
 });
 
-test('lngLatToWorld', t => {
+test('lngLatToWorld', (t) => {
   t.throws(() => lngLatToWorld([38, -122]), /latitude/i, 'throws on invalid latitude');
   t.ok(
     equals(lngLatToWorld([-122, 38]), [82.4888888888889, 314.50692551385134]),
@@ -44,7 +44,7 @@ test('lngLatToWorld', t => {
   t.end();
 });
 
-test('getDistanceScales', t => {
+test('getDistanceScales', (t) => {
   for (const vc in VIEWPORT_PROPS) {
     const props = VIEWPORT_PROPS[vc];
     const {metersPerUnit, unitsPerMeter, degreesPerUnit, unitsPerDegree} = getDistanceScales(props);
@@ -72,7 +72,7 @@ test('getDistanceScales', t => {
   t.end();
 });
 
-test('getDistanceScales#unitsPerDegree', t => {
+test('getDistanceScales#unitsPerDegree', (t) => {
   const scale = Math.pow(2, DISTANCE_SCALE_TEST_ZOOM);
   const z = 1000;
 
@@ -113,11 +113,11 @@ test('getDistanceScales#unitsPerDegree', t => {
       t.comment(`adjusted: ${diffAdjusted.message}`);
 
       t.ok(
-        diffAdjusted.error.every(e => e < DISTANCE_TOLERANCE),
+        diffAdjusted.error.every((e) => e < DISTANCE_TOLERANCE),
         'Error within ratio tolerance'
       );
       t.ok(
-        diffAdjusted.errorPixels.every(p => p < DISTANCE_TOLERANCE_PIXELS),
+        diffAdjusted.errorPixels.every((p) => p < DISTANCE_TOLERANCE_PIXELS),
         'Error within pixel tolerance'
       );
     }
@@ -125,7 +125,7 @@ test('getDistanceScales#unitsPerDegree', t => {
   t.end();
 });
 
-test('getDistanceScales#unitsPerMeter', t => {
+test('getDistanceScales#unitsPerMeter', (t) => {
   const scale = Math.pow(2, DISTANCE_SCALE_TEST_ZOOM);
   const z = 1000;
 
@@ -169,11 +169,11 @@ test('getDistanceScales#unitsPerMeter', t => {
       t.comment(`adjusted: ${diffAdjusted.message}`);
 
       t.ok(
-        diffAdjusted.error.every(e => e < DISTANCE_TOLERANCE),
+        diffAdjusted.error.every((e) => e < DISTANCE_TOLERANCE),
         'Error within ratio tolerance'
       );
       t.ok(
-        diffAdjusted.errorPixels.every(p => p < DISTANCE_TOLERANCE_PIXELS),
+        diffAdjusted.errorPixels.every((p) => p < DISTANCE_TOLERANCE_PIXELS),
         'Error within pixel tolerance'
       );
     }
@@ -181,7 +181,7 @@ test('getDistanceScales#unitsPerMeter', t => {
   t.end();
 });
 
-test('addMetersToLngLat', t => {
+test('addMetersToLngLat', (t) => {
   config.EPSILON = 1e-7;
 
   for (const vc in VIEWPORT_PROPS) {
@@ -207,7 +207,7 @@ test('addMetersToLngLat', t => {
   t.end();
 });
 
-test('getMeterZoom', t => {
+test('getMeterZoom', (t) => {
   const TEST_LATITUDES = [0, 37.5, 75];
 
   for (const latitude of TEST_LATITUDES) {
@@ -216,7 +216,7 @@ test('getMeterZoom', t => {
 
     const {unitsPerMeter} = getDistanceScales({latitude, longitude: 0});
     t.deepEqual(
-      toLowPrecision(unitsPerMeter.map(x => x * scale)),
+      toLowPrecision(unitsPerMeter.map((x) => x * scale)),
       [1, 1, 1],
       'zoom yields 1 pixel per meter'
     );
@@ -235,12 +235,12 @@ function getDiff(value, baseValue, scale) {
     errorPixels,
     error,
     message: `off by \
-      (${errorPixels.map(d => d.toFixed(3)).join(', ')}) pixels, \
-      (${error.map(d => `${(d * 100).toFixed(3)}%`).join(', ')})`
+      (${errorPixels.map((d) => d.toFixed(3)).join(', ')}) pixels, \
+      (${error.map((d) => `${(d * 100).toFixed(3)}%`).join(', ')})`
   };
 }
 
-test('getProjectionParameters', t => {
+test('getProjectionParameters', (t) => {
   const TEST_CASES = {
     ...VIEWPORT_PROPS,
     extremePitched: {

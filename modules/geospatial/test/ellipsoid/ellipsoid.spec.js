@@ -33,7 +33,7 @@ const spaceCartographicGeodeticSurfaceNormal = new Vector3(
 const surfaceCartesian = new Vector3(4094327.7921465295, 1909216.4044747739, 4487348.4088659193);
 const surfaceCartographic = new Vector3(25.0, 45.0, 0.0);
 
-test('Ellipsoid#default constructor creates zero Ellipsoid', t => {
+test('Ellipsoid#default constructor creates zero Ellipsoid', (t) => {
   const ellipsoid = new Ellipsoid();
   tapeEquals(t, ellipsoid.radii, Vector3.ZERO);
   tapeEquals(t, ellipsoid.radiiSquared, Vector3.ZERO);
@@ -45,7 +45,7 @@ test('Ellipsoid#default constructor creates zero Ellipsoid', t => {
   t.end();
 });
 
-test('Ellipsoid#constructor computes correct values', t => {
+test('Ellipsoid#constructor computes correct values', (t) => {
   const ellipsoid = new Ellipsoid(radii.x, radii.y, radii.z);
   tapeEquals(t, ellipsoid.radii, radii);
   tapeEquals(t, ellipsoid.radiiSquared, radiiSquared);
@@ -57,14 +57,14 @@ test('Ellipsoid#constructor computes correct values', t => {
   t.end();
 });
 
-test('Ellipsoid#ellipsoid is initialized with squaredXOverSquaredZ property', t => {
+test('Ellipsoid#ellipsoid is initialized with squaredXOverSquaredZ property', (t) => {
   const ellipsoid = new Ellipsoid(4, 4, 3);
   const squaredXOverSquaredZ = ellipsoid.radiiSquared.x / ellipsoid.radiiSquared.z;
   t.equals(ellipsoid.squaredXOverSquaredZ, squaredXOverSquaredZ);
   t.end();
 });
 
-test('Ellipsoid#geodeticSurfaceNormalCartographic works without a result parameter', t => {
+test('Ellipsoid#geodeticSurfaceNormalCartographic works without a result parameter', (t) => {
   const ellipsoid = Ellipsoid.WGS84;
   const returnedResult = ellipsoid.geodeticSurfaceNormalCartographic(spaceCartographic);
   tapeEqualsEpsilon(
@@ -76,7 +76,7 @@ test('Ellipsoid#geodeticSurfaceNormalCartographic works without a result paramet
   t.end();
 });
 
-test('Ellipsoid#geodeticSurfaceNormalCartographic works with a result parameter', t => {
+test('Ellipsoid#geodeticSurfaceNormalCartographic works with a result parameter', (t) => {
   const ellipsoid = Ellipsoid.WGS84;
   const result = new Vector3();
   const returnedResult = ellipsoid.geodeticSurfaceNormalCartographic(spaceCartographic, result);
@@ -90,14 +90,14 @@ test('Ellipsoid#geodeticSurfaceNormalCartographic works with a result parameter'
   t.end();
 });
 
-test('Ellipsoid#geodeticSurfaceNormal works without a result parameter', t => {
+test('Ellipsoid#geodeticSurfaceNormal works without a result parameter', (t) => {
   const ellipsoid = Ellipsoid.WGS84;
   const returnedResult = ellipsoid.geodeticSurfaceNormal(spaceCartesian);
   tapeEqualsEpsilon(t, returnedResult, spaceCartesianGeodeticSurfaceNormal, _MathUtils.EPSILON15);
   t.end();
 });
 
-test('Ellipsoid#geodeticSurfaceNormal works with a result parameter', t => {
+test('Ellipsoid#geodeticSurfaceNormal works with a result parameter', (t) => {
   const ellipsoid = Ellipsoid.WGS84;
   const result = new Vector3();
   const returnedResult = ellipsoid.geodeticSurfaceNormal(spaceCartesian, result);
@@ -106,14 +106,14 @@ test('Ellipsoid#geodeticSurfaceNormal works with a result parameter', t => {
   t.end();
 });
 
-test('Ellipsoid#geocentricSurfaceNormal works without a result parameter', t => {
+test('Ellipsoid#geocentricSurfaceNormal works without a result parameter', (t) => {
   const ellipsoid = Ellipsoid.WGS84;
   const returnedResult = ellipsoid.geocentricSurfaceNormal([2, 0, 0]);
   tapeEquals(t, returnedResult, [1, 0, 0]);
   t.end();
 });
 
-test('Ellipsoid#geocentricSurfaceNormal works with a result parameter', t => {
+test('Ellipsoid#geocentricSurfaceNormal works with a result parameter', (t) => {
   const ellipsoid = Ellipsoid.WGS84;
   const result = new Vector3();
   const returnedResult = ellipsoid.geocentricSurfaceNormal([2, 0, 0], result);
@@ -122,14 +122,14 @@ test('Ellipsoid#geocentricSurfaceNormal works with a result parameter', t => {
   t.end();
 });
 
-test('Ellipsoid#cartographicToCartesian works without a result parameter', t => {
+test('Ellipsoid#cartographicToCartesian works without a result parameter', (t) => {
   const ellipsoid = Ellipsoid.WGS84;
   const returnedResult = ellipsoid.cartographicToCartesian(spaceCartographic);
   tapeEqualsEpsilon(t, returnedResult, spaceCartesian, _MathUtils.EPSILON7);
   t.end();
 });
 
-test('Ellipsoid#cartographicToCartesian works with a result parameter', t => {
+test('Ellipsoid#cartographicToCartesian works with a result parameter', (t) => {
   const ellipsoid = Ellipsoid.WGS84;
   const result = new Vector3();
   const returnedResult = ellipsoid.cartographicToCartesian(spaceCartographic, result);
@@ -138,7 +138,7 @@ test('Ellipsoid#cartographicToCartesian works with a result parameter', t => {
   t.end();
 });
 
-test('Ellipsoid#cartographicToCartesian works with an Object result parameter', t => {
+test('Ellipsoid#cartographicToCartesian works with an Object result parameter', (t) => {
   const ellipsoid = Ellipsoid.WGS84;
   const result = {x: 0, y: 0, z: 0};
   // @ts-ignore ADD XYZ TYPE
@@ -150,14 +150,14 @@ test('Ellipsoid#cartographicToCartesian works with an Object result parameter', 
   t.end();
 });
 
-test('Ellipsoid#cartesianToCartographic works without a result parameter', t => {
+test('Ellipsoid#cartesianToCartographic works without a result parameter', (t) => {
   const ellipsoid = Ellipsoid.WGS84;
   const returnedResult = ellipsoid.cartesianToCartographic(surfaceCartesian);
   tapeEqualsEpsilon(t, returnedResult, surfaceCartographic, _MathUtils.EPSILON8);
   t.end();
 });
 
-test('Ellipsoid#cartesianToCartographic works with a result parameter', t => {
+test('Ellipsoid#cartesianToCartographic works with a result parameter', (t) => {
   const result = new Vector3();
   const returnedResult = Ellipsoid.WGS84.cartesianToCartographic(surfaceCartesian, result);
   t.ok(result === returnedResult);
@@ -165,7 +165,7 @@ test('Ellipsoid#cartesianToCartographic works with a result parameter', t => {
   t.end();
 });
 
-test('Ellipsoid#cartesianToCartographic works with an Object result parameter', t => {
+test('Ellipsoid#cartesianToCartographic works with an Object result parameter', (t) => {
   const result = {x: 0, y: 0, z: 0};
   // @ts-ignore
   const returnedResult = Ellipsoid.WGS84.cartesianToCartographic(surfaceCartesian, result);
@@ -177,7 +177,7 @@ test('Ellipsoid#cartesianToCartographic works with an Object result parameter', 
   t.end();
 });
 
-test('Ellipsoid#cartesianToCartographic works with a Cartesian result parameter', t => {
+test('Ellipsoid#cartesianToCartographic works with a Cartesian result parameter', (t) => {
   const result = {longitude: 0, latitude: 0, height: 0};
   // @ts-ignore
   const returnedResult = Ellipsoid.WGS84.cartesianToCartographic(surfaceCartesian, result);
@@ -192,7 +192,7 @@ test('Ellipsoid#cartesianToCartographic works with a Cartesian result parameter'
   t.end();
 });
 
-test('Ellipsoid#cartesianToCartographic works close to center', t => {
+test('Ellipsoid#cartesianToCartographic works close to center', (t) => {
   const expected = new Vector3(
     toDegrees(9.999999999999999e-11),
     toDegrees(1.0067394967422763e-20),
@@ -203,7 +203,7 @@ test('Ellipsoid#cartesianToCartographic works close to center', t => {
   t.end();
 });
 
-test('Ellipsoid#cartesianToCartographic return undefined very close to center', t => {
+test('Ellipsoid#cartesianToCartographic return undefined very close to center', (t) => {
   const returnedResult = Ellipsoid.WGS84.cartesianToCartographic(
     new Vector3(1e-150, 1e-150, 1e-150)
   );
@@ -211,13 +211,13 @@ test('Ellipsoid#cartesianToCartographic return undefined very close to center', 
   t.end();
 });
 
-test('Ellipsoid#cartesianToCartographic return undefined at center', t => {
+test('Ellipsoid#cartesianToCartographic return undefined at center', (t) => {
   const returnedResult = Ellipsoid.WGS84.cartesianToCartographic(Vector3.ZERO);
   t.equals(returnedResult, undefined);
   t.end();
 });
 
-test('Ellipsoid#scaleToGeodeticSurface scaled in the x direction', t => {
+test('Ellipsoid#scaleToGeodeticSurface scaled in the x direction', (t) => {
   const ellipsoid = new Ellipsoid(1.0, 2.0, 3.0);
   const expected = new Vector3(1.0, 0.0, 0.0);
   const cartesian = new Vector3(9.0, 0.0, 0.0);
@@ -226,7 +226,7 @@ test('Ellipsoid#scaleToGeodeticSurface scaled in the x direction', t => {
   t.end();
 });
 
-test('Ellipsoid#scaleToGeodeticSurface scaled in the y direction', t => {
+test('Ellipsoid#scaleToGeodeticSurface scaled in the y direction', (t) => {
   const ellipsoid = new Ellipsoid(1.0, 2.0, 3.0);
   const expected = new Vector3(0.0, 2.0, 0.0);
   const cartesian = new Vector3(0.0, 8.0, 0.0);
@@ -235,7 +235,7 @@ test('Ellipsoid#scaleToGeodeticSurface scaled in the y direction', t => {
   t.end();
 });
 
-test('Ellipsoid#scaleToGeodeticSurface scaled in the z direction', t => {
+test('Ellipsoid#scaleToGeodeticSurface scaled in the z direction', (t) => {
   const ellipsoid = new Ellipsoid(1.0, 2.0, 3.0);
   const expected = new Vector3(0.0, 0.0, 3.0);
   const cartesian = new Vector3(0.0, 0.0, 8.0);
@@ -244,7 +244,7 @@ test('Ellipsoid#scaleToGeodeticSurface scaled in the z direction', t => {
   t.end();
 });
 
-test('Ellipsoid#scaleToGeodeticSurface works without a result parameter', t => {
+test('Ellipsoid#scaleToGeodeticSurface works without a result parameter', (t) => {
   const ellipsoid = new Ellipsoid(1.0, 2.0, 3.0);
   const expected = new Vector3(0.2680893773941855, 1.1160466902266495, 2.3559801120411263);
   const cartesian = new Vector3(4.0, 5.0, 6.0);
@@ -253,7 +253,7 @@ test('Ellipsoid#scaleToGeodeticSurface works without a result parameter', t => {
   t.end();
 });
 
-test('Ellipsoid#scaleToGeodeticSurface works with a result parameter', t => {
+test('Ellipsoid#scaleToGeodeticSurface works with a result parameter', (t) => {
   const ellipsoid = new Ellipsoid(1.0, 2.0, 3.0);
   const expected = new Vector3(0.2680893773941855, 1.1160466902266495, 2.3559801120411263);
   const cartesian = new Vector3(4.0, 5.0, 6.0);
@@ -264,7 +264,7 @@ test('Ellipsoid#scaleToGeodeticSurface works with a result parameter', t => {
   t.end();
 });
 
-test('Ellipsoid#scaleToGeodeticSurface returns undefined at center', t => {
+test('Ellipsoid#scaleToGeodeticSurface returns undefined at center', (t) => {
   const ellipsoid = new Ellipsoid(1.0, 2.0, 3.0);
   const cartesian = new Vector3(0.0, 0.0, 0.0);
   const returnedResult = ellipsoid.scaleToGeodeticSurface(cartesian);
@@ -272,7 +272,7 @@ test('Ellipsoid#scaleToGeodeticSurface returns undefined at center', t => {
   t.end();
 });
 
-test('Ellipsoid#scaleToGeocentricSurface scaled in the x direction', t => {
+test('Ellipsoid#scaleToGeocentricSurface scaled in the x direction', (t) => {
   const ellipsoid = new Ellipsoid(1.0, 2.0, 3.0);
   const expected = new Vector3(1.0, 0.0, 0.0);
   const cartesian = new Vector3(9.0, 0.0, 0.0);
@@ -281,7 +281,7 @@ test('Ellipsoid#scaleToGeocentricSurface scaled in the x direction', t => {
   t.end();
 });
 
-test('Ellipsoid#scaleToGeocentricSurface scaled in the y direction', t => {
+test('Ellipsoid#scaleToGeocentricSurface scaled in the y direction', (t) => {
   const ellipsoid = new Ellipsoid(1.0, 2.0, 3.0);
   const expected = new Vector3(0.0, 2.0, 0.0);
   const cartesian = new Vector3(0.0, 8.0, 0.0);
@@ -290,7 +290,7 @@ test('Ellipsoid#scaleToGeocentricSurface scaled in the y direction', t => {
   t.end();
 });
 
-test('Ellipsoid#scaleToGeocentricSurface scaled in the z direction', t => {
+test('Ellipsoid#scaleToGeocentricSurface scaled in the z direction', (t) => {
   const ellipsoid = new Ellipsoid(1.0, 2.0, 3.0);
   const expected = new Vector3(0.0, 0.0, 3.0);
   const cartesian = new Vector3(0.0, 0.0, 8.0);
@@ -299,7 +299,7 @@ test('Ellipsoid#scaleToGeocentricSurface scaled in the z direction', t => {
   t.end();
 });
 
-test('Ellipsoid#scaleToGeocentricSurface works without a result parameter', t => {
+test('Ellipsoid#scaleToGeocentricSurface works without a result parameter', (t) => {
   const ellipsoid = new Ellipsoid(1.0, 2.0, 3.0);
   const expected = new Vector3(0.7807200583588266, 0.9759000729485333, 1.1710800875382399);
   const cartesian = new Vector3(4.0, 5.0, 6.0);
@@ -308,7 +308,7 @@ test('Ellipsoid#scaleToGeocentricSurface works without a result parameter', t =>
   t.end();
 });
 
-test('Ellipsoid#scaleToGeocentricSurface works with a result parameter', t => {
+test('Ellipsoid#scaleToGeocentricSurface works with a result parameter', (t) => {
   const ellipsoid = new Ellipsoid(1.0, 2.0, 3.0);
   const expected = new Vector3(0.7807200583588266, 0.9759000729485333, 1.1710800875382399);
   const cartesian = new Vector3(4.0, 5.0, 6.0);
@@ -319,7 +319,7 @@ test('Ellipsoid#scaleToGeocentricSurface works with a result parameter', t => {
   t.end();
 });
 
-test('Ellipsoid#scaleToGeocentricSurface works with an Object result parameter', t => {
+test('Ellipsoid#scaleToGeocentricSurface works with an Object result parameter', (t) => {
   const ellipsoid = new Ellipsoid(1.0, 2.0, 3.0);
   const expected = new Vector3(0.7807200583588266, 0.9759000729485333, 1.1710800875382399);
   const cartesian = new Vector3(4.0, 5.0, 6.0);
@@ -334,7 +334,7 @@ test('Ellipsoid#scaleToGeocentricSurface works with an Object result parameter',
   t.end();
 });
 
-test('Ellipsoid#transformPositionToScaledSpace works without a result parameter', t => {
+test('Ellipsoid#transformPositionToScaledSpace works without a result parameter', (t) => {
   const ellipsoid = new Ellipsoid(2.0, 3.0, 4.0);
   const expected = new Vector3(2.0, 2.0, 2.0);
   const cartesian = new Vector3(4.0, 6.0, 8.0);
@@ -343,7 +343,7 @@ test('Ellipsoid#transformPositionToScaledSpace works without a result parameter'
   t.end();
 });
 
-test('Ellipsoid#transformPositionToScaledSpace works with a result parameter', t => {
+test('Ellipsoid#transformPositionToScaledSpace works with a result parameter', (t) => {
   const ellipsoid = new Ellipsoid(2.0, 3.0, 4.0);
   const expected = new Vector3(3.0, 3.0, 3.0);
   const cartesian = new Vector3(6.0, 9.0, 12.0);
@@ -354,7 +354,7 @@ test('Ellipsoid#transformPositionToScaledSpace works with a result parameter', t
   t.end();
 });
 
-test('Ellipsoid#transformPositionFromScaledSpace works without a result parameter', t => {
+test('Ellipsoid#transformPositionFromScaledSpace works without a result parameter', (t) => {
   const ellipsoid = new Ellipsoid(2.0, 3.0, 4.0);
   const expected = new Vector3(4.0, 6.0, 8.0);
   const cartesian = new Vector3(2.0, 2.0, 2.0);
@@ -363,7 +363,7 @@ test('Ellipsoid#transformPositionFromScaledSpace works without a result paramete
   t.end();
 });
 
-test('Ellipsoid#transformPositionFromScaledSpace works with a result parameter', t => {
+test('Ellipsoid#transformPositionFromScaledSpace works with a result parameter', (t) => {
   const ellipsoid = new Ellipsoid(2.0, 3.0, 4.0);
   const expected = new Vector3(6.0, 9.0, 12.0);
   const cartesian = new Vector3(3.0, 3.0, 3.0);
@@ -374,7 +374,7 @@ test('Ellipsoid#transformPositionFromScaledSpace works with a result parameter',
   t.end();
 });
 
-test('Ellipsoid#equals works in all cases', t => {
+test('Ellipsoid#equals works in all cases', (t) => {
   const ellipsoid = new Ellipsoid(1.0, 0.0, 0.0);
   t.equals(ellipsoid.equals(new Ellipsoid(1.0, 0.0, 0.0)), true);
   t.equals(ellipsoid.equals(new Ellipsoid(1.0, 1.0, 0.0)), false);
@@ -382,82 +382,82 @@ test('Ellipsoid#equals works in all cases', t => {
   t.end();
 });
 
-test('Ellipsoid#toString produces expected values', t => {
+test('Ellipsoid#toString produces expected values', (t) => {
   const expected = '[1, 2, 3]';
   const ellipsoid = new Ellipsoid(1, 2, 3);
   t.equals(ellipsoid.toString(), expected);
   t.end();
 });
 
-test('Ellipsoid#constructor throws if x less than 0', t => {
+test('Ellipsoid#constructor throws if x less than 0', (t) => {
   t.throws(() => new Ellipsoid(-1, 0, 0));
   t.end();
 });
 
-test('Ellipsoid#constructor throws if y less than 0', t => {
+test('Ellipsoid#constructor throws if y less than 0', (t) => {
   t.throws(() => new Ellipsoid(0, -1, 0));
   t.end();
 });
 
-test('Ellipsoid#constructor throws if z less than 0', t => {
+test('Ellipsoid#constructor throws if z less than 0', (t) => {
   t.throws(() => new Ellipsoid(0, 0, -1));
   t.end();
 });
 
-test('Ellipsoid#geodeticSurfaceNormalCartographic throws with no cartographic', t => {
+test('Ellipsoid#geodeticSurfaceNormalCartographic throws with no cartographic', (t) => {
   t.throws(() => Ellipsoid.WGS84.geodeticSurfaceNormalCartographic(undefined));
   t.end();
 });
 
-test.skip('Ellipsoid#geocentricSurfaceNormal throws with no', t => {
+test.skip('Ellipsoid#geocentricSurfaceNormal throws with no', (t) => {
   t.throws(() => Ellipsoid.WGS84.geocentricSurfaceNormal(undefined));
   t.end();
 });
 
-test('Ellipsoid#geodeticSurfaceNormal throws with no cartesian', t => {
+test('Ellipsoid#geodeticSurfaceNormal throws with no cartesian', (t) => {
   t.throws(() => Ellipsoid.WGS84.geodeticSurfaceNormal(undefined));
   t.end();
 });
 
-test('Ellipsoid#cartographicToCartesian throws with no cartographic', t => {
+test('Ellipsoid#cartographicToCartesian throws with no cartographic', (t) => {
   t.throws(() => Ellipsoid.WGS84.cartographicToCartesian(undefined));
   t.end();
 });
 
-test('Ellipsoid#cartographicArrayToCartesianArray throws with no cartographics', t => {
+test('Ellipsoid#cartographicArrayToCartesianArray throws with no cartographics', (t) => {
   // @ts-ignore
   t.throws(() => Ellipsoid.WGS84.cartographicArrayToCartesianArray(undefined));
   t.end();
 });
 
-test('Ellipsoid#cartesianToCartographic throws with no cartesian', t => {
+test('Ellipsoid#cartesianToCartographic throws with no cartesian', (t) => {
   t.throws(() => Ellipsoid.WGS84.cartesianToCartographic(undefined));
   t.end();
 });
 
-test('Ellipsoid#cartesianArrayToCartographicArray throws with no cartesians', t => {
+test('Ellipsoid#cartesianArrayToCartographicArray throws with no cartesians', (t) => {
   // @ts-ignore
   t.throws(() => Ellipsoid.WGS84.cartesianArrayToCartographicArray(undefined));
   t.end();
 });
 
-test('Ellipsoid#scaleToGeodeticSurface throws with no cartesian', t => {
+test('Ellipsoid#scaleToGeodeticSurface throws with no cartesian', (t) => {
   t.throws(() => Ellipsoid.WGS84.scaleToGeodeticSurface(undefined));
   t.end();
 });
 
-test('Ellipsoid#scaleToGeocentricSurface throws with no cartesian', t => {
+test('Ellipsoid#scaleToGeocentricSurface throws with no cartesian', (t) => {
   t.throws(() => Ellipsoid.WGS84.scaleToGeocentricSurface(undefined));
   t.end();
 });
 
-test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis throws with no position', t => {
+test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis throws with no position', (t) => {
   // @ts-ignore
   t.throws(() => Ellipsoid.WGS84.getSurfaceNormalIntersectionWithZAxis(undefined));
   t.end();
 });
 
-test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis throws if the ellipsoid is not an ellipsoid of revolution', t => {
+test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis throws if the ellipsoid is not an ellipsoid of revolution', (t) => {
   const ellipsoid = new Ellipsoid(1, 2, 3);
   const cartesian = new Vector3();
   // @ts-ignore
@@ -465,7 +465,7 @@ test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis throws if the ellipsoid is
   t.end();
 });
 
-test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis throws if the ellipsoid has radii.z === 0', t => {
+test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis throws if the ellipsoid has radii.z === 0', (t) => {
   const ellipsoid = new Ellipsoid(1, 2, 0);
   const cartesian = new Vector3();
   // @ts-ignore
@@ -473,7 +473,7 @@ test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis throws if the ellipsoid ha
   t.end();
 });
 
-test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis works without a result parameter', t => {
+test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis works without a result parameter', (t) => {
   const ellipsoid = Ellipsoid.WGS84;
   const cartographic = [35.23, 33.23, 0]; // Cartographic.fromDegrees(35.23, 33.23);
   const cartesianOnTheSurface = ellipsoid.cartographicToCartesian(cartographic);
@@ -482,7 +482,7 @@ test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis works without a result par
   t.end();
 });
 
-test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis works with a result parameter', t => {
+test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis works with a result parameter', (t) => {
   const ellipsoid = Ellipsoid.WGS84;
   const cartographic = [35.23, 33.23, 0]; // Cartographic.fromDegrees(35.23, 33.23);
   const cartesianOnTheSurface = ellipsoid.cartographicToCartesian(cartographic);
@@ -495,7 +495,7 @@ test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis works with a result parame
   t.end();
 });
 
-test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis returns undefined if the result is outside the ellipsoid with buffer parameter', t => {
+test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis returns undefined if the result is outside the ellipsoid with buffer parameter', (t) => {
   const ellipsoid = Ellipsoid.WGS84;
   const cartographic = [35.23, 33.23, 0]; // Cartographic.fromDegrees(35.23, 33.23);
   const cartesianOnTheSurface = ellipsoid.cartographicToCartesian(cartographic);
@@ -507,7 +507,7 @@ test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis returns undefined if the r
   t.end();
 });
 
-test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis returns undefined if the result is outside the ellipsoid without buffer parameter', t => {
+test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis returns undefined if the result is outside the ellipsoid without buffer parameter', (t) => {
   const majorAxis = 10;
   const minorAxis = 1;
   const ellipsoid = new Ellipsoid(majorAxis, majorAxis, minorAxis);
@@ -521,7 +521,7 @@ test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis returns undefined if the r
   t.end();
 });
 
-test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis returns a result that is equal to a value that computed in a different way', t => {
+test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis returns a result that is equal to a value that computed in a different way', (t) => {
   const ellipsoid = Ellipsoid.WGS84;
   const cartographic = [35.23, 33.23, 0]; // Cartographic.fromDegrees(35.23, 33.23);
   let cartesianOnTheSurface = ellipsoid.cartographicToCartesian(cartographic);
@@ -541,7 +541,7 @@ test('Ellipsoid#getSurfaceNormalIntersectionWithZAxis returns a result that is e
   t.end();
 });
 
-test("getSurfaceNormalIntersectionWithZAxis returns a result that when it's used as an origin for a vector with the surface normal direction it produces an accurate cartographic", t => {
+test("getSurfaceNormalIntersectionWithZAxis returns a result that when it's used as an origin for a vector with the surface normal direction it produces an accurate cartographic", (t) => {
   const ellipsoid = Ellipsoid.WGS84;
 
   let cartographic = [35.23, 33.23, 0];

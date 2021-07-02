@@ -24,12 +24,12 @@ import {tapeEquals} from 'test/utils/tape-assertions';
 
 import {Vector2, Matrix4, Matrix3} from '@math.gl/core';
 
-test('Vector2#import', t => {
+test('Vector2#import', (t) => {
   t.equals(typeof Vector2, 'function');
   t.end();
 });
 
-test('Vector2#construct and Array.isArray check', t => {
+test('Vector2#construct and Array.isArray check', (t) => {
   t.ok(Array.isArray(new Vector2()));
   t.end();
 });
@@ -37,7 +37,7 @@ test('Vector2#construct and Array.isArray check', t => {
 // ['add', 'cross'];
 const VECTOR_METHODS = ['clone'];
 
-test('Vector2#members and methods', t => {
+test('Vector2#members and methods', (t) => {
   const v = new Vector2();
   t.equals(v.x, 0);
   t.equals(v.y, 0);
@@ -48,7 +48,7 @@ test('Vector2#members and methods', t => {
   t.end();
 });
 
-test('Vector2#from', t => {
+test('Vector2#from', (t) => {
   let vector2;
   vector2 = new Vector2().from([1, 2]);
   tapeEquals(t, vector2, [1, 2]);
@@ -57,14 +57,14 @@ test('Vector2#from', t => {
   t.end();
 });
 
-test('Vector2#to', t => {
+test('Vector2#to', (t) => {
   const vector2 = new Vector2(1, 2);
   tapeEquals(t, vector2.to([0, 0]), [1, 2]);
   t.deepEquals(vector2.to({x: 0, y: 0}), {x: 1, y: 2});
   t.end();
 });
 
-test('Vector2#toString', t => {
+test('Vector2#toString', (t) => {
   const TEST_CASES = [{input: [0, 1], precision: 5, string: '[0, 1]'}];
   for (const tc of TEST_CASES) {
     const v = new Vector2(tc.input);
@@ -74,7 +74,7 @@ test('Vector2#toString', t => {
   t.end();
 });
 
-test('Vector2#scale', t => {
+test('Vector2#scale', (t) => {
   const TEST_CASES = [
     {input: [1, 2], scale: 5, result: [5, 10]},
     {input: [1, 2], scale: [2, -1], result: [2, -2]}
@@ -86,7 +86,7 @@ test('Vector2#scale', t => {
   t.end();
 });
 
-test('Vector2#distance', t => {
+test('Vector2#distance', (t) => {
   const TEST_CASES = [{start: [0, 0], end: [3, 4], result: 5}];
   for (const tc of TEST_CASES) {
     const result = new Vector2(tc.start).distance(tc.end);
@@ -95,7 +95,7 @@ test('Vector2#distance', t => {
   t.end();
 });
 
-test('Vector2#len', t => {
+test('Vector2#len', (t) => {
   const TEST_CASES = [
     {input: [0, 0], result: 0},
     {input: [3, 4], result: 5}
@@ -107,7 +107,7 @@ test('Vector2#len', t => {
   t.end();
 });
 
-test('Vector2#dot', t => {
+test('Vector2#dot', (t) => {
   const TEST_CASES = [{input1: [1, 3], input2: [4, -2], result: -2}];
   for (const tc of TEST_CASES) {
     const result = new Vector2(tc.input1).dot(tc.input2);
@@ -116,7 +116,7 @@ test('Vector2#dot', t => {
   t.end();
 });
 
-test('Vector2#normalize', t => {
+test('Vector2#normalize', (t) => {
   const TEST_CASES = [
     {input: [0, 0], result: [0, 0]},
     {input: [1, 0], result: [1, 0]},
@@ -131,7 +131,7 @@ test('Vector2#normalize', t => {
   t.end();
 });
 
-test('Vector2#horizontalAngle', t => {
+test('Vector2#horizontalAngle', (t) => {
   const TEST_CASES = [
     {input: [0, 0], result: 0},
     {input: [1, 0], result: 0},
@@ -144,7 +144,7 @@ test('Vector2#horizontalAngle', t => {
   t.end();
 });
 
-test('Vector2#verticalAngle', t => {
+test('Vector2#verticalAngle', (t) => {
   const TEST_CASES = [
     {input: [0, 0], result: 0},
     {input: [1, 0], result: 1.5707963267948966},
@@ -157,7 +157,7 @@ test('Vector2#verticalAngle', t => {
   t.end();
 });
 
-test('Vector2#transform', t => {
+test('Vector2#transform', (t) => {
   const transform = new Matrix4().scale([0.5, 0.5, 0.5]).translate([1, 1, 1]);
 
   const TEST_CASES = [
@@ -174,7 +174,7 @@ test('Vector2#transform', t => {
   t.end();
 });
 
-test('Vector2#transformAsVector', t => {
+test('Vector2#transformAsVector', (t) => {
   const transform = new Matrix4().scale([0.5, 0.5, 0.5]).translate([1, 1, 1]);
 
   const TEST_CASES = [
@@ -189,7 +189,7 @@ test('Vector2#transformAsVector', t => {
   t.end();
 });
 
-test('Vector2#transformByMatrix3', t => {
+test('Vector2#transformByMatrix3', (t) => {
   const transform = new Matrix3().scale([0.5, 0.5, 0.5]).translate([1, 1, 1]);
 
   const TEST_CASES = [
@@ -206,7 +206,7 @@ test('Vector2#transformByMatrix3', t => {
   t.end();
 });
 
-test('Vector2#transformByMatrix2x3', t => {
+test('Vector2#transformByMatrix2x3', (t) => {
   const transform = [0.5, 0, 0, 0.5, 0.5, 0.5];
 
   const TEST_CASES = [
@@ -223,7 +223,7 @@ test('Vector2#transformByMatrix2x3', t => {
   t.end();
 });
 
-test('Vector2#transformByMatrix2', t => {
+test('Vector2#transformByMatrix2', (t) => {
   const transform = [0.5, 0, 0, 0.5];
 
   const TEST_CASES = [

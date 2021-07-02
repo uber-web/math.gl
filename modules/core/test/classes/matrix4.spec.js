@@ -40,32 +40,32 @@ const TRANSPOSED_INDICES_MATRIX = [1, 5, 9, 13, 2, 6, 10, 14, 3, 7, 11, 15, 4, 8
 //   set: {}
 // };
 
-test('Matrix4#types', t => {
+test('Matrix4#types', (t) => {
   t.equals(typeof Matrix4, 'function');
   t.ok(Matrix4.IDENTITY);
   t.ok(Matrix4.ZERO);
   t.end();
 });
 
-test('Matrix4#construct and Array.isArray check', t => {
+test('Matrix4#construct and Array.isArray check', (t) => {
   const m = new Matrix4();
   t.ok(Array.isArray(m));
   t.ok(m.INDICES);
   t.end();
 });
 
-test('Matrix4#fromQuaternion', t => {
+test('Matrix4#fromQuaternion', (t) => {
   tapeEquals(t, new Matrix4().fromQuaternion([0, 0, 0, 1]), IDENTITY_MATRIX);
   t.end();
 });
 
-test('Matrix4#from', t => {
+test('Matrix4#from', (t) => {
   tapeEquals(t, new Matrix4().from(INDICES_MATRIX), INDICES_MATRIX);
   // tapeEquals(t, new Matrix4().from({x: 1, y: 2, z: 3, w: 4}), [1, 2, 3, 4]);
   t.end();
 });
 
-test('Matrix4#to', t => {
+test('Matrix4#to', (t) => {
   const matrix = new Matrix4(INDICES_MATRIX);
   t.ok(matrix.to(matrix), 'Handles copy to self');
   // tapeEquals(t, matrix.to([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]), INDICES_MATRIX);
@@ -73,7 +73,7 @@ test('Matrix4#to', t => {
   t.end();
 });
 
-test('Matrix4#toString', t => {
+test('Matrix4#toString', (t) => {
   const matrix = new Matrix4(INDICES_MATRIX);
   configure({printRowMajor: true});
   tapeEquals(t, String(matrix), '[row-major: 1 5 9 13 2 6 10 14 3 7 11 15 4 8 12 16]');
@@ -86,7 +86,7 @@ test('Matrix4#toString', t => {
   t.end();
 });
 
-test('Matrix4.toFloat32Array', t => {
+test('Matrix4.toFloat32Array', (t) => {
   t.equals(typeof Matrix4.prototype.toFloat32Array, 'function');
   const m = new Matrix4();
   m.identity();
@@ -94,21 +94,21 @@ test('Matrix4.toFloat32Array', t => {
   t.end();
 });
 
-test('Matrix4.equals', t => {
+test('Matrix4.equals', (t) => {
   const m = new Matrix4();
   t.ok(m.equals(IDENTITY_MATRIX));
   t.notOk(m.equals([...IDENTITY_MATRIX, 0]));
   t.end();
 });
 
-test('Matrix4.exactEquals', t => {
+test('Matrix4.exactEquals', (t) => {
   const m = new Matrix4();
   t.ok(m.exactEquals(IDENTITY_MATRIX));
   t.notOk(m.exactEquals([...IDENTITY_MATRIX, 0]));
   t.end();
 });
 
-test('Matrix4#identity (identity matrix)', t => {
+test('Matrix4#identity (identity matrix)', (t) => {
   t.equals(typeof Matrix4.prototype.identity, 'function');
   const m = new Matrix4();
   m.identity();
@@ -119,7 +119,7 @@ test('Matrix4#identity (identity matrix)', t => {
   t.end();
 });
 
-test('Matrix4#copy', t => {
+test('Matrix4#copy', (t) => {
   t.equals(typeof Matrix4.prototype.copy, 'function');
 
   const INPUT = INDICES_MATRIX;
@@ -132,7 +132,7 @@ test('Matrix4#copy', t => {
   t.end();
 });
 
-test('Matrix4#set', t => {
+test('Matrix4#set', (t) => {
   t.equals(typeof Matrix4.prototype.set, 'function');
 
   const INPUT = INDICES_MATRIX;
@@ -145,7 +145,7 @@ test('Matrix4#set', t => {
   t.end();
 });
 
-test('Matrix4#setRowMajor', t => {
+test('Matrix4#setRowMajor', (t) => {
   const INPUT = INDICES_MATRIX;
   const RESULT = TRANSPOSED_INDICES_MATRIX;
 
@@ -156,7 +156,7 @@ test('Matrix4#setRowMajor', t => {
   t.end();
 });
 
-test('Matrix4#toRowMajor', t => {
+test('Matrix4#toRowMajor', (t) => {
   const INPUT = INDICES_MATRIX;
   const RESULT = TRANSPOSED_INDICES_MATRIX;
 
@@ -166,7 +166,7 @@ test('Matrix4#toRowMajor', t => {
   t.end();
 });
 
-test('Matrix4#getScale', t => {
+test('Matrix4#getScale', (t) => {
   const INPUT = INDICES_MATRIX;
   const RESULT = [3.7416573867739413, 10.488088481701515, 17.37814719698276];
 
@@ -176,25 +176,12 @@ test('Matrix4#getScale', t => {
   t.end();
 });
 
-test('Matrix4#getRotation', t => {
+test('Matrix4#getRotation', (t) => {
   const INPUT = INDICES_MATRIX;
   const RESULT = [
-    0.2672612419124244,
-    0.19069251784911848,
-    0.17263060129453078,
-    0,
-    1.3363062095621219,
-    0.5720775535473555,
-    0.4028047363539052,
-    0,
-    2.4053511772118195,
-    0.9534625892455924,
-    0.6329788714132796,
-    0,
-    0,
-    0,
-    0,
-    1
+    0.2672612419124244, 0.19069251784911848, 0.17263060129453078, 0, 1.3363062095621219,
+    0.5720775535473555, 0.4028047363539052, 0, 2.4053511772118195, 0.9534625892455924,
+    0.6329788714132796, 0, 0, 0, 0, 1
   ];
 
   const m = new Matrix4(INPUT).getRotation([...INDICES_MATRIX]);
@@ -203,17 +190,11 @@ test('Matrix4#getRotation', t => {
   t.end();
 });
 
-test('Matrix4#getRotationMatrix3', t => {
+test('Matrix4#getRotationMatrix3', (t) => {
   const INPUT = INDICES_MATRIX;
   const RESULT = [
-    0.2672612419124244,
-    0.19069251784911848,
-    0.17263060129453078,
-    1.3363062095621219,
-    0.5720775535473555,
-    0.4028047363539052,
-    2.4053511772118195,
-    0.9534625892455924,
+    0.2672612419124244, 0.19069251784911848, 0.17263060129453078, 1.3363062095621219,
+    0.5720775535473555, 0.4028047363539052, 2.4053511772118195, 0.9534625892455924,
     0.6329788714132796
   ];
 
@@ -223,7 +204,7 @@ test('Matrix4#getRotationMatrix3', t => {
   t.end();
 });
 
-test('Matrix4#getTranslation', t => {
+test('Matrix4#getTranslation', (t) => {
   const INPUT = INDICES_MATRIX;
   const RESULT = [13, 14, 15];
 
@@ -233,7 +214,7 @@ test('Matrix4#getTranslation', t => {
   t.end();
 });
 
-test('Matrix4#perspective#', t => {
+test('Matrix4#perspective#', (t) => {
   const fovy = Math.PI * 0.5;
   const result = new Matrix4().perspective({fovy, aspect: 1, near: 0, far: 1});
   tapeEquals(
@@ -245,7 +226,7 @@ test('Matrix4#perspective#', t => {
   t.end();
 });
 
-test('Matrix4#perspective#with nonzero near, 45deg fovy, and realistic aspect ratio', t => {
+test('Matrix4#perspective#with nonzero near, 45deg fovy, and realistic aspect ratio', (t) => {
   const result = new Matrix4().perspective({
     fovy: (45 * Math.PI) / 180.0,
     aspect: 640 / 480,
@@ -261,7 +242,7 @@ test('Matrix4#perspective#with nonzero near, 45deg fovy, and realistic aspect ra
   t.end();
 });
 
-test('Matrix4#perspective#with no far plane, 45deg fovy, and realistic aspect ratio', t => {
+test('Matrix4#perspective#with no far plane, 45deg fovy, and realistic aspect ratio', (t) => {
   const result = new Matrix4().perspective({
     fovy: (45 * Math.PI) / 180.0,
     aspect: 640 / 480,
@@ -278,7 +259,7 @@ test('Matrix4#perspective#with no far plane, 45deg fovy, and realistic aspect ra
   t.end();
 });
 
-test('Matrix4#perspective#with infinite far plane, 45deg fovy, and realistic aspect ratio', t => {
+test('Matrix4#perspective#with infinite far plane, 45deg fovy, and realistic aspect ratio', (t) => {
   const result = new Matrix4().perspective({
     fovy: (45 * Math.PI) / 180.0,
     aspect: 640 / 480,
@@ -295,7 +276,7 @@ test('Matrix4#perspective#with infinite far plane, 45deg fovy, and realistic asp
   t.end();
 });
 
-test('Matrix4#orthographic#', t => {
+test('Matrix4#orthographic#', (t) => {
   const fovy = Math.PI * 0.5;
   const result = new Matrix4().orthographic({fovy, aspect: 1, near: 0, far: 1});
   t.ok(result);
@@ -303,13 +284,13 @@ test('Matrix4#orthographic#', t => {
   t.end();
 });
 
-test('Matrix4#frustum', t => {
+test('Matrix4#frustum', (t) => {
   const result = new Matrix4().frustum({left: -1, right: 1, bottom: -1, top: 1, near: -1, far: 1});
   t.ok(result);
   t.end();
 });
 
-test('Matrix4#frustum() works', t => {
+test('Matrix4#frustum() works', (t) => {
   const expected = new Matrix4([2, 0, 3, 0, 0, 2, 5, 0, 0, 0, -3, -4, 0, 0, -1, 0]).transpose();
   const returnedResult = new Matrix4().frustum({
     left: 1,
@@ -323,7 +304,7 @@ test('Matrix4#frustum() works', t => {
   t.end();
 });
 
-test('Matrix4#frustum(far: Infinity) works', t => {
+test('Matrix4#frustum(far: Infinity) works', (t) => {
   const expected = new Matrix4([2, 0, 3, 0, 0, 2, 5, 0, 0, 0, -1, -2, 0, 0, -1, 0]).transpose();
   const returnedResult = new Matrix4().frustum({
     left: 1,
@@ -337,13 +318,13 @@ test('Matrix4#frustum(far: Infinity) works', t => {
   t.end();
 });
 
-test('Matrix4#ortho', t => {
+test('Matrix4#ortho', (t) => {
   const result = new Matrix4().ortho({left: -1, right: 1, bottom: -1, top: 1, near: -1, far: 1});
   t.ok(result);
   t.end();
 });
 
-test('Matrix4#lookat', t => {
+test('Matrix4#lookat', (t) => {
   let result = new Matrix4().lookAt({eye: [1, 1, 1], center: [0, 0, 0], up: [0, 1, 0]});
   t.ok(result);
   result = new Matrix4().lookAt([1, 1, 1], [0, 0, 0], [0, 1, 0]);
@@ -351,7 +332,7 @@ test('Matrix4#lookat', t => {
   t.end();
 });
 
-test('Matrix4.transpose', t => {
+test('Matrix4.transpose', (t) => {
   t.equals(typeof Matrix4.prototype.transpose, 'function');
 
   const INPUT = INDICES_MATRIX;
@@ -366,7 +347,7 @@ test('Matrix4.transpose', t => {
   t.end();
 });
 
-test('Matrix4.add', t => {
+test('Matrix4.add', (t) => {
   const RESULT = [2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2];
 
   let m = new Matrix4().identity();
@@ -376,7 +357,7 @@ test('Matrix4.add', t => {
   t.end();
 });
 
-test('Matrix4.scale', t => {
+test('Matrix4.scale', (t) => {
   const M1_RESULT = [1, 0, 0, 0, 0, 2, 0, 0, 0, 0, 3, 0, 0, 0, 0, 1];
   const M2_RESULT = [2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 1];
 
@@ -394,7 +375,7 @@ test('Matrix4.scale', t => {
   t.end();
 });
 
-test('Matrix4.multiplyRight', t => {
+test('Matrix4.multiplyRight', (t) => {
   const RESULT = [2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2];
 
   const m = new Matrix4().multiplyRight(RESULT);
@@ -403,7 +384,7 @@ test('Matrix4.multiplyRight', t => {
   t.end();
 });
 
-test('Matrix4.multiplyLeft', t => {
+test('Matrix4.multiplyLeft', (t) => {
   const RESULT = [2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2, 0, 0, 0, 0, 2];
 
   const m = new Matrix4().multiplyLeft(RESULT);
@@ -412,7 +393,7 @@ test('Matrix4.multiplyLeft', t => {
   t.end();
 });
 
-test('Matrix4.translate', t => {
+test('Matrix4.translate', (t) => {
   const RESULT = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 2, 3, 1];
 
   t.equals(typeof Matrix4.prototype.translate, 'function');
@@ -541,7 +522,7 @@ test('Matrix4.translate', t => {
 //   t.end();
 // });
 
-test('Matrix4.rotateAxis', t => {
+test('Matrix4.rotateAxis', (t) => {
   t.equals(typeof Matrix4.prototype.rotateAxis, 'function');
   const v = new Vector3(1, 2, 3).normalize();
   const theta = Math.PI / 4;
@@ -549,53 +530,27 @@ test('Matrix4.rotateAxis', t => {
 
   const result = m.rotateAxis(theta, v);
   const reference = new Matrix4([
-    0.7280277013778687,
-    -0.525104820728302,
-    0.4407272934913635,
-    0,
-    0.6087885979157627,
-    0.7907905578613281,
-    -0.06345657259225845,
-    0,
-    -0.3152016404063445,
-    0.3145079017103789,
-    0.8953952789306641,
-    0,
-    0,
-    0,
-    0,
-    1
+    0.7280277013778687, -0.525104820728302, 0.4407272934913635, 0, 0.6087885979157627,
+    0.7907905578613281, -0.06345657259225845, 0, -0.3152016404063445, 0.3145079017103789,
+    0.8953952789306641, 0, 0, 0, 0, 1
   ]).transpose();
   t.assert(result.equals(reference), 'rotateAxis generated expected matrix');
   t.end();
 });
 
-test('Matrix4.rotateXYZ', t => {
+test('Matrix4.rotateXYZ', (t) => {
   const m = new Matrix4();
   const result = m.rotateXYZ([1, 2, 3]);
   const reference = [
-    0.411982245665683,
-    -0.6812427202564033,
-    0.6051272472413688,
-    0,
-    0.05872664492762098,
-    -0.642872836134547,
-    -0.7637183366502791,
-    0,
-    0.9092974268256817,
-    0.35017548837401463,
-    -0.2248450953661529,
-    0,
-    0,
-    0,
-    0,
-    1
+    0.411982245665683, -0.6812427202564033, 0.6051272472413688, 0, 0.05872664492762098,
+    -0.642872836134547, -0.7637183366502791, 0, 0.9092974268256817, 0.35017548837401463,
+    -0.2248450953661529, 0, 0, 0, 0, 1
   ];
   tapeEquals(t, result, reference, 'rotateXYZ generated expected matrix');
   t.end();
 });
 
-test('Matrix4#transform', t => {
+test('Matrix4#transform', (t) => {
   const matrix = new Matrix4().translate([1, 2, 3]).scale([2, 2, 2]);
 
   const TEST_CASES = [

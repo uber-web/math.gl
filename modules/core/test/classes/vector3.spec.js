@@ -24,17 +24,17 @@ import {tapeEquals} from 'test/utils/tape-assertions';
 
 import {Vector3, Matrix4, Matrix3, Quaternion} from '@math.gl/core';
 
-test('Vector3#import', t => {
+test('Vector3#import', (t) => {
   t.equals(typeof Vector3, 'function');
   t.end();
 });
 
-test('Vector3#construct and Array.isArray check', t => {
+test('Vector3#construct and Array.isArray check', (t) => {
   t.ok(Array.isArray(new Vector3()));
   t.end();
 });
 
-test('Vector3#from', t => {
+test('Vector3#from', (t) => {
   let vector3;
   vector3 = new Vector3().from([1, 2, 3]);
   tapeEquals(t, vector3, [1, 2, 3]);
@@ -43,7 +43,7 @@ test('Vector3#from', t => {
   t.end();
 });
 
-test('Vector3#to', t => {
+test('Vector3#to', (t) => {
   const vector3 = new Vector3(1, 2, 3);
   tapeEquals(t, vector3.to([0, 0, 0]), [1, 2, 3]);
   t.deepEquals(vector3.to({x: 0, y: 0, z: 0}), {x: 1, y: 2, z: 3});
@@ -53,7 +53,7 @@ test('Vector3#to', t => {
 // ['add', 'cross'];
 const VECTOR_METHODS = ['clone'];
 
-test('Vector3#members and methods', t => {
+test('Vector3#members and methods', (t) => {
   const v = new Vector3();
   t.equals(v.x, 0);
   t.equals(v.y, 0);
@@ -65,7 +65,7 @@ test('Vector3#members and methods', t => {
   t.end();
 });
 
-test('Vector3#rotates', t => {
+test('Vector3#rotates', (t) => {
   const TEST_CASES = [
     {input: [0, 0, 1], radians: Math.PI, rotateX: [0, 0, -1]},
     {input: [0, 0, 1], radians: Math.PI / 2, rotateX: [0, -1, 0]}
@@ -77,7 +77,7 @@ test('Vector3#rotates', t => {
   t.end();
 });
 
-test('Vector3#toString', t => {
+test('Vector3#toString', (t) => {
   const TEST_CASES = [{input: [0, 0, 1], precision: 5, string: '[0, 0, 1]'}];
   for (const tc of TEST_CASES) {
     const v = new Vector3(tc.input);
@@ -87,7 +87,7 @@ test('Vector3#toString', t => {
   t.end();
 });
 
-test('Vector3#scale', t => {
+test('Vector3#scale', (t) => {
   const TEST_CASES = [
     {input: [1, 2, 3], scale: 5, result: [5, 10, 15]},
     {input: [1, 2, 3], scale: [2, 0, -1], result: [2, 0, -3]}
@@ -99,7 +99,7 @@ test('Vector3#scale', t => {
   t.end();
 });
 
-test('Vector3#distance', t => {
+test('Vector3#distance', (t) => {
   const TEST_CASES = [{start: [0, 0, 0], end: [3, 4, 0], result: 5}];
   for (const tc of TEST_CASES) {
     const result = new Vector3(tc.start).distance(tc.end);
@@ -108,7 +108,7 @@ test('Vector3#distance', t => {
   t.end();
 });
 
-test('Vector3#len', t => {
+test('Vector3#len', (t) => {
   const TEST_CASES = [
     {input: [0, 0, 0], result: 0},
     {input: [3, 4, 0], result: 5}
@@ -120,7 +120,7 @@ test('Vector3#len', t => {
   t.end();
 });
 
-test('Vector3#dot', t => {
+test('Vector3#dot', (t) => {
   const TEST_CASES = [{input1: [1, 3, -5], input2: [4, -2, -1], result: 3}];
   for (const tc of TEST_CASES) {
     const result = new Vector3(tc.input1).dot(tc.input2);
@@ -129,7 +129,7 @@ test('Vector3#dot', t => {
   t.end();
 });
 
-test('Vector3#angle', t => {
+test('Vector3#angle', (t) => {
   const TEST_CASES = [{input: [0, 1, 0], result: Math.PI / 2}];
   for (const tc of TEST_CASES) {
     const result = new Vector3([1, 0, 0]).angle(tc.input);
@@ -138,7 +138,7 @@ test('Vector3#angle', t => {
   t.end();
 });
 
-test('Vector3#normalize', t => {
+test('Vector3#normalize', (t) => {
   const TEST_CASES = [
     {input: [0, 0, 0], result: [0, 0, 0]},
     {input: [1, 0, 0], result: [1, 0, 0]},
@@ -153,7 +153,7 @@ test('Vector3#normalize', t => {
   t.end();
 });
 
-test('Vector3.rotateX', t => {
+test('Vector3.rotateX', (t) => {
   let result = new Vector3([0, 1, 0]).rotateX({radians: Math.PI});
   t.ok(result.equals([0, -1, 0]), 'rotation around [0, 0, 0] should return rotated vector');
 
@@ -163,7 +163,7 @@ test('Vector3.rotateX', t => {
   t.end();
 });
 
-test('Vector3.rotateY', t => {
+test('Vector3.rotateY', (t) => {
   let result = new Vector3([1, 1, 0]).rotateY({radians: Math.PI});
   t.ok(result.equals([-1, 1, 0]), 'rotation around [0, 0, 0] should return rotated vector');
 
@@ -173,7 +173,7 @@ test('Vector3.rotateY', t => {
   t.end();
 });
 
-test('Vector3.rotateZ', t => {
+test('Vector3.rotateZ', (t) => {
   let result = new Vector3([0, 1, 0]).rotateZ({radians: Math.PI});
   t.ok(result.equals([0, -1, 0]), 'rotation around [0, 0, 0] should return rotated vector');
 
@@ -183,7 +183,7 @@ test('Vector3.rotateZ', t => {
   t.end();
 });
 
-test('Vector3#transform', t => {
+test('Vector3#transform', (t) => {
   const transform = new Matrix4().scale([0.5, 0.5, 0.5]).translate([1, 1, 1]);
 
   const TEST_CASES = [
@@ -200,7 +200,7 @@ test('Vector3#transform', t => {
   t.end();
 });
 
-test('Vector3#transformByMatrix3', t => {
+test('Vector3#transformByMatrix3', (t) => {
   const transform = new Matrix3().scale([0.5, 0.5, 0.5]).translate([1, 1, 1]);
 
   const TEST_CASES = [
@@ -217,7 +217,7 @@ test('Vector3#transformByMatrix3', t => {
   t.end();
 });
 
-test('Vector3#transformByMatrix2', t => {
+test('Vector3#transformByMatrix2', (t) => {
   const transform = [0.5, 0, 0, 0.5];
 
   const TEST_CASES = [
@@ -234,7 +234,7 @@ test('Vector3#transformByMatrix2', t => {
   t.end();
 });
 
-test('Vector3#transformByQuaternion', t => {
+test('Vector3#transformByQuaternion', (t) => {
   const transform = new Quaternion(0.5, 0.5, 0.5, 0.5);
 
   const TEST_CASES = [

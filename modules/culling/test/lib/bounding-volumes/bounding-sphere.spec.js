@@ -76,7 +76,7 @@ function getPositionsAsEncodedFlatArray() {
 }
 */
 
-test('BoundingSphere#default constructing produces expected values', t => {
+test('BoundingSphere#default constructing produces expected values', (t) => {
   const sphere = new BoundingSphere();
   tapeEquals(t, sphere.center, [0, 0, 0]);
   t.equals(sphere.radius, 0.0);
@@ -84,7 +84,7 @@ test('BoundingSphere#default constructing produces expected values', t => {
   t.end();
 });
 
-test('BoundingSphere#constructor sets expected values (array)', t => {
+test('BoundingSphere#constructor sets expected values (array)', (t) => {
   const expectedCenter = [1.0, 2.0, 3.0];
   const expectedRadius = 1.0;
   const sphere = new BoundingSphere(expectedCenter, expectedRadius);
@@ -94,7 +94,7 @@ test('BoundingSphere#constructor sets expected values (array)', t => {
   t.end();
 });
 
-test('BoundingSphere#constructor sets expected values (object)', t => {
+test('BoundingSphere#constructor sets expected values (object)', (t) => {
   const expectedCenter = {x: 1.0, y: 2.0, z: 3.0};
   const expectedRadius = 1.0;
   // @ts-ignore TODO - add XYZ types
@@ -105,7 +105,7 @@ test('BoundingSphere#constructor sets expected values (object)', t => {
   t.end();
 });
 
-test('BoundingSphere#fromCornerPoints', t => {
+test('BoundingSphere#fromCornerPoints', (t) => {
   const sphere = new BoundingSphere().fromCornerPoints(
     new Vector3(-1.0, -0.0, 0.0),
     new Vector3(1.0, 0.0, 0.0)
@@ -115,7 +115,7 @@ test('BoundingSphere#fromCornerPoints', t => {
   t.end();
 });
 
-test('BoundingSphere#fromCornerPoints throws without corner', t => {
+test('BoundingSphere#fromCornerPoints throws without corner', (t) => {
   const sphere = new BoundingSphere();
   // @ts-ignore
   t.throws(() => sphere.fromCornerPoints());
@@ -123,7 +123,7 @@ test('BoundingSphere#fromCornerPoints throws without corner', t => {
   t.end();
 });
 
-test('BoundingSphere#fromCornerPoints throws without oppositeCorner', t => {
+test('BoundingSphere#fromCornerPoints throws without oppositeCorner', (t) => {
   const sphere = new BoundingSphere();
   // @ts-ignore
   t.throws(() => sphere.fromCornerPoints(VECTOR3_UNIT_X));
@@ -131,7 +131,7 @@ test('BoundingSphere#fromCornerPoints throws without oppositeCorner', t => {
   t.end();
 });
 
-test('BoundingSphere#clone', t => {
+test('BoundingSphere#clone', (t) => {
   const sphere = new BoundingSphere(new Vector3(1.0, 2.0, 3.0), 4.0);
   const result = sphere.clone();
   t.notEqual(sphere, result);
@@ -140,7 +140,7 @@ test('BoundingSphere#clone', t => {
   t.end();
 });
 
-test('BoundingSphere#equals', t => {
+test('BoundingSphere#equals', (t) => {
   const sphere = new BoundingSphere([1.0, 2.0, 3.0], 4.0);
   t.equals(sphere.equals(new BoundingSphere([1.0, 2.0, 3.0], 4.0)), true);
   t.equals(sphere.equals(new BoundingSphere([5.0, 2.0, 3.0], 4.0)), false);
@@ -152,7 +152,7 @@ test('BoundingSphere#equals', t => {
   t.end();
 });
 
-test('BoundingSphere#intersectPlane with sphere on the positive side of a plane', t => {
+test('BoundingSphere#intersectPlane with sphere on the positive side of a plane', (t) => {
   const sphere = new BoundingSphere(VECTOR3_ZERO, 0.5);
   const normal = new Vector3(VECTOR3_UNIT_X).negate();
   const position = VECTOR3_UNIT_X;
@@ -162,7 +162,7 @@ test('BoundingSphere#intersectPlane with sphere on the positive side of a plane'
   t.end();
 });
 
-test('BoundingSphere#intersectPlane with sphere on the negative side of a plane', t => {
+test('BoundingSphere#intersectPlane with sphere on the negative side of a plane', (t) => {
   const sphere = new BoundingSphere(VECTOR3_ZERO, 0.5);
   const normal = VECTOR3_UNIT_X;
   const position = VECTOR3_UNIT_X;
@@ -172,7 +172,7 @@ test('BoundingSphere#intersectPlane with sphere on the negative side of a plane'
   t.end();
 });
 
-test('BoundingSphere#intersectPlane with sphere intersecting a plane', t => {
+test('BoundingSphere#intersectPlane with sphere intersecting a plane', (t) => {
   const sphere = new BoundingSphere(VECTOR3_UNIT_X, 0.5);
   const normal = VECTOR3_UNIT_X;
   const position = VECTOR3_UNIT_X;
@@ -182,7 +182,7 @@ test('BoundingSphere#intersectPlane with sphere intersecting a plane', t => {
   t.end();
 });
 
-test('BoundingSphere#expands to contain another sphere', t => {
+test('BoundingSphere#expands to contain another sphere', (t) => {
   const bs1 = new BoundingSphere(VECTOR3_UNIT_X.clone().negate(), 1.0);
   const bs2 = new BoundingSphere(VECTOR3_UNIT_X, 1.0);
   const expected = new BoundingSphere(VECTOR3_ZERO, 2.0);
@@ -191,7 +191,7 @@ test('BoundingSphere#expands to contain another sphere', t => {
   t.end();
 });
 
-test('BoundingSphere#union left sphere encloses right', t => {
+test('BoundingSphere#union left sphere encloses right', (t) => {
   const bs1 = new BoundingSphere(VECTOR3_ZERO, 3.0);
   const bs2 = new BoundingSphere(VECTOR3_UNIT_X, 1.0);
   const union = bs1.union(bs2);
@@ -200,7 +200,7 @@ test('BoundingSphere#union left sphere encloses right', t => {
   t.end();
 });
 
-test('BoundingSphere#union of co-located spheres, right sphere encloses left', t => {
+test('BoundingSphere#union of co-located spheres, right sphere encloses left', (t) => {
   const bs1 = new BoundingSphere(VECTOR3_UNIT_X, 1.0);
   const bs2 = new BoundingSphere(VECTOR3_UNIT_X, 2.0);
   const union = bs1.union(bs2);
@@ -209,7 +209,7 @@ test('BoundingSphere#union of co-located spheres, right sphere encloses left', t
   t.end();
 });
 
-test('BoundingSphere#union result parameter is a tight fit', t => {
+test('BoundingSphere#union result parameter is a tight fit', (t) => {
   const bs1 = new BoundingSphere(new Vector3(VECTOR3_UNIT_X).negate().scale(3.0), 3.0);
   const bs2 = new BoundingSphere(VECTOR3_UNIT_X, 1.0);
   const expected = new BoundingSphere(new Vector3(VECTOR3_UNIT_X).negate().scale(2.0), 4.0);
@@ -219,7 +219,7 @@ test('BoundingSphere#union result parameter is a tight fit', t => {
   t.end();
 });
 
-test('BoundingSphere#expands to contain another point', t => {
+test('BoundingSphere#expands to contain another point', (t) => {
   const bs = new BoundingSphere(new Vector3(VECTOR3_UNIT_X).negate(), 1.0);
   const point = VECTOR3_UNIT_X;
   const expected = new BoundingSphere(new Vector3(VECTOR3_UNIT_X).negate(), 2.0);
@@ -228,7 +228,7 @@ test('BoundingSphere#expands to contain another point', t => {
   t.end();
 });
 
-test('BoundingSphere#applies transform', t => {
+test('BoundingSphere#applies transform', (t) => {
   const bs = new BoundingSphere(VECTOR3_ZERO, 1.0);
   const transform = new Matrix4().translate(new Vector3(1.0, 2.0, 3.0));
   const expected = new BoundingSphere(new Vector3(1.0, 2.0, 3.0), 1.0);
@@ -237,7 +237,7 @@ test('BoundingSphere#applies transform', t => {
   t.end();
 });
 
-test('BoundingSphere#applies scale transform', t => {
+test('BoundingSphere#applies scale transform', (t) => {
   const bs = new BoundingSphere(VECTOR3_ZERO, 1.0);
   const transform = new Matrix4().scale(new Vector3(1.0, 2.0, 3.0));
   const expected = new BoundingSphere(VECTOR3_ZERO, 3.0);
@@ -246,7 +246,7 @@ test('BoundingSphere#applies scale transform', t => {
   t.end();
 });
 
-test('BoundingSphere#estimated distance squared to point', t => {
+test('BoundingSphere#estimated distance squared to point', (t) => {
   const bs = new BoundingSphere(VECTOR3_ZERO, 1.0);
   const position = new Vector3(-2.0, 1.0, 0.0);
   const expected = position.lengthSquared() - 1.0;
@@ -255,7 +255,7 @@ test('BoundingSphere#estimated distance squared to point', t => {
   t.end();
 });
 
-test('BoundingSphere#estimated distance to point', t => {
+test('BoundingSphere#estimated distance to point', (t) => {
   const bs = new BoundingSphere(VECTOR3_ZERO, 1.0);
   const position = new Vector3(-2.0, 1.0, 0.0);
   const expected = position.lengthSquared() - 1.0;
@@ -264,28 +264,28 @@ test('BoundingSphere#estimated distance to point', t => {
   t.end();
 });
 
-test('BoundingSphere#union throws with no parameter', t => {
+test('BoundingSphere#union throws with no parameter', (t) => {
   const sphere = new BoundingSphere();
   t.throws(() => sphere.union(undefined));
 
   t.end();
 });
 
-test('BoundingSphere#expand throws without a point', t => {
+test('BoundingSphere#expand throws without a point', (t) => {
   const sphere = new BoundingSphere();
   t.throws(() => sphere.expand(undefined));
 
   t.end();
 });
 
-test('BoundingSphere#intersectPlane throws without a plane', t => {
+test('BoundingSphere#intersectPlane throws without a plane', (t) => {
   const sphere = new BoundingSphere();
   t.throws(() => sphere.intersectPlane(undefined));
 
   t.end();
 });
 
-test('BoundingSphere#transform throws without a transform', t => {
+test('BoundingSphere#transform throws without a transform', (t) => {
   const sphere = new BoundingSphere();
   // @ts-ignore
   t.throws(() => sphere.transform());
@@ -293,7 +293,7 @@ test('BoundingSphere#transform throws without a transform', t => {
   t.end();
 });
 
-test('BoundingSphere#distanceSquaredTo throws without a cartesian', t => {
+test('BoundingSphere#distanceSquaredTo throws without a cartesian', (t) => {
   const sphere = new BoundingSphere();
   // @ts-ignore
   t.throws(() => sphere.distanceSquaredTo(new BoundingSphere()));

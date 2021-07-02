@@ -20,7 +20,7 @@ const TEST_CASES = [
   }
 ];
 
-test('Viewport vs Mapbox project', t => {
+test('Viewport vs Mapbox project', (t) => {
   config.EPSILON = 1e-8;
 
   for (const viewportName in VIEWPORT_PROPS) {
@@ -42,7 +42,7 @@ test('Viewport vs Mapbox project', t => {
   t.end();
 });
 
-test('Viewport vs Mapbox unproject', t => {
+test('Viewport vs Mapbox unproject', (t) => {
   config.EPSILON = 1e-7;
 
   for (const viewportName in VIEWPORT_PROPS) {
@@ -65,7 +65,7 @@ test('Viewport vs Mapbox unproject', t => {
 });
 
 /* Mapbox's matrixes projects to screenspace instead of clipspace */
-test('Viewport vs Mapbox project 3D', t => {
+test('Viewport vs Mapbox project 3D', (t) => {
   for (const viewportName in VIEWPORT_PROPS) {
     const viewportProps = VIEWPORT_PROPS[viewportName];
 
@@ -86,7 +86,7 @@ test('Viewport vs Mapbox project 3D', t => {
   t.end();
 });
 
-test('Viewport/Mapbox getLocationAtPoint', t => {
+test('Viewport/Mapbox getLocationAtPoint', (t) => {
   for (const viewportName in VIEWPORT_PROPS) {
     const viewportProps = VIEWPORT_PROPS[viewportName];
     for (const {title, lngLat} of TEST_CASES) {

@@ -31,7 +31,7 @@ function beforeEachTest() {
   return {frustum, planes};
 }
 
-test('PerspectiveOffCenterFrustum#constructs', t => {
+test('PerspectiveOffCenterFrustum#constructs', (t) => {
   const options = {
     left: -1.0,
     right: 2.0,
@@ -48,7 +48,7 @@ test('PerspectiveOffCenterFrustum#constructs', t => {
   t.end();
 });
 
-test('PerspectiveOffCenterFrustum#default constructs', t => {
+test('PerspectiveOffCenterFrustum#default constructs', (t) => {
   const f = new PerspectiveOffCenterFrustum();
   t.ok(f.left === undefined);
   t.ok(f.right === undefined);
@@ -59,39 +59,39 @@ test('PerspectiveOffCenterFrustum#default constructs', t => {
   t.end();
 });
 
-test('PerspectiveOffCenterFrustum#out of range near plane throws an exception', t => {
+test('PerspectiveOffCenterFrustum#out of range near plane throws an exception', (t) => {
   const {frustum} = beforeEachTest();
   frustum.near = -1.0;
   t.throws(() => frustum.projectionMatrix);
   t.end();
 });
 
-test('PerspectiveOffCenterFrustum#negative far plane throws an exception', t => {
+test('PerspectiveOffCenterFrustum#negative far plane throws an exception', (t) => {
   const {frustum} = beforeEachTest();
   frustum.far = -1.0;
   t.throws(() => frustum.projectionMatrix);
   t.end();
 });
 
-test('PerspectiveOffCenterFrustum#computeCullingVolume with no position throws an exception', t => {
+test('PerspectiveOffCenterFrustum#computeCullingVolume with no position throws an exception', (t) => {
   const {frustum} = beforeEachTest();
   t.throws(() => frustum.computeCullingVolume());
   t.end();
 });
 
-test('PerspectiveOffCenterFrustum#computeCullingVolume with no direction throws an exception', t => {
+test('PerspectiveOffCenterFrustum#computeCullingVolume with no direction throws an exception', (t) => {
   const {frustum} = beforeEachTest();
   t.throws(() => frustum.computeCullingVolume(new Vector3()));
   t.end();
 });
 
-test('PerspectiveOffCenterFrustum#computeCullingVolume with no up throws an exception', t => {
+test('PerspectiveOffCenterFrustum#computeCullingVolume with no up throws an exception', (t) => {
   const {frustum} = beforeEachTest();
   t.throws(() => frustum.computeCullingVolume(new Vector3(), new Vector3()));
   t.end();
 });
 
-test('PerspectiveOffCenterFrustum#get frustum left plane', t => {
+test('PerspectiveOffCenterFrustum#get frustum left plane', (t) => {
   const {planes} = beforeEachTest();
   const leftPlane = planes[0];
   const x = 1.0 / Math.sqrt(2.0);
@@ -100,7 +100,7 @@ test('PerspectiveOffCenterFrustum#get frustum left plane', t => {
   t.end();
 });
 
-test('PerspectiveOffCenterFrustum#get frustum right plane', t => {
+test('PerspectiveOffCenterFrustum#get frustum right plane', (t) => {
   const {planes} = beforeEachTest();
   const rightPlane = planes[1];
   const x = 1.0 / Math.sqrt(2.0);
@@ -109,7 +109,7 @@ test('PerspectiveOffCenterFrustum#get frustum right plane', t => {
   t.end();
 });
 
-test('PerspectiveOffCenterFrustum#get frustum bottom plane', t => {
+test('PerspectiveOffCenterFrustum#get frustum bottom plane', (t) => {
   const {planes} = beforeEachTest();
   const bottomPlane = planes[2];
   const x = 1.0 / Math.sqrt(2.0);
@@ -118,7 +118,7 @@ test('PerspectiveOffCenterFrustum#get frustum bottom plane', t => {
   t.end();
 });
 
-test('PerspectiveOffCenterFrustum#get frustum top plane', t => {
+test('PerspectiveOffCenterFrustum#get frustum top plane', (t) => {
   const {planes} = beforeEachTest();
   const topPlane = planes[3];
   const x = 1.0 / Math.sqrt(2.0);
@@ -127,7 +127,7 @@ test('PerspectiveOffCenterFrustum#get frustum top plane', t => {
   t.end();
 });
 
-test('PerspectiveOffCenterFrustum#get frustum near plane', t => {
+test('PerspectiveOffCenterFrustum#get frustum near plane', (t) => {
   const {planes} = beforeEachTest();
   const nearPlane = planes[4];
   const expectedResult = new Vector4(0.0, 0.0, -1.0, -1.0);
@@ -135,7 +135,7 @@ test('PerspectiveOffCenterFrustum#get frustum near plane', t => {
   t.end();
 });
 
-test('PerspectiveOffCenterFrustum#get frustum far plane', t => {
+test('PerspectiveOffCenterFrustum#get frustum far plane', (t) => {
   const {planes} = beforeEachTest();
   const farPlane = planes[5];
   const expectedResult = new Vector4(0.0, 0.0, 1.0, 2.0);
@@ -143,7 +143,7 @@ test('PerspectiveOffCenterFrustum#get frustum far plane', t => {
   t.end();
 });
 
-test('PerspectiveOffCenterFrustum#get perspective projection matrix', t => {
+test('PerspectiveOffCenterFrustum#get perspective projection matrix', (t) => {
   const {frustum} = beforeEachTest();
   const projectionMatrix = frustum.projectionMatrix;
 
@@ -166,7 +166,7 @@ test('PerspectiveOffCenterFrustum#get perspective projection matrix', t => {
   t.end();
 });
 
-test('PerspectiveOffCenterFrustum#get infinite perspective matrix', t => {
+test('PerspectiveOffCenterFrustum#get infinite perspective matrix', (t) => {
   const {frustum} = beforeEachTest();
   const top = frustum.top;
   const bottom = frustum.bottom;
@@ -186,31 +186,31 @@ test('PerspectiveOffCenterFrustum#get infinite perspective matrix', t => {
   t.end();
 });
 
-test('PerspectiveOffCenterFrustum#get pixel dimensions throws without canvas height', t => {
+test('PerspectiveOffCenterFrustum#get pixel dimensions throws without canvas height', (t) => {
   const {frustum} = beforeEachTest();
   t.throws(() => frustum.getPixelDimensions(1.0, undefined, 1.0, new Vector2()));
   t.end();
 });
 
-test('PerspectiveOffCenterFrustum#get pixel dimensions throws without canvas width', t => {
+test('PerspectiveOffCenterFrustum#get pixel dimensions throws without canvas width', (t) => {
   const {frustum} = beforeEachTest();
   t.throws(() => frustum.getPixelDimensions(undefined, 1.0, 1.0, new Vector2()));
   t.end();
 });
 
-test('PerspectiveOffCenterFrustum#get pixel dimensions throws with canvas width less than or equal to zero', t => {
+test('PerspectiveOffCenterFrustum#get pixel dimensions throws with canvas width less than or equal to zero', (t) => {
   const {frustum} = beforeEachTest();
   t.throws(() => frustum.getPixelDimensions(0.0, 1.0, 1.0, new Vector2()));
   t.end();
 });
 
-test('PerspectiveOffCenterFrustum#get pixel dimensions throws with canvas height less than or equal to zero', t => {
+test('PerspectiveOffCenterFrustum#get pixel dimensions throws with canvas height less than or equal to zero', (t) => {
   const {frustum} = beforeEachTest();
   t.throws(() => frustum.getPixelDimensions(1.0, 0.0, 1.0, new Vector2()));
   t.end();
 });
 
-test('PerspectiveOffCenterFrustum#get pixel dimensions', t => {
+test('PerspectiveOffCenterFrustum#get pixel dimensions', (t) => {
   const {frustum} = beforeEachTest();
   const pixelSize = frustum.getPixelDimensions(1.0, 1.0, 1.0, new Vector2());
   t.equals(pixelSize.x, 2.0);
@@ -218,7 +218,7 @@ test('PerspectiveOffCenterFrustum#get pixel dimensions', t => {
   t.end();
 });
 
-test('PerspectiveOffCenterFrustum#equals', t => {
+test('PerspectiveOffCenterFrustum#equals', (t) => {
   const {frustum} = beforeEachTest();
   const frustum2 = new PerspectiveOffCenterFrustum();
   frustum2.right = 1.0;
@@ -235,13 +235,13 @@ test('PerspectiveOffCenterFrustum#equals', t => {
   t.end();
 });
 
-test('PerspectiveOffCenterFrustum#throws with undefined frustum parameters', t => {
+test('PerspectiveOffCenterFrustum#throws with undefined frustum parameters', (t) => {
   const frustum = new PerspectiveOffCenterFrustum();
   t.throws(() => frustum.infiniteProjectionMatrix);
   t.end();
 });
 
-test('PerspectiveOffCenterFrustum#clone', t => {
+test('PerspectiveOffCenterFrustum#clone', (t) => {
   const {frustum} = beforeEachTest();
   const frustum2 = frustum.clone();
   tapeEquals(t, frustum, frustum2);

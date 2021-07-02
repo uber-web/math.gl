@@ -83,10 +83,7 @@ export default class OrientedBoundingBox {
     const w = halfAxes.getColumn(2, scratchVectorW);
 
     // Calculate "corner" vector
-    const cornerVector = scratchVector3
-      .copy(u)
-      .add(v)
-      .add(w);
+    const cornerVector = scratchVector3.copy(u).add(v).add(w);
 
     result.center.copy(this.center);
     result.radius = cornerVector.magnitude();
@@ -189,11 +186,7 @@ export default class OrientedBoundingBox {
     const w = halfAxes.getColumn(2, scratchVectorW);
 
     // project first corner
-    const corner = scratchCorner
-      .copy(u)
-      .add(v)
-      .add(w)
-      .add(center);
+    const corner = scratchCorner.copy(u).add(v).add(w).add(center);
 
     const toCenter = scratchToCenter.copy(corner).subtract(position);
     let mag = direction.dot(toCenter);
@@ -202,11 +195,7 @@ export default class OrientedBoundingBox {
     maxDist = Math.max(mag, maxDist);
 
     // project second corner
-    corner
-      .copy(center)
-      .add(u)
-      .add(v)
-      .subtract(w);
+    corner.copy(center).add(u).add(v).subtract(w);
 
     toCenter.copy(corner).subtract(position);
     mag = direction.dot(toCenter);
@@ -215,11 +204,7 @@ export default class OrientedBoundingBox {
     maxDist = Math.max(mag, maxDist);
 
     // project third corner
-    corner
-      .copy(center)
-      .add(u)
-      .subtract(v)
-      .add(w);
+    corner.copy(center).add(u).subtract(v).add(w);
 
     toCenter.copy(corner).subtract(position);
     mag = direction.dot(toCenter);
@@ -228,11 +213,7 @@ export default class OrientedBoundingBox {
     maxDist = Math.max(mag, maxDist);
 
     // project fourth corner
-    corner
-      .copy(center)
-      .add(u)
-      .subtract(v)
-      .subtract(w);
+    corner.copy(center).add(u).subtract(v).subtract(w);
 
     toCenter.copy(corner).subtract(position);
     mag = direction.dot(toCenter);
@@ -241,11 +222,7 @@ export default class OrientedBoundingBox {
     maxDist = Math.max(mag, maxDist);
 
     // project fifth corner
-    center
-      .copy(corner)
-      .subtract(u)
-      .add(v)
-      .add(w);
+    center.copy(corner).subtract(u).add(v).add(w);
 
     toCenter.copy(corner).subtract(position);
     mag = direction.dot(toCenter);
@@ -254,11 +231,7 @@ export default class OrientedBoundingBox {
     maxDist = Math.max(mag, maxDist);
 
     // project sixth corner
-    center
-      .copy(corner)
-      .subtract(u)
-      .add(v)
-      .subtract(w);
+    center.copy(corner).subtract(u).add(v).subtract(w);
 
     toCenter.copy(corner).subtract(position);
     mag = direction.dot(toCenter);
@@ -267,11 +240,7 @@ export default class OrientedBoundingBox {
     maxDist = Math.max(mag, maxDist);
 
     // project seventh corner
-    center
-      .copy(corner)
-      .subtract(u)
-      .subtract(v)
-      .add(w);
+    center.copy(corner).subtract(u).subtract(v).add(w);
 
     toCenter.copy(corner).subtract(position);
     mag = direction.dot(toCenter);
@@ -280,11 +249,7 @@ export default class OrientedBoundingBox {
     maxDist = Math.max(mag, maxDist);
 
     // project eighth corner
-    center
-      .copy(corner)
-      .subtract(u)
-      .subtract(v)
-      .subtract(w);
+    center.copy(corner).subtract(u).subtract(v).subtract(w);
 
     toCenter.copy(corner).subtract(position);
     mag = direction.dot(toCenter);

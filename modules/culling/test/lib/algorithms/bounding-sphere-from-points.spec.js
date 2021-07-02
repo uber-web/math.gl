@@ -24,7 +24,7 @@ function getPositions() {
   ];
 }
 
-test('makeBoundingSphereFromPoints without positions returns an empty sphere', t => {
+test('makeBoundingSphereFromPoints without positions returns an empty sphere', (t) => {
   const sphere = makeBoundingSphereFromPoints([]);
   tapeEquals(t, sphere.center, Vector3.ZERO);
   t.equals(sphere.radius, 0.0);
@@ -32,7 +32,7 @@ test('makeBoundingSphereFromPoints without positions returns an empty sphere', t
   t.end();
 });
 
-test('makeBoundingSphereFromPoints works with one point', t => {
+test('makeBoundingSphereFromPoints works with one point', (t) => {
   const expectedCenter = new Vector3(1.0, 2.0, 3.0);
   const sphere = makeBoundingSphereFromPoints([expectedCenter]);
   tapeEquals(t, sphere.center, expectedCenter);
@@ -41,7 +41,7 @@ test('makeBoundingSphereFromPoints works with one point', t => {
   t.end();
 });
 
-test('makeBoundingSphereFromPoints computes a center from points', t => {
+test('makeBoundingSphereFromPoints computes a center from points', (t) => {
   const sphere = makeBoundingSphereFromPoints(getPositions());
   tapeEquals(t, sphere.center, positionsCenter);
   t.equals(sphere.radius, positionsRadius);
@@ -49,7 +49,7 @@ test('makeBoundingSphereFromPoints computes a center from points', t => {
   t.end();
 });
 
-test('makeBoundingSphereFromPoints contains all points (naive)', t => {
+test('makeBoundingSphereFromPoints contains all points (naive)', (t) => {
   const sphere = makeBoundingSphereFromPoints(getPositions());
   const radius = sphere.radius;
 
@@ -69,7 +69,7 @@ test('makeBoundingSphereFromPoints contains all points (naive)', t => {
   t.end();
 });
 
-test('makeBoundingSphereFromPoints contains all points (ritter)', t => {
+test('makeBoundingSphereFromPoints contains all points (ritter)', (t) => {
   const positions = getPositions();
   positions.push(new Vector3(1, 1, 1), new Vector3(2, 2, 2), new Vector3(3, 3, 3));
   const sphere = makeBoundingSphereFromPoints(positions);

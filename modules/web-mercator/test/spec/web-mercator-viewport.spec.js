@@ -4,12 +4,12 @@ import {equals, config} from '@math.gl/core';
 
 import VIEWPORT_PROPS from '../utils/sample-viewports';
 
-test('WebMercatorViewport#imports', t => {
+test('WebMercatorViewport#imports', (t) => {
   t.ok(WebMercatorViewport, 'WebMercatorViewport import ok');
   t.end();
 });
 
-test('WebMercatorViewport#constructor', t => {
+test('WebMercatorViewport#constructor', (t) => {
   t.ok(
     new WebMercatorViewport() instanceof WebMercatorViewport,
     'Created new WebMercatorViewport with default args'
@@ -17,7 +17,7 @@ test('WebMercatorViewport#constructor', t => {
   t.end();
 });
 
-test('WebMercatorViewport#constructor - 0 width/height', t => {
+test('WebMercatorViewport#constructor - 0 width/height', (t) => {
   const viewport = new WebMercatorViewport(
     Object.assign({}, VIEWPORT_PROPS.flat, {
       width: 0,
@@ -31,7 +31,7 @@ test('WebMercatorViewport#constructor - 0 width/height', t => {
   t.end();
 });
 
-test('WebMercatorViewport#constructor - camera offset', t => {
+test('WebMercatorViewport#constructor - camera offset', (t) => {
   const viewport = new WebMercatorViewport(
     Object.assign({}, VIEWPORT_PROPS.flat, {
       position: [0, 0, 300]
@@ -41,7 +41,7 @@ test('WebMercatorViewport#constructor - camera offset', t => {
   t.end();
 });
 
-test('WebMercatorViewport#equals', t => {
+test('WebMercatorViewport#equals', (t) => {
   // TODO - fix types
   // @ts-ignore
   const viewport1 = new WebMercatorViewport(VIEWPORT_PROPS.flat);
@@ -56,7 +56,7 @@ test('WebMercatorViewport#equals', t => {
   t.end();
 });
 
-test('WebMercatorViewport.projectFlat', t => {
+test('WebMercatorViewport.projectFlat', (t) => {
   config.EPSILON = 1e-6;
 
   for (const vc in VIEWPORT_PROPS) {
@@ -73,7 +73,7 @@ test('WebMercatorViewport.projectFlat', t => {
   t.end();
 });
 
-test('WebMercatorViewport.project#3D', t => {
+test('WebMercatorViewport.project#3D', (t) => {
   config.EPSILON = 1e-6;
 
   for (const vc in VIEWPORT_PROPS) {
@@ -92,7 +92,7 @@ test('WebMercatorViewport.project#3D', t => {
   t.end();
 });
 
-test('WebMercatorViewport.project#2D', t => {
+test('WebMercatorViewport.project#2D', (t) => {
   config.EPSILON = 1e-6;
 
   for (const vc in VIEWPORT_PROPS) {
@@ -115,7 +115,7 @@ test('WebMercatorViewport.project#2D', t => {
   t.end();
 });
 
-test('WebMercatorViewport.getLocationAtPoint', t => {
+test('WebMercatorViewport.getLocationAtPoint', (t) => {
   config.EPSILON = 1e-6;
   const TEST_POS = [200, 200];
 
