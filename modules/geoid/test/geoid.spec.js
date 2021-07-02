@@ -4,12 +4,12 @@ import {openFile} from './utils/file-utils';
 
 const PGM_FILE_PATH = 'modules/geoid/test/data/egm84-30.pgm';
 
-test('geoid - exports', t => {
+test('geoid - exports', (t) => {
   t.assert(Geoid, 'Geoid is defined');
   t.end();
 });
 
-test('geoid - get height model info', async t => {
+test('geoid - get height model info', async (t) => {
   const data = await openFile(PGM_FILE_PATH);
 
   // If data is null - now ways to open the file
@@ -40,7 +40,7 @@ test('geoid - get height model info', async t => {
   t.end();
 });
 
-test('geoid - cubic approximation', async t => {
+test('geoid - cubic approximation', async (t) => {
   const data = await openFile(PGM_FILE_PATH);
 
   // If data is null - now ways to open the file

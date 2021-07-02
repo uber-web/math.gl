@@ -68,18 +68,9 @@ export default function makeBoundingSphereFromPoints(positions, result = new Bou
   }
 
   // Compute x-, y-, and z-spans (Squared distances b/n each component's min. and max.).
-  const xSpan = fromPointsScratch
-    .copy(xMax)
-    .subtract(xMin)
-    .magnitudeSquared();
-  const ySpan = fromPointsScratch
-    .copy(yMax)
-    .subtract(yMin)
-    .magnitudeSquared();
-  const zSpan = fromPointsScratch
-    .copy(zMax)
-    .subtract(zMin)
-    .magnitudeSquared();
+  const xSpan = fromPointsScratch.copy(xMax).subtract(xMin).magnitudeSquared();
+  const ySpan = fromPointsScratch.copy(yMax).subtract(yMin).magnitudeSquared();
+  const zSpan = fromPointsScratch.copy(zMax).subtract(zMin).magnitudeSquared();
 
   // Set the diameter endpoints to the largest span.
   let diameter1 = xMin;
@@ -103,10 +94,7 @@ export default function makeBoundingSphereFromPoints(positions, result = new Bou
   ritterCenter.z = (diameter1.z + diameter2.z) * 0.5;
 
   // Calculate the radius of the initial sphere found by Ritter's algorithm
-  let radiusSquared = fromPointsScratch
-    .copy(diameter2)
-    .subtract(ritterCenter)
-    .magnitudeSquared();
+  let radiusSquared = fromPointsScratch.copy(diameter2).subtract(ritterCenter).magnitudeSquared();
   let ritterRadius = Math.sqrt(radiusSquared);
 
   // Find the center of the sphere found using the Naive method.
@@ -131,10 +119,7 @@ export default function makeBoundingSphereFromPoints(positions, result = new Bou
     currentPos.copy(position);
 
     // Find the furthest point from the naive center to calculate the naive radius.
-    const r = fromPointsScratch
-      .copy(currentPos)
-      .subtract(naiveCenter)
-      .magnitude();
+    const r = fromPointsScratch.copy(currentPos).subtract(naiveCenter).magnitude();
     if (r > naiveRadius) {
       naiveRadius = r;
     }

@@ -53,7 +53,7 @@ function addProdConfig(config) {
   });
 }
 
-module.exports = env => {
+module.exports = (env) => {
   env = env || {};
 
   let config = COMMON_CONFIG;

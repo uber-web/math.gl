@@ -58,10 +58,7 @@ export default class Plane {
 
   // Transforms the plane by the given transformation matrix.
   transform(matrix4) {
-    const normal = scratchNormal
-      .copy(this.normal)
-      .transformAsVector(matrix4)
-      .normalize();
+    const normal = scratchNormal.copy(this.normal).transformAsVector(matrix4).normalize();
     const point = this.normal.scale(-this.distance).transform(matrix4);
     return this.fromPointNormal(point, normal);
   }

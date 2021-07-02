@@ -26,19 +26,19 @@ import {earcut} from '@math.gl/polygon';
 import {extractAreas, deviation, flatten} from './earcut-utils';
 import expected from './data/earcut/expected';
 
-test('indices-2d', function(t) {
+test('indices-2d', function (t) {
   const indices = earcut([10, 0, 0, 50, 60, 60, 70, 10]);
   t.same(indices, [1, 0, 3, 3, 2, 1]);
   t.end();
 });
 
-test('indices-3d', function(t) {
+test('indices-3d', function (t) {
   const indices = earcut([10, 4, 0, 0, 50, 0, 60, 60, 0, 70, 10, 0], null, 3);
   t.same(indices, [1, 0, 3, 3, 2, 1]);
   t.end();
 });
 
-test('empty', function(t) {
+test('empty', function (t) {
   t.same(earcut([]), []);
   t.end();
 });
@@ -57,8 +57,8 @@ async function openFile(filePath) {
 
 const FIXTURES_PATH = 'modules/polygon/test/data/earcut/fixtures/';
 
-Object.keys(expected.triangles).forEach(id => {
-  test(id, async t => {
+Object.keys(expected.triangles).forEach((id) => {
+  test(id, async (t) => {
     const filepath = resolve(FIXTURES_PATH, `${id}.json`);
     const raw = await openFile(filepath);
     const data = flatten(raw);

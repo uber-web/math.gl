@@ -13,7 +13,7 @@ import {
 
 const radianVector = [toRadians(45), toRadians(45), 10];
 
-test('type-utils#fromCartographic', t => {
+test('type-utils#fromCartographic', (t) => {
   let result;
   result = fromCartographicToDegrees([45, 45, 10], [0, 0, 0]);
   t.deepEquals(result, [45, 45, 10]);
@@ -32,7 +32,7 @@ test('type-utils#fromCartographic', t => {
   t.end();
 });
 
-test('type-utils#toCartographic', t => {
+test('type-utils#toCartographic', (t) => {
   let result;
   result = toCartographicFromDegrees([45, 45, 10], [0, 0, 0]);
   t.deepEquals(result, [45, 45, 10]);
@@ -51,7 +51,7 @@ test('type-utils#toCartographic', t => {
   t.end();
 });
 
-test('type-utils#isWGS84', t => {
+test('type-utils#isWGS84', (t) => {
   t.ok(isWGS84([1215010.375, -4736313.5, 4081601.75]));
   t.notOk(isWGS84([0, 0, 0]));
   t.notOk(isWGS84([1, 2, 3]));

@@ -33,10 +33,7 @@ export default class BoundingSphere {
 
   fromCornerPoints(corner, oppositeCorner) {
     oppositeCorner = scratchVector.from(oppositeCorner);
-    this.center = new Vector3()
-      .from(corner)
-      .add(oppositeCorner)
-      .scale(0.5);
+    this.center = new Vector3().from(corner).add(oppositeCorner).scale(0.5);
     this.radius = this.center.distance(oppositeCorner);
     return this;
   }

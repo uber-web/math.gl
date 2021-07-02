@@ -28,7 +28,7 @@ function extendToMatrix4(arr) {
   return matrix4;
 }
 
-test('Euler#import', t => {
+test('Euler#import', (t) => {
   t.equals(typeof Euler, 'function');
   t.ok(Euler.ZYX >= 0);
   t.ok(Euler.YXZ > 0);
@@ -46,12 +46,12 @@ test('Euler#import', t => {
   t.end();
 });
 
-test('Euler#construct and Array.isArray check', t => {
+test('Euler#construct and Array.isArray check', (t) => {
   t.ok(Array.isArray(new Euler()));
   t.end();
 });
 
-test('Euler#coverage', t => {
+test('Euler#coverage', (t) => {
   let result = new Euler().fromRollPitchYaw(0, 0, 0);
   t.ok(result);
   result = new Euler().fromRotationMatrix(Matrix4.IDENTITY);
@@ -90,7 +90,7 @@ test('Euler#coverage', t => {
   t.end();
 });
 
-test('Euler#toQuaternion', t => {
+test('Euler#toQuaternion', (t) => {
   const eulers = [
     new Euler(
       90 * DEGREE_TO_RADIANS,
@@ -111,7 +111,7 @@ test('Euler#toQuaternion', t => {
       Euler.RollPitchYaw
     )
   ];
-  const quaternions = eulers.map(e => e.toQuaternion());
+  const quaternions = eulers.map((e) => e.toQuaternion());
   quaternions.every((q, i) => {
     tapeEquals(
       t,
@@ -123,7 +123,7 @@ test('Euler#toQuaternion', t => {
   t.end();
 });
 
-test('Euler.fromQuaternion', t => {
+test('Euler.fromQuaternion', (t) => {
   // transformMatrix result from https://www.wolframalpha.com/input/?i=quaternion:
   const testCases = [
     {
@@ -134,15 +134,8 @@ test('Euler.fromQuaternion', t => {
         0.49561769378289866
       ),
       transformMatrix: extendToMatrix4([
-        -0.017452406437283,
-        0.999847695156391,
-        10e-15,
-        10e-15,
-        10e-15,
-        1.0,
-        0.999847695156391,
-        0.017452406437283,
-        10e-15
+        -0.017452406437283, 0.999847695156391, 10e-15, 10e-15, 10e-15, 1.0, 0.999847695156391,
+        0.017452406437283, 10e-15
       ])
     },
     {
@@ -153,15 +146,8 @@ test('Euler.fromQuaternion', t => {
         0.7010573846499779
       ),
       transformMatrix: extendToMatrix4([
-        0.1e-14,
-        -0.86602540378444,
-        0.5,
-        0.70710678118655,
-        0.35355339059327,
-        0.61237243569579,
-        -0.70710678118655,
-        0.35355339059327,
-        0.61237243569579
+        0.1e-14, -0.86602540378444, 0.5, 0.70710678118655, 0.35355339059327, 0.61237243569579,
+        -0.70710678118655, 0.35355339059327, 0.61237243569579
       ])
     },
     {
@@ -172,21 +158,14 @@ test('Euler.fromQuaternion', t => {
         0.7871074941705494
       ),
       transformMatrix: extendToMatrix4([
-        0.27628863057544,
-        -0.56991857422771,
-        0.77385877998831,
-        0.27628863057544,
-        0.81831190179808,
-        0.50401411090402,
-        -0.92050485345244,
-        0.07455501408938,
-        0.38355229714425
+        0.27628863057544, -0.56991857422771, 0.77385877998831, 0.27628863057544, 0.81831190179808,
+        0.50401411090402, -0.92050485345244, 0.07455501408938, 0.38355229714425
       ])
     }
   ];
 
-  const eulers = testCases.map(tc => new Euler().fromQuaternion(tc.quaternion));
-  const results = eulers.map(e => {
+  const eulers = testCases.map((tc) => new Euler().fromQuaternion(tc.quaternion));
+  const results = eulers.map((e) => {
     const pose = new Pose({yaw: e.yaw, pitch: e.pitch, roll: e.roll});
     return pose.getTransformationMatrix();
   });

@@ -114,7 +114,7 @@ const GETBOUNDS_TEST_CASES = [
   }
 ];
 
-test('getBounds', t => {
+test('getBounds', (t) => {
   for (const {title, viewportProps, quad, z} of GETBOUNDS_TEST_CASES) {
     // @ts-ignore
     const viewport = new WebMercatorViewport(viewportProps);
@@ -124,7 +124,7 @@ test('getBounds', t => {
   t.end();
 });
 
-test('WebMercatorViewport.getBounds/getBoundingRegion', t => {
+test('WebMercatorViewport.getBounds/getBoundingRegion', (t) => {
   for (const testCase of GETBOUNDS_TEST_CASES) {
     // @ts-ignore
     const viewport = new WebMercatorViewport(testCase.viewportProps);

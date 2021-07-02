@@ -65,7 +65,7 @@ function toMatrix4(m3) {
 }
 
 // INSTANCING
-test('three.js#Matrix3#Instancing', t => {
+test('three.js#Matrix3#Instancing', (t) => {
   var a = new Matrix3();
   t.ok(a.determinant() === 1, 'Passed!');
 
@@ -85,12 +85,12 @@ test('three.js#Matrix3#Instancing', t => {
 });
 
 // PUBLIC STUFF
-test.skip('three.js#Matrix3#isMatrix3', t => {
+test.skip('three.js#Matrix3#isMatrix3', (t) => {
   t.ok(false, "everything's gonna be alright");
   t.end();
 });
 
-test('three.js#Matrix3#set', t => {
+test('three.js#Matrix3#set', (t) => {
   var b = new Matrix3();
   t.ok(b.determinant() === 1, 'Passed!');
 
@@ -107,7 +107,7 @@ test('three.js#Matrix3#set', t => {
   t.end();
 });
 
-test('three.js#Matrix3#identity', t => {
+test('three.js#Matrix3#identity', (t) => {
   var b = new Matrix3().set(0, 1, 2, 3, 4, 5, 6, 7, 8);
   t.ok(b.elements[0] === 0);
   t.ok(b.elements[1] === 3);
@@ -127,7 +127,7 @@ test('three.js#Matrix3#identity', t => {
   t.end();
 });
 
-test('three.js#Matrix3#clone', t => {
+test('three.js#Matrix3#clone', (t) => {
   var a = new Matrix3().set(0, 1, 2, 3, 4, 5, 6, 7, 8);
   var b = a.clone();
 
@@ -139,7 +139,7 @@ test('three.js#Matrix3#clone', t => {
   t.end();
 });
 
-test('three.js#Matrix3#copy', t => {
+test('three.js#Matrix3#copy', (t) => {
   var a = new Matrix3().set(0, 1, 2, 3, 4, 5, 6, 7, 8);
   var b = new Matrix3().copy(a);
 
@@ -151,7 +151,7 @@ test('three.js#Matrix3#copy', t => {
   t.end();
 });
 
-test.skip('three.js#Matrix3#setFromMatrix4', t => {
+test.skip('three.js#Matrix3#setFromMatrix4', (t) => {
   t.ok(false, "everything's gonna be alright");
   t.end();
 });
@@ -168,7 +168,7 @@ test('three.js#Matrix3#applyToBufferAttribute', t => {
 });
 */
 
-test('three.js#Matrix3#multiply/premultiply', t => {
+test('three.js#Matrix3#multiply/premultiply', (t) => {
   // both simply just wrap multiplyMatrices
   var a = new Matrix3().set(2, 3, 5, 7, 11, 13, 17, 19, 23);
   var b = new Matrix3().set(29, 31, 37, 41, 43, 47, 53, 59, 61);
@@ -184,7 +184,7 @@ test('three.js#Matrix3#multiply/premultiply', t => {
   t.end();
 });
 
-test('three.js#Matrix3#multiplyMatrices', t => {
+test('three.js#Matrix3#multiplyMatrices', (t) => {
   // Reference:
   //
   // #!/usr/bin/env python
@@ -218,7 +218,7 @@ test('three.js#Matrix3#multiplyMatrices', t => {
   t.end();
 });
 
-test('three.js#Matrix3#multiplyScalar', t => {
+test('three.js#Matrix3#multiplyScalar', (t) => {
   var b = new Matrix3().set(0, 1, 2, 3, 4, 5, 6, 7, 8);
   t.ok(b.elements[0] === 0);
   t.ok(b.elements[1] === 3);
@@ -243,7 +243,7 @@ test('three.js#Matrix3#multiplyScalar', t => {
   t.end();
 });
 
-test('three.js#Matrix3#determinant', t => {
+test('three.js#Matrix3#determinant', (t) => {
   var a = new Matrix3();
   t.ok(a.determinant() === 1, 'Passed!');
 
@@ -259,7 +259,7 @@ test('three.js#Matrix3#determinant', t => {
   t.end();
 });
 
-test('three.js#Matrix3#getInverse', t => {
+test('three.js#Matrix3#getInverse', (t) => {
   var identity = new Matrix3();
   var identity4 = new Matrix4();
   var a = new Matrix3();
@@ -306,7 +306,7 @@ test('three.js#Matrix3#getInverse', t => {
   t.end();
 });
 
-test('three.js#Matrix3#transpose', t => {
+test('three.js#Matrix3#transpose', (t) => {
   var a = new Matrix3();
   let b = a.clone().transpose();
   t.ok(matrixEquals3(a, b), 'Passed!');
@@ -319,7 +319,7 @@ test('three.js#Matrix3#transpose', t => {
   t.end();
 });
 
-test('three.js#Matrix3#getNormalMatrix', t => {
+test('three.js#Matrix3#getNormalMatrix', (t) => {
   var a = new Matrix3();
   var b = new Matrix4().set(2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 57);
   var expected = new Matrix3().set(
@@ -339,12 +339,12 @@ test('three.js#Matrix3#getNormalMatrix', t => {
   t.end();
 });
 
-test.skip('three.js#Matrix3#transposeIntoArray', t => {
+test.skip('three.js#Matrix3#transposeIntoArray', (t) => {
   t.ok(false, "everything's gonna be alright");
   t.end();
 });
 
-test('three.js#Matrix3#setUvTransform', t => {
+test('three.js#Matrix3#setUvTransform', (t) => {
   var a = new Matrix3().set(
     0.1767766952966369,
     0.17677669529663687,
@@ -400,7 +400,7 @@ test('three.js#Matrix3#setUvTransform', t => {
   t.end();
 });
 
-test('three.js#Matrix3#scale', t => {
+test('three.js#Matrix3#scale', (t) => {
   var a = new Matrix3().set(1, 2, 3, 4, 5, 6, 7, 8, 9);
   var expected = new Matrix3().set(0.25, 0.5, 0.75, 1, 1.25, 1.5, 7, 8, 9);
 
@@ -409,7 +409,7 @@ test('three.js#Matrix3#scale', t => {
   t.end();
 });
 
-test('three.js#Matrix3#rotate', t => {
+test('three.js#Matrix3#rotate', (t) => {
   var a = new Matrix3().set(1, 2, 3, 4, 5, 6, 7, 8, 9);
   var expected = new Matrix3().set(
     3.5355339059327373,
@@ -428,7 +428,7 @@ test('three.js#Matrix3#rotate', t => {
   t.end();
 });
 
-test('three.js#Matrix3#translate', t => {
+test('three.js#Matrix3#translate', (t) => {
   var a = new Matrix3().set(1, 2, 3, 4, 5, 6, 7, 8, 9);
   var expected = new Matrix3().set(22, 26, 30, 53, 61, 69, 7, 8, 9);
 
@@ -437,7 +437,7 @@ test('three.js#Matrix3#translate', t => {
   t.end();
 });
 
-test('three.js#Matrix3#equals', t => {
+test('three.js#Matrix3#equals', (t) => {
   var a = new Matrix3().set(0, 1, 2, 3, 4, 5, 6, 7, 8);
   var b = new Matrix3().set(0, -1, 2, 3, 4, 5, 6, 7, 8);
 
@@ -450,12 +450,12 @@ test('three.js#Matrix3#equals', t => {
   t.end();
 });
 
-test.skip('three.js#Matrix3#fromArray', t => {
+test.skip('three.js#Matrix3#fromArray', (t) => {
   t.ok(false, "everything's gonna be alright");
   t.end();
 });
 
-test('three.js#Matrix3#toArray', t => {
+test('three.js#Matrix3#toArray', (t) => {
   var a = new Matrix3().set(1, 2, 3, 4, 5, 6, 7, 8, 9);
   var noOffset = [1, 4, 7, 2, 5, 8, 3, 6, 9];
   var withOffset = [undefined, 1, 4, 7, 2, 5, 8, 3, 6, 9];

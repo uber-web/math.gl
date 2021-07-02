@@ -71,7 +71,7 @@ function quatEquals(a, b, tolerance) {
 export default QUnit.module('Maths', () => {
   QUnit.module('Euler', () => {
     // INSTANCING
-    QUnit.test('Instancing', t => {
+    QUnit.test('Instancing', (t) => {
       var a = new Euler();
       t.ok(a.equals(eulerZero), 'Passed!');
       t.ok(!a.equals(eulerAxyz), 'Passed!');
@@ -79,37 +79,37 @@ export default QUnit.module('Maths', () => {
     });
 
     // STATIC STUFF
-    QUnit.todo('RotationOrders', t => {
+    QUnit.todo('RotationOrders', (t) => {
       t.ok(false, "everything's gonna be alright");
     });
 
-    QUnit.todo('DefaultOrder', t => {
+    QUnit.todo('DefaultOrder', (t) => {
       t.ok(false, "everything's gonna be alright");
     });
 
     // PROPERTIES STUFF
-    QUnit.todo('x', t => {
+    QUnit.todo('x', (t) => {
       t.ok(false, "everything's gonna be alright");
     });
 
-    QUnit.todo('y', t => {
+    QUnit.todo('y', (t) => {
       t.ok(false, "everything's gonna be alright");
     });
 
-    QUnit.todo('z', t => {
+    QUnit.todo('z', (t) => {
       t.ok(false, "everything's gonna be alright");
     });
 
-    QUnit.todo('order', t => {
+    QUnit.todo('order', (t) => {
       t.ok(false, "everything's gonna be alright");
     });
 
     // PUBLIC STUFF
-    QUnit.todo('isEuler', t => {
+    QUnit.todo('isEuler', (t) => {
       t.ok(false, "everything's gonna be alright");
     });
 
-    QUnit.test('set/setFromVector3/toVector3', t => {
+    QUnit.test('set/setFromVector3/toVector3', (t) => {
       var a = new Euler();
 
       a.set(0, 1, 0, 'ZYX');
@@ -126,7 +126,7 @@ export default QUnit.module('Maths', () => {
       t.ok(c.equals(vec), 'Passed!');
     });
 
-    QUnit.test('clone/copy/equals', t => {
+    QUnit.test('clone/copy/equals', (t) => {
       var a = eulerAxyz.clone();
       t.ok(a.equals(eulerAxyz), 'Passed!');
       t.ok(!a.equals(eulerZero), 'Passed!');
@@ -138,7 +138,7 @@ export default QUnit.module('Maths', () => {
       t.ok(!a.equals(eulerZero), 'Passed!');
     });
 
-    QUnit.test('Quaternion.setFromEuler/Euler.fromQuaternion', t => {
+    QUnit.test('Quaternion.setFromEuler/Euler.fromQuaternion', (t) => {
       var testValues = [eulerZero, eulerAxyz, eulerAzyx];
       for (var i = 0; i < testValues.length; i++) {
         var v = testValues[i];
@@ -150,7 +150,7 @@ export default QUnit.module('Maths', () => {
       }
     });
 
-    QUnit.test('Matrix4.setFromEuler/Euler.fromRotationMatrix', t => {
+    QUnit.test('Matrix4.setFromEuler/Euler.fromRotationMatrix', (t) => {
       var testValues = [eulerZero, eulerAxyz, eulerAzyx];
       for (var i = 0; i < testValues.length; i++) {
         var v = testValues[i];
@@ -162,7 +162,7 @@ export default QUnit.module('Maths', () => {
       }
     });
 
-    QUnit.test('reorder', t => {
+    QUnit.test('reorder', (t) => {
       var testValues = [eulerZero, eulerAxyz, eulerAzyx];
       for (var i = 0; i < testValues.length; i++) {
         var v = testValues[i];
@@ -178,9 +178,9 @@ export default QUnit.module('Maths', () => {
       }
     });
 
-    QUnit.test('set/get properties, check callbacks', t => {
+    QUnit.test('set/get properties, check callbacks', (t) => {
       var a = new Euler();
-      a.onChange(function() {
+      a.onChange(function () {
         t.step('set: onChange called');
       });
 
@@ -198,12 +198,12 @@ export default QUnit.module('Maths', () => {
       t.strictEqual(a.order, 'ZYX', 'get: check order');
     });
 
-    QUnit.test('clone/copy, check callbacks', t => {
+    QUnit.test('clone/copy, check callbacks', (t) => {
       t.expect(3);
 
       var a = new Euler(1, 2, 3, 'ZXY');
       var b = new Euler(4, 5, 6, 'XZY');
-      var cb = function() {
+      var cb = function () {
         t.step('onChange called');
       };
       a.onChange(cb);
@@ -220,7 +220,7 @@ export default QUnit.module('Maths', () => {
       t.ok(a.equals(b), 'copy: check if a equals b');
     });
 
-    QUnit.test('toArray', t => {
+    QUnit.test('toArray', (t) => {
       var order = 'YXZ';
       var a = new Euler(x, y, z, order);
 
@@ -246,12 +246,12 @@ export default QUnit.module('Maths', () => {
       t.strictEqual(array[4], order, 'With array and offset: check order');
     });
 
-    QUnit.test('fromArray', t => {
+    QUnit.test('fromArray', (t) => {
       t.expect(10);
 
       var a = new Euler();
       var array = [x, y, z];
-      var cb = function() {
+      var cb = function () {
         t.step('onChange called');
       };
       a.onChange(cb);
@@ -272,16 +272,16 @@ export default QUnit.module('Maths', () => {
       t.strictEqual(a.order, 'ZXY', 'With order: check order');
     });
 
-    QUnit.todo('onChange', t => {
+    QUnit.todo('onChange', (t) => {
       t.ok(false, "everything's gonna be alright");
     });
 
-    QUnit.todo('onChangeCallback', t => {
+    QUnit.todo('onChangeCallback', (t) => {
       t.ok(false, "everything's gonna be alright");
     });
 
     // OTHERS
-    QUnit.test('gimbalLocalQuat', t => {
+    QUnit.test('gimbalLocalQuat', (t) => {
       // known problematic quaternions
       var q1 = new Quaternion(
         0.5207769385244341,

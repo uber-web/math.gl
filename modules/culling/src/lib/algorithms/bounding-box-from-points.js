@@ -102,10 +102,7 @@ export function makeOrientedBoundingBoxFromPoints(positions, result = new Orient
   v2 = v2.multiplyByScalar(0.5 * (l2 + u2));
   v3 = v3.multiplyByScalar(0.5 * (l3 + u3));
 
-  result.center
-    .copy(v1)
-    .add(v2)
-    .add(v3);
+  result.center.copy(v1).add(v2).add(v3);
 
   const scale = scratchVector3.set(u1 - l1, u2 - l2, u3 - l3).multiplyByScalar(0.5);
   const scaleMatrix = new Matrix3([scale[0], 0, 0, 0, scale[1], 0, 0, 0, scale[2]]);
@@ -149,10 +146,7 @@ export function makeAxisAlignedBoundingBoxFromPoints(
 
   result.minimum.set(minimumX, minimumY, minimumZ);
   result.maximum.set(maximumX, maximumY, maximumZ);
-  result.center
-    .copy(result.minimum)
-    .add(result.maximum)
-    .scale(0.5);
+  result.center.copy(result.minimum).add(result.maximum).scale(0.5);
   result.halfDiagonal.copy(result.maximum).subtract(result.center);
 
   return result;

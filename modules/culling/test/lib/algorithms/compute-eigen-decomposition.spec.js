@@ -4,13 +4,13 @@ import test from 'tape-promise/tape';
 import {Matrix3} from '@math.gl/core';
 import {computeEigenDecomposition} from '@math.gl/culling';
 
-test('computeEigenDecomposition#throws without a matrix', t => {
+test('computeEigenDecomposition#throws without a matrix', (t) => {
   // @ts-ignore
   t.throws(() => computeEigenDecomposition());
   t.end();
 });
 
-test('computeEigenDecomposition#computes eigenvalues and eigenvectors', t => {
+test('computeEigenDecomposition#computes eigenvalues and eigenvectors', (t) => {
   // prettier-ignore
   const a = new Matrix3().setRowMajor(
     4.0, -1.0, 1.0,
@@ -47,7 +47,7 @@ test('computeEigenDecomposition#computes eigenvalues and eigenvectors', t => {
   t.end();
 });
 
-test('computeEigenDecomposition#computes eigenvalues and eigenvectors with result parameters', t => {
+test('computeEigenDecomposition#computes eigenvalues and eigenvectors with result parameters', (t) => {
   // prettier-ignore
   const a = new Matrix3().setRowMajor(
     4.0, -1.0, 1.0,

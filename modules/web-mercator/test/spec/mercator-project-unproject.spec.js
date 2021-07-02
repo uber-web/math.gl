@@ -39,13 +39,13 @@ const TEST_CASES = [
   }
 ];
 
-test('Viewport constructor', t => {
+test('Viewport constructor', (t) => {
   const viewport = new WebMercatorViewport(viewportProps);
 
   t.ok(viewport, 'Viewport construction successful');
 
   const viewportState = {};
-  Object.keys(viewportProps).forEach(key => {
+  Object.keys(viewportProps).forEach((key) => {
     viewportState[key] = viewport[key];
   });
 
@@ -53,7 +53,7 @@ test('Viewport constructor', t => {
   t.end();
 });
 
-test('Viewport projection', t => {
+test('Viewport projection', (t) => {
   config.EPSILON = 1e-7;
   const viewport = new WebMercatorViewport(viewportProps);
   TEST_CASES.forEach(({title, func, input, expected}) => {
@@ -63,7 +63,7 @@ test('Viewport projection', t => {
   t.end();
 });
 
-test('Viewport projection#topLeft', t => {
+test('Viewport projection#topLeft', (t) => {
   const viewport = new WebMercatorViewport(viewportProps);
 
   const topLeft = viewport.unproject([0, 0], {topLeft: true});

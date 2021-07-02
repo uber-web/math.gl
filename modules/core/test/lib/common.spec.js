@@ -25,7 +25,7 @@ import {radians, degrees, sin, cos, tan, asin, acos, atan, clamp, lerp} from '@m
 import {tapeEquals} from 'test/utils/tape-assertions';
 import test from 'tape-promise/tape';
 
-test('math.gl#tests', t => {
+test('math.gl#tests', (t) => {
   // Note: tape 4.12 and higher no longer compares 0 and -0 equally...
   // Workaround is to pin tape to 4.11
   t.equals(0, 0, '0 and 0 compares equally');
@@ -35,7 +35,7 @@ test('math.gl#tests', t => {
   t.end();
 });
 
-test('math.gl#types', t => {
+test('math.gl#types', (t) => {
   t.equals(typeof isArray, 'function');
   t.equals(typeof radians, 'function');
   t.equals(typeof equals, 'function');
@@ -44,7 +44,7 @@ test('math.gl#types', t => {
   t.end();
 });
 
-test('math.gl#configue', t => {
+test('math.gl#configue', (t) => {
   const {EPSILON, debug} = config;
   configure({EPSILON: 1e-13, debug: false});
   t.equals(config.EPSILON, 1e-13);
@@ -55,7 +55,7 @@ test('math.gl#configue', t => {
   t.end();
 });
 
-test('math.gl#isArray', t => {
+test('math.gl#isArray', (t) => {
   t.ok(isArray([]), 'isArray([])');
   t.ok(isArray(new Float32Array(1)), 'isArray(Float32Array)');
   t.notOk(isArray(new ArrayBuffer(4)), 'isArray(ArrayBuffer)');
@@ -72,18 +72,18 @@ test('math.gl#isArray', t => {
   t.end();
 });
 
-test('math.gl#clone', t => {
+test('math.gl#clone', (t) => {
   tapeEquals(t, clone([1, 2, 3]), [1, 2, 3], 'clone([])');
   tapeEquals(t, clone(new Vector3([1, 2, 3])), [1, 2, 3], 'clone([])');
   t.end();
 });
 
-test('math.gl#formatValue', t => {
+test('math.gl#formatValue', (t) => {
   t.equals(formatValue(1), '1');
   t.end();
 });
 
-test('math.gl#equals', t => {
+test('math.gl#equals', (t) => {
   t.notOk(equals(1.0, 0.0), 'should return false for different numbers');
   tapeEquals(t, 1.0, 1.0, 'should return true for the same number');
   tapeEquals(t, 1.0 + config.EPSILON / 2, 1.0, 'should return true for numbers that are close');
@@ -128,7 +128,7 @@ test('math.gl#equals', t => {
   t.end();
 });
 
-test('math.gl#exactEquals', t => {
+test('math.gl#exactEquals', (t) => {
   t.notOk(exactEquals(1.0, 0.0), 'should return false for different numbers');
   t.ok(exactEquals(1.0, 1.0), 'should return true for the same number');
   t.notOk(
@@ -186,7 +186,7 @@ function runTests(t, functionUnderTest, testCases) {
   }
 }
 
-test('math.gl#toRadians', t => {
+test('math.gl#toRadians', (t) => {
   runTests(t, toRadians, [
     {input: 180, result: Math.PI},
     {input: [180, 180, 180], result: [Math.PI, Math.PI, Math.PI]},
@@ -195,7 +195,7 @@ test('math.gl#toRadians', t => {
   t.end();
 });
 
-test('math.gl#toDegrees', t => {
+test('math.gl#toDegrees', (t) => {
   runTests(t, toDegrees, [
     {input: Math.PI, result: 180},
     {input: [Math.PI, Math.PI, Math.PI], result: [180, 180, 180]}
@@ -203,7 +203,7 @@ test('math.gl#toDegrees', t => {
   t.end();
 });
 
-test('math.gl#radians', t => {
+test('math.gl#radians', (t) => {
   runTests(t, radians, [
     {input: 180, result: Math.PI},
     {input: [180, 180, 180], result: [Math.PI, Math.PI, Math.PI]},
@@ -212,7 +212,7 @@ test('math.gl#radians', t => {
   t.end();
 });
 
-test('math.gl#degrees', t => {
+test('math.gl#degrees', (t) => {
   runTests(t, degrees, [
     {input: Math.PI, result: 180},
     {input: [Math.PI, Math.PI, Math.PI], result: [180, 180, 180]}
@@ -220,7 +220,7 @@ test('math.gl#degrees', t => {
   t.end();
 });
 
-test('math.gl#sin', t => {
+test('math.gl#sin', (t) => {
   runTests(t, sin, [
     {input: 0, result: 0},
     {input: [Math.PI / 2, Math.PI / 6, 0], result: [1, 0.5, 0]}
@@ -228,7 +228,7 @@ test('math.gl#sin', t => {
   t.end();
 });
 
-test('math.gl#cos', t => {
+test('math.gl#cos', (t) => {
   runTests(t, cos, [
     {input: 0, result: 1},
     {input: [Math.PI / 2, Math.PI / 3, 0], result: [0, 0.5, 1]}
@@ -236,7 +236,7 @@ test('math.gl#cos', t => {
   t.end();
 });
 
-test('math.gl#tan', t => {
+test('math.gl#tan', (t) => {
   runTests(t, tan, [
     {input: 0, result: 0},
     {input: [Math.PI / 4, 0], result: [1, 0]}
@@ -244,7 +244,7 @@ test('math.gl#tan', t => {
   t.end();
 });
 
-test('math.gl#asin', t => {
+test('math.gl#asin', (t) => {
   runTests(t, asin, [
     {input: 0, result: 0},
     {input: [1, 0.5, 0], result: [Math.PI / 2, Math.PI / 6, 0]}
@@ -252,7 +252,7 @@ test('math.gl#asin', t => {
   t.end();
 });
 
-test('math.gl#acos', t => {
+test('math.gl#acos', (t) => {
   runTests(t, acos, [
     {input: 1, result: 0},
     {input: [0, 0.5, 1], result: [Math.PI / 2, Math.PI / 3, 0]}
@@ -260,7 +260,7 @@ test('math.gl#acos', t => {
   t.end();
 });
 
-test('math.gl#atan', t => {
+test('math.gl#atan', (t) => {
   runTests(t, atan, [
     {input: 0, result: 0},
     {input: [1, 0], result: [Math.PI / 4, 0]}
@@ -268,14 +268,14 @@ test('math.gl#atan', t => {
   t.end();
 });
 
-test('math.gl#clamp', t => {
+test('math.gl#clamp', (t) => {
   tapeEquals(t, clamp(5.0, 2.0, 0.2), 2, 'clamp numbers');
   tapeEquals(t, clamp([1.0, 0.0], -1.0, 0.2), [0.2, -0], 'clamp arrays');
   tapeEquals(t, clamp(new Float32Array([2.0, -1.0]), -1.0, 1.0), [1.0, -1.0], 'clamp arrays');
   t.end();
 });
 
-test('math.gl#lerp', t => {
+test('math.gl#lerp', (t) => {
   tapeEquals(t, lerp(1.0, 2.0, 0.2), 1.2, 'interpolate between numbers');
   tapeEquals(t, lerp([1.0, 0.0], [2.0, -1.0], 0.2), [1.2, -0.2], 'interpolate between arrays');
   tapeEquals(

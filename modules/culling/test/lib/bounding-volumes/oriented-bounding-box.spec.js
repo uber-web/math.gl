@@ -67,14 +67,14 @@ function translatePositions(positions, translation) {
 }
 */
 
-test('OrientedBoundingBox#constructor sets expected default values', t => {
+test('OrientedBoundingBox#constructor sets expected default values', (t) => {
   const box = new OrientedBoundingBox();
   tapeEquals(t, box.center, ZERO_VECTOR3);
   tapeEquals(t, box.halfAxes, ZERO_MATRIX3);
   t.end();
 });
 
-test('OrientedBoundingBox#halfSize - should return halfSize of quaternion based OBB', t => {
+test('OrientedBoundingBox#halfSize - should return halfSize of quaternion based OBB', (t) => {
   const originalHalfSize = [100.45386505126953, 91.120384216308594, 426.03338623046875];
   const box = new OrientedBoundingBox().fromCenterHalfSizeQuaternion(
     [-122.40277014424709, 37.795204290863012, 134.5439856108278],
@@ -89,12 +89,9 @@ test('OrientedBoundingBox#halfSize - should return halfSize of quaternion based 
   t.end();
 });
 
-test('OrientedBoundingBox#quaternion - should return quaternion of quaternion based OBB', t => {
+test('OrientedBoundingBox#quaternion - should return quaternion of quaternion based OBB', (t) => {
   const originalQuaternion = [
-    0.64432936906814575,
-    0.76474469900131226,
-    -0.0020481476094573736,
-    0.0010012148413807154
+    0.64432936906814575, 0.76474469900131226, -0.0020481476094573736, 0.0010012148413807154
   ];
   const box = new OrientedBoundingBox().fromCenterHalfSizeQuaternion(
     [-122.40277014424709, 37.795204290863012, 134.5439856108278],
@@ -109,20 +106,14 @@ test('OrientedBoundingBox#quaternion - should return quaternion of quaternion ba
   t.end();
 });
 
-test('OrientedBoundingBox#fromCenterHalfSizeQuaternion - constructs new OrientedBoundingBox from quaternion-based OBB', t => {
+test('OrientedBoundingBox#fromCenterHalfSizeQuaternion - constructs new OrientedBoundingBox from quaternion-based OBB', (t) => {
   const TEST_CENTER = Object.freeze(
     new Vector3(-122.40277014424709, 37.795204290863012, 134.5439856108278)
   );
   const TEST_MATRIX3 = Object.freeze(
     new Matrix3([
-      -17.044740507911246,
-      98.99636360349382,
-      -0.41896401976407743,
-      89.79905117716781,
-      15.46048110602704,
-      -0.16787981318476183,
-      -0.47205173558557734,
-      -1.8842793374379618,
+      -17.044740507911246, 98.99636360349382, -0.41896401976407743, 89.79905117716781,
+      15.46048110602704, -0.16787981318476183, -0.47205173558557734, -1.8842793374379618,
       -426.02894738381406
     ])
   );
@@ -137,7 +128,7 @@ test('OrientedBoundingBox#fromCenterHalfSizeQuaternion - constructs new Oriented
   t.end();
 });
 
-test('OrientedBoundingBox#clone', t => {
+test('OrientedBoundingBox#clone', (t) => {
   const box = new OrientedBoundingBox();
   const result = box.clone();
   t.notEquals(box, result);
@@ -146,14 +137,14 @@ test('OrientedBoundingBox#clone', t => {
   t.end();
 });
 
-test('OrientedBoundingBox#equals works in all cases', t => {
+test('OrientedBoundingBox#equals works in all cases', (t) => {
   const box = new OrientedBoundingBox();
   tapeEquals(t, box.equals(new OrientedBoundingBox()), true);
   t.equals(box.equals(undefined), false);
   t.end();
 });
 
-test('OrientedBoundingBox#getBoundingSphere works with a result', t => {
+test('OrientedBoundingBox#getBoundingSphere works with a result', (t) => {
   const box = makeOrientedBoundingBoxFromPoints(spherePositions);
   const sphere = new BoundingSphere();
   box.getBoundingSphere(sphere);
@@ -163,7 +154,7 @@ test('OrientedBoundingBox#getBoundingSphere works with a result', t => {
   t.end();
 });
 
-test('OrientedBoundingBox#getBoundingSphere works without a result parameter', t => {
+test('OrientedBoundingBox#getBoundingSphere works without a result parameter', (t) => {
   const box = makeOrientedBoundingBoxFromPoints(spherePositions);
   const sphere = box.getBoundingSphere();
   tapeEquals(t, sphere.center, positionsCenter);
@@ -172,7 +163,7 @@ test('OrientedBoundingBox#getBoundingSphere works without a result parameter', t
   t.end();
 });
 
-test('OrientedBoundingBox#Calculate half sizes and half axes properly', t => {
+test('OrientedBoundingBox#Calculate half sizes and half axes properly', (t) => {
   const halfAxes = new Matrix3([2, 0, 0, 0, 2, 0, 0, 0, 2]);
   const halfSize = [2, 2, 2];
   const volume = 8;
@@ -196,7 +187,7 @@ test('OrientedBoundingBox#Calculate half sizes and half axes properly', t => {
   t.end();
 });
 
-test('BoundingSphere#throws from fromOrientedBoundingBox with null orientedBoundingBox parameter', t => {
+test('BoundingSphere#throws from fromOrientedBoundingBox with null orientedBoundingBox parameter', (t) => {
   // t.throws(() => sphere.fromOrientedBoundingBox(null));
   t.end();
 });
@@ -208,22 +199,13 @@ function intersectPlaneTestCornersEdgesFaces(t, center, axes) {
 
   const box = new OrientedBoundingBox(center, axes.clone().multiplyByScalar(0.5));
 
-  const planeNormXform = function(nx, ny, nz, dist) {
+  const planeNormXform = function (nx, ny, nz, dist) {
     const n = new Vector3(nx, ny, nz);
     const arb = new Vector3(357, 924, 258);
 
-    const p0 = n
-      .clone()
-      .normalize()
-      .multiplyByScalar(-dist);
-    const tang = n
-      .clone()
-      .cross(arb)
-      .normalize();
-    const binorm = n
-      .clone()
-      .cross(tang)
-      .normalize();
+    const p0 = n.clone().normalize().multiplyByScalar(-dist);
+    const tang = n.clone().cross(arb).normalize();
+    const binorm = n.clone().cross(tang).normalize();
 
     p0.transformByMatrix3(axes);
     tang.transformByMatrix3(axes);
@@ -384,7 +366,7 @@ function intersectPlaneTestCornersEdgesFaces(t, center, axes) {
   // prettier-ignore-end
 }
 
-test('intersectPlane works with untransformed box', t => {
+test('intersectPlane works with untransformed box', (t) => {
   intersectPlaneTestCornersEdgesFaces(t, ZERO_VECTOR3, new Matrix3().identity());
   t.end();
 });
@@ -469,7 +451,7 @@ function makeRotationZ(angle, result) {
 }
 
 // eslint-disable-next-line max-statements
-test('OrientedBoundingBox#distanceSquaredTo', t => {
+test('OrientedBoundingBox#distanceSquaredTo', (t) => {
   const r0 = makeRotationZ(toRadians(-45.0));
   const r1 = makeRotationY(toRadians(45.0));
 
@@ -549,13 +531,13 @@ test('OrientedBoundingBox#distanceSquaredTo', t => {
   t.end();
 });
 
-test('OrientedBoundingBox#distanceSquaredTo throws without cartesian', t => {
+test('OrientedBoundingBox#distanceSquaredTo throws without cartesian', (t) => {
   t.throws(() => new OrientedBoundingBox().distanceSquaredTo(undefined));
   t.end();
 });
 
 // eslint-disable-next-line max-statements
-test('OrientedBoundingBox#computePlaneDistances', t => {
+test('OrientedBoundingBox#computePlaneDistances', (t) => {
   const r0 = makeRotationZ(toRadians(-45.0));
   const r1 = makeRotationY(toRadians(45.0));
 
@@ -633,41 +615,34 @@ test('OrientedBoundingBox#computePlaneDistances', t => {
   t.end();
 });
 
-test('OrientedBoundingBox#computePlaneDistances throws without a box', t => {
+test('OrientedBoundingBox#computePlaneDistances throws without a box', (t) => {
   t.throws(() =>
     new OrientedBoundingBox().computePlaneDistances(undefined, new Vector3(), new Vector3())
   );
   t.end();
 });
 
-test('OrientedBoundingBox#computePlaneDistances throws without a position', t => {
+test('OrientedBoundingBox#computePlaneDistances throws without a position', (t) => {
   t.throws(() => new OrientedBoundingBox().computePlaneDistances(undefined, new Vector3()));
   t.end();
 });
 
-test('OrientedBoundingBox#computePlaneDistances throws without a direction', t => {
+test('OrientedBoundingBox#computePlaneDistances throws without a direction', (t) => {
   t.throws(() => new OrientedBoundingBox().computePlaneDistances(new Vector3(), undefined));
   t.end();
 });
 
-test('OrientedBoundingBox#applies transform: translation, rotation, scale', t => {
+test('OrientedBoundingBox#applies transform: translation, rotation, scale', (t) => {
   const VECTOR3_ZERO = new Vector3(0, 0, 0);
   const obb = new OrientedBoundingBox(VECTOR3_ZERO, [1, 0, 0, 0, 1, 0, 0, 0, 1]);
   const transform = new Matrix4()
     .translate(new Vector3(1.0, 2.0, 3.0))
     .rotateZ(Math.PI / 2)
     .scale(2);
-  const expected = new OrientedBoundingBox(new Vector3(1.0, 2.0, 3.0), [
-    1.0000000000000002,
-    4,
-    3,
-    -1,
-    2,
-    3,
-    1,
-    2,
-    5
-  ]);
+  const expected = new OrientedBoundingBox(
+    new Vector3(1.0, 2.0, 3.0),
+    [1.0000000000000002, 4, 3, -1, 2, 3, 1, 2, 5]
+  );
   const result = obb.transform(transform);
   tapeEqualsEpsilon(t, result, expected, _MathUtils.EPSILON8);
   t.end();

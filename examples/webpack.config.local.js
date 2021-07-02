@@ -79,7 +79,7 @@ function addAnalyzerSettings(config) {
   return config;
 }
 
-module.exports = baseConfig => env => {
+module.exports = (baseConfig) => (env) => {
   let config = baseConfig;
 
   if (env && env.analyze) {

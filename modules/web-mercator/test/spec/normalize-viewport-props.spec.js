@@ -45,7 +45,7 @@ const NORMALIZATION_TEST_CASES = [
   ]
 ];
 
-test('normalizeViewportProps', t => {
+test('normalizeViewportProps', (t) => {
   config.EPSILON = 1e-7;
 
   for (const [input, expected] of NORMALIZATION_TEST_CASES) {
@@ -53,8 +53,8 @@ test('normalizeViewportProps', t => {
 
     t.ok(
       equals(
-        Object.keys(expected).map(key => result[key]),
-        Object.keys(expected).map(key => expected[key])
+        Object.keys(expected).map((key) => result[key]),
+        Object.keys(expected).map((key) => expected[key])
       ),
       'correct viewport returned'
     );

@@ -36,7 +36,7 @@ export default class CullingVolume {
   constructor(planes = []) {
     // {Cartesian4[]} [planes] An array of clipping planes.
     this.planes = planes;
-    assert(this.planes.every(plane => plane instanceof Plane));
+    assert(this.planes.every((plane) => plane instanceof Plane));
   }
 
   // Constructs a culling volume from a bounding sphere. Creates six planes that create a box containing the sphere.
@@ -60,18 +60,12 @@ export default class CullingVolume {
         plane1 = this.planes[planeIndex + 1] = new Plane();
       }
 
-      const plane0Center = scratchPlaneCenter
-        .copy(faceNormal)
-        .scale(-radius)
-        .add(center);
+      const plane0Center = scratchPlaneCenter.copy(faceNormal).scale(-radius).add(center);
       const plane0Distance = -faceNormal.dot(plane0Center);
 
       plane0.fromPointNormal(plane0Center, faceNormal);
 
-      const plane1Center = scratchPlaneCenter
-        .copy(faceNormal)
-        .scale(radius)
-        .add(center);
+      const plane1Center = scratchPlaneCenter.copy(faceNormal).scale(radius).add(center);
 
       const negatedFaceNormal = scratchPlaneNormal.copy(faceNormal).negate();
 

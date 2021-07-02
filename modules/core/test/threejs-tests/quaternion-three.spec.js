@@ -54,7 +54,7 @@ function doSlerpObject(aArr, bArr, t) {
   c.slerp(b, t);
 
   return {
-    equals: function(x, y, z, w, maxError) {
+    equals: function (x, y, z, w, maxError) {
       if (maxError === undefined) maxError = Number.EPSILON;
 
       return (
@@ -82,7 +82,7 @@ function doSlerpArray(a, b, t) {
   }
 
   return {
-    equals: function(x, y, z, w, maxError) {
+    equals: function (x, y, z, w, maxError) {
       if (maxError === undefined) maxError = Number.EPSILON;
 
       return (
@@ -148,7 +148,7 @@ function changeEulerOrder(euler, order) {
 }
 
 // INSTANCING
-test('three.js#Quaternion#Instancing', t => {
+test('three.js#Quaternion#Instancing', (t) => {
   let a = new Quaternion();
   t.ok(a.x == 0, 'Passed!');
   t.ok(a.y == 0, 'Passed!');
@@ -164,18 +164,18 @@ test('three.js#Quaternion#Instancing', t => {
 });
 
 // STATIC STUFF
-test('three.js#Quaternion#slerp', t => {
+test('three.js#Quaternion#slerp', (t) => {
   slerpTestSkeleton(doSlerpObject, Number.EPSILON, t);
   t.end();
 });
 
-test.skip('three.js#Quaternion#slerpFlat - NOT IMPLEMENTED', t => {
+test.skip('three.js#Quaternion#slerpFlat - NOT IMPLEMENTED', (t) => {
   slerpTestSkeleton(doSlerpArray, Number.EPSILON, t);
   t.end();
 });
 
 // PROPERTIES
-test('three.js#Quaternion#properties', t => {
+test('three.js#Quaternion#properties', (t) => {
   const a = new Quaternion();
   // a.onChange(function() {
   //   t.ok(true, 'onChange called');
@@ -194,7 +194,7 @@ test('three.js#Quaternion#properties', t => {
 });
 
 // PUBLIC STUFF
-test('three.js#Quaternion#set', t => {
+test('three.js#Quaternion#set', (t) => {
   const a = new Quaternion();
   t.ok(a.x == 0, 'Passed!');
   t.ok(a.y == 0, 'Passed!');
@@ -209,12 +209,12 @@ test('three.js#Quaternion#set', t => {
   t.end();
 });
 
-test('three.js#Quaternion#clone', t => {
+test('three.js#Quaternion#clone', (t) => {
   t.ok(true, "everything's gonna be alright");
   t.end();
 });
 
-test('three.js#Quaternion#copy', t => {
+test('three.js#Quaternion#copy', (t) => {
   const a = new Quaternion(x, y, z, w);
   const b = new Quaternion().copy(a);
   t.ok(b.x == x, 'Passed!');
@@ -232,7 +232,7 @@ test('three.js#Quaternion#copy', t => {
   t.end();
 });
 
-test.skip('three.js#Quaternion#setFromEuler/setFromQuaternion', t => {
+test.skip('three.js#Quaternion#setFromEuler/setFromQuaternion', (t) => {
   const angles = [new Vector3(1, 0, 0), new Vector3(0, 1, 0), new Vector3(0, 0, 1)];
 
   // ensure euler conversion to/from Quaternion matches.
@@ -249,7 +249,7 @@ test.skip('three.js#Quaternion#setFromEuler/setFromQuaternion', t => {
   t.end();
 });
 
-test('three.js#Quaternion#setFromAxisAngle', t => {
+test('three.js#Quaternion#setFromAxisAngle', (t) => {
   // TODO: find cases to validate.
   // t.ok( true, "Passed!" );
 
@@ -272,7 +272,7 @@ test('three.js#Quaternion#setFromAxisAngle', t => {
   t.end();
 });
 
-test.skip('Quaternion#setFromEuler/setFromRotationMatrix', t => {
+test.skip('Quaternion#setFromEuler/setFromRotationMatrix', (t) => {
   // ensure euler conversion for Quaternion matches that of Matrix4
   for (let i = 0; i < orders.length; i++) {
     const q = new Quaternion().setFromEuler(changeEulerOrder(eulerAngles, orders[i]));
@@ -284,7 +284,7 @@ test.skip('Quaternion#setFromEuler/setFromRotationMatrix', t => {
   t.end();
 });
 
-test.skip('three.js#Quaternion#setFromRotationMatrix', t => {
+test.skip('three.js#Quaternion#setFromRotationMatrix', (t) => {
   // contrived examples purely to please the god of code coverage...
   // match conditions in constious 'else [if]' blocks
 
@@ -321,7 +321,7 @@ test.skip('three.js#Quaternion#setFromRotationMatrix', t => {
   t.end();
 });
 
-test.skip('three.js#Quaternion#setFromUnitVectors', t => {
+test.skip('three.js#Quaternion#setFromUnitVectors', (t) => {
   const a = new Quaternion();
   const b = new Vector3(1, 0, 0);
   const c = new Vector3(0, 1, 0);
@@ -335,7 +335,7 @@ test.skip('three.js#Quaternion#setFromUnitVectors', t => {
   t.end();
 });
 
-test('three.js#Quaternion#inverse/conjugate', t => {
+test('three.js#Quaternion#inverse/conjugate', (t) => {
   const a = new Quaternion(x, y, z, w);
 
   // TODO: add better validation here.
@@ -349,12 +349,12 @@ test('three.js#Quaternion#inverse/conjugate', t => {
   t.end();
 });
 
-test('three.js#Quaternion#dot', t => {
+test('three.js#Quaternion#dot', (t) => {
   t.ok(true, "everything's gonna be alright");
   t.end();
 });
 
-test('three.js#Quaternion#normalize/length/lengthSq', t => {
+test('three.js#Quaternion#normalize/length/lengthSq', (t) => {
   const a = new Quaternion(x, y, z, w);
 
   t.ok(a.len() != 1, 'Passed!');
@@ -372,7 +372,7 @@ test('three.js#Quaternion#normalize/length/lengthSq', t => {
   t.end();
 });
 
-test.skip('Quaternion#multiplyQuaternions/multiply', t => {
+test.skip('Quaternion#multiplyQuaternions/multiply', (t) => {
   const angles = [new Euler(1, 0, 0), new Euler(0, 1, 0), new Euler(0, 0, 1)];
 
   const q1 = new Quaternion().setFromEuler(changeEulerOrder(angles[0], 'XYZ'));
@@ -393,7 +393,7 @@ test.skip('Quaternion#multiplyQuaternions/multiply', t => {
   t.end();
 });
 
-test('three.js#Quaternion#premultiply', t => {
+test('three.js#Quaternion#premultiply', (t) => {
   const a = new Quaternion(x, y, z, w);
   const b = new Quaternion(2 * x, -y, -2 * z, w);
   const expected = new Quaternion(42, -32, -2, 58);
@@ -406,12 +406,12 @@ test('three.js#Quaternion#premultiply', t => {
   t.end();
 });
 
-test('three.js#Quaternion#slerp', t => {
+test('three.js#Quaternion#slerp', (t) => {
   t.ok(true, "everything's gonna be alright");
   t.end();
 });
 
-test('three.js#Quaternion#equals', t => {
+test('three.js#Quaternion#equals', (t) => {
   const a = new Quaternion(x, y, z, w);
   const b = new Quaternion(-x, -y, -z, -w);
 
@@ -430,12 +430,12 @@ test('three.js#Quaternion#equals', t => {
   t.end();
 });
 
-test('three.js#Quaternion#fromArray', t => {
+test('three.js#Quaternion#fromArray', (t) => {
   t.ok(true, "everything's gonna be alright");
   t.end();
 });
 
-test('three.js#Quaternion#toArray', t => {
+test('three.js#Quaternion#toArray', (t) => {
   const a = new Quaternion(x, y, z, w);
 
   let array = a.toArray();
@@ -461,18 +461,18 @@ test('three.js#Quaternion#toArray', t => {
   t.end();
 });
 
-test.skip('three.js#Quaternion#onChange - NOT IMPLEMENTED', t => {
+test.skip('three.js#Quaternion#onChange - NOT IMPLEMENTED', (t) => {
   t.ok(true, "everything's gonna be alright");
   t.end();
 });
 
-test.skip('three.js#Quaternion#onChangeCallback - NOT IMPLEMENTED', t => {
+test.skip('three.js#Quaternion#onChangeCallback - NOT IMPLEMENTED', (t) => {
   t.ok(true, "everything's gonna be alright");
   t.end();
 });
 
 // OTHERS
-test.skip('Quaternion#multiplyVector3', t => {
+test.skip('Quaternion#multiplyVector3', (t) => {
   const angles = [new Euler(1, 0, 0), new Euler(0, 1, 0), new Euler(0, 0, 1)];
 
   // ensure euler conversion for Quaternion matches that of Matrix4

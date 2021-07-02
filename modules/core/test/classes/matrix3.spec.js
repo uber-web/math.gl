@@ -31,34 +31,34 @@ const INDICES_MATRIX = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 const TRANSPOSED_INDICES_MATRIX = [1, 4, 7, 2, 5, 8, 3, 6, 9];
 
-test('Matrix3#types', t => {
+test('Matrix3#types', (t) => {
   t.equals(typeof Matrix3, 'function');
   t.ok(Matrix3.IDENTITY);
   t.ok(Matrix3.ZERO);
   t.end();
 });
 
-test('Matrix3#construct and Array.isArray check', t => {
+test('Matrix3#construct and Array.isArray check', (t) => {
   const m = new Matrix3();
   t.ok(Array.isArray(m));
   t.ok(m.INDICES);
   t.end();
 });
 
-test('Matrix3#from', t => {
+test('Matrix3#from', (t) => {
   tapeEquals(t, new Matrix3().from([1, 2, 3, 4, 5, 6, 7, 8, 9]), [1, 2, 3, 4, 5, 6, 7, 8, 9]);
   // tapeEquals(t, new Matrix3().from({x: 1, y: 2, z: 3, w: 4}), [1, 2, 3, 4]);
   t.end();
 });
 
-test.skip('Matrix3#to', t => {
+test.skip('Matrix3#to', (t) => {
   const matrix = new Matrix3(1, 2, 3, 4, 5, 6, 7, 8, 9);
   tapeEquals(t, matrix.to([0, 0, 0, 0, 0, 0, 0, 0, 0]), [1, 2, 3, 4, 5, 6, 7, 8, 9]);
   // t.deepEquals(matrix.to({x: 0, y: 0, z: 0, w: 0}), {x: 1, y: 2, z: 4});
   t.end();
 });
 
-test('Matrix3#toFloat32Array', t => {
+test('Matrix3#toFloat32Array', (t) => {
   t.equals(typeof Matrix3.prototype.toFloat32Array, 'function');
   const m = new Matrix3();
   m.identity();
@@ -66,7 +66,7 @@ test('Matrix3#toFloat32Array', t => {
   t.end();
 });
 
-test('Matrix3#setRowMajor', t => {
+test('Matrix3#setRowMajor', (t) => {
   t.equals(typeof Matrix3.prototype.setRowMajor, 'function');
 
   const INPUT = INDICES_MATRIX;
@@ -78,7 +78,7 @@ test('Matrix3#setRowMajor', t => {
   t.end();
 });
 
-test('Matrix3#set', t => {
+test('Matrix3#set', (t) => {
   t.equals(typeof Matrix3.prototype.set, 'function');
 
   const INPUT = INDICES_MATRIX;
@@ -91,7 +91,7 @@ test('Matrix3#set', t => {
   t.end();
 });
 
-test('Matrix3#getElement and setElement', t => {
+test('Matrix3#getElement and setElement', (t) => {
   t.equals(typeof new Matrix3().setElement, 'function');
   t.equals(typeof new Matrix3().getElement, 'function');
 
@@ -108,7 +108,7 @@ test('Matrix3#getElement and setElement', t => {
   t.end();
 });
 
-test('Matrix3#getColumn and setColumn', t => {
+test('Matrix3#getColumn and setColumn', (t) => {
   t.equals(typeof new Matrix3().setColumn, 'function');
   t.equals(typeof new Matrix3().getColumn, 'function');
 
@@ -129,7 +129,7 @@ test('Matrix3#getColumn and setColumn', t => {
   t.end();
 });
 
-test('Matrix3#determinant', t => {
+test('Matrix3#determinant', (t) => {
   const RESULT = 5;
 
   t.equals(typeof Matrix3.prototype.determinant, 'function');
@@ -140,7 +140,7 @@ test('Matrix3#determinant', t => {
   t.end();
 });
 
-test('Matrix3#identity (identity matrix)', t => {
+test('Matrix3#identity (identity matrix)', (t) => {
   t.equals(typeof Matrix3.prototype.identity, 'function');
   const m = new Matrix3();
   m.identity();
@@ -151,7 +151,7 @@ test('Matrix3#identity (identity matrix)', t => {
   t.end();
 });
 
-test('Matrix3#copy', t => {
+test('Matrix3#copy', (t) => {
   t.equals(typeof Matrix3.prototype.copy, 'function');
 
   const INPUT = INDICES_MATRIX;
@@ -167,18 +167,11 @@ test('Matrix3#copy', t => {
 // calculation from the website below
 // https://www.andre-gaschler.com/rotationconverter/
 
-test('Matrix3#fromQuaternion', t => {
+test('Matrix3#fromQuaternion', (t) => {
   t.equals(typeof Matrix3.prototype.fromQuaternion, 'function');
 
   const RESULT = [
-    -0.7238737,
-    0.4321177,
-    0.5378486,
-    0.3953417,
-    -0.379099,
-    0.8366534,
-    0.5654306,
-    0.8182654,
+    -0.7238737, 0.4321177, 0.5378486, 0.3953417, -0.379099, 0.8366534, 0.5654306, 0.8182654,
     0.1035857
   ];
 
@@ -192,7 +185,7 @@ test('Matrix3#fromQuaternion', t => {
   t.end();
 });
 
-test('Matrix3#transpose', t => {
+test('Matrix3#transpose', (t) => {
   t.equals(typeof Matrix3.prototype.transpose, 'function');
 
   const INPUT = INDICES_MATRIX;
@@ -206,7 +199,7 @@ test('Matrix3#transpose', t => {
   t.end();
 });
 
-test('Matrix3#invert', t => {
+test('Matrix3#invert', (t) => {
   const INPUT = [1, 2, 3, 0, 1, 5, 5, 6, 0];
   const RESULT = [-6, 3.6, 1.4, 5, -3, -1, -1, 0.8, 0.2];
 
@@ -218,7 +211,7 @@ test('Matrix3#invert', t => {
   t.end();
 });
 
-test('Matrix3#multiplyLeft', t => {
+test('Matrix3#multiplyLeft', (t) => {
   const INPUT_A = INDICES_MATRIX;
   const INPUT_B = [1, 2, 3, 0, 1, 5, 5, 6, 0];
   const RESULT = [16, 22, 13, 34, 49, 37, 52, 76, 61];
@@ -232,7 +225,7 @@ test('Matrix3#multiplyLeft', t => {
   t.end();
 });
 
-test('Matrix3#multiplyRight', t => {
+test('Matrix3#multiplyRight', (t) => {
   const INPUT_A = INDICES_MATRIX;
   const INPUT_B = [1, 2, 3, 0, 1, 5, 5, 6, 0];
   const RESULT = [30, 36, 42, 39, 45, 51, 29, 40, 51];
@@ -246,7 +239,7 @@ test('Matrix3#multiplyRight', t => {
   t.end();
 });
 
-test('Matrix3#rotate', t => {
+test('Matrix3#rotate', (t) => {
   const RESULT = [0, 1, 0, -1, 0, 0, 0, 0, 1];
 
   t.equals(typeof Matrix3.prototype.rotate, 'function');
@@ -257,7 +250,7 @@ test('Matrix3#rotate', t => {
   t.end();
 });
 
-test('Matrix3#scale', t => {
+test('Matrix3#scale', (t) => {
   const M1_RESULT = [1, 0, 0, 0, 2, 0, 0, 0, 1];
   const M2_RESULT = [2, 0, 0, 0, 2, 0, 0, 0, 1];
 
@@ -276,7 +269,7 @@ test('Matrix3#scale', t => {
   t.end();
 });
 
-test('Matrix3#translate', t => {
+test('Matrix3#translate', (t) => {
   const RESULT = [1, 0, 0, 0, 1, 0, 1, 2, 1];
 
   t.equals(typeof Matrix3.prototype.translate, 'function');
@@ -287,7 +280,7 @@ test('Matrix3#translate', t => {
   t.end();
 });
 
-test('Matrix3#transform', t => {
+test('Matrix3#transform', (t) => {
   const TEST_CASES = [
     {
       method: 'transform',

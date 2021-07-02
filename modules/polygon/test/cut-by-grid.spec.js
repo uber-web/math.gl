@@ -4,7 +4,7 @@ import {cutPolylineByGrid, cutPolygonByGrid} from '@math.gl/polygon';
 
 import {flatten} from './lineclip.spec';
 
-test('subdivide line', t => {
+test('subdivide line', (t) => {
   const result = cutPolylineByGrid([0, 0, 25, 40]);
   t.comment(result);
   t.ok(
@@ -25,7 +25,7 @@ test('subdivide line', t => {
   t.end();
 });
 
-test('subdivide polyline', t => {
+test('subdivide polyline', (t) => {
   const result = cutPolylineByGrid(
     flatten([
       [30, 20],
@@ -53,7 +53,7 @@ test('subdivide polyline', t => {
   t.end();
 });
 
-test('subdivide polyline - custom grid', t => {
+test('subdivide polyline - custom grid', (t) => {
   const result = cutPolylineByGrid(
     flatten([
       [30, 20],
@@ -84,7 +84,7 @@ test('subdivide polyline - custom grid', t => {
   t.end();
 });
 
-test('subdivide polyline - multiple parts', t => {
+test('subdivide polyline - multiple parts', (t) => {
   const result = cutPolylineByGrid(
     flatten([
       [30, 20],
@@ -107,7 +107,7 @@ test('subdivide polyline - multiple parts', t => {
   t.end();
 });
 
-test('subdivide 3d polyline', t => {
+test('subdivide 3d polyline', (t) => {
   const result = cutPolylineByGrid(
     flatten([
       [30, 20, 0],
@@ -138,7 +138,7 @@ test('subdivide 3d polyline', t => {
   t.end();
 });
 
-test('subdivide polyline from partial array', t => {
+test('subdivide polyline from partial array', (t) => {
   const polyline = flatten([
     [30, 20],
     [25, 25],
@@ -178,7 +178,7 @@ function arePolygonsEqual(p1, p2) {
 }
 
 // Debug with https://codepen.io/Pessimistress/pen/BaNOmKM
-test('subdivide polygon', t => {
+test('subdivide polygon', (t) => {
   const result = cutPolygonByGrid(
     flatten([
       [5, 20],
@@ -205,12 +205,12 @@ test('subdivide polygon', t => {
   t.end();
 });
 
-test('subdivide polygon - empty', t => {
+test('subdivide polygon - empty', (t) => {
   t.deepEqual(cutPolygonByGrid([]), [], 'returns empty array');
   t.end();
 });
 
-test('subdivide polygon#edgeTypes', t => {
+test('subdivide polygon#edgeTypes', (t) => {
   // This polygon tests:
   // - vertex on grid intersection
   // - interpolated edge point on grid intersection
@@ -235,7 +235,7 @@ test('subdivide polygon#edgeTypes', t => {
     0: 'inside',
     1: 'border'
   };
-  const findEdges = p => {
+  const findEdges = (p) => {
     return testPolygonEdges.filter(
       ([p0, p1]) =>
         equals(p, p0) ||
@@ -248,7 +248,7 @@ test('subdivide polygon#edgeTypes', t => {
     const edgesNext = findEdges(pNext);
     // console.log(p, pNext)
     // console.log(edges, edgesNext)
-    return edges.some(edge => edgesNext.includes(edge)) ? 1 : 0;
+    return edges.some((edge) => edgesNext.includes(edge)) ? 1 : 0;
   };
 
   const result = cutPolygonByGrid(flatten(testPolygon), [6], {
@@ -277,7 +277,7 @@ test('subdivide polygon#edgeTypes', t => {
   t.end();
 });
 
-test('subdivide polygon with custom grid', t => {
+test('subdivide polygon with custom grid', (t) => {
   const result = cutPolygonByGrid(
     flatten([
       [5, 20],
@@ -302,7 +302,7 @@ test('subdivide polygon with custom grid', t => {
   t.end();
 });
 
-test('subdivide 3D polygon', t => {
+test('subdivide 3D polygon', (t) => {
   const result = cutPolygonByGrid(
     flatten([
       [5, 20, 0],
@@ -331,7 +331,7 @@ test('subdivide 3D polygon', t => {
   t.end();
 });
 
-test('subdivide polygon with holes', t => {
+test('subdivide polygon with holes', (t) => {
   const result = cutPolygonByGrid(
     flatten([
       [5, 5],

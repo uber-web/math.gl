@@ -133,10 +133,7 @@ export default class Ellipsoid {
   // Computes the unit vector directed from the center of this ellipsoid toward
   // the provided Cartesian position.
   geocentricSurfaceNormal(cartesian, result = [0, 0, 0]) {
-    return scratchVector
-      .from(cartesian)
-      .normalize()
-      .to(result);
+    return scratchVector.from(cartesian).normalize().to(result);
   }
 
   // Computes the normal of the plane tangent to the surface of the ellipsoid at provided position.
@@ -157,11 +154,7 @@ export default class Ellipsoid {
 
   // Computes the normal of the plane tangent to the surface of the ellipsoid at the provided position.
   geodeticSurfaceNormal(cartesian, result = [0, 0, 0]) {
-    return scratchVector
-      .from(cartesian)
-      .scale(this.oneOverRadiiSquared)
-      .normalize()
-      .to(result);
+    return scratchVector.from(cartesian).scale(this.oneOverRadiiSquared).normalize().to(result);
   }
 
   // Scales the provided Cartesian position along the geodetic surface normal
@@ -195,19 +188,13 @@ export default class Ellipsoid {
   // Transforms a Cartesian X, Y, Z position to the ellipsoid-scaled space by multiplying
   // its components by the result of `Ellipsoid#oneOverRadii`
   transformPositionToScaledSpace(position, result = [0, 0, 0]) {
-    return scratchPosition
-      .from(position)
-      .scale(this.oneOverRadii)
-      .to(result);
+    return scratchPosition.from(position).scale(this.oneOverRadii).to(result);
   }
 
   // Transforms a Cartesian X, Y, Z position from the ellipsoid-scaled space by multiplying
   // its components by the result of `Ellipsoid#radii`.
   transformPositionFromScaledSpace(position, result = [0, 0, 0]) {
-    return scratchPosition
-      .from(position)
-      .scale(this.radii)
-      .to(result);
+    return scratchPosition.from(position).scale(this.radii).to(result);
   }
 
   // Computes a point which is the intersection of the surface normal with the z-axis.
