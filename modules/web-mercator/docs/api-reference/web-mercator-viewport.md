@@ -19,7 +19,7 @@ and performs projections between world and screen coordinates.
 | `pitch`     | `number`   | `0`     | The pitch (tilt) of the map from the screen, in degrees (0 is straight down)                     |
 | `bearing`   | `number`   | `0`     | The bearing (rotation) of the map from north, in degrees counter-clockwise (0 means north is up) |
 | `altitude`  | `number`   | `1.5`   | Altitude of camera in screen units                                                               |
-| `fovy`      | `number`   | `null`  | Field of view of camera in degrees (overrides opts.altitude for projection matrix)          |
+| `fovy`      | `number`   | `null`  | Field of view of camera in degrees (overrides opts.altitude for projection matrix)               |
 | `position`  | `number[]` | `null`  | Offset of the camera, in meters                                                                  |
 
 Remarks:
