@@ -63,7 +63,7 @@ export default class WebMercatorViewport {
    * @param [opt.pitch=0] - Camera angle in degrees (0 is straight down)
    * @param [opt.bearing=0] - Map rotation in degrees (0 means north is up)
    * @param [opt.altitude=] - Altitude of camera in screen units
-   * @param [opt.fovy=] - Field of view of camera in screen units (overrides opts.altitude for projection matrix)
+   * @param [opt.fovy=] - Field of view of camera in degrees (overrides opts.altitude for projection matrix)
    *
    * Web mercator projection short-hand parameters
    * @param [opt.latitude] - Center of viewport on map

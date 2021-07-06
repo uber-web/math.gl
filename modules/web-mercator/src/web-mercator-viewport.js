@@ -1,4 +1,5 @@
 // View and Projection Matrix calculations for mapbox-js style map view properties
+import {toRadians} from '@math.gl/core';
 import {createMat4} from './math-utils';
 
 import {
@@ -59,7 +60,7 @@ export default class WebMercatorViewport {
       width,
       height,
       pitch,
-      altitude: fovy ? 0.5 / Math.tan(0.5 * fovy) : altitude,
+      altitude: fovy ? 0.5 / Math.tan(0.5 * toRadians(fovy)) : altitude,
       nearZMultiplier,
       farZMultiplier
     });
