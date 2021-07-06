@@ -29,7 +29,7 @@
 
 Release Date: TBD
 
-**`@math.gl/web-mercator`
+**`@math.gl/web-mercator`**
 
 - `getBounds()` now supports an optional `fovy` parameter on the `WebMercatorViewport` object
 
