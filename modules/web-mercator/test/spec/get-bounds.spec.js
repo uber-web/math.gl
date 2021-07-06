@@ -165,13 +165,3 @@ test('WebMercatorViewport.getBounds/getBoundingRegion', (t) => {
   }
   t.end();
 });
-
-test('getBounds fovy override', (t) => {
-  for (const {title, viewportProps, quad, z} of GETBOUNDS_TEST_CASES) {
-    // @ts-ignore
-    const viewport = new WebMercatorViewport(viewportProps);
-    const result = getBounds(viewport, z);
-    t.deepEqual(toLowPrecision(result), toLowPrecision(quad), title);
-  }
-  t.end();
-});
