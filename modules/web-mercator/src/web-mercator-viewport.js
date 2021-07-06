@@ -31,6 +31,7 @@ export default class WebMercatorViewport {
       pitch = 0,
       bearing = 0,
       altitude = 1.5,
+      fovy = null,
       position = null,
       nearZMultiplier = 0.02,
       farZMultiplier = 1.01
@@ -58,7 +59,7 @@ export default class WebMercatorViewport {
       width,
       height,
       pitch,
-      altitude,
+      altitude: fovy ? 0.5 / Math.tan(0.5 * fovy) : altitude,
       nearZMultiplier,
       farZMultiplier
     });
@@ -83,6 +84,7 @@ export default class WebMercatorViewport {
     this.pitch = pitch;
     this.bearing = bearing;
     this.altitude = altitude;
+    this.fovy = fovy;
     this.center = center;
     this.meterOffset = position || [0, 0, 0];
 
