@@ -111,6 +111,29 @@ const GETBOUNDS_TEST_CASES = [
       [-142.66539563, -6.5539361951],
       [142.66539563, 89.538042739]
     ]
+  },
+  {
+    title: 'with fovy override',
+    viewportProps: {
+      width: 400,
+      height: 300,
+      longitude: 0,
+      latitude: 0,
+      fovy: 25,
+      pitch: 60,
+      zoom: 5
+    },
+    z: 0,
+    quad: [
+      [-2.1118215668, -3.1661197853, 0],
+      [2.1118215668, -3.1661197853, 0],
+      [4.7445908032, 7.0986555343, 0],
+      [-4.7445908032, 7.0986555343, 0]
+    ],
+    rect: [
+      [-4.7445908032, -3.1661197853],
+      [4.7445908032, 7.0986555343]
+    ]
   }
 ];
 
@@ -146,11 +169,7 @@ test('WebMercatorViewport.getBounds/getBoundingRegion', (t) => {
 test('getBounds fovy override', (t) => {
   for (const {title, viewportProps, quad, z} of GETBOUNDS_TEST_CASES) {
     // @ts-ignore
-    const viewport = {...new WebMercatorViewport(viewportProps)};
-    viewport.fovy = 2 * Math.atan(0.5 / viewport.altitude);
-
-    // Modify altitude to check fovy overrides it
-    viewport.altitude = 10000;
+    const viewport = new WebMercatorViewport(viewportProps);
     const result = getBounds(viewport, z);
     t.deepEqual(toLowPrecision(result), toLowPrecision(quad), title);
   }
