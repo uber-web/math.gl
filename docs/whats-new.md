@@ -32,6 +32,7 @@ Release Date: TBD
 **`@math.gl/web-mercator`**
 
 - `getBounds()` now supports an optional `fovy` parameter on the `WebMercatorViewport` object
+- `getProjectionMatrix()` and `getProjectionParameters()` now accept an optional `fovy` parameter
 
 **`@math.gl/polygon`**
 

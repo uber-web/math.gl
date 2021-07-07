@@ -18,8 +18,6 @@ import * as mat4 from 'gl-matrix/mat4';
 import * as vec2 from 'gl-matrix/vec2';
 import * as vec3 from 'gl-matrix/vec3';
 
-const DEGREES_TO_RADIANS = Math.PI / 180;
-
 export default class WebMercatorViewport {
   // eslint-disable-next-line max-statements
   constructor(
