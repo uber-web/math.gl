@@ -100,7 +100,7 @@ type ProjectionParameters = {
  * @param options.height Height of "viewport" or window
  * @param options.pitch Camera angle in degrees (0 is straight down)
  * @param options.altitude of camera in screen units
- * @param options.fovy optional fov, will override altitude
+ * @param options.fovy optional fov in degrees, will override altitude
  * @param options.nearZMultiplier control z buffer
  * @param options.farZMultiplier control z buffer
  * @returns project parameters object
@@ -127,7 +127,7 @@ export function getProjectionParameters(options: {
  * @param options.height Height of "viewport" or window
  * @param options.pitch Camera angle in degrees (0 is straight down)
  * @param options.altitude of camera in screen units
- * @param options.fovy optional fov, will override altitude
+ * @param options.fovy optional fov in degrees, will override altitude
  * @param options.nearZMultiplier control z buffer
  * @param options.farZMultiplier control z buffer
  * @returns 4x4 projection matrix

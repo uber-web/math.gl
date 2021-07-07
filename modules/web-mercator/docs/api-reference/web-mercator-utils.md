@@ -130,7 +130,7 @@ Parameters:
 - `viewport.height` (Number, required)
 - `viewport.pitch` (Number, required)
 - `viewport.altitude` (Number, required)
-- `viewport.fovy` (Number, optional) - optional fov, will override altitude
+- `viewport.fovy` (Number, optional) - optional fov in degrees, will override altitude
 - `viewport.nearZMultiplier` (Number, optional) - near plane multiplier. Default `1`.
 - `viewport.farZMultiplier` (Number, optional) - far plane multiplier. Default `1`
 
@@ -153,13 +153,13 @@ Parameters:
 - `height` (Number, required)
 - `pitch` (Number, required)
 - `altitude` (Number, required)
-- `fovy` (Number, optional) - optional fov, will override altitude
+- `fovy` (Number, optional) - optional fov in degrees, will override altitude
 - `farZMultiplier` (Number, optional) - near plane multiplier. Default `1`.
 - `farZMultiplier` (Number, optional) - far plane multiplier. Default `1`.
 
 Returns
 
-- Object with `{fovy, aspect, focalDistance, near, far}` fields.
+- Object with `{fov, aspect, focalDistance, near, far}` fields. Note that returned `fov` is in radians
 
 ### `fitBounds(opts)`
 

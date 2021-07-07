@@ -200,7 +200,7 @@ export function getProjectionParameters({
   nearZMultiplier = 1,
   farZMultiplier = 1
 }) {
-  const halfFov = fovy ? 0.5 * fovy : Math.atan(0.5 / altitude);
+  const halfFov = fovy ? 0.5 * fovy * DEGREES_TO_RADIANS : Math.atan(0.5 / altitude);
   const focalDistance = fovy ? 0.5 / Math.tan(0.5 * fovy * DEGREES_TO_RADIANS) : altitude;
 
   // Find the distance from the center point to the center top
