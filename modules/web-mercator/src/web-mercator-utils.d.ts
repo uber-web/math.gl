@@ -93,13 +93,14 @@ type ProjectionParameters = {
 };
 
 /**
- * Valculates mapbox compatible projection matrix from parameters
+ * Calculates mapbox compatible projection matrix from parameters
 // Note: This matrix has variable fov (specified in radians)
  *
  * @param options.width Width of "viewport" or window
  * @param options.height Height of "viewport" or window
  * @param options.pitch Camera angle in degrees (0 is straight down)
  * @param options.altitude of camera in screen units
+ * @param options.fovy optional fov, will override altitude
  * @param options.nearZMultiplier control z buffer
  * @param options.farZMultiplier control z buffer
  * @returns project parameters object
@@ -108,6 +109,7 @@ export function getProjectionParameters(options: {
   width: number;
   height: number;
   altitude?: number;
+  fovy?: number;
   pitch?: number;
   nearZMultiplier?: number;
   farZMultiplier?: number;
@@ -125,6 +127,7 @@ export function getProjectionParameters(options: {
  * @param options.height Height of "viewport" or window
  * @param options.pitch Camera angle in degrees (0 is straight down)
  * @param options.altitude of camera in screen units
+ * @param options.fovy optional fov, will override altitude
  * @param options.nearZMultiplier control z buffer
  * @param options.farZMultiplier control z buffer
  * @returns 4x4 projection matrix
@@ -134,6 +137,7 @@ export function getProjectionMatrix(options: {
   height: number;
   pitch: number;
   altitude: number;
+  fovy?: number;
   nearZMultiplier: number;
   farZMultiplier: number;
 }): number[];

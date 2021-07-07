@@ -61,7 +61,8 @@ export default class WebMercatorViewport {
       width,
       height,
       pitch,
-      altitude: fovy ? 0.5 / Math.tan(0.5 * fovy * DEGREES_TO_RADIANS) : altitude,
+      altitude,
+      fovy,
       nearZMultiplier,
       farZMultiplier
     });
