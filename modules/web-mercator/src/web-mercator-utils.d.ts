@@ -1,5 +1,8 @@
 // TODO - THE UTILITIES IN THIS FILE SHOULD BE IMPORTED FROM WEB-MERCATOR-VIEWPORT MODULE
 
+/** Mapbox default altitude */
+export const DEFAULT_ALTITUDE: number;
+
 /** Util functions **/
 export function zoomToScale(zoom: number): number;
 
@@ -94,13 +97,12 @@ type ProjectionParameters = {
 
 /**
  * Calculates mapbox compatible projection matrix from parameters
-// Note: This matrix has variable fov (specified in radians)
  *
  * @param options.width Width of "viewport" or window
  * @param options.height Height of "viewport" or window
  * @param options.pitch Camera angle in degrees (0 is straight down)
- * @param options.altitude of camera in screen units
- * @param options.fovy optional fov in degrees, will override altitude
+ * @param options.fovy field of view in degrees
+ * @param options.altitude if provided, field of view is calculated using `altitudeToFovy()`
  * @param options.nearZMultiplier control z buffer
  * @param options.farZMultiplier control z buffer
  * @returns project parameters object
@@ -108,8 +110,8 @@ type ProjectionParameters = {
 export function getProjectionParameters(options: {
   width: number;
   height: number;
-  altitude?: number;
   fovy?: number;
+  altitude?: number;
   pitch?: number;
   nearZMultiplier?: number;
   farZMultiplier?: number;
@@ -126,8 +128,8 @@ export function getProjectionParameters(options: {
  * @param options.width Width of "viewport" or window
  * @param options.height Height of "viewport" or window
  * @param options.pitch Camera angle in degrees (0 is straight down)
- * @param options.altitude of camera in screen units
- * @param options.fovy optional fov in degrees, will override altitude
+ * @param options.fovy field of view in degrees
+ * @param options.altitude if provided, field of view is calculated using `altitudeToFovy()`
  * @param options.nearZMultiplier control z buffer
  * @param options.farZMultiplier control z buffer
  * @returns 4x4 projection matrix
@@ -136,11 +138,21 @@ export function getProjectionMatrix(options: {
   width: number;
   height: number;
   pitch: number;
-  altitude: number;
   fovy?: number;
+  altitude?: number;
   nearZMultiplier: number;
   farZMultiplier: number;
 }): number[];
+
+/**
+ *
+ * Convert an altitude to field of view such that the
+ * focal distance is equal to the altitude
+ *
+ * @param altitude - altitude of camera in screen units
+ * @return fovy field of view in degrees
+ */
+export function altitudeToFovy(altitude: number): number;
 
 /**
  * Project flat coordinates to pixels on screen.

@@ -62,8 +62,8 @@ export default class WebMercatorViewport {
    * @param [opt.scale=1] - Either use scale or zoom
    * @param [opt.pitch=0] - Camera angle in degrees (0 is straight down)
    * @param [opt.bearing=0] - Map rotation in degrees (0 means north is up)
-   * @param [opt.altitude=] - Altitude of camera in screen units
-   * @param [opt.fovy=] - Field of view of camera in degrees (overrides opts.altitude for projection matrix)
+   * @param [opt.fovy=] - Field of view of camera in degrees
+   * @param [opt.altitude=] - Altitude of camera in screen units                                                               
    *
    * Web mercator projection short-hand parameters
    * @param [opt.latitude] - Center of viewport on map
@@ -74,7 +74,7 @@ export default class WebMercatorViewport {
    *  - Only one of center or [latitude, longitude] can be specified
    *  - [latitude, longitude] can only be specified when "mercator" is true
    *  - Altitude has a default value that matches assumptions in mapbox-gl
-   *  - Field of view is calculated from altitude, so that one screen unit fills the view, unless overridden by the `fovy` parameter
+   *  - Field of view is independent from altitude, provide `altitudeToFovy(1.5)` (default value) to match assumptions in mapbox-gl 
    *  - width and height are forced to 1 if supplied as 0, to avoid
    *    division by zero. This is intended to reduce the burden of apps to
    *    to check values before instantiating a Viewport.

@@ -7,6 +7,8 @@ import {
   lngLatToWorld,
   worldToLngLat,
   worldToPixels,
+  altitudeToFovy,
+  DEFAULT_ALTITUDE,
   getProjectionMatrix,
   getDistanceScales,
   getViewMatrix
@@ -30,8 +32,8 @@ export default class WebMercatorViewport {
       zoom = 0,
       pitch = 0,
       bearing = 0,
-      altitude = 1.5,
-      fovy = null,
+      altitude = DEFAULT_ALTITUDE,
+      fovy = altitudeToFovy(DEFAULT_ALTITUDE),
       position = null,
       nearZMultiplier = 0.02,
       farZMultiplier = 1.01
@@ -59,7 +61,6 @@ export default class WebMercatorViewport {
       width,
       height,
       pitch,
-      altitude,
       fovy,
       nearZMultiplier,
       farZMultiplier

@@ -129,8 +129,8 @@ Parameters:
 - `viewport.width` (Number, required)
 - `viewport.height` (Number, required)
 - `viewport.pitch` (Number, required)
-- `viewport.altitude` (Number, required)
-- `viewport.fovy` (Number, optional) - optional fov in degrees, will override altitude
+- `viewport.fovy` (Number, required) - field of view in degrees
+- `viewport.altitude` (Number, optional) - if provided, field of view is calculated using `altitudeToFovy()`
 - `viewport.nearZMultiplier` (Number, optional) - near plane multiplier. Default `1`.
 - `viewport.farZMultiplier` (Number, optional) - far plane multiplier. Default `1`
 
@@ -142,8 +142,11 @@ To match Mapbox's z-buffer, use these parameters:
   - `nearZMultiplier`: `0.1`
   - `farZMultiplier`: `1`
 - Starting 0.29:
+
   - `nearZMultiplier`: `1 / viewport.height`
   - `farZMultiplier`: `1.01`
+
+- `fovy`: `altitudeToFovy(1.5)`
 
 ### `getProjectionParameters({width, height, altitude, fovy, pitch, farZMultiplier}})`
 
@@ -152,14 +155,26 @@ Parameters:
 - `width` (Number, required)
 - `height` (Number, required)
 - `pitch` (Number, required)
-- `altitude` (Number, required)
-- `fovy` (Number, optional) - optional fov in degrees, will override altitude
+- `fovy` (Number, required) - field of view in degrees
+- `altitude` (Number, optional) - if provided, field of view is calculated using `altitudeToFovy()`
 - `farZMultiplier` (Number, optional) - near plane multiplier. Default `1`.
 - `farZMultiplier` (Number, optional) - far plane multiplier. Default `1`.
 
 Returns
 
 - Object with `{fov, aspect, focalDistance, near, far}` fields. Note that returned `fov` is in radians
+
+### `altitudeToFovy(altitude)`
+
+Convert an altitude to field of view such that the focal distance is equal to the altitude.
+
+Parameters:
+
+- `altitude` (Number, required) - altitude of camera in screen units
+
+Returns:
+
+- `fovy` field of view in degrees
 
 ### `fitBounds(opts)`
 
