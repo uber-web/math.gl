@@ -17,7 +17,9 @@ export default function getBounds(viewport, z = 0) {
   let topLeft;
   let topRight;
 
-  const halfFov = Math.atan(0.5 / viewport.altitude);
+  const halfFov = viewport.fovy
+    ? 0.5 * viewport.fovy * DEGREES_TO_RADIANS
+    : Math.atan(0.5 / viewport.altitude);
   const angleToGround = (90 - viewport.pitch) * DEGREES_TO_RADIANS;
   // The top plane is parallel to the ground if halfFov == angleToGround
   if (halfFov > angleToGround - 0.01) {

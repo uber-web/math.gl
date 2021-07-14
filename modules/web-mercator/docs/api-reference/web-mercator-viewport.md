@@ -9,21 +9,24 @@ and performs projections between world and screen coordinates.
 
 ## Constructor
 
-| Parameter   | Type       | Default | Description                                                                                      |
-| ----------- | ---------- | ------- | ------------------------------------------------------------------------------------------------ |
-| `width`     | `number`   | `1`     | Width of viewport                                                                                |
-| `height`    | `number`   | `1`     | Height of viewport                                                                               |
-| `latitude`  | `number`   | `0`     | Latitude of viewport center                                                                      |
-| `longitude` | `number`   | `0`     | Longitude of viewport center                                                                     |
-| `zoom`      | `number`   | `11`    | Map zoom (scale is calculated as `2^zoom`)                                                       |
-| `pitch`     | `number`   | `0`     | The pitch (tilt) of the map from the screen, in degrees (0 is straight down)                     |
-| `bearing`   | `number`   | `0`     | The bearing (rotation) of the map from north, in degrees counter-clockwise (0 means north is up) |
-| `altitude`  | `number`   | `1.5`   | Altitude of camera in screen units                                                               |
-| `position`  | `number[]` | `null`  | Offset of the camera, in meters                                                                  |
+| Parameter   | Type       | Default     | Description                                                                                      |
+| ----------- | ---------- | ----------- | ------------------------------------------------------------------------------------------------ |
+| `width`     | `number`   | `1`         | Width of viewport                                                                                |
+| `height`    | `number`   | `1`         | Height of viewport                                                                               |
+| `latitude`  | `number`   | `0`         | Latitude of viewport center                                                                      |
+| `longitude` | `number`   | `0`         | Longitude of viewport center                                                                     |
+| `zoom`      | `number`   | `11`        | Map zoom (scale is calculated as `2^zoom`)                                                       |
+| `pitch`     | `number`   | `0`         | The pitch (tilt) of the map from the screen, in degrees (0 is straight down)                     |
+| `bearing`   | `number`   | `0`         | The bearing (rotation) of the map from north, in degrees counter-clockwise (0 means north is up) |
+| `fovy`      | `number`   | `see below` | Field of view of camera in degrees                                                               |
+| `altitude`  | `number`   | `see below` | Altitude of camera in screen units                                                               |
+| `position`  | `number[]` | `null`      | Offset of the camera, in meters                                                                  |
 
 Remarks:
 
-- Altitude has a default value that matches assumptions in mapbox-gl
+- If either `altitude` or `fovy` is not provided, the missing value is computed from the other using `altitudeToFovy()`/`fovyToAltitude()`.
+- Altitude has a default value that matches assumptions in mapbox-gl. It is only used if both `altitude` and `fovy` are not supplied.
+- Field of view is independent from altitude, provide `altitudeToFovy(1.5)` (default value) to match assumptions in mapbox-gl
 - `width` and `height` are forced to 1 if supplied as 0, to avoid
   division by zero. This is intended to reduce the burden of apps to
   to check values before instantiating a `Viewport`.

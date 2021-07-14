@@ -17,7 +17,7 @@ const TILE_SIZE = 512;
 const EARTH_CIRCUMFERENCE = 40.03e6;
 
 // Mapbox default altitude
-const DEFAULT_ALTITUDE = 1.5;
+export const DEFAULT_ALTITUDE = 1.5;
 
 /** Util functions **/
 export function zoomToScale(zoom) {
@@ -194,26 +194,34 @@ export function getViewMatrix({
 export function getProjectionParameters({
   width,
   height,
-  altitude = DEFAULT_ALTITUDE,
+  fovy = altitudeToFovy(DEFAULT_ALTITUDE),
+  altitude,
   pitch = 0,
   nearZMultiplier = 1,
   farZMultiplier = 1
 }) {
+  // For back-compatibility allow field of view to be
+  // derived from altitude
+  if (altitude !== undefined) {
+    fovy = altitudeToFovy(altitude);
+  }
+  const halfFov = 0.5 * fovy * DEGREES_TO_RADIANS;
+  const focalDistance = fovyToAltitude(fovy);
+
   // Find the distance from the center point to the center top
-  // in altitude units using law of sines.
+  // in focal distance units using law of sines.
   const pitchRadians = pitch * DEGREES_TO_RADIANS;
-  const halfFov = Math.atan(0.5 / altitude);
   const topHalfSurfaceDistance =
-    (Math.sin(halfFov) * altitude) /
+    (Math.sin(halfFov) * focalDistance) /
     Math.sin(Math.min(Math.max(Math.PI / 2 - pitchRadians - halfFov, 0.01), Math.PI - 0.01));
 
   // Calculate z value of the farthest fragment that should be rendered.
-  const farZ = Math.sin(pitchRadians) * topHalfSurfaceDistance + altitude;
+  const farZ = Math.sin(pitchRadians) * topHalfSurfaceDistance + focalDistance;
 
   return {
     fov: 2 * halfFov,
     aspect: width / height,
-    focalDistance: altitude,
+    focalDistance,
     near: nearZMultiplier,
     far: farZ * farZMultiplier
   };
@@ -228,6 +236,7 @@ export function getProjectionMatrix({
   height,
   pitch,
   altitude,
+  fovy,
   nearZMultiplier,
   farZMultiplier
 }) {
@@ -235,6 +244,7 @@ export function getProjectionMatrix({
     width,
     height,
     altitude,
+    fovy,
     pitch,
     nearZMultiplier,
     farZMultiplier
@@ -249,6 +259,17 @@ export function getProjectionMatrix({
   );
 
   return projectionMatrix;
+}
+
+// Utility function to calculate the field of view such that
+// the focal distance is equal to the ground distance. This
+// is how mapbox's z fov is calculated
+export function altitudeToFovy(altitude) {
+  return 2 * Math.atan(0.5 / altitude) * RADIANS_TO_DEGREES;
+}
+
+export function fovyToAltitude(fovy) {
+  return 0.5 / Math.tan(0.5 * fovy * DEGREES_TO_RADIANS);
 }
 
 // Project flat coordinates to pixels on screen.
