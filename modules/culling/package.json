@@ -5,7 +5,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "3.5.0-beta.1",
+  "version": "3.5.1",
   "keywords": [
     "webgl",
     "javascript",
@@ -35,7 +35,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.12.0",
-    "@math.gl/core": "3.5.0-beta.1",
+    "@math.gl/core": "3.5.1",
     "gl-matrix": "^3.0.0"
   },
   "gitHead": "e1a95300cb225a90da6e90333d4adf290f7ba501"

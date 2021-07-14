@@ -1,5 +1,25 @@
 # CHANGELOG
 
+# v3.5.0
+
+- Extend web mercator viewport to support fovy parameter (#240)
+
+# v3.5.0-beta.1
+
+- chore: Bump ocular@1.0.0-alpha.7 (#238)
+- viewport-mercator-project@7.0.3
+- WebMercatorViewport supports camera meter offset (#235)
+- chore: Use babel-register to run tests and bench (#236)
+- feat(culling): Add BoundingVolume interface (#227)
+- chore(polygon): Move earcut test data (#234)
+- Add tests and types for Polygon & earcut (#224)
+- feat(culling): Addd transforms to bounding boxes (#231)
+- chore: Add back CI versions, fix CI target (#233)
+- chore: Fix CI coverage (#232)
+- Bounding box transforms (#226)
+- chore: Upgrade node CI versions to 12, 14, 16 (#222)
+- chore: upgrade ocular (#221)
+
 # v3.5.0-alpha.1
 
 - Add earcut (#219)
