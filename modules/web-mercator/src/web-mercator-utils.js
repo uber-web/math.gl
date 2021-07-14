@@ -206,7 +206,7 @@ export function getProjectionParameters({
     fovy = altitudeToFovy(altitude);
   }
   const halfFov = 0.5 * fovy * DEGREES_TO_RADIANS;
-  const focalDistance = 0.5 / Math.tan(halfFov);
+  const focalDistance = fovyToAltitude(fovy);
 
   // Find the distance from the center point to the center top
   // in focal distance units using law of sines.
@@ -266,6 +266,10 @@ export function getProjectionMatrix({
 // is how mapbox's z fov is calculated
 export function altitudeToFovy(altitude) {
   return 2 * Math.atan(0.5 / altitude) * RADIANS_TO_DEGREES;
+}
+
+export function fovyToAltitude(fovy) {
+  return 0.5 / Math.tan(0.5 * fovy * DEGREES_TO_RADIANS);
 }
 
 // Project flat coordinates to pixels on screen.

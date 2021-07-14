@@ -8,6 +8,7 @@ import {
   worldToLngLat,
   worldToPixels,
   altitudeToFovy,
+  fovyToAltitude,
   DEFAULT_ALTITUDE,
   getProjectionMatrix,
   getDistanceScales,
@@ -32,8 +33,8 @@ export default class WebMercatorViewport {
       zoom = 0,
       pitch = 0,
       bearing = 0,
-      altitude = DEFAULT_ALTITUDE,
-      fovy = altitudeToFovy(DEFAULT_ALTITUDE),
+      altitude = null,
+      fovy = null,
       position = null,
       nearZMultiplier = 0.02,
       farZMultiplier = 1.01
@@ -42,6 +43,18 @@ export default class WebMercatorViewport {
     // Silently allow apps to send in 0,0 to facilitate isomorphic render etc
     width = width || 1;
     height = height || 1;
+
+    // `fovy` & `altitude` are independent parameters, one for the
+    // projection and the latter for the view matrix. In the past,
+    // the `fovy` was always derived from the `altitude`
+    if (fovy === null && altitude === null) {
+      altitude = DEFAULT_ALTITUDE;
+      fovy = altitudeToFovy(altitude);
+    } else if (fovy === null) {
+      fovy = altitudeToFovy(altitude);
+    } else if (altitude === null) {
+      altitude = fovyToAltitude(fovy);
+    }
 
     const scale = zoomToScale(zoom);
     // Altitude - prevent division by 0

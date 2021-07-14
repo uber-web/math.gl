@@ -155,6 +155,16 @@ export function getProjectionMatrix(options: {
 export function altitudeToFovy(altitude: number): number;
 
 /**
+ *
+ * Convert an field of view such that the
+ * focal distance is equal to the altitude
+ *
+ * @param fovy - field of view in degrees
+ * @return altitude altitude of camera in screen units
+ */
+export function fovyToAltitude(fovy: number): number;
+
+/**
  * Project flat coordinates to pixels on screen.
  *
  * @param xyz - flat coordinate on 512*512 Mercator Zoom 0 tile

@@ -176,6 +176,18 @@ Returns:
 
 - `fovy` field of view in degrees
 
+### `fovyToAltitude(fovy)`
+
+Convert a field of view to an altitude equal to the focal distance
+
+Parameters:
+
+- `fovy` (Number, required) field of view in degrees
+
+Returns:
+
+- `altitude` altitude of camera in screen units
+
 ### `fitBounds(opts)`
 
 Returns map settings (longitude, latitude and zoom) that will contain the provided corners within the provided dimensions. Only supports non-perspective mode.
