@@ -1,6 +1,6 @@
 # CHANGELOG
 
-# v3.5.0
+# v3.5.1
 
 - Extend web mercator viewport to support fovy parameter (#240)
 
