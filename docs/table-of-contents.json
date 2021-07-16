@@ -71,7 +71,7 @@
             {"entry": "modules/culling/docs/api-reference/bounding-volume"},
             {"entry": "modules/culling/docs/api-reference/culling-volume"},
             {"entry": "modules/culling/docs/api-reference/oriented-bounding-box"},
-x            {"entry": "modules/culling/docs/api-reference/plane"}
+            {"entry": "modules/culling/docs/api-reference/plane"}
           ]
         },
         {

@@ -4,7 +4,7 @@ import {render} from 'react-dom';
 import {BenchResults} from '@probe.gl/react-bench';
 import {Bench} from '@probe.gl/bench';
 
-import addBenchmarks from '../../test/modules.bench';
+import addBenchmarks from '../../test/bench/modules.bench';
 
 const addReferenceBenchmarks = false;
 

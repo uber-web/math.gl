@@ -25,9 +25,9 @@
   </tbody>
 </table>
 
-## v3.5 (In development)
+## v3.5
 
-Release Date: TBD
+Release Date: July 14, 2021
 
 **`@math.gl/web-mercator`**
 
@@ -46,7 +46,7 @@ Release Date: TBD
 
 ## v3.4
 
-Release Date: Jan 7, 2020
+Release Date: Jan 7, 2021
 
 **`@math.gl/geoid`** - New module
 
