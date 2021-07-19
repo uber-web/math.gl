@@ -1,6 +1,16 @@
 # CHANGELOG
 
-# v3.5.1
+## v3.5.3
+
+- Export altitudeToFovy & fovyToAltitude (#244)
+
+## v3.5.2
+
+- chore: bump probe.gl (#243)
+- chore: 3.5 docs (#242)
+- Fix typo (#241)
+
+## v3.5.1
 
 - Extend web mercator viewport to support fovy parameter (#240)
 
