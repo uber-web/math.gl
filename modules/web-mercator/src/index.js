@@ -14,6 +14,8 @@ export {
   pixelsToWorld,
   zoomToScale,
   scaleToZoom,
+  altitudeToFovy,
+  fovyToAltitude,
   getMeterZoom,
   getDistanceScales,
   addMetersToLngLat,
