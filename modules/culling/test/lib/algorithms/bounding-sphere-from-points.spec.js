@@ -7,12 +7,7 @@ import {tapeEquals} from 'test/utils/tape-assertions';
 import {Vector3} from '@math.gl/core';
 import {makeBoundingSphereFromPoints} from '@math.gl/culling';
 
-const positionsRadius = 1.0;
-const positionsCenter = new Vector3(10000001.0, 0.0, 0.0);
-
-const center = [10000000.0, 0.0, 0.0];
-
-function getPositions() {
+function getPositions(center) {
   return [
     new Vector3(center).add([1, -1, 0]),
     new Vector3(center).add([1, 0, 0]),
@@ -33,7 +28,7 @@ test('makeBoundingSphereFromPoints without positions returns an empty sphere', (
 });
 
 test('makeBoundingSphereFromPoints works with one point', (t) => {
-  const expectedCenter = new Vector3(1.0, 2.0, 3.0);
+  const expectedCenter = [1.0, 2.0, 3.0];
   const sphere = makeBoundingSphereFromPoints([expectedCenter]);
   tapeEquals(t, sphere.center, expectedCenter);
   t.equals(sphere.radius, 0.0);
@@ -42,7 +37,11 @@ test('makeBoundingSphereFromPoints works with one point', (t) => {
 });
 
 test('makeBoundingSphereFromPoints computes a center from points', (t) => {
-  const sphere = makeBoundingSphereFromPoints(getPositions());
+  const positionsRadius = 1.0;
+  const positionsCenter = [10000001.0, 0.0, 0.0];
+  const center = [10000000.0, 0.0, 0.0];
+
+  const sphere = makeBoundingSphereFromPoints(getPositions(center));
   tapeEquals(t, sphere.center, positionsCenter);
   t.equals(sphere.radius, positionsRadius);
 
@@ -50,7 +49,7 @@ test('makeBoundingSphereFromPoints computes a center from points', (t) => {
 });
 
 test('makeBoundingSphereFromPoints contains all points (naive)', (t) => {
-  const positions = getPositions();
+  const positions = getPositions([0, 0, 0]);
   const sphere = makeBoundingSphereFromPoints(positions);
   const radius = sphere.radius;
 
@@ -65,7 +64,7 @@ test('makeBoundingSphereFromPoints contains all points (naive)', (t) => {
 });
 
 test('makeBoundingSphereFromPoints contains all points (ritter)', (t) => {
-  const positions = getPositions();
+  const positions = getPositions([0, 0, 0]);
   positions.push(new Vector3(1, 1, 1), new Vector3(2, 2, 2), new Vector3(3, 3, 3));
   const sphere = makeBoundingSphereFromPoints(positions);
   const radius = sphere.radius;
