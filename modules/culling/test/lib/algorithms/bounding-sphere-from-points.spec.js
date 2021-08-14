@@ -14,11 +14,11 @@ const center = [10000000.0, 0.0, 0.0];
 
 function getPositions() {
   return [
+    new Vector3(center).add([1, -1, 0]),
     new Vector3(center).add([1, 0, 0]),
     new Vector3(center).add([2, 0, 0]),
     new Vector3(center).add([0, 0, 0]),
     new Vector3(center).add([1, 1, 0]),
-    new Vector3(center).add([1, -1, 0]),
     new Vector3(center).add([1, 0, 1]),
     new Vector3(center).add([1, 0, -1])
   ];
@@ -50,20 +50,15 @@ test('makeBoundingSphereFromPoints computes a center from points', (t) => {
 });
 
 test('makeBoundingSphereFromPoints contains all points (naive)', (t) => {
-  const sphere = makeBoundingSphereFromPoints(getPositions());
+  const positions = getPositions();
+  const sphere = makeBoundingSphereFromPoints(positions);
   const radius = sphere.radius;
 
-  const r = new Vector3(radius, radius, radius);
-  const max = sphere.center.clone().add(r);
-  const min = sphere.center.clone().subtract(r);
-
-  const positions = getPositions();
   const numPositions = positions.length;
   for (let i = 0; i < numPositions; i++) {
     const currentPos = positions[i];
-    t.equals(currentPos.x <= max.x && currentPos.x >= min.x, true);
-    t.equals(currentPos.y <= max.y && currentPos.y >= min.y, true);
-    t.equals(currentPos.z <= max.z && currentPos.z >= min.z, true);
+    const deltaToCenter = currentPos.subtract(sphere.center);
+    t.ok(deltaToCenter.len() <= radius);
   }
 
   t.end();
@@ -75,16 +70,11 @@ test('makeBoundingSphereFromPoints contains all points (ritter)', (t) => {
   const sphere = makeBoundingSphereFromPoints(positions);
   const radius = sphere.radius;
 
-  const r = new Vector3(radius, radius, radius);
-  const max = sphere.center.clone().add(r);
-  const min = sphere.center.clone().subtract(r);
-
   const numPositions = positions.length;
   for (let i = 0; i < numPositions; i++) {
     const currentPos = positions[i];
-    t.equals(currentPos.x <= max.x && currentPos.x >= min.x, true);
-    t.equals(currentPos.y <= max.y && currentPos.y >= min.y, true);
-    t.equals(currentPos.z <= max.z && currentPos.z >= min.z, true);
+    const deltaToCenter = currentPos.subtract(sphere.center);
+    t.ok(deltaToCenter.len() <= radius);
   }
 
   t.end();
