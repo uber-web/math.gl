@@ -89,13 +89,15 @@ export function makeOrientedBoundingBoxFromPoints(positions, result = new Orient
   let l3 = Number.MAX_VALUE;
 
   for (const position of positions) {
-    u1 = Math.max(position.dot(v1), u1);
-    u2 = Math.max(position.dot(v2), u2);
-    u3 = Math.max(position.dot(v3), u3);
+    scratchVector2.copy(position);
 
-    l1 = Math.min(position.dot(v1), l1);
-    l2 = Math.min(position.dot(v2), l2);
-    l3 = Math.min(position.dot(v3), l3);
+    u1 = Math.max(scratchVector2.dot(v1), u1);
+    u2 = Math.max(scratchVector2.dot(v2), u2);
+    u3 = Math.max(scratchVector2.dot(v3), u3);
+
+    l1 = Math.min(scratchVector2.dot(v1), l1);
+    l2 = Math.min(scratchVector2.dot(v2), l2);
+    l3 = Math.min(scratchVector2.dot(v3), l3);
   }
 
   v1 = v1.multiplyByScalar(0.5 * (l1 + u1));
