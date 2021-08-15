@@ -248,18 +248,20 @@ test('BoundingSphere#applies scale transform', (t) => {
 
 test('BoundingSphere#estimated distance squared to point', (t) => {
   const bs = new BoundingSphere(VECTOR3_ZERO, 1.0);
-  const position = new Vector3(-2.0, 1.0, 0.0);
-  const expected = position.lengthSquared() - 1.0;
-  t.equals(bs.distanceSquaredTo(position), expected);
+  t.equals(bs.distanceSquaredTo([0, 0, 0]), 0, 'point inside the sphere');
+  t.equals(bs.distanceSquaredTo([0, 0, 1]), 0, 'point on the sphere surface');
+  t.equals(bs.distanceSquaredTo([0, 0, 2]), 1, 'point outside the sphere');
+  t.equals(bs.distanceSquaredTo([3, 4, 12]), 144, 'point outside the sphere');
 
   t.end();
 });
 
 test('BoundingSphere#estimated distance to point', (t) => {
   const bs = new BoundingSphere(VECTOR3_ZERO, 1.0);
-  const position = new Vector3(-2.0, 1.0, 0.0);
-  const expected = position.lengthSquared() - 1.0;
-  t.equals(bs.distanceTo(position), Math.sqrt(expected));
+  t.equals(bs.distanceTo([0, 0, 0]), 0, 'point inside the sphere');
+  t.equals(bs.distanceTo([0, 0, 1]), 0, 'point on the sphere surface');
+  t.equals(bs.distanceTo([0, 0, 2]), 1, 'point outside the sphere');
+  t.equals(bs.distanceTo([3, 4, 12]), 12, 'point outside the sphere');
 
   t.end();
 });

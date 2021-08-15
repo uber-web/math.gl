@@ -101,13 +101,14 @@ export default class BoundingSphere {
 
   // Computes the estimated distance squared from the closest point on a bounding sphere to a point.
   distanceSquaredTo(point) {
-    point = scratchVector.from(point);
-    const delta = point.subtract(this.center);
-    return delta.lengthSquared() - this.radius * this.radius;
+    const d = this.distanceTo(point);
+    return d * d;
   }
 
   distanceTo(point) {
-    return Math.sqrt(this.distanceSquaredTo(point));
+    point = scratchVector.from(point);
+    const delta = point.subtract(this.center);
+    return Math.max(0, delta.len() - this.radius);
   }
 
   // Determines which side of a plane a sphere is located.
