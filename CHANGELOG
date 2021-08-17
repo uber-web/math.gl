@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v3.5.4
+
+- [fix] BoundingSphere.distanceTo (#248)
+- [fix] makeOrientedBoundingBoxFromPoints crash (#247)
+- [fix] makeBoundingSphereFromPoints inconsistent result (#246)
+
 ## v3.5.3
 
 - Export altitudeToFovy & fovyToAltitude (#244)
