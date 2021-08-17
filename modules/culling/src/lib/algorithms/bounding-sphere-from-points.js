@@ -43,27 +43,27 @@ export default function makeBoundingSphereFromPoints(positions, result = new Bou
 
     // Store points containing the the smallest and largest components
     if (x < xMin.x) {
-      currentPos.copy(xMin);
+      xMin.copy(currentPos);
     }
 
     if (x > xMax.x) {
-      currentPos.copy(xMax);
+      xMax.copy(currentPos);
     }
 
     if (y < yMin.y) {
-      currentPos.copy(yMin);
+      yMin.copy(currentPos);
     }
 
     if (y > yMax.y) {
-      currentPos.copy(yMax);
+      yMax.copy(currentPos);
     }
 
     if (z < zMin.z) {
-      currentPos.copy(zMin);
+      zMin.copy(currentPos);
     }
 
     if (z > zMax.z) {
-      currentPos.copy(zMax);
+      zMax.copy(currentPos);
     }
   }
 
