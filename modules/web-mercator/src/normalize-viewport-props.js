@@ -1,9 +1,8 @@
-import WebMercatorViewport from './web-mercator-viewport';
+import {worldToLngLat} from './web-mercator-utils';
 import {mod, log2} from './math-utils';
 
 // defined by mapbox-gl
-const MAX_LATITUDE = 85.05113;
-const MIN_LATITUDE = -85.05113;
+const TILE_SIZE = 512;
 
 // Apply mathematical constraints to viewport props
 // eslint-disable-next-line complexity
@@ -25,30 +24,22 @@ export default function normalizeViewportProps({
   }
 
   // Constrain zoom and shift center at low zoom levels
-  let flatViewport = new WebMercatorViewport({width, height, longitude, latitude, zoom});
-  let topY = flatViewport.project([longitude, MAX_LATITUDE])[1];
-  let bottomY = flatViewport.project([longitude, MIN_LATITUDE])[1];
-  let shiftY = 0;
-
-  if (bottomY - topY < height) {
-    // Map height must not be smaller than viewport height
-    // Zoom out map to fit map height into viewport
-    zoom += log2(height / (bottomY - topY));
-
-    // Calculate top and bottom using new zoom
-    flatViewport = new WebMercatorViewport({width, height, longitude, latitude, zoom});
-    topY = flatViewport.project([longitude, MAX_LATITUDE])[1];
-    bottomY = flatViewport.project([longitude, MIN_LATITUDE])[1];
-  }
-  if (topY > 0) {
-    // Compensate for white gap on top
-    shiftY = topY;
-  } else if (bottomY < height) {
-    // Compensate for white gap on bottom
-    shiftY = bottomY - height;
-  }
-  if (shiftY) {
-    latitude = flatViewport.unproject([width / 2, height / 2 + shiftY])[1];
+  const minZoom = log2(height / TILE_SIZE);
+  if (zoom <= minZoom) {
+    zoom = minZoom;
+    latitude = 0;
+  } else {
+    // Eliminate white space above and below the map
+    const halfHeightPixels = height / 2 / Math.pow(2, zoom);
+    const minLatitude = worldToLngLat([0, halfHeightPixels])[1];
+    if (latitude < minLatitude) {
+      latitude = minLatitude;
+    } else {
+      const maxLatitude = worldToLngLat([0, TILE_SIZE - halfHeightPixels])[1];
+      if (latitude > maxLatitude) {
+        latitude = maxLatitude;
+      }
+    }
   }
 
   return {width, height, longitude, latitude, zoom, pitch, bearing};
