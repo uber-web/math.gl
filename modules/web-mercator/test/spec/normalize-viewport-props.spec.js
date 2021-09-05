@@ -8,7 +8,7 @@ const NORMALIZATION_TEST_CASES = [
       width: 800,
       height: 600,
       longitude: -200,
-      latitude: 0,
+      latitude: 10,
       zoom: 0,
       pitch: 60,
       bearing: 200
@@ -21,6 +21,26 @@ const NORMALIZATION_TEST_CASES = [
       zoom: 0.22881869049588088,
       bearing: -160,
       pitch: 60
+    }
+  ],
+  [
+    {
+      width: 1000,
+      height: 1000,
+      longitude: 80,
+      latitude: 0,
+      zoom: 1,
+      pitch: 0,
+      bearing: 0
+    },
+    {
+      width: 1000,
+      height: 1000,
+      latitude: 0,
+      longitude: 80,
+      zoom: 1,
+      bearing: 0,
+      pitch: 0
     }
   ],
   [

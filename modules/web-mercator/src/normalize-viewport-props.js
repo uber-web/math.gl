@@ -23,11 +23,13 @@ export default function normalizeViewportProps({
     bearing = mod(bearing + 180, 360) - 180;
   }
 
+  // Constrain zoom and shift center at low zoom levels
   const minZoom = log2(height / TILE_SIZE);
   if (zoom <= minZoom) {
     zoom = minZoom;
     latitude = 0;
   } else {
+    // Eliminate white space above and below the map
     const halfHeightPixels = height / 2 / Math.pow(2, zoom);
     const minLatitude = worldToLngLat([0, halfHeightPixels])[1];
     if (latitude < minLatitude) {
