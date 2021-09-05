@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.5.5
+
+- [fix] Improve web mercator viewport normalization (#250)
+
 ## v3.5.4
 
 - [fix] BoundingSphere.distanceTo (#248)
