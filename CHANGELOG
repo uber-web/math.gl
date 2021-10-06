@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 3.5.6
+
+- Pin gl-matrix to ~3.3.0 (#253)
+- fix(core): Euler.getQuaternion never use rotation order (#251)
+
 ## 3.5.5
 
 - [fix] Improve web mercator viewport normalization (#250)
