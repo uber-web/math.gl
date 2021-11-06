@@ -148,7 +148,6 @@ export default class PerspectiveFrustum {
    * Gets the perspective projection matrix computed from the view frustum.
    * @memberof PerspectiveFrustum.prototype
    * @type {Matrix4}
-   * @readonly
    */
   get projectionMatrix() {
     update(this);
@@ -159,7 +158,6 @@ export default class PerspectiveFrustum {
    * The perspective projection matrix computed from the view frustum with an infinite far plane.
    * @memberof PerspectiveFrustum.prototype
    * @type {Matrix4}
-   * @readonly
    *
    * @see PerspectiveFrustum#projectionMatrix
    */
@@ -172,7 +170,6 @@ export default class PerspectiveFrustum {
    * Gets the angle of the vertical field of view, in radians.
    * @memberof PerspectiveFrustum.prototype
    * @type {Number}
-   * @readonly
    * @default undefined
    */
   get fovy() {
@@ -181,7 +178,6 @@ export default class PerspectiveFrustum {
   }
 
   /**
-   * @readonly
    * @private
    */
   get sseDenominator() {

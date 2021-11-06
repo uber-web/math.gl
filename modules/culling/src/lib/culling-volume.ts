@@ -2,9 +2,11 @@
 // See LICENSE.md and https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md
 
 /* eslint-disable */
-import {Vector3, Vector4, assert} from '@math.gl/core';
+import {Vector3, assert} from '@math.gl/core';
 import {INTERSECTION} from '../constants';
 import Plane from './plane';
+import type {BoundingVolume} from './bounding-volumes/bounding-volume';
+import type BoundingSphere from './bounding-volumes/bounding-sphere';
 
 // X, Y, Z Unit vectors
 const faces = [new Vector3([1, 0, 0]), new Vector3([0, 1, 0]), new Vector3([0, 0, 1])];
@@ -13,35 +15,42 @@ const scratchPlaneCenter = new Vector3();
 const scratchPlaneNormal = new Vector3();
 const scratchPlane = new Plane(new Vector3(1.0, 0.0, 0.0), 0.0);
 
-// A culling volume defined by planes.
+/** A culling volume defined by planes. */
 export default class CullingVolume {
-  // For plane masks (as used in {@link CullingVolume#computeVisibilityWithPlaneMask}), this special value
-  // represents the case where the object bounding volume is entirely outside the culling volume.
-  static get MASK_OUTSIDE() {
-    return 0xffffffff;
-  }
+  /**
+   * For plane masks (as used in {@link CullingVolume#computeVisibilityWithPlaneMask}), this special value
+   * represents the case where the object bounding volume is entirely outside the culling volume.
+   */
+  static MASK_OUTSIDE = 0xffffffff;
 
-  // For plane masks (as used in {@link CullingVolume.prototype.computeVisibilityWithPlaneMask}), this value
-  // represents the case where the object bounding volume is entirely inside the culling volume.
-  static get MASK_INSIDE() {
-    return 0x00000000;
-  }
+  /**
+   * For plane masks (as used in {@link CullingVolume.prototype.computeVisibilityWithPlaneMask}), this value
+   * represents the case where the object bounding volume is entirely inside the culling volume.
+   */
+  static MASK_INSIDE = 0x00000000;
 
-  // For plane masks (as used in {@link CullingVolume.prototype.computeVisibilityWithPlaneMask}), this value
-  // represents the case where the object bounding volume (may) intersect all planes of the culling volume.
-  static get MASK_INDETERMINATE() {
-    return 0x7fffffff;
-  }
+  /**
+   * For plane masks (as used in {@link CullingVolume.prototype.computeVisibilityWithPlaneMask}), this value
+   * represents the case where the object bounding volume (may) intersect all planes of the culling volume.
+   */
+  static MASK_INDETERMINATE = 0x7fffffff;
 
-  constructor(planes = []) {
-    // {Cartesian4[]} [planes] An array of clipping planes.
+  /** Array of clipping planes. */
+  readonly planes: Plane[];
+
+  /**
+   * Create a new `CullingVolume` bounded by an array of clipping planed
+   * @param planes Array of clipping planes.
+   * */
+  constructor(planes: Plane[] = []) {
     this.planes = planes;
-    assert(this.planes.every((plane) => plane instanceof Plane));
   }
 
-  // Constructs a culling volume from a bounding sphere. Creates six planes that create a box containing the sphere.
-  // The planes are aligned to the x, y, and z axes in world coordinates.
-  fromBoundingSphere(boundingSphere) {
+  /**
+   * Constructs a culling volume from a bounding sphere. Creates six planes that create a box containing the sphere.
+   * The planes are aligned to the x, y, and z axes in world coordinates.
+   */
+  fromBoundingSphere(boundingSphere: BoundingSphere): CullingVolume {
     this.planes.length = 2 * faces.length;
 
     const center = boundingSphere.center;
@@ -79,9 +88,8 @@ export default class CullingVolume {
     return this;
   }
 
-  // Determines whether a bounding volume intersects the culling volume.
-  computeVisibility(boundingVolume) {
-    assert(boundingVolume);
+  /** Determines whether a bounding volume intersects the culling volume. */
+  computeVisibility(boundingVolume: BoundingVolume): INTERSECTION {
     // const planes = this.planes;
     let intersect = INTERSECTION.INSIDE;
     for (const plane of this.planes) {
@@ -103,15 +111,15 @@ export default class CullingVolume {
     return intersect;
   }
 
-  // Determines whether a bounding volume intersects the culling volume.
-  /*
-   * @param {Number} parentPlaneMask A bit mask from the boundingVolume's parent's check against the same culling
-   *                                 volume, such that if (planeMask & (1 << planeIndex) === 0), for k < 31, then
-   *                                 the parent (and therefore this) volume is completely inside plane[planeIndex]
-   *                                 and that plane check can be skipped.
+  /**
+   * Determines whether a bounding volume intersects the culling volume.
+   *
+   * @param parentPlaneMask A bit mask from the boundingVolume's parent's check against the same culling
+   *   volume, such that if (planeMask & (1 << planeIndex) === 0), for k < 31, then
+   *   the parent (and therefore this) volume is completely inside plane[planeIndex]
+   *   and that plane check can be skipped.
    */
-  computeVisibilityWithPlaneMask(boundingVolume, parentPlaneMask) {
-    assert(boundingVolume, 'boundingVolume is required.');
+  computeVisibilityWithPlaneMask(boundingVolume: BoundingVolume, parentPlaneMask: number): number {
     assert(Number.isFinite(parentPlaneMask), 'parentPlaneMask is required.');
 
     if (

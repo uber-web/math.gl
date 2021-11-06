@@ -18,7 +18,3 @@ export {
   makeOrientedBoundingBoxFromPoints
 } from './lib/algorithms/bounding-box-from-points';
 export {default as computeEigenDecomposition} from './lib/algorithms/compute-eigen-decomposition';
-
-// Deprecated
-export {INTERSECTION as Intersect} from './constants';
-export {INTERSECTION as INTERSECT} from './constants';

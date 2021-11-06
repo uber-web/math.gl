@@ -1,4 +1,3 @@
-
 /** Base class for vectors and matrices */
 export default abstract class MathArray<DerivedType> extends Array<number> {
   // Defined by derived class

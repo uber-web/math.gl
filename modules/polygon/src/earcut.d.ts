@@ -6,4 +6,9 @@
  * @param areas areas of outer polygon and holes as computed by `getPolygonSignedArea()`. Can be optionally supplied to speed up triangulation
  * @returns array of indices into the `positions` array that describes the triangulation of the polygon
  */
-export function earcut(positions: number[], holeIndices?: number[], size?: number, areas?: number[]): number[];
+export function earcut(
+  positions: number[],
+  holeIndices?: number[],
+  size?: number,
+  areas?: number[]
+): number[];

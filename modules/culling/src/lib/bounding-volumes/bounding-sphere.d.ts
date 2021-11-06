@@ -1,6 +1,6 @@
 import {BoundingVolume} from './bounding-volume';
 import {Vector3} from '@math.gl/core';
-import {INTERSECTION_ENUM} from '../../constants';
+import {INTERSECTION} from '../../constants';
 import Plane from '../plane';
 
 /** A BoundingSphere */
@@ -48,5 +48,5 @@ export default class BoundingSphere implements BoundingVolume {
   distanceTo(point: readonly number[]): number;
 
   /** Determines which side of a plane a sphere is located. */
-  intersectPlane(plane: Plane): INTERSECTION_ENUM;
+  intersectPlane(plane: Plane): INTERSECTION;
 }

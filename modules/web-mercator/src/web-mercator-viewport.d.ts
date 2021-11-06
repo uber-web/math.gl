@@ -1,4 +1,4 @@
-import { Bounds, FitBoundsOptions } from "./fit-bounds";
+import {Bounds, FitBoundsOptions} from './fit-bounds';
 
 type WebMercatorViewportOptions = {
   // Map state
@@ -38,7 +38,7 @@ export default class WebMercatorViewport {
   height: number;
   scale: number;
   distanceScales: {
-    unitsPerMeter: number[]
+    unitsPerMeter: number[];
   };
 
   viewMatrix: number[];
@@ -149,10 +149,10 @@ export default class WebMercatorViewport {
    *   Specifies a point on the screen.
    * @return [lng,lat] new map center.
    */
-  getMapCenterByLngLatPosition({lngLat, pos}: {lngLat: number[], pos: number[]}): number[];
+  getMapCenterByLngLatPosition({lngLat, pos}: {lngLat: number[]; pos: number[]}): number[];
 
   /** @deprecated Legacy method name */
-  getLocationAtPoint({lngLat, pos}: {lngLat: number[], pos: number[]}): number[];
+  getLocationAtPoint({lngLat, pos}: {lngLat: number[]; pos: number[]}): number[];
 
   /**
    * Returns a new viewport that fit around the given rectangle.
@@ -166,7 +166,7 @@ export default class WebMercatorViewport {
    */
   fitBounds(
     bounds: [[number, number], [number, number]],
-    options?: Omit<FitBoundsOptions, 'width' | 'height' | 'bounds'>,
+    options?: Omit<FitBoundsOptions, 'width' | 'height' | 'bounds'>
   ): WebMercatorViewport;
 
   /**
@@ -175,7 +175,7 @@ export default class WebMercatorViewport {
    * @param {Number} [options.z] - The altitude at which the bounds should be calculated.
    * @returns {Array} bounds - [[lon, lat], [lon, lat]]
    */
-  getBounds(options?: {z?: number}) : Array<number[]>;
+  getBounds(options?: {z?: number}): Array<number[]>;
 
   /**
    * Returns the bounding box of the viewport.
@@ -183,5 +183,5 @@ export default class WebMercatorViewport {
    * @param {Number} [options.z] - The altitude at which the bounds should be calculated.
    * @returns {Array} an array of 4 points that define the visible region
    */
-  getBoundingRegion(options?: {z?: number}) : Array<number[]>;
+  getBoundingRegion(options?: {z?: number}): Array<number[]>;
 }

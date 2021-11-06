@@ -12,6 +12,8 @@ npm-debug.log
 yarn-error.log
 report*.json
 
+tsconfig.tsbuildinfo
+
 # editor files
 .project
 .DS_Store

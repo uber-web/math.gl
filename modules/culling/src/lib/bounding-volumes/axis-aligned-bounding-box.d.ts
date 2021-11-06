@@ -1,14 +1,14 @@
 import {BoundingVolume} from './bounding-volume';
 import {Vector3} from '@math.gl/core';
 import Plane from '../plane';
-import {INTERSECTION_ENUM} from '../../constants';
+import {INTERSECTION} from '../../constants';
 
 /**
-* An axis aligned bounding box - aligned with coordinate axes
-* @see BoundingVolume
-* @see BoundingRectangle
-* @see OrientedBoundingBox
-*/
+ * An axis aligned bounding box - aligned with coordinate axes
+ * @see BoundingVolume
+ * @see BoundingRectangle
+ * @see OrientedBoundingBox
+ */
 export default class AxisAlignedBoundingBox implements BoundingVolume {
   /** The center point of the bounding box. */
   readonly center: Vector3;
@@ -47,5 +47,5 @@ export default class AxisAlignedBoundingBox implements BoundingVolume {
   distanceSquaredTo(point: readonly number[]): number;
 
   /** Determines which side of a plane a box is located. */
-  intersectPlane(plane: Plane): INTERSECTION_ENUM;
+  intersectPlane(plane: Plane): INTERSECTION;
 }
