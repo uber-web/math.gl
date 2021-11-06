@@ -23,7 +23,7 @@ export default class Polygon {
   isFlatArray: boolean;
   options: PolygonOptions;
 
-  constructor(points /* : number[] */, options?: PolygonOptions) {
+  constructor(points /* : number[] */, options: PolygonOptions = {}) {
     this.points = points;
     this.isFlatArray = !isArray(points[0]);
 

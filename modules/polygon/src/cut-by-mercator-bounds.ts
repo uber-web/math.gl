@@ -78,7 +78,7 @@ export function cutPolygonByMercatorBounds(
     wrapLongitudesForShortestPath(newPositions, size, targetStartIndex, targetIndex);
 
     // Handle the case when the ring contains a pole
-    insertPoleVertices(newPositions, size, targetStartIndex, targetIndex, options.maxLatitude);
+    insertPoleVertices(newPositions, size, targetStartIndex, targetIndex, options?.maxLatitude);
 
     srcStartIndex = srcEndIndex;
     newHoleIndices[ringIndex] = targetIndex;
