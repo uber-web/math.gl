@@ -9,61 +9,68 @@ const scratchNormal = new Vector3();
 
 // A plane in Hessian Normal Form
 export default class Plane {
-  constructor(normal = [0, 0, 1], distance = 0) {
+  readonly normal: Vector3;
+  distance: number;
+
+  constructor(normal: readonly number[] = [0, 0, 1], distance: number  = 0) {
     this.normal = new Vector3();
     this.distance = -0;
     this.fromNormalDistance(normal, distance);
   }
 
-  fromNormalDistance(normal, distance) {
+  /** Creates a plane from a normal and a distance from the origin. */
+  fromNormalDistance(normal: readonly number[], distance: number): this {
     assert(Number.isFinite(distance));
     this.normal.from(normal).normalize();
     this.distance = distance;
     return this;
   }
 
-  // Creates a plane from a normal and a point on the plane.
-  fromPointNormal(point, normal) {
+  /** Creates a plane from a normal and a point on the plane. */
+  fromPointNormal(point: readonly number[], normal: readonly number[]): this {
     point = scratchPosition.from(point);
     this.normal.from(normal).normalize();
     const distance = -this.normal.dot(point);
     this.distance = distance;
-
     return this;
   }
 
-  // Creates a plane from the general equation
-  fromCoefficients(a, b, c, d) {
+  /** Creates a plane from the general equation */
+  fromCoefficients(a: number, b: number, c: number, d: number): this {
     this.normal.set(a, b, c);
     assert(equals(this.normal.len(), 1));
     this.distance = d;
     return this;
   }
 
-  // Duplicates a Plane instance.
-  clone(plane) {
+  /** Duplicates a Plane instance. */
+  clone(): Plane {
     return new Plane(this.normal, this.distance);
   }
 
-  // Compares the provided Planes by normal and distance
-  equals(right) {
+  /** Compares the provided Planes by normal and distance */
+  equals(right: Plane): Plane {
     return equals(this.distance, right.distance) && equals(this.normal, right.normal);
   }
 
-  // Computes the signed shortest distance of a point to a plane.
-  // The sign of the distance determines which side of the plane the point is on.
-  getPointDistance(point) {
+  /** Computes the signed shortest distance of a point to a plane.
+   * The sign of the distance determines which side of the plane the point is on.
+   */
+  getPointDistance(point: readonly number[]): number {
     return this.normal.dot(point) + this.distance;
   }
 
-  // Transforms the plane by the given transformation matrix.
-  transform(matrix4) {
+  /** Transforms the plane by the given transformation matrix. */
+  transform(matrix4: readonly number[]): this {
     const normal = scratchNormal.copy(this.normal).transformAsVector(matrix4).normalize();
     const point = this.normal.scale(-this.distance).transform(matrix4);
     return this.fromPointNormal(point, normal);
   }
 
-  // Projects a point onto the plane.
+  /** Projects a point onto the plane. */
+  projectPointOntoPlane(point: readonly number[], result: Vector3): Vector3;
+  projectPointOntoPlane(point: readonly number[], result?: readonly number[]): readonly number[];
+
   projectPointOntoPlane(point, result = [0, 0, 0]) {
     point = scratchPosition.from(point);
     // projectedPoint = point - (normal.point + scale) * normal

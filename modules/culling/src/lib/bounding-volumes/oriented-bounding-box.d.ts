@@ -5,7 +5,7 @@ import {BoundingVolume} from './bounding-volume';
 import {Vector3, Matrix3, Quaternion} from '@math.gl/core';
 import BoundingSphere from './bounding-sphere';
 import Plane from '../plane';
-import {INTERSECTION_ENUM} from '../../constants';
+import {INTERSECTION} from '../../constants';
 
 /**
  * An OrientedBoundingBox of some object is a closed and convex cuboid.
@@ -79,5 +79,5 @@ export default class OrientedBoundingBox implements BoundingVolume {
   distanceSquaredTo(point: readonly number[]): number;
 
   /** Determines which side of a plane the oriented bounding box is located. */
-  intersectPlane(plane: Plane): INTERSECTION_ENUM;
+  intersectPlane(plane: Plane): INTERSECTION;
 }

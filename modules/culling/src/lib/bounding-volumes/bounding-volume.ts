@@ -1,4 +1,4 @@
-import {INTERSECTION_ENUM} from '../../constants';
+import {INTERSECTION} from '../../constants';
 import Plane from '../plane';
 
 /**
@@ -28,5 +28,5 @@ export interface BoundingVolume {
    *  - `INTERSECTION.OUTSIDE` if the entire box is on the opposite side.
    *  - `INTERSECTION.INTERSECTING` if the box intersects the plane.
    */
-  intersectPlane(plane: Plane): INTERSECTION_ENUM;
+  intersectPlane(plane: Plane): INTERSECTION;
 }

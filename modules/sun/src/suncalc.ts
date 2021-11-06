@@ -1,5 +1,3 @@
-// sun position calculations are based on http://aa.quae.nl/en/reken/zonpositie.html formulas
-// and inspired by https://github.com/mourner/suncalc/blob/master/suncalc.js
 const DEGREES_TO_RADIANS = Math.PI / 180;
 
 const DAY_IN_MS = 1000 * 60 * 60 * 24;
@@ -17,7 +15,27 @@ const M1 = 0.98560028; // Earth angle traverses on average per day seen from the
 const THETA0 = 280.147; // The sidereal time (in degrees) at longitude 0° at the instant defined by JD2000
 const THETA1 = 360.9856235; // The rate of change of the sidereal time, in degrees per day.
 
-export function getSunPosition(timestamp, latitude, longitude) {
+/**
+ * A position in the sky defined by two angles
+ * The altitude is 0° at the horizon, +90° in the zenith (straight over your head), and −90° in the nadir (straight down).
+ * The azimuth is the direction along the horizon, which we measure from south to west.
+ * South has azimuth 0°, west +90°, north +180°, and east +270° (or −90°, that's the same thing).
+ */
+export type CelestialPosition = {
+  azimuth: number;
+  altitude: number;
+};
+
+/**
+ * Calculate sun position
+ * based on https://www.aa.quae.nl/en/reken/zonpositie.html
+ * inspired by https://github.com/mourner/suncalc/blob/master/suncalc.js
+ */
+export function getSunPosition(
+  timestamp: number | Date,
+  latitude: number,
+  longitude: number
+): CelestialPosition {
   const longitudeWestInRadians = DEGREES_TO_RADIANS * -longitude;
   const phi = DEGREES_TO_RADIANS * latitude;
   const d = toDays(timestamp);
@@ -26,17 +44,17 @@ export function getSunPosition(timestamp, latitude, longitude) {
   // hour angle
   const H = getSiderealTime(d, longitudeWestInRadians) - c.rightAscension;
 
-  // https://www.aa.quae.nl/en/reken/zonpositie.html
-  // The altitude is 0° at the horizon, +90° in the zenith (straight over your head), and −90° in the nadir (straight down).
-  // The azimuth is the direction along the horizon, which we measure from south to west.
-  // South has azimuth 0°, west +90°, north +180°, and east +270° (or −90°, that's the same thing).
   return {
     azimuth: getAzimuth(H, phi, c.declination),
     altitude: getAltitude(H, phi, c.declination)
   };
 }
 
-export function getSunDirection(timestamp, latitude, longitude) {
+export function getSunDirection(
+  timestamp: number | Date,
+  latitude: number,
+  longitude: number
+): number[] {
   const {azimuth, altitude} = getSunPosition(timestamp, latitude, longitude);
   // convert azimuth from 0 at south to be 0 at north
   const azimuthN = azimuth + Math.PI;

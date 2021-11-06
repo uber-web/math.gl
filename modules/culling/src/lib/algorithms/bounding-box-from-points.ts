@@ -23,8 +23,17 @@ const scratchEigenResult = {
   unitary: new Matrix3()
 };
 
+/**
+ * Computes an instance of an OrientedBoundingBox of the given positions.
+ *
+ * This is an implementation of Stefan Gottschalk's Collision Queries using Oriented Bounding Boxes solution (PHD thesis).
+ * Reference: http://gamma.cs.unc.edu/users/gottschalk/main.pdf
+ */
 /* eslint-disable max-statements */
-export function makeOrientedBoundingBoxFromPoints(positions, result = new OrientedBoundingBox()) {
+export function makeOrientedBoundingBoxFromPoints(
+  positions: number[][],
+  result: OrientedBoundingBox = new OrientedBoundingBox()
+): OrientedBoundingBox {
   if (!positions || positions.length === 0) {
     result.halfAxes = new Matrix3([0, 0, 0, 0, 0, 0, 0, 0, 0]);
     result.center = new Vector3();
@@ -113,10 +122,14 @@ export function makeOrientedBoundingBoxFromPoints(positions, result = new Orient
   return result;
 }
 
-export function makeAxisAlignedBoundingBoxFromPoints(
-  positions,
-  result = new AxisAlignedBoundingBox()
-) {
+/**
+ * Computes an instance of an AxisAlignedBoundingBox. The box is determined by
+ * finding the points spaced the farthest apart on the x, y, and z axes.
+ */
+ export function makeAxisAlignedBoundingBoxFromPoints(
+  positions: readonly number[][],
+  result: AxisAlignedBoundingBox = new AxisAlignedBoundingBox()
+): AxisAlignedBoundingBox {
   if (!positions || positions.length === 0) {
     result.minimum.set(0, 0, 0);
     result.maximum.set(0, 0, 0);

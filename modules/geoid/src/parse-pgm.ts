@@ -9,8 +9,15 @@ import Geoid from './geoid';
 const ENDL = 10;
 const PIXEL_MAX = 65535;
 
+/**
+ * Parse "Earth Gravity Model" loaded from a *.pgm file
+ * https://geographiclib.sourceforge.io/html/geoid.html
+ * @param {} data - binary buffer of pgm file
+ * @param {Object} options - loader options
+ * @returns {GeoidHeightModel} - instance of GeoidHeightModel class
+ */
 // eslint-disable-next-line
-export function parsePGM(data, options) {
+export function parsePGM(data: Uint8Array, options) {
   const getline = _getLineGenerator(data);
   let currentLine = getline.next();
   if (currentLine.done || currentLine.value.line !== 'P5') {
