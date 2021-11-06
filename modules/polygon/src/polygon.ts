@@ -1,5 +1,4 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-console */
+/* eslint-disable no-undef, no-console */
 import {isArray} from '@math.gl/core';
 import type {SegmentVisitorPoints} from './polygon-utils';
 
@@ -13,10 +12,10 @@ import {
 } from './polygon-utils';
 
 export type PolygonOptions = {
-  start?: number,
-  end?: number,
-  size?: number,
-  isClosed?: boolean
+  start?: number;
+  end?: number;
+  size?: number;
+  isClosed?: boolean;
 };
 
 export default class Polygon {
@@ -24,7 +23,7 @@ export default class Polygon {
   isFlatArray: boolean;
   options: PolygonOptions;
 
-  constructor(points /*: number[] */, options?: PolygonOptions) {
+  constructor(points /* : number[] */, options?: PolygonOptions) {
     this.points = points;
     this.isFlatArray = !isArray(points[0]);
 

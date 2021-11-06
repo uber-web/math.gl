@@ -2,19 +2,23 @@
 import {bitCode, intersect} from './lineclip';
 import {getPointAtIndex, copy, push} from './utils';
 
-export type Polygon = {positions: Array<number>, holeIndices?: Array<number>, vertexTypes?: Array<Number>};
+export type Polygon = {
+  positions: Array<number>;
+  holeIndices?: Array<number>;
+  vertexTypes?: Array<number>;
+};
 
 export function cutPolylineByGrid(
-  positions : Array<number>,
-  options? : {
-    size? : number,
-    broken? : boolean,
-    gridResolution? : number,
-    gridOffset? : [number, number],
-    startIndex? : number,
-    endIndex? : number
+  positions: Array<number>,
+  options?: {
+    size?: number;
+    broken?: boolean;
+    gridResolution?: number;
+    gridOffset?: [number, number];
+    startIndex?: number;
+    endIndex?: number;
   }
-) : Array<number> | Array<Array<number>> {
+): Array<number> | Array<Array<number>> {
   const {
     size = 2,
     broken = false,
@@ -77,15 +81,15 @@ function concatInPlace(arr1, arr2) {
 }
 
 export function cutPolygonByGrid(
-  positions : Array<number>,
-  holeIndices : Array<number> | null = null,
-  options? : {
-    size? : number,
-    gridResolution? : number,
-    gridOffset? : [number, number],
-    edgeTypes? : boolean
+  positions: Array<number>,
+  holeIndices: Array<number> | null = null,
+  options?: {
+    size?: number;
+    gridResolution?: number;
+    gridOffset?: [number, number];
+    edgeTypes?: boolean;
   }
-) : Array<Polygon> {
+): Array<Polygon> {
   if (!positions.length) {
     // input is empty
     return [];

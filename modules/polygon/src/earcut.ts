@@ -35,7 +35,12 @@ import {getPolygonSignedArea} from './polygon-utils';
  * @returns array of indices into the `positions` array that describes the triangulation of the polygon
  * Adapted from https://github.com/mapbox/earcut
  */
- export function earcut(positions: number[], holeIndices?: number[], dim: number = 2, areas?: number[]): number[] {
+export function earcut(
+  positions: number[],
+  holeIndices?: number[],
+  dim: number = 2,
+  areas?: number[]
+): number[] {
   const hasHoles = holeIndices && holeIndices.length;
   const outerLen = hasHoles ? holeIndices[0] * dim : positions.length;
   let outerNode = linkedList(positions, 0, outerLen, dim, true, areas && areas[0]);
