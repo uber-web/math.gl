@@ -2,7 +2,19 @@
 import {bitCode, intersect} from './lineclip';
 import {getPointAtIndex, copy, push} from './utils';
 
-export function cutPolylineByGrid(positions, options = {}) {
+export type Polygon = {positions: Array<number>, holeIndices?: Array<number>, vertexTypes?: Array<Number>};
+
+export function cutPolylineByGrid(
+  positions : Array<number>,
+  options? : {
+    size? : number,
+    broken? : boolean,
+    gridResolution? : number,
+    gridOffset? : [number, number],
+    startIndex? : number,
+    endIndex? : number
+  }
+) : Array<number> | Array<Array<number>> {
   const {
     size = 2,
     broken = false,
@@ -10,7 +22,7 @@ export function cutPolylineByGrid(positions, options = {}) {
     gridOffset = [0, 0],
     startIndex = 0,
     endIndex = positions.length
-  } = options;
+  } = options || {};
   const numPoints = (endIndex - startIndex) / size;
   let part = [];
   const result = [part];
@@ -64,12 +76,21 @@ function concatInPlace(arr1, arr2) {
   return arr1;
 }
 
-export function cutPolygonByGrid(positions, holeIndices, options = {}) {
+export function cutPolygonByGrid(
+  positions : Array<number>,
+  holeIndices : Array<number> | null = null,
+  options? : {
+    size? : number,
+    gridResolution? : number,
+    gridOffset? : [number, number],
+    edgeTypes? : boolean
+  }
+) : Array<Polygon> {
   if (!positions.length) {
     // input is empty
     return [];
   }
-  const {size = 2, gridResolution = 10, gridOffset = [0, 0], edgeTypes = false} = options;
+  const {size = 2, gridResolution = 10, gridOffset = [0, 0], edgeTypes = false} = options || {};
   const result = [];
   const queue = [
     {
@@ -88,6 +109,7 @@ export function cutPolygonByGrid(positions, holeIndices, options = {}) {
     // Get the bounding box of the outer polygon
     getBoundingBox(pos, size, holes[0] || pos.length, bbox);
     cell = getGridCell(bbox[0], gridResolution, gridOffset, cell);
+    // @ts-expect-error
     const code = bitCode(bbox[1], cell);
 
     if (code) {
@@ -120,9 +142,11 @@ export function cutPolygonByGrid(positions, holeIndices, options = {}) {
       // Polygon fits in a single cell, no more processing required
       const polygon = {positions: pos};
       if (edgeTypes) {
+        // @ts-expect-error
         polygon.edgeTypes = types;
       }
       if (holes.length) {
+        // @ts-expect-error
         polygon.holeIndices = holes;
       }
 

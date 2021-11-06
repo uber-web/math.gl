@@ -26,12 +26,19 @@
 
 import {getPolygonSignedArea} from './polygon-utils';
 
-export function earcut(data, holeIndices, dim, areas) {
-  dim = dim || 2;
-
+/**
+ * Computes a triangulation of a polygon
+ * @param positions a flat array of the vertex positions that define the polygon.
+ * @param holeIndices an array of hole indices if any (e.g. [5, 8] for a 12-vertex input would mean one hole with vertices 5–7 and another with 8–11).
+ * @param dim the number of elements in each vertex. Size `2` will interpret `positions` as `[x0, y0, x1, y1, ...]` and size `3` will interpret `positions` as `[x0, y0, z0, x1, y1, z1, ...]`. Default `2`.
+ * @param areas areas of outer polygon and holes as computed by `getPolygonSignedArea()`. Can be optionally supplied to speed up triangulation
+ * @returns array of indices into the `positions` array that describes the triangulation of the polygon
+ * Adapted from https://github.com/mapbox/earcut
+ */
+ export function earcut(positions: number[], holeIndices?: number[], dim: number = 2, areas?: number[]): number[] {
   const hasHoles = holeIndices && holeIndices.length;
-  const outerLen = hasHoles ? holeIndices[0] * dim : data.length;
-  let outerNode = linkedList(data, 0, outerLen, dim, true, areas && areas[0]);
+  const outerLen = hasHoles ? holeIndices[0] * dim : positions.length;
+  let outerNode = linkedList(positions, 0, outerLen, dim, true, areas && areas[0]);
   const triangles = [];
 
   if (!outerNode || outerNode.next === outerNode.prev) return triangles;
@@ -44,16 +51,16 @@ export function earcut(data, holeIndices, dim, areas) {
   let x;
   let y;
 
-  if (hasHoles) outerNode = eliminateHoles(data, holeIndices, outerNode, dim, areas);
+  if (hasHoles) outerNode = eliminateHoles(positions, holeIndices, outerNode, dim, areas);
 
   // if the shape is not too simple, we'll use z-order curve hash later; calculate polygon bbox
-  if (data.length > 80 * dim) {
-    minX = maxX = data[0];
-    minY = maxY = data[1];
+  if (positions.length > 80 * dim) {
+    minX = maxX = positions[0];
+    minY = maxY = positions[1];
 
     for (let i = dim; i < outerLen; i += dim) {
-      x = data[i];
-      y = data[i + 1];
+      x = positions[i];
+      y = positions[i + 1];
       if (x < minX) minX = x;
       if (y < minY) minY = y;
       if (x > maxX) maxX = x;
@@ -96,7 +103,7 @@ function linkedList(data, start, end, dim, clockwise, area) {
 }
 
 // eliminate colinear or duplicate points
-function filterPoints(start, end) {
+function filterPoints(start, end?) {
   if (!start) return start;
   if (!end) end = start;
 
@@ -119,7 +126,7 @@ function filterPoints(start, end) {
 }
 
 // main ear slicing loop which triangulates a polygon (given as a linked list)
-function earcutLinked(ear, triangles, dim, minX, minY, invSize, pass) {
+function earcutLinked(ear, triangles, dim, minX, minY, invSize, pass?) {
   if (!ear) return;
 
   // interlink polygon nodes in z-order

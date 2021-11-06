@@ -250,6 +250,7 @@ test('clips floating point lines', (t) => {
 
   const bbox = [-91.93359375, 42.29356419217009, -91.7578125, 42.42345651793831];
 
+  // @ts-expect-error
   const result = clipPolyline(line, bbox);
 
   t.comment(result);
