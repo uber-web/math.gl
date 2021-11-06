@@ -1,0 +1,38 @@
+// This is the monorepo build config
+// needs to be a separate file to avoid importing references into packages
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "build": true,
+    "module": "ES2020",
+    "esModuleInterop": true,
+    "declaration": true,
+    // Source map for declarations... not currently needed
+    // "declarationMap": true,
+    "noEmit": true,
+    // "emitDeclarationOnly": true,
+    // Uncomment to debug
+    "listEmittedFiles": true
+  },
+  // Monorepo setup. All modules need to be listed here
+  "references": [
+    {"path": "modules/core"},
+    {"path": "modules/culling"},
+    {"path": "modules/geoid"},
+    {"path": "modules/geospatial"},
+    {"path": "modules/main"},
+    {"path": "modules/polygon"},
+    {"path": "modules/proj4"},
+    {"path": "modules/sun"},
+    {"path": "modules/web-mercator"}
+  ],
+  "include": [
+    "modules"
+  ],
+  "exclude": [
+    "examples",
+    "test",
+    "modules/*/test",
+    "modules/*/dist"
+  ]
+}

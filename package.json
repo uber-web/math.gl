@@ -14,6 +14,8 @@
   "scripts": {
     "bootstrap": "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true yarn && ocular-bootstrap",
     "build": "ocular-clean && ocular-build",
+    "tsclean": "find . -name tsconfig.tsbuildinfo -exec rm {} \\;",
+    "tsbuild": "time npx tsc -b tsconfig.modules.json",
     "cover": "ocular-test cover",
     "lint": "tsc && ocular-lint",
     "metrics": "ocular-metrics",

@@ -9237,14 +9237,6 @@ proj4@2.6.2:
     mgrs "1.0.0"
     wkt-parser "^1.2.4"
 
-proj4@^2.6.2:
-  version "2.7.2"
-  resolved "https://registry.yarnpkg.com/proj4/-/proj4-2.7.2.tgz#faa42e5965aa275af5438ba2da8c59d1cc501137"
-  integrity sha512-x/EboBmIq48a9FED0Z9zWCXkd8VIpXHLsyEXljGtsnzeztC41bFjPjJ0S//wBbNLDnDYRe0e6c3FSSiqMCebDA==
-  dependencies:
-    mgrs "1.0.0"
-    wkt-parser "^1.2.4"
-
 promise-inflight@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/promise-inflight/-/promise-inflight-1.0.1.tgz#98472870bf228132fcbdd868129bad12c3c029e3"
