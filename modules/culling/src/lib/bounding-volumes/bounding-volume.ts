@@ -12,12 +12,12 @@ export interface BoundingVolume {
    * @param transform The transformation matrix to apply to the bounding sphere.
    * @returns itself, i.e. the modified BoundingVolume.
    */
-   transform(transform: readonly number[]): this;
+  transform(transform: readonly number[]): this;
 
-   /** Computes the estimated distance squared from the closest point on a bounding sphere to a point. */
-   distanceSquaredTo(point: readonly number[]): number;
-   /** Computes the estimated distance from the closest point on a bounding sphere to a point. */
-   distanceTo(point: readonly number[]): number;
+  /** Computes the estimated distance squared from the closest point on a bounding sphere to a point. */
+  distanceSquaredTo(point: readonly number[]): number;
+  /** Computes the estimated distance from the closest point on a bounding sphere to a point. */
+  distanceTo(point: readonly number[]): number;
 
   /**
    * Determines which side of a plane the oriented bounding box is located.

@@ -32,7 +32,11 @@ export default class OrientedBoundingBox implements BoundingVolume {
   /**
    * Create OrientedBoundingBox from quaternion based OBB,
    */
-  fromCenterHalfSizeQuaternion(center: number[], halfSize: number[], quaternion: number[]): OrientedBoundingBox;
+  fromCenterHalfSizeQuaternion(
+    center: number[],
+    halfSize: number[],
+    quaternion: number[]
+  ): OrientedBoundingBox;
 
   /** Duplicates a OrientedBoundingBox instance. */
   clone(): OrientedBoundingBox;
@@ -57,7 +61,11 @@ export default class OrientedBoundingBox implements BoundingVolume {
    * @returns Interval (array of length 2) with nearest and farthest distances
    *   on the bounding box from position in direction.
    */
-  computePlaneDistances(position: readonly number[], direction: readonly number[], result?: number[]): number[];
+  computePlaneDistances(
+    position: readonly number[],
+    direction: readonly number[],
+    result?: number[]
+  ): number[];
 
   // BoundingVolume interface
 
@@ -68,7 +76,7 @@ export default class OrientedBoundingBox implements BoundingVolume {
    */
   transform(transform: readonly number[]): this;
 
-   /** Computes the estimated distance from the closest point on a bounding box to a point. */
+  /** Computes the estimated distance from the closest point on a bounding box to a point. */
   distanceTo(point: readonly number[]): number;
 
   /**

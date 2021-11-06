@@ -119,7 +119,7 @@ export default class CullingVolume {
    *   the parent (and therefore this) volume is completely inside plane[planeIndex]
    *   and that plane check can be skipped.
    */
-   computeVisibilityWithPlaneMask(boundingVolume: BoundingVolume, parentPlaneMask: number): number {
+  computeVisibilityWithPlaneMask(boundingVolume: BoundingVolume, parentPlaneMask: number): number {
     assert(Number.isFinite(parentPlaneMask), 'parentPlaneMask is required.');
 
     if (

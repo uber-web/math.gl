@@ -12,7 +12,7 @@ export default class Plane {
   readonly normal: Vector3;
   distance: number;
 
-  constructor(normal: readonly number[] = [0, 0, 1], distance: number  = 0) {
+  constructor(normal: readonly number[] = [0, 0, 1], distance: number = 0) {
     this.normal = new Vector3();
     this.distance = -0;
     this.fromNormalDistance(normal, distance);

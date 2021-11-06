@@ -4,11 +4,11 @@ import Plane from '../plane';
 import {INTERSECTION} from '../../constants';
 
 /**
-* An axis aligned bounding box - aligned with coordinate axes
-* @see BoundingVolume
-* @see BoundingRectangle
-* @see OrientedBoundingBox
-*/
+ * An axis aligned bounding box - aligned with coordinate axes
+ * @see BoundingVolume
+ * @see BoundingRectangle
+ * @see OrientedBoundingBox
+ */
 export default class AxisAlignedBoundingBox implements BoundingVolume {
   /** The center point of the bounding box. */
   readonly center: Vector3;

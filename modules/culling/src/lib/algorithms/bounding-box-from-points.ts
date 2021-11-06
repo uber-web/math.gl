@@ -126,7 +126,7 @@ export function makeOrientedBoundingBoxFromPoints(
  * Computes an instance of an AxisAlignedBoundingBox. The box is determined by
  * finding the points spaced the farthest apart on the x, y, and z axes.
  */
- export function makeAxisAlignedBoundingBoxFromPoints(
+export function makeAxisAlignedBoundingBoxFromPoints(
   positions: readonly number[][],
   result: AxisAlignedBoundingBox = new AxisAlignedBoundingBox()
 ): AxisAlignedBoundingBox {

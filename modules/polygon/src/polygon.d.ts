@@ -1,13 +1,16 @@
 import {SegmentVisitorPoints} from './polygon-utils';
 
 export default class Polygon {
-  constructor(points: number[], options: {start?: number, end?: number,size?: number, isClosed?: boolean});
+  constructor(
+    points: number[],
+    options: {start?: number; end?: number; size?: number; isClosed?: boolean}
+  );
 
   /**
    * Returns signed area of the polygon.
    * @returns Signed area of the polygon.
    */
-  getSignedArea(): number; 
+  getSignedArea(): number;
 
   /**
    * Returns absolute area of the polygon.

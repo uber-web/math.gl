@@ -96,7 +96,7 @@ export type GeoidProps = {
  *
  * The implementation is ported from GeographicLib-1.50.1
  */
- export default class Geoid {
+export default class Geoid {
   _v00 = 0;
   _v01 = 0;
   _v10 = 0;
@@ -113,7 +113,7 @@ export type GeoidProps = {
    * @param options - object which includes parameters parsed from *.pgm header
    * @param options.data - binary buffer of *.pgm file
    */
-   constructor(options: GeoidProps) {
+  constructor(options: GeoidProps) {
     this.options = options;
     this._ix = this.options._width;
     this._iy = this.options._height;

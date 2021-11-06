@@ -24,6 +24,12 @@ const config = deepMerge(defaultConfig, {
       }
     },
     {
+      files: ['modules/**/*.ts', 'modules/**/*.js'],
+      rules: {
+        'import/no-unresolved': 0
+      }
+    },
+    {
       files: ['examples/**/*.js'],
       rules: {
         'import/no-unresolved': 0

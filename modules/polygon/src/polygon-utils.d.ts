@@ -19,7 +19,12 @@ type SegmentVisitorFlat = (
 ) => void;
 
 // Segment visitor callback type for polygons defined with array of points.
-export type SegmentVisitorPoints = (p1: NumberArray, p2: NumberArray, i1: number, i2: number) => void;
+export type SegmentVisitorPoints = (
+  p1: NumberArray,
+  p2: NumberArray,
+  i1: number,
+  i2: number
+) => void;
 
 // Parameters of a polygon.
 type PolygonParams = {
