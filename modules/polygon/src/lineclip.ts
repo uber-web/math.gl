@@ -20,14 +20,26 @@
 
  */
 
-/* eslint-disable max-statements, max-depth */
+/* eslint-disable max-statements, max-depth, complexity */
 
 import {push, copy, getPointAtIndex} from './utils';
 
-// Cohen-Sutherland line clipping algorithm, adapted to efficiently
-// handle polylines rather than just segments
-export function clipPolyline(positions, bbox, options = {}) {
-  const {size = 2, startIndex = 0, endIndex = positions.length} = options;
+type BoundingBox = [number, number, number, number];
+
+/**
+ * Cohen-Sutherland line clipping algorithm, adapted to efficiently
+ * handle polylines rather than just segments
+ */
+export function clipPolyline(
+  positions: number[],
+  bbox: BoundingBox,
+  options?: {
+    size?: number;
+    startIndex?: number;
+    endIndex?: number;
+  }
+): number[][] {
+  const {size = 2, startIndex = 0, endIndex = positions.length} = options || {};
   const numPoints = (endIndex - startIndex) / size;
   const result = [];
   let part = [];
@@ -86,11 +98,21 @@ export function clipPolyline(positions, bbox, options = {}) {
   return result;
 }
 
-// Sutherland-Hodgeman polygon clipping algorithm
-// polygon must be closed (first vertex == last vertex)
-export function clipPolygon(positions, bbox, options = {}) {
-  const {size = 2, endIndex = positions.length} = options;
-  let {startIndex = 0} = options;
+/**
+ * Sutherland-Hodgeman polygon clipping algorithm
+ * polygon must be closed (first vertex == last vertex)
+ */
+export function clipPolygon(
+  positions: number[],
+  bbox: BoundingBox,
+  options?: {
+    size?: number;
+    startIndex?: number;
+    endIndex?: number;
+  }
+): number[] {
+  const {size = 2, endIndex = positions.length} = options || {};
+  let {startIndex = 0} = options || {};
   let numPoints = (endIndex - startIndex) / size;
   let result;
   let p;
@@ -128,9 +150,15 @@ export function clipPolygon(positions, bbox, options = {}) {
   return result;
 }
 
-// intersect a segment against one of the 4 lines that make up the bbox
+/** intersect a segment against one of the 4 lines that make up the bbox */
 
-export function intersect(a, b, edge, bbox, out = []) {
+export function intersect(
+  a: number[],
+  b: number[],
+  edge: number,
+  bbox: BoundingBox,
+  out: number[] = []
+): number[] {
   let t;
   // Forces out[snapI] to be on the bbox edge
   // Interpolation introduces precision issue which may cause lineclip to be
@@ -161,14 +189,14 @@ export function intersect(a, b, edge, bbox, out = []) {
   return out;
 }
 
-// bit code reflects the point position relative to the bbox:
-
-//         left  mid  right
-//    top  1001  1000  1010
-//    mid  0001  0000  0010
-// bottom  0101  0100  0110
-
-export function bitCode(p, bbox) {
+/**
+ * bit code reflects the point position relative to the bbox:
+ *         left  mid  right
+ *    top  1001  1000  1010
+ *    mid  0001  0000  0010
+ * bottom  0101  0100  0110
+ */
+export function bitCode(p: number[], bbox: BoundingBox): number {
   let code = 0;
 
   if (p[0] < bbox[0]) code |= 1;

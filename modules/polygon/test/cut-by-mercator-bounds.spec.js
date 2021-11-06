@@ -61,7 +61,9 @@ test('cutPolylineByMercatorBounds - multiple worlds', (t) => {
 
   for (const positions of result) {
     // check left/right bounds
+    // @ts-expect-error
     let valid = positions[0] === -180 || positions[positions.length - 2] === 180;
+    // @ts-expect-error
     for (let i = 2; i < positions.length; i += 2) {
       // check slope
       valid = valid && positions[i] > positions[i - 2] && positions[i + 1] > positions[i - 1];

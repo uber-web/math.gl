@@ -2,7 +2,7 @@ import proj4 from 'proj4';
 
 export class Proj4Projection {
   /** Define aliases for one or more projections */
-  static defineProjectionAliases(aliases: {[name: string]: string}) {
+  static defineProjectionAliases(aliases: {[name: string]: string}): void {
     const aliasArray = [];
     for (const alias in aliases) {
       aliasArray.push([alias, aliases[alias]]);
