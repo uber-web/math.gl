@@ -1,0 +1,16 @@
+// This is a base TS config to be extended by the individual packages
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "build": true,
+    "target": "es2020",
+    "module": "es2020",
+    "esModuleInterop": true,
+    "declaration": true,
+    "declarationMap": true,
+    "noEmit": false,
+    // "emitDeclarationOnly": true
+    // Uncomment to debug
+    // "listEmittedFiles": true
+  }
+}
