@@ -1,3 +1,3 @@
-import * as math from 'math.gl';
+import * as math from '@math.gl/core';
 
 console.log(math); // eslint-disable-line

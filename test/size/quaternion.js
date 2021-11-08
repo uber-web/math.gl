@@ -1,3 +1,3 @@
-import {Quaternion} from 'math.gl';
+import {Quaternion} from '@math.gl/core';
 
 console.log(Quaternion); // eslint-disable-line
