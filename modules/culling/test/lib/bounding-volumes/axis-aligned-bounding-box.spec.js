@@ -24,10 +24,15 @@ const positionsMinimum = new Vector3(-3, -3, -3);
 const positionsMaximum = new Vector3(3, 3, 3);
 const positionsCenter = new Vector3(0, 0, 0);
 
-const VECTOR3_UNIT_X = Object.freeze(new Vector3(1, 0, 0));
-const VECTOR3_ZERO = Object.freeze(new Vector3(0, 0, 0));
-const VECTOR3_UNIT_Y = Object.freeze(new Vector3(0, 1, 0));
-const VECTOR3_UNIT_Z = Object.freeze(new Vector3(0, 0, 1));
+// TODO - fix readonly declarations in AABB typescript constructor
+// const VECTOR3_UNIT_X = Object.freeze(new Vector3(1, 0, 0));
+// const VECTOR3_ZERO = Object.freeze(new Vector3(0, 0, 0));
+// const VECTOR3_UNIT_Y = Object.freeze(new Vector3(0, 1, 0));
+// const VECTOR3_UNIT_Z = Object.freeze(new Vector3(0, 0, 1));
+const VECTOR3_UNIT_X = new Vector3(1, 0, 0);
+const VECTOR3_ZERO = new Vector3(0, 0, 0);
+const VECTOR3_UNIT_Y = new Vector3(0, 1, 0);
+const VECTOR3_UNIT_Z = new Vector3(0, 0, 1);
 
 it('AxisAlignedBoundingBox#constructor sets expected default values', () => {
   const box = new AxisAlignedBoundingBox();
