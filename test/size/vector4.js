@@ -1,3 +1,3 @@
-import {Vector4} from 'math.gl';
+import {Vector4} from '@math.gl/core';
 
 console.log(Vector4); // eslint-disable-line
