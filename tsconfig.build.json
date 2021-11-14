@@ -1,4 +1,4 @@
-// This is a base TS config to be extended by the individual packages
+// This is a base TS config for the individual packages, mainly for building .d.ts files
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {

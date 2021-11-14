@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 3.6.0-alpha
+
+- chore: Import '@math.gl/core' instead of 'math.gl' (#258)
+- chore: Add ts build (#257)
+- chore: Move polygon module to .ts (#256)
+- Bump url-parse from 1.5.1 to 1.5.3 (#254)
+- chore: Move .d.ts files to .ts (#255)
+
 ## 3.5.6
 
 - Pin gl-matrix to ~3.3.0 (#253)

@@ -1,7 +1,7 @@
 /* eslint-disable max-statements, max-depth, complexity, no-unused-expressions */
 
 import {equals} from '@math.gl/core';
-import type {NumberArray} from '@math.gl/core';
+import type {NumericArray} from '@math.gl/core';
 
 export enum WINDING {
   CLOCKWISE = 1,
@@ -9,7 +9,7 @@ export enum WINDING {
 }
 
 /** Polygon representation where each point is represented as a separate array of positions. */
-type PointsArray = NumberArray[];
+type PointsArray = NumericArray[];
 
 /** Segment visitor callback type for polygons defined with flat arrays, */
 type SegmentVisitorFlat = (
@@ -23,8 +23,8 @@ type SegmentVisitorFlat = (
 
 /** Segment visitor callback type for polygons defined with array of points. */
 export type SegmentVisitorPoints = (
-  p1: NumberArray,
-  p2: NumberArray,
+  p1: NumericArray,
+  p2: NumericArray,
   i1: number,
   i2: number
 ) => void;
@@ -46,7 +46,7 @@ type PolygonParams = {
  * @return Returns true if the winding direction was changed.
  */
 export function modifyPolygonWindingDirection(
-  points: NumberArray,
+  points: NumericArray,
   direction: number,
   options: PolygonParams = {}
 ): boolean {
@@ -65,7 +65,7 @@ export function modifyPolygonWindingDirection(
  * @returns Winding direction of the polygon.
  */
 export function getPolygonWindingDirection(
-  points: NumberArray,
+  points: NumericArray,
   options: PolygonParams = {}
 ): number {
   return Math.sign(getPolygonSignedArea(points, options));
@@ -78,7 +78,7 @@ export function getPolygonWindingDirection(
  * @returns Signed area of the polygon.
  * https://en.wikipedia.org/wiki/Shoelace_formula
  */
-export function getPolygonSignedArea(points: NumberArray, options: PolygonParams = {}): number {
+export function getPolygonSignedArea(points: NumericArray, options: PolygonParams = {}): number {
   const {start = 0, end = points.length} = options;
   const dim = options.size || 2;
   let area = 0;
@@ -96,7 +96,7 @@ export function getPolygonSignedArea(points: NumberArray, options: PolygonParams
  * @param options Parameters of the polygon.
  */
 export function forEachSegmentInPolygon(
-  points: NumberArray,
+  points: NumericArray,
   visitor: SegmentVisitorFlat,
   options: PolygonParams = {}
 ): void {

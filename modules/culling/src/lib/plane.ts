@@ -49,7 +49,7 @@ export default class Plane {
   }
 
   /** Compares the provided Planes by normal and distance */
-  equals(right: Plane): Plane {
+  equals(right: Plane): boolean {
     return equals(this.distance, right.distance) && equals(this.normal, right.normal);
   }
 
