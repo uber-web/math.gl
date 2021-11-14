@@ -10,29 +10,47 @@ const DEFAULT_OPTS = {
   // screenSpeed and maxDuration are used only if specified
 };
 
+export type FlytoTransitionOptions = {
+  curve?: number;
+  speed?: number;
+  screenSpeed?: number;
+  maxDuration?: number;
+};
+
+export type ViewportProps = {
+  longitude: number;
+  latitude: number;
+  zoom: number;
+};
+
 /**
  * mapbox-gl-js flyTo : https://www.mapbox.com/mapbox-gl-js/api/#map#flyto.
  * It implements “Smooth and efficient zooming and panning.” algorithm by
  * "Jarke J. van Wijk and Wim A.A. Nuij"
  */
-export default function flyToViewport(startProps, endProps, t, opts = {}) {
+export default function flyToViewport(
+  startProps: ViewportProps,
+  endProps: ViewportProps,
+  t: number,
+  options?: FlytoTransitionOptions
+): ViewportProps {
   // Equations from above paper are referred where needed.
-
-  const viewport = {};
 
   const {startZoom, startCenterXY, uDelta, w0, u1, S, rho, rho2, r0} = getFlyToTransitionParams(
     startProps,
     endProps,
-    opts
+    options
   );
 
   // If change in center is too small, do linear interpolaiton.
   if (u1 < EPSILON) {
+    const viewport = {};
     for (const key of VIEWPORT_TRANSITION_PROPS) {
       const startValue = startProps[key];
       const endValue = endProps[key];
       viewport[key] = lerp(startValue, endValue, t);
     }
+    // @ts-expect-error
     return viewport;
   }
 
@@ -48,15 +66,20 @@ export default function flyToViewport(startProps, endProps, t, opts = {}) {
   vec2.add(newCenterWorld, newCenterWorld, startCenterXY);
 
   const newCenter = worldToLngLat(newCenterWorld);
-  viewport.longitude = newCenter[0];
-  viewport.latitude = newCenter[1];
-  viewport.zoom = newZoom;
-  return viewport;
+  return {
+    longitude: newCenter[0],
+    latitude: newCenter[1],
+    zoom: newZoom
+  };
 }
 
 // returns transition duration in milliseconds
-export function getFlyToDuration(startProps, endProps, opts = {}) {
-  opts = Object.assign({}, DEFAULT_OPTS, opts);
+export function getFlyToDuration(
+  startProps: ViewportProps,
+  endProps: ViewportProps,
+  options?: FlytoTransitionOptions
+): number {
+  const opts = {...DEFAULT_OPTS, ...options};
   const {screenSpeed, speed, maxDuration} = opts;
   const {S, rho} = getFlyToTransitionParams(startProps, endProps, opts);
   const length = 1000 * S;

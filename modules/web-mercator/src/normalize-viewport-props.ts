@@ -4,17 +4,26 @@ import {mod, log2} from './math-utils';
 // defined by mapbox-gl
 const TILE_SIZE = 512;
 
-// Apply mathematical constraints to viewport props
+/** Description of viewport */
+type ViewportProps = {
+  width: number;
+  height: number;
+  longitude: number;
+  latitude: number;
+  zoom: number;
+  pitch?: number;
+  bearing?: number;
+};
+
+/**
+ * Apply mathematical constraints to viewport props
+ * @param props
+ */
 // eslint-disable-next-line complexity
-export default function normalizeViewportProps({
-  width,
-  height,
-  longitude,
-  latitude,
-  zoom,
-  pitch = 0,
-  bearing = 0
-}) {
+export default function normalizeViewportProps(props: ViewportProps): ViewportProps {
+  const {width, height, pitch = 0} = props;
+  let {longitude, latitude, zoom, bearing = 0} = props;
+
   // Normalize degrees
   if (longitude < -180 || longitude > 180) {
     longitude = mod(longitude + 180, 360) - 180;
