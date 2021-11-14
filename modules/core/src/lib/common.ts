@@ -1,6 +1,6 @@
 // Copyright (c) 2017 Uber Technologies, Inc.
 // MIT License
-import {NumericArray, NumberOrArray} from './types';
+import {NumericArray} from '@math.gl/types';
 import assert from './assert';
 
 export type ConfigurationOptions = {

@@ -1,7 +1,7 @@
 // luma.gl, MIT license
 
 // types
-export type {TypedArray, NumericArray, NumberOrArray} from './lib/types';
+export type {TypedArray, NumericArray} from '@math.gl/types';
 
 // classes
 export {default as Vector2} from './classes/vector2';

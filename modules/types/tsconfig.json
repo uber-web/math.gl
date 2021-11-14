@@ -7,8 +7,5 @@
     "rootDir": "src",
     "outDir": "dist"
   },
-  "references": [
-    {"path": "../types"},
-    {"path": "../core"}
-  ]
+  "references": []
 }
