@@ -19,12 +19,40 @@ const EARTH_CIRCUMFERENCE = 40.03e6;
 // Mapbox default altitude
 export const DEFAULT_ALTITUDE = 1.5;
 
-/** Util functions **/
-export function zoomToScale(zoom) {
+export type DistanceScales = {
+  unitsPerMeter: number[];
+  metersPerUnit: number[];
+  unitsPerMeter2?: number[];
+  unitsPerDegree: number[];
+  degreesPerUnit: number[];
+  unitsPerDegree2?: number[];
+};
+
+/**
+ * PROJECTION MATRIX PARAMETERS
+ *
+ * TODO how to document mebers
+ * @param fov in radians. fov is variable, depends on pitch and altitude
+ * @param aspect width/height
+ * @param focalDistance distance at which visual scale factor is 1
+ * @param near near clipping plane
+ * @param far far clipping plane
+ */
+type ProjectionParameters = {
+  fov: number;
+  aspect: number;
+  focalDistance: number;
+  near: number;
+  far: number;
+};
+
+/** Logarithimic zoom to linear scale **/
+export function zoomToScale(zoom: number): number {
   return Math.pow(2, zoom);
 }
 
-export function scaleToZoom(scale) {
+/** Linear scale to logarithimic zoom **/
+export function scaleToZoom(scale: number): number {
   return log2(scale);
 }
 
@@ -38,7 +66,8 @@ export function scaleToZoom(scale) {
  *   Specifies a point on the sphere to project onto the map.
  * @return [x,y] coordinates.
  */
-export function lngLatToWorld([lng, lat]) {
+export function lngLatToWorld(lngLat: number[]): number[] {
+  const [lng, lat] = lngLat;
   assert(Number.isFinite(lng));
   assert(Number.isFinite(lat) && lat >= -90 && lat <= 90, 'invalid latitude');
 
@@ -49,16 +78,28 @@ export function lngLatToWorld([lng, lat]) {
   return [x, y];
 }
 
-// Unproject world point [x,y] on map onto {lat, lon} on sphere
-export function worldToLngLat([x, y]) {
+/**
+ * Unproject world point [x,y] on map onto {lat, lon} on sphere
+ *
+ * @param xy - array with [x,y] members
+ *  representing point on projected map plane
+ * @return - array with [x,y] of point on sphere.
+ *   Has toArray method if you need a GeoJSON Array.
+ *   Per cartographic tradition, lat and lon are specified as degrees.
+ */
+export function worldToLngLat(xy: number[]): number[] {
+  const [x, y] = xy;
   const lambda2 = (x / TILE_SIZE) * (2 * PI) - PI;
   const phi2 = 2 * (Math.atan(Math.exp((y / TILE_SIZE) * (2 * PI) - PI)) - PI_4);
   return [lambda2 * RADIANS_TO_DEGREES, phi2 * RADIANS_TO_DEGREES];
 }
 
-// Returns the zoom level that gives a 1 meter pixel at a certain latitude
-// 1 = C*cos(y)/2^z/TILE_SIZE = C*cos(y)/2^(z+9)
-export function getMeterZoom({latitude}) {
+/**
+ * Returns the zoom level that gives a 1 meter pixel at a certain latitude
+ * 1 = C*cos(y)/2^z/TILE_SIZE = C*cos(y)/2^(z+9)
+ */
+export function getMeterZoom(options: {latitude: number}): number {
+  const {latitude} = options;
   assert(Number.isFinite(latitude));
   const latCosine = Math.cos(latitude * DEGREES_TO_RADIANS);
   return scaleToZoom(EARTH_CIRCUMFERENCE * latCosine) - 9;
@@ -70,11 +111,14 @@ export function getMeterZoom({latitude}) {
  * In mercator projection mode, the distance scales vary significantly
  * with latitude.
  */
-
-export function getDistanceScales({latitude, longitude, highPrecision = false}) {
+export function getDistanceScales(options: {
+  latitude: number;
+  longitude: number;
+  highPrecision?: boolean;
+}): DistanceScales {
+  const {latitude, longitude, highPrecision = false} = options;
   assert(Number.isFinite(latitude) && Number.isFinite(longitude));
 
-  const result = {};
   const worldSize = TILE_SIZE;
   const latCosine = Math.cos(latitude * DEGREES_TO_RADIANS);
 
@@ -100,11 +144,13 @@ export function getDistanceScales({latitude, longitude, highPrecision = false}) 
    *
    * Y needs to be flipped when converting delta degree/meter to delta pixels
    */
-  result.unitsPerMeter = [altUnitsPerMeter, altUnitsPerMeter, altUnitsPerMeter];
-  result.metersPerUnit = [1 / altUnitsPerMeter, 1 / altUnitsPerMeter, 1 / altUnitsPerMeter];
+  const result: DistanceScales = {
+    unitsPerMeter: [altUnitsPerMeter, altUnitsPerMeter, altUnitsPerMeter],
+    metersPerUnit: [1 / altUnitsPerMeter, 1 / altUnitsPerMeter, 1 / altUnitsPerMeter],
 
-  result.unitsPerDegree = [unitsPerDegreeX, unitsPerDegreeY, altUnitsPerMeter];
-  result.degreesPerUnit = [1 / unitsPerDegreeX, 1 / unitsPerDegreeY, 1 / altUnitsPerMeter];
+    unitsPerDegree: [unitsPerDegreeX, unitsPerDegreeY, altUnitsPerMeter],
+    degreesPerUnit: [1 / unitsPerDegreeX, 1 / unitsPerDegreeY, 1 / altUnitsPerMeter]
+  };
 
   /**
    * Taylor series 2nd order for 1/latCosine
@@ -129,7 +175,7 @@ export function getDistanceScales({latitude, longitude, highPrecision = false}) 
 /**
  * Offset a lng/lat position by meterOffset (northing, easting)
  */
-export function addMetersToLngLat(lngLatZ, xyz) {
+export function addMetersToLngLat(lngLatZ: number[], xyz: number[]): number[] {
   const [longitude, latitude, z0] = lngLatZ;
   const [x, y, z] = xyz;
 
@@ -150,21 +196,32 @@ export function addMetersToLngLat(lngLatZ, xyz) {
   return Number.isFinite(z0) || Number.isFinite(z) ? [newLngLat[0], newLngLat[1], newZ] : newLngLat;
 }
 
-// ATTRIBUTION:
-// view and projection matrix creation is intentionally kept compatible with
-// mapbox-gl's implementation to ensure that seamless interoperation
-// with mapbox and react-map-gl. See: https://github.com/mapbox/mapbox-gl-js
-
-export function getViewMatrix({
+/**
+ *
+ * view and projection matrix creation is intentionally kept compatible with
+ * mapbox-gl's implementation to ensure that seamless interoperation
+ * with mapbox and react-map-gl. See: https://github.com/mapbox/mapbox-gl-js
+ */
+export function getViewMatrix(options: {
   // Viewport props
-  height,
-  pitch,
-  bearing,
-  altitude,
+  height: number;
+  pitch: number;
+  bearing: number;
+  altitude: number;
   // Pre-calculated parameters
-  scale,
-  center = null
-}) {
+  scale: number;
+  center: number[];
+}): number[] {
+  const {
+    // Viewport props
+    height,
+    pitch,
+    bearing,
+    altitude,
+    // Pre-calculated parameters
+    scale,
+    center = null
+  } = options;
   // VIEW MATRIX: PROJECTS MERCATOR WORLD COORDINATES
   // Note that mercator world coordinates typically need to be flipped
   //
@@ -179,8 +236,8 @@ export function getViewMatrix({
   mat4.rotateX(vm, vm, -pitch * DEGREES_TO_RADIANS);
   mat4.rotateZ(vm, vm, bearing * DEGREES_TO_RADIANS);
 
-  scale /= height;
-  mat4.scale(vm, vm, [scale, scale, scale]);
+  const relativeScale = scale / height;
+  mat4.scale(vm, vm, [relativeScale, relativeScale, relativeScale]);
 
   if (center) {
     mat4.translate(vm, vm, vec3.negate([], center));
@@ -189,17 +246,30 @@ export function getViewMatrix({
   return vm;
 }
 
-// PROJECTION MATRIX PARAMETERS
-// Variable fov (in radians)
-export function getProjectionParameters({
-  width,
-  height,
-  fovy = altitudeToFovy(DEFAULT_ALTITUDE),
-  altitude,
-  pitch = 0,
-  nearZMultiplier = 1,
-  farZMultiplier = 1
-}) {
+/**
+ * Calculates mapbox compatible projection matrix from parameters
+ *
+ * @param options.width Width of "viewport" or window
+ * @param options.height Height of "viewport" or window
+ * @param options.pitch Camera angle in degrees (0 is straight down)
+ * @param options.fovy field of view in degrees
+ * @param options.altitude if provided, field of view is calculated using `altitudeToFovy()`
+ * @param options.nearZMultiplier control z buffer
+ * @param options.farZMultiplier control z buffer
+ * @returns project parameters object
+ */
+export function getProjectionParameters(options: {
+  width: number;
+  height: number;
+  fovy?: number;
+  altitude?: number;
+  pitch?: number;
+  nearZMultiplier?: number;
+  farZMultiplier?: number;
+}): ProjectionParameters {
+  const {width, height, altitude, pitch = 0, nearZMultiplier = 1, farZMultiplier = 1} = options;
+  let {fovy = altitudeToFovy(DEFAULT_ALTITUDE)} = options;
+
   // For back-compatibility allow field of view to be
   // derived from altitude
   if (altitude !== undefined) {
@@ -227,28 +297,33 @@ export function getProjectionParameters({
   };
 }
 
-// PROJECTION MATRIX: PROJECTS FROM CAMERA (VIEW) SPACE TO CLIPSPACE
-// To match mapbox's z buffer:
-// <= 0.28 - nearZMultiplier: 0.1, farZmultiplier: 1
-// >= 0.29 - nearZMultiplier: 1 / height, farZMultiplier: 1.01
-export function getProjectionMatrix({
-  width,
-  height,
-  pitch,
-  altitude,
-  fovy,
-  nearZMultiplier,
-  farZMultiplier
-}) {
-  const {fov, aspect, near, far} = getProjectionParameters({
-    width,
-    height,
-    altitude,
-    fovy,
-    pitch,
-    nearZMultiplier,
-    farZMultiplier
-  });
+/**
+ * CALCULATE PROJECTION MATRIX: PROJECTS FROM CAMERA (VIEW) SPACE TO CLIPSPACE
+ *
+ * To match mapbox's z buffer:
+ *  - \<= 0.28: nearZMultiplier: 0.1, farZmultiplier: 1
+ *  - \>= 0.29: nearZMultiplier: 1 / height, farZMultiplier: 1.01
+ *
+ * @param options Viewport options
+ * @param options.width Width of "viewport" or window
+ * @param options.height Height of "viewport" or window
+ * @param options.pitch Camera angle in degrees (0 is straight down)
+ * @param options.fovy field of view in degrees
+ * @param options.altitude if provided, field of view is calculated using `altitudeToFovy()`
+ * @param options.nearZMultiplier control z buffer
+ * @param options.farZMultiplier control z buffer
+ * @returns 4x4 projection matrix
+ */
+export function getProjectionMatrix(options: {
+  width: number;
+  height: number;
+  pitch: number;
+  fovy?: number;
+  altitude?: number;
+  nearZMultiplier: number;
+  farZMultiplier: number;
+}): number[] {
+  const {fov, aspect, near, far} = getProjectionParameters(options);
 
   const projectionMatrix = mat4.perspective(
     [],
@@ -261,16 +336,38 @@ export function getProjectionMatrix({
   return projectionMatrix;
 }
 
-// Utility function to calculate the field of view such that
-// the focal distance is equal to the ground distance. This
-// is how mapbox's z fov is calculated
-export function altitudeToFovy(altitude) {
+/**
+ *
+ * Convert an altitude to field of view such that the
+ * focal distance is equal to the altitude
+ *
+ * @param altitude - altitude of camera in screen units
+ * @return fovy field of view in degrees
+ */
+export function altitudeToFovy(altitude: number): number {
   return 2 * Math.atan(0.5 / altitude) * RADIANS_TO_DEGREES;
 }
 
-export function fovyToAltitude(fovy) {
+/**
+ *
+ * Convert an field of view such that the
+ * focal distance is equal to the altitude
+ *
+ * @param fovy - field of view in degrees
+ * @return altitude altitude of camera in screen units
+ */
+export function fovyToAltitude(fovy: number): number {
   return 0.5 / Math.tan(0.5 * fovy * DEGREES_TO_RADIANS);
 }
+
+/**
+ * Project flat coordinates to pixels on screen.
+ *
+ * @param xyz - flat coordinate on 512*512 Mercator Zoom 0 tile
+ * @param pixelProjectionMatrix - projection matrix 4x4
+ * @return [x, y, depth] pixel coordinate on screen.
+ */
+export function worldToPixels(xyz: number[], pixelProjectionMatrix: number[]): number[];
 
 // Project flat coordinates to pixels on screen.
 export function worldToPixels(xyz, pixelProjectionMatrix) {
@@ -280,8 +377,20 @@ export function worldToPixels(xyz, pixelProjectionMatrix) {
   return transformVector(pixelProjectionMatrix, [x, y, z, 1]);
 }
 
-// Unproject pixels on screen to flat coordinates.
-export function pixelsToWorld(xyz, pixelUnprojectionMatrix, targetZ = 0) {
+/**
+ * Unproject pixels on screen to flat coordinates.
+ *
+ * @param xyz - pixel coordinate on screen.
+ * @param pixelUnprojectionMatrix - unprojection matrix 4x4
+ * @param targetZ - if pixel coordinate does not have a 3rd component (depth),
+ *    targetZ is used as the elevation plane to unproject onto
+ * @return [x, y, Z] flat coordinates on 512*512 Mercator Zoom 0 tile.
+ */
+export function pixelsToWorld(
+  xyz: number[],
+  pixelUnprojectionMatrix: number[],
+  targetZ: number = 0
+): number[] {
   const [x, y, z] = xyz;
   assert(Number.isFinite(x) && Number.isFinite(y), 'invalid pixel coordinate');
 
