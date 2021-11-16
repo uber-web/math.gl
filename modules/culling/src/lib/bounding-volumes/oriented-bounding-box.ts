@@ -1,8 +1,10 @@
 // This file is derived from the Cesium math library under Apache 2 license
 // See LICENSE.md and https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md
 
-import {Vector3, Matrix3, Quaternion} from '@math.gl/core';
+import {Vector3, Matrix3, Quaternion, NumericArray} from '@math.gl/core';
+import type {BoundingVolume} from './bounding-volume';
 import BoundingSphere from './bounding-sphere';
+import type Plane from '../plane';
 import {INTERSECTION} from '../../constants';
 
 const scratchVector3 = new Vector3();
@@ -25,20 +27,36 @@ const MATRIX3 = {
   COLUMN2ROW2: 8
 };
 
-export default class OrientedBoundingBox {
-  constructor(center = [0, 0, 0], halfAxes = [0, 0, 0, 0, 0, 0, 0, 0, 0]) {
+/**
+ * An OrientedBoundingBox of some object is a closed and convex cuboid.
+ * It can provide a tighter bounding volume than `BoundingSphere` or
+ * `AxisAlignedBoundingBox` in many cases.
+ */
+export default class OrientedBoundingBox implements BoundingVolume {
+  center: Vector3;
+  halfAxes: Matrix3;
+
+  /**
+   * An OrientedBoundingBox of some object is a closed and convex cuboid.
+   * It can provide a tighter bounding volume than
+   * `BoundingSphere` or `AxisAlignedBoundingBox` in many cases.
+   */
+  constructor(center?: readonly number[], halfAxes?: readonly number[]);
+  constructor(center: Readonly<NumericArray> = [0, 0, 0], halfAxes = [0, 0, 0, 0, 0, 0, 0, 0, 0]) {
     this.center = new Vector3().from(center);
     this.halfAxes = new Matrix3(halfAxes);
   }
 
-  get halfSize() {
+  /** Returns an array with three halfSizes for the bounding box */
+  get halfSize(): number[] {
     const xAxis = this.halfAxes.getColumn(0);
     const yAxis = this.halfAxes.getColumn(1);
     const zAxis = this.halfAxes.getColumn(2);
     return [new Vector3(xAxis).len(), new Vector3(yAxis).len(), new Vector3(zAxis).len()];
   }
 
-  get quaternion() {
+  /** Returns a quaternion describing the orientation of the bounding box */
+  get quaternion(): Quaternion {
     const xAxis = this.halfAxes.getColumn(0);
     const yAxis = this.halfAxes.getColumn(1);
     const zAxis = this.halfAxes.getColumn(2);
@@ -48,7 +66,14 @@ export default class OrientedBoundingBox {
     return new Quaternion().fromMatrix3(new Matrix3([...normXAxis, ...normYAxis, ...normZAxis]));
   }
 
-  fromCenterHalfSizeQuaternion(center, halfSize, quaternion) {
+  /**
+   * Create OrientedBoundingBox from quaternion based OBB,
+   */
+  fromCenterHalfSizeQuaternion(
+    center: number[],
+    halfSize: number[],
+    quaternion: number[]
+  ): OrientedBoundingBox {
     const quaternionObject = new Quaternion(quaternion);
     const directionsMatrix = new Matrix3().fromQuaternion(quaternionObject);
     directionsMatrix[0] = directionsMatrix[0] * halfSize[0];
@@ -65,18 +90,21 @@ export default class OrientedBoundingBox {
     return this;
   }
 
-  clone() {
+  /** Duplicates a OrientedBoundingBox instance. */
+  clone(): OrientedBoundingBox {
     return new OrientedBoundingBox(this.center, this.halfAxes);
   }
 
-  equals(right) {
+  /** Compares the provided OrientedBoundingBox component wise and returns */
+  equals(right: OrientedBoundingBox): boolean {
     return (
       this === right ||
       (Boolean(right) && this.center.equals(right.center) && this.halfAxes.equals(right.halfAxes))
     );
   }
 
-  getBoundingSphere(result = new BoundingSphere()) {
+  /** Computes a tight-fitting bounding sphere enclosing the provided oriented bounding box. */
+  getBoundingSphere(result = new BoundingSphere()): BoundingSphere {
     const halfAxes = this.halfAxes;
     const u = halfAxes.getColumn(0, scratchVectorU);
     const v = halfAxes.getColumn(1, scratchVectorV);
@@ -91,7 +119,8 @@ export default class OrientedBoundingBox {
     return result;
   }
 
-  intersectPlane(plane) {
+  /** Determines which side of a plane the oriented bounding box is located. */
+  intersectPlane(plane: Plane): INTERSECTION {
     const center = this.center;
     const normal = plane.normal;
     const halfAxes = this.halfAxes;
@@ -129,11 +158,17 @@ export default class OrientedBoundingBox {
     return INTERSECTION.INTERSECTING;
   }
 
-  distanceTo(point) {
+  /** Computes the estimated distance from the closest point on a bounding box to a point. */
+  distanceTo(point: readonly number[]): number {
     return Math.sqrt(this.distanceSquaredTo(point));
   }
 
-  distanceSquaredTo(point) {
+  /**
+   * Computes the estimated distance squared from the closest point
+   * on a bounding box to a point.
+   * See Geometric Tools for Computer Graphics 10.4.2
+   */
+  distanceSquaredTo(point: readonly number[]): number {
     // Computes the estimated distance squared from the
     // closest point on a bounding box to a point.
     // See Geometric Tools for Computer Graphics 10.4.2
@@ -173,8 +208,26 @@ export default class OrientedBoundingBox {
     return distanceSquared;
   }
 
+  /**
+   * The distances calculated by the vector from the center of the bounding box
+   * to position projected onto direction.
+   *
+   * - If you imagine the infinite number of planes with normal direction,
+   *   this computes the smallest distance to the closest and farthest planes
+   *   from `position` that intersect the bounding box.
+   *
+   * @param position The position to calculate the distance from.
+   * @param direction The direction from position.
+   * @param result An Interval (array of length 2) to store the nearest and farthest distances.
+   * @returns Interval (array of length 2) with nearest and farthest distances
+   *   on the bounding box from position in direction.
+   */
   // eslint-disable-next-line max-statements
-  computePlaneDistances(position, direction, result = [-0, -0]) {
+  computePlaneDistances(
+    position: readonly number[],
+    direction: Vector3,
+    result: number[] = [-0, -0]
+  ): number[] {
     let minDist = Number.POSITIVE_INFINITY;
     let maxDist = Number.NEGATIVE_INFINITY;
 
@@ -262,7 +315,12 @@ export default class OrientedBoundingBox {
     return result;
   }
 
-  transform(transformation) {
+  /**
+   * Applies a 4x4 affine transformation matrix to a bounding sphere.
+   * @param transform The transformation matrix to apply to the bounding sphere.
+   * @returns itself, i.e. the modified BoundingVolume.
+   */
+  transform(transformation: readonly number[]): this {
     this.center.transformAsPoint(transformation);
 
     const xAxis = this.halfAxes.getColumn(0, scratchVectorU);
