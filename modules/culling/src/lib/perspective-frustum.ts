@@ -7,7 +7,7 @@
 
 // @ts-nocheck
 
-import {assert} from '@math.gl/core';
+import {assert, Matrix4} from '@math.gl/core';
 import PerspectiveOffCenterFrustum from './perspective-off-center-frustum';
 
 const defined = (val) => val !== null && typeof val !== 'undefined';
@@ -40,7 +40,47 @@ const defined = (val) => val !== null && typeof val !== 'undefined';
  * @see PerspectiveOffCenterFrustum
  */
 export default class PerspectiveFrustum {
-  constructor(options = {}) {
+  _offCenterFrustum = new PerspectiveOffCenterFrustum();
+  /**
+   * The angle of the field of view (FOV), in radians.  This angle will be used
+   * as the horizontal FOV if the width is greater than the height, otherwise
+   * it will be the vertical FOV.
+   */
+  fov: number;
+  _fov;
+  _fovy;
+  _sseDenominator;
+  /**
+   * The aspect ratio of the frustum's width to it's height.
+   */
+  aspectRatio: number;
+  _aspectRatio;
+  /**
+   * The distance of the near plane.
+   * @default 1.0
+   */
+  near: number;
+  _near;
+  /**
+   * The distance of the far plane.
+   * @default 500000000.0
+   */
+  far: number;
+  _far;
+  /**
+   * Offsets the frustum in the x direction.
+   * @default 0.0
+   */
+  xOffset: number;
+  _xOffset;
+  /**
+   * Offsets the frustum in the y direction.
+   * @default 0.0
+   */
+  yOffset: number;
+  _yOffset;
+
+  constructor(options: Record<string, any> = {}) {
     options = {
       near: 1.0,
       far: 500000000.0,
@@ -49,69 +89,27 @@ export default class PerspectiveFrustum {
       ...options
     };
 
-    this._offCenterFrustum = new PerspectiveOffCenterFrustum();
-
-    /**
-     * The angle of the field of view (FOV), in radians.  This angle will be used
-     * as the horizontal FOV if the width is greater than the height, otherwise
-     * it will be the vertical FOV.
-     * @type {Number}
-     * @default undefined
-     */
     this.fov = options.fov;
-    this._fov = undefined;
-    this._fovy = undefined;
 
-    this._sseDenominator = undefined;
-
-    /**
-     * The aspect ratio of the frustum's width to it's height.
-     * @type {Number}
-     * @default undefined
-     */
     this.aspectRatio = options.aspectRatio;
-    this._aspectRatio = undefined;
 
-    /**
-     * The distance of the near plane.
-     * @type {Number}
-     * @default 1.0
-     */
     this.near = options.near;
     this._near = this.near;
 
-    /**
-     * The distance of the far plane.
-     * @type {Number}
-     * @default 500000000.0
-     */
     this.far = options.far;
     this._far = this.far;
 
-    /**
-     * Offsets the frustum in the x direction.
-     * @type {Number}
-     * @default 0.0
-     */
     this.xOffset = options.xOffset;
     this._xOffset = this.xOffset;
 
-    /**
-     * Offsets the frustum in the y direction.
-     * @type {Number}
-     * @default 0.0
-     */
     this.yOffset = options.yOffset;
     this._yOffset = this.yOffset;
   }
 
   /**
    * Returns a duplicate of a PerspectiveFrustum instance.
-   *
-   * @param {PerspectiveFrustum} [result] The object onto which to store the result.
-   * @returns {PerspectiveFrustum} The modified result parameter or a new PerspectiveFrustum instance if one was not provided.
    */
-  clone() {
+  clone(): PerspectiveFrustum {
     return new PerspectiveFrustum({
       aspectRatio: this.aspectRatio,
       fov: this.fov,
@@ -123,11 +121,8 @@ export default class PerspectiveFrustum {
   /**
    * Compares the provided PerspectiveFrustum componentwise and returns
    * <code>true</code> if they are equal, <code>false</code> otherwise.
-   *
-   * @param {PerspectiveFrustum} [other] The right hand side PerspectiveFrustum.
-   * @returns {Boolean} <code>true</code> if they are equal, <code>false</code> otherwise.
    */
-  equals(other) {
+  equals(other: PerspectiveFrustum): boolean {
     if (!defined(other) || !(other instanceof PerspectiveFrustum)) {
       return false;
     }
@@ -146,33 +141,24 @@ export default class PerspectiveFrustum {
 
   /**
    * Gets the perspective projection matrix computed from the view frustum.
-   * @memberof PerspectiveFrustum.prototype
-   * @type {Matrix4}
    */
-  get projectionMatrix() {
+  get projectionMatrix(): Matrix4 {
     update(this);
     return this._offCenterFrustum.projectionMatrix;
   }
 
   /**
    * The perspective projection matrix computed from the view frustum with an infinite far plane.
-   * @memberof PerspectiveFrustum.prototype
-   * @type {Matrix4}
-   *
-   * @see PerspectiveFrustum#projectionMatrix
    */
-  get infiniteProjectionMatrix() {
+  get infiniteProjectionMatrix(): Matrix4 {
     update(this);
     return this._offCenterFrustum.infiniteProjectionMatrix;
   }
 
   /**
    * Gets the angle of the vertical field of view, in radians.
-   * @memberof PerspectiveFrustum.prototype
-   * @type {Number}
-   * @default undefined
    */
-  get fovy() {
+  get fovy(): number {
     update(this);
     return this._fovy;
   }
@@ -180,7 +166,7 @@ export default class PerspectiveFrustum {
   /**
    * @private
    */
-  get sseDenominator() {
+  get sseDenominator(): number {
     update(this);
     return this._sseDenominator;
   }

@@ -18,6 +18,29 @@ const scratchPlaneFarCenter = new Vector3();
 const scratchPlaneNormal = new Vector3();
 
 export default class PerspectiveOffCenterFrustum {
+  left;
+  _left;
+  right;
+  _right;
+  top;
+  _top;
+  bottom;
+  _bottom;
+  near;
+  _near;
+  far;
+  _far;
+  _cullingVolume = new CullingVolume([
+    new Plane(),
+    new Plane(),
+    new Plane(),
+    new Plane(),
+    new Plane(),
+    new Plane()
+  ]);
+  _perspectiveMatrix = new Matrix4();
+  _infinitePerspective = new Matrix4();
+
   /**
    * The viewing frustum is defined by 6 planes.
    * Each plane is represented by a {@link Vector4} object, where the x, y, and z components
@@ -47,7 +70,7 @@ export default class PerspectiveOffCenterFrustum {
    *
    * @see PerspectiveFrustum
    */
-  constructor(options = {}) {
+  constructor(options: Record<string, any> = {}) {
     options = {near: 1.0, far: 500000000.0, ...options};
 
     /**
@@ -97,17 +120,6 @@ export default class PerspectiveOffCenterFrustum {
      */
     this.far = options.far;
     this._far = this.far;
-
-    this._cullingVolume = new CullingVolume([
-      new Plane(),
-      new Plane(),
-      new Plane(),
-      new Plane(),
-      new Plane(),
-      new Plane()
-    ]);
-    this._perspectiveMatrix = new Matrix4();
-    this._infinitePerspective = new Matrix4();
   }
 
   /**
