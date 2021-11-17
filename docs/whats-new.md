@@ -29,9 +29,13 @@
 
 Target Release Date: Q4, 2021
 
+Codebase has been fully converted to typescript. In general this means that users can expect
+the types exported from math.gl to be considerably improved, however in some function signatures
+are no longer supported. For details, consult the [upgrade guide](./upgrade-guide).
+
 **`@math.gl/types` (NEW)
 
-- New module that exports a couple of typescript types that simplify handling of e.g. numeric arrays.
+- New module that exports a few typescript types that e.g. generalize handling of numeric arrays.
 
 ## v3.5
 

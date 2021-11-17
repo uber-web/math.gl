@@ -1,5 +1,19 @@
 # Upgrade Guide
 
+## Upgrading to v3.6
+
+In version 3.6 the entire math.gl code base was converted to typescript (`.ts`).
+While the API itself has not changed, in some cases, the introduction of types
+made it harder to keep supporting some type signatures and overloads.
+
+Known changes
+- `Matrix4.lookAt()` - Now only accepts named parameters.
+- `SphericalCoordinates()` - Constructor is now more restrictive in terms of what parameters it accepts.
+
+Note that some omissions may be unintentional, feel free to report upgrade issues
+in the math.gl github repo.
+
+
 ## Upgrading to v3.0
 
 ### Matrix API changes
