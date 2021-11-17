@@ -19,15 +19,16 @@ const INDICES = Object.freeze({
   COL2ROW1: 7,
   COL2ROW2: 8
 });
-const constants = {};
+
+const IDENTITY_MATRIX = Object.freeze([1, 0, 0, 0, 1, 0, 0, 0, 1]);
 
 export default class Matrix3 extends Matrix {
   static get IDENTITY(): Readonly<Matrix3> {
-    return IDENTITY_MATRIX3;
+    return getIdentityMatrix();
   }
 
   static get ZERO(): Readonly<Matrix3> {
-    return ZERO_MATRIX3;
+    return getZeroMatrix();
   }
 
   get ELEMENTS(): number {
@@ -75,7 +76,7 @@ export default class Matrix3 extends Matrix {
   // Constructors
 
   identity() {
-    return this.copy(IDENTITY_MATRIX3);
+    return this.copy(IDENTITY_MATRIX);
   }
 
   /**
@@ -194,25 +195,21 @@ export default class Matrix3 extends Matrix {
   }
 }
 
-const ZERO_MATRIX3 = new Matrix3([0, 0, 0, 0, 0, 0, 0, 0, 0]);
-const IDENTITY_MATRIX3 = new Matrix3();
-Object.freeze(ZERO_MATRIX3);
-Object.freeze(IDENTITY_MATRIX3);
+let ZERO_MATRIX3;
+let IDENTITY_MATRIX3;
 
-/**
 function getZeroMatrix(): Readonly<Matrix3> {
-	if (!ZERO) {
-		ZERO = new Matrix3([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
-		Object.freeze(ZERO);
-	}
-	return ZERO;
+  if (!ZERO_MATRIX3) {
+    ZERO_MATRIX3 = new Matrix3([0, 0, 0, 0, 0, 0, 0, 0, 0]);
+    Object.freeze(ZERO_MATRIX3);
+  }
+  return ZERO_MATRIX3;
 }
 
 function getIdentityMatrix(): Matrix3 {
-	if (!IDENTITY) {
-		IDENTITY = new Matrix3([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
-		Object.freeze(IDENTITY);
-	}
-	return IDENTITY;
+  if (!IDENTITY_MATRIX3) {
+    IDENTITY_MATRIX3 = new Matrix3();
+    Object.freeze(IDENTITY_MATRIX3);
+  }
+  return IDENTITY_MATRIX3;
 }
- */

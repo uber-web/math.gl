@@ -34,6 +34,8 @@ const DEFAULT_ASPECT = 1;
 const DEFAULT_NEAR = 0.1;
 const DEFAULT_FAR = 500;
 
+const IDENTITY_MATRIX = Object.freeze([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
+
 /** 4x4 matrix */
 export default class Matrix4 extends Matrix {
   static get IDENTITY(): Readonly<Matrix4> {
@@ -187,7 +189,7 @@ export default class Matrix4 extends Matrix {
 
   /** Set to identity matrix */
   identity() {
-    return this.copy(Matrix4.IDENTITY);
+    return this.copy(IDENTITY_MATRIX);
   }
 
   /**
@@ -605,7 +607,7 @@ function getZeroMatrix(): Readonly<Matrix4> {
 
 function getIdentityMatrix(): Matrix4 {
   if (!IDENTITY) {
-    IDENTITY = new Matrix4([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
+    IDENTITY = new Matrix4();
     Object.freeze(IDENTITY);
   }
   return IDENTITY;
