@@ -15,6 +15,8 @@ const RADIANS_TO_DEGREES = 180 / PI;
 const TILE_SIZE = 512;
 // Average circumference (40075 km equatorial, 40007 km meridional)
 const EARTH_CIRCUMFERENCE = 40.03e6;
+// Latitude that makes a square world, 2 * atan(E ** PI) - PI / 2
+export const MAX_LATITUDE = 85.051129;
 
 // Mapbox default altitude
 export const DEFAULT_ALTITUDE = 1.5;

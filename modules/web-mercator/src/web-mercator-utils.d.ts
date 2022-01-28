@@ -1,4 +1,5 @@
 // TODO - THE UTILITIES IN THIS FILE SHOULD BE IMPORTED FROM WEB-MERCATOR-VIEWPORT MODULE
+export const MAX_LATITUDE: number;
 
 /** Mapbox default altitude */
 export const DEFAULT_ALTITUDE: number;

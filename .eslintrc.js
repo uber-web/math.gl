@@ -19,6 +19,7 @@ const config = deepMerge(defaultConfig, {
       // scripts use devDependencies
       files: ['**/test/**/*.js', '**/scripts/**/*.js', '*.config.js', '*.config.local.js'],
       rules: {
+        indent: 0,
         'import/no-unresolved': 0,
         'import/no-extraneous-dependencies': 0
       }
