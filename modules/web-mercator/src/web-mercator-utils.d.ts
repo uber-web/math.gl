@@ -1,4 +1,5 @@
 // TODO - THE UTILITIES IN THIS FILE SHOULD BE IMPORTED FROM WEB-MERCATOR-VIEWPORT MODULE
+export const MAX_LATITUDE: number;
 
 /** Util functions **/
 export function zoomToScale(zoom: number): number;

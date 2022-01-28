@@ -20,3 +20,4 @@ report*.json
 *.rar
 
 .reify-cache
+*.tsbuildinfo

@@ -79,9 +79,22 @@ const FITBOUNDS_TEST_CASES = /** @type {[import('@math.gl/web-mercator/fit-bound
       offset: [0, -40]
     },
     {
-      longitude: -23.406499999999973,
-      latitude: 64.870857602,
-      zoom: 12.476957831
+      longitude: -23.406499999999998,
+      latitude: 64.86614331652771,
+      zoom: 12.476957831451607
+    }
+  ],
+  [
+    {
+      width: 512,
+      height: 512,
+      // southwest bound first
+      bounds: [[-180, -90], [180, 90]]
+    },
+    {
+      longitude: 0,
+      latitude: 0,
+      zoom: 0
     }
   ]
 ]);
