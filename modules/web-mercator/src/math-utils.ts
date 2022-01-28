@@ -21,6 +21,10 @@ export function lerp(start: number, end: number, step: number): number {
   return step * end + (1 - step) * start;
 }
 
+export function clamp(x: number, min: number, max: number) {
+  return x < min ? min : x > max ? max : x;
+}
+
 function ieLog2(x: number): number {
   return Math.log(x) * Math.LOG2E;
 }

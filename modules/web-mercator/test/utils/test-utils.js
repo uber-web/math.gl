@@ -5,10 +5,11 @@
  * @param  {Number} [precision] Desired precision
  * @return {any}            Input data, with all numbers converted
  */
-export function toLowPrecision(input, precision = 11) {
+export function toLowPrecision(input, precision = 7) {
   /* eslint-disable guard-for-in */
   if (typeof input === 'number') {
-    input = Number(input.toPrecision(precision));
+    input =
+      Math.abs(input) > 1 ? Number(input.toPrecision(precision)) : Number(input.toFixed(precision));
   } else if (Array.isArray(input)) {
     input = input.map((item) => toLowPrecision(item, precision));
   } else if (ArrayBuffer.isView(input)) {
