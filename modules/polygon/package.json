@@ -5,7 +5,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "3.5.6",
+  "version": "3.5.7",
   "keywords": [
     "webgl",
     "javascript",
@@ -24,6 +24,6 @@
     "src"
   ],
   "dependencies": {
-    "@math.gl/core": "3.5.6"
+    "@math.gl/core": "3.5.7"
   }
 }
