@@ -8,6 +8,7 @@ export {default as normalizeViewportProps} from './normalize-viewport-props';
 export {default as flyToViewport, getFlyToDuration} from './fly-to-viewport';
 
 export {
+  MAX_LATITUDE,
   lngLatToWorld,
   worldToLngLat,
   worldToPixels,

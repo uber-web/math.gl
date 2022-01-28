@@ -1,6 +1,6 @@
-import WebMercatorViewport from './web-mercator-viewport';
 import assert from './assert';
-import {log2} from './math-utils';
+import {log2, clamp} from './math-utils';
+import {MAX_LATITUDE, lngLatToWorld, worldToLngLat} from './web-mercator-utils';
 
 /**
  * Options for fitBounds
@@ -66,16 +66,8 @@ export default function fitBounds(options: FitBoundsOptions): Bounds {
   const [[west, south], [east, north]] = bounds;
   const padding = getPaddingObject(options.padding);
 
-  const viewport = new WebMercatorViewport({
-    width,
-    height,
-    longitude: 0,
-    latitude: 0,
-    zoom: 0
-  });
-
-  const nw = viewport.project([west, north]);
-  const se = viewport.project([east, south]);
+  const nw = lngLatToWorld([west, clamp(north, -MAX_LATITUDE, MAX_LATITUDE)]);
+  const se = lngLatToWorld([east, clamp(south, -MAX_LATITUDE, MAX_LATITUDE)]);
 
   // width/height on the Web Mercator plane
   const size = [
@@ -100,8 +92,8 @@ export default function fitBounds(options: FitBoundsOptions): Bounds {
 
   const center = [(se[0] + nw[0]) / 2 + offsetX, (se[1] + nw[1]) / 2 + offsetY];
 
-  const centerLngLat = viewport.unproject(center);
-  const zoom = Math.min(maxZoom, viewport.zoom + log2(Math.abs(Math.min(scaleX, scaleY))));
+  const centerLngLat = worldToLngLat(center);
+  const zoom = Math.min(maxZoom, log2(Math.abs(Math.min(scaleX, scaleY))));
 
   assert(Number.isFinite(zoom));
 
