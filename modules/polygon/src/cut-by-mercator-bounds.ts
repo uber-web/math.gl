@@ -7,14 +7,14 @@ const DEFAULT_MAX_LATITUDE = 85.051129;
 
 /** https://user-images.githubusercontent.com/2059298/78465769-938b7a00-76ae-11ea-9b95-1f4c26425ab9.png */
 export function cutPolylineByMercatorBounds(
-  positions: Array<number>,
+  positions: number[],
   options?: {
     size?: number;
     startIndex?: number;
     endIndex?: number;
     normalize?: boolean;
   }
-): Array<number> {
+): number[] {
   const {size = 2, startIndex = 0, endIndex = positions.length, normalize = true} = options || {};
 
   // Remap longitudes so that each segment takes the shorter path
@@ -35,14 +35,14 @@ export function cutPolylineByMercatorBounds(
       shiftLongitudesIntoRange(part, size);
     }
   }
-  // @ts-expect-error
-  return parts;
+
+  return parts as number[];
 }
 
 /** https://user-images.githubusercontent.com/2059298/78465770-94241080-76ae-11ea-809a-6a8534dac1d9.png */
 export function cutPolygonByMercatorBounds(
-  positions: Array<number>,
-  holeIndices: Array<number> | null = null,
+  positions: number[],
+  holeIndices: number[] | null = null,
   options?: {
     size?: number;
     normalize?: boolean;

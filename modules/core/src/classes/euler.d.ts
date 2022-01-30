@@ -2,7 +2,7 @@ import MathArray from './base/math-array';
 import Quaternion from './quaternion';
 import Matrix3 from './matrix3';
 
-export default class Euler extends MathArray<Euler> {
+export default class Euler extends MathArray {
   static ZYX: number;
   static YXZ: number;
   static XZY: number;
@@ -75,7 +75,7 @@ export default class Euler extends MathArray<Euler> {
   // Constructors
   fromVector3(v: number[], order: number): Euler;
   // TODO - with and without 4th element
-  fromArray(array: number[], offset?: number): Euler;
+  fromArray(array: number[], offset?: number): this;
 
   // Common ZYX rotation order
   fromRollPitchYaw(roll: number, pitch: number, yaw: number): Euler;

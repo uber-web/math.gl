@@ -27,7 +27,7 @@
   ],
   "dependencies": {
     "@babel/runtime": "^7.12.0",
-    "gl-matrix": "~3.3.0"
+    "gl-matrix": "~3.4.3"
   },
   "devDependencies": {
     "mapbox-gl": "^1.0.0",

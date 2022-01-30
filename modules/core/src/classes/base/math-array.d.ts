@@ -1,55 +1,57 @@
+import type {NumberArray} from '@math.gl/types';
+
 /** Base class for vectors and matrices */
-export default abstract class MathArray<DerivedType> extends Array<number> {
+export default abstract class MathArray extends Array<number> {
   // Defined by derived class
   abstract get ELEMENTS(): number;
 
-  clone(): DerivedType;
+  clone(): this;
 
   // TODO - define more sophisticated object type per class?
-  from(array: readonly number[]): DerivedType;
-  from(object: object): DerivedType;
+  from(array: Readonly<NumberArray>): this;
+  from(object: object): this;
 
-  fromArray(array: readonly number[], offset?: number): DerivedType;
+  fromArray(array: Readonly<NumberArray>, offset?: number): this;
   // todo
-  to(arrayOrObject): any;
-  toTarget(target): any;
+  to(arrayOrObject: NumberArray | {[key: string]: number} | any): any;
+  toTarget(target: Readonly<NumberArray> | Readonly<{[key: string]: number}>): any;
 
   toArray(array?: number[], offset?: number): number[];
   toFloat32Array(): Float32Array;
   toString(): string;
-  formatString(opts: object): string;
-  equals(array: readonly number[]): boolean;
-  exactEquals(array: readonly number[]): boolean;
+  formatString(opts: Record<string, any>): string; // TODO - declare options type
+  equals(array: Readonly<NumberArray>): boolean;
+  exactEquals(array: Readonly<NumberArray>): boolean;
 
   // Modifiers
 
-  negate(): DerivedType;
-  lerp(a: readonly number[], b: readonly number[], t: number): DerivedType;
+  negate(): this;
+  lerp(a: Readonly<NumberArray>, b: Readonly<NumberArray>, t: number): this;
 
-  min(vector: readonly number[]): DerivedType;
-  max(vector: readonly number[]): DerivedType;
+  min(vector: Readonly<NumberArray>): this;
+  max(vector: Readonly<NumberArray>): this;
 
-  clamp(minVector: readonly number[], maxVector: readonly number[]): DerivedType;
+  clamp(minVector: Readonly<NumberArray>, maxVector: Readonly<NumberArray>): this;
 
-  add(...vectors): DerivedType;
-  subtract(...vectors): DerivedType;
+  add(...vectors: Readonly<NumberArray>[]): this;
+  subtract(...vectors: Readonly<NumberArray>[]): this;
 
-  scale(scale): DerivedType;
+  scale(scale): this;
 
   // three.js compatibility
 
-  sub(a): DerivedType;
-  setScalar(a): DerivedType;
-  addScalar(a): DerivedType;
-  subScalar(a): DerivedType;
-  multiplyScalar(scalar): DerivedType;
-  divideScalar(a): DerivedType;
-  clampScalar(min, max): DerivedType;
+  sub(a: NumberArray): this;
+  setScalar(a): this;
+  addScalar(a): this;
+  subScalar(a): this;
+  multiplyScalar(scalar: number): this;
+  divideScalar(a: number): this;
+  clampScalar(min: number, max: number): this;
   elements: number[];
 
   // Cesium compatibility
-  multiplyByScalar(scalar): DerivedType;
+  multiplyByScalar(scalar): this;
 
   // private
-  check(): DerivedType;
+  check(): this;
 }

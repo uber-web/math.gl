@@ -1,6 +1,7 @@
+import type {NumberArray} from '@math.gl/types';
 import MathArray from './base/math-array';
 
-export default class Quaternion extends MathArray<Quaternion> {
+export default class Quaternion extends MathArray {
   // Getters/setters
   ELEMENTS: number;
 
@@ -48,12 +49,12 @@ export default class Quaternion extends MathArray<Quaternion> {
   lengthSquared(): number;
 
   /** Calculates the dot product of two quaternions */
-  dot(a: readonly number[]): number;
+  dot(a: Readonly<NumberArray>): number;
 
   rotationTo(vectorA, vectorB): Quaternion;
 
   /** Adds two quaternions */
-  add(a: readonly number[]): Quaternion;
+  add(a: Readonly<NumberArray>): this;
 
   /**
    * Calculates the W component of a quat from the X, Y, and Z components.
@@ -71,7 +72,7 @@ export default class Quaternion extends MathArray<Quaternion> {
   invert(): Quaternion;
 
   /** Performs a linear interpolation between two quaternions */
-  lerp(a, b, t): Quaternion;
+  lerp(a, b, t): this;
 
   /** Multiplies two quaternions */
   multiplyRight(a, b): Quaternion;
@@ -91,7 +92,7 @@ export default class Quaternion extends MathArray<Quaternion> {
   rotateZ(radians: number): Quaternion;
 
   /** Scales a quaternion by a scalar number */
-  scale(b: number): Quaternion;
+  scale(b: number): this;
 
   /** Performs a spherical linear interpolation between two quaternions */
   slerp(start: readonly number[], target: readonly number[], ratio: number): Quaternion;

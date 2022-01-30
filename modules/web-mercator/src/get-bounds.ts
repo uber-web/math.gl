@@ -16,8 +16,8 @@ export default function getBounds(viewport: WebMercatorViewport, z: number = 0):
   const unprojectOps = {targetZ: z};
   const bottomLeft = unproject([0, height], unprojectOps);
   const bottomRight = unproject([width, height], unprojectOps);
-  let topLeft;
-  let topRight;
+  let topLeft: number[];
+  let topRight: number[];
 
   const halfFov = viewport.fovy
     ? 0.5 * viewport.fovy * DEGREES_TO_RADIANS

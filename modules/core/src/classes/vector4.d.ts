@@ -1,7 +1,7 @@
 import Vector from './base/vector';
 
 /** Four-element vector class */
-export default class Vector4 extends Vector<Vector4> {
+export default class Vector4 extends Vector {
   static ZERO: number[];
   get ELEMENTS(): number;
 

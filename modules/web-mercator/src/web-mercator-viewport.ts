@@ -16,7 +16,7 @@ import {
 } from './web-mercator-utils';
 import fitBounds from './fit-bounds';
 import getBounds from './get-bounds';
-import type {Bounds, FitBoundsOptions} from './fit-bounds';
+import type {FitBoundsOptions} from './fit-bounds';
 
 import * as mat4 from 'gl-matrix/mat4';
 import * as vec2 from 'gl-matrix/vec2';

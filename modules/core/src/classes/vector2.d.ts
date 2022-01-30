@@ -21,7 +21,7 @@
 import Vector from './base/vector';
 
 /* Two-element vector class */
-export default class Vector2 extends Vector<Vector2> {
+export default class Vector2 extends Vector {
   static ZERO: number[];
   get ELEMENTS(): number;
 

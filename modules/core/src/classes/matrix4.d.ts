@@ -4,7 +4,7 @@ import Matrix from './base/matrix';
 type Array16 = number[];
 // = [number, number, number, number, number, number, number, number, number, number, number, number, number, number, number, number];
 
-export default class Matrix4 extends Matrix<Matrix4> {
+export default class Matrix4 extends Matrix {
   static IDENTITY: number[];
   static ZERO: number[];
 
@@ -130,7 +130,7 @@ export default class Matrix4 extends Matrix<Matrix4> {
   multiplyLeft(a: number[]): Matrix4;
   multiplyRight(a: number[]): Matrix4;
 
-  scale(factor): Matrix4;
+  scale(factor): this;
   translate(vec): Matrix4;
   rotateX(radians: number): Matrix4;
   rotateY(radians: number): Matrix4;

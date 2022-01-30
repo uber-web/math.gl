@@ -29,7 +29,7 @@
 
 Target Release Date: Q4, 2021
 
-**`@math.gl/types` (NEW)
+**`@math.gl/types`** (NEW)
 
 - New module that exports a couple of typescript types that simplify handling of e.g. numeric arrays.
 

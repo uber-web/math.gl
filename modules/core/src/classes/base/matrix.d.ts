@@ -1,6 +1,6 @@
 import MathArray from './math-array';
 
-export default abstract class Matrix<MatrixType> extends MathArray<MatrixType> {
+export default abstract class Matrix extends MathArray {
   abstract get RANK(): number;
 
   toString(): string;

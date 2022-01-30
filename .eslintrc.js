@@ -10,9 +10,9 @@ const config = deepMerge(defaultConfig, {
     node: true
   },
 
-  // rules: {
-  //   'accessor-pairs': ['error', {getWithoutSet: false, setWithoutGet: false}]
-  // },
+  rules: {
+    // 'accessor-pairs': ['error', {getWithoutSet: false, setWithoutGet: false}]
+  },
 
   overrides: [
     {
@@ -26,6 +26,7 @@ const config = deepMerge(defaultConfig, {
     {
       files: ['modules/**/*.ts', 'modules/**/*.js'],
       rules: {
+        '@typescript-eslint/explicit-module-boundary-types': 0,
         'import/no-unresolved': 0
       }
     },

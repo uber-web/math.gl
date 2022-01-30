@@ -1,7 +1,7 @@
 import Matrix from './base/matrix';
 // import Quaternion from './quaternion';
 
-export default class Matrix3 extends Matrix<Matrix3> {
+export default class Matrix3 extends Matrix {
   static IDENTITY: Matrix3;
   static ZERO: Matrix3;
 
@@ -75,8 +75,8 @@ export default class Matrix3 extends Matrix<Matrix3> {
 
   rotate(radians: number): Matrix3;
 
-  scale(scale: number): Matrix3;
-  scale([scaleX, scaleY, scaleZ]: number[]): Matrix3;
+  scale(scale: number): this;
+  scale([scaleX, scaleY, scaleZ]: number[]): this;
 
   translate(vec): Matrix3;
 

@@ -1,7 +1,7 @@
 import MathArray from './math-array';
 
 /** Base class for vectors */
-export default abstract class Vector<VectorType> extends MathArray<VectorType> {
+export default abstract class Vector extends MathArray {
   // VIRTUAL METHODS
   // copy(vector) {
 
@@ -23,23 +23,23 @@ export default abstract class Vector<VectorType> extends MathArray<VectorType> {
   dot(mathArray): number;
   // MODIFIERS
 
-  normalize(): VectorType;
+  normalize(): this;
 
-  multiply(...vectors): VectorType;
+  multiply(...vectors): this;
 
-  divide(...vectors): VectorType;
+  divide(...vectors): this;
 
   // THREE.js compatibility
   lengthSq(): number;
-  distanceTo(vector: VectorType): number;
+  distanceTo(vector: this): number;
   distanceToSquared(vector): number;
 
   getComponent(i): number;
   setComponent(i, value): number;
 
-  addVectors(a: VectorType, b: VectorType): VectorType;
-  subVectors(a: VectorType, b: VectorType): VectorType;
-  multiplyVectors(a: VectorType, b: VectorType): VectorType;
+  addVectors(a: this, b: this): this;
+  subVectors(a: this, b: this): this;
+  multiplyVectors(a: this, b: this): this;
 
-  addScaledVector(a: VectorType, b: VectorType): VectorType;
+  addScaledVector(a: this, b: this): this;
 }
