@@ -2373,6 +2373,21 @@
     "@babel/runtime" "^7.0.0"
     probe.gl "3.3.1"
 
+"@probe.gl/env@3.5.0-alpha.4":
+  version "3.5.0-alpha.4"
+  resolved "https://registry.yarnpkg.com/@probe.gl/env/-/env-3.5.0-alpha.4.tgz#7b902a16eff84f67a729960a28cff75636c66c2f"
+  integrity sha512-8QWv17Cb0xMCXMMyrFyVO2Bz2JPWGl59TU6+nzAk+LASkR9+bVAXbHt9Iq3BxznItJUyFj6uJUo4hDlq3YT3pA==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+
+"@probe.gl/log@3.5.0-alpha.4":
+  version "3.5.0-alpha.4"
+  resolved "https://registry.yarnpkg.com/@probe.gl/log/-/log-3.5.0-alpha.4.tgz#0c7c2a1412e8d3641739d03b00fd8cd7bfc27ec3"
+  integrity sha512-bqrma+KDrfubmPznWEtHGfjECkqoNg1CCEQrfSFzqWswkvJ6s40zoxZGh44n0OUOzMon8O83pXxBK2SC8seFEg==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    "@probe.gl/env" "3.5.0-alpha.4"
+
 "@probe.gl/react-bench@^3.3.0":
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/@probe.gl/react-bench/-/react-bench-3.3.1.tgz#b19f6fc395ce4dc883fdd4aa06fa406a26e6579e"
@@ -2390,14 +2405,14 @@
   dependencies:
     "@babel/runtime" "^7.0.0"
 
-"@probe.gl/test-utils@^3.0.2", "@probe.gl/test-utils@^3.3.0":
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/@probe.gl/test-utils/-/test-utils-3.3.1.tgz#00fc9dc884b1517e20f924cf3af631300f333794"
-  integrity sha512-0moc6YkrgsZmVlKGagbQ0hbskOPjz/lpO6mUAUucMcDJ2gtjFYFM1V/bh6LNdb2vd4mBPGNxtR5X/+2rgRXetg==
+"@probe.gl/test-utils@3.5.0-alpha.4", "@probe.gl/test-utils@^3.0.2":
+  version "3.5.0-alpha.4"
+  resolved "https://registry.yarnpkg.com/@probe.gl/test-utils/-/test-utils-3.5.0-alpha.4.tgz#34d21648cf33ded712e438b1a6accd7e750be808"
+  integrity sha512-OIzvFHkfbu6C+Tnbzvm55wIWWzYaW2OGAwYoPdFGnIJdX6Nq68VpTyvHOaE1StrPuP9sh1gCe4QmTN0TnipeTw==
   dependencies:
     "@babel/runtime" "^7.0.0"
+    "@probe.gl/log" "3.5.0-alpha.4"
     pixelmatch "^4.0.2"
-    probe.gl "3.3.1"
     puppeteer "*"
 
 "@turf/destination@^6.0.1":
@@ -5734,9 +5749,9 @@ flush-write-stream@^1.0.0:
     readable-stream "^2.3.6"
 
 follow-redirects@^1.0.0:
-  version "1.14.1"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.1.tgz#d9114ded0a1cfdd334e164e6662ad02bfd91ff43"
-  integrity sha512-HWqDgT7ZEkqRzBvc2s64vSZ/hfOceEol3ac/7tKwzuvEyWx3/4UegXh5oBOIotkGsObyk3xznnSRVADBgWSQVg==
+  version "1.14.7"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.7.tgz#2004c02eb9436eee9a21446a6477debf17e81685"
+  integrity sha512-+hbxoLbFMbRKDwohX8GkTataGqO6Jb7jGwpAlwgy2bIz25XtRm7KEzJM76R1WiNT5SwZkX4Y75SwBolkpmE7iQ==
 
 for-each@~0.3.3:
   version "0.3.3"
