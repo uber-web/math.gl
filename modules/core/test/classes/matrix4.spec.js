@@ -1,22 +1,5 @@
 // Copyright (c) 2017 Uber Technologies, Inc.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
+// MIT License
 
 /* eslint-disable max-statements */
 import {Matrix4, Vector3, config, configure} from '@math.gl/core';
@@ -50,7 +33,7 @@ test('Matrix4#types', (t) => {
 test('Matrix4#construct and Array.isArray check', (t) => {
   const m = new Matrix4();
   t.ok(Array.isArray(m));
-  t.ok(m.INDICES);
+  // t.ok(m.INDICES);
   t.end();
 });
 
@@ -149,7 +132,7 @@ test('Matrix4#setRowMajor', (t) => {
   const INPUT = INDICES_MATRIX;
   const RESULT = TRANSPOSED_INDICES_MATRIX;
 
-  // @ts-ignore TS2556: Expected 16 arguments, but got 0 or more.
+  // @ts-expect-error TS2556: Expected 16 arguments, but got 0 or more.
   const m = new Matrix4().setRowMajor(...INPUT);
   tapeEquals(t, m, RESULT, 'setRowMajor gave the right result');
 
@@ -325,10 +308,10 @@ test('Matrix4#ortho', (t) => {
 });
 
 test('Matrix4#lookat', (t) => {
-  let result = new Matrix4().lookAt({eye: [1, 1, 1], center: [0, 0, 0], up: [0, 1, 0]});
+  const result = new Matrix4().lookAt({eye: [1, 1, 1], center: [0, 0, 0], up: [0, 1, 0]});
   t.ok(result);
-  result = new Matrix4().lookAt([1, 1, 1], [0, 0, 0], [0, 1, 0]);
-  t.ok(result);
+  // result = new Matrix4().lookAt([1, 1, 1], [0, 0, 0], [0, 1, 0]);
+  // t.ok(result);
   t.end();
 });
 
@@ -338,7 +321,7 @@ test('Matrix4.transpose', (t) => {
   const INPUT = INDICES_MATRIX;
   const RESULT = TRANSPOSED_INDICES_MATRIX;
 
-  // @ts-ignore TS2556: Expected 16 arguments, but got 0 or more.
+  // @ts-expect-error TS2556: Expected 16 arguments, but got 0 or more.
   const m = new Matrix4().set(...INPUT);
 
   const result = m.transpose();
@@ -628,15 +611,13 @@ test('Matrix4#transform', (t) => {
     tapeEquals(t, p4, testCase.expected, 'transform gave the right result');
   }
 
-  // @ts-ignore
+  // @ts-expect-error
   t.throws(() => matrix.transform([NaN, 0, 0, 0]));
-  // @ts-ignore
+  // @ts-expect-error
   t.throws(() => matrix.transform([0]));
-  // @ts-ignore
+  // @ts-expect-error
   t.throws(() => matrix.transform([0, 0, 0, 0, 0]));
-  // @ts-ignore
   t.throws(() => matrix.transformAsVector([0, 0, 0, 0, 0]));
-  // @ts-ignore
   t.throws(() => matrix.transformAsPoint([0, 0, 0, 0, 0]));
 
   t.end();

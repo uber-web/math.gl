@@ -5,7 +5,7 @@ import {Matrix3} from '@math.gl/core';
 import {computeEigenDecomposition} from '@math.gl/culling';
 
 test('computeEigenDecomposition#throws without a matrix', (t) => {
-  // @ts-ignore
+  // @ts-expect-error
   t.throws(() => computeEigenDecomposition());
   t.end();
 });

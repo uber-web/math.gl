@@ -37,7 +37,7 @@ Using with math.gl `Vector3`:
 
 ```js
 import {Ellipsoid} from '@math.gl/geospatial';
-import {Vector3} from 'math.gl';
+import {Vector3} from '@math.gl/core';
 const cartesian = Ellipsoid.WSG84.cartographicToCartesian(new Vector3(lng, lat, z));
 ```
 

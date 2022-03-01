@@ -191,7 +191,6 @@ export function addMetersToLngLat(lngLatZ: number[], xyz: number[]): number[] {
   worldspace[0] += x * (unitsPerMeter[0] + unitsPerMeter2[0] * y);
   worldspace[1] += y * (unitsPerMeter[1] + unitsPerMeter2[1] * y);
 
-  // @ts-ignore
   const newLngLat = worldToLngLat(worldspace);
   const newZ = (z0 || 0) + (z || 0);
 

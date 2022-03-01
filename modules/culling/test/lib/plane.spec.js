@@ -88,7 +88,7 @@ test.skip('Plane#fromPointNormal throws if normal is not normalized', (t) => {
 });
 
 test('Plane#fromCoefficients throws without coefficients', (t) => {
-  // @ts-ignore
+  // @ts-expect-error
   t.throws(() => new Plane().fromCoefficients(undefined));
   t.end();
 });
@@ -109,7 +109,7 @@ test('Plane#gets the distance to a point', (t) => {
 
 test('Plane#getPointDistance throws without a plane', (t) => {
   const point = Vector3.ZERO;
-  // @ts-ignore
+  // @ts-expect-error
   t.throws(() => new Plane().getPointDistance(undefined, point));
   t.end();
 });

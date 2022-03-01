@@ -1,55 +1,85 @@
 // Copyright (c) 2017 Uber Technologies, Inc.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
+// MIT License
 // Adaptation of THREE.js Spherical class, under MIT license
+import Vector3 from './vector3';
 import {formatValue, equals, config} from '../lib/common';
 import {degrees, radians, clamp} from '../lib/common';
-import Vector3 from './vector3';
-
-// @ts-ignore: error TS2307: Cannot find module 'gl-matrix/...'.
 import * as vec3 from 'gl-matrix/vec3';
+import {NumericArray} from '../lib/types';
+
+type SphericalCoordinatesOptions = {
+  phi?: number;
+  theta?: number;
+  radius?: number;
+  bearing?: number;
+  pitch?: number;
+  altitude?: number;
+  radiusScale?: number;
+};
+
+type FormatOptions = {
+  printTypes?: boolean;
+};
 
 // TODO - import epsilon
 const EPSILON = 0.000001;
+const EARTH_RADIUS_METERS = 6371000;
 
-const EARTH_RADIUS_METERS = 6.371e6;
-
-// Todo [rho, theta, phi] ?
+/**
+ * The poles (phi) are at the positive and negative y axis.
+ * The equator starts at positive z.
+ * @link https://en.wikipedia.org/wiki/Spherical_coordinate_system
+ */
 export default class SphericalCoordinates {
-  // @ts-ignore TS2740: Type '{}' is missing the following properties from type
+  phi: number;
+  theta: number;
+  radius: number;
+  radiusScale: number;
+  // bearing: number;
+  // pitch: number;
+  // altitude: number;
+
+  // lnglatZ coordinates
+  // longitude: number;
+  // latitude: number;
+  // lng: number;
+  // lat: number;
+  // z: number;
+
+  /**
+   * Creates a new SphericalCoordinates object
+   * @param options
+   * @param [options.phi] =0 - rotation around X (latitude)
+   * @param [options.theta] =0 - rotation around Y (longitude)
+   * @param [options.radius] =1 - Distance from center
+   * @param [options.bearing]
+   * @param [options.pitch]
+   * @param [options.altitude]
+   * @param [options.radiusScale] =1
+   */
   // eslint-disable-next-line complexity
   constructor({
     phi = 0,
     theta = 0,
     radius = 1,
-    bearing = undefined,
-    pitch = undefined,
-    altitude = undefined,
+    bearing,
+    pitch,
+    altitude,
     radiusScale = EARTH_RADIUS_METERS
+  }: {
+    phi?: number;
+    theta?: number;
+    radius?: number;
+    bearing?: number;
+    pitch?: number;
+    altitude?: number;
+    radiusScale?: number;
   } = {}) {
     this.phi = phi;
     this.theta = theta;
     // TODO - silently accepts illegal 0
     this.radius = radius || altitude || 1; // radial distance from center
     this.radiusScale = radiusScale || 1; // Used by lngLatZ
-
     if (bearing !== undefined) {
       this.bearing = bearing; // up / down towards top and bottom pole
     }
@@ -59,17 +89,17 @@ export default class SphericalCoordinates {
     this.check();
   }
 
-  toString() {
+  toString(): string {
     return this.formatString(config);
   }
 
-  formatString({printTypes = false}) {
+  formatString({printTypes = false}: {printTypes?: boolean}): string {
     const f = formatValue;
     return `${printTypes ? 'Spherical' : ''}\
 [rho:${f(this.radius)},theta:${f(this.theta)},phi:${f(this.phi)}]`;
   }
 
-  equals(other) {
+  equals(other: SphericalCoordinates): boolean {
     return (
       equals(this.radius, other.radius) &&
       equals(this.theta, other.theta) &&
@@ -77,71 +107,79 @@ export default class SphericalCoordinates {
     );
   }
 
-  exactEquals(other) {
+  exactEquals(other: SphericalCoordinates): boolean {
     return this.radius === other.radius && this.theta === other.theta && this.phi === other.phi;
   }
 
   /* eslint-disable brace-style */
   // Cartographic (bearing 0 north, pitch 0 look from above)
-  get bearing() {
+  get bearing(): number {
     return 180 - degrees(this.phi);
   }
-  set bearing(v) {
+
+  set bearing(v: number) {
     this.phi = Math.PI - radians(v);
   }
-  get pitch() {
+
+  get pitch(): number {
     return degrees(this.theta);
   }
-  set pitch(v) {
+
+  set pitch(v: number) {
     this.theta = radians(v);
   }
+
   // get pitch() { return 90 - degrees(this.phi); }
   // set pitch(v) { this.phi = radians(v) + Math.PI / 2; }
   // get altitude() { return this.radius - 1; } // relative altitude
-
   // lnglatZ coordinates
-  get longitude() {
+  get longitude(): number {
     return degrees(this.phi);
   }
-  get latitude() {
+
+  get latitude(): number {
     return degrees(this.theta);
   }
-  get lng() {
+
+  get lng(): number {
     return degrees(this.phi);
   }
-  get lat() {
+
+  get lat(): number {
     return degrees(this.theta);
   }
-  get z() {
+
+  get z(): number {
     return (this.radius - 1) * this.radiusScale;
   }
-  /* eslint-enable brace-style */
 
-  set(radius, phi, theta) {
+  /* eslint-enable brace-style */
+  set(radius: number, phi: number, theta: number) {
     this.radius = radius;
     this.phi = phi;
     this.theta = theta;
     return this.check();
   }
 
-  clone() {
+  clone(): SphericalCoordinates {
     return new SphericalCoordinates().copy(this);
   }
 
-  copy(other) {
+  copy(other: SphericalCoordinates): this {
     this.radius = other.radius;
     this.phi = other.phi;
     this.theta = other.theta;
     return this.check();
   }
 
-  fromLngLatZ([lng, lat, z]) {
+  fromLngLatZ([lng, lat, z]: [number, number, number]): this {
     this.radius = 1 + z / this.radiusScale;
     this.phi = radians(lat);
     this.theta = radians(lng);
+    return this.check();
   }
 
-  fromVector3(v) {
+  fromVector3(v: Readonly<NumericArray>): this {
     this.radius = vec3.length(v);
     if (this.radius > 0) {
       this.theta = Math.atan2(v[0], v[1]); // equator angle around y-up axis
@@ -150,14 +188,14 @@ export default class SphericalCoordinates {
     return this.check();
   }
 
-  toVector3() {
+  toVector3(): Vector3 {
     return new Vector3(0, 0, this.radius)
       .rotateX({radians: this.theta})
       .rotateZ({radians: this.phi});
   }
 
   // restrict phi to be betwee EPS and PI-EPS
-  makeSafe() {
+  makeSafe(): this {
     this.phi = Math.max(EPSILON, Math.min(Math.PI - EPSILON, this.phi));
     return this;
   }

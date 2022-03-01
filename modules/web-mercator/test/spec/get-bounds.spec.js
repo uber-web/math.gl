@@ -139,7 +139,6 @@ const GETBOUNDS_TEST_CASES = [
 
 test('getBounds', (t) => {
   for (const {title, viewportProps, quad, z} of GETBOUNDS_TEST_CASES) {
-    // @ts-ignore
     const viewport = new WebMercatorViewport(viewportProps);
     const result = getBounds(viewport, z);
     t.deepEqual(toLowPrecision(result), toLowPrecision(quad), title);
@@ -149,7 +148,6 @@ test('getBounds', (t) => {
 
 test('WebMercatorViewport.getBounds/getBoundingRegion', (t) => {
   for (const testCase of GETBOUNDS_TEST_CASES) {
-    // @ts-ignore
     const viewport = new WebMercatorViewport(testCase.viewportProps);
     const opts = testCase.z ? {z: testCase.z} : undefined;
 

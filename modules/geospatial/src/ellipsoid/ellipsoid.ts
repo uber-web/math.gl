@@ -36,7 +36,7 @@ let wgs84;
  */
 export default class Ellipsoid {
   /** An Ellipsoid instance initialized to the WGS84 standard. */
-  static readonly WGS84 = new Ellipsoid(WGS84_RADIUS_X, WGS84_RADIUS_Y, WGS84_RADIUS_Z);
+  static readonly WGS84: Ellipsoid = new Ellipsoid(WGS84_RADIUS_X, WGS84_RADIUS_Y, WGS84_RADIUS_Z);
 
   readonly radii: Vector3;
   readonly radiiSquared: Vector3;

@@ -159,11 +159,9 @@ export default function makeBoundingSphereFromPoints(
 
   if (ritterRadius < naiveRadius) {
     ritterCenter.to(result.center);
-    // @ts-ignore TS2540: Cannot assign to 'radius' because it is a read-only property.
     result.radius = ritterRadius;
   } else {
     naiveCenter.to(result.center);
-    // @ts-ignore TS2540: Cannot assign to 'radius' because it is a read-only property.
     result.radius = naiveRadius;
   }
 

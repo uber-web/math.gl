@@ -1,51 +1,40 @@
 // Copyright (c) 2017 Uber Technologies, Inc.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-
+// MIT License
+import {NumericArray} from '../lib/types';
 import Vector from './base/vector';
 import {config, isArray} from '../lib/common';
 import {checkNumber} from '../lib/validators';
-
-// @ts-ignore: error TS2307: Cannot find module 'gl-matrix/...'.
 import * as vec3 from 'gl-matrix/vec3';
-// eslint-disable-next-line camelcase
 import {vec3_transformMat2, vec3_transformMat4AsVector} from '../lib/gl-matrix-extras';
 
 const ORIGIN = [0, 0, 0];
-const constants = {};
 
+let ZERO;
+
+/**
+ * Three-element vector class.
+ * Subclass of Array<number>
+ */
 export default class Vector3 extends Vector {
   static get ZERO() {
-    return (constants.ZERO = constants.ZERO || Object.freeze(new Vector3(0, 0, 0, 0)));
+    if (!ZERO) {
+      ZERO = new Vector3(0, 0, 0);
+      Object.freeze(ZERO);
+    }
+    return ZERO;
   }
 
   /**
    * @class
-   * @param {Number | [Number, Number, Number]} x
-   * @param {Number} y - rotation around X (latitude)
-   * @param {Number} z - rotation around X (latitude)
+   * @param x
+   * @param y
+   * @param z
    */
-  constructor(x = 0, y = 0, z = 0) {
+  constructor(x: number | Readonly<NumericArray> = 0, y: number = 0, z: number = 0) {
     // PERF NOTE: initialize elements as double precision numbers
     super(-0, -0, -0);
     if (arguments.length === 1 && isArray(x)) {
-      this.copy(x);
+      this.copy(x as NumericArray);
     } else {
       // this.set(x, y, z);
       if (config.debug) {
@@ -53,28 +42,28 @@ export default class Vector3 extends Vector {
         checkNumber(y);
         checkNumber(z);
       }
-      // @ts-ignore TS2412: Property '0' of type 'number | [number, number, number]' is not assignable to numeric index type 'number'
+      // @ts-expect-error TS2412: Property '0' of type 'number | [number, number, number]' is not assignable to numeric index type 'number'
       this[0] = x;
       this[1] = y;
       this[2] = z;
     }
   }
 
-  set(x, y, z) {
+  set(x: number, y: number, z: number): this {
     this[0] = x;
     this[1] = y;
     this[2] = z;
     return this.check();
   }
 
-  copy(array) {
+  copy(array: Readonly<NumericArray>): this {
     this[0] = array[0];
     this[1] = array[1];
     this[2] = array[2];
     return this.check();
   }
 
-  fromObject(object) {
+  fromObject(object: {[key: string]: any}): this {
     if (config.debug) {
       checkNumber(object.x);
       checkNumber(object.y);
@@ -86,7 +75,7 @@ export default class Vector3 extends Vector {
     return this.check();
   }
 
-  toObject(object) {
+  toObject(object): {x: number; y: number; z: number} {
     object.x = this[0];
     object.y = this[1];
     object.z = this[2];
@@ -94,43 +83,41 @@ export default class Vector3 extends Vector {
   }
 
   // Getters/setters
-  /* eslint-disable no-multi-spaces, brace-style, no-return-assign */
-  get ELEMENTS() {
+
+  get ELEMENTS(): number {
     return 3;
   }
-
-  // x,y inherited from Vector
-
-  get z() {
+  get z(): number {
     return this[2];
   }
-  set z(value) {
+  set z(value: number) {
     this[2] = checkNumber(value);
   }
-  /* eslint-enable no-multi-spaces, brace-style, no-return-assign */
 
-  angle(vector) {
+  // ACCESSORS
+
+  angle(vector: Readonly<NumericArray>): number {
     return vec3.angle(this, vector);
   }
 
   // MODIFIERS
 
-  cross(vector) {
+  cross(vector: Readonly<NumericArray>): this {
     vec3.cross(this, this, vector);
     return this.check();
   }
 
-  rotateX({radians, origin = ORIGIN}) {
+  rotateX({radians, origin = ORIGIN}: {radians: number; origin?: Readonly<NumericArray>}): this {
     vec3.rotateX(this, this, origin, radians);
     return this.check();
   }
 
-  rotateY({radians, origin = ORIGIN}) {
+  rotateY({radians, origin = ORIGIN}: {radians: number; origin?: Readonly<NumericArray>}): this {
     vec3.rotateY(this, this, origin, radians);
     return this.check();
   }
 
-  rotateZ({radians, origin = ORIGIN}) {
+  rotateZ({radians, origin = ORIGIN}: {radians: number; origin?: Readonly<NumericArray>}): this {
     vec3.rotateZ(this, this, origin, radians);
     return this.check();
   }
@@ -138,33 +125,33 @@ export default class Vector3 extends Vector {
   // Transforms
 
   // transforms as point (4th component is implicitly 1)
-  transform(matrix4) {
+  transform(matrix4: Readonly<NumericArray>): this {
     return this.transformAsPoint(matrix4);
   }
 
   // transforms as point (4th component is implicitly 1)
-  transformAsPoint(matrix4) {
+  transformAsPoint(matrix4: Readonly<NumericArray>): this {
     vec3.transformMat4(this, this, matrix4);
     return this.check();
   }
 
   // transforms as vector  (4th component is implicitly 0, ignores translation. slightly faster)
-  transformAsVector(matrix4) {
+  transformAsVector(matrix4: Readonly<NumericArray>): this {
     vec3_transformMat4AsVector(this, this, matrix4);
     return this.check();
   }
 
-  transformByMatrix3(matrix3) {
+  transformByMatrix3(matrix3: Readonly<NumericArray>): this {
     vec3.transformMat3(this, this, matrix3);
     return this.check();
   }
 
-  transformByMatrix2(matrix2) {
+  transformByMatrix2(matrix2: Readonly<NumericArray>): this {
     vec3_transformMat2(this, this, matrix2);
     return this.check();
   }
 
-  transformByQuaternion(quaternion) {
+  transformByQuaternion(quaternion: Readonly<NumericArray>): this {
     vec3.transformQuat(this, this, quaternion);
     return this.check();
   }

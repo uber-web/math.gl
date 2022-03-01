@@ -171,13 +171,11 @@ test('Quaternion#identity', (t) => {
 });
 
 test('Quaternion#dot', (t) => {
-  // @ts-ignore TS2554: Expected 1 arguments, but got 2.
   t.throws(() => new Quaternion(1, 1, 1, 1).dot([1, 1, 1, 1], [1, 1, 1, 1]));
   t.end();
 });
 
 test('Quaternion#rotationTo', (t) => {
-  // @ts-ignore TS2554: Expected 1 arguments, but got 2.
   t.doesNotThrow(() => new Quaternion().rotationTo([1, 1, 1, 1], [2, 2, 2, 2]));
   t.end();
 });
@@ -231,8 +229,6 @@ test('Quaternion#rotateZ', (t) => {
 
 test('Quaternion#add', (t) => {
   const quat = new Quaternion(1, 1, 1, 1).identity();
-  // @ts-ignore
-  t.throws(() => quat.add([0, 0, 0, 0], [0, 0, 0, 0]));
   tapeEquals(t, quat.add([0, 0, 0, 0]), quat, 'should add quaternion');
   t.end();
 });
@@ -255,7 +251,7 @@ test.skip('getAxisAngle', (tt) => {
   test('Quaternion#getAxisAngle for a quaternion representing no rotation', (t) => {
     const out = [0, 0, 0];
     const quat = new Quaternion().setAxisAngle([0, 1, 0], 0.0);
-    // @ts-ignore
+    // @ts-expect-error
     const deg90 = quat.getAxisAngle(out);
     tapeEquals(
       t,

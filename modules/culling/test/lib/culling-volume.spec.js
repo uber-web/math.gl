@@ -17,7 +17,6 @@ import {
 
 const VECTOR3_UNIT_Z = Object.freeze(new Vector3(0, 0, 1));
 
-// @ts-ignore
 const frustum = new PerspectiveFrustum();
 frustum.near = 1.0;
 frustum.far = 2.0;
@@ -369,7 +368,7 @@ test('CullingVolume#construct from bounding sphere', (ttt) => {
   const cullingVolume = new CullingVolume().fromBoundingSphere(boundingSphereCullingVolume);
 
   ttt.test('CullingVolume#throws without a boundingSphere', (t) => {
-    // @ts-ignore
+    // @ts-expect-error
     t.throws(() => new CullingVolume().fromBoundingSphere());
     t.end();
   });
