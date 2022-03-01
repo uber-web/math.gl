@@ -43,7 +43,8 @@ export default abstract class MathArray extends Array<number> {
     return Array.isArray(arrayOrObject) ? this.copy(arrayOrObject) : this.fromObject(arrayOrObject);
   }
 
-  to(arrayOrObject: NumericArray | object): NumericArray | object {
+  to<T extends NumericArray | object>(arrayOrObject: T): T {
+    // @ts-ignore
     if (arrayOrObject === this) {
       return this;
     }
