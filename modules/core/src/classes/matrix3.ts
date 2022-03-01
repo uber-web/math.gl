@@ -1,24 +1,24 @@
 // Copyright (c) 2017 Uber Technologies, Inc.
 // MIT License
 import Matrix from './base/matrix';
-import {checkVector, deprecated} from '../lib/validators';
+import {checkVector} from '../lib/validators';
 import {vec4_transformMat3} from '../lib/gl-matrix-extras';
 import * as mat3 from 'gl-matrix/mat3';
 import * as vec2 from 'gl-matrix/vec2';
 import * as vec3 from 'gl-matrix/vec3';
 import {NumericArray} from '../lib/types';
 
-const INDICES = Object.freeze({
-  COL0ROW0: 0,
-  COL0ROW1: 1,
-  COL0ROW2: 2,
-  COL1ROW0: 3,
-  COL1ROW1: 4,
-  COL1ROW2: 5,
-  COL2ROW0: 6,
-  COL2ROW1: 7,
-  COL2ROW2: 8
-});
+enum INDICES {
+  COL0ROW0 = 0,
+  COL0ROW1 = 1,
+  COL0ROW2 = 2,
+  COL1ROW0 = 3,
+  COL1ROW1 = 4,
+  COL1ROW2 = 5,
+  COL2ROW0 = 6,
+  COL2ROW1 = 7,
+  COL2ROW2 = 8
+}
 
 const IDENTITY_MATRIX = Object.freeze([1, 0, 0, 0, 1, 0, 0, 0, 1]);
 
@@ -53,13 +53,13 @@ export default class Matrix3 extends Matrix {
     if (arguments.length === 1 && Array.isArray(array)) {
       this.copy(array);
     } else if (args.length > 0) {
-      this.copy([array, ...args]);
+      this.copy([array as number, ...args]);
     } else {
       this.identity();
     }
   }
 
-  copy(array): this {
+  copy(array: Readonly<NumericArray>): this {
     // Element wise copy for performance
     this[0] = array[0];
     this[1] = array[1];
@@ -90,7 +90,7 @@ export default class Matrix3 extends Matrix {
 
   // Calculates a 3x3 matrix from the given quaternion
   // q quat  Quaternion to create matrix from
-  fromQuaternion(q) {
+  fromQuaternion(q: Readonly<NumericArray>): this {
     mat3.fromQuat(this, q);
     return this.check();
   }
@@ -99,7 +99,17 @@ export default class Matrix3 extends Matrix {
    * accepts column major order, stores in column major order
    */
   // eslint-disable-next-line max-params
-  set(m00, m10, m20, m01, m11, m21, m02, m12, m22) {
+  set(
+    m00: number,
+    m10: number,
+    m20: number,
+    m01: number,
+    m11: number,
+    m21: number,
+    m02: number,
+    m12: number,
+    m22: number
+  ): this {
     this[0] = m00;
     this[1] = m10;
     this[2] = m20;
@@ -116,7 +126,17 @@ export default class Matrix3 extends Matrix {
    * accepts row major order, stores as column major
    */
   // eslint-disable-next-line max-params
-  setRowMajor(m00, m01, m02, m10, m11, m12, m20, m21, m22) {
+  setRowMajor(
+    m00: number,
+    m01: number,
+    m02: number,
+    m10: number,
+    m11: number,
+    m12: number,
+    m20: number,
+    m21: number,
+    m22: number
+  ): this {
     this[0] = m00;
     this[1] = m10;
     this[2] = m20;
@@ -131,39 +151,39 @@ export default class Matrix3 extends Matrix {
 
   // Accessors
 
-  determinant() {
+  determinant(): number {
     return mat3.determinant(this);
   }
 
   // Modifiers
-  transpose() {
+  transpose(): this {
     mat3.transpose(this, this);
     return this.check();
   }
 
   /** Invert a matrix. Note that this can fail if the matrix is not invertible */
-  invert() {
+  invert(): this {
     mat3.invert(this, this);
     return this.check();
   }
 
   // Operations
-  multiplyLeft(a) {
+  multiplyLeft(a: NumericArray): this {
     mat3.multiply(this, a, this);
     return this.check();
   }
 
-  multiplyRight(a) {
+  multiplyRight(a: NumericArray): this {
     mat3.multiply(this, this, a);
     return this.check();
   }
 
-  rotate(radians) {
+  rotate(radians: number): NumericArray {
     mat3.rotate(this, this, radians);
     return this.check();
   }
 
-  scale(factor) {
+  scale(factor: NumericArray | number): this {
     if (Array.isArray(factor)) {
       mat3.scale(this, this, factor);
     } else {
@@ -171,12 +191,14 @@ export default class Matrix3 extends Matrix {
     }
     return this.check();
   }
-  translate(vec) {
+
+  translate(vec: NumericArray): this {
     mat3.translate(this, this, vec);
     return this.check();
   }
+
   // Transforms
-  transform(vector, result) {
+  transform(vector: Readonly<NumericArray>, result?: NumericArray): NumericArray {
     switch (vector.length) {
       case 2:
         result = vec2.transformMat3(result || [-0, -0], vector, this);
@@ -192,6 +214,21 @@ export default class Matrix3 extends Matrix {
     }
     checkVector(result, vector.length);
     return result;
+  }
+
+  /** @deprecated */
+  transformVector(vector: Readonly<NumericArray>, result?: NumericArray): NumericArray {
+    return this.transform(vector, result);
+  }
+
+  /** @deprecated */
+  transformVector2(vector: Readonly<NumericArray>, result?: NumericArray): NumericArray {
+    return this.transform(vector, result);
+  }
+
+  /** @deprecated */
+  transformVector3(vector: Readonly<NumericArray>, result?: NumericArray): NumericArray {
+    return this.transform(vector, result);
   }
 }
 

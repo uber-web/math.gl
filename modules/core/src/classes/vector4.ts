@@ -70,7 +70,12 @@ export default class Vector4 extends Vector {
     return this;
   }
 
-  toObject(object) {
+  toObject(object): {
+    x: number;
+    y: number;
+    z: number;
+    w: number;
+  } {
     object.x = this[0];
     object.y = this[1];
     object.z = this[2];

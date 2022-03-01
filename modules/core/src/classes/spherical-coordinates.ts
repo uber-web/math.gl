@@ -5,6 +5,7 @@ import Vector3 from './vector3';
 import {formatValue, equals, config} from '../lib/common';
 import {degrees, radians, clamp} from '../lib/common';
 import * as vec3 from 'gl-matrix/vec3';
+import {NumericArray} from '../lib/types';
 
 type SphericalCoordinatesOptions = {
   phi?: number;
@@ -61,10 +62,18 @@ export default class SphericalCoordinates {
     phi = 0,
     theta = 0,
     radius = 1,
-    bearing = undefined,
-    pitch = undefined,
-    altitude = undefined,
+    bearing,
+    pitch,
+    altitude,
     radiusScale = EARTH_RADIUS_METERS
+  }: {
+    phi?: number;
+    theta?: number;
+    radius?: number;
+    bearing?: number;
+    pitch?: number;
+    altitude?: number;
+    radiusScale?: number;
   } = {}) {
     this.phi = phi;
     this.theta = theta;
@@ -79,79 +88,98 @@ export default class SphericalCoordinates {
     }
     this.check();
   }
-  toString() {
+
+  toString(): string {
     return this.formatString(config);
   }
-  formatString({printTypes = false}) {
+
+  formatString({printTypes = false}: {printTypes?: boolean}): string {
     const f = formatValue;
     return `${printTypes ? 'Spherical' : ''}\
 [rho:${f(this.radius)},theta:${f(this.theta)},phi:${f(this.phi)}]`;
   }
-  equals(other) {
+
+  equals(other: SphericalCoordinates): boolean {
     return (
       equals(this.radius, other.radius) &&
       equals(this.theta, other.theta) &&
       equals(this.phi, other.phi)
     );
   }
-  exactEquals(other) {
+
+  exactEquals(other: SphericalCoordinates): boolean {
     return this.radius === other.radius && this.theta === other.theta && this.phi === other.phi;
   }
+
   /* eslint-disable brace-style */
   // Cartographic (bearing 0 north, pitch 0 look from above)
-  get bearing() {
+  get bearing(): number {
     return 180 - degrees(this.phi);
   }
-  set bearing(v) {
+
+  set bearing(v: number) {
     this.phi = Math.PI - radians(v);
   }
-  get pitch() {
+
+  get pitch(): number {
     return degrees(this.theta);
   }
-  set pitch(v) {
+
+  set pitch(v: number) {
     this.theta = radians(v);
   }
+
   // get pitch() { return 90 - degrees(this.phi); }
   // set pitch(v) { this.phi = radians(v) + Math.PI / 2; }
   // get altitude() { return this.radius - 1; } // relative altitude
   // lnglatZ coordinates
-  get longitude() {
+  get longitude(): number {
     return degrees(this.phi);
   }
-  get latitude() {
+
+  get latitude(): number {
     return degrees(this.theta);
   }
-  get lng() {
+
+  get lng(): number {
     return degrees(this.phi);
   }
-  get lat() {
+
+  get lat(): number {
     return degrees(this.theta);
   }
-  get z() {
+
+  get z(): number {
     return (this.radius - 1) * this.radiusScale;
   }
+
   /* eslint-enable brace-style */
-  set(radius, phi, theta) {
+  set(radius: number, phi: number, theta: number) {
     this.radius = radius;
     this.phi = phi;
     this.theta = theta;
     return this.check();
   }
-  clone() {
+
+  clone(): SphericalCoordinates {
     return new SphericalCoordinates().copy(this);
   }
-  copy(other) {
+
+  copy(other: SphericalCoordinates): this {
     this.radius = other.radius;
     this.phi = other.phi;
     this.theta = other.theta;
     return this.check();
   }
-  fromLngLatZ([lng, lat, z]) {
+
+  fromLngLatZ([lng, lat, z]: [number, number, number]): this {
     this.radius = 1 + z / this.radiusScale;
     this.phi = radians(lat);
     this.theta = radians(lng);
+    return this.check();
   }
-  fromVector3(v) {
+
+  fromVector3(v: Readonly<NumericArray>): this {
     this.radius = vec3.length(v);
     if (this.radius > 0) {
       this.theta = Math.atan2(v[0], v[1]); // equator angle around y-up axis
@@ -159,16 +187,19 @@ export default class SphericalCoordinates {
     }
     return this.check();
   }
-  toVector3() {
+
+  toVector3(): Vector3 {
     return new Vector3(0, 0, this.radius)
       .rotateX({radians: this.theta})
       .rotateZ({radians: this.phi});
   }
+
   // restrict phi to be betwee EPS and PI-EPS
-  makeSafe() {
+  makeSafe(): this {
     this.phi = Math.max(EPSILON, Math.min(Math.PI - EPSILON, this.phi));
     return this;
   }
+
   check() {
     // this.makeSafe();
     if (!Number.isFinite(this.phi) || !Number.isFinite(this.theta) || !(this.radius > 0)) {

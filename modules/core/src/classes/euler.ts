@@ -3,6 +3,7 @@
 import MathArray from './base/math-array';
 import Quaternion from './quaternion';
 import Matrix3 from './matrix3';
+import {NumericArray} from '../lib/types';
 
 import {clamp} from '../lib/common';
 import {checkNumber} from '../lib/validators';
@@ -11,48 +12,48 @@ import {checkNumber} from '../lib/validators';
 const ERR_UNKNOWN_ORDER = 'Unknown Euler angle order';
 const ALMOST_ONE = 0.99999;
 
+enum RotationOrder {
+  ZYX = 0,
+  YXZ = 1,
+  XZY = 2,
+  ZXY = 3,
+  YZX = 4,
+  XYZ = 5
+}
+
 export default class Euler extends MathArray {
-  // static XYZ = 0;
-  // static YZX = 1;
-  // static ZXY = 2;
-  // static XZY = 3;
-  // static YXZ = 4;
-  // static ZYX = 5;
-  // static RollPitchYaw = 0;
-  // static DefaultOrder = 0;
   // Constants
-  /* eslint-disable no-multi-spaces, brace-style, no-return-assign */
-  static get ZYX() {
-    return 0;
+  static get ZYX(): RotationOrder {
+    return RotationOrder.ZYX;
   }
-  static get YXZ() {
-    return 1;
+  static get YXZ(): RotationOrder {
+    return RotationOrder.YXZ;
   }
-  static get XZY() {
-    return 2;
+  static get XZY(): RotationOrder {
+    return RotationOrder.XZY;
   }
-  static get ZXY() {
-    return 3;
+  static get ZXY(): RotationOrder {
+    return RotationOrder.ZXY;
   }
-  static get YZX() {
-    return 4;
+  static get YZX(): RotationOrder {
+    return RotationOrder.YZX;
   }
-  static get XYZ() {
-    return 5;
+  static get XYZ(): RotationOrder {
+    return RotationOrder.XYZ;
   }
-  static get RollPitchYaw() {
-    return 0;
+  static get RollPitchYaw(): RotationOrder {
+    return RotationOrder.ZYX;
   }
-  static get DefaultOrder() {
-    return Euler.ZYX;
+  static get DefaultOrder(): RotationOrder {
+    return RotationOrder.ZYX;
   }
   static get RotationOrders() {
-    return ['ZYX', 'YXZ', 'XZY', 'ZXY', 'YZX', 'XYZ'];
+    return RotationOrder;
   }
-  static rotationOrder(order) {
-    return Euler.RotationOrders[order];
+  static rotationOrder(order: RotationOrder): string {
+    return RotationOrder[order];
   }
-  get ELEMENTS() {
+  get ELEMENTS(): number {
     return 4;
   }
 
@@ -76,7 +77,7 @@ export default class Euler extends MathArray {
     }
   }
 
-  fromQuaternion(quaternion) {
+  fromQuaternion(quaternion: Readonly<NumericArray>): this {
     const [x, y, z, w] = quaternion;
     const ysqr = y * y;
     const t0 = -2 * (ysqr + z * z) + 1;
@@ -89,7 +90,7 @@ export default class Euler extends MathArray {
     const roll = Math.atan2(t3, t4);
     const pitch = Math.asin(t2);
     const yaw = Math.atan2(t1, t0);
-    return new Euler(roll, pitch, yaw, Euler.RollPitchYaw);
+    return this.set(roll, pitch, yaw, Euler.RollPitchYaw);
   }
 
   fromObject(object: object): this {
@@ -102,7 +103,7 @@ export default class Euler extends MathArray {
   //   return this.check();
   // }
   // If copied array does contain fourth element, preserves currently set order
-  copy(array) {
+  copy(array: Readonly<NumericArray>): this {
     this[0] = array[0];
     this[1] = array[1];
     this[2] = array[2];
@@ -113,7 +114,7 @@ export default class Euler extends MathArray {
 
   // Sets the three angles, and optionally sets the rotation order
   // If order is not specified, preserves currently set order
-  set(x = 0, y = 0, z = 0, order) {
+  set(x = 0, y = 0, z = 0, order: RotationOrder): this {
     this[0] = x;
     this[1] = y;
     this[2] = z;
@@ -121,7 +122,7 @@ export default class Euler extends MathArray {
     return this.check();
   }
 
-  validate() {
+  validate(): boolean {
     return (
       validateOrder(this[3]) &&
       Number.isFinite(this[0]) &&
@@ -131,7 +132,7 @@ export default class Euler extends MathArray {
   }
 
   // Does not copy the orientation element
-  toArray(array = [], offset = 0) {
+  toArray(array: NumericArray = [], offset: number = 0): NumericArray {
     array[offset] = this[0];
     array[offset + 1] = this[1];
     array[offset + 2] = this[2];
@@ -139,7 +140,7 @@ export default class Euler extends MathArray {
   }
 
   // Copies the orientation element
-  toArray4(array = [], offset = 0) {
+  toArray4(array: NumericArray = [], offset: number = 0): NumericArray {
     array[offset] = this[0];
     array[offset + 1] = this[1];
     array[offset + 2] = this[2];
@@ -147,7 +148,7 @@ export default class Euler extends MathArray {
     return array;
   }
 
-  toVector3(result = [-0, -0, -0]) {
+  toVector3(result: NumericArray = [-0, -0, -0]): NumericArray {
     result[0] = this[0];
     result[1] = this[1];
     result[2] = this[2];
@@ -156,107 +157,107 @@ export default class Euler extends MathArray {
   /* eslint-disable no-multi-spaces, brace-style, no-return-assign */
   // x, y, z angle notation (note: only corresponds to axis in XYZ orientation)
 
-  get x() {
+  get x(): number {
     return this[0];
   }
-  set x(value) {
+  set x(value: number) {
     this[0] = checkNumber(value);
   }
 
-  get y() {
+  get y(): number {
     return this[1];
   }
-  set y(value) {
+  set y(value: number) {
     this[1] = checkNumber(value);
   }
 
-  get z() {
+  get z(): number {
     return this[2];
   }
-  set z(value) {
+  set z(value: number) {
     this[2] = checkNumber(value);
   }
   // alpha, beta, gamma angle notation
-  get alpha() {
+  get alpha(): number {
     return this[0];
   }
-  set alpha(value) {
+  set alpha(value: number) {
     this[0] = checkNumber(value);
   }
 
-  get beta() {
+  get beta(): number {
     return this[1];
   }
-  set beta(value) {
+  set beta(value: number) {
     this[1] = checkNumber(value);
   }
 
-  get gamma() {
+  get gamma(): number {
     return this[2];
   }
-  set gamma(value) {
+  set gamma(value: number) {
     this[2] = checkNumber(value);
   }
 
   // phi, theta, psi angle notation
-  get phi() {
+  get phi(): number {
     return this[0];
   }
-  set phi(value) {
+  set phi(value: number) {
     this[0] = checkNumber(value);
   }
 
-  get theta() {
+  get theta(): number {
     return this[1];
   }
-  set theta(value) {
+  set theta(value: number) {
     this[1] = checkNumber(value);
   }
 
-  get psi() {
+  get psi(): number {
     return this[2];
   }
-  set psi(value) {
+  set psi(value: number) {
     this[2] = checkNumber(value);
   }
   // roll, pitch, yaw angle notation
 
-  get roll() {
+  get roll(): number {
     return this[0];
   }
-  set roll(value) {
+  set roll(value: number) {
     this[0] = checkNumber(value);
   }
 
-  get pitch() {
+  get pitch(): number {
     return this[1];
   }
-  set pitch(value) {
+  set pitch(value: number) {
     this[1] = checkNumber(value);
   }
 
-  get yaw() {
+  get yaw(): number {
     return this[2];
   }
-  set yaw(value) {
+  set yaw(value: number) {
     this[2] = checkNumber(value);
   }
 
   // rotation order, in all three angle notations
-  get order() {
+  get order(): RotationOrder {
     return this[3];
   }
-  set order(value) {
+  set order(value: RotationOrder) {
     this[3] = checkOrder(value);
   }
 
   // Constructors
-  fromVector3(v, order) {
+  fromVector3(v: Readonly<NumericArray>, order: RotationOrder): this {
     return this.set(v[0], v[1], v[2], Number.isFinite(order) ? order : this[3]);
   }
 
   // TODO - with and without 4th element
-  fromArray(array, offset = 0) {
+  fromArray(array: Readonly<NumericArray>, offset: number = 0): this {
     this[0] = array[0 + offset];
     this[1] = array[1 + offset];
     this[2] = array[2 + offset];
@@ -267,41 +268,42 @@ export default class Euler extends MathArray {
   }
 
   // Common ZYX rotation order
-  fromRollPitchYaw(roll, pitch, yaw) {
-    return this.set(roll, pitch, yaw, Euler.ZYX);
+  fromRollPitchYaw(roll: number, pitch: number, yaw: number): this {
+    return this.set(roll, pitch, yaw, RotationOrder.ZYX);
   }
 
-  fromRotationMatrix(m, order = Euler.DefaultOrder) {
+  fromRotationMatrix(m: Readonly<NumericArray>, order: RotationOrder = Euler.DefaultOrder): this {
     this._fromRotationMatrix(m, order);
     return this.check();
   }
 
   // ACCESSORS
 
-  getRotationMatrix(m) {
+  getRotationMatrix(m: NumericArray): NumericArray {
     return this._getRotationMatrix(m);
   }
 
   // TODO - move to Quaternion
-  getQuaternion() {
+  getQuaternion(): Quaternion {
     const q = new Quaternion();
     switch (this[4]) {
-      case Euler.XYZ:
+      case RotationOrder.XYZ:
         return q.rotateX(this[0]).rotateY(this[1]).rotateZ(this[2]);
-      case Euler.YXZ:
+      case RotationOrder.YXZ:
         return q.rotateY(this[0]).rotateX(this[1]).rotateZ(this[2]);
-      case Euler.ZXY:
+      case RotationOrder.ZXY:
         return q.rotateZ(this[0]).rotateX(this[1]).rotateY(this[2]);
-      case Euler.ZYX:
+      case RotationOrder.ZYX:
         return q.rotateZ(this[0]).rotateY(this[1]).rotateX(this[2]);
-      case Euler.YZX:
+      case RotationOrder.YZX:
         return q.rotateY(this[0]).rotateZ(this[1]).rotateX(this[2]);
-      case Euler.XZY:
+      case RotationOrder.XZY:
         return q.rotateX(this[0]).rotateZ(this[1]).rotateY(this[2]);
       default:
         throw new Error(ERR_UNKNOWN_ORDER);
     }
   }
+
   // INTERNAL METHODS
   // Conversion from Euler to rotation matrix and from matrix to Euler
   // Adapted from three.js under MIT license
@@ -310,18 +312,17 @@ export default class Euler extends MathArray {
   //   const q = new Quaternion().setFromEuler(this);
   //   return this.setFromQuaternion(q, newOrder);
   /* eslint-disable complexity, max-statements, one-var */
-  _fromRotationMatrix(m, order = Euler.DefaultOrder) {
+  _fromRotationMatrix(m: Readonly<NumericArray>, order = Euler.DefaultOrder): this {
     // assumes the upper 3x3 of m is a pure rotation matrix (i.e, unscaled)
-    const te = m.elements;
-    const m11 = te[0],
-      m12 = te[4],
-      m13 = te[8];
-    const m21 = te[1],
-      m22 = te[5],
-      m23 = te[9];
-    const m31 = te[2],
-      m32 = te[6],
-      m33 = te[10];
+    const m11 = m[0],
+      m12 = m[4],
+      m13 = m[8];
+    const m21 = m[1],
+      m22 = m[5],
+      m23 = m[9];
+    const m31 = m[2],
+      m32 = m[6],
+      m33 = m[10];
     order = order || this[3];
     switch (order) {
       case Euler.XYZ:
@@ -390,7 +391,8 @@ export default class Euler extends MathArray {
     this[3] = order;
     return this;
   }
-  _getRotationMatrix(result) {
+
+  _getRotationMatrix(result: NumericArray): NumericArray {
     const te = result || [-0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0];
     const x = this.x,
       y = this.y,
@@ -512,7 +514,8 @@ export default class Euler extends MathArray {
     te[15] = 1;
     return te;
   }
-  toQuaternion() {
+
+  toQuaternion(): Quaternion {
     // Abbreviations for the various angular functions
     const cy = Math.cos(this.yaw * 0.5);
     const sy = Math.sin(this.yaw * 0.5);
@@ -530,11 +533,11 @@ export default class Euler extends MathArray {
 
 // HELPER FUNCTIONS
 
-function validateOrder(value) {
+function validateOrder(value: number): boolean {
   return value >= 0 && value < 6;
 }
 
-function checkOrder(value) {
+function checkOrder(value: number) {
   if (value < 0 && value >= 6) {
     throw new Error(ERR_UNKNOWN_ORDER);
   }

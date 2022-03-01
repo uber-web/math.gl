@@ -49,21 +49,21 @@ export default class Vector3 extends Vector {
     }
   }
 
-  set(x: number, y: number, z: number) {
+  set(x: number, y: number, z: number): this {
     this[0] = x;
     this[1] = y;
     this[2] = z;
     return this.check();
   }
 
-  copy(array: Readonly<NumericArray>) {
+  copy(array: Readonly<NumericArray>): this {
     this[0] = array[0];
     this[1] = array[1];
     this[2] = array[2];
     return this.check();
   }
 
-  fromObject(object: {[key: string]: any}) {
+  fromObject(object: {[key: string]: any}): this {
     if (config.debug) {
       checkNumber(object.x);
       checkNumber(object.y);
@@ -75,7 +75,7 @@ export default class Vector3 extends Vector {
     return this.check();
   }
 
-  toObject(object) {
+  toObject(object): {x: number; y: number; z: number} {
     object.x = this[0];
     object.y = this[1];
     object.z = this[2];
@@ -84,40 +84,40 @@ export default class Vector3 extends Vector {
 
   // Getters/setters
 
-  get ELEMENTS() {
+  get ELEMENTS(): number {
     return 3;
   }
-  get z() {
+  get z(): number {
     return this[2];
   }
-  set z(value) {
+  set z(value: number) {
     this[2] = checkNumber(value);
   }
 
   // ACCESSORS
 
-  angle(vector) {
+  angle(vector: Readonly<NumericArray>): number {
     return vec3.angle(this, vector);
   }
 
   // MODIFIERS
 
-  cross(vector) {
+  cross(vector: Readonly<NumericArray>): this {
     vec3.cross(this, this, vector);
     return this.check();
   }
 
-  rotateX({radians, origin = ORIGIN}) {
+  rotateX({radians, origin = ORIGIN}: {radians: number; origin?: Readonly<NumericArray>}): this {
     vec3.rotateX(this, this, origin, radians);
     return this.check();
   }
 
-  rotateY({radians, origin = ORIGIN}) {
+  rotateY({radians, origin = ORIGIN}: {radians: number; origin?: Readonly<NumericArray>}): this {
     vec3.rotateY(this, this, origin, radians);
     return this.check();
   }
 
-  rotateZ({radians, origin = ORIGIN}) {
+  rotateZ({radians, origin = ORIGIN}: {radians: number; origin?: Readonly<NumericArray>}): this {
     vec3.rotateZ(this, this, origin, radians);
     return this.check();
   }
@@ -125,33 +125,33 @@ export default class Vector3 extends Vector {
   // Transforms
 
   // transforms as point (4th component is implicitly 1)
-  transform(matrix4) {
+  transform(matrix4: Readonly<NumericArray>): this {
     return this.transformAsPoint(matrix4);
   }
 
   // transforms as point (4th component is implicitly 1)
-  transformAsPoint(matrix4) {
+  transformAsPoint(matrix4: Readonly<NumericArray>): this {
     vec3.transformMat4(this, this, matrix4);
     return this.check();
   }
 
   // transforms as vector  (4th component is implicitly 0, ignores translation. slightly faster)
-  transformAsVector(matrix4) {
+  transformAsVector(matrix4: Readonly<NumericArray>): this {
     vec3_transformMat4AsVector(this, this, matrix4);
     return this.check();
   }
 
-  transformByMatrix3(matrix3) {
+  transformByMatrix3(matrix3: Readonly<NumericArray>): this {
     vec3.transformMat3(this, this, matrix3);
     return this.check();
   }
 
-  transformByMatrix2(matrix2) {
+  transformByMatrix2(matrix2: Readonly<NumericArray>): this {
     vec3_transformMat2(this, this, matrix2);
     return this.check();
   }
 
-  transformByQuaternion(quaternion) {
+  transformByQuaternion(quaternion: Readonly<NumericArray>): this {
     vec3.transformQuat(this, this, quaternion);
     return this.check();
   }

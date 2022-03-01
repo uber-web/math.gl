@@ -3,6 +3,7 @@
 import Matrix4 from './matrix4';
 import Vector3 from './vector3';
 import Euler from './euler';
+import {NumericArray} from '../lib/types';
 
 type PoseOptions = {
   position?: number[];
@@ -28,6 +29,15 @@ export default class Pose {
     yaw = 0,
     position = undefined,
     orientation = undefined
+  }: {
+    x?: number;
+    y?: number;
+    z?: number;
+    roll?: number;
+    pitch?: number;
+    yaw?: number;
+    position?: Readonly<NumericArray>;
+    orientation?: Readonly<NumericArray>;
   } = {}) {
     if (Array.isArray(position) && position.length === 3) {
       this.position = new Vector3(position);
@@ -42,69 +52,69 @@ export default class Pose {
     }
   }
 
-  get x() {
+  get x(): number {
     return this.position.x;
   }
 
-  set x(value) {
+  set x(value: number) {
     this.position.x = value;
   }
 
-  get y() {
+  get y(): number {
     return this.position.y;
   }
 
-  set y(value) {
+  set y(value: number) {
     this.position.y = value;
   }
 
-  get z() {
+  get z(): number {
     return this.position.z;
   }
 
-  set z(value) {
+  set z(value: number) {
     this.position.z = value;
   }
 
-  get roll() {
+  get roll(): number {
     return this.orientation.roll;
   }
 
-  set roll(value) {
+  set roll(value: number) {
     this.orientation.roll = value;
   }
 
-  get pitch() {
+  get pitch(): number {
     return this.orientation.pitch;
   }
-  set pitch(value) {
+  set pitch(value: number) {
     this.orientation.pitch = value;
   }
 
-  get yaw() {
+  get yaw(): number {
     return this.orientation.yaw;
   }
 
-  set yaw(value) {
+  set yaw(value: number) {
     this.orientation.yaw = value;
   }
 
-  getPosition() {
+  getPosition(): Vector3 {
     return this.position;
   }
 
-  getOrientation() {
+  getOrientation(): Euler {
     return this.orientation;
   }
 
-  equals(pose) {
+  equals(pose: Pose): boolean {
     if (!pose) {
       return false;
     }
     return this.position.equals(pose.position) && this.orientation.equals(pose.orientation);
   }
 
-  exactEquals(pose) {
+  exactEquals(pose: Pose): boolean {
     if (!pose) {
       return false;
     }
@@ -113,7 +123,7 @@ export default class Pose {
     );
   }
 
-  getTransformationMatrix() {
+  getTransformationMatrix(): Matrix4 {
     // setup pre computations for the sin/cos of the angles
     const sr = Math.sin(this.roll);
     const sp = Math.sin(this.pitch);
@@ -143,13 +153,13 @@ export default class Pose {
     );
   }
 
-  getTransformationMatrixFromPose(pose) {
+  getTransformationMatrixFromPose(pose: Pose): Matrix4 {
     return new Matrix4()
       .multiplyRight(this.getTransformationMatrix())
       .multiplyRight(pose.getTransformationMatrix().invert());
   }
 
-  getTransformationMatrixToPose(pose) {
+  getTransformationMatrixToPose(pose: Pose): Matrix4 {
     return new Matrix4()
       .multiplyRight(pose.getTransformationMatrix())
       .multiplyRight(this.getTransformationMatrix().invert());

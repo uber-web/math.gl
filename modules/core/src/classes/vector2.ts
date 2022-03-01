@@ -50,7 +50,7 @@ export default class Vector2 extends Vector {
     return this.check();
   }
 
-  toObject(object): this {
+  toObject(object): {x: number; y: number} {
     object.x = this[0];
     object.y = this[1];
     return object;

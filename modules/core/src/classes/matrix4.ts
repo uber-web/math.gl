@@ -10,7 +10,7 @@ import * as vec2 from 'gl-matrix/vec2';
 import * as vec3 from 'gl-matrix/vec3';
 import * as vec4 from 'gl-matrix/vec4';
 
-enum COLUMN_INDEX {
+enum INDICES {
   COL0ROW0 = 0,
   COL0ROW1 = 1,
   COL0ROW2 = 2,
@@ -46,16 +46,16 @@ export default class Matrix4 extends Matrix {
     return getZeroMatrix();
   }
 
-  // get INDICES() {
-  //     return getMatrixIndices();
-  // }
-
   get ELEMENTS(): number {
     return 16;
   }
 
   get RANK(): number {
     return 4;
+  }
+
+  get INDICES() {
+    return INDICES;
   }
 
   constructor(array?: Readonly<NumericArray>) {
@@ -91,20 +91,20 @@ export default class Matrix4 extends Matrix {
   // eslint-disable-next-line max-params
   set(
     m00: number,
-    m01: number,
-    m02: number,
-    m03: number,
     m10: number,
-    m11: number,
-    m12: number,
-    m13: number,
     m20: number,
-    m21: number,
-    m22: number,
-    m23: number,
     m30: number,
+    m01: number,
+    m11: number,
+    m21: number,
     m31: number,
+    m02: number,
+    m12: number,
+    m22: number,
     m32: number,
+    m03: number,
+    m13: number,
+    m23: number,
     m33: number
   ): this {
     this[0] = m00;
@@ -188,7 +188,7 @@ export default class Matrix4 extends Matrix {
   // Constructors
 
   /** Set to identity matrix */
-  identity() {
+  identity(): this {
     return this.copy(IDENTITY_MATRIX);
   }
 
@@ -206,7 +206,7 @@ export default class Matrix4 extends Matrix {
    * @param quaternion Quaternion to create matrix from
    * @returns self
    */
-  fromQuaternion(quaternion: Readonly<NumericArray>) {
+  fromQuaternion(quaternion: Readonly<NumericArray>): this {
     mat4.fromQuat(this, quaternion);
     return this.check();
   }
@@ -338,7 +338,7 @@ export default class Matrix4 extends Matrix {
 
   // Accessors
 
-  determinant() {
+  determinant(): this {
     return mat4.determinant(this);
   }
 
@@ -348,7 +348,7 @@ export default class Matrix4 extends Matrix {
    * @param result
    * @returns self
    */
-  getScale(result: NumericArray = [-0, -0, -0]) {
+  getScale(result: NumericArray = [-0, -0, -0]): NumericArray {
     // explicit is faster than hypot...
     result[0] = Math.sqrt(this[0] * this[0] + this[1] * this[1] + this[2] * this[2]);
     result[1] = Math.sqrt(this[4] * this[4] + this[5] * this[5] + this[6] * this[6]);
@@ -364,7 +364,7 @@ export default class Matrix4 extends Matrix {
    * @param result
    * @returns self
    */
-  getTranslation(result: NumericArray = [-0, -0, -0]) {
+  getTranslation(result: NumericArray = [-0, -0, -0]): NumericArray {
     result[0] = this[12];
     result[1] = this[13];
     result[2] = this[14];
@@ -377,7 +377,7 @@ export default class Matrix4 extends Matrix {
    * @param scaleResult
    * @returns self
    */
-  getRotation(result?: NumericArray, scaleResult?: NumericArray) {
+  getRotation(result?: NumericArray, scaleResult?: NumericArray): NumericArray {
     result = result || [-0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0];
     scaleResult = scaleResult || [-0, -0, -0];
     const scale = this.getScale(scaleResult);
@@ -578,7 +578,17 @@ export default class Matrix4 extends Matrix {
   }
 
   /** @deprecated */
+  transformPoint(vector: Readonly<NumericArray>, result?: NumericArray): NumericArray {
+    return this.transformAsPoint(vector, result);
+  }
+
+  /** @deprecated */
   transformVector(vector: Readonly<NumericArray>, result?: NumericArray): NumericArray {
+    return this.transformAsPoint(vector, result);
+  }
+
+  /** @deprecated */
+  transformDirection(vector: Readonly<NumericArray>, result?: NumericArray): NumericArray {
     return this.transformAsVector(vector, result);
   }
 
@@ -613,28 +623,9 @@ function getIdentityMatrix(): Matrix4 {
   return IDENTITY;
 }
 
-// const INDICES = Object.freeze({
-//     COL0ROW0: 0,
-//     COL0ROW1: 1,
-//     COL0ROW2: 2,
-//     COL0ROW3: 3,
-//     COL1ROW0: 4,
-//     COL1ROW1: 5,
-//     COL1ROW2: 6,
-//     COL1ROW3: 7,
-//     COL2ROW0: 8,
-//     COL2ROW1: 9,
-//     COL2ROW2: 10,
-//     COL2ROW3: 11,
-//     COL3ROW0: 12,
-//     COL3ROW1: 13,
-//     COL3ROW2: 14,
-//     COL3ROW3: 15
-// });
-
 // HELPER FUNCTIONS
 
-function checkRadians(possiblyDegrees) {
+function checkRadians(possiblyDegrees: number) {
   if (possiblyDegrees > Math.PI * 2) {
     throw Error('expected radians');
   }

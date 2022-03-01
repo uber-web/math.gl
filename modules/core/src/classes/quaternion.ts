@@ -5,8 +5,10 @@ import {checkNumber, checkVector} from '../lib/validators';
 import assert from '../lib/assert';
 import * as quat from 'gl-matrix/quat';
 import * as vec4 from 'gl-matrix/vec4';
-import {NumericArray} from '..';
-const IDENTITY_QUATERNION = [0, 0, 0, 1];
+import {NumericArray} from '../lib/types';
+
+const IDENTITY_QUATERNION = [0, 0, 0, 1] as const;
+
 export default class Quaternion extends MathArray {
   constructor(x: number | Readonly<NumericArray> = 0, y = 0, z = 0, w = 1) {
     // PERF NOTE: initialize elements as double precision numbers
@@ -175,7 +177,10 @@ export default class Quaternion extends MathArray {
     return this.check();
   }
   // Performs a linear interpolation between two quat's
-  lerp(a, b, t) {
+  lerp(a: Readonly<NumericArray>, b: Readonly<NumericArray> | number, t?: number): this {
+    if (t === undefined) {
+      return this.lerp(this, a, b as number);
+    }
     quat.lerp(this, a, b, t);
     return this.check();
   }

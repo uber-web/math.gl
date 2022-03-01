@@ -108,7 +108,13 @@ export default abstract class MathArray extends Array<number> {
   }
 
   /** Linearly interpolates between two values */
-  lerp(a: Readonly<NumericArray>, b: Readonly<NumericArray>, t?: number): this {
+  lerp(a: Readonly<NumericArray>, t: number): this;
+  lerp(a: Readonly<NumericArray>, b: Readonly<NumericArray>, t: number): this;
+
+  lerp(a: Readonly<NumericArray>, b: Readonly<NumericArray> | number, t?: number): this {
+    if (t === undefined) {
+      return this.lerp(this, a, b as number);
+    }
     for (let i = 0; i < this.ELEMENTS; ++i) {
       const ai = a[i];
       this[i] = ai + t * (b[i] - ai);
@@ -203,12 +209,12 @@ export default abstract class MathArray extends Array<number> {
   // three.js compatibility
 
   /** @deprecated */
-  sub(a) {
+  sub(a: Readonly<NumericArray>): this {
     return this.subtract(a);
   }
 
   /** @deprecated */
-  setScalar(a) {
+  setScalar(a: number): this {
     for (let i = 0; i < this.ELEMENTS; ++i) {
       this[i] = a;
     }
@@ -216,7 +222,7 @@ export default abstract class MathArray extends Array<number> {
   }
 
   /** @deprecated */
-  addScalar(a) {
+  addScalar(a: number): this {
     for (let i = 0; i < this.ELEMENTS; ++i) {
       this[i] += a;
     }
@@ -224,12 +230,12 @@ export default abstract class MathArray extends Array<number> {
   }
 
   /** @deprecated */
-  subScalar(a) {
+  subScalar(a: number): this {
     return this.addScalar(-a);
   }
 
   /** @deprecated */
-  multiplyScalar(scalar) {
+  multiplyScalar(scalar: number): this {
     // Multiplies all elements
     // `Matrix4.scale` only scales its 3x3 "minor"
     for (let i = 0; i < this.ELEMENTS; ++i) {
@@ -239,12 +245,12 @@ export default abstract class MathArray extends Array<number> {
   }
 
   /** @deprecated */
-  divideScalar(a) {
+  divideScalar(a: number): this {
     return this.multiplyByScalar(1 / a);
   }
 
   /** @deprecated */
-  clampScalar(min, max) {
+  clampScalar(min: number, max: number): this {
     for (let i = 0; i < this.ELEMENTS; ++i) {
       this[i] = Math.min(Math.max(this[i], min), max);
     }
