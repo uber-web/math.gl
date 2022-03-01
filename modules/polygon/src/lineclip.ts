@@ -24,7 +24,7 @@
 
 import {push, copy, getPointAtIndex} from './utils';
 
-type BoundingBox = [number, number, number, number];
+export type BoundingBox = [number, number, number, number];
 
 /**
  * Cohen-Sutherland line clipping algorithm, adapted to efficiently
@@ -41,13 +41,13 @@ export function clipPolyline(
 ): number[][] {
   const {size = 2, startIndex = 0, endIndex = positions.length} = options || {};
   const numPoints = (endIndex - startIndex) / size;
-  const result = [];
-  let part = [];
-  let a;
-  let b;
-  let codeA = -1;
-  let codeB;
-  let lastCode;
+  const result: number[][] = [];
+  let part: number[] = [];
+  let a: number[];
+  let b: number[];
+  let codeA: number = -1;
+  let codeB: number;
+  let lastCode: number;
 
   for (let i = 1; i < numPoints; i++) {
     a = getPointAtIndex(positions, i - 1, size, startIndex, a);
@@ -114,11 +114,11 @@ export function clipPolygon(
   const {size = 2, endIndex = positions.length} = options || {};
   let {startIndex = 0} = options || {};
   let numPoints = (endIndex - startIndex) / size;
-  let result;
-  let p;
-  let prev;
-  let inside;
-  let prevInside;
+  let result: number[];
+  let p: number[];
+  let prev: number[];
+  let inside: boolean;
+  let prevInside: boolean;
 
   // clip against each side of the clip rectangle
   for (let edge = 1; edge <= 8; edge *= 2) {
@@ -163,7 +163,7 @@ export function intersect(
   // Forces out[snapI] to be on the bbox edge
   // Interpolation introduces precision issue which may cause lineclip to be
   // stuck in an infinite loop
-  let snap;
+  let snap: number;
   if (edge & 8) {
     // top
     t = (bbox[3] - a[1]) / (b[1] - a[1]);

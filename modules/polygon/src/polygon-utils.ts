@@ -132,7 +132,10 @@ export function forEachSegmentInPolygon(
   }
 }
 
-function reversePolygon(points, options) {
+function reversePolygon(
+  points: NumericArray,
+  options: {start?: number; end?: number; size?: number}
+): void {
   const {start = 0, end = points.length, size = 2} = options;
 
   const numPoints = (end - start) / size;
