@@ -255,7 +255,6 @@ test('subdivide polygon#edgeTypes', (t) => {
     edgeTypes: true
   });
 
-  // @ts-expect-error
   for (const {positions, edgeTypes, holeIndices} of result) {
     let loopStart = 0;
     let loopEnd = (holeIndices && holeIndices[0]) || positions.length;
