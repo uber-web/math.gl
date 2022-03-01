@@ -5,7 +5,7 @@ import {mod, log2} from './math-utils';
 const TILE_SIZE = 512;
 
 /** Description of viewport */
-type ViewportProps = {
+export type ViewportProps = {
   width: number;
   height: number;
   longitude: number;

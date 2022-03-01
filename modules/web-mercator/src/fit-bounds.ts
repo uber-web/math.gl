@@ -38,7 +38,7 @@ export type Padding = {
   right: number;
 };
 
-export type Bounds = {
+type ViewportProps = {
   longitude: number;
   latitude: number;
   zoom: number;
@@ -53,7 +53,7 @@ export type Bounds = {
  * @param options fit bounds parameters
  * @returns - latitude, longitude and zoom
  */
-export default function fitBounds(options: FitBoundsOptions): Bounds {
+export default function fitBounds(options: FitBoundsOptions): ViewportProps {
   const {
     width,
     height,

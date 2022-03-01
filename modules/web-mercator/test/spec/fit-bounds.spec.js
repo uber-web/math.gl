@@ -4,7 +4,7 @@ import {WebMercatorViewport} from '@math.gl/web-mercator';
 import {toLowPrecision} from '../utils/test-utils';
 
 const FITBOUNDS_TEST_CASES =
-  /** @type {[import('@math.gl/web-mercator/fit-bounds').FitBoundsOptions, import('@math.gl/web-mercator/fit-bounds').Bounds][]} */ ([
+  /** @type {[import('@math.gl/web-mercator/fit-bounds').FitBoundsOptions, {longitude: number; latitude: number; zoom: number;}][]} */ ([
     [
       {
         width: 100,

@@ -68,7 +68,7 @@ export function scaleToZoom(scale: number): number {
  *   Specifies a point on the sphere to project onto the map.
  * @return [x,y] coordinates.
  */
-export function lngLatToWorld(lngLat: number[]): number[] {
+export function lngLatToWorld(lngLat: number[]): [number, number] {
   const [lng, lat] = lngLat;
   assert(Number.isFinite(lng));
   assert(Number.isFinite(lat) && lat >= -90 && lat <= 90, 'invalid latitude');
@@ -89,7 +89,7 @@ export function lngLatToWorld(lngLat: number[]): number[] {
  *   Has toArray method if you need a GeoJSON Array.
  *   Per cartographic tradition, lat and lon are specified as degrees.
  */
-export function worldToLngLat(xy: number[]): number[] {
+export function worldToLngLat(xy: number[]): [number, number] {
   const [x, y] = xy;
   const lambda2 = (x / TILE_SIZE) * (2 * PI) - PI;
   const phi2 = 2 * (Math.atan(Math.exp((y / TILE_SIZE) * (2 * PI) - PI)) - PI_4);
@@ -211,7 +211,7 @@ export function getViewMatrix(options: {
   altitude: number;
   // Pre-calculated parameters
   scale: number;
-  center: number[];
+  center?: number[];
 }): number[] {
   const {
     // Viewport props
@@ -221,7 +221,7 @@ export function getViewMatrix(options: {
     altitude,
     // Pre-calculated parameters
     scale,
-    center = null
+    center
   } = options;
   // VIEW MATRIX: PROJECTS MERCATOR WORLD COORDINATES
   // Note that mercator world coordinates typically need to be flipped
@@ -327,7 +327,7 @@ export function getProjectionMatrix(options: {
   const {fov, aspect, near, far} = getProjectionParameters(options);
 
   const projectionMatrix = mat4.perspective(
-    [],
+    [] as number[],
     fov, // fov in radians
     aspect, // aspect ratio
     near, // near plane
@@ -371,7 +371,7 @@ export function fovyToAltitude(fovy: number): number {
 export function worldToPixels(xyz: number[], pixelProjectionMatrix: number[]): number[];
 
 // Project flat coordinates to pixels on screen.
-export function worldToPixels(xyz, pixelProjectionMatrix) {
+export function worldToPixels(xyz: number[], pixelProjectionMatrix: number[]): number[] {
   const [x, y, z = 0] = xyz;
   assert(Number.isFinite(x) && Number.isFinite(y) && Number.isFinite(z));
 
@@ -410,5 +410,5 @@ export function pixelsToWorld(
   const z1 = coord1[2];
 
   const t = z0 === z1 ? 0 : ((targetZ || 0) - z0) / (z1 - z0);
-  return vec2.lerp([], coord0, coord1, t);
+  return vec2.lerp([] as number[], coord0, coord1, t);
 }

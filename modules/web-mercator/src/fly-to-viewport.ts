@@ -2,8 +2,10 @@ import {lerp} from './math-utils';
 import {scaleToZoom, zoomToScale, lngLatToWorld, worldToLngLat} from './web-mercator-utils';
 import * as vec2 from 'gl-matrix/vec2';
 
+import type {ViewportProps} from './normalize-viewport-props';
+
 const EPSILON = 0.01;
-const VIEWPORT_TRANSITION_PROPS = ['longitude', 'latitude', 'zoom'];
+const VIEWPORT_TRANSITION_PROPS = ['longitude', 'latitude', 'zoom'] as const;
 const DEFAULT_OPTS = {
   curve: 1.414,
   speed: 1.2
@@ -17,12 +19,6 @@ export type FlytoTransitionOptions = {
   maxDuration?: number;
 };
 
-export type ViewportProps = {
-  longitude: number;
-  latitude: number;
-  zoom: number;
-};
-
 /**
  * mapbox-gl-js flyTo : https://www.mapbox.com/mapbox-gl-js/api/#map#flyto.
  * It implements “Smooth and efficient zooming and panning.” algorithm by
@@ -33,7 +29,11 @@ export default function flyToViewport(
   endProps: ViewportProps,
   t: number,
   options?: FlytoTransitionOptions
-): ViewportProps {
+): {
+  longitude: number;
+  latitude: number;
+  zoom: number;
+} {
   // Equations from above paper are referred where needed.
 
   const {startZoom, startCenterXY, uDelta, w0, u1, S, rho, rho2, r0} = getFlyToTransitionParams(
@@ -83,7 +83,7 @@ export function getFlyToDuration(
   const {screenSpeed, speed, maxDuration} = opts;
   const {S, rho} = getFlyToTransitionParams(startProps, endProps, opts);
   const length = 1000 * S;
-  let duration;
+  let duration: number;
   if (Number.isFinite(screenSpeed)) {
     duration = length / (screenSpeed / rho);
   } else {
@@ -96,7 +96,22 @@ export function getFlyToDuration(
 // Private Methods
 
 // Calculate all parameters that are static for given startProps and endProps
-function getFlyToTransitionParams(startProps, endProps, opts) {
+function getFlyToTransitionParams(
+  startProps: ViewportProps,
+  endProps: ViewportProps,
+  opts: FlytoTransitionOptions
+): {
+  startZoom: number;
+  startCenterXY: number[];
+  uDelta: number[];
+  w0: number;
+  u1: number;
+  S: number;
+  rho: number;
+  rho2: number;
+  r0: number;
+  r1: number;
+} {
   opts = Object.assign({}, DEFAULT_OPTS, opts);
   const rho = opts.curve;
   const startZoom = startProps.zoom;
@@ -108,7 +123,7 @@ function getFlyToTransitionParams(startProps, endProps, opts) {
 
   const startCenterXY = lngLatToWorld(startCenter);
   const endCenterXY = lngLatToWorld(endCenter);
-  const uDelta = vec2.sub([], endCenterXY, startCenterXY);
+  const uDelta = vec2.sub([] as number[], endCenterXY, startCenterXY);
 
   const w0 = Math.max(startProps.width, startProps.height);
   const w1 = w0 / scale;
