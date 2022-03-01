@@ -1,20 +1,21 @@
 import {cutPolylineByGrid, cutPolygonByGrid} from './cut-by-grid';
 import {getPointAtIndex, push} from './utils';
 import type {Polygon} from './cut-by-grid';
+import type {NumericArray} from '@math.gl/core';
 
 // https://en.wikipedia.org/wiki/Web_Mercator_projection
 const DEFAULT_MAX_LATITUDE = 85.051129;
 
 /** https://user-images.githubusercontent.com/2059298/78465769-938b7a00-76ae-11ea-9b95-1f4c26425ab9.png */
 export function cutPolylineByMercatorBounds(
-  positions: Array<number>,
+  positions: NumericArray,
   options?: {
     size?: number;
     startIndex?: number;
     endIndex?: number;
     normalize?: boolean;
   }
-): Array<number> {
+): number[][] {
   const {size = 2, startIndex = 0, endIndex = positions.length, normalize = true} = options || {};
 
   // Remap longitudes so that each segment takes the shorter path
@@ -26,7 +27,7 @@ export function cutPolylineByMercatorBounds(
     broken: true,
     gridResolution: 360,
     gridOffset: [-180, -180]
-  });
+  }) as number[][];
 
   if (normalize) {
     // Each part is guaranteed to be in a single copy of the world
@@ -35,25 +36,24 @@ export function cutPolylineByMercatorBounds(
       shiftLongitudesIntoRange(part, size);
     }
   }
-  // @ts-expect-error
   return parts;
 }
 
 /** https://user-images.githubusercontent.com/2059298/78465770-94241080-76ae-11ea-809a-6a8534dac1d9.png */
 export function cutPolygonByMercatorBounds(
-  positions: Array<number>,
-  holeIndices: Array<number> | null = null,
+  positions: number[],
+  holeIndices: number[] | null = null,
   options?: {
     size?: number;
     normalize?: boolean;
     maxLatitude?: number;
     edgeTypes?: boolean;
   }
-): Array<Polygon> {
+): Polygon[] {
   const {size = 2, normalize = true, edgeTypes = false} = options || {};
   holeIndices = holeIndices || [];
-  const newPositions = [];
-  const newHoleIndices = [];
+  const newPositions: number[] = [];
+  const newHoleIndices: number[] = [];
   let srcStartIndex = 0;
   let targetIndex = 0;
 
@@ -105,7 +105,12 @@ export function cutPolygonByMercatorBounds(
 /* Helpers */
 
 // See comments for insertPoleVertices
-function findSplitIndex(positions, size, startIndex, endIndex) {
+function findSplitIndex(
+  positions: number[],
+  size: number,
+  startIndex: number,
+  endIndex: number
+): number {
   let maxLat = -1;
   let pointIndex = -1;
   for (let i = startIndex + 1; i < endIndex; i += size) {
@@ -128,12 +133,12 @@ function findSplitIndex(positions, size, startIndex, endIndex) {
 // intersect with the ring itself. This is ensured by findSplitIndex, which returns the
 // vertex closest to the pole.
 function insertPoleVertices(
-  positions,
-  size,
-  startIndex,
-  endIndex,
-  maxLatitude = DEFAULT_MAX_LATITUDE
-) {
+  positions: number[],
+  size: number,
+  startIndex: number,
+  endIndex: number,
+  maxLatitude: number = DEFAULT_MAX_LATITUDE
+): void {
   // Check if the ring contains a pole
   const firstLng = positions[startIndex];
   const lastLng = positions[endIndex - size];
@@ -153,9 +158,14 @@ function insertPoleVertices(
   }
 }
 
-function wrapLongitudesForShortestPath(positions, size, startIndex, endIndex) {
-  let prevLng = positions[0];
-  let lng;
+function wrapLongitudesForShortestPath(
+  positions: NumericArray,
+  size: number,
+  startIndex: number,
+  endIndex: number
+): void {
+  let prevLng: number = positions[0];
+  let lng: number;
   for (let i = startIndex; i < endIndex; i += size) {
     lng = positions[i];
     const delta = lng - prevLng;
@@ -166,8 +176,8 @@ function wrapLongitudesForShortestPath(positions, size, startIndex, endIndex) {
   }
 }
 
-function shiftLongitudesIntoRange(positions, size) {
-  let refLng;
+function shiftLongitudesIntoRange(positions: NumericArray, size: number): void {
+  let refLng: number;
   const pointCount = positions.length / size;
 
   // Find a longitude that is not on the edge of a world

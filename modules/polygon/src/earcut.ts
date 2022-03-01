@@ -22,7 +22,7 @@
 
  */
 
-/* eslint-disable complexity, max-params, max-statements, max-depth, no-continue, no-shadow */
+/* eslint-disable */
 
 import {getPolygonSignedArea} from './polygon-utils';
 

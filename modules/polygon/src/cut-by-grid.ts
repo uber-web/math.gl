@@ -1,15 +1,17 @@
 /* eslint-disable max-statements, max-depth, complexity, no-unused-expressions */
-import {bitCode, intersect} from './lineclip';
+import {bitCode, intersect, BoundingBox} from './lineclip';
 import {getPointAtIndex, copy, push} from './utils';
 
+import type {NumericArray} from '@math.gl/core';
+
 export type Polygon = {
-  positions: Array<number>;
-  holeIndices?: Array<number>;
-  vertexTypes?: Array<number>;
+  positions: number[];
+  holeIndices?: number[];
+  edgeTypes?: number[];
 };
 
 export function cutPolylineByGrid(
-  positions: Array<number>,
+  positions: NumericArray,
   options?: {
     size?: number;
     broken?: boolean;
@@ -18,7 +20,7 @@ export function cutPolylineByGrid(
     startIndex?: number;
     endIndex?: number;
   }
-): Array<number> | Array<Array<number>> {
+): number[] | number[][] {
   const {
     size = 2,
     broken = false,
@@ -28,13 +30,13 @@ export function cutPolylineByGrid(
     endIndex = positions.length
   } = options || {};
   const numPoints = (endIndex - startIndex) / size;
-  let part = [];
-  const result = [part];
-  const a = getPointAtIndex(positions, 0, size, startIndex);
-  let b;
-  let codeB;
-  const cell = getGridCell(a, gridResolution, gridOffset, []);
-  const scratchPoint = [];
+  let part: number[] = [];
+  const result: number[][] = [part];
+  const a: number[] = getPointAtIndex(positions, 0, size, startIndex);
+  let b: number[];
+  let codeB: number;
+  const cell: BoundingBox = getGridCell(a, gridResolution, gridOffset, []);
+  const scratchPoint: number[] = [];
   push(part, a);
 
   for (let i = 1; i < numPoints; i++) {
@@ -73,7 +75,7 @@ export function cutPolylineByGrid(
 const TYPE_INSIDE = 0;
 const TYPE_BORDER = 1;
 
-function concatInPlace(arr1, arr2) {
+function concatInPlace(arr1: number[], arr2: number[]): number[] {
   for (let i = 0; i < arr2.length; i++) {
     arr1.push(arr2[i]);
   }
@@ -81,30 +83,31 @@ function concatInPlace(arr1, arr2) {
 }
 
 export function cutPolygonByGrid(
-  positions: Array<number>,
-  holeIndices: Array<number> | null = null,
+  positions: number[],
+  holeIndices: number[] | null = null,
   options?: {
     size?: number;
     gridResolution?: number;
     gridOffset?: [number, number];
     edgeTypes?: boolean;
   }
-): Array<Polygon> {
+): Polygon[] {
   if (!positions.length) {
     // input is empty
     return [];
   }
   const {size = 2, gridResolution = 10, gridOffset = [0, 0], edgeTypes = false} = options || {};
-  const result = [];
-  const queue = [
+  const result: Polygon[] = [];
+  const queue: {pos: number[]; types: number[]; holes: number[]}[] = [
     {
       pos: positions,
-      types: edgeTypes && new Array(positions.length / size).fill(TYPE_BORDER),
+      types: edgeTypes ? (new Array(positions.length / size).fill(TYPE_BORDER) as number[]) : null,
       holes: holeIndices || []
     }
   ];
-  const bbox = [[], []];
-  let cell = [];
+  const bbox: number[][] = [[], []];
+  // @ts-ignore
+  let cell: BoundingBox = [];
 
   // Recursively bisect polygon until every part fit in a single grid cell
   while (queue.length) {
@@ -113,7 +116,6 @@ export function cutPolygonByGrid(
     // Get the bounding box of the outer polygon
     getBoundingBox(pos, size, holes[0] || pos.length, bbox);
     cell = getGridCell(bbox[0], gridResolution, gridOffset, cell);
-    // @ts-expect-error
     const code = bitCode(bbox[1], cell);
 
     if (code) {
@@ -144,13 +146,11 @@ export function cutPolygonByGrid(
       }
     } else {
       // Polygon fits in a single cell, no more processing required
-      const polygon = {positions: pos};
+      const polygon: Polygon = {positions: pos};
       if (edgeTypes) {
-        // @ts-expect-error
         polygon.edgeTypes = types;
       }
       if (holes.length) {
-        // @ts-expect-error
         polygon.holeIndices = holes;
       }
 
@@ -164,17 +164,25 @@ export function cutPolygonByGrid(
 // TYPE_BORDER - edge from the original polygon
 // TYPE_INSIDE - inside the original polygon
 // eslint-disable-next-line max-params
-function bisectPolygon(positions, edgeTypes, size, startIndex, endIndex, bbox, edge) {
+function bisectPolygon(
+  positions: NumericArray,
+  edgeTypes: number[] | undefined,
+  size: number,
+  startIndex: number,
+  endIndex: number,
+  bbox: BoundingBox,
+  edge: number
+) {
   const numPoints = (endIndex - startIndex) / size;
-  const resultLow = [];
-  const resultHigh = [];
-  const typesLow = [];
-  const typesHigh = [];
-  const scratchPoint = [];
+  const resultLow: number[] = [];
+  const resultHigh: number[] = [];
+  const typesLow: number[] = [];
+  const typesHigh: number[] = [];
+  const scratchPoint: number[] = [];
 
-  let p;
-  let side;
-  let type;
+  let p: number[];
+  let side: number;
+  let type: number;
   const prev = getPointAtIndex(positions, numPoints - 1, size, startIndex);
   let prevSide = Math.sign(edge & 8 ? prev[1] - bbox[3] : prev[0] - bbox[2]);
   let prevType = edgeTypes && edgeTypes[numPoints - 1];
@@ -217,7 +225,12 @@ function bisectPolygon(positions, edgeTypes, size, startIndex, endIndex, bbox, e
   ];
 }
 
-function getGridCell(p, gridResolution, gridOffset, out) {
+function getGridCell(
+  p: number[],
+  gridResolution: number,
+  gridOffset: [number, number],
+  out: number[]
+): BoundingBox {
   const left = Math.floor((p[0] - gridOffset[0]) / gridResolution) * gridResolution + gridOffset[0];
   const bottom =
     Math.floor((p[1] - gridOffset[1]) / gridResolution) * gridResolution + gridOffset[1];
@@ -225,10 +238,10 @@ function getGridCell(p, gridResolution, gridOffset, out) {
   out[1] = bottom;
   out[2] = left + gridResolution;
   out[3] = bottom + gridResolution;
-  return out;
+  return out as BoundingBox;
 }
 
-function moveToNeighborCell(cell, gridResolution, edge) {
+function moveToNeighborCell(cell: number[], gridResolution: number, edge: number): void {
   if (edge & 8) {
     // top
     cell[1] += gridResolution;
@@ -248,7 +261,12 @@ function moveToNeighborCell(cell, gridResolution, edge) {
   }
 }
 
-function getBoundingBox(positions, size, endIndex, out) {
+function getBoundingBox(
+  positions: NumericArray,
+  size: number,
+  endIndex: number,
+  out: number[][]
+): number[][] {
   let minX = Infinity;
   let maxX = -Infinity;
   let minY = Infinity;

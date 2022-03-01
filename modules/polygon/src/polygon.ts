@@ -1,6 +1,7 @@
 /* eslint-disable no-undef, no-console */
 import {isArray} from '@math.gl/core';
 import type {SegmentVisitorPoints} from './polygon-utils';
+import type {NumericArray} from '@math.gl/core';
 
 import {
   getPolygonSignedArea,
@@ -19,11 +20,11 @@ export type PolygonOptions = {
 };
 
 export default class Polygon {
-  points; // : number[];
+  points: NumericArray | number[][];
   isFlatArray: boolean;
   options: PolygonOptions;
 
-  constructor(points /* : number[] */, options: PolygonOptions = {}) {
+  constructor(points: NumericArray | number[][], options: PolygonOptions = {}) {
     this.points = points;
     this.isFlatArray = !isArray(points[0]);
 
@@ -42,9 +43,9 @@ export default class Polygon {
    * @returns Signed area of the polygon.
    */
   getSignedArea(): number {
-    if (this.isFlatArray) return getPolygonSignedArea(this.points, this.options);
+    if (this.isFlatArray) return getPolygonSignedArea(this.points as NumericArray, this.options);
 
-    return getPolygonSignedAreaPoints(this.points, this.options);
+    return getPolygonSignedAreaPoints(this.points as number[][], this.options);
   }
 
   /**
@@ -70,7 +71,7 @@ export default class Polygon {
   forEachSegment(visitor: SegmentVisitorPoints): void {
     if (this.isFlatArray) {
       forEachSegmentInPolygon(
-        this.points,
+        this.points as NumericArray,
         // eslint-disable-next-line max-params
         (x1, y1, x2, y2, i1, i2) => {
           // TODO @igorDykhta original visitor uses arrays for each point, but with flat arrays performance degrades if we allocate points for each segment
@@ -79,7 +80,7 @@ export default class Polygon {
         this.options
       );
     } else {
-      forEachSegmentInPolygonPoints(this.points, visitor, this.options);
+      forEachSegmentInPolygonPoints(this.points as number[][], visitor, this.options);
     }
   }
 
@@ -90,8 +91,8 @@ export default class Polygon {
    */
   modifyWindingDirection(direction: number): boolean {
     if (this.isFlatArray) {
-      return modifyPolygonWindingDirection(this.points, direction, this.options);
+      return modifyPolygonWindingDirection(this.points as NumericArray, direction, this.options);
     }
-    return modifyPolygonWindingDirectionPoints(this.points, direction, this.options);
+    return modifyPolygonWindingDirectionPoints(this.points as number[][], direction, this.options);
   }
 }
