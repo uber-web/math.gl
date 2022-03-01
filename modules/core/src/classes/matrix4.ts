@@ -1,8 +1,8 @@
 // Copyright (c) 2017 Uber Technologies, Inc.
 // MIT License
 import Matrix from './base/matrix';
-import {NumericArray} from '../lib/types';
-import {checkVector, deprecated} from '../lib/validators';
+import {NumericArray} from '@math.gl/types';
+import {checkVector} from '../lib/validators';
 
 import {vec2_transformMat4AsVector, vec3_transformMat4AsVector} from '../lib/gl-matrix-extras';
 import * as mat4 from 'gl-matrix/mat4';

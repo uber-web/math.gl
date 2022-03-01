@@ -3,11 +3,11 @@
 import Matrix4 from './matrix4';
 import Vector3 from './vector3';
 import Euler from './euler';
-import {NumericArray} from '../lib/types';
+import {NumericArray} from '@math.gl/types';
 
 type PoseOptions = {
-  position?: number[];
-  orientation?: number[];
+  position?: Readonly<NumericArray>;
+  orientation?: Readonly<NumericArray>;
   x?: number;
   y?: number;
   z?: number;
@@ -27,18 +27,9 @@ export default class Pose {
     roll = 0,
     pitch = 0,
     yaw = 0,
-    position = undefined,
-    orientation = undefined
-  }: {
-    x?: number;
-    y?: number;
-    z?: number;
-    roll?: number;
-    pitch?: number;
-    yaw?: number;
-    position?: Readonly<NumericArray>;
-    orientation?: Readonly<NumericArray>;
-  } = {}) {
+    position,
+    orientation
+  }: PoseOptions = {}) {
     if (Array.isArray(position) && position.length === 3) {
       this.position = new Vector3(position);
     } else {
