@@ -6,7 +6,7 @@ import {vec4_transformMat3} from '../lib/gl-matrix-extras';
 import * as mat3 from 'gl-matrix/mat3';
 import * as vec2 from 'gl-matrix/vec2';
 import * as vec3 from 'gl-matrix/vec3';
-import {NumericArray} from '../lib/types';
+import {NumericArray} from '@math.gl/types';
 
 enum INDICES {
   COL0ROW0 = 0,

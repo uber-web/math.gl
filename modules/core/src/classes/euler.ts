@@ -2,8 +2,7 @@
 // MIT License
 import MathArray from './base/math-array';
 import Quaternion from './quaternion';
-import Matrix3 from './matrix3';
-import {NumericArray} from '../lib/types';
+import {NumericArray} from '@math.gl/types';
 
 import {clamp} from '../lib/common';
 import {checkNumber} from '../lib/validators';

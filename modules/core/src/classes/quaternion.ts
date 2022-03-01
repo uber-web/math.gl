@@ -5,7 +5,7 @@ import {checkNumber, checkVector} from '../lib/validators';
 import assert from '../lib/assert';
 import * as quat from 'gl-matrix/quat';
 import * as vec4 from 'gl-matrix/vec4';
-import {NumericArray} from '../lib/types';
+import {NumericArray} from '@math.gl/types';
 
 const IDENTITY_QUATERNION = [0, 0, 0, 1] as const;
 

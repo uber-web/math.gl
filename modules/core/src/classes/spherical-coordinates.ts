@@ -5,7 +5,7 @@ import Vector3 from './vector3';
 import {formatValue, equals, config} from '../lib/common';
 import {degrees, radians, clamp} from '../lib/common';
 import * as vec3 from 'gl-matrix/vec3';
-import {NumericArray} from '../lib/types';
+import {NumericArray} from '@math.gl/types';
 
 type SphericalCoordinatesOptions = {
   phi?: number;
@@ -66,15 +66,7 @@ export default class SphericalCoordinates {
     pitch,
     altitude,
     radiusScale = EARTH_RADIUS_METERS
-  }: {
-    phi?: number;
-    theta?: number;
-    radius?: number;
-    bearing?: number;
-    pitch?: number;
-    altitude?: number;
-    radiusScale?: number;
-  } = {}) {
+  }: SphericalCoordinatesOptions = {}) {
     this.phi = phi;
     this.theta = theta;
     // TODO - silently accepts illegal 0

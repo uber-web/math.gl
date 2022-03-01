@@ -1,6 +1,6 @@
 // Copyright (c) 2017 Uber Technologies, Inc.
 // MIT License
-import {NumericArray} from '../../lib/types';
+import {NumericArray} from '@math.gl/types';
 import MathArray from './math-array';
 import {checkNumber} from '../../lib/validators';
 import assert from '../../lib/assert';

@@ -5,7 +5,7 @@ import {config, isArray} from '../lib/common';
 import {checkNumber} from '../lib/validators';
 import * as vec4 from 'gl-matrix/vec3';
 import {vec4_transformMat2, vec4_transformMat3} from '../lib/gl-matrix-extras';
-import {NumericArray} from '../lib/types';
+import {NumericArray} from '@math.gl/types';
 
 const constants: {
   ZERO?: any;
