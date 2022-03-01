@@ -12,11 +12,12 @@ import {
   DEFAULT_ALTITUDE,
   getProjectionMatrix,
   getDistanceScales,
-  getViewMatrix
+  getViewMatrix,
+  DistanceScales
 } from './web-mercator-utils';
 import fitBounds from './fit-bounds';
 import getBounds from './get-bounds';
-import type {Bounds, FitBoundsOptions} from './fit-bounds';
+import type {FitBoundsOptions} from './fit-bounds';
 
 import * as mat4 from 'gl-matrix/mat4';
 import * as vec2 from 'gl-matrix/vec2';
@@ -84,9 +85,7 @@ export default class WebMercatorViewport {
   readonly width: number;
   readonly height: number;
   readonly scale: number;
-  readonly distanceScales: {
-    unitsPerMeter: number[];
-  };
+  readonly distanceScales: DistanceScales;
 
   readonly viewMatrix: number[];
   readonly projectionMatrix: number[];
@@ -145,7 +144,7 @@ export default class WebMercatorViewport {
     const distanceScales = getDistanceScales({longitude, latitude});
 
     const center = lngLatToWorld([longitude, latitude]);
-    center[2] = 0;
+    center.push(0);
 
     if (position) {
       vec3.add(center, center, vec3.mul([], position, distanceScales.unitsPerMeter));
@@ -198,7 +197,7 @@ export default class WebMercatorViewport {
     Object.freeze(this);
   }
 
-  _initMatrices() {
+  _initMatrices(): void {
     const {width, height, projectionMatrix, viewMatrix} = this;
 
     // Note: As usual, matrix operations should be applied in "reverse" order
@@ -303,15 +302,14 @@ export default class WebMercatorViewport {
   // NON_LINEAR PROJECTION HOOKS
   // Used for web meractor projection
 
-  projectPosition(xyz) {
+  projectPosition(xyz: number[]): [number, number, number] {
     const [X, Y] = lngLatToWorld(xyz);
     const Z = (xyz[2] || 0) * this.distanceScales.unitsPerMeter[2];
     return [X, Y, Z];
   }
 
-  unprojectPosition(xyz) {
+  unprojectPosition(xyz: number[]): [number, number, number] {
     const [X, Y] = worldToLngLat(xyz);
-    // @ts-expect-error
     const Z = (xyz[2] || 0) * this.distanceScales.metersPerUnit[2];
     return [X, Y, Z];
   }

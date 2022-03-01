@@ -338,7 +338,7 @@ export default class Matrix4 extends Matrix {
 
   // Accessors
 
-  determinant(): this {
+  determinant(): number {
     return mat4.determinant(this);
   }
 

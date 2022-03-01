@@ -6,8 +6,8 @@ export function createMat4(): number[] {
 }
 
 // Transforms a vec4 with a projection matrix
-export function transformVector(matrix, vector) {
-  const result = transformMat4([], vector, matrix);
+export function transformVector(matrix: number[], vector: number[]): number[] {
+  const result = transformMat4([] as number[], vector, matrix);
   scale(result, result, 1 / result[3]);
   return result;
 }
@@ -21,7 +21,7 @@ export function lerp(start: number, end: number, step: number): number {
   return step * end + (1 - step) * start;
 }
 
-export function clamp(x: number, min: number, max: number) {
+export function clamp(x: number, min: number, max: number): number {
   return x < min ? min : x > max ? max : x;
 }
 

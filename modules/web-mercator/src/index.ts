@@ -24,3 +24,7 @@ export {
   getProjectionMatrix,
   getProjectionParameters
 } from './web-mercator-utils';
+
+/** Types */
+export type {FitBoundsOptions} from './fit-bounds';
+export type {DistanceScales} from './web-mercator-utils';

@@ -16,8 +16,8 @@ export default function getBounds(viewport: WebMercatorViewport, z: number = 0):
   const unprojectOps = {targetZ: z};
   const bottomLeft = unproject([0, height], unprojectOps);
   const bottomRight = unproject([width, height], unprojectOps);
-  let topLeft;
-  let topRight;
+  let topLeft: number[];
+  let topRight: number[];
 
   const halfFov = viewport.fovy
     ? 0.5 * viewport.fovy * DEGREES_TO_RADIANS
@@ -43,7 +43,7 @@ export default function getBounds(viewport: WebMercatorViewport, z: number = 0):
  * @param {Number} x - projected x in screen space
  * @param {Number} targetZ - the elevation of the point in meters
  */
-function unprojectOnFarPlane(viewport: WebMercatorViewport, x: number, targetZ) {
+function unprojectOnFarPlane(viewport: WebMercatorViewport, x: number, targetZ: number): number[] {
   const {pixelUnprojectionMatrix} = viewport;
   const coord0 = transformVector(pixelUnprojectionMatrix, [x, 0, 1, 1]);
   const coord1 = transformVector(pixelUnprojectionMatrix, [x, viewport.height, 1, 1]);
@@ -53,6 +53,6 @@ function unprojectOnFarPlane(viewport: WebMercatorViewport, x: number, targetZ) 
   const coord = vec2.lerp([], coord0, coord1, t);
 
   const result = worldToLngLat(coord);
-  result[2] = targetZ;
+  result.push(targetZ);
   return result;
 }
