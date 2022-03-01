@@ -1,7 +1,12 @@
 /* eslint-disable camelcase */
+import {NumericArray} from '@math.gl/types';
 // vec2 additions
 
-export function vec2_transformMat4AsVector(out, a, m) {
+export function vec2_transformMat4AsVector<T extends NumericArray>(
+  out: T,
+  a: Readonly<NumericArray>,
+  m: Readonly<NumericArray>
+): T {
   const x = a[0];
   const y = a[1];
   const w = m[3] * x + m[7] * y || 1.0;
@@ -13,7 +18,11 @@ export function vec2_transformMat4AsVector(out, a, m) {
 // vec3 additions
 
 // Transform as vector, only uses 3x3 minor matrix
-export function vec3_transformMat4AsVector(out, a, m) {
+export function vec3_transformMat4AsVector<T extends NumericArray>(
+  out: T,
+  a: Readonly<NumericArray>,
+  m: Readonly<NumericArray>
+): T {
   const x = a[0];
   const y = a[1];
   const z = a[2];
@@ -24,7 +33,11 @@ export function vec3_transformMat4AsVector(out, a, m) {
   return out;
 }
 
-export function vec3_transformMat2(out, a, m) {
+export function vec3_transformMat2<T extends NumericArray>(
+  out: T,
+  a: Readonly<NumericArray>,
+  m: Readonly<NumericArray>
+): T {
   const x = a[0];
   const y = a[1];
   out[0] = m[0] * x + m[2] * y;
@@ -35,7 +48,11 @@ export function vec3_transformMat2(out, a, m) {
 
 // vec4 additions
 
-export function vec4_transformMat2(out, a, m) {
+export function vec4_transformMat2<T extends NumericArray>(
+  out: T,
+  a: Readonly<NumericArray>,
+  m: Readonly<NumericArray>
+): T {
   const x = a[0];
   const y = a[1];
   out[0] = m[0] * x + m[2] * y;
@@ -45,7 +62,11 @@ export function vec4_transformMat2(out, a, m) {
   return out;
 }
 
-export function vec4_transformMat3(out, a, m) {
+export function vec4_transformMat3<T extends NumericArray>(
+  out: T,
+  a: Readonly<NumericArray>,
+  m: Readonly<NumericArray>
+): T {
   const x = a[0];
   const y = a[1];
   const z = a[2];

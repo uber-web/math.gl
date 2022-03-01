@@ -3,6 +3,8 @@
 import {NumericArray} from '@math.gl/types';
 import assert from './assert';
 
+import type MathArray from '../classes/base/math-array';
+
 export type ConfigurationOptions = {
   EPSILON?: number;
   debug?: boolean;
@@ -61,23 +63,22 @@ export function isArray(value: unknown): boolean {
   return Array.isArray(value) || (ArrayBuffer.isView(value) && !(value instanceof DataView));
 }
 
-export function clone(array: NumericArray): NumericArray {
-  // @ts-expect-error We are speculatively calling clone
-  return 'clone' in array ? array.clone() : new Array(...array);
+export function clone(array: NumericArray | MathArray): NumericArray {
+  return 'clone' in array ? array.clone() : array.slice();
 }
 
 export function toRadians(degrees: number): number;
 export function toRadians(degrees: NumericArray): NumericArray;
 
-export function toRadians(degrees): any {
-  return radians(degrees);
+export function toRadians(degrees: number | NumericArray): number | NumericArray {
+  return radians(degrees as NumericArray);
 }
 
 export function toDegrees(degrees: number): number;
 export function toDegrees(degrees: NumericArray): NumericArray;
 
-export function toDegrees(radians): any {
-  return degrees(radians);
+export function toDegrees(radians: number | NumericArray): number | NumericArray {
+  return degrees(radians as NumericArray);
 }
 
 // GLSL math function equivalents - Works on both single values and vectors
@@ -88,7 +89,10 @@ export function toDegrees(radians): any {
 export function radians(degrees: number): number;
 export function radians(degrees: NumericArray, result?: NumericArray): NumericArray;
 
-export function radians(degrees, result?) {
+export function radians(
+  degrees: number | NumericArray,
+  result?: NumericArray
+): number | NumericArray {
   return map(degrees, (degrees) => degrees * DEGREES_TO_RADIANS, result);
 }
 
@@ -98,7 +102,10 @@ export function radians(degrees, result?) {
 export function degrees(radians: number): number;
 export function degrees(radians: NumericArray, result?: NumericArray): NumericArray;
 
-export function degrees(radians: number | NumericArray, result?) {
+export function degrees(
+  radians: number | NumericArray,
+  result?: NumericArray
+): number | NumericArray {
   return map(radians, (radians) => radians * RADIANS_TO_DEGREES, result);
 }
 
@@ -106,7 +113,7 @@ export function degrees(radians: number | NumericArray, result?) {
  * "GLSL equivalent" of `Math.sin`: Works on single values and vectors
  * @deprecated
  */
-export function sin(radians: any, result?: any): any {
+export function sin(radians: number | NumericArray, result?: NumericArray): number | NumericArray {
   return map(radians, (angle) => Math.sin(angle), result);
 }
 
@@ -114,7 +121,7 @@ export function sin(radians: any, result?: any): any {
  * "GLSL equivalent" of `Math.cos`: Works on single values and vectors
  * @deprecated
  */
-export function cos(radians: number | NumericArray, result?) {
+export function cos(radians: number | NumericArray, result?: NumericArray): number | NumericArray {
   return map(radians, (angle) => Math.cos(angle), result);
 }
 
@@ -122,50 +129,66 @@ export function cos(radians: number | NumericArray, result?) {
  * "GLSL equivalent" of `Math.tan`: Works on single values and vectors
  * @deprecated
  */
-export function tan(radians: number | NumericArray, result?) {
-  return map(radians, (angle) => Math.tan(angle));
+export function tan(radians: number | NumericArray, result?: NumericArray): number | NumericArray {
+  return map(radians, (angle) => Math.tan(angle), result);
 }
 
 /**
  * "GLSL equivalent" of `Math.asin`: Works on single values and vectors
  * @deprecated
  */
-export function asin(radians: number | NumericArray) {
-  return map(radians, (angle) => Math.asin(angle));
+export function asin(radians: number | NumericArray, result?: NumericArray): number | NumericArray {
+  return map(radians, (angle) => Math.asin(angle), result);
 }
 
 /**
  * "GLSL equivalent" of `Math.acos`: Works on single values and vectors
  * @deprecated
  */
-export function acos(radians: number | NumericArray) {
-  return map(radians, (angle) => Math.acos(angle));
+export function acos(radians: number | NumericArray, result?: NumericArray): number | NumericArray {
+  return map(radians, (angle) => Math.acos(angle), result);
 }
 
 /**
  * "GLSL equivalent" of `Math.atan`: Works on single values and vectors
  * @deprecated
  */
-export function atan(radians: number | NumericArray) {
-  return map(radians, (angle) => Math.atan(angle));
+export function atan(radians: number | NumericArray, result?: NumericArray): number | NumericArray {
+  return map(radians, (angle) => Math.atan(angle), result);
 }
 
 /**
  * GLSL style value clamping: Works on single values and vectors
  */
-export function clamp(value: number | NumericArray, min: number, max: number) {
+export function clamp(value: number, min: number, max: number): number;
+export function clamp(value: NumericArray, min: number, max: number): NumericArray;
+
+export function clamp(
+  value: number | NumericArray,
+  min: number,
+  max: number
+): number | NumericArray {
   return map(value, (value) => Math.max(min, Math.min(max, value)));
 }
 
 /**
  * Interpolate between two numbers or two arrays
  */
-export function lerp(a, b, t: number) {
+export function lerp(a: number, b: number, t: number): number;
+export function lerp(a: NumericArray, b: NumericArray, t: number): NumericArray;
+
+export function lerp(
+  a: number | NumericArray,
+  b: number | NumericArray,
+  t: number
+): number | NumericArray {
   if (isArray(a)) {
-    return a.map((ai, i) => lerp(ai, b[i], t));
+    return (a as NumericArray).map((ai: number, i: number) => lerp(ai, (b as NumericArray)[i], t));
   }
-  return t * b + (1 - t) * a;
+  return t * (b as number) + (1 - t) * (a as number);
 }
+
+/* eslint-disable */
 
 /**
  * Compares any two math objects, using `equals` method if available.
@@ -174,8 +197,7 @@ export function lerp(a, b, t: number) {
  * @param epsilon
  * @returns
  */
-// eslint-disable-next-line complexity
-export function equals(a: unknown, b: unknown, epsilon?: number): boolean {
+export function equals(a: any, b: any, epsilon?: number): boolean {
   const oldEpsilon = config.EPSILON;
   if (epsilon) {
     config.EPSILON = epsilon;
@@ -185,11 +207,9 @@ export function equals(a: unknown, b: unknown, epsilon?: number): boolean {
       return true;
     }
     if (isArray(a) && isArray(b)) {
-      // @ts-expect-error isArray has checked
       if (a.length !== b.length) {
         return false;
       }
-      // @ts-expect-error isArray has checked
       for (let i = 0; i < a.length; ++i) {
         // eslint-disable-next-line max-depth
         if (!equals(a[i], b[i])) {
@@ -198,14 +218,10 @@ export function equals(a: unknown, b: unknown, epsilon?: number): boolean {
       }
       return true;
     }
-    // @ts-expect-error Dynamic testing
     if (a && a.equals) {
-      // @ts-expect-error Dynamic testing
       return a.equals(b);
     }
-    // @ts-expect-error Dynamic testing
     if (b && b.equals) {
-      // @ts-expect-error Dynamic testing
       return b.equals(a);
     }
     if (typeof a === 'number' && typeof b === 'number') {
@@ -217,8 +233,7 @@ export function equals(a: unknown, b: unknown, epsilon?: number): boolean {
   }
 }
 
-// eslint-disable-next-line complexity
-export function exactEquals(a, b): boolean {
+export function exactEquals(a: any, b: any): boolean {
   if (a === b) {
     return true;
   }
@@ -244,7 +259,9 @@ export function exactEquals(a, b): boolean {
   return false;
 }
 
-export function withEpsilon(epsilon: number, func: Function): any {
+/* eslint-enable */
+
+export function withEpsilon(epsilon: number, func: () => any): any {
   const oldPrecision = config.EPSILON;
   config.EPSILON = epsilon;
   let value;
@@ -265,12 +282,16 @@ function round(value: number): number {
 // If the array has a clone function, calls it, otherwise returns a copy
 function duplicateArray(array: NumericArray): NumericArray {
   // @ts-expect-error We check for math.gl class methods
-  return array.clone ? array.clone() : new Array(array.length);
+  return array.clone ? array.clone() : (new Array(array.length) as number[]);
 }
 
 // If the argument value is an array, applies the func element wise,
 // otherwise applies func to the argument value
-function map(value: number | NumericArray, func: Function, result?) {
+function map(
+  value: number | NumericArray,
+  func: (x: number, index?: number, result?: NumericArray) => number,
+  result?: NumericArray
+): number | NumericArray {
   if (isArray(value)) {
     const array = value as NumericArray;
     result = result || duplicateArray(array);
@@ -279,5 +300,5 @@ function map(value: number | NumericArray, func: Function, result?) {
     }
     return result;
   }
-  return func(value);
+  return func(value as number);
 }

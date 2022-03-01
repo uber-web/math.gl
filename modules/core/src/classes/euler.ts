@@ -46,7 +46,7 @@ export default class Euler extends MathArray {
   static get DefaultOrder(): RotationOrder {
     return RotationOrder.ZYX;
   }
-  static get RotationOrders() {
+  static get RotationOrders(): typeof RotationOrder {
     return RotationOrder;
   }
   static rotationOrder(order: RotationOrder): string {

@@ -85,7 +85,7 @@ export default class SphericalCoordinates {
     return this.formatString(config);
   }
 
-  formatString({printTypes = false}: {printTypes?: boolean}): string {
+  formatString({printTypes = false}: FormatOptions): string {
     const f = formatValue;
     return `${printTypes ? 'Spherical' : ''}\
 [rho:${f(this.radius)},theta:${f(this.theta)},phi:${f(this.phi)}]`;
@@ -146,7 +146,7 @@ export default class SphericalCoordinates {
   }
 
   /* eslint-enable brace-style */
-  set(radius: number, phi: number, theta: number) {
+  set(radius: number, phi: number, theta: number): this {
     this.radius = radius;
     this.phi = phi;
     this.theta = theta;
@@ -192,7 +192,7 @@ export default class SphericalCoordinates {
     return this;
   }
 
-  check() {
+  check(): this {
     // this.makeSafe();
     if (!Number.isFinite(this.phi) || !Number.isFinite(this.theta) || !(this.radius > 0)) {
       throw new Error('SphericalCoordinates: some fields set to invalid numbers');

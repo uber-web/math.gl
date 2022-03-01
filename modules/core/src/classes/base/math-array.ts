@@ -7,7 +7,7 @@ export default abstract class MathArray extends Array<number> {
   /** Number of elements (values) in this array */
   abstract get ELEMENTS(): number;
 
-  abstract copy(vector): this;
+  abstract copy(vector: Readonly<NumericArray>): this;
 
   abstract fromObject(object: object): this;
 
@@ -19,7 +19,7 @@ export default abstract class MathArray extends Array<number> {
    */
   clone(): this {
     // @ts-expect-error TS2351: Cannot use 'new' with an expression whose type lacks a call or construct signature.
-    return new this.constructor().copy(this);
+    return new this.constructor().copy(this); // eslint-disable-line
   }
 
   fromArray(array: Readonly<NumericArray>, offset: number = 0): this {
@@ -259,7 +259,7 @@ export default abstract class MathArray extends Array<number> {
   }
 
   /** @deprecated */
-  get elements() {
+  get elements(): NumericArray {
     return this;
   }
 }

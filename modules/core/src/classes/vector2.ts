@@ -4,6 +4,7 @@ import Vector from './base/vector';
 import {config, isArray} from '../lib/common';
 import {checkNumber} from '../lib/validators';
 import * as vec2 from 'gl-matrix/vec2';
+/* eslint-disable camelcase */
 import {vec2_transformMat4AsVector} from '../lib/gl-matrix-extras';
 import {NumericArray} from '@math.gl/types';
 
@@ -40,7 +41,7 @@ export default class Vector2 extends Vector {
     return this.check();
   }
 
-  fromObject(object: {[key: string]: any}): this {
+  fromObject(object: {x: number; y: number}): this {
     if (config.debug) {
       checkNumber(object.x);
       checkNumber(object.y);
@@ -50,10 +51,10 @@ export default class Vector2 extends Vector {
     return this.check();
   }
 
-  toObject(object): {x: number; y: number} {
+  toObject(object: {x?: number; y?: number}): {x: number; y: number} {
     object.x = this[0];
     object.y = this[1];
-    return object;
+    return object as {x: number; y: number};
   }
 
   // Getters/setters

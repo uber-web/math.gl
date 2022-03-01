@@ -2,6 +2,7 @@
 // MIT License
 import Matrix from './base/matrix';
 import {checkVector} from '../lib/validators';
+/* eslint-disable camelcase */
 import {vec4_transformMat3} from '../lib/gl-matrix-extras';
 import * as mat3 from 'gl-matrix/mat3';
 import * as vec2 from 'gl-matrix/vec2';
@@ -39,7 +40,7 @@ export default class Matrix3 extends Matrix {
     return 3;
   }
 
-  get INDICES() {
+  get INDICES(): typeof INDICES {
     return INDICES;
   }
 
@@ -75,7 +76,7 @@ export default class Matrix3 extends Matrix {
 
   // Constructors
 
-  identity() {
+  identity(): this {
     return this.copy(IDENTITY_MATRIX);
   }
 
@@ -187,7 +188,7 @@ export default class Matrix3 extends Matrix {
     if (Array.isArray(factor)) {
       mat3.scale(this, this, factor);
     } else {
-      mat3.scale(this, this, [factor, factor, factor]);
+      mat3.scale(this, this, [factor as number, factor as number]);
     }
     return this.check();
   }
