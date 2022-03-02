@@ -249,8 +249,8 @@ export default class Matrix4 extends Matrix {
    */
   lookAt(view: {
     eye: Readonly<NumericArray>;
-    center: Readonly<NumericArray>;
-    up: Readonly<NumericArray>;
+    center?: Readonly<NumericArray>;
+    up?: Readonly<NumericArray>;
   }): this {
     const {eye, center = [0, 0, 0], up = [0, 1, 0]} = view;
     mat4.lookAt(this, eye, center, up);
