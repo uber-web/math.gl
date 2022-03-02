@@ -1,6 +1,14 @@
 # CHANGELOG
 
-## 3.6.0-alpha
+## 3.6.0-alpha.2
+
+- (HEAD -> master, origin/master, origin/HEAD) chore(core): lint (#280)
+- Remove duplicate types (#279)
+- chore(polygon): improve typings (#278)
+- Add typing for gl-matrix (#277)
+- chore: convert core module to typescript (#260)
+
+## 3.6.0-alpha.1
 
 - chore: Import '@math.gl/core' instead of 'math.gl' (#258)
 - chore: Add ts build (#257)
