@@ -4,6 +4,7 @@ import Matrix from './base/matrix';
 import {NumericArray} from '@math.gl/types';
 import {checkVector} from '../lib/validators';
 
+/* eslint-disable camelcase */
 import {vec2_transformMat4AsVector, vec3_transformMat4AsVector} from '../lib/gl-matrix-extras';
 import * as mat4 from 'gl-matrix/mat4';
 import * as vec2 from 'gl-matrix/vec2';
@@ -54,7 +55,7 @@ export default class Matrix4 extends Matrix {
     return 4;
   }
 
-  get INDICES() {
+  get INDICES(): typeof INDICES {
     return INDICES;
   }
 
@@ -296,7 +297,7 @@ export default class Matrix4 extends Matrix {
     focalDistance?: number;
     near?: number;
     far?: number;
-  }) {
+  }): this {
     const {
       fovy = DEFAULT_FOVY,
       aspect = DEFAULT_ASPECT,
@@ -311,7 +312,7 @@ export default class Matrix4 extends Matrix {
     const top = focalDistance * Math.tan(halfY); // focus_plane is the distance from the camera
     const right = top * aspect;
 
-    return new Matrix4().ortho({
+    return this.ortho({
       left: -right,
       right,
       bottom: -top,
@@ -632,7 +633,14 @@ function checkRadians(possiblyDegrees: number) {
 }
 
 // eslint-disable-next-line max-params
-function computeInfinitePerspectiveOffCenter(result, left, right, bottom, top, near) {
+function computeInfinitePerspectiveOffCenter(
+  result: NumericArray,
+  left: number,
+  right: number,
+  bottom: number,
+  top: number,
+  near: number
+): NumericArray {
   const column0Row0 = (2 * near) / (right - left);
   const column1Row1 = (2 * near) / (top - bottom);
   const column2Row0 = (right + left) / (right - left);

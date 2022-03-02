@@ -1,23 +1,29 @@
 // Copyright (c) 2017 Uber Technologies, Inc.
 // MIT License
+
 import Vector from './base/vector';
 import {config, isArray} from '../lib/common';
 import {checkNumber} from '../lib/validators';
 import * as vec4 from 'gl-matrix/vec3';
+/* eslint-disable camelcase */
 import {vec4_transformMat2, vec4_transformMat3} from '../lib/gl-matrix-extras';
 import {NumericArray} from '@math.gl/types';
 
-const constants: {
-  ZERO?: any;
-} = {};
+import type Matrix4 from './matrix4';
+
+let ZERO: Vector4;
 
 /**
  * Four-element vector class.
  * Subclass of Array<number>
  */
 export default class Vector4 extends Vector {
-  static get ZERO() {
-    return (constants.ZERO = constants.ZERO || Object.freeze(new Vector4(0, 0, 0, 0)));
+  static get ZERO(): Vector4 {
+    if (!ZERO) {
+      ZERO = new Vector4(0, 0, 0, 0);
+      Object.freeze(ZERO);
+    }
+    return ZERO;
   }
 
   constructor(x: number | Readonly<NumericArray> = 0, y: number = 0, z: number = 0, w: number = 0) {
@@ -56,7 +62,7 @@ export default class Vector4 extends Vector {
     return this.check();
   }
 
-  fromObject(object: {[key: string]: any}): this {
+  fromObject(object: {x: number; y: number; z: number; w: number}): this {
     if (config.debug) {
       checkNumber(object.x);
       checkNumber(object.y);
@@ -70,7 +76,7 @@ export default class Vector4 extends Vector {
     return this;
   }
 
-  toObject(object): {
+  toObject(object: {x?: number; y?: number; z?: number; w?: number}): {
     x: number;
     y: number;
     z: number;
@@ -80,7 +86,12 @@ export default class Vector4 extends Vector {
     object.y = this[1];
     object.z = this[2];
     object.w = this[3];
-    return object;
+    return object as {
+      x: number;
+      y: number;
+      z: number;
+      w: number;
+    };
   }
 
   // Getters/setters
@@ -123,7 +134,7 @@ export default class Vector4 extends Vector {
   }
 
   // three.js compatibility
-  applyMatrix4(m): this {
+  applyMatrix4(m: Matrix4): this {
     m.transform(this, this);
     return this;
   }

@@ -1,6 +1,6 @@
 /* eslint-disable */
-import {Vector3, assert, _MathUtils} from '@math.gl/core';
-import * as vec3 from 'gl-matrix/vec3';
+import {Vector3, _MathUtils} from '@math.gl/core';
+import type Ellipsoid from '../ellipsoid';
 
 const scratchVector = new Vector3();
 const scaleToGeodeticSurfaceIntersection = new Vector3();
@@ -9,14 +9,18 @@ const scaleToGeodeticSurfaceGradient = new Vector3();
 // Scales the provided Cartesian position along the geodetic surface normal
 // so that it is on the surface of this ellipsoid.  If the position is
 // at the center of the ellipsoid, this function returns undefined.
-export default function scaleToGeodeticSurface(cartesian, ellipsoid, result = new Vector3()) {
+export default function scaleToGeodeticSurface(
+  cartesian: number[],
+  ellipsoid: Ellipsoid,
+  result: number[] = []
+): number[] {
   const {oneOverRadii, oneOverRadiiSquared, centerToleranceSquared} = ellipsoid;
 
   scratchVector.from(cartesian);
 
-  const positionX = cartesian.x;
-  const positionY = cartesian.y;
-  const positionZ = cartesian.z;
+  const positionX = scratchVector.x;
+  const positionY = scratchVector.y;
+  const positionZ = scratchVector.z;
 
   const oneOverRadiiX = oneOverRadii.x;
   const oneOverRadiiY = oneOverRadii.y;
@@ -58,7 +62,7 @@ export default function scaleToGeodeticSurface(cartesian, ellipsoid, result = ne
   );
 
   // Compute the initial guess at the normal vector multiplier, lambda.
-  let lambda = ((1.0 - ratio) * cartesian.len()) / (0.5 * gradient.len());
+  let lambda = ((1.0 - ratio) * scratchVector.len()) / (0.5 * gradient.len());
   let correction = 0.0;
 
   let xMultiplier;

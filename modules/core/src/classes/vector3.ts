@@ -5,18 +5,19 @@ import Vector from './base/vector';
 import {config, isArray} from '../lib/common';
 import {checkNumber} from '../lib/validators';
 import * as vec3 from 'gl-matrix/vec3';
+/* eslint-disable camelcase */
 import {vec3_transformMat2, vec3_transformMat4AsVector} from '../lib/gl-matrix-extras';
 
 const ORIGIN = [0, 0, 0];
 
-let ZERO;
+let ZERO: Vector3;
 
 /**
  * Three-element vector class.
  * Subclass of Array<number>
  */
 export default class Vector3 extends Vector {
-  static get ZERO() {
+  static get ZERO(): Vector3 {
     if (!ZERO) {
       ZERO = new Vector3(0, 0, 0);
       Object.freeze(ZERO);
@@ -63,7 +64,7 @@ export default class Vector3 extends Vector {
     return this.check();
   }
 
-  fromObject(object: {[key: string]: any}): this {
+  fromObject(object: {x: number; y: number; z: number}): this {
     if (config.debug) {
       checkNumber(object.x);
       checkNumber(object.y);
@@ -75,11 +76,11 @@ export default class Vector3 extends Vector {
     return this.check();
   }
 
-  toObject(object): {x: number; y: number; z: number} {
+  toObject(object: {x?: number; y?: number; z?: number}): {x: number; y: number; z: number} {
     object.x = this[0];
     object.y = this[1];
     object.z = this[2];
-    return object;
+    return object as {x: number; y: number; z: number};
   }
 
   // Getters/setters

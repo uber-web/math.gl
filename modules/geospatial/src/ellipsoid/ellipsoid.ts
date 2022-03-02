@@ -212,15 +212,13 @@ export default class Ellipsoid {
   /** Scales the provided Cartesian position along the geodetic surface normal
    * so that it is on the surface of this ellipsoid.  If the position is
    * at the center of the ellipsoid, this function returns undefined. */
-  scaleToGeodeticSurface(cartesian: number[], result?: number[]): number[];
-  scaleToGeodeticSurface(cartesian, result) {
+  scaleToGeodeticSurface(cartesian: number[], result?: number[]): number[] {
     return scaleToGeodeticSurface(cartesian, this, result);
   }
 
   /** Scales the provided Cartesian position along the geocentric surface normal
    * so that it is on the surface of this ellipsoid. */
-  scaleToGeocentricSurface(cartesian: number[], result?: number[]): number[];
-  scaleToGeocentricSurface(cartesian, result = [0, 0, 0]) {
+  scaleToGeocentricSurface(cartesian: number[], result: number[] = [0, 0, 0]): number[] {
     scratchPosition.from(cartesian);
 
     const positionX = scratchPosition.x;
@@ -241,25 +239,22 @@ export default class Ellipsoid {
 
   /** Transforms a Cartesian X, Y, Z position to the ellipsoid-scaled space by multiplying
    * its components by the result of `Ellipsoid#oneOverRadii` */
-  transformPositionToScaledSpace(position: number[], result?: number[]): number[];
-  transformPositionToScaledSpace(position, result = [0, 0, 0]) {
+  transformPositionToScaledSpace(position: number[], result: number[] = [0, 0, 0]): number[] {
     return scratchPosition.from(position).scale(this.oneOverRadii).to(result);
   }
 
   /** Transforms a Cartesian X, Y, Z position from the ellipsoid-scaled space by multiplying
    * its components by the result of `Ellipsoid#radii`. */
-  transformPositionFromScaledSpace(position: number[], result?: number[]): number[];
-  transformPositionFromScaledSpace(position, result = [0, 0, 0]) {
+  transformPositionFromScaledSpace(position: number[], result: number[] = [0, 0, 0]): number[] {
     return scratchPosition.from(position).scale(this.radii).to(result);
   }
 
   /** Computes a point which is the intersection of the surface normal with the z-axis. */
   getSurfaceNormalIntersectionWithZAxis(
     position: number[],
-    buffer?: number,
-    result?: number[]
-  ): number[];
-  getSurfaceNormalIntersectionWithZAxis(position, buffer = 0.0, result = [0, 0, 0]) {
+    buffer: number = 0,
+    result: number[] = [0, 0, 0]
+  ): number[] {
     // Ellipsoid must be an ellipsoid of revolution (radii.x == radii.y)
     assert(equals(this.radii.x, this.radii.y, _MathUtils.EPSILON15));
     assert(this.radii.z > 0);

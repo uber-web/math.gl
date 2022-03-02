@@ -128,6 +128,29 @@ declare module 'gl-matrix/vec4' {
   ): T;
 }
 
+declare module 'gl-matrix/mat3' {
+  function determinant(a: Readonly<NumericArray>): number;
+  function fromQuat<T extends NumericArray>(out: T, q: Readonly<NumericArray>): T;
+  function transpose<T extends NumericArray>(out: T, a: Readonly<NumericArray>): T;
+  function invert<T extends NumericArray>(out: T, a: Readonly<NumericArray>): T;
+  function translate<T extends NumericArray>(
+    out: T,
+    a: Readonly<NumericArray>,
+    v: Readonly<NumericArray>
+  ): T;
+  function scale<T extends NumericArray>(
+    out: T,
+    a: Readonly<NumericArray>,
+    v: Readonly<NumericArray>
+  ): T;
+  function rotate<T extends NumericArray>(out: T, a: Readonly<NumericArray>, rad: number): T;
+  function multiply<T extends NumericArray>(
+    out: T,
+    a: Readonly<NumericArray>,
+    b: Readonly<NumericArray>
+  ): T;
+}
+
 declare module 'gl-matrix/mat4' {
   function determinant(a: Readonly<NumericArray>): number;
   function fromQuat<T extends NumericArray>(out: T, q: Readonly<NumericArray>): T;
@@ -192,4 +215,52 @@ declare module 'gl-matrix/mat4' {
     near: number,
     far: number
   ): T;
+}
+
+declare module 'gl-matrix/quat' {
+  function identity<T extends NumericArray>(out: T): T;
+  function length(a: Readonly<NumericArray>): number;
+  function squaredLength(a: Readonly<NumericArray>): number;
+  function fromMat3<T extends NumericArray>(out: T, m: Readonly<NumericArray>): T;
+  function setAxisAngle<T extends NumericArray>(
+    out: T,
+    axis: Readonly<NumericArray>,
+    rad: number
+  ): T;
+  function rotationTo<T extends NumericArray>(
+    out: T,
+    a: Readonly<NumericArray>,
+    b: Readonly<NumericArray>
+  ): T;
+  function add<T extends NumericArray>(
+    out: T,
+    a: Readonly<NumericArray>,
+    b: Readonly<NumericArray>
+  ): T;
+  function dot(a: Readonly<NumericArray>, b: Readonly<NumericArray>): number;
+  function invert<T extends NumericArray>(out: T, a: Readonly<NumericArray>): T;
+  function calculateW<T extends NumericArray>(out: T, a: Readonly<NumericArray>): T;
+  function conjugate<T extends NumericArray>(out: T, a: Readonly<NumericArray>): T;
+
+  function lerp<T extends NumericArray>(
+    out: T,
+    a: Readonly<NumericArray>,
+    b: Readonly<NumericArray>,
+    t: number
+  ): T;
+  function slerp<T extends NumericArray>(
+    out: T,
+    a: Readonly<NumericArray>,
+    b: Readonly<NumericArray>,
+    t: number
+  ): T;
+  function scale<T extends NumericArray>(out: T, a: Readonly<NumericArray>, b: number): T;
+  function multiply<T extends NumericArray>(
+    out: T,
+    a: Readonly<NumericArray>,
+    b: Readonly<NumericArray>
+  ): T;
+  function rotateX<T extends NumericArray>(out: T, a: Readonly<NumericArray>, rad: number): T;
+  function rotateY<T extends NumericArray>(out: T, a: Readonly<NumericArray>, rad: number): T;
+  function rotateZ<T extends NumericArray>(out: T, a: Readonly<NumericArray>, rad: number): T;
 }

@@ -170,11 +170,6 @@ test('Quaternion#identity', (t) => {
   t.end();
 });
 
-test('Quaternion#dot', (t) => {
-  t.throws(() => new Quaternion(1, 1, 1, 1).dot([1, 1, 1, 1], [1, 1, 1, 1]));
-  t.end();
-});
-
 test('Quaternion#rotationTo', (t) => {
   t.doesNotThrow(() => new Quaternion().rotationTo([1, 1, 1, 1], [2, 2, 2, 2]));
   t.end();
@@ -243,7 +238,6 @@ test('Quaternion#transform', (t) => {
   const quat = new Quaternion();
   t.throws(() => quat.transformVector4([NaN, 0, 0, 0]));
   t.throws(() => quat.transformVector4([0, 0, 0]));
-  t.throws(() => quat.transformVector4([0, 0, 0, 0, 0]));
   t.end();
 });
 
