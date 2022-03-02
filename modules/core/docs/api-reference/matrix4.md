@@ -119,8 +119,8 @@ Generates a look-at matrix with the given eye position, focal point, and up axis
 `matrix4.lookAt({eye, center, up})`
 
 - `eye` (`Vector3`|`number[3]`) - Position of the viewer
-- `center` (`=`) - 0, 0, 0] vec3 Point the viewer is looking at
-- `up` (`=`) - 0, 1, 0] vec3 vec3 pointing up
+- `center`=`[0, 0, 0]` (`Vector3`|`number[3]`) vec3 Point the viewer is looking at
+- `up`=`[0, 1, 0]` (`Vector3`|`number[3]`) vec3 vec3 pointing up
 
 ##### ortho(options: {left: number, right: number, bottom: number, top: number, near?: number, far: number}): this
 
@@ -146,7 +146,7 @@ as a perspective matrix (plus `focalDistance`).
 - `aspect` (`number`) - Aspect ratio. typically viewport width/height
 - `focalDistance` (`number`) - selects which plane in the perspective view frustum should be used to calculate the size of the orthographic view box.
 - `near`=`0.1` (`number`) - Near bound of the frustum
-- `far`=`500` (`Nmber`) - Far bound of the frustum
+- `far`=`500` (`number`) - Far bound of the frustum
 
 > In applications it is not unusual to want to offer both perspective and orthographic views and this method is supplied to make this as simple as possible.
 
