@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## 3.6.0-alpha.4
+
+- Fix core package types entry point (#283)
+
+## 3.6.0-alpha.3
+
+- Fix Matrix4.lookAt types (#281)
+
 ## 3.6.0-alpha.2
 
 - (HEAD -> master, origin/master, origin/HEAD) chore(core): lint (#280)

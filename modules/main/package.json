@@ -5,7 +5,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "3.6.0-alpha.3",
+  "version": "3.6.0-alpha.4",
   "keywords": [],
   "repository": {
     "type": "git",
@@ -19,6 +19,6 @@
     "src"
   ],
   "dependencies": {
-    "@math.gl/core": "3.6.0-alpha.3"
+    "@math.gl/core": "3.6.0-alpha.4"
   }
 }
