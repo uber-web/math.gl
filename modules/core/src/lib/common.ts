@@ -6,9 +6,9 @@ import assert from './assert';
 import type MathArray from '../classes/base/math-array';
 
 export type ConfigurationOptions = {
-  EPSILON?: number;
+  EPSILON: number;
   debug?: boolean;
-  precision?: number;
+  precision: number;
   printTypes?: boolean;
   printDegrees?: boolean;
   printRowMajor?: boolean;
@@ -19,17 +19,16 @@ const RADIANS_TO_DEGREES = (1 / Math.PI) * 180;
 const DEGREES_TO_RADIANS = (1 / 180) * Math.PI;
 
 // TODO - remove
-/* eslint-disable no-shadow */
-export const config: ConfigurationOptions = {};
+export const config: ConfigurationOptions = {
+  EPSILON: 1e-12,
+  debug: false,
+  precision: 4,
+  printTypes: false,
+  printDegrees: false,
+  printRowMajor: true
+};
 
-config.EPSILON = 1e-12;
-config.debug = false;
-config.precision = 4;
-config.printTypes = false;
-config.printDegrees = false;
-config.printRowMajor = true;
-
-export function configure(options: ConfigurationOptions = {}): ConfigurationOptions {
+export function configure(options?: Partial<ConfigurationOptions>): ConfigurationOptions {
   // Only copy existing keys
   for (const key in options) {
     assert(key in config);
@@ -46,7 +45,7 @@ export function configure(options: ConfigurationOptions = {}): ConfigurationOpti
  */
 export function formatValue(
   value: number,
-  {precision = config.precision || 4}: ConfigurationOptions = {}
+  {precision = config.precision}: {precision?: number} = {}
 ): string {
   value = round(value);
   // get rid of trailing zeros
