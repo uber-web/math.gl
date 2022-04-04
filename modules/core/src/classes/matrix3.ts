@@ -200,21 +200,22 @@ export default class Matrix3 extends Matrix {
 
   // Transforms
   transform(vector: Readonly<NumericArray>, result?: NumericArray): NumericArray {
+    let out: NumericArray;
     switch (vector.length) {
       case 2:
-        result = vec2.transformMat3(result || [-0, -0], vector, this);
+        out = vec2.transformMat3(result || [-0, -0], vector, this);
         break;
       case 3:
-        result = vec3.transformMat3(result || [-0, -0, -0], vector, this);
+        out = vec3.transformMat3(result || [-0, -0, -0], vector, this);
         break;
       case 4:
-        result = vec4_transformMat3(result || [-0, -0, -0, -0], vector, this);
+        out = vec4_transformMat3(result || [-0, -0, -0, -0], vector, this);
         break;
       default:
         throw new Error('Illegal vector');
     }
-    checkVector(result, vector.length);
-    return result;
+    checkVector(out, vector.length);
+    return out;
   }
 
   /** @deprecated */
