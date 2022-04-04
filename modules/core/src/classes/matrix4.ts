@@ -541,20 +541,21 @@ export default class Matrix4 extends Matrix {
    * @param result
    * @returns self
    */
-  transformAsPoint(vector: Readonly<NumericArray>, result?: NumericArray) {
+  transformAsPoint(vector: Readonly<NumericArray>, result?: NumericArray): NumericArray {
     const {length} = vector;
+    let out: NumericArray;
     switch (length) {
       case 2:
-        result = vec2.transformMat4(result || [-0, -0], vector, this);
+        out = vec2.transformMat4(result || [-0, -0], vector, this);
         break;
       case 3:
-        result = vec3.transformMat4(result || [-0, -0, -0], vector, this);
+        out = vec3.transformMat4(result || [-0, -0, -0], vector, this);
         break;
       default:
         throw new Error('Illegal vector');
     }
-    checkVector(result, vector.length);
-    return result;
+    checkVector(out, vector.length);
+    return out;
   }
 
   /**
@@ -564,18 +565,19 @@ export default class Matrix4 extends Matrix {
    * @returns self
    */
   transformAsVector(vector: Readonly<NumericArray>, result?: NumericArray): NumericArray {
+    let out: NumericArray;
     switch (vector.length) {
       case 2:
-        result = vec2_transformMat4AsVector(result || [-0, -0], vector, this);
+        out = vec2_transformMat4AsVector(result || [-0, -0], vector, this);
         break;
       case 3:
-        result = vec3_transformMat4AsVector(result || [-0, -0, -0], vector, this);
+        out = vec3_transformMat4AsVector(result || [-0, -0, -0], vector, this);
         break;
       default:
         throw new Error('Illegal vector');
     }
-    checkVector(result, vector.length);
-    return result;
+    checkVector(out, vector.length);
+    return out;
   }
 
   /** @deprecated */
