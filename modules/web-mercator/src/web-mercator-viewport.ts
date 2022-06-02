@@ -187,13 +187,6 @@ export default class WebMercatorViewport {
 
     this._initMatrices();
 
-    // Bind methods for easy access
-    this.equals = this.equals.bind(this);
-    this.project = this.project.bind(this);
-    this.unproject = this.unproject.bind(this);
-    this.projectPosition = this.projectPosition.bind(this);
-    this.unprojectPosition = this.unprojectPosition.bind(this);
-
     Object.freeze(this);
   }
 
@@ -236,7 +229,7 @@ export default class WebMercatorViewport {
   /** Two viewports are equal if width and height are identical, and if
    * their view and projection matrices are (approximately) equal.
    */
-  equals(viewport: WebMercatorViewport | null): boolean {
+  equals = (viewport: WebMercatorViewport | null): boolean => {
     if (!(viewport instanceof WebMercatorViewport)) {
       return false;
     }
@@ -247,7 +240,7 @@ export default class WebMercatorViewport {
       mat4.equals(viewport.projectionMatrix, this.projectionMatrix) &&
       mat4.equals(viewport.viewMatrix, this.viewMatrix)
     );
-  }
+  };
 
   /**
    * Projects xyz (possibly latitude and longitude) to pixel coordinates in window
@@ -261,7 +254,7 @@ export default class WebMercatorViewport {
    * @param options.topLeft=true - Whether projected coords are top left
    * @return - screen coordinates [x, y] or [x, y, z], z as pixel depth
    */
-  project(lngLatZ: number[], options: {topLeft?: boolean} = {}): number[] {
+  project = (lngLatZ: number[], options: {topLeft?: boolean} = {}): number[] => {
     const {topLeft = true} = options;
     const worldPosition = this.projectPosition(lngLatZ);
     const coord = worldToPixels(worldPosition, this.pixelProjectionMatrix);
@@ -269,7 +262,7 @@ export default class WebMercatorViewport {
     const [x, y] = coord;
     const y2 = topLeft ? y : this.height - y;
     return lngLatZ.length === 2 ? [x, y2] : [x, y2, coord[2]];
-  }
+  };
 
   /**
    * Unproject pixel coordinates on screen onto world coordinates, possibly `[lon, lat]` on map.
@@ -284,7 +277,7 @@ export default class WebMercatorViewport {
    *   the elevation plane to unproject onto
    * @return - [lng, lat, Z] or [X, Y, Z]
    */
-  unproject(xyz: number[], options: {topLeft?: boolean; targetZ?: number} = {}): number[] {
+  unproject = (xyz: number[], options: {topLeft?: boolean; targetZ?: number} = {}): number[] => {
     const {topLeft = true, targetZ = undefined} = options;
     const [x, y, z] = xyz;
 
@@ -297,22 +290,22 @@ export default class WebMercatorViewport {
       return [X, Y, Z];
     }
     return Number.isFinite(targetZ) ? [X, Y, targetZ] : [X, Y];
-  }
+  };
 
   // NON_LINEAR PROJECTION HOOKS
   // Used for web meractor projection
 
-  projectPosition(xyz: number[]): [number, number, number] {
+  projectPosition = (xyz: number[]): [number, number, number] => {
     const [X, Y] = lngLatToWorld(xyz);
     const Z = (xyz[2] || 0) * this.distanceScales.unitsPerMeter[2];
     return [X, Y, Z];
-  }
+  };
 
-  unprojectPosition(xyz: number[]): [number, number, number] {
+  unprojectPosition = (xyz: number[]): [number, number, number] => {
     const [X, Y] = worldToLngLat(xyz);
     const Z = (xyz[2] || 0) * this.distanceScales.metersPerUnit[2];
     return [X, Y, Z];
-  }
+  };
 
   /**
    * Project [lng,lat] on sphere onto [x,y] on 512*512 Mercator Zoom 0 tile.

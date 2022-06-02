@@ -58,7 +58,7 @@ export default class AxisAlignedBoundingBox implements BoundingVolume {
    *
    * @returns {AxisAlignedBoundingBox} A new AxisAlignedBoundingBox instance.
    */
-  clone() {
+  clone(): AxisAlignedBoundingBox {
     return new AxisAlignedBoundingBox(this.minimum, this.maximum, this.center);
   }
 
@@ -69,7 +69,7 @@ export default class AxisAlignedBoundingBox implements BoundingVolume {
    * @param {AxisAlignedBoundingBox} [right] The second AxisAlignedBoundingBox to compare with.
    * @returns {Boolean} <code>true</code> if left and right are equal, <code>false</code> otherwise.
    */
-  equals(right) {
+  equals(right: AxisAlignedBoundingBox): boolean {
     return (
       this === right ||
       (Boolean(right) && this.minimum.equals(right.minimum) && this.maximum.equals(right.maximum))

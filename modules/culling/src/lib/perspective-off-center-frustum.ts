@@ -5,9 +5,7 @@
 // - It has not been fully adapted to math.gl conventions
 // - Documentation has not been ported
 
-// @ts-nocheck
-
-import {Vector3, Matrix4, assert} from '@math.gl/core';
+import {Vector3, Vector2, Matrix4, assert, NumericArray} from '@math.gl/core';
 import CullingVolume from './culling-volume';
 import Plane from './plane';
 
@@ -17,20 +15,60 @@ const scratchPlaneNearCenter = new Vector3();
 const scratchPlaneFarCenter = new Vector3();
 const scratchPlaneNormal = new Vector3();
 
+type PerspectiveOffCenterFrustumOptions = {
+  left?: number;
+  right?: number;
+  top?: number;
+  bottom?: number;
+  near?: number;
+  far?: number;
+};
+
 export default class PerspectiveOffCenterFrustum {
-  left;
-  _left;
-  right;
-  _right;
-  top;
-  _top;
-  bottom;
-  _bottom;
-  near;
-  _near;
-  far;
-  _far;
-  _cullingVolume = new CullingVolume([
+  /**
+   * Defines the left clipping plane.
+   * @type {Number}
+   * @default undefined
+   */
+  left?: number;
+  private _left?: number;
+  /**
+   * Defines the right clipping plane.
+   * @type {Number}
+   * @default undefined
+   */
+  right?: number;
+  private _right?: number;
+  /**
+   * Defines the top clipping plane.
+   * @type {Number}
+   * @default undefined
+   */
+  top?: number;
+  private _top?: number;
+  /**
+   * Defines the bottom clipping plane.
+   * @type {Number}
+   * @default undefined
+   */
+  bottom?: number;
+  private _bottom?: number;
+  /**
+   * The distance of the near plane.
+   * @type {Number}
+   * @default 1.0
+   */
+  near: number;
+  private _near: number;
+  /**
+   * The distance of the far plane.
+   * @type {Number}
+   * @default 500000000.0
+   */
+  far: number;
+  private _far: number;
+
+  private _cullingVolume = new CullingVolume([
     new Plane(),
     new Plane(),
     new Plane(),
@@ -38,8 +76,8 @@ export default class PerspectiveOffCenterFrustum {
     new Plane(),
     new Plane()
   ]);
-  _perspectiveMatrix = new Matrix4();
-  _infinitePerspective = new Matrix4();
+  private _perspectiveMatrix = new Matrix4();
+  private _infinitePerspective = new Matrix4();
 
   /**
    * The viewing frustum is defined by 6 planes.
@@ -48,15 +86,6 @@ export default class PerspectiveOffCenterFrustum {
    * plane from the origin/camera position.
    *
    * @alias PerspectiveOffCenterFrustum
-   * @constructor
-   *
-   * @param {Object} [options] An object with the following properties:
-   * @param {Number} [options.left] The left clipping plane distance.
-   * @param {Number} [options.right] The right clipping plane distance.
-   * @param {Number} [options.top] The top clipping plane distance.
-   * @param {Number} [options.bottom] The bottom clipping plane distance.
-   * @param {Number} [options.near=1.0] The near clipping plane distance.
-   * @param {Number} [options.far=500000000.0] The far clipping plane distance.
    *
    * @example
    * const frustum = new PerspectiveOffCenterFrustum({
@@ -70,63 +99,33 @@ export default class PerspectiveOffCenterFrustum {
    *
    * @see PerspectiveFrustum
    */
-  constructor(options: Record<string, any> = {}) {
-    options = {near: 1.0, far: 500000000.0, ...options};
+  constructor(options: PerspectiveOffCenterFrustumOptions = {}) {
+    const {near = 1.0, far = 500000000.0} = options;
 
-    /**
-     * Defines the left clipping plane.
-     * @type {Number}
-     * @default undefined
-     */
     this.left = options.left;
     this._left = undefined;
 
-    /**
-     * Defines the right clipping plane.
-     * @type {Number}
-     * @default undefined
-     */
     this.right = options.right;
     this._right = undefined;
 
-    /**
-     * Defines the top clipping plane.
-     * @type {Number}
-     * @default undefined
-     */
     this.top = options.top;
     this._top = undefined;
 
-    /**
-     * Defines the bottom clipping plane.
-     * @type {Number}
-     * @default undefined
-     */
     this.bottom = options.bottom;
     this._bottom = undefined;
 
-    /**
-     * The distance of the near plane.
-     * @type {Number}
-     * @default 1.0
-     */
-    this.near = options.near;
-    this._near = this.near;
+    this.near = near;
+    this._near = near;
 
-    /**
-     * The distance of the far plane.
-     * @type {Number}
-     * @default 500000000.0
-     */
-    this.far = options.far;
-    this._far = this.far;
+    this.far = far;
+    this._far = far;
   }
 
   /**
    * Returns a duplicate of a PerspectiveOffCenterFrustum instance.
    * @returns {PerspectiveOffCenterFrustum} A new PerspectiveFrustum instance.
    * */
-  clone() {
+  clone(): PerspectiveOffCenterFrustum {
     return new PerspectiveOffCenterFrustum({
       right: this.right,
       left: this.left,
@@ -141,10 +140,9 @@ export default class PerspectiveOffCenterFrustum {
    * Compares the provided PerspectiveOffCenterFrustum componentwise and returns
    * <code>true</code> if they are equal, <code>false</code> otherwise.
    *
-   * @param {PerspectiveOffCenterFrustum} [other] The right hand side PerspectiveOffCenterFrustum.
    * @returns {Boolean} <code>true</code> if they are equal, <code>false</code> otherwise.
    */
-  equals(other) {
+  equals(other: PerspectiveOffCenterFrustum): boolean {
     return (
       other &&
       other instanceof PerspectiveOffCenterFrustum &&
@@ -164,8 +162,8 @@ export default class PerspectiveOffCenterFrustum {
    *
    * @see PerspectiveOffCenterFrustum#infiniteProjectionMatrix
    */
-  get projectionMatrix() {
-    update(this);
+  get projectionMatrix(): Matrix4 {
+    this._update();
     return this._perspectiveMatrix;
   }
 
@@ -176,17 +174,13 @@ export default class PerspectiveOffCenterFrustum {
    *
    * @see PerspectiveOffCenterFrustum#projectionMatrix
    */
-  get infiniteProjectionMatrix() {
-    update(this);
+  get infiniteProjectionMatrix(): Matrix4 {
+    this._update();
     return this._infinitePerspective;
   }
 
   /**
    * Creates a culling volume for this frustum.
-   *
-   * @param {Vector3} position The eye position.
-   * @param {Vector3} direction The view direction.
-   * @param {Vector3} up The up direction.
    * @returns {CullingVolume} A culling volume at the given position and orientation.
    *
    * @example
@@ -195,7 +189,14 @@ export default class PerspectiveOffCenterFrustum {
    * const intersect = cullingVolume.computeVisibility(boundingVolume);
    */
   // eslint-disable-next-line complexity, max-statements
-  computeCullingVolume(position, direction, up) {
+  computeCullingVolume(
+    /** A Vector3 defines the eye position. */
+    position: Readonly<NumericArray>,
+    /** A Vector3 defines the view direction. */
+    direction: Readonly<NumericArray>,
+    /** A Vector3 defines the up direction. */
+    up: Readonly<NumericArray>
+  ): CullingVolume {
     assert(position, 'position is required.');
     assert(direction, 'direction is required.');
     assert(up, 'up is required.');
@@ -265,10 +266,6 @@ export default class PerspectiveOffCenterFrustum {
   /**
    * Returns the pixel's width and height in meters.
    *
-   * @param {Number} drawingBufferWidth The width of the drawing buffer.
-   * @param {Number} drawingBufferHeight The height of the drawing buffer.
-   * @param {Number} distance The distance to the near plane in meters.
-   * @param {Vector2} result The object onto which to store the result.
    * @returns {Vector2} The modified result parameter or a new instance of {@link Vector2} with the pixel's width and height in the x and y properties, respectively.
    *
    * @exception {DeveloperError} drawingBufferWidth must be greater than zero.
@@ -290,8 +287,17 @@ export default class PerspectiveOffCenterFrustum {
    * const distance = Vector3.magnitude(toCenterProj);
    * const pixelSize = camera.frustum.getPixelDimensions(scene.drawingBufferWidth, scene.drawingBufferHeight, distance, new Vector2());
    */
-  getPixelDimensions(drawingBufferWidth, drawingBufferHeight, distance, result) {
-    update(this);
+  getPixelDimensions(
+    /** The width of the drawing buffer. */
+    drawingBufferWidth: number,
+    /** The height of the drawing buffer. */
+    drawingBufferHeight: number,
+    /** The distance to the near plane in meters. */
+    distance: number,
+    /** The object onto which to store the result. */
+    result: Vector2
+  ): Vector2 {
+    this._update();
 
     assert(Number.isFinite(drawingBufferWidth) && Number.isFinite(drawingBufferHeight));
     // 'Both drawingBufferWidth and drawingBufferHeight are required.'
@@ -314,56 +320,56 @@ export default class PerspectiveOffCenterFrustum {
     result.y = pixelHeight;
     return result;
   }
-}
 
-// eslint-disable-next-line complexity, max-statements
-function update(frustum) {
-  assert(
-    Number.isFinite(frustum.right) &&
-      Number.isFinite(frustum.left) &&
-      Number.isFinite(frustum.top) &&
-      Number.isFinite(frustum.bottom) &&
-      Number.isFinite(frustum.near) &&
-      Number.isFinite(frustum.far)
-  );
-  // throw new DeveloperError('right, left, top, bottom, near, or far parameters are not set.');
-
-  const {top, bottom, right, left, near, far} = frustum;
-
-  if (
-    top !== frustum._top ||
-    bottom !== frustum._bottom ||
-    left !== frustum._left ||
-    right !== frustum._right ||
-    near !== frustum._near ||
-    far !== frustum._far
-  ) {
+  // eslint-disable-next-line complexity, max-statements
+  private _update() {
     assert(
-      frustum.near > 0 && frustum.near < frustum.far,
-      'near must be greater than zero and less than far.'
+      Number.isFinite(this.right) &&
+        Number.isFinite(this.left) &&
+        Number.isFinite(this.top) &&
+        Number.isFinite(this.bottom) &&
+        Number.isFinite(this.near) &&
+        Number.isFinite(this.far)
     );
+    // throw new DeveloperError('right, left, top, bottom, near, or far parameters are not set.');
 
-    frustum._left = left;
-    frustum._right = right;
-    frustum._top = top;
-    frustum._bottom = bottom;
-    frustum._near = near;
-    frustum._far = far;
-    frustum._perspectiveMatrix = new Matrix4().frustum({
-      left,
-      right,
-      bottom,
-      top,
-      near,
-      far
-    });
-    frustum._infinitePerspective = new Matrix4().frustum({
-      left,
-      right,
-      bottom,
-      top,
-      near,
-      far: Infinity
-    });
+    const {top, bottom, right, left, near, far} = this;
+
+    if (
+      top !== this._top ||
+      bottom !== this._bottom ||
+      left !== this._left ||
+      right !== this._right ||
+      near !== this._near ||
+      far !== this._far
+    ) {
+      assert(
+        this.near > 0 && this.near < this.far,
+        'near must be greater than zero and less than far.'
+      );
+
+      this._left = left;
+      this._right = right;
+      this._top = top;
+      this._bottom = bottom;
+      this._near = near;
+      this._far = far;
+      this._perspectiveMatrix = new Matrix4().frustum({
+        left,
+        right,
+        bottom,
+        top,
+        near,
+        far
+      });
+      this._infinitePerspective = new Matrix4().frustum({
+        left,
+        right,
+        bottom,
+        top,
+        near,
+        far: Infinity
+      });
+    }
   }
 }

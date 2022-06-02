@@ -264,7 +264,7 @@ export default class Quaternion extends MathArray {
         },
     arg1?: Readonly<NumericArray> | number,
     arg2?: number
-  ) {
+  ): this {
     let start: Readonly<NumericArray>;
     let target: Readonly<NumericArray>;
     let ratio: number;
@@ -318,7 +318,7 @@ export default class Quaternion extends MathArray {
     return this.multiplyLeft(a);
   }
 
-  multiply(a: Readonly<NumericArray>) {
+  multiply(a: Readonly<NumericArray>): this {
     return this.multiplyRight(a);
   }
 }

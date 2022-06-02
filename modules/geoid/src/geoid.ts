@@ -97,15 +97,15 @@ export type GeoidProps = {
  * The implementation is ported from GeographicLib-1.50.1
  */
 export default class Geoid {
-  _v00 = 0;
-  _v01 = 0;
-  _v10 = 0;
-  _v11 = 0;
-  _t = [];
+  private _v00: number = 0;
+  private _v01: number = 0;
+  private _v10: number = 0;
+  private _v11: number = 0;
+  private _t: number[] = [];
+  private _ix: number;
+  private _iy: number;
 
-  options;
-  _ix;
-  _iy;
+  options: GeoidProps;
 
   /**
    * @constructs
@@ -151,7 +151,7 @@ export default class Geoid {
     let v01 = 0;
     let v10 = 0;
     let v11 = 0;
-    let t = new Array(nterms_);
+    let t: number[] = new Array(nterms_);
     if (!(ix === this._ix && iy === this._iy)) {
       if (!this.options.cubic) {
         v00 = this._rawval(ix, iy);
@@ -235,7 +235,7 @@ export default class Geoid {
    * @param {number} iy - latitude parameter
    * @returns {number} data from pgm binary buffer
    */
-  _rawval(ix, iy) {
+  private _rawval(ix: number, iy: number): number {
     if (ix < 0) {
       ix += this.options._width;
     } else if (ix >= this.options._width) {
@@ -263,7 +263,7 @@ export default class Geoid {
  * @param {number} y - denominator
  * @returns {number} - remainder
  */
-function remainder(x, y) {
+function remainder(x: number, y: number): number {
   y = Math.abs(y); // The result doesn't depend on the sign of y
   let z = fmod(x, y);
   if (2 * Math.abs(z) === y) z -= fmod(x, 2 * y) - z;
@@ -278,6 +278,6 @@ function remainder(x, y) {
  * @param {number} y - denominator
  * @returns {number} - remainder
  */
-function fmod(x, y) {
+function fmod(x: number, y: number): number {
   return x - Math.floor(x / y) * y;
 }

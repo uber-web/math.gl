@@ -85,7 +85,7 @@ export default function computeEigenDecomposition(
   return result;
 }
 
-function computeFrobeniusNorm(matrix) {
+function computeFrobeniusNorm(matrix: Matrix3): number {
   let norm = 0.0;
   for (let i = 0; i < 9; ++i) {
     const temp = matrix[i];
@@ -99,7 +99,7 @@ const colVal = [2, 2, 1];
 
 // Computes the "off-diagonal" Frobenius norm.
 // Assumes matrix is symmetric.
-function offDiagonalFrobeniusNorm(matrix) {
+function offDiagonalFrobeniusNorm(matrix: Matrix3): number {
   let norm = 0.0;
   for (let i = 0; i < 3; ++i) {
     const temp = matrix[scratchMatrix.getElementIndex(colVal[i], rowVal[i])];
@@ -116,7 +116,7 @@ function offDiagonalFrobeniusNorm(matrix) {
 // section 8.4.2 The 2by2 Symmetric Schur Decomposition.
 //
 // eslint-disable-next-line max-statements
-function shurDecomposition(matrix, result) {
+function shurDecomposition(matrix: Matrix3, result: Matrix3): Matrix3 {
   const tolerance = _MathUtils.EPSILON15;
 
   let maxDiagonal = 0.0;

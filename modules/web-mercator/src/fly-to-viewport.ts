@@ -50,7 +50,7 @@ export default function flyToViewport(
       const endValue = endProps[key];
       viewport[key] = lerp(startValue, endValue, t);
     }
-    // @ts-expect-error
+    // @ts-expect-error properties are populated dynamically
     return viewport;
   }
 
