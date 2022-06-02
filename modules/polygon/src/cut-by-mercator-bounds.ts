@@ -8,7 +8,7 @@ const DEFAULT_MAX_LATITUDE = 85.051129;
 
 /** https://user-images.githubusercontent.com/2059298/78465769-938b7a00-76ae-11ea-9b95-1f4c26425ab9.png */
 export function cutPolylineByMercatorBounds(
-  positions: NumericArray,
+  positions: Readonly<NumericArray>,
   options?: {
     size?: number;
     startIndex?: number;
@@ -41,8 +41,8 @@ export function cutPolylineByMercatorBounds(
 
 /** https://user-images.githubusercontent.com/2059298/78465770-94241080-76ae-11ea-809a-6a8534dac1d9.png */
 export function cutPolygonByMercatorBounds(
-  positions: number[],
-  holeIndices: number[] | null = null,
+  positions: Readonly<NumericArray>,
+  holeIndices: Readonly<NumericArray> | null = null,
   options?: {
     size?: number;
     normalize?: boolean;
@@ -96,6 +96,7 @@ export function cutPolygonByMercatorBounds(
     // Each part is guaranteed to be in a single copy of the world
     // Map longitudes back to [-180, 180]
     for (const part of parts) {
+      // @ts-expect-error (mutates readonly array) May mutate newPositions, which is created by us
       shiftLongitudesIntoRange(part.positions, size);
     }
   }
@@ -106,7 +107,7 @@ export function cutPolygonByMercatorBounds(
 
 // See comments for insertPoleVertices
 function findSplitIndex(
-  positions: number[],
+  positions: Readonly<NumericArray>,
   size: number,
   startIndex: number,
   endIndex: number

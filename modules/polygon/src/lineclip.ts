@@ -23,6 +23,7 @@
 /* eslint-disable max-statements, max-depth, complexity */
 
 import {push, copy, getPointAtIndex} from './utils';
+import type {NumericArray} from '@math.gl/core';
 
 export type BoundingBox = [number, number, number, number];
 
@@ -31,7 +32,7 @@ export type BoundingBox = [number, number, number, number];
  * handle polylines rather than just segments
  */
 export function clipPolyline(
-  positions: number[],
+  positions: Readonly<NumericArray>,
   bbox: BoundingBox,
   options?: {
     size?: number;
@@ -103,7 +104,7 @@ export function clipPolyline(
  * polygon must be closed (first vertex == last vertex)
  */
 export function clipPolygon(
-  positions: number[],
+  positions: Readonly<NumericArray>,
   bbox: BoundingBox,
   options?: {
     size?: number;

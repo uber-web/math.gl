@@ -32,7 +32,7 @@ export function copy(target: number[], source: Readonly<NumericArray>): void {
 }
 
 export function getPointAtIndex(
-  positions: NumericArray,
+  positions: Readonly<NumericArray>,
   index: number,
   size: number,
   offset: number,

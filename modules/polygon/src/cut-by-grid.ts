@@ -5,9 +5,9 @@ import {getPointAtIndex, copy, push} from './utils';
 import type {NumericArray} from '@math.gl/core';
 
 export type Polygon = {
-  positions: number[];
-  holeIndices?: number[];
-  edgeTypes?: number[];
+  positions: Readonly<NumericArray>;
+  holeIndices?: Readonly<NumericArray>;
+  edgeTypes?: Readonly<NumericArray>;
 };
 
 export function cutPolylineByGrid(
@@ -83,8 +83,8 @@ function concatInPlace(arr1: number[], arr2: number[]): number[] {
 }
 
 export function cutPolygonByGrid(
-  positions: number[],
-  holeIndices: number[] | null = null,
+  positions: Readonly<NumericArray>,
+  holeIndices: Readonly<NumericArray> | null = null,
   options?: {
     size?: number;
     gridResolution?: number;
@@ -98,7 +98,7 @@ export function cutPolygonByGrid(
   }
   const {size = 2, gridResolution = 10, gridOffset = [0, 0], edgeTypes = false} = options || {};
   const result: Polygon[] = [];
-  const queue: {pos: number[]; types: number[]; holes: number[]}[] = [
+  const queue: {pos: Readonly<NumericArray>; types: number[]; holes: Readonly<NumericArray>}[] = [
     {
       pos: positions,
       types: edgeTypes ? (new Array(positions.length / size).fill(TYPE_BORDER) as number[]) : null,
@@ -165,14 +165,17 @@ export function cutPolygonByGrid(
 // TYPE_INSIDE - inside the original polygon
 // eslint-disable-next-line max-params
 function bisectPolygon(
-  positions: NumericArray,
+  positions: Readonly<NumericArray>,
   edgeTypes: number[] | undefined,
   size: number,
   startIndex: number,
   endIndex: number,
   bbox: BoundingBox,
   edge: number
-) {
+): {
+  pos: number[];
+  types?: number[];
+}[] {
   const numPoints = (endIndex - startIndex) / size;
   const resultLow: number[] = [];
   const resultHigh: number[] = [];
@@ -262,7 +265,7 @@ function moveToNeighborCell(cell: number[], gridResolution: number, edge: number
 }
 
 function getBoundingBox(
-  positions: NumericArray,
+  positions: Readonly<NumericArray>,
   size: number,
   endIndex: number,
   out: number[][]
