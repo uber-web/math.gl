@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 3.6.0-alpha.6
+
+- lint (#292)
+- [polygon] utility functions accept typed array inputs (#291)
+
 ## 3.6.0-alpha.5
 
 - Fix core type errors (#286)
