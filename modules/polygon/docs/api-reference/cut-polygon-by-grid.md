@@ -26,7 +26,7 @@ cutPolygonByGrid(positions, holeIndices, [options]);
 Arguments:
 
 - `positions` (Array|TypedArray) - a flat array of the vertex positions that define the polygon's rings.
-- `holeIndices` (Array) - the indices in `positions` where each hole starts. If `null`, the polygon has no holes.
+- `holeIndices` (Array|TypedArray|null) - the indices in `positions` where each hole starts. If `null`, the polygon has no holes.
 - `options` (Object, optional)
   - `size` (Number) - the number of elements in each vertex. Size `2` will interpret `positions` as `[x0, y0, x1, y1, ...]` and size `3` will interpret `positions` as `[x0, y0, z0, x1, y1, z1, ...]`. Default `2`.
   - `gridResolution` (Number, optional) - the grid size. Default `10`.
@@ -37,8 +37,8 @@ Returns:
 
 An array of polygons. Each polygons is represented by an object with the following fields:
 
-- `positions` (Array) - a flat array of the vertex positions that define the polygon's rings.
-- `holeIndices` (Array) - the indices in `positions` where each hole starts. Not present if the polygon has no holes.
+- `positions` (Array|TypedArray) - a flat array of the vertex positions that define the polygon's rings.
+- `holeIndices` (Array|TypedArray) - the indices in `positions` where each hole starts. Not present if the polygon has no holes.
 - `edgeTypes` (Array) - describes the nature of each vertex in `positions`:
 
   - `0` - the segment connecting this vertex to the next is inside the original polygon
