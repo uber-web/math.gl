@@ -1,7 +1,7 @@
 // This file is derived from the Cesium math library under Apache 2 license
 // See LICENSE.md and https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md
 
-import {Vector3, Matrix3, Quaternion, NumericArray} from '@math.gl/core';
+import {Vector3, Matrix3, Matrix4, Quaternion, NumericArray} from '@math.gl/core';
 import type {BoundingVolume} from './bounding-volume';
 import BoundingSphere from './bounding-sphere';
 import type Plane from '../plane';
@@ -336,7 +336,7 @@ export default class OrientedBoundingBox implements BoundingVolume {
     return this;
   }
 
-  getTransform() {
+  getTransform(): Matrix4 {
     // const modelMatrix = Matrix4.fromRotationTranslation(this.boundingVolume.halfAxes, this.boundingVolume.center);
     // return modelMatrix;
     throw new Error('not implemented');

@@ -2,7 +2,7 @@
 // See LICENSE.md and https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md
 
 /* eslint-disable */
-import {Vector3, equals, assert} from '@math.gl/core';
+import {Vector3, equals, assert, NumericArray} from '@math.gl/core';
 
 const scratchPosition = new Vector3();
 const scratchNormal = new Vector3();
@@ -12,14 +12,14 @@ export default class Plane {
   readonly normal: Vector3;
   distance: number;
 
-  constructor(normal: readonly number[] = [0, 0, 1], distance: number = 0) {
+  constructor(normal: Readonly<NumericArray> = [0, 0, 1], distance: number = 0) {
     this.normal = new Vector3();
     this.distance = -0;
     this.fromNormalDistance(normal, distance);
   }
 
   /** Creates a plane from a normal and a distance from the origin. */
-  fromNormalDistance(normal: readonly number[], distance: number): this {
+  fromNormalDistance(normal: Readonly<NumericArray>, distance: number): this {
     assert(Number.isFinite(distance));
     this.normal.from(normal).normalize();
     this.distance = distance;
@@ -27,7 +27,7 @@ export default class Plane {
   }
 
   /** Creates a plane from a normal and a point on the plane. */
-  fromPointNormal(point: readonly number[], normal: readonly number[]): this {
+  fromPointNormal(point: Readonly<NumericArray>, normal: Readonly<NumericArray>): this {
     point = scratchPosition.from(point);
     this.normal.from(normal).normalize();
     const distance = -this.normal.dot(point);
@@ -56,20 +56,23 @@ export default class Plane {
   /** Computes the signed shortest distance of a point to a plane.
    * The sign of the distance determines which side of the plane the point is on.
    */
-  getPointDistance(point: readonly number[]): number {
+  getPointDistance(point: Readonly<NumericArray>): number {
     return this.normal.dot(point) + this.distance;
   }
 
   /** Transforms the plane by the given transformation matrix. */
-  transform(matrix4: readonly number[]): this {
+  transform(matrix4: Readonly<NumericArray>): this {
     const normal = scratchNormal.copy(this.normal).transformAsVector(matrix4).normalize();
     const point = this.normal.scale(-this.distance).transform(matrix4);
     return this.fromPointNormal(point, normal);
   }
 
   /** Projects a point onto the plane. */
-  projectPointOntoPlane(point: readonly number[], result: Vector3): Vector3;
-  projectPointOntoPlane(point: readonly number[], result?: readonly number[]): readonly number[];
+  projectPointOntoPlane(point: Readonly<NumericArray>, result: Vector3): Vector3;
+  projectPointOntoPlane(
+    point: Readonly<NumericArray>,
+    result?: readonly number[]
+  ): readonly number[];
 
   projectPointOntoPlane(point, result = [0, 0, 0]) {
     point = scratchPosition.from(point);

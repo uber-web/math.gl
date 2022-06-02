@@ -52,7 +52,7 @@ export default abstract class MathArray extends Array<number> {
     return isArray(arrayOrObject) ? this.toArray(arrayOrObject) : this.toObject(arrayOrObject);
   }
 
-  toTarget(target: any): any {
+  toTarget(target: this): this {
     return target ? this.to(target) : this;
   }
 

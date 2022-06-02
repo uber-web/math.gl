@@ -260,10 +260,10 @@ export function exactEquals(a: any, b: any): boolean {
 
 /* eslint-enable */
 
-export function withEpsilon(epsilon: number, func: () => any): any {
+export function withEpsilon<T>(epsilon: number, func: () => T): T {
   const oldPrecision = config.EPSILON;
   config.EPSILON = epsilon;
-  let value;
+  let value: T;
   try {
     value = func();
   } finally {

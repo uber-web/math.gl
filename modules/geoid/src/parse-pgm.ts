@@ -17,7 +17,12 @@ const PIXEL_MAX = 65535;
  * @returns {GeoidHeightModel} - instance of GeoidHeightModel class
  */
 // eslint-disable-next-line
-export function parsePGM(data: Uint8Array, options) {
+export function parsePGM(
+  data: Uint8Array,
+  options: {
+    cubic?: boolean;
+  }
+) {
   const getline = _getLineGenerator(data);
   let currentLine = getline.next();
   if (currentLine.done || currentLine.value.line !== 'P5') {
@@ -147,7 +152,7 @@ export function parsePGM(data: Uint8Array, options) {
  * @param {Uint8Array} data - binary buffer of pgm file
  * @returns {Generator}
  */
-function* _getLineGenerator(data) {
+function* _getLineGenerator(data: Uint8Array) {
   let offset = 0;
   do {
     const endLineIndex = data.indexOf(ENDL, offset);

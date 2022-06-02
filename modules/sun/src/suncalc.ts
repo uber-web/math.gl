@@ -63,32 +63,33 @@ export function getSunDirection(
   return [-Math.sin(azimuthN), Math.cos(azimuthN), -Math.sin(altitude)];
 }
 
-function toJulianDay(timestamp) {
-  return timestamp / DAY_IN_MS - 0.5 + JD1970;
+function toJulianDay(timestamp: number | Date): number {
+  const ts = typeof timestamp === 'number' ? timestamp : timestamp.getTime();
+  return ts / DAY_IN_MS - 0.5 + JD1970;
 }
 
-function toDays(timestamp) {
+function toDays(timestamp: number | Date): number {
   return toJulianDay(timestamp) - JD2000;
 }
 
-function getRightAscension(eclipticLongitude, b) {
+function getRightAscension(eclipticLongitude: number, b: number): number {
   const lambda = eclipticLongitude;
   return Math.atan2(Math.sin(lambda) * Math.cos(e) - Math.tan(b) * Math.sin(e), Math.cos(lambda));
 }
 
-function getDeclination(eclipticLongitude, b) {
+function getDeclination(eclipticLongitude: number, b: number): number {
   const lambda = eclipticLongitude;
   return Math.asin(Math.sin(b) * Math.cos(e) + Math.cos(b) * Math.sin(e) * Math.sin(lambda));
 }
 
-function getAzimuth(hourAngle, latitudeInRadians, declination) {
+function getAzimuth(hourAngle: number, latitudeInRadians: number, declination: number): number {
   const H = hourAngle;
   const phi = latitudeInRadians;
   const delta = declination;
   return Math.atan2(Math.sin(H), Math.cos(H) * Math.sin(phi) - Math.tan(delta) * Math.cos(phi));
 }
 
-function getAltitude(hourAngle, latitudeInRadians, declination) {
+function getAltitude(hourAngle: number, latitudeInRadians: number, declination: number): number {
   const H = hourAngle;
   const phi = latitudeInRadians;
   const delta = declination;
@@ -97,15 +98,15 @@ function getAltitude(hourAngle, latitudeInRadians, declination) {
 
 // https://www.aa.quae.nl/en/reken/zonpositie.html
 // "The Observer section"
-function getSiderealTime(dates, longitudeWestInRadians) {
+function getSiderealTime(dates: number, longitudeWestInRadians: number): number {
   return DEGREES_TO_RADIANS * (THETA0 + THETA1 * dates) - longitudeWestInRadians;
 }
 
-function getSolarMeanAnomaly(days) {
+function getSolarMeanAnomaly(days: number): number {
   return DEGREES_TO_RADIANS * (M0 + M1 * days);
 }
 
-function getEclipticLongitude(meanAnomaly) {
+function getEclipticLongitude(meanAnomaly: number): number {
   const M = meanAnomaly;
   // equation of center
   const C =
@@ -116,7 +117,10 @@ function getEclipticLongitude(meanAnomaly) {
   return M + C + P + Math.PI;
 }
 
-function getSunCoords(dates) {
+function getSunCoords(dates: number): {
+  declination: number;
+  rightAscension: number;
+} {
   const M = getSolarMeanAnomaly(dates);
   const L = getEclipticLongitude(M);
 

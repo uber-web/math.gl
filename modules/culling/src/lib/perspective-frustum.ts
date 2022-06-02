@@ -5,12 +5,26 @@
 // - It has not been fully adapted to math.gl conventions
 // - Documentation has not been ported
 
-// @ts-nocheck
-
-import {assert, Matrix4} from '@math.gl/core';
+import {assert, Matrix4, NumericArray, Vector2} from '@math.gl/core';
 import PerspectiveOffCenterFrustum from './perspective-off-center-frustum';
+import CullingVolume from './culling-volume';
 
 const defined = (val) => val !== null && typeof val !== 'undefined';
+
+type PerspectiveFrustumOptions = {
+  /** The angle of the field of view (FOV), in radians. */
+  fov?: number;
+  /** The aspect ratio of the frustum's width to it's height. */
+  aspectRatio?: number;
+  /** The distance of the near plane. */
+  near?: number;
+  /** The distance of the far plane. */
+  far?: number;
+  /** The offset in the x direction. */
+  xOffset?: number;
+  /** The offset in the y direction. */
+  yOffset?: number;
+};
 
 /**
  * The viewing frustum is defined by 6 planes.
@@ -19,15 +33,6 @@ const defined = (val) => val !== null && typeof val !== 'undefined';
  * plane from the origin/camera position.
  *
  * @alias PerspectiveFrustum
- * @constructor
- *
- * @param {Object} [options] An object with the following properties:
- * @param {Number} [options.fov] The angle of the field of view (FOV), in radians.
- * @param {Number} [options.aspectRatio] The aspect ratio of the frustum's width to it's height.
- * @param {Number} [options.near=1.0] The distance of the near plane.
- * @param {Number} [options.far=500000000.0] The distance of the far plane.
- * @param {Number} [options.xOffset=0.0] The offset in the x direction.
- * @param {Number} [options.yOffset=0.0] The offset in the y direction.
  *
  * @example
  * var frustum = new PerspectiveFrustum({
@@ -40,70 +45,55 @@ const defined = (val) => val !== null && typeof val !== 'undefined';
  * @see PerspectiveOffCenterFrustum
  */
 export default class PerspectiveFrustum {
-  _offCenterFrustum = new PerspectiveOffCenterFrustum();
+  private _offCenterFrustum = new PerspectiveOffCenterFrustum();
   /**
    * The angle of the field of view (FOV), in radians.  This angle will be used
    * as the horizontal FOV if the width is greater than the height, otherwise
    * it will be the vertical FOV.
    */
-  fov: number;
-  _fov;
-  _fovy;
-  _sseDenominator;
+  fov?: number;
+  private _fov: number;
+  private _fovy: number;
+  private _sseDenominator: number;
   /**
    * The aspect ratio of the frustum's width to it's height.
    */
-  aspectRatio: number;
-  _aspectRatio;
+  aspectRatio?: number;
+  private _aspectRatio: number;
   /**
    * The distance of the near plane.
    * @default 1.0
    */
   near: number;
-  _near;
+  private _near: number;
   /**
    * The distance of the far plane.
    * @default 500000000.0
    */
   far: number;
-  _far;
+  private _far: number;
   /**
    * Offsets the frustum in the x direction.
    * @default 0.0
    */
   xOffset: number;
-  _xOffset;
+  private _xOffset: number;
   /**
    * Offsets the frustum in the y direction.
    * @default 0.0
    */
   yOffset: number;
-  _yOffset;
+  private _yOffset: number;
 
-  constructor(options: Record<string, any> = {}) {
-    options = {
-      near: 1.0,
-      far: 500000000.0,
-      xOffset: 0.0,
-      yOffset: 0.0,
-      ...options
-    };
+  constructor(options: PerspectiveFrustumOptions = {}) {
+    const {fov, aspectRatio, near = 1.0, far = 500000000.0, xOffset = 0.0, yOffset = 0.0} = options;
 
-    this.fov = options.fov;
-
-    this.aspectRatio = options.aspectRatio;
-
-    this.near = options.near;
-    this._near = this.near;
-
-    this.far = options.far;
-    this._far = this.far;
-
-    this.xOffset = options.xOffset;
-    this._xOffset = this.xOffset;
-
-    this.yOffset = options.yOffset;
-    this._yOffset = this.yOffset;
+    this.fov = fov;
+    this.aspectRatio = aspectRatio;
+    this.near = near;
+    this.far = far;
+    this.xOffset = xOffset;
+    this.yOffset = yOffset;
   }
 
   /**
@@ -127,8 +117,8 @@ export default class PerspectiveFrustum {
       return false;
     }
 
-    update(this);
-    update(other);
+    this._update();
+    other._update();
 
     return (
       this.fov === other.fov &&
@@ -140,10 +130,10 @@ export default class PerspectiveFrustum {
   }
 
   /**
-   * Gets the perspective projection matrix computed from the view frustum.
+   * Gets the perspective projection matrix computed from the view this.
    */
   get projectionMatrix(): Matrix4 {
-    update(this);
+    this._update();
     return this._offCenterFrustum.projectionMatrix;
   }
 
@@ -151,7 +141,7 @@ export default class PerspectiveFrustum {
    * The perspective projection matrix computed from the view frustum with an infinite far plane.
    */
   get infiniteProjectionMatrix(): Matrix4 {
-    update(this);
+    this._update();
     return this._offCenterFrustum.infiniteProjectionMatrix;
   }
 
@@ -159,7 +149,7 @@ export default class PerspectiveFrustum {
    * Gets the angle of the vertical field of view, in radians.
    */
   get fovy(): number {
-    update(this);
+    this._update();
     return this._fovy;
   }
 
@@ -167,35 +157,33 @@ export default class PerspectiveFrustum {
    * @private
    */
   get sseDenominator(): number {
-    update(this);
+    this._update();
     return this._sseDenominator;
   }
 
   /**
-   * Creates a culling volume for this frustum.
-   *
-   * @param {Vector3} position The eye position.
-   * @param {Vector3} direction The view direction.
-   * @param {Vector3} up The up direction.
+   * Creates a culling volume for this this.ion.
    * @returns {CullingVolume} A culling volume at the given position and orientation.
    *
    * @example
-   * // Check if a bounding volume intersects the frustum.
-   * var cullingVolume = frustum.computeCullingVolume(cameraPosition, cameraDirection, cameraUp);
+   * // Check if a bounding volume intersects the this.
+   * var cullingVolume = this.computeCullingVolume(cameraPosition, cameraDirection, cameraUp);
    * var intersect = cullingVolume.computeVisibility(boundingVolume);
    */
-  computeCullingVolume(position, direction, up) {
-    update(this);
+  computeCullingVolume(
+    /** A Vector3 defines the eye position. */
+    position: Readonly<NumericArray>,
+    /** A Vector3 defines the view direction. */
+    direction: Readonly<NumericArray>,
+    /** A Vector3 defines the up direction. */
+    up: Readonly<NumericArray>
+  ): CullingVolume {
+    this._update();
     return this._offCenterFrustum.computeCullingVolume(position, direction, up);
   }
 
   /**
    * Returns the pixel's width and height in meters.
-   *
-   * @param {Number} drawingBufferWidth The width of the drawing buffer.
-   * @param {Number} drawingBufferHeight The height of the drawing buffer.
-   * @param {Number} distance The distance to the near plane in meters.
-   * @param {Vector2} result The object onto which to store the result.
    * @returns {Vector2} The modified result parameter or a new instance of {@link Vector2} with the pixel's width and height in the x and y properties, respectively.
    *
    * @exception {DeveloperError} drawingBufferWidth must be greater than zero.
@@ -204,7 +192,7 @@ export default class PerspectiveFrustum {
    * @example
    * // Example 1
    * // Get the width and height of a pixel.
-   * var pixelSize = camera.frustum.getPixelDimensions(scene.drawingBufferWidth, scene.drawingBufferHeight, 1.0, new Vector2());
+   * var pixelSize = camera.this.getPixelDimensions(scene.drawingBufferWidth, scene.drawingBufferHeight, 1.0, new Vector2());
    *
    * @example
    * // Example 2
@@ -215,70 +203,79 @@ export default class PerspectiveFrustum {
    * var toCenter = Vector3.subtract(primitive.boundingVolume.center, position, new Vector3());      // vector from camera to a primitive
    * var toCenterProj = Vector3.multiplyByScalar(direction, Vector3.dot(direction, toCenter), new Vector3()); // project vector onto camera direction vector
    * var distance = Vector3.magnitude(toCenterProj);
-   * var pixelSize = camera.frustum.getPixelDimensions(scene.drawingBufferWidth, scene.drawingBufferHeight, distance, new Vector2());
+   * var pixelSize = camera.this.getPixelDimensions(scene.drawingBufferWidth, scene.drawingBufferHeight, distance, new Vector2());
    */
-  getPixelDimensions(drawingBufferWidth, drawingBufferHeight, distance, result) {
-    update(this);
+  getPixelDimensions(
+    /** The width of the drawing buffer. */
+    drawingBufferWidth: number,
+    /** The height of the drawing buffer. */
+    drawingBufferHeight: number,
+    /** The distance to the near plane in meters. */
+    distance: number,
+    /** The object onto which to store the result. */
+    result?: Vector2
+  ): Vector2 {
+    this._update();
     return this._offCenterFrustum.getPixelDimensions(
       drawingBufferWidth,
       drawingBufferHeight,
       distance,
-      result
+      result || new Vector2()
     );
   }
-}
 
-// eslint-disable-next-line complexity, max-statements
-function update(frustum) {
-  assert(
-    Number.isFinite(frustum.fov) &&
-      Number.isFinite(frustum.aspectRatio) &&
-      Number.isFinite(frustum.near) &&
-      Number.isFinite(frustum.far)
-  );
-  // 'fov, aspectRatio, near, or far parameters are not set.'
+  // eslint-disable-next-line complexity, max-statements
+  private _update(): void {
+    assert(
+      Number.isFinite(this.fov) &&
+        Number.isFinite(this.aspectRatio) &&
+        Number.isFinite(this.near) &&
+        Number.isFinite(this.far)
+    );
+    // 'fov, aspectRatio, near, or far parameters are not set.'
 
-  const f = frustum._offCenterFrustum;
+    const f = this._offCenterFrustum;
 
-  if (
-    frustum.fov !== frustum._fov ||
-    frustum.aspectRatio !== frustum._aspectRatio ||
-    frustum.near !== frustum._near ||
-    frustum.far !== frustum._far ||
-    frustum.xOffset !== frustum._xOffset ||
-    frustum.yOffset !== frustum._yOffset
-  ) {
-    assert(frustum.fov >= 0 && frustum.fov < Math.PI);
-    // throw new DeveloperError('fov must be in the range [0, PI).');
+    if (
+      this.fov !== this._fov ||
+      this.aspectRatio !== this._aspectRatio ||
+      this.near !== this._near ||
+      this.far !== this._far ||
+      this.xOffset !== this._xOffset ||
+      this.yOffset !== this._yOffset
+    ) {
+      assert(this.fov >= 0 && this.fov < Math.PI);
+      // throw new DeveloperError('fov must be in the range [0, PI).');
 
-    assert(frustum.aspectRatio > 0);
-    // throw new DeveloperError('aspectRatio must be positive.');
+      assert(this.aspectRatio > 0);
+      // throw new DeveloperError('aspectRatio must be positive.');
 
-    assert(frustum.near >= 0 && frustum.near < frustum.far);
-    // throw new DeveloperError('near must be greater than zero and less than far.');
+      assert(this.near >= 0 && this.near < this.far);
+      // throw new DeveloperError('near must be greater than zero and less than far.');
 
-    frustum._aspectRatio = frustum.aspectRatio;
-    frustum._fov = frustum.fov;
-    frustum._fovy =
-      frustum.aspectRatio <= 1
-        ? frustum.fov
-        : Math.atan(Math.tan(frustum.fov * 0.5) / frustum.aspectRatio) * 2.0;
-    frustum._near = frustum.near;
-    frustum._far = frustum.far;
-    frustum._sseDenominator = 2.0 * Math.tan(0.5 * frustum._fovy);
-    frustum._xOffset = frustum.xOffset;
-    frustum._yOffset = frustum.yOffset;
+      this._aspectRatio = this.aspectRatio;
+      this._fov = this.fov;
+      this._fovy =
+        this.aspectRatio <= 1
+          ? this.fov
+          : Math.atan(Math.tan(this.fov * 0.5) / this.aspectRatio) * 2.0;
+      this._near = this.near;
+      this._far = this.far;
+      this._sseDenominator = 2.0 * Math.tan(0.5 * this._fovy);
+      this._xOffset = this.xOffset;
+      this._yOffset = this.yOffset;
 
-    f.top = frustum.near * Math.tan(0.5 * frustum._fovy);
-    f.bottom = -f.top;
-    f.right = frustum.aspectRatio * f.top;
-    f.left = -f.right;
-    f.near = frustum.near;
-    f.far = frustum.far;
+      f.top = this.near * Math.tan(0.5 * this._fovy);
+      f.bottom = -f.top;
+      f.right = this.aspectRatio * f.top;
+      f.left = -f.right;
+      f.near = this.near;
+      f.far = this.far;
 
-    f.right += frustum.xOffset;
-    f.left += frustum.xOffset;
-    f.top += frustum.yOffset;
-    f.bottom += frustum.yOffset;
+      f.right += this.xOffset;
+      f.left += this.xOffset;
+      f.top += this.yOffset;
+      f.bottom += this.yOffset;
+    }
   }
 }
