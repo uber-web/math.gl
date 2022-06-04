@@ -526,7 +526,7 @@ export default class Matrix4 extends Matrix {
    * @param result
    * @returns self
    */
-  transform(vector: Readonly<NumericArray>, result: NumericArray): NumericArray {
+  transform(vector: Readonly<NumericArray>, result?: NumericArray): NumericArray {
     if (vector.length === 4) {
       result = vec4.transformMat4(result || [-0, -0, -0, -0], vector, this);
       checkVector(result, 4);
