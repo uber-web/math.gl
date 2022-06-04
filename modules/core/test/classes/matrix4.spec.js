@@ -611,11 +611,8 @@ test('Matrix4#transform', (t) => {
     tapeEquals(t, p4, testCase.expected, 'transform gave the right result');
   }
 
-  // @ts-expect-error
   t.throws(() => matrix.transform([NaN, 0, 0, 0]));
-  // @ts-expect-error
   t.throws(() => matrix.transform([0]));
-  // @ts-expect-error
   t.throws(() => matrix.transform([0, 0, 0, 0, 0]));
   t.throws(() => matrix.transformAsVector([0, 0, 0, 0, 0]));
   t.throws(() => matrix.transformAsPoint([0, 0, 0, 0, 0]));
