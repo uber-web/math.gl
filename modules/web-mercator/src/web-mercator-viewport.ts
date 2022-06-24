@@ -143,7 +143,7 @@ export default class WebMercatorViewport {
 
     const distanceScales = getDistanceScales({longitude, latitude});
 
-    const center = lngLatToWorld([longitude, latitude]);
+    const center: number[] = lngLatToWorld([longitude, latitude]);
     center.push(0);
 
     if (position) {
@@ -153,6 +153,8 @@ export default class WebMercatorViewport {
     this.projectionMatrix = getProjectionMatrix({
       width,
       height,
+      scale,
+      center,
       pitch,
       fovy,
       nearZMultiplier,

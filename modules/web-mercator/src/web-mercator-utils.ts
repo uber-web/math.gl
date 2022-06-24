@@ -1,6 +1,6 @@
 // TODO - THE UTILITIES IN THIS FILE SHOULD BE IMPORTED FROM WEB-MERCATOR-VIEWPORT MODULE
 
-import {createMat4, transformVector, log2} from './math-utils';
+import {createMat4, transformVector, clamp, log2} from './math-utils';
 
 import * as mat4 from 'gl-matrix/mat4';
 import * as vec2 from 'gl-matrix/vec2';
@@ -252,6 +252,9 @@ export function getViewMatrix(options: {
  *
  * @param options.width Width of "viewport" or window
  * @param options.height Height of "viewport" or window
+ * @param options.scale Scale at the current zoom
+ * @param options.center Offset of the target, vec3 in world space
+ * @param options.offset Offset of the focal point, vec2 in screen space
  * @param options.pitch Camera angle in degrees (0 is straight down)
  * @param options.fovy field of view in degrees
  * @param options.altitude if provided, field of view is calculated using `altitudeToFovy()`
@@ -262,13 +265,26 @@ export function getViewMatrix(options: {
 export function getProjectionParameters(options: {
   width: number;
   height: number;
+  scale?: number;
+  center?: number[];
+  offset?: [number, number];
   fovy?: number;
   altitude?: number;
   pitch?: number;
   nearZMultiplier?: number;
   farZMultiplier?: number;
 }): ProjectionParameters {
-  const {width, height, altitude, pitch = 0, nearZMultiplier = 1, farZMultiplier = 1} = options;
+  const {
+    width,
+    height,
+    altitude,
+    pitch = 0,
+    offset,
+    center,
+    scale,
+    nearZMultiplier = 1,
+    farZMultiplier = 1
+  } = options;
   let {fovy = altitudeToFovy(DEFAULT_ALTITUDE)} = options;
 
   // For back-compatibility allow field of view to be
@@ -276,25 +292,42 @@ export function getProjectionParameters(options: {
   if (altitude !== undefined) {
     fovy = altitudeToFovy(altitude);
   }
-  const halfFov = 0.5 * fovy * DEGREES_TO_RADIANS;
+
+  const fovRadians = fovy * DEGREES_TO_RADIANS;
+  const pitchRadians = pitch * DEGREES_TO_RADIANS;
+
+  // Distance from camera to the target
   const focalDistance = fovyToAltitude(fovy);
+
+  let cameraToSeaLevelDistance = focalDistance;
+
+  if (center) {
+    cameraToSeaLevelDistance += (center[2] * scale) / Math.cos(pitchRadians) / height;
+  }
+
+  const fovAboveCenter = fovRadians * (0.5 + (offset ? offset[1] : 0) / height);
 
   // Find the distance from the center point to the center top
   // in focal distance units using law of sines.
-  const pitchRadians = pitch * DEGREES_TO_RADIANS;
   const topHalfSurfaceDistance =
-    (Math.sin(halfFov) * focalDistance) /
-    Math.sin(Math.min(Math.max(Math.PI / 2 - pitchRadians - halfFov, 0.01), Math.PI - 0.01));
+    (Math.sin(fovAboveCenter) * cameraToSeaLevelDistance) /
+    Math.sin(clamp(Math.PI / 2 - pitchRadians - fovAboveCenter, 0.01, Math.PI - 0.01));
+
+  // Calculate z distance of the farthest fragment that should be rendered.
+  const furthestDistance =
+    Math.sin(pitchRadians) * topHalfSurfaceDistance + cameraToSeaLevelDistance;
+  // Matches mapbox limit
+  const horizonDistance = cameraToSeaLevelDistance * 10;
 
   // Calculate z value of the farthest fragment that should be rendered.
-  const farZ = Math.sin(pitchRadians) * topHalfSurfaceDistance + focalDistance;
+  const farZ = Math.min(furthestDistance * farZMultiplier, horizonDistance);
 
   return {
-    fov: 2 * halfFov,
+    fov: fovRadians,
     aspect: width / height,
     focalDistance,
     near: nearZMultiplier,
-    far: farZ * farZMultiplier
+    far: farZ
   };
 }
 
@@ -308,6 +341,9 @@ export function getProjectionParameters(options: {
  * @param options Viewport options
  * @param options.width Width of "viewport" or window
  * @param options.height Height of "viewport" or window
+ * @param options.scale Scale at the current zoom
+ * @param options.center Offset of the target, vec3 in world space
+ * @param options.offset Offset of the focal point, vec2 in screen space
  * @param options.pitch Camera angle in degrees (0 is straight down)
  * @param options.fovy field of view in degrees
  * @param options.altitude if provided, field of view is calculated using `altitudeToFovy()`
@@ -319,6 +355,9 @@ export function getProjectionMatrix(options: {
   width: number;
   height: number;
   pitch: number;
+  scale?: number;
+  center?: number[];
+  offset?: [number, number];
   fovy?: number;
   altitude?: number;
   nearZMultiplier: number;
