@@ -129,7 +129,10 @@ Parameters:
 - `viewport.width` (Number, required)
 - `viewport.height` (Number, required)
 - `viewport.pitch` (Number, required)
-- `viewport.fovy` (Number, required) - field of view in degrees
+- `viewport.scale` (Number, optional) - required if `center` is specified
+- `viewport.center` (Number[], optional) - offset of the target, vec3 in world space
+- `viewport.offset` (Number[], optional) - offset of the focal point, vec2 in screen space
+- `viewport.fovy` (Number, optional) - field of view in degrees
 - `viewport.altitude` (Number, optional) - if provided, field of view is calculated using `altitudeToFovy()`
 - `viewport.nearZMultiplier` (Number, optional) - near plane multiplier. Default `1`.
 - `viewport.farZMultiplier` (Number, optional) - far plane multiplier. Default `1`
@@ -154,8 +157,11 @@ Parameters:
 
 - `width` (Number, required)
 - `height` (Number, required)
-- `pitch` (Number, required)
-- `fovy` (Number, required) - field of view in degrees
+- `viewport.pitch` (Number, optional) - default `0`.
+- `viewport.scale` (Number, optional) - required if `center` is specified
+- `viewport.center` (Number[], optional) - offset of the target, vec3 in world space
+- `viewport.offset` (Number[], optional) - offset of the focal point, vec2 in screen space
+- `viewport.fovy` (Number, optional) - field of view in degrees
 - `altitude` (Number, optional) - if provided, field of view is calculated using `altitudeToFovy()`
 - `farZMultiplier` (Number, optional) - near plane multiplier. Default `1`.
 - `farZMultiplier` (Number, optional) - far plane multiplier. Default `1`.

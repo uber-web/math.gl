@@ -265,12 +265,12 @@ export function getViewMatrix(options: {
 export function getProjectionParameters(options: {
   width: number;
   height: number;
-  scale: number;
+  scale?: number;
   center?: number[];
   offset?: [number, number];
   fovy?: number;
   altitude?: number;
-  pitch: number;
+  pitch?: number;
   nearZMultiplier?: number;
   farZMultiplier?: number;
 }): ProjectionParameters {
@@ -278,7 +278,7 @@ export function getProjectionParameters(options: {
     width,
     height,
     altitude,
-    pitch,
+    pitch = 0,
     offset,
     center,
     scale,
@@ -355,9 +355,8 @@ export function getProjectionMatrix(options: {
   width: number;
   height: number;
   pitch: number;
-  scale: number;
+  scale?: number;
   center?: number[];
-  /** offset of focal point in the viewport, relative to the height */
   offset?: [number, number];
   fovy?: number;
   altitude?: number;

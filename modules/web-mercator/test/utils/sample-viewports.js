@@ -3,7 +3,6 @@ export default {
     latitude: 37.75,
     longitude: -122.43,
     zoom: 11.5,
-    pitch: 0,
     bearing: 0,
     width: 800,
     height: 600
