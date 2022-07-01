@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 3.6.1
+
+- [web-mercator] Add unitsPerMeter util (#296)
+- [web-mercator] Account for elevation and offset when calculating far z (#295)
+
 ## 3.6.0
 
 ## 3.6.0-alpha.8
