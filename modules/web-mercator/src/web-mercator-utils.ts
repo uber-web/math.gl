@@ -108,6 +108,17 @@ export function getMeterZoom(options: {latitude: number}): number {
 }
 
 /**
+ * Calculate the conversion from meter to common units at a given latitude
+ * This is a cheaper version of `getDistanceScales`
+ * @param latitude center latitude in degrees
+ * @returns common units per meter
+ */
+export function unitsPerMeter(latitude: number): number {
+  const latCosine = Math.cos(latitude * DEGREES_TO_RADIANS);
+  return TILE_SIZE / EARTH_CIRCUMFERENCE / latCosine;
+}
+
+/**
  * Calculate distance scales in meters around current lat/lon, both for
  * degrees and pixels.
  * In mercator projection mode, the distance scales vary significantly

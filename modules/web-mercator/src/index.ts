@@ -18,6 +18,7 @@ export {
   altitudeToFovy,
   fovyToAltitude,
   getMeterZoom,
+  unitsPerMeter,
   getDistanceScales,
   addMetersToLngLat,
   getViewMatrix,
