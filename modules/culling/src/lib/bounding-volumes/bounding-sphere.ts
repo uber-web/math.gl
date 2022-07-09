@@ -127,7 +127,7 @@ export default class BoundingSphere implements BoundingVolume {
   }
 
   /** Determines which side of a plane a sphere is located. */
-  intersectPlane(plane: Plane): INTERSECTION {
+  intersectPlane(plane: Plane): number {
     const center = this.center;
     const radius = this.radius;
     const normal = plane.normal;
