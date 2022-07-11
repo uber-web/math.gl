@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.6.2
+
+- Remove enum exports (#298)
+
 ## 3.6.1
 
 - [web-mercator] Add unitsPerMeter util (#296)
