@@ -28,5 +28,5 @@ export interface BoundingVolume {
    *  - `INTERSECTION.OUTSIDE` if the entire box is on the opposite side.
    *  - `INTERSECTION.INTERSECTING` if the box intersects the plane.
    */
-  intersectPlane(plane: Plane): INTERSECTION;
+  intersectPlane(plane: Plane): number;
 }

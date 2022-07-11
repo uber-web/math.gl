@@ -93,7 +93,7 @@ export default class AxisAlignedBoundingBox implements BoundingVolume {
   /**
    * Determines which side of a plane a box is located.
    */
-  intersectPlane(plane: Plane): INTERSECTION {
+  intersectPlane(plane: Plane): number {
     const {halfDiagonal} = this;
     const normal = scratchNormal.from(plane.normal);
     const e =

@@ -120,7 +120,7 @@ export default class OrientedBoundingBox implements BoundingVolume {
   }
 
   /** Determines which side of a plane the oriented bounding box is located. */
-  intersectPlane(plane: Plane): INTERSECTION {
+  intersectPlane(plane: Plane): number {
     const center = this.center;
     const normal = plane.normal;
     const halfAxes = this.halfAxes;

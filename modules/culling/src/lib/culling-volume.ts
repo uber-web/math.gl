@@ -89,9 +89,9 @@ export default class CullingVolume {
   }
 
   /** Determines whether a bounding volume intersects the culling volume. */
-  computeVisibility(boundingVolume: BoundingVolume): INTERSECTION {
+  computeVisibility(boundingVolume: BoundingVolume): number {
     // const planes = this.planes;
-    let intersect = INTERSECTION.INSIDE;
+    let intersect: number = INTERSECTION.INSIDE;
     for (const plane of this.planes) {
       const result = boundingVolume.intersectPlane(plane);
       switch (result) {

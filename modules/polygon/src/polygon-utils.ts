@@ -3,10 +3,10 @@
 import {equals} from '@math.gl/core';
 import type {NumericArray} from '@math.gl/core';
 
-export enum WINDING {
-  CLOCKWISE = 1,
-  COUNTER_CLOCKWISE = -1
-}
+export const WINDING = {
+  CLOCKWISE: 1,
+  COUNTER_CLOCKWISE: -1
+} as const;
 
 /** Polygon representation where each point is represented as a separate array of positions. */
 type PointsArray = NumericArray[];
