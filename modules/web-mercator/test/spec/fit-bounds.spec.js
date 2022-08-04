@@ -99,7 +99,7 @@ const FITBOUNDS_TEST_CASES =
       },
       {
         longitude: -23.406499999999998,
-        latitude: 64.86614331652771,
+        latitude: 64.87085760222105,
         zoom: 12.476957831451607
       }
     ],

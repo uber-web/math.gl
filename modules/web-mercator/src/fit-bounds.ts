@@ -88,7 +88,7 @@ export default function fitBounds(options: FitBoundsOptions): ViewportProps {
 
   // Find how much we need to shift the center
   const offsetX = (padding.right - padding.left) / 2 / scaleX;
-  const offsetY = (padding.bottom - padding.top) / 2 / scaleY;
+  const offsetY = (padding.top - padding.bottom) / 2 / scaleY;
 
   const center = [(se[0] + nw[0]) / 2 + offsetX, (se[1] + nw[1]) / 2 + offsetY];
 
