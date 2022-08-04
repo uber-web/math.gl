@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.6.3
+
+- [web-mercator] Fix reverse top/bottom padding in fitBounds (#302)
+
 ## 3.6.2
 
 - Remove enum exports (#298)
