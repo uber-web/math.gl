@@ -20,7 +20,7 @@ earcut([0, 0, 100, 0, 100, 100, 0, 100, 20, 20, 80, 20, 80, 80, 20, 80], [4]);
 ## Usage
 
 ```js
-earcut(positions[, holeIndices, size = 2, areas]);
+earcut(positions[, holeIndices, size = 2, areas, plane]);
 ```
 
 Arguments:
@@ -29,6 +29,7 @@ Arguments:
 - `holeIndices` (Array, optional) - is an array of hole indices if any (e.g. [5, 8] for a 12-vertex input would mean one hole with vertices 5–7 and another with 8–11).
 - `size` (Number, optional) - the number of elements in each vertex. Size `2` will interpret `positions` as `[x0, y0, x1, y1, ...]` and size `3` will interpret `positions` as `[x0, y0, z0, x1, y1, z1, ...]`. Default `2`.
 - `areas` (Array, optional) - areas of outer polygon and holes as computed by `getPolygonSignedArea()`. Can be optionally supplied to speed up triangulation
+- `plane` (String, optional) - the 2D projection plane on which to tesselate a 3D polygon on. One of `xy`, `yz`, `xz`. Default to `xy`
 
 Returns:
 

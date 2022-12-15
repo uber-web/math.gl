@@ -71,6 +71,13 @@ export function getPolygonWindingDirection(
   return Math.sign(getPolygonSignedArea(points, options));
 }
 
+export type Plane2D = 'xy' | 'yz' | 'xz';
+export const DimIndex: Record<string, number> = {
+  x: 0,
+  y: 1,
+  z: 2
+} as const;
+
 /**
  * Returns signed area of the polygon.
  * @param points An array that represents points of the polygon.
@@ -78,12 +85,19 @@ export function getPolygonWindingDirection(
  * @returns Signed area of the polygon.
  * https://en.wikipedia.org/wiki/Shoelace_formula
  */
-export function getPolygonSignedArea(points: NumericArray, options: PolygonParams = {}): number {
+export function getPolygonSignedArea(
+  points: NumericArray,
+  options: PolygonParams = {},
+  plane: Plane2D = 'xy'
+): number {
   const {start = 0, end = points.length} = options;
   const dim = options.size || 2;
   let area = 0;
+  const i0 = DimIndex[plane[0]];
+  const i1 = DimIndex[plane[1]];
+
   for (let i = start, j = end - dim; i < end; i += dim) {
-    area += (points[i] - points[j]) * (points[i + 1] + points[j + 1]);
+    area += (points[i + i0] - points[j + i0]) * (points[i + i1] + points[j + i1]);
     j = i;
   }
   return area / 2;

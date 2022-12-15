@@ -26,7 +26,8 @@
 
 /* eslint-disable */
 
-import {getPolygonSignedArea} from './polygon-utils';
+import type {NumericArray} from '@math.gl/core';
+import {getPolygonSignedArea, DimIndex, Plane2D} from './polygon-utils';
 
 /**
  * Computes a triangulation of a polygon
@@ -38,14 +39,15 @@ import {getPolygonSignedArea} from './polygon-utils';
  * Adapted from https://github.com/mapbox/earcut
  */
 export function earcut(
-  positions: number[],
-  holeIndices?: number[],
+  positions: NumericArray,
+  holeIndices?: NumericArray,
   dim: number = 2,
-  areas?: number[]
+  areas?: NumericArray,
+  plane: Plane2D = 'xy'
 ): number[] {
   const hasHoles = holeIndices && holeIndices.length;
   const outerLen = hasHoles ? holeIndices[0] * dim : positions.length;
-  let outerNode = linkedList(positions, 0, outerLen, dim, true, areas && areas[0]);
+  let outerNode = linkedList(positions, 0, outerLen, dim, true, areas && areas[0], plane);
   const triangles = [];
 
   if (!outerNode || outerNode.next === outerNode.prev) return triangles;
@@ -58,7 +60,7 @@ export function earcut(
   let x;
   let y;
 
-  if (hasHoles) outerNode = eliminateHoles(positions, holeIndices, outerNode, dim, areas);
+  if (hasHoles) outerNode = eliminateHoles(positions, holeIndices, outerNode, dim, areas, plane);
 
   // if the shape is not too simple, we'll use z-order curve hash later; calculate polygon bbox
   if (positions.length > 80 * dim) {
@@ -85,20 +87,31 @@ export function earcut(
 }
 
 // create a circular doubly linked list from polygon points in the specified winding order
-function linkedList(data, start, end, dim, clockwise, area) {
+function linkedList(
+  data: NumericArray,
+  start: number,
+  end: number,
+  dim: number,
+  clockwise: boolean,
+  area: number | undefined,
+  plane: Plane2D
+): Vertex {
   let i;
   let last;
   if (area === undefined) {
-    area = getPolygonSignedArea(data, {start, end, size: dim});
+    area = getPolygonSignedArea(data, {start, end, size: dim}, plane);
   }
 
+  let i0 = DimIndex[plane[0]];
+  let i1 = DimIndex[plane[1]];
   // Note that the signed area calculation in math.gl
   // has the opposite sign to that which was originally
   // present in earcut, thus the `< 0` is reversed
   if (clockwise === area < 0) {
-    for (i = start; i < end; i += dim) last = insertNode(i, data[i], data[i + 1], last);
+    for (i = start; i < end; i += dim) last = insertNode(i, data[i + i0], data[i + i1], last);
   } else {
-    for (i = end - dim; i >= start; i -= dim) last = insertNode(i, data[i], data[i + 1], last);
+    for (i = end - dim; i >= start; i -= dim)
+      last = insertNode(i, data[i + i0], data[i + i1], last);
   }
 
   if (last && equals(last, last.next)) {
@@ -372,7 +385,14 @@ function splitEarcut(start, triangles, dim, minX, minY, invSize) {
 }
 
 // link every hole into the outer loop, producing a single-ring polygon without holes
-function eliminateHoles(data, holeIndices, outerNode, dim, areas) {
+function eliminateHoles(
+  data: NumericArray,
+  holeIndices: NumericArray,
+  outerNode: Vertex,
+  dim: number,
+  areas: NumericArray | undefined,
+  plane: Plane2D
+): Vertex {
   const queue = [];
   let i;
   let len;
@@ -383,7 +403,7 @@ function eliminateHoles(data, holeIndices, outerNode, dim, areas) {
   for (i = 0, len = holeIndices.length; i < len; i++) {
     start = holeIndices[i] * dim;
     end = i < len - 1 ? holeIndices[i + 1] * dim : data.length;
-    list = linkedList(data, start, end, dim, false, areas && areas[i + 1]);
+    list = linkedList(data, start, end, dim, false, areas && areas[i + 1], plane);
     if (list === list.next) list.steiner = true;
     queue.push(getLeftmost(list));
   }
@@ -698,8 +718,8 @@ function middleInside(a, b) {
 // link two polygon vertices with a bridge; if the vertices belong to the same ring, it splits polygon into two;
 // if one belongs to the outer ring and another to a hole, it merges it into a single ring
 function splitPolygon(a, b) {
-  const a2 = new Node(a.i, a.x, a.y);
-  const b2 = new Node(b.i, b.x, b.y);
+  const a2 = new Vertex(a.i, a.x, a.y);
+  const b2 = new Vertex(b.i, b.x, b.y);
   const an = a.next;
   const bp = b.prev;
 
@@ -720,7 +740,7 @@ function splitPolygon(a, b) {
 
 // create a node and optionally link it with previous one (in a circular doubly linked list)
 function insertNode(i, x, y, last) {
-  const p = new Node(i, x, y);
+  const p = new Vertex(i, x, y);
 
   if (!last) {
     p.prev = p;
@@ -742,32 +762,31 @@ function removeNode(p) {
   if (p.nextZ) p.nextZ.prevZ = p.prevZ;
 }
 
-class Node {
-  // previous and next vertex nodes in a polygon ring
-  prev = null;
-  next = null;
-
-  // z-order curve value
-  z: number;
-
-  // previous and next nodes in z-order
-  prevZ = null;
-  nextZ = null;
-
-  // indicates whether this is a steiner point
-  steiner = false;
-
+class Vertex {
+  // vertex index in coordinates array
   i: number;
+
+  // vertex coordinates
   x: number;
   y: number;
 
-  constructor(i: number, x: number, y: number) {
-    // vertex index in coordinates array
-    this.i = i;
+  // previous and next vertex nodes in a polygon ring
+  prev: Vertex = null;
+  next: Vertex = null;
 
-    // vertex coordinates
+  // z-order curve value
+  z: number = 0;
+
+  // previous and next nodes in z-order
+  prevZ: Vertex = null;
+  nextZ: Vertex = null;
+
+  // indicates whether this is a steiner point
+  steiner: boolean = false;
+
+  constructor(i: number, x: number, y: number) {
+    this.i = i;
     this.x = x;
     this.y = y;
-    this.z = 0;
   }
 }

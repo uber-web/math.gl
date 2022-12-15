@@ -43,12 +43,13 @@ Returns true if the winding direction was changed.
 
 Returns signed area of the polygon.
 
-`getPolygonSignedArea(points, options)`
+`getPolygonSignedArea(points, options, plane)`
 
 Arguments:
 
 - `points` (Array|TypedArray) - a flat array of the points that define the polygon.
-- `options` (PolygonParams) - Polygon parameters.
+- `options` (PolygonParams, optional) - Polygon parameters.
+- `plane` (String, optional) - the 2D projection plane on which to calculate the area of a 3D polygon. One of `xy`, `yz`, `xz`. Default to `xy`
 
 Returns:
 
