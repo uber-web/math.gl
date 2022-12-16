@@ -1,6 +1,3 @@
-// @ts-nocheck
-let mapbox;
-
 function noop() {}
 
 if (typeof window === 'undefined') {
@@ -9,12 +6,7 @@ if (typeof window === 'undefined') {
   // back fill with mock objects
   global.window = win;
   global.self = win;
+  // @ts-expect-error
   global.Blob = noop;
   win.URL.createObjectURL = noop;
-
-  mapbox = require.call(global, 'mapbox-gl/dist/mapbox-gl.js');
-} else {
-  mapbox = require('mapbox-gl/dist/mapbox-gl.js');
 }
-
-module.exports = mapbox;

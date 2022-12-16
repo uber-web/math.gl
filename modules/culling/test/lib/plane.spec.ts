@@ -195,7 +195,12 @@ test('Plane#transforms a plane according to a transform', (t) => {
   const transformedPlane = plane.clone().transform(transform);
 
   tapeEquals(t, transformedPlane.distance, plane.distance * 2.0);
-  tapeEquals(t, transformedPlane.normal, [-normal.x, normal.y, -normal.z], _MathUtils.EPSILON10);
+  tapeEquals(
+    t,
+    transformedPlane.normal,
+    [-normal.x, normal.y, -normal.z],
+    'epsilon:' + _MathUtils.EPSILON10
+  );
 
   t.end();
 });

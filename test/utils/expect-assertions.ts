@@ -4,6 +4,10 @@ import {tapeEquals, tapeNotEquals, tapeEqualsEpsilon} from './tape-assertions';
 // Maps `expect` style tests to `tape assert` style tests
 
 class TestCase {
+  _t: test;
+  _result: any;
+  _not: boolean;
+
   constructor(t, result) {
     this._t = t;
     this._result = result;

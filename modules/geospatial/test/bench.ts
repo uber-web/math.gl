@@ -8,9 +8,13 @@ import {
   toCartographicFromRadians
 } from '../src/type-utils';
 
-import ellipsoidBench from '@math.gl/geospatial/test/ellipsoid/ellipsoid.bench';
+import ellipsoidBench from './ellipsoid/ellipsoid.bench';
 
 class ObjectVector {
+  x: number;
+  y: number;
+  z: number;
+
   constructor(x = 0, y = 0, z = 0) {
     this.x = x;
     this.y = y;

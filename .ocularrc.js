@@ -15,10 +15,20 @@ module.exports = {
   },
 
   entry: {
-    test: 'test/node.js',
-    'test-browser': 'test/browser.js',
-    bench: 'test/bench/node.js',
-    'bench-browser': 'test/bench/browser.js',
-    size: 'test/size/import-nothing.js'
+    test: 'test/node.ts',
+    'test-browser': 'test/browser.ts',
+    bench: 'test/bench/node.ts',
+    'bench-browser': 'test/bench/browser.ts',
+    size: [
+      'test/size/core.js',
+      'test/size/vector3.js',
+      'test/size/matrix4.js',
+      'test/size/quaternion.js',
+      'test/size/culling.js',
+      'test/size/geospatial.js',
+      'test/size/polygon.js',
+      'test/size/sun.js',
+      'test/size/web-mercator.js'
+    ]
   }
 };

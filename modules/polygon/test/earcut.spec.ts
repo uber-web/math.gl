@@ -19,7 +19,7 @@
 
  */
 
-import {promises as fs} from 'fs';
+import fs from 'fs';
 import {resolve} from 'path';
 import test from 'tape-promise/tape';
 import {earcut} from '@math.gl/polygon';
@@ -49,7 +49,7 @@ async function openFile(filePath) {
     const request = await fetch(filePath);
     data = await request.json();
   } else if (fs) {
-    data = await fs.readFile(filePath);
+    data = await fs.promises.readFile(filePath);
     data = JSON.parse(data.toString());
   }
   return data;
@@ -59,7 +59,7 @@ const FIXTURES_PATH = 'modules/polygon/test/data/earcut/fixtures/';
 
 Object.keys(expected.triangles).forEach((id) => {
   test(id, async (t) => {
-    const filepath = resolve(FIXTURES_PATH, `${id}.json`);
+    const filepath = FIXTURES_PATH + `${id}.json`;
     const raw = await openFile(filepath);
     const data = flatten(raw);
     const indices = earcut(data.vertices, data.holes, data.dimensions);

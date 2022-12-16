@@ -444,7 +444,7 @@ function makeRotationY(angle) {
   return new Matrix3([cosAngle, 0.0, sinAngle, 0.0, 1.0, 0.0, -sinAngle, 0.0, cosAngle]);
 }
 
-function makeRotationZ(angle, result) {
+function makeRotationZ(angle) {
   const cosAngle = Math.cos(angle);
   const sinAngle = Math.sin(angle);
   return new Matrix3([cosAngle, -sinAngle, 0.0, sinAngle, cosAngle, 0.0, 0.0, 0.0, 1.0]);

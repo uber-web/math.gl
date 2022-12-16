@@ -1,4 +1,4 @@
-import {promises as fs} from 'fs';
+import fs from 'fs';
 
 export async function openFile(filePath) {
   let data = null;
@@ -6,7 +6,7 @@ export async function openFile(filePath) {
     const request = await fetch(filePath);
     data = new Uint8Array(await request.arrayBuffer());
   } else if (fs) {
-    data = await fs.readFile(filePath);
+    data = await fs.promises.readFile(filePath);
   }
   return data;
 }

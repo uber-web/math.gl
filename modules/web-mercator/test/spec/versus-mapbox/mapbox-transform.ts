@@ -22,9 +22,10 @@
 
 // NOTE: Transform is not a public API so we should be careful to always lock
 // down mapbox-gl to a specific major, minor, and patch version.
-import {Map, LngLat, Point} from './mapbox';
+import mapbox from 'mapbox-gl';
 import * as vec4 from 'gl-matrix/vec4';
 
+const {Map, LngLat, Point} = mapbox;
 let Transform;
 /* eslint-disable */
 // Hack: mapbox-gl does not expose Transform class
