@@ -17,7 +17,7 @@ const config = deepMerge(defaultConfig, {
   overrides: [
     {
       // scripts use devDependencies
-      files: ['**/test/**/*.js', '**/scripts/**/*.js', '*.config.js', '*.config.local.js'],
+      files: ['**/test/**/*.ts', '**/scripts/**/*.js', '*.config.js', '*.config.local.js'],
       rules: {
         'import/no-unresolved': 0,
         'import/no-extraneous-dependencies': 0

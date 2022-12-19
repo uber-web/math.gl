@@ -1,6 +1,6 @@
 import {equals, withEpsilon} from '@math.gl/core';
 
-function isEqual(a, b) {
+function isEqual(a: any, b: any): boolean {
   if (a && a.equals) {
     return a.equals(b);
   }
@@ -13,7 +13,7 @@ function isEqual(a, b) {
 // FOR TAPE TESTING
 // Use tape assert to compares using a.equals(b)
 // Usage test(..., t => { tapeEquals(t, a, b, ...); });
-export function tapeEquals(t, a, b, msg, extra) {
+export function tapeEquals(t, a: any, b: any, msg?: string, extra?: any) {
   t._assert(isEqual(a, b), {
     message: msg || 'should be equal',
     operator: 'equal',
@@ -23,7 +23,7 @@ export function tapeEquals(t, a, b, msg, extra) {
   });
 }
 
-export function tapeNotEquals(t, a, b, msg, extra) {
+export function tapeNotEquals(t, a: any, b: any, msg?: string, extra?: any) {
   t._assert(!isEqual(a, b), {
     message: msg || 'should not be equal',
     operator: 'notEqual',
@@ -34,6 +34,6 @@ export function tapeNotEquals(t, a, b, msg, extra) {
 }
 
 // eslint-disable-next-line max-params
-export function tapeEqualsEpsilon(t, a, b, epsilon, msg, extra) {
+export function tapeEqualsEpsilon(t, a: any, b: any, epsilon: number, msg?: string, extra?: any) {
   return withEpsilon(epsilon, () => tapeEquals(t, a, b, msg, extra));
 }

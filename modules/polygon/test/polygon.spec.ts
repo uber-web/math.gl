@@ -4,7 +4,7 @@
 /* eslint-disable max-statements */
 import test from 'tape-promise/tape';
 import {tapeEquals} from 'test/utils/tape-assertions';
-import {toNested} from './utils.js';
+import {toNested} from './utils';
 
 import {configure} from '@math.gl/core';
 import {_Polygon as Polygon, WINDING} from '@math.gl/polygon';

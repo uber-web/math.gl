@@ -18,24 +18,4 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-const {Bench} = require('@probe.gl/bench');
-const addBenchmarks = require('./modules.bench').default;
-
-const addReferenceBenchmarks = false;
-
-const suite = new Bench();
-
-addBenchmarks(suite, addReferenceBenchmarks);
-
-suite
-  // Calibrate performance
-  .calibrate()
-  .run()
-  // when running in browser, notify test the driver that it's done
-  .then(() => {
-    // @ts-ignore TS2339: Property 'browserTestDriver_finish' does not exist
-    if (typeof window !== 'undefined' && window.browserTestDriver_finish) {
-      // @ts-ignore TS2339: Property 'browserTestDriver_finish' does not exist
-      window.browserTestDriver_finish();
-    }
-  });
+import './browser';

@@ -6,11 +6,18 @@ const IDENTITY = [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1];
 
 class ClassNoConstructor {}
 class ClassWithConstructor {
+  data: any;
+
   constructor() {
     this.data = null;
   }
 }
 class ClassWithConstructorXYZ {
+  x: number;
+  y: number;
+  z: number;
+  w: number;
+
   constructor() {
     this.x = -0;
     this.y = -0;
@@ -46,6 +53,10 @@ class ArrayExtender extends Array {
 // DEFAULT PARAMETERS
 
 class XYZVector {
+  x: number;
+  y: number;
+  z: number;
+
   constructor(x = 0, y = 0, z = 0) {
     this.x = x;
     this.y = y;
@@ -54,7 +65,11 @@ class XYZVector {
 }
 
 class XYZVectorLogicalOr {
-  constructor(x, y, z) {
+  x: number;
+  y: number;
+  z: number;
+
+  constructor(x?: number, y?: number, z?: number) {
     this.x = x || 0;
     this.y = y || 0;
     this.z = z || 0;
@@ -62,10 +77,14 @@ class XYZVectorLogicalOr {
 }
 
 class XYZVectorBitwiseOr {
-  constructor(x, y, z) {
-    this.x = x || 0;
-    this.y = y || 0;
-    this.z = z || 0;
+  x: number;
+  y: number;
+  z: number;
+
+  constructor(x?: number, y?: number, z?: number) {
+    this.x = x | 0;
+    this.y = y | 0;
+    this.z = z | 0;
   }
 }
 
