@@ -2,18 +2,18 @@
 // See LICENSE.md and https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md
 
 /* eslint-disable */
-import test from 'tape-promise/tape';
+import test, {Test} from 'tape-promise/tape';
 
 import {Vector3} from '@math.gl/core';
 import {
   CullingVolume,
   BoundingSphere,
-  AxisAlignedBoundingBox,
   makeBoundingSphereFromPoints,
   makeAxisAlignedBoundingBoxFromPoints,
   _PerspectiveFrustum as PerspectiveFrustum,
   INTERSECTION
 } from '@math.gl/culling';
+import {BoundingVolume} from '../../dist/lib/bounding-volumes/bounding-volume';
 
 const VECTOR3_UNIT_Z = Object.freeze(new Vector3(0, 0, 1));
 
@@ -66,7 +66,12 @@ test('CullingVolume#computeVisibilityWithPlaneMask throws without a parent plane
   t.end();
 });
 
-function testWithAndWithoutPlaneMask(t, culling, bound, intersect) {
+function testWithAndWithoutPlaneMask(
+  t: Test,
+  culling: CullingVolume,
+  bound: BoundingVolume,
+  intersect: number
+) {
   const actualIntersect = culling.computeVisibility(bound);
   t.equals(actualIntersect, intersect);
 

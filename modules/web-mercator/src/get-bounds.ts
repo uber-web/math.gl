@@ -1,5 +1,5 @@
 import {worldToLngLat} from './web-mercator-utils';
-import * as vec2 from 'gl-matrix/vec2';
+import {lerp as vec2_lerp} from 'gl-matrix/vec2';
 import {transformVector} from './math-utils';
 import type WebMercatorViewport from './web-mercator-viewport';
 
@@ -50,7 +50,7 @@ function unprojectOnFarPlane(viewport: WebMercatorViewport, x: number, targetZ: 
 
   const z = targetZ * viewport.distanceScales.unitsPerMeter[2];
   const t = (z - coord0[2]) / (coord1[2] - coord0[2]);
-  const coord = vec2.lerp([], coord0, coord1, t);
+  const coord = vec2_lerp([], coord0, coord1, t);
 
   const result = worldToLngLat(coord);
   result.push(targetZ);

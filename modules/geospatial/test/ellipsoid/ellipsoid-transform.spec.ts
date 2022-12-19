@@ -381,6 +381,7 @@ test('Ellipsoid#transforms#localFrameToFixedFrame incorrect use throws', (t) => 
   t.throws(() => UNIT_SPHERE.localFrameToFixedFrame('north', undefined, null, origin));
   t.throws(() => UNIT_SPHERE.localFrameToFixedFrame(undefined, 'north', null, origin));
   t.throws(() => UNIT_SPHERE.localFrameToFixedFrame('south', undefined, null, origin));
+  // @ts-expect-error intentional
   t.throws(() => UNIT_SPHERE.localFrameToFixedFrame('northe', 'southe', null, origin));
 
   t.throws(() => UNIT_SPHERE.localFrameToFixedFrame('north', 'north', null, origin));
@@ -397,5 +398,6 @@ test('Ellipsoid#transforms#localFrameToFixedFrame incorrect use throws', (t) => 
   t.throws(() => UNIT_SPHERE.localFrameToFixedFrame('east', 'west', null, origin));
   t.throws(() => UNIT_SPHERE.localFrameToFixedFrame('west', 'east', null, origin));
   t.throws(() => UNIT_SPHERE.localFrameToFixedFrame('west', 'west', null, origin));
+
   t.end();
 });

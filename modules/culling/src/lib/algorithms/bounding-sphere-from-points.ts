@@ -17,7 +17,7 @@ const fromPointsRitterCenter = new Vector3();
 const fromPointsMinBoxPt = new Vector3();
 const fromPointsMaxBoxPt = new Vector3();
 const fromPointsNaiveCenterScratch = new Vector3();
-const volumeConstant = (4.0 / 3.0) * Math.PI;
+// const volumeConstant = (4.0 / 3.0) * Math.PI;
 
 /**
  * Computes a tight-fitting bounding sphere enclosing a list of 3D Cartesian points.

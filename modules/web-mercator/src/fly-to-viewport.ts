@@ -48,6 +48,7 @@ export default function flyToViewport(
     for (const key of VIEWPORT_TRANSITION_PROPS) {
       const startValue = startProps[key];
       const endValue = endProps[key];
+      // @ts-ignore-error properties are populated dynamically
       viewport[key] = lerp(startValue, endValue, t);
     }
     // @ts-expect-error properties are populated dynamically

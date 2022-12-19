@@ -37,7 +37,7 @@ test('cutPolylineByMercatorBounds - simple', (t) => {
 test('cutPolylineByMercatorBounds - multiple crossings', (t) => {
   const result = cutPolylineByMercatorBounds([-170, 0, 170, 20, -175, 35, 175, 45]);
 
-  t.comment(result);
+  t.comment(JSON.stringify(result));
   t.deepEquals(result, [
     [-170, 0, -180, 10],
     [180, 10, 170, 20, 180, 30],
@@ -49,7 +49,7 @@ test('cutPolylineByMercatorBounds - multiple crossings', (t) => {
 });
 
 test('cutPolylineByMercatorBounds - multiple worlds', (t) => {
-  const polyline = [];
+  const polyline: number[][] = [];
   const N = 30;
 
   for (let i = 0; i < N; i++) {
@@ -97,7 +97,7 @@ test('cutPolygonByMercatorBounds - simple', (t) => {
   t.deepEquals(parts[1].positions, flatten(expectedB), '2d');
 
   const flatten2 = (ring, accessPosition) => flatten(ring.map(accessPosition));
-  const addZ = (p) => [p[0], p[1], 100];
+  const addZ = (p: number[]) => [p[0], p[1], 100];
 
   parts = cutPolygonByMercatorBounds(flatten2(polygon, addZ), null, {size: 3});
   t.deepEquals(parts[0].positions, flatten2(expectedA, addZ), '3d');

@@ -2,10 +2,18 @@
 // See LICENSE.md and https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md
 
 /* eslint-disable */
-import test from 'tape-promise/tape';
+import test, {Test} from 'tape-promise/tape';
 import {tapeEquals, tapeEqualsEpsilon} from 'test/utils/tape-assertions';
 
-import {Vector3, Vector4, Matrix3, Matrix4, toRadians, _MathUtils} from '@math.gl/core';
+import {
+  Vector3,
+  Vector4,
+  Matrix3,
+  Matrix4,
+  toRadians,
+  _MathUtils,
+  NumericArray
+} from '@math.gl/core';
 import {
   BoundingSphere,
   OrientedBoundingBox,
@@ -13,22 +21,21 @@ import {
   Plane,
   INTERSECTION
 } from '@math.gl/culling';
-import Matrix from '@math.gl/core/classes/base/matrix';
 
 const ZERO_VECTOR3 = Object.freeze(new Vector3(0, 0, 0));
 const ZERO_MATRIX3 = Object.freeze(new Matrix3([0, 0, 0, 0, 0, 0, 0, 0, 0]));
 
 // TODO - copy the right positions array
-const positions = [
-  new Vector3(2.0, 0.0, 0.0),
-  new Vector3(0.0, 3.0, 0.0),
-  new Vector3(0.0, 0.0, 4.0),
-  new Vector3(-2.0, 0.0, 0.0),
-  new Vector3(0.0, -3.0, 0.0),
-  new Vector3(0.0, 0.0, -4.0)
-];
+// const positions = [
+//   new Vector3(2.0, 0.0, 0.0),
+//   new Vector3(0.0, 3.0, 0.0),
+//   new Vector3(0.0, 0.0, 4.0),
+//   new Vector3(-2.0, 0.0, 0.0),
+//   new Vector3(0.0, -3.0, 0.0),
+//   new Vector3(0.0, 0.0, -4.0)
+// ];
 
-const positionsRadius = 1.0;
+// const positionsRadius = 1.0;
 const positionsCenter = new Vector3(10000001.0, 0.0, 0.0);
 
 const center = new Vector3(10000000.0, 0.0, 0.0);
@@ -193,13 +200,22 @@ test('BoundingSphere#throws from fromOrientedBoundingBox with null orientedBound
 });
 
 // eslint-disable-next-line max-statements
-function intersectPlaneTestCornersEdgesFaces(t, center, axes) {
-  const SQRT1_2 = Math.pow(1.0 / 2.0, 1 / 2.0);
-  const SQRT3_4 = Math.pow(3.0 / 4.0, 1 / 2.0);
+function intersectPlaneTestCornersEdgesFaces(
+  t: Test,
+  center: Readonly<NumericArray>,
+  axes: Readonly<Matrix3>
+): void {
+  // const SQRT1_2 = Math.pow(1.0 / 2.0, 1 / 2.0);
+  // const SQRT3_4 = Math.pow(3.0 / 4.0, 1 / 2.0);
 
   const box = new OrientedBoundingBox(center, axes.clone().multiplyByScalar(0.5));
 
-  const planeNormXform = function (nx, ny, nz, dist) {
+  const planeNormXform = function (
+    nx: number,
+    ny: number,
+    nz: number,
+    dist: number
+  ): Plane | undefined {
     const n = new Vector3(nx, ny, nz);
     const arb = new Vector3(357, 924, 258);
 
@@ -438,13 +454,13 @@ test.skip('intersectPlane fails without plane parameter', t => {
 });
 */
 
-function makeRotationY(angle) {
+function makeRotationY(angle: number): Matrix3 {
   const cosAngle = Math.cos(angle);
   const sinAngle = Math.sin(angle);
   return new Matrix3([cosAngle, 0.0, sinAngle, 0.0, 1.0, 0.0, -sinAngle, 0.0, cosAngle]);
 }
 
-function makeRotationZ(angle) {
+function makeRotationZ(angle: number): Matrix3 {
   const cosAngle = Math.cos(angle);
   const sinAngle = Math.sin(angle);
   return new Matrix3([cosAngle, -sinAngle, 0.0, sinAngle, cosAngle, 0.0, 0.0, 0.0, 1.0]);
@@ -465,8 +481,8 @@ test('OrientedBoundingBox#distanceSquaredTo', (t) => {
 
   const halfAxes = obb.halfAxes;
   const xAxis = halfAxes.getColumn(0, new Vector3());
-  const yAxis = halfAxes.getColumn(1, new Vector3());
-  const zAxis = halfAxes.getColumn(2, new Vector3());
+  // const yAxis = halfAxes.getColumn(1, new Vector3());
+  // const zAxis = halfAxes.getColumn(2, new Vector3());
 
   // from positive x direction
   const cartesian = new Vector3(xAxis).multiplyByScalar(2.0);
@@ -538,6 +554,7 @@ test('OrientedBoundingBox#distanceSquaredTo throws without cartesian', (t) => {
 
 // eslint-disable-next-line max-statements
 test('OrientedBoundingBox#computePlaneDistances', (t) => {
+  /*
   const r0 = makeRotationZ(toRadians(-45.0));
   const r1 = makeRotationY(toRadians(45.0));
 
@@ -565,7 +582,6 @@ test('OrientedBoundingBox#computePlaneDistances', (t) => {
 
   const distances = obb.computePlaneDistances(position, direction);
 
-  /*
   tapeEqualsEpsilon(t, distances.start, expectedNear, _MathUtils.EPSILON14);
   tapeEqualsEpsilon(t, distances.stop, expectedFar, _MathUtils.EPSILON14);
 

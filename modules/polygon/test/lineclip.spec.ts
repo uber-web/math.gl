@@ -1,7 +1,7 @@
 import test from 'tape-promise/tape';
 import {clipPolyline, clipPolygon} from '@math.gl/polygon';
 
-export function flatten(arr, result = []) {
+export function flatten(arr: unknown, result: any[] = []): any[] {
   if (Array.isArray(arr)) {
     for (let i = 0; i < arr.length; i++) {
       flatten(arr[i], result);
@@ -32,7 +32,7 @@ test('clips line', (t) => {
     [0, 0, 30, 30]
   );
 
-  t.comment(result);
+  t.comment(JSON.stringify(result));
   t.deepEquals(result, [
     [0, 10, 10, 10, 10, 0],
     [20, 0, 20, 10, 30, 10],
@@ -54,7 +54,7 @@ test('clips line crossing through many times', (t) => {
     [0, 0, 20, 20]
   );
 
-  t.comment(result);
+  t.comment(JSON.stringify(result));
   t.deepEquals(result, [
     [10, 0, 10, 20],
     [20, 20, 20, 0]
@@ -75,7 +75,7 @@ test('clips 3d line', (t) => {
     {size: 3}
   );
 
-  t.comment(result);
+  t.comment(JSON.stringify(result));
   t.deepEquals(result, [
     [10, 0, 5, 10, 20, 15],
     [20, 20, 5, 20, 0, -5]
@@ -96,7 +96,7 @@ test('clips line from partial array', (t) => {
     endIndex: 12
   });
 
-  t.comment(result);
+  t.comment(JSON.stringify(result));
   t.deepEquals(result, [
     [10, 0, 10, 20],
     [20, 20, 20, 0]
@@ -128,7 +128,7 @@ test('clips polygon', (t) => {
     [0, 0, 30, 30]
   );
 
-  t.comment(result);
+  t.comment(JSON.stringify(result));
   t.deepEquals(
     result,
     flatten([
@@ -163,7 +163,7 @@ test('polygon contains bbox', (t) => {
     [0, 0, 20, 20]
   );
 
-  t.comment(result);
+  t.comment(JSON.stringify(result));
   t.deepEquals(
     result,
     flatten([
@@ -189,7 +189,7 @@ test('clips 3d polygon', (t) => {
     {size: 3}
   );
 
-  t.comment(result);
+  t.comment(JSON.stringify(result));
   t.deepEquals(
     result,
     flatten([
@@ -219,7 +219,7 @@ test('clips polygon fom partial array', (t) => {
     endIndex: 12
   });
 
-  t.comment(result);
+  t.comment(JSON.stringify(result));
   t.deepEquals(
     result,
     flatten([
@@ -253,7 +253,7 @@ test('clips floating point lines', (t) => {
   // @ts-expect-error
   const result = clipPolyline(line, bbox);
 
-  t.comment(result);
+  t.comment(JSON.stringify(result));
   t.deepEquals(result, [
     flatten([
       [-91.91208030440808, 42.29356419217009],
@@ -268,7 +268,7 @@ test('clips floating point lines', (t) => {
 test('preserves line if no protrusions exist', (t) => {
   const result = clipPolyline([1, 1, 2, 2, 3, 3], [0, 0, 30, 30]);
 
-  t.comment(result);
+  t.comment(JSON.stringify(result));
   t.deepEquals(result, [[1, 1, 2, 2, 3, 3]]);
 
   t.end();

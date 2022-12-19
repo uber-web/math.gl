@@ -1,4 +1,9 @@
 {
+  "ts-node": {
+    // It is faster to skip typechecking. Remove if you want ts-node to do typechecking.
+    "transpileOnly": true
+  },
+
   "compilerOptions": {
     "target": "esnext",
     "jsx": "react",
@@ -9,6 +14,30 @@
     "allowSyntheticDefaultImports": true,
     "noEmit": true,
     "baseUrl": ".",
+
+    // BEGIN TYPE CHECK SETTINGS
+    "skipLibCheck": true,
+
+    "strict": false,
+
+    "noImplicitAny": true, // covered by strict
+    "noImplicitThis": true, // covered by strict
+    "strictBindCallApply": true, // covered by strict
+    "strictFunctionTypes": true, // covered by strict
+    "useUnknownInCatchVariables": true,  // covered by strict
+    // "strictNullChecks": true, // covered by strict
+    // "strictPropertyInitialization": true, // covered by strict, requires strict null checks
+
+    // "exactOptionalPropertyTypes": true, - requires strictNullChecks
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitOverride": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedIndexedAccess": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": false,
+    // END TYPE CHECK SETTINGS
+
     "paths": {
       "@math.gl/core/*": ["modules/core/src/*"],
       "@math.gl/core/test/*": ["modules/core/test/*"],
@@ -31,13 +60,17 @@
     }
   },
   "include":[
-    "modules/**/src/**/*",
-    "modules/**/test/**/*",
-    "test/**/*"
+    "modules/*/src",
+    "modules/culling/test",
+    "modules/geoid/test",
+    "modules/geospatial/test",
+    "modules/proj4/test",
+    "modules/sun/test"
   ],
   "exclude":[
     "test/apps/**/*",
     "node_modules",
-    "**/dist/**/*"
+    "**/dist/**/*",
+    "**/*bench*"
   ]
 }

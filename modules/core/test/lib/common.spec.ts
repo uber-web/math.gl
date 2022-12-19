@@ -1,12 +1,12 @@
 // Copyright (c) 2017 Uber Technologies, Inc.
 // MIT License
 
+import test, {Test} from 'tape-promise/tape';
 import {Vector2, Vector3, Pose, _MathUtils} from '@math.gl/core';
 import {config, configure, isArray, clone, equals, exactEquals, formatValue} from '@math.gl/core';
 import {toRadians, toDegrees} from '@math.gl/core';
 import {radians, degrees, sin, cos, tan, asin, acos, atan, clamp, lerp} from '@math.gl/core';
 import {tapeEquals} from 'test/utils/tape-assertions';
-import test from 'tape-promise/tape';
 
 test('math.gl#tests', (t) => {
   // Note: tape 4.12 and higher no longer compares 0 and -0 equally...
@@ -158,7 +158,7 @@ test('math.gl#exactEquals', (t) => {
   t.end();
 });
 
-function runTests(t, functionUnderTest, testCases) {
+function runTests(t: Test, functionUnderTest: Function, testCases: any[]): void {
   for (const testCase of testCases) {
     tapeEquals(
       t,

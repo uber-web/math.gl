@@ -1,7 +1,6 @@
 // Copyright (c) 2017 Uber Technologies, Inc.
 // MIT License
 import {NumericArray} from '@math.gl/types';
-import assert from './assert';
 
 import type MathArray from '../classes/base/math-array';
 
@@ -29,11 +28,7 @@ export const config: ConfigurationOptions = {
 };
 
 export function configure(options?: Partial<ConfigurationOptions>): ConfigurationOptions {
-  // Only copy existing keys
-  for (const key in options) {
-    assert(key in config);
-    config[key] = options[key];
-  }
+  Object.assign(config, options);
   return config;
 }
 
@@ -295,7 +290,8 @@ function map(
     const array = value as NumericArray;
     result = result || duplicateArray(array);
     for (let i = 0; i < result.length && i < array.length; ++i) {
-      result[i] = func(value[i], i, result);
+      const val = typeof value === 'number' ? value : value[i];
+      result[i] = func(val, i, result);
     }
     return result;
   }

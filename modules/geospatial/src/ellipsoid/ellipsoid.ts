@@ -2,23 +2,16 @@
 // See LICENSE.md and https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md
 
 /* eslint-disable */
-import {
-  Vector3,
-  Matrix4,
-  toRadians,
-  toDegrees,
-  assert,
-  equals,
-  _MathUtils,
-  NumericArray
-} from '@math.gl/core';
+import {Vector3, Matrix4, assert, equals, _MathUtils, NumericArray} from '@math.gl/core';
+// @ts-ignore gl-matrix typings...
 import * as vec3 from 'gl-matrix/vec3';
 
 import {WGS84_RADIUS_X, WGS84_RADIUS_Y, WGS84_RADIUS_Z} from '../constants';
 import {fromCartographicToRadians, toCartographicFromRadians} from '../type-utils';
 
-import scaleToGeodeticSurface from './helpers/scale-to-geodetic-surface';
+import type {AxisDirection} from './helpers/ellipsoid-transform';
 import localFrameToFixedFrame from './helpers/ellipsoid-transform';
+import scaleToGeodeticSurface from './helpers/scale-to-geodetic-surface';
 
 const scratchVector = new Vector3();
 const scratchNormal = new Vector3();
@@ -26,8 +19,6 @@ const scratchK = new Vector3();
 const scratchPosition = new Vector3();
 const scratchHeight = new Vector3();
 const scratchCartesian = new Vector3();
-
-let wgs84;
 
 /**
  * A quadratic surface defined in Cartesian coordinates by the equation
@@ -100,7 +91,7 @@ export default class Ellipsoid {
   cartographicToCartesian(cartographic: number[], result: Vector3): Vector3;
   cartographicToCartesian(cartographic: number[], result?: number[]): number[];
 
-  cartographicToCartesian(cartographic, result = [0, 0, 0]) {
+  cartographicToCartesian(cartographic: Readonly<NumericArray>, result = [0, 0, 0]) {
     const normal = scratchNormal;
     const k = scratchK;
 
@@ -120,10 +111,10 @@ export default class Ellipsoid {
 
   /** Converts the provided cartesian to cartographic (lng/lat/z) representation.
    * The cartesian is undefined at the center of the ellipsoid. */
-  cartesianToCartographic(cartesian: number[], result: Vector3): Vector3;
-  cartesianToCartographic(cartesian: number[], result?: number[]): number[];
+  cartesianToCartographic(cartesian: Readonly<NumericArray>, result: Vector3): Vector3;
+  cartesianToCartographic(cartesian: Readonly<NumericArray>, result?: number[]): number[];
 
-  cartesianToCartographic(cartesian, result = [0, 0, 0]) {
+  cartesianToCartographic(cartesian: Readonly<NumericArray>, result = [0, 0, 0]) {
     scratchCartesian.from(cartesian);
     const point = this.scaleToGeodeticSurface(scratchCartesian, scratchPosition);
 
@@ -145,10 +136,10 @@ export default class Ellipsoid {
 
   /** Computes a 4x4 transformation matrix from a reference frame with an east-north-up axes
    * centered at the provided origin to the provided ellipsoid's fixed reference frame. */
-  eastNorthUpToFixedFrame(origin: number[], result?: Matrix4): Matrix4;
-  eastNorthUpToFixedFrame(origin: number[], result: number[]): number[];
+  eastNorthUpToFixedFrame(origin: Readonly<NumericArray>, result?: Matrix4): Matrix4;
+  eastNorthUpToFixedFrame(origin: Readonly<NumericArray>, result: number[]): number[];
 
-  eastNorthUpToFixedFrame(origin, result = new Matrix4()) {
+  eastNorthUpToFixedFrame(origin: Readonly<NumericArray>, result = new Matrix4()) {
     return localFrameToFixedFrame(this, 'east', 'north', 'up', origin, result);
   }
 
@@ -156,23 +147,29 @@ export default class Ellipsoid {
    * the provided origin to the ellipsoid's fixed reference frame.
    */
   localFrameToFixedFrame(
-    firstAxis: string,
-    secondAxis: string,
-    thirdAxis: string,
+    firstAxis: AxisDirection,
+    secondAxis: AxisDirection,
+    thirdAxis: AxisDirection,
     origin: Readonly<NumericArray>,
     result?: Matrix4
   ): Matrix4;
   localFrameToFixedFrame<Matrix4T>(
-    firstAxis: string,
-    secondAxis: string,
-    thirdAxis: string,
+    firstAxis: AxisDirection,
+    secondAxis: AxisDirection,
+    thirdAxis: AxisDirection,
     origin: Readonly<NumericArray>,
     result: number[]
   ): number[];
 
   // Computes a 4x4 transformation matrix from a reference frame centered at
   // the provided origin to the ellipsoid's fixed reference frame.
-  localFrameToFixedFrame(firstAxis, secondAxis, thirdAxis, origin, result = new Matrix4()) {
+  localFrameToFixedFrame(
+    firstAxis: AxisDirection,
+    secondAxis: AxisDirection,
+    thirdAxis: AxisDirection,
+    origin: Readonly<NumericArray>,
+    result = new Matrix4()
+  ) {
     return localFrameToFixedFrame(this, firstAxis, secondAxis, thirdAxis, origin, result);
   }
 
@@ -180,14 +177,17 @@ export default class Ellipsoid {
    * the provided Cartesian position. */
   geocentricSurfaceNormal(cartesian: number[], result?: number[]): number[];
   geocentricSurfaceNormal<NumArray>(cartesian: number[], result: NumArray): NumArray;
-  geocentricSurfaceNormal(cartesian, result = [0, 0, 0]) {
+  geocentricSurfaceNormal(cartesian: Readonly<NumericArray>, result = [0, 0, 0]) {
     return scratchVector.from(cartesian).normalize().to(result);
   }
 
   /** Computes the normal of the plane tangent to the surface of the ellipsoid at provided position. */
-  geodeticSurfaceNormalCartographic<NumArray>(cartographic: number[], result: NumArray): NumArray;
+  geodeticSurfaceNormalCartographic<NumArray>(
+    cartographic: Readonly<NumericArray>,
+    result: NumArray
+  ): NumArray;
   geodeticSurfaceNormalCartographic(cartographic: number[]): number[];
-  geodeticSurfaceNormalCartographic(cartographic, result = [0, 0, 0]) {
+  geodeticSurfaceNormalCartographic(cartographic: Readonly<NumericArray>, result = [0, 0, 0]) {
     const cartographicVectorRadians = fromCartographicToRadians(cartographic);
 
     const longitude = cartographicVectorRadians[0];
@@ -205,7 +205,7 @@ export default class Ellipsoid {
   /** Computes the normal of the plane tangent to the surface of the ellipsoid at the provided position. */
   geodeticSurfaceNormal<NumArrayT>(cartesian: number[], result: NumArrayT): NumArrayT;
   geodeticSurfaceNormal(cartesian: number[]): number[];
-  geodeticSurfaceNormal(cartesian, result = [0, 0, 0]) {
+  geodeticSurfaceNormal(cartesian: Readonly<NumericArray>, result = [0, 0, 0]) {
     return scratchVector.from(cartesian).scale(this.oneOverRadiiSquared).normalize().to(result);
   }
 

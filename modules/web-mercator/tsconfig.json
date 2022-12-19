@@ -3,6 +3,7 @@
   "include": ["src/**/*"],
   "exclude": ["node_modules"],
   "compilerOptions": {
+    "noImplicitAny": false, // gl-matrix is a mess...
     "composite": true,
     "rootDir": "src",
     "outDir": "dist"

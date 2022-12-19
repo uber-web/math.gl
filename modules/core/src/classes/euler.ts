@@ -121,7 +121,7 @@ export default class Euler extends MathArray {
     return this.check();
   }
 
-  validate(): boolean {
+  override validate(): boolean {
     return (
       validateOrder(this[3]) &&
       Number.isFinite(this[0]) &&
@@ -131,7 +131,7 @@ export default class Euler extends MathArray {
   }
 
   // Does not copy the orientation element
-  toArray(array: NumericArray = [], offset: number = 0): NumericArray {
+  override toArray(array: NumericArray = [], offset: number = 0): NumericArray {
     array[offset] = this[0];
     array[offset + 1] = this[1];
     array[offset + 2] = this[2];
@@ -256,7 +256,7 @@ export default class Euler extends MathArray {
   }
 
   // TODO - with and without 4th element
-  fromArray(array: Readonly<NumericArray>, offset: number = 0): this {
+  override fromArray(array: Readonly<NumericArray>, offset: number = 0): this {
     this[0] = array[0 + offset];
     this[1] = array[1 + offset];
     this[2] = array[2 + offset];

@@ -1,4 +1,5 @@
 import test from 'tape-promise/tape';
+import type {NumericArray} from '@math.gl/core';
 import {equals} from '@math.gl/core';
 import {cutPolylineByGrid, cutPolygonByGrid} from '@math.gl/polygon';
 
@@ -6,7 +7,7 @@ import {flatten} from './lineclip.spec';
 
 test('subdivide line', (t) => {
   const result = cutPolylineByGrid([0, 0, 25, 40]);
-  t.comment(result);
+  t.comment(JSON.stringify(result));
   t.ok(
     equals(
       result,
@@ -34,7 +35,7 @@ test('subdivide polyline', (t) => {
       [10, 20]
     ])
   );
-  t.comment(result);
+  t.comment(JSON.stringify(result));
   t.ok(
     equals(
       result,
@@ -66,7 +67,7 @@ test('subdivide polyline - custom grid', (t) => {
       gridOffset: [-5, -5]
     }
   );
-  t.comment(result);
+  t.comment(JSON.stringify(result));
   t.ok(
     equals(
       result,
@@ -94,7 +95,7 @@ test('subdivide polyline - multiple parts', (t) => {
     ]),
     {broken: true}
   );
-  t.comment(result);
+  t.comment(JSON.stringify(result));
   t.ok(
     equals(result, [
       [30, 20, 25, 25, 20, 20],
@@ -119,7 +120,7 @@ test('subdivide 3d polyline', (t) => {
       size: 3
     }
   );
-  t.comment(result);
+  t.comment(JSON.stringify(result));
   t.ok(
     equals(
       result,
@@ -149,7 +150,7 @@ test('subdivide polyline from partial array', (t) => {
     startIndex: 4,
     endIndex: 12
   });
-  t.comment(result);
+  t.comment(JSON.stringify(result));
   t.ok(
     equals(
       result,
@@ -187,7 +188,7 @@ test('subdivide polygon', (t) => {
     ])
   );
 
-  t.comment(result);
+  t.comment(JSON.stringify(result));
   const expected = [
     {positions: [5, 0, 10, 0, 10, -5, 5, -10]},
     {positions: [10, 0, 15, 0, 10, -5]},
@@ -235,7 +236,7 @@ test('subdivide polygon#edgeTypes', (t) => {
     0: 'inside',
     1: 'border'
   };
-  const findEdges = (p) => {
+  const findEdges = (p: number[]) => {
     return testPolygonEdges.filter(
       ([p0, p1]) =>
         equals(p, p0) ||
@@ -243,7 +244,7 @@ test('subdivide polygon#edgeTypes', (t) => {
         equals(Math.atan2(p0[1] - p[1], p0[0] - p[0]), Math.atan2(p[1] - p1[1], p[0] - p1[0]))
     );
   };
-  const getType = (p, pNext) => {
+  const getType = (p: NumericArray, pNext: number[]) => {
     const edges = findEdges(p);
     const edgesNext = findEdges(pNext);
     // console.log(p, pNext)
@@ -258,13 +259,13 @@ test('subdivide polygon#edgeTypes', (t) => {
   for (const {positions, edgeTypes, holeIndices} of result) {
     let loopStart = 0;
     let loopEnd = (holeIndices && holeIndices[0]) || positions.length;
-    for (let i = 0, loop = 0; i < edgeTypes.length; i++) {
+    for (let i = 0, loop = 0; i < edgeTypes?.length; i++) {
       const position = positions.slice(i * 2, i * 2 + 2);
       const nextPosition =
         i * 2 + 2 < loopEnd
           ? positions.slice(i * 2 + 2, i * 2 + 4)
           : positions.slice(loopStart, loopStart + 2);
-      const type = edgeTypes[i];
+      const type = edgeTypes && edgeTypes[i];
       t.is(type, getType(position, nextPosition), `edge should be ${displayString[type]}`);
 
       if (i * 2 + 2 === loopEnd) {
@@ -291,7 +292,7 @@ test('subdivide polygon with custom grid', (t) => {
     }
   );
 
-  t.comment(result);
+  t.comment(JSON.stringify(result));
   const expected = [{positions: [5, 5, 20, 5, 5, -10]}, {positions: [5, 5, 5, 20, 20, 5]}];
 
   t.is(result.length, expected.length, `should return ${expected.length} polygons`);
@@ -317,7 +318,7 @@ test('subdivide 3D polygon', (t) => {
     }
   );
 
-  t.comment(result);
+  t.comment(JSON.stringify(result));
   const expected = [
     {positions: [5, 5, 15, 20, 5, 15, 5, -10, 30]},
     {positions: [5, 5, 15, 5, 20, 0, 20, 5, 15]}
@@ -346,7 +347,7 @@ test('subdivide polygon with holes', (t) => {
     [8]
   );
 
-  t.comment(result);
+  t.comment(JSON.stringify(result));
 
   const expected = [
     {positions: [10, 10, 5, 10, 5, 5, 10, 5]},

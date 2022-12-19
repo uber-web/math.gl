@@ -1,4 +1,4 @@
-import {INTERSECTION} from '../../constants';
+// import {INTERSECTION} from '../../constants';
 import Plane from '../plane';
 
 /**

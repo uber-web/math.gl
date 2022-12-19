@@ -1,54 +1,60 @@
-import test from 'tape';
+// math.gl, MIT license
+
+import test, {Test} from 'tape-promise/tape';
 import {tapeEquals, tapeNotEquals, tapeEqualsEpsilon} from './tape-assertions';
 
 // Maps `expect` style tests to `tape assert` style tests
 
 class TestCase {
-  _t: test;
+  _t: Test;
   _result: any;
   _not: boolean;
 
-  constructor(t, result) {
+  constructor(t: Test, result: any) {
     this._t = t;
     this._result = result;
     this._not = false;
   }
-  toBe(value) {
+
+  toBe(value: any): void {
     if (this._not) {
       this._t.notEquals(this._result, value);
     } else {
       this._t.equals(this._result, value);
     }
   }
-  toEqual(value) {
+
+  toEqual(value: any): void {
     if (this._not) {
       tapeNotEquals(this._t, this._result, value);
     } else {
       tapeEquals(this._t, this._result, value);
     }
   }
-  toEqualEpsilon(value, epsilon) {
+
+  toEqualEpsilon(value: number, epsilon: number): void {
     tapeEqualsEpsilon(this._t, this._result, value, epsilon);
   }
-  toThrow() {
+
+  toThrow(): void {
     this._t.throws(() => this._result());
   }
 
-  get not() {
+  get not(): this {
     this._not = !this._not;
     return this;
   }
 }
 
-let currentTest;
+let currentTest: Test;
 
-let currentBeforeFunc;
+let currentBeforeFunc: Function;
 
-export function beforeEach(beforeFunc) {
+export function beforeEach(beforeFunc: Function) {
   currentBeforeFunc = beforeFunc;
 }
 
-export function it(message, testfunc) {
+export function it(message: string, testfunc: Function) {
   if (currentBeforeFunc) {
     currentBeforeFunc();
   }
@@ -60,6 +66,6 @@ export function it(message, testfunc) {
   });
 }
 
-export function expect(value) {
+export function expect(value: unknown) {
   return new TestCase(currentTest, value);
 }

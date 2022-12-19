@@ -1,13 +1,17 @@
 // Copyright (c) 2017 Uber Technologies, Inc.
 // MIT License
+
+import {NumericArray} from '@math.gl/types';
 import Matrix from './base/matrix';
 import {checkVector} from '../lib/validators';
 /* eslint-disable camelcase */
 import {vec4_transformMat3} from '../lib/gl-matrix-extras';
+// @ts-ignore gl-matrix types...
 import * as mat3 from 'gl-matrix/mat3';
+// @ts-ignore gl-matrix types...
 import * as vec2 from 'gl-matrix/vec2';
+// @ts-ignore gl-matrix types...
 import * as vec3 from 'gl-matrix/vec3';
-import {NumericArray} from '@math.gl/types';
 
 enum INDICES {
   COL0ROW0 = 0,
@@ -184,7 +188,7 @@ export default class Matrix3 extends Matrix {
     return this.check();
   }
 
-  scale(factor: NumericArray | number): this {
+  override scale(factor: NumericArray | number): this {
     if (Array.isArray(factor)) {
       mat3.scale(this, this, factor);
     } else {
@@ -234,8 +238,8 @@ export default class Matrix3 extends Matrix {
   }
 }
 
-let ZERO_MATRIX3;
-let IDENTITY_MATRIX3;
+let ZERO_MATRIX3: Matrix3 | null;
+let IDENTITY_MATRIX3: Matrix3 | null = null;
 
 function getZeroMatrix(): Readonly<Matrix3> {
   if (!ZERO_MATRIX3) {

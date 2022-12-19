@@ -1,6 +1,9 @@
 // This file is derived from the Cesium math library under Apache 2 license
 // See LICENSE.md and https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md
 
+// @ts-expect-error tsconfig issue?
+import {Bench} from '@probe.gl/bench';
+
 import {Vector3} from '@math.gl/core';
 import {
   fromCartographic,
@@ -28,7 +31,7 @@ const objectVector = new ObjectVector();
 const vector = new Vector3();
 const vector3 = new Vector3();
 
-export default function geospatialBench(suite, addReferenceBenchmarks) {
+export default function geospatialBench(suite: Bench, addReferenceBenchmarks?: boolean): Bench {
   suite
     .group('Cartographic Type Conversion Cost')
     .add('fromCartographic#Vector3', () => fromCartographic(vector3, vector))

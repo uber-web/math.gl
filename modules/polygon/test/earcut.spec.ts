@@ -19,8 +19,9 @@
 
  */
 
+// @ts-nocheck External code
+
 import fs from 'fs';
-import {resolve} from 'path';
 import test from 'tape-promise/tape';
 import {earcut} from '@math.gl/polygon';
 import {extractAreas, deviation, flatten} from './earcut-utils';
