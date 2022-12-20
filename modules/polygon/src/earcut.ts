@@ -22,6 +22,8 @@
 
  */
 
+// @ts-nocheck
+
 /* eslint-disable */
 
 import {getPolygonSignedArea} from './polygon-utils';
@@ -740,25 +742,32 @@ function removeNode(p) {
   if (p.nextZ) p.nextZ.prevZ = p.prevZ;
 }
 
-function Node(i, x, y) {
-  // vertex index in coordinates array
-  this.i = i;
-
-  // vertex coordinates
-  this.x = x;
-  this.y = y;
-
+class Node {
   // previous and next vertex nodes in a polygon ring
-  this.prev = null;
-  this.next = null;
+  prev = null;
+  next = null;
 
   // z-order curve value
-  this.z = 0;
+  z: number;
 
   // previous and next nodes in z-order
-  this.prevZ = null;
-  this.nextZ = null;
+  prevZ = null;
+  nextZ = null;
 
   // indicates whether this is a steiner point
-  this.steiner = false;
+  steiner = false;
+
+  i: number;
+  x: number;
+  y: number;
+
+  constructor(i: number, x: number, y: number) {
+    // vertex index in coordinates array
+    this.i = i;
+
+    // vertex coordinates
+    this.x = x;
+    this.y = y;
+    this.z = 0;
+  }
 }

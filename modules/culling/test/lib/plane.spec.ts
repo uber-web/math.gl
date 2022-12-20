@@ -5,12 +5,12 @@
 import test from 'tape-promise/tape';
 import {tapeEquals} from 'test/utils/tape-assertions';
 
-import {configure, _MathUtils, Vector3, Matrix4, Matrix3} from '@math.gl/core';
+import {_MathUtils, Vector3, Matrix4} from '@math.gl/core';
 import {Plane} from '@math.gl/culling';
 
 const UNIT_X = [1, 0, 0];
 const UNIT_Y = [0, 1, 0];
-const UNIT_Z = [0, 0, 1];
+// const UNIT_Z = [0, 0, 1];
 
 test('Plane#constructs', (t) => {
   const normal = UNIT_X;
@@ -115,7 +115,7 @@ test('Plane#getPointDistance throws without a plane', (t) => {
 });
 
 test('Plane#getPointDistance throws without a point', (t) => {
-  const plane = new Plane(UNIT_X, 0.0);
+  // const plane = new Plane(UNIT_X, 0.0);
   t.throws(() => new Plane().getPointDistance(undefined));
   t.end();
 });

@@ -9,8 +9,8 @@
     "generate": "node ./generate-index/index.js"
   },
   "dependencies": {
-    "@probe.gl/bench": "^3.3.0",
-    "@probe.gl/react-bench": "^3.3.0",
+    "@probe.gl/bench": "^3.5.4",
+    "@probe.gl/react-bench": "^3.5.4",
     "react": "^16.3.0",
     "react-dom": "^16.3.0"
   },

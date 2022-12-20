@@ -9,7 +9,7 @@ export default abstract class MathArray extends Array<number> {
 
   abstract copy(vector: Readonly<NumericArray>): this;
 
-  abstract fromObject(object: object): this;
+  abstract fromObject(object: Record<string, unknown>): this;
 
   // Common methods
 
@@ -39,11 +39,14 @@ export default abstract class MathArray extends Array<number> {
     return targetArray;
   }
 
-  from(arrayOrObject: Readonly<NumericArray> | object): this {
-    return Array.isArray(arrayOrObject) ? this.copy(arrayOrObject) : this.fromObject(arrayOrObject);
+  from(arrayOrObject: Readonly<NumericArray> | Record<string, unknown>): this {
+    return Array.isArray(arrayOrObject)
+      ? this.copy(arrayOrObject)
+      : // @ts-ignore
+        this.fromObject(arrayOrObject);
   }
 
-  to<T extends NumericArray | object>(arrayOrObject: T): T {
+  to<T extends NumericArray | Record<string, unknown>>(arrayOrObject: T): T {
     // @ts-ignore
     if (arrayOrObject === this) {
       return this;
@@ -61,7 +64,7 @@ export default abstract class MathArray extends Array<number> {
     return new Float32Array(this);
   }
 
-  toString(): string {
+  override toString(): string {
     return this.formatString(config);
   }
 
@@ -118,7 +121,8 @@ export default abstract class MathArray extends Array<number> {
     }
     for (let i = 0; i < this.ELEMENTS; ++i) {
       const ai = a[i];
-      this[i] = ai + t * (b[i] - ai);
+      const endValue = typeof b === 'number' ? b : b[i];
+      this[i] = ai + t * (endValue - ai);
     }
     return this.check();
   }

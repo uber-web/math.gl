@@ -41,8 +41,11 @@ export default class OrientedBoundingBox implements BoundingVolume {
    * It can provide a tighter bounding volume than
    * `BoundingSphere` or `AxisAlignedBoundingBox` in many cases.
    */
-  constructor(center?: readonly number[], halfAxes?: readonly number[]);
-  constructor(center: Readonly<NumericArray> = [0, 0, 0], halfAxes = [0, 0, 0, 0, 0, 0, 0, 0, 0]) {
+  constructor(center?: Readonly<NumericArray>, halfAxes?: Readonly<NumericArray>);
+  constructor(
+    center: Readonly<NumericArray> = [0, 0, 0],
+    halfAxes: Readonly<NumericArray> = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+  ) {
     this.center = new Vector3().from(center);
     this.halfAxes = new Matrix3(halfAxes);
   }

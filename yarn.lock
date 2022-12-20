@@ -2557,13 +2557,13 @@
   dependencies:
     "@octokit/openapi-types" "^7.2.3"
 
-"@probe.gl/bench@^3.3.0":
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/@probe.gl/bench/-/bench-3.3.1.tgz#f877b9cfb8682df083038b6d39983f29f807abdb"
-  integrity sha512-7VcOEgyVIJ4Y3cO2K37hh4h4BFlWUL0xSiSr1TvkE2AM2NZS+Mrk/2K30wuiSyZnWEg/eFSeHVIhSP6nIvdbsw==
+"@probe.gl/bench@^3.5.4":
+  version "3.5.4"
+  resolved "https://registry.yarnpkg.com/@probe.gl/bench/-/bench-3.5.4.tgz#df42c9c349fa8dfd0636a64394c941ccdd448296"
+  integrity sha512-I41uR/JTcfY7bDpD+koWGzmj6g7WCL6CO8GgKC9uhQn3KUxjSirQ7UvBs5svmoHBa0yD0IOoF2shMJA/5kQsYA==
   dependencies:
     "@babel/runtime" "^7.0.0"
-    probe.gl "3.3.1"
+    "@probe.gl/log" "3.5.4"
 
 "@probe.gl/env@3.5.4":
   version "3.5.4"
@@ -2580,22 +2580,15 @@
     "@babel/runtime" "^7.0.0"
     "@probe.gl/env" "3.5.4"
 
-"@probe.gl/react-bench@^3.3.0":
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/@probe.gl/react-bench/-/react-bench-3.3.1.tgz#b19f6fc395ce4dc883fdd4aa06fa406a26e6579e"
-  integrity sha512-XOl49RoPvtHKDRXvxngStElkcNHnJBu8zWkST31mBHtZo5wGUXMXyT1Qz28Q5xCVKNqLn5OA7CHFfYE/qtFGMA==
+"@probe.gl/react-bench@^3.5.4":
+  version "3.5.4"
+  resolved "https://registry.yarnpkg.com/@probe.gl/react-bench/-/react-bench-3.5.4.tgz#e21e9e10c555c953a3f23dc4a29c7925a6bf2a3e"
+  integrity sha512-K+KSKAZG+3+gTbaBWhRgOG3WtMuMq9a1f1Zz39eT0jN2XbR56eDYgpGo0FYcPDRA+jUlKdV3c7+d5X0Xk+iaOQ==
   dependencies:
     "@babel/runtime" "^7.0.0"
     css-loader "^2.1.1"
     react-table "^6.10.0"
     style-loader "^1.1.3"
-
-"@probe.gl/stats@3.3.1":
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/@probe.gl/stats/-/stats-3.3.1.tgz#6119c4ce978420ea08464aaf1773d983d4ad9c66"
-  integrity sha512-7ekl4qYndDgmCzZMNhicgJpIzApyjdqo67qv1zKx8hmAgC+AeCk6LE8sdiTauddd8+FDViAkxhrr271KwOgHfw==
-  dependencies:
-    "@babel/runtime" "^7.0.0"
 
 "@probe.gl/test-utils@^3.5.4":
   version "3.5.4"
@@ -2730,6 +2723,20 @@
   version "0.16.1"
   resolved "https://registry.yarnpkg.com/@types/scheduler/-/scheduler-0.16.1.tgz#18845205e86ff0038517aab7a18a62a6b9f71275"
   integrity sha512-EaCxbanVeyxDRTQBkdLb3Bvl/HK7PBK6UJjsSixB0iHKoWxE5uu2Q/DgtpOhPIojN0Zl1whvOd7PoHs2P0s5eA==
+
+"@types/tape-promise@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@types/tape-promise/-/tape-promise-4.0.1.tgz#a72fa8d2d5351704d651b174931ecc8f996e68ca"
+  integrity sha512-1yBeq9y0EmJ2RpxfXMPrFeD3yMetBapY9zArTexp/wCRdBToJac/y//rtcZZjmiArgodTqz0RrK0VxxySoKyVg==
+  dependencies:
+    "@types/tape" "*"
+
+"@types/tape@*":
+  version "4.13.2"
+  resolved "https://registry.yarnpkg.com/@types/tape/-/tape-4.13.2.tgz#77215c065b1c7840da3ca5e061337bb4c7258122"
+  integrity sha512-V1ez/RtYRGN9cNYApw5xf27DpMkTB0033X6a2i3KUmKhSojBfbWN0i3EgZxboUG96WJLHLdOyZ01aiZwVW5aSA==
+  dependencies:
+    "@types/node" "*"
 
 "@types/unist@*", "@types/unist@^2.0.2":
   version "2.0.3"
@@ -4036,9 +4043,9 @@ camelcase@^5.0.0, camelcase@^5.2.0, camelcase@^5.3.1:
   integrity sha512-L28STB170nwWS63UjtlEOE3dldQApaJXZkOI1uMFfzf3rRuPegHaHesyee+YxQ+W6SvRDQV6UrdOdRiR153wJg==
 
 caniuse-lite@^1.0.30001219:
-  version "1.0.30001346"
-  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001346.tgz"
-  integrity sha512-q6ibZUO2t88QCIPayP/euuDREq+aMAxFE5S70PkrLh0iTDj/zEhgvJRKC2+CvXY6EWc6oQwUR48lL5vCW6jiXQ==
+  version "1.0.30001439"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001439.tgz"
+  integrity sha512-1MgUzEkoMO6gKfXflStpYgZDlFM7M/ck/bgfVCACO5vnAf0fXoNVHdWtqGU+MYca+4bL9Z5bpOVmR33cWW9G2A==
 
 caseless@~0.12.0:
   version "0.12.0"
@@ -6464,7 +6471,7 @@ gl-matrix@^3.2.1:
   resolved "https://registry.yarnpkg.com/gl-matrix/-/gl-matrix-3.3.0.tgz#232eef60b1c8b30a28cbbe75b2caf6c48fd6358b"
   integrity sha512-COb7LDz+SXaHtl/h4LeaFcNdJdAQSDeVqjiIihSXNrkWObZLhDI4hIkZC11Aeqp7bcE72clzB0BnDXr2SmslRA==
 
-gl-matrix@^3.4.0:
+gl-matrix@^3.4.3:
   version "3.4.3"
   resolved "https://registry.yarnpkg.com/gl-matrix/-/gl-matrix-3.4.3.tgz#fc1191e8320009fd4d20e9339595c6041ddc22c9"
   integrity sha512-wcCp8vu8FT22BnvKVPjXa/ICBWRq/zjFfdofZy1WSpQZpphblv12/bOQLBC1rMM7SGOFS9ltVmKOHil5+Ml7gA==
@@ -9783,14 +9790,6 @@ pretty-error@^2.0.2:
     lodash "^4.17.20"
     renderkid "^2.0.4"
 
-probe.gl@3.3.1:
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/probe.gl/-/probe.gl-3.3.1.tgz#4d60d0e896aa7eee6a6b1bfe4d59120f7d247f7a"
-  integrity sha512-RI6gxvEyTEdRMzT1np8HvbBOFNYQ0HwE3kZvK790tg/ldwFy7Qvs7cllz4MDT84QG2IMDUu7EsTXQX3qtzdx3w==
-  dependencies:
-    "@babel/runtime" "^7.0.0"
-    "@probe.gl/stats" "3.3.1"
-
 process-nextick-args@~2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-2.0.1.tgz#7820d9b16120cc55ca9ae7792680ae7dba6d7fe2"
@@ -11868,6 +11867,11 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
+
+typescript@^4.9.4:
+  version "4.9.4"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.9.4.tgz#a2a3d2756c079abda241d75f149df9d561091e78"
+  integrity sha512-Uz+dTXYzxXXbsFpM86Wh3dKCxrQqUcVMxwU54orwlJjOpO3ao8L7j5lH+dWfTwgCwIuM9GQ2kvVotzYJMXTBZg==
 
 typescript@~4.6.0:
   version "4.6.4"

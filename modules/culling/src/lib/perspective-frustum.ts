@@ -9,7 +9,7 @@ import {assert, Matrix4, NumericArray, Vector2} from '@math.gl/core';
 import PerspectiveOffCenterFrustum from './perspective-off-center-frustum';
 import CullingVolume from './culling-volume';
 
-const defined = (val) => val !== null && typeof val !== 'undefined';
+const defined = (val: unknown) => val !== null && typeof val !== 'undefined';
 
 type PerspectiveFrustumOptions = {
   /** The angle of the field of view (FOV), in radians. */

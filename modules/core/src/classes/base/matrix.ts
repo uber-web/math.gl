@@ -20,7 +20,7 @@ export default abstract class Matrix extends MathArray {
   // }
 
   // TODO better override formatString?
-  toString(): string {
+  override toString(): string {
     let string = '[';
     if (config.printRowMajor) {
       string += 'row-major:';

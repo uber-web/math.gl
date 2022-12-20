@@ -75,13 +75,23 @@ export function cutPolylineByGrid(
 const TYPE_INSIDE = 0;
 const TYPE_BORDER = 1;
 
-function concatInPlace(arr1: number[], arr2: number[]): number[] {
-  for (let i = 0; i < arr2.length; i++) {
-    arr1.push(arr2[i]);
-  }
-  return arr1;
-}
+/** Internal helper type during cutting, name TBD */
+type PolygonCut = {
+  pos: Readonly<NumericArray>;
+  types: number[];
+  holes: Readonly<NumericArray>;
+};
 
+/** Internal helper type during cutting, name TBD */
+type MutablePolygonCut = {
+  pos: number[];
+  types: number[];
+  holes: number[];
+};
+
+/**
+ * Cuts a polygon by a pre-defined grid
+ */
 export function cutPolygonByGrid(
   positions: Readonly<NumericArray>,
   holeIndices: Readonly<NumericArray> | null = null,
@@ -98,7 +108,7 @@ export function cutPolygonByGrid(
   }
   const {size = 2, gridResolution = 10, gridOffset = [0, 0], edgeTypes = false} = options || {};
   const result: Polygon[] = [];
-  const queue: {pos: Readonly<NumericArray>; types: number[]; holes: Readonly<NumericArray>}[] = [
+  const queue: PolygonCut[] = [
     {
       pos: positions,
       types: edgeTypes ? (new Array(positions.length / size).fill(TYPE_BORDER) as number[]) : null,
@@ -121,8 +131,8 @@ export function cutPolygonByGrid(
     if (code) {
       // Split the outer ring at the boundary
       let parts = bisectPolygon(pos, types, size, 0, holes[0] || pos.length, cell, code);
-      const polygonLow = {pos: parts[0].pos, types: parts[0].types, holes: []};
-      const polygonHigh = {pos: parts[1].pos, types: parts[1].types, holes: []};
+      const polygonLow: MutablePolygonCut = {pos: parts[0].pos, types: parts[0].types, holes: []};
+      const polygonHigh: MutablePolygonCut = {pos: parts[1].pos, types: parts[1].types, holes: []};
       queue.push(polygonLow, polygonHigh);
 
       // Split each hole at the boundary
@@ -289,4 +299,11 @@ function getBoundingBox(
   out[1][0] = maxX;
   out[1][1] = maxY;
   return out;
+}
+
+function concatInPlace(arr1: number[], arr2: number[]): number[] {
+  for (let i = 0; i < arr2.length; i++) {
+    arr1.push(arr2[i]);
+  }
+  return arr1;
 }

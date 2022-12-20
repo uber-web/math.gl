@@ -171,10 +171,10 @@ function* _getLineGenerator(data: Uint8Array) {
 
 /**
  * Converts Uint8Array of char-codes to string
- * @param {Uint8Array} array - binary buffer of pgm file
- * @returns {string}
+ * @param array - binary buffer of pgm file
+ * @returns string
  */
-function _getStringFromCharArray(array) {
+function _getStringFromCharArray(array: Uint8Array): string {
   let s = '';
   for (const char of array) {
     s += String.fromCharCode(char);

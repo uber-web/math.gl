@@ -19,6 +19,8 @@
 
  */
 
+// @ts-nocheck external code
+
 import {getPolygonSignedArea} from '@math.gl/polygon';
 
 /**

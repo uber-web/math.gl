@@ -25,14 +25,14 @@ function identity(x: number): number {
 
 const scratchVector = new Vector3();
 
-export function fromCartographic(cartographic: Cartographic): number[];
+export function fromCartographic(cartographic: Readonly<Cartographic>): number[];
 export function fromCartographic<NumArrayT>(
-  cartographic: Cartographic,
+  cartographic: Readonly<Cartographic>,
   result: NumArrayT,
   map?: (x: number) => number
 ): NumArrayT;
 export function fromCartographic(
-  cartographic: Cartographic,
+  cartographic: Readonly<Cartographic>,
   result = [] as number[],
   map = identity
 ): number[] {
@@ -52,25 +52,31 @@ export function fromCartographic(
   return result;
 }
 
-export function fromCartographicToRadians(cartographic: Cartographic, result?: number[]): number[];
+export function fromCartographicToRadians(
+  cartographic: Readonly<Cartographic>,
+  result?: number[]
+): number[];
 export function fromCartographicToRadians<TArray>(
-  cartographic: Cartographic,
+  cartographic: Readonly<Cartographic>,
   result: TArray
 ): TArray;
 export function fromCartographicToRadians(
-  cartographic: Cartographic,
+  cartographic: Readonly<Cartographic>,
   vector = [] as number[]
 ): number[] {
   return fromCartographic(cartographic, vector, config._cartographicRadians ? identity : toRadians);
 }
 
-export function fromCartographicToDegrees(cartographic: Cartographic, result?: number[]): number[];
+export function fromCartographicToDegrees(
+  cartographic: Readonly<Cartographic>,
+  result?: number[]
+): number[];
 export function fromCartographicToDegrees<TArray>(
-  cartographic: Cartographic,
+  cartographic: Readonly<Cartographic>,
   result: TArray
 ): TArray;
 export function fromCartographicToDegrees(
-  cartographic: Cartographic,
+  cartographic: Readonly<Cartographic>,
   vector = [] as number[]
 ): number[] {
   return fromCartographic(cartographic, vector, config._cartographicRadians ? toDegrees : identity);

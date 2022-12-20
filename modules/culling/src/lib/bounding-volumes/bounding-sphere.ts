@@ -2,7 +2,9 @@
 // See LICENSE.md and https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md
 
 import {NumericArray, Vector3} from '@math.gl/core';
+// @ts-ignore gl-matrix typings...
 import * as mat4 from 'gl-matrix/mat4';
+
 import {INTERSECTION} from '../../constants';
 import {BoundingVolume} from './bounding-volume';
 import Plane from '../plane';

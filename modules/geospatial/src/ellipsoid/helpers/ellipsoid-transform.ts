@@ -1,4 +1,4 @@
-import {Vector3, assert, equals as equalsEpsilon} from '@math.gl/core';
+import {NumericArray, Vector3, assert, equals as equalsEpsilon} from '@math.gl/core';
 
 import type Ellipsoid from '../ellipsoid';
 
@@ -6,8 +6,13 @@ const EPSILON14 = 1e-14;
 
 const scratchOrigin = new Vector3();
 
+export type AxisDirection = 'up' | 'down' | 'north' | 'east' | 'south' | 'west';
+
 // Caclulate third axis from given two axii
-const VECTOR_PRODUCT_LOCAL_FRAME = {
+const VECTOR_PRODUCT_LOCAL_FRAME: Record<
+  AxisDirection,
+  Partial<Record<AxisDirection, AxisDirection>>
+> = {
   up: {
     south: 'east',
     north: 'west',
@@ -68,22 +73,19 @@ const scratchVector1 = new Vector3();
 const scratchVector2 = new Vector3();
 const scratchVector3 = new Vector3();
 
-type Axis = 'up' | 'down' | 'north' | 'east' | 'south' | 'west';
-
 // Computes a 4x4 transformation matrix from a reference frame
 // centered at the provided origin to the provided ellipsoid's fixed reference frame.
 // eslint-disable-next-line max-statements, max-params, complexity
 export default function localFrameToFixedFrame(
   ellipsoid: Ellipsoid,
-  firstAxis: Axis,
-  secondAxis: Axis,
-  thirdAxis: Axis,
-  cartesianOrigin: number[],
+  firstAxis: AxisDirection,
+  secondAxis: AxisDirection,
+  thirdAxis: AxisDirection,
+  cartesianOrigin: Readonly<NumericArray>,
   result: number[]
 ): number[] {
   const thirdAxisInferred =
-    VECTOR_PRODUCT_LOCAL_FRAME[firstAxis] &&
-    (VECTOR_PRODUCT_LOCAL_FRAME[firstAxis][secondAxis] as Axis);
+    VECTOR_PRODUCT_LOCAL_FRAME[firstAxis] && VECTOR_PRODUCT_LOCAL_FRAME[firstAxis][secondAxis];
   // firstAxis and secondAxis must be east, north, up, west, south or down.');
   assert(thirdAxisInferred && (!thirdAxis || thirdAxis === thirdAxisInferred));
 

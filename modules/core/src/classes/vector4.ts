@@ -1,13 +1,15 @@
 // Copyright (c) 2017 Uber Technologies, Inc.
 // MIT License
 
-import Vector from './base/vector';
-import {config, isArray} from '../lib/common';
-import {checkNumber} from '../lib/validators';
+import {NumericArray} from '@math.gl/types';
+// @ts-ignore gl-matrix types...
 import * as vec4 from 'gl-matrix/vec3';
 /* eslint-disable camelcase */
 import {vec4_transformMat2, vec4_transformMat3} from '../lib/gl-matrix-extras';
-import {NumericArray} from '@math.gl/types';
+
+import Vector from './base/vector';
+import {config, isArray} from '../lib/common';
+import {checkNumber} from '../lib/validators';
 
 import type Matrix4 from './matrix4';
 

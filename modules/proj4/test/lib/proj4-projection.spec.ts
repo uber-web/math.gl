@@ -4,8 +4,8 @@
 /* eslint-disable */
 import test from 'tape-promise/tape';
 import {Proj4Projection} from '@math.gl/proj4';
-import {Vector3, toDegrees, _MathUtils} from '@math.gl/core';
-import {tapeEquals, tapeEqualsEpsilon} from 'test/utils/tape-assertions';
+import {_MathUtils} from '@math.gl/core';
+import {tapeEqualsEpsilon} from 'test/utils/tape-assertions';
 
 import testPoints from './test-data';
 
@@ -51,18 +51,18 @@ test('Proj4Projection', (t) => {
   for (const testPoint of testPoints) {
     t.comment(`new Proj4Projection({to: ${testPoint.code}})`);
 
-    var xyAcc = 2,
-      llAcc = 6;
+    let xyAcc = 2;
+    // let llAcc = 6;
     if ('acc' in testPoint) {
       if ('xy' in testPoint.acc) {
         xyAcc = testPoint.acc.xy;
       }
-      if ('ll' in testPoint.acc) {
-        llAcc = testPoint.acc.ll;
-      }
+      // if ('ll' in testPoint.acc) {
+      //   llAcc = testPoint.acc.ll;
+      // }
     }
     var xyEPSLN = Math.pow(10, -1 * xyAcc);
-    var llEPSLN = Math.pow(10, -1 * llAcc);
+    // var llEPSLN = Math.pow(10, -1 * llAcc);
 
     // describe('traditional', it('should work with forwards', t => {
     var proj = new Proj4Projection({to: testPoint.code});

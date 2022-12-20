@@ -2,13 +2,13 @@
 // MIT License
 
 /* eslint-disable max-statements */
+import test, {Test} from 'tape-promise/tape';
 import {Vector2, Vector3, Vector4} from '@math.gl/core';
-import test from 'tape-promise/tape';
 
 // FOR TAPE TESTING
 // Use tape assert to compares using a.equals(b)
 // Usage test(..., t => { tapeEquals(t, a, b, ...); });
-export function tapeEquals(t, a, b, msg, extra) {
+export function tapeEquals(t: Test, a, b, msg, extra) {
   /* eslint-disable no-invalid-this */
   t._assert(a.equals(b), {
     message: msg || 'should be equal',

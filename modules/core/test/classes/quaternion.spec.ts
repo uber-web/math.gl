@@ -22,31 +22,7 @@
 import test from 'tape-promise/tape';
 import {tapeEquals} from 'test/utils/tape-assertions';
 
-import {Quaternion, Vector3, Matrix4} from '@math.gl/core';
-
-function extendToMatrix4(arr) {
-  const matrix4 = new Matrix4();
-  matrix4.setRowMajor(
-    arr[0],
-    arr[1],
-    arr[2],
-    0,
-    arr[3],
-    arr[4],
-    arr[5],
-    0,
-    arr[6],
-    arr[7],
-    arr[8],
-    0,
-    0,
-    0,
-    0,
-    1
-  );
-
-  return matrix4;
-}
+import {Quaternion, Vector3} from '@math.gl/core';
 
 test('Quaternion#import', (t) => {
   t.equals(typeof Quaternion, 'function');
@@ -118,11 +94,11 @@ test('Quaternion#fromAxisRotation', (t) => {
 });
 
 const quatA = [1, 2, 3, 4];
-const quatB = [5, 6, 7, 8];
-const out = [0, 0, 0, 0];
-const vec = [1, 1, -1];
-const id = [0, 0, 0, 1];
-const deg90 = Math.PI / 2;
+// const quatB = [5, 6, 7, 8];
+// const out = [0, 0, 0, 0];
+// const vec = [1, 1, -1];
+// const id = [0, 0, 0, 1];
+// const deg90 = Math.PI / 2;
 
 test('Quaternion#create', (t) => {
   tapeEquals(

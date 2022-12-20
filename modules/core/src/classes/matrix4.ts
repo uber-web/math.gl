@@ -1,14 +1,19 @@
 // Copyright (c) 2017 Uber Technologies, Inc.
 // MIT License
-import Matrix from './base/matrix';
+
 import {NumericArray} from '@math.gl/types';
+import Matrix from './base/matrix';
 import {checkVector} from '../lib/validators';
 
 /* eslint-disable camelcase */
 import {vec2_transformMat4AsVector, vec3_transformMat4AsVector} from '../lib/gl-matrix-extras';
+// @ts-ignore gl-matrix types...
 import * as mat4 from 'gl-matrix/mat4';
+// @ts-ignore gl-matrix types...
 import * as vec2 from 'gl-matrix/vec2';
+// @ts-ignore gl-matrix types...
 import * as vec3 from 'gl-matrix/vec3';
+// @ts-ignore gl-matrix types...
 import * as vec4 from 'gl-matrix/vec4';
 
 enum INDICES {
@@ -503,7 +508,7 @@ export default class Matrix4 extends Matrix {
    * @param factor
    * @returns self
    */
-  scale(factor: number | Readonly<NumericArray>): this {
+  override scale(factor: number | Readonly<NumericArray>): this {
     mat4.scale(this, this, Array.isArray(factor) ? factor : [factor, factor, factor]);
     return this.check();
   }

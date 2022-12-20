@@ -12,7 +12,7 @@ export class Proj4Projection {
 
   private _projection: proj4.Converter;
 
-  constructor({from = 'WGS84', to = 'WGS84'}) {
+  constructor({from = 'WGS84', to = 'WGS84'}: {from?: string; to?: string}) {
     this._projection = proj4(from, to);
     if (!this._projection) {
       throw new Error('Invalid projection');

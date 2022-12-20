@@ -74,12 +74,12 @@ export default class Plane {
     result?: readonly number[]
   ): readonly number[];
 
-  projectPointOntoPlane(point, result = [0, 0, 0]) {
-    point = scratchPosition.from(point);
+  projectPointOntoPlane(point: Readonly<NumericArray>, result = [0, 0, 0]) {
+    const scratchPoint = scratchPosition.from(point);
     // projectedPoint = point - (normal.point + scale) * normal
-    const pointDistance = this.getPointDistance(point);
+    const pointDistance = this.getPointDistance(scratchPoint);
     const scaledNormal = scratchNormal.copy(this.normal).scale(pointDistance);
 
-    return point.subtract(scaledNormal).to(result);
+    return scratchPoint.subtract(scaledNormal).to(result);
   }
 }

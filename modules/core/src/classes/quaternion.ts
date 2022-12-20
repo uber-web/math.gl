@@ -1,11 +1,13 @@
 // Copyright (c) 2017 Uber Technologies, Inc.
 // MIT License
+import {NumericArray} from '@math.gl/types';
 import MathArray from './base/math-array';
 import {checkNumber, checkVector} from '../lib/validators';
 import Vector4 from './vector4';
+// @ts-ignore gl-matrix types...
 import * as quat from 'gl-matrix/quat';
+// @ts-ignore gl-matrix types...
 import * as vec4 from 'gl-matrix/vec4';
-import {NumericArray} from '@math.gl/types';
 
 const IDENTITY_QUATERNION = [0, 0, 0, 1] as const;
 
@@ -160,7 +162,7 @@ export default class Quaternion extends MathArray {
   //   Number;
   // }
   // Adds two quat's
-  add(a: Readonly<NumericArray>): this {
+  override add(a: Readonly<NumericArray>): this {
     quat.add(this, this, a);
     return this.check();
   }
@@ -186,7 +188,7 @@ export default class Quaternion extends MathArray {
   }
 
   // Performs a linear interpolation between two quat's
-  lerp(a: Readonly<NumericArray>, b: Readonly<NumericArray> | number, t?: number): this {
+  override lerp(a: Readonly<NumericArray>, b: Readonly<NumericArray> | number, t?: number): this {
     if (t === undefined) {
       return this.lerp(this, a, b as number);
     }
@@ -240,7 +242,7 @@ export default class Quaternion extends MathArray {
   }
 
   // Scales a quat by a scalar number
-  scale(b: number): this {
+  override scale(b: number): this {
     quat.scale(this, this, b);
     return this.check();
   }

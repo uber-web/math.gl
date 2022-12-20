@@ -1,11 +1,12 @@
 // Copyright (c) 2017 Uber Technologies, Inc.
 // MIT License
 // Adaptation of THREE.js Spherical class, under MIT license
+import {NumericArray} from '@math.gl/types';
 import Vector3 from './vector3';
 import {formatValue, equals, config} from '../lib/common';
 import {degrees, radians, clamp} from '../lib/common';
+// @ts-ignore gl-matrix types...
 import * as vec3 from 'gl-matrix/vec3';
-import {NumericArray} from '@math.gl/types';
 
 type SphericalCoordinatesOptions = {
   phi?: number;

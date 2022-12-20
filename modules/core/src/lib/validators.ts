@@ -33,7 +33,7 @@ export function validateVector(v: NumberArray, length: number): boolean {
   return true;
 }
 
-export function checkNumber(value: any): number {
+export function checkNumber(value: unknown): number {
   if (!Number.isFinite(value)) {
     throw new Error(`Invalid number ${value}`);
   }
@@ -51,7 +51,7 @@ export function checkVector<T extends NumberArray>(
   return v;
 }
 
-const map = {};
+const map: Record<string, boolean> = {};
 
 export function deprecated(method: string, version: string): void {
   if (!map[method]) {

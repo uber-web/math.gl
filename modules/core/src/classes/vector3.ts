@@ -4,6 +4,7 @@ import {NumericArray} from '@math.gl/types';
 import Vector from './base/vector';
 import {config, isArray} from '../lib/common';
 import {checkNumber} from '../lib/validators';
+// @ts-ignore gl-matrix types
 import * as vec3 from 'gl-matrix/vec3';
 /* eslint-disable camelcase */
 import {vec3_transformMat2, vec3_transformMat4AsVector} from '../lib/gl-matrix-extras';

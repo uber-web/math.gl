@@ -1,7 +1,7 @@
 import fs from 'fs';
 
-export async function openFile(filePath) {
-  let data = null;
+export async function openFile(filePath: string): Promise<Uint8Array | null> {
+  let data: Uint8Array | null = null;
   if (typeof fetch !== 'undefined') {
     const request = await fetch(filePath);
     data = new Uint8Array(await request.arrayBuffer());

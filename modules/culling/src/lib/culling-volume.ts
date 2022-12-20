@@ -13,7 +13,7 @@ const faces = [new Vector3([1, 0, 0]), new Vector3([0, 1, 0]), new Vector3([0, 0
 
 const scratchPlaneCenter = new Vector3();
 const scratchPlaneNormal = new Vector3();
-const scratchPlane = new Plane(new Vector3(1.0, 0.0, 0.0), 0.0);
+// const scratchPlane = new Plane(new Vector3(1.0, 0.0, 0.0), 0.0);
 
 /** A culling volume defined by planes. */
 export default class CullingVolume {
@@ -70,7 +70,7 @@ export default class CullingVolume {
       }
 
       const plane0Center = scratchPlaneCenter.copy(faceNormal).scale(-radius).add(center);
-      const plane0Distance = -faceNormal.dot(plane0Center);
+      // const plane0Distance = -faceNormal.dot(plane0Center);
 
       plane0.fromPointNormal(plane0Center, faceNormal);
 
@@ -78,7 +78,7 @@ export default class CullingVolume {
 
       const negatedFaceNormal = scratchPlaneNormal.copy(faceNormal).negate();
 
-      const plane1Distance = -negatedFaceNormal.dot(plane1Center);
+      // const plane1Distance = -negatedFaceNormal.dot(plane1Center);
 
       plane1.fromPointNormal(plane1Center, negatedFaceNormal);
 

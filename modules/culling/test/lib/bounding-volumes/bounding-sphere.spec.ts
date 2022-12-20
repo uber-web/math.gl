@@ -11,7 +11,7 @@ import {BoundingSphere, Plane, INTERSECTION} from '@math.gl/culling';
 // const positionsRadius = 1.0;
 // const positionsCenter = new Vector3(10000001.0, 0.0, 0.0);
 
-const center = [10000000.0, 0.0, 0.0];
+// const center = [10000000.0, 0.0, 0.0];
 
 const VECTOR3_UNIT_X = new Vector3(1, 0, 0);
 Object.freeze(VECTOR3_UNIT_X);
@@ -19,17 +19,17 @@ Object.freeze(VECTOR3_UNIT_X);
 const VECTOR3_ZERO = new Vector3(0, 0, 0);
 Object.freeze(VECTOR3_ZERO);
 
-function getPositions() {
-  return [
-    new Vector3(center).add([1, 0, 0]),
-    new Vector3(center).add([2, 0, 0]),
-    new Vector3(center).add([0, 0, 0]),
-    new Vector3(center).add([1, 1, 0]),
-    new Vector3(center).add([1, -1, 0]),
-    new Vector3(center).add([1, 0, 1]),
-    new Vector3(center).add([1, 0, -1])
-  ];
-}
+// function getPositions() {
+//   return [
+//     new Vector3(center).add([1, 0, 0]),
+//     new Vector3(center).add([2, 0, 0]),
+//     new Vector3(center).add([0, 0, 0]),
+//     new Vector3(center).add([1, 1, 0]),
+//     new Vector3(center).add([1, -1, 0]),
+//     new Vector3(center).add([1, 0, 1]),
+//     new Vector3(center).add([1, 0, -1])
+//   ];
+// }
 
 /*
 function getPositionsAsFlatArray() {

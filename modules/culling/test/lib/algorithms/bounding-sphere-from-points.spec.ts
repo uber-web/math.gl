@@ -4,10 +4,10 @@
 import test from 'tape-promise/tape';
 import {tapeEquals} from 'test/utils/tape-assertions';
 
-import {Vector3} from '@math.gl/core';
+import {NumericArray, Vector3} from '@math.gl/core';
 import {makeBoundingSphereFromPoints} from '@math.gl/culling';
 
-function getPositions(center) {
+function getPositions(center: Readonly<NumericArray>) {
   return [
     new Vector3(center).add([1, -1, 0]),
     new Vector3(center).add([1, 0, 0]),
