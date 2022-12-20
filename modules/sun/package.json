@@ -1,5 +1,6 @@
 {
   "name": "@math.gl/sun",
+  "type": "module",
   "description": "Sun classes",
   "license": "MIT",
   "publishConfig": {
@@ -19,12 +20,16 @@
     "url": "https://github.com/uber-web/math.gl.git"
   },
   "types": "dist/index.d.ts",
-  "main": "dist/index.js",
+  "main": "dist/dist.min.cjs",
   "module": "dist/index.js",
   "files": [
     "dist",
     "src"
   ],
+  "scripts": {
+    "pre-build": "npm run build-cjs-bundle",
+    "build-cjs-bundle": "esbuild src/index.ts --outfile=dist/dist.min.cjs --bundle --minify --sourcemap"
+  },
   "dependencies": {
     "@babel/runtime": "^7.12.0"
   }

@@ -1,5 +1,6 @@
 {
   "name": "@math.gl/types",
+  "type": "module",
   "description": "TypeScript types for math.gl",
   "license": "MIT",
   "publishConfig": {
@@ -18,8 +19,8 @@
     "url": "https://github.com/uber-web/math.gl.git"
   },
   "types": "dist/index.d.ts",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
+  "main": "dist/es5/index.js",
+  "module": "dist/esm/index.js",
   "files": [
     "dist",
     "src"
@@ -27,5 +28,9 @@
   "sideEffects": [
     "./src/bigint.js"
   ],
+  "scripts": {
+    "pre-build": "npm run build-cjs-bundle",
+    "build-cjs-bundle": "esbuild src/index.ts --outfile=dist/dist.min.cjs --bundle --minify --sourcemap"
+  },
   "gitHead": "e1a95300cb225a90da6e90333d4adf290f7ba501"
 }

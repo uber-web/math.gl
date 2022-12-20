@@ -1,5 +1,6 @@
 {
   "name": "math.gl",
+  "type": "module",
   "description": "Array-based 3D Math Classes optimized for WebGL applications",
   "license": "MIT",
   "private": true,
@@ -14,7 +15,7 @@
   "scripts": {
     "bootstrap": "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true yarn && ocular-bootstrap",
     "clean": "ocular-clean && npm run tsclean",
-    "build": "npm run clean && time npm run tsbuild && time ocular-build --dist esm",
+    "build": "npm run clean && time npm run tsbuild && time lerna run pre-build && time ocular-build --dist esm",
     "tsclean": "find . -name tsconfig.tsbuildinfo -exec rm {} \\;",
     "tsbuild": "tsc -b tsconfig.modules.json",
     "cover": "ocular-test cover",
