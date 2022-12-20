@@ -1,5 +1,4 @@
-import {NumericArray} from '@math.gl/types';
-import {Vector3, assert, equals as equalsEpsilon} from '@math.gl/core';
+import {NumericArray, Vector3, assert, equals as equalsEpsilon} from '@math.gl/core';
 
 import type Ellipsoid from '../ellipsoid';
 

@@ -148,6 +148,6 @@ export default abstract class Vector extends MathArray {
 
   addScaledVector(a: Readonly<NumericArray>, b: number): this {
     // @ts-expect-error error TS2351: Cannot use 'new' with an expression whose type lacks a call or construct signature.
-    return this.add(new this.constructor(a).multiplyScalar(b));
+    return this.add((new this.constructor(a) as this).multiplyScalar(b));
   }
 }

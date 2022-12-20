@@ -1,7 +1,8 @@
-import {worldToLngLat} from './web-mercator-utils';
+/* eslint-disable camelcase */
 import {lerp as vec2_lerp} from 'gl-matrix/vec2';
-import {transformVector} from './math-utils';
 import type WebMercatorViewport from './web-mercator-viewport';
+import {worldToLngLat} from './web-mercator-utils';
+import {transformVector} from './math-utils';
 
 const DEGREES_TO_RADIANS = Math.PI / 180;
 

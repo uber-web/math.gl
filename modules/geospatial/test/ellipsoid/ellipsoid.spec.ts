@@ -198,7 +198,7 @@ test('Ellipsoid#cartesianToCartographic works close to center', (t) => {
     -6378137.0
   );
   const returnedResult = Ellipsoid.WGS84.cartesianToCartographic(new Vector3(1e-50, 1e-60, 1e-70));
-  tapeEqualsEpsilon(t, returnedResult, expected,  _MathUtils.EPSILON8, 'close to center');
+  tapeEqualsEpsilon(t, returnedResult, expected, _MathUtils.EPSILON8, 'close to center');
   t.end();
 });
 

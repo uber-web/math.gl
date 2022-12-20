@@ -151,7 +151,7 @@ export default class Geoid {
     let v01 = 0;
     let v10 = 0;
     let v11 = 0;
-    let t: number[] = new Array(nterms_);
+    let t: number[] = new Array<number>(nterms_);
     if (!(ix === this._ix && iy === this._iy)) {
       if (!this.options.cubic) {
         v00 = this._rawval(ix, iy);

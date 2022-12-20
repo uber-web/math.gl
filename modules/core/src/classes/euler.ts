@@ -92,7 +92,7 @@ export default class Euler extends MathArray {
     return this.set(roll, pitch, yaw, Euler.RollPitchYaw);
   }
 
-  fromObject(object: object): this {
+  fromObject(object: Record<string, unknown>): this {
     throw new Error('not implemented');
     //  return this.set(object.x, object.y, object.z, object.order);
   }
