@@ -32,7 +32,7 @@ test('math.gl#isTypedArray', (t) => {
   t.end();
 });
 
-test.only('math.gl#isNumericArray', (t) => {
+test('math.gl#isNumericArray', (t) => {
   for (const tc of TEST_CASES) {
     t.equal(
       Boolean(isNumericArray(tc.value)),
