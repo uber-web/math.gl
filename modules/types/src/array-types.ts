@@ -23,5 +23,6 @@ export type NumericArray = TypedArray | number[];
 
 /**
  * TypeScript type covering all typed arrays and classic arrays consisting of numbers
+ * @note alias for NumericArray
  */
-export type NumberArray = TypedArray | number[];
+export type NumberArray = NumericArray;

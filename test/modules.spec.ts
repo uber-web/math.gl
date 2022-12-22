@@ -1,3 +1,4 @@
+import '../modules/types/test';
 import '../modules/core/test';
 import '../modules/culling/test';
 import '../modules/geoid/test';
