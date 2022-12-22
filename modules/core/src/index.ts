@@ -3,6 +3,8 @@
 // types
 export type {TypedArray, NumericArray} from '@math.gl/types';
 
+export type {isTypedArray, isNumericArray} from '@math.gl/types';
+
 // classes
 export {default as Vector2} from './classes/vector2';
 export {default as Vector3} from './classes/vector3';

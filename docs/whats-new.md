@@ -25,7 +25,15 @@
   </tbody>
 </table>
 
-## v3.6 (In Development)
+
+## v3.7 (In Development)
+
+**`@math.gl/types`
+
+- Add `isTypedArray()` and `isNumericArray()` utilities that both check values and return properly restricted types to help write strictly typed code (avoids the `DataView` issue with `ArrayBuffer.isView()`).
+
+
+## v3.6
 
 Target Release Date: Q4, 2021
 
