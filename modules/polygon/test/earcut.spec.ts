@@ -39,8 +39,19 @@ test('indices-3d', function (t) {
   t.end();
 });
 
-test('empty', function (t) {
-  t.same(earcut([]), []);
+test('indices-3d', function (t) {
+  const indices = earcut([10, 4, 0, 0, 50, 0, 60, 60, 0, 70, 10, 0], null, 3);
+  t.same(indices, [1, 0, 3, 3, 2, 1]);
+  t.end();
+});
+
+test('projection', function (t) {
+  let indices = earcut([0, 4, 0, 0, 50, 0, 0, 60, 20, 0, 10, 20], null, 3, undefined, 'xy');
+  t.same(indices, []); // Polygon has no area on the XY plane
+
+  indices = earcut([0, 4, 0, 0, 50, 0, 0, 60, 20, 0, 10, 20], null, 3, undefined, 'yz');
+  t.same(indices, [2, 3, 0, 0, 1, 2]);
+
   t.end();
 });
 
