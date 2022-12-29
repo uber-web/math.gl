@@ -99,7 +99,7 @@ function linkedList(
   let i;
   let last;
   if (area === undefined) {
-    area = getPolygonSignedArea(data, {start, end, size: dim}, plane);
+    area = getPolygonSignedArea(data, {start, end, size: dim, plane});
   }
 
   let i0 = DimIndex[plane[0]];

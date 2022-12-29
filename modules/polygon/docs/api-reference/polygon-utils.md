@@ -20,6 +20,7 @@ Fields:
 - `end` (number) - End index of the polygon in the array of positions. Defaults to number of positions.
 - `size` (Number) - Size of a point, 2 (XZ) or 3 (XYZ). Defaults to 2. Affects only polygons stored in flat arrays.
 - `isClosed` (Boolean) - Indicates that the first point of the polygon is equal to the last point, and additional checks should be ommited.
+- `plane` ('xy' | 'yz' | 'xz') - The 2D projection plane on which to calculate the area of a 3D polygon. Default `'xy'`.
 
 ## Functions
 
@@ -49,7 +50,6 @@ Arguments:
 
 - `points` (Array|TypedArray) - a flat array of the points that define the polygon.
 - `options` (PolygonParams, optional) - Polygon parameters.
-- `plane` (String, optional) - the 2D projection plane on which to calculate the area of a 3D polygon. One of `xy`, `yz`, `xz`. Default to `xy`
 
 Returns:
 

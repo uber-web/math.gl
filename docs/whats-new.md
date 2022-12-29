@@ -33,9 +33,13 @@ Codebase has been fully converted to typescript. In general this means that user
 the types exported from math.gl to be considerably improved, however in some function signatures
 are no longer supported. For details, consult the [upgrade guide](./upgrade-guide).
 
-**`@math.gl/types` (NEW)
+**`@math.gl/types` (NEW)**
 
 - New module that exports a few typescript types that e.g. generalize handling of numeric arrays.
+
+**`@math.gl/polygon` (NEW)**
+- Includes earcut 2.2 (various bug fixes for edge cases)
+- The `earcut` utility supports a new argument `plane` to calculate tesselation on alternative projection planes.
 
 ## v3.5
 

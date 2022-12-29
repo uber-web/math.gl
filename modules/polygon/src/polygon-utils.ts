@@ -29,12 +29,34 @@ export type SegmentVisitorPoints = (
   i2: number
 ) => void;
 
+export type Plane2D = 'xy' | 'yz' | 'xz';
+
 /** Parameters of a polygon. */
 type PolygonParams = {
-  start?: number; // Start index of the polygon in the array of positions. Defaults to 0.
-  end?: number; // End index of the polygon in the array of positions. Defaults to number of positions.
-  size?: number; // Size of a point, 2 (XZ) or 3 (XYZ). Defaults to 2. Affects only polygons stored in flat arrays.
-  isClosed?: boolean; // Indicates that the first point of the polygon is equal to the last point, and additional checks should be ommited.
+  /**
+   * Start index of the polygon in the array of positions.
+   * @default `0`
+   */
+  start?: number;
+  /**
+   * End index of the polygon in the array of positions.
+   * @default number of positions
+   */
+  end?: number;
+  /**
+   * Size of a point, 2 (XZ) or 3 (XYZ). Affects only polygons stored in flat arrays.
+   * @default `2`
+   */
+  size?: number;
+  /**
+   * Indicates that the first point of the polygon is equal to the last point, and additional checks should be ommited.
+   */
+  isClosed?: boolean;
+  /**
+   * The 2D projection plane on which to calculate the area of a 3D polygon.
+   * @default `'xy'`
+   */
+  plane?: Plane2D;
 };
 
 /**
@@ -71,7 +93,6 @@ export function getPolygonWindingDirection(
   return Math.sign(getPolygonSignedArea(points, options));
 }
 
-export type Plane2D = 'xy' | 'yz' | 'xz';
 export const DimIndex: Record<string, number> = {
   x: 0,
   y: 1,
@@ -85,12 +106,8 @@ export const DimIndex: Record<string, number> = {
  * @returns Signed area of the polygon.
  * https://en.wikipedia.org/wiki/Shoelace_formula
  */
-export function getPolygonSignedArea(
-  points: NumericArray,
-  options: PolygonParams = {},
-  plane: Plane2D = 'xy'
-): number {
-  const {start = 0, end = points.length} = options;
+export function getPolygonSignedArea(points: NumericArray, options: PolygonParams = {}): number {
+  const {start = 0, end = points.length, plane = 'xy'} = options;
   const dim = options.size || 2;
   let area = 0;
   const i0 = DimIndex[plane[0]];
@@ -210,10 +227,13 @@ export function getPolygonSignedAreaPoints(
   options: PolygonParams = {}
 ): number {
   // https://en.wikipedia.org/wiki/Shoelace_formula
-  const {start = 0, end = points.length} = options;
+  const {start = 0, end = points.length, plane = 'xy'} = options;
   let area = 0;
+  const i0 = DimIndex[plane[0]];
+  const i1 = DimIndex[plane[1]];
+
   for (let i = start, j = end - 1; i < end; ++i) {
-    area += (points[i][0] - points[j][0]) * (points[i][1] + points[j][1]);
+    area += (points[i][i0] - points[j][i0]) * (points[i][i1] + points[j][i1]);
     j = i;
   }
   return area / 2;
