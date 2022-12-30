@@ -6,6 +6,7 @@
 
   "compilerOptions": {
     "target": "esnext",
+    "module": "esnext",
     "jsx": "react",
     "allowJs": true,
     "checkJs": false,

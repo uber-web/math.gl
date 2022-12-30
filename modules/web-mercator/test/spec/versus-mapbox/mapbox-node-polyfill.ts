@@ -1,8 +1,10 @@
+import MockBrowser from 'mock-browser';
+
 function noop() {}
 
 if (typeof window === 'undefined') {
   // Node
-  const win = require('mock-browser').mocks.MockBrowser.createWindow();
+  const win = MockBrowser.mocks.MockBrowser.createWindow();
   // back fill with mock objects
   global.window = win;
   global.self = win;
