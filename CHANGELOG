@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 4.0.0-alpha.1
+
+Experiment with type: module
+
 ## 3.6.3
 
 - [web-mercator] Fix reverse top/bottom padding in fitBounds (#302)
