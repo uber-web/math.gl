@@ -1,6 +1,6 @@
-const {resolve} = require('path');
+import {resolve} from 'path';
 
-module.exports = {
+export default {
   lint: {
     paths: ['dev-docs', 'docs', 'modules', 'examples', 'test'] // 'website'
     // extensions: ['js', 'md']
@@ -11,7 +11,8 @@ module.exports = {
   },
 
   aliases: {
-    test: resolve(__dirname, 'test')
+    test: resolve('./test'),
+    'gl-matrix/*': resolve('./node_modules/gl-matrix/cjs/*.js')
   },
 
   entry: {

@@ -3,6 +3,7 @@
   "description": "Array-based 3D Math Classes optimized for WebGL applications",
   "license": "MIT",
   "private": true,
+  "type": "module",
   "repository": {
     "type": "git",
     "url": "https://github.com/uber-web/math.gl.git"
@@ -31,7 +32,7 @@
     "@turf/destination": "^6.0.1",
     "@types/tape-promise": "^4.0.1",
     "babel-plugin-transform-builtin-extend": "^1.1.2",
-    "ocular-dev-tools": "2.0.0-alpha.3",
+    "ocular-dev-tools": "2.0.0-alpha.4",
     "pre-commit": "^1.2.2",
     "typescript": "^5.0.4"
   },
@@ -42,6 +43,5 @@
   "resolutions": {
     "tape": "4.11.0",
     "es-abstract": "^1.21.1"
-  },
-  "dependencies": {}
+  }
 }
