@@ -4,7 +4,7 @@
   "author": "Uber Technologies, Inc.",
   "license": "MIT",
   "type": "module",
-  "version": "3.6.3",
+  "version": "4.0.0-alpha.1",
   "keywords": [
     "webgl",
     "javascript",
