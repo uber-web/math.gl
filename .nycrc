@@ -1,0 +1,17 @@
+{
+  "all": true,
+  "sourceMap": false,
+  "instrument": true,
+  "include": [
+    "modules/**/src/**/*.+(js|jsx|cjs|mjs|ts|tsx)"
+  ],
+  "exclude": [
+    "**/*disabled",
+    "**/deprecated",
+    "**/wip/**",
+    "**/libs/**",
+    "**/test/**",
+    "**/*.d.ts",
+    "**/bundle.+(js|ts)"
+  ]
+}

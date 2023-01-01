@@ -2,6 +2,7 @@
   "name": "@math.gl/geoid",
   "description": "Geoid class for working with irregular Earth surface defined by an earth gravity model file.",
   "license": "MIT",
+  "type": "module",
   "publishConfig": {
     "access": "public"
   },
@@ -25,8 +26,8 @@
     "url": "https://github.com/uber-web/math.gl.git"
   },
   "types": "dist/index.d.ts",
-  "main": "dist/es5/index.js",
-  "module": "dist/esm/index.js",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
   "files": [
     "dist",
     "src"
