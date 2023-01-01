@@ -9,12 +9,6 @@ module.exports = getESLintConfig({
       node: true
     },
 
-    parserOptions: {
-      babelOptions: {
-        configFile: './babel.config.cjs'
-      }
-    },
-
     overrides: [
       {
         // scripts use devDependencies

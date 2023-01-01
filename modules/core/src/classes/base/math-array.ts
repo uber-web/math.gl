@@ -53,7 +53,7 @@ export abstract class MathArray extends Array<number> {
   to<T extends NumericArray | Record<string, unknown>>(arrayOrObject: T): T {
     // @ts-ignore
     if (arrayOrObject === this) {
-      return this;
+      return this as T;
     }
     // @ts-expect-error TS2339: Property 'toObject' does not exist on type 'MathArray'.
     return isArray(arrayOrObject) ? this.toArray(arrayOrObject) : this.toObject(arrayOrObject);
