@@ -2,6 +2,7 @@
   "name": "@math.gl/core",
   "description": "Array-based 3D Math Classes optimized for WebGL applications",
   "license": "MIT",
+  "type": "module",
   "publishConfig": {
     "access": "public"
   },
@@ -27,8 +28,8 @@
     "url": "https://github.com/uber-web/math.gl.git"
   },
   "types": "dist/index.d.ts",
-  "main": "dist/es5/index.js",
-  "module": "dist/esm/index.js",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
   "files": [
     "dist",
     "src"

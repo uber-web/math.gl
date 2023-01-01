@@ -1,9 +1,8 @@
-const {getBabelConfig, deepMerge} = require('ocular-dev-tools');
+const {getBabelConfig} = require('ocular-dev-tools/configuration');
 
-module.exports = (api) => {
-  const defaultConfig = getBabelConfig(api, {react: true});
-
-  const config = deepMerge(defaultConfig, {
+module.exports = getBabelConfig({
+  react: true,
+  overrides: {
     plugins: ['version-inline', ['transform-builtin-extend', {globals: ['Array']}]],
     ignore: [
       // Don't transpile workers, they are transpiled separately
@@ -14,8 +13,5 @@ module.exports = (api) => {
       // e.g. draco, basis, las-perf etc.
       /src\/libs/
     ]
-  });
-
-  // console.debug(config);
-  return config;
-};
+  }
+});
