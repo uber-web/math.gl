@@ -14,10 +14,8 @@
   ],
   "scripts": {
     "bootstrap": "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true yarn && ocular-bootstrap",
-    "clean": "ocular-clean && npm run tsclean",
-    "build": "npm run clean && time npm run tsbuild && time ocular-build",
-    "tsclean": "find . -name tsconfig.tsbuildinfo -exec rm {} \\;",
-    "tsbuild": "tsc -b tsconfig.modules.json",
+    "clean": "ocular-clean",
+    "build": "npm run clean && time ocular-build",
     "cover": "ocular-test cover",
     "lint": "tsc && ocular-lint",
     "metrics": "ocular-metrics",
@@ -27,14 +25,12 @@
     "test-size": "npm run build && webpack --config test/webpack.config.js --env.import-nothing"
   },
   "devDependencies": {
-    "@babel/register": "^7.13.16",
     "@probe.gl/bench": "^3.5.4",
     "@turf/destination": "^6.0.1",
     "@types/tape-promise": "^4.0.1",
     "babel-plugin-transform-builtin-extend": "^1.1.2",
-    "ocular-dev-tools": "2.0.0-alpha.4",
-    "pre-commit": "^1.2.2",
-    "typescript": "^4.9.4"
+    "ocular-dev-tools": "2.0.0-alpha.5",
+    "pre-commit": "^1.2.2"
   },
   "resolutions_notes": [
     "Note: tape 4.12 and higher no longer compares 0 and -0 equally..."

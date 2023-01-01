@@ -10,6 +10,10 @@ export default {
     // extensions: ['.js']
   },
 
+  typescript: {
+    project: 'tsconfig.modules.json'
+  },
+
   aliases: {
     test: resolve('./test'),
     'gl-matrix/*': resolve('./node_modules/gl-matrix/cjs/*.js')
