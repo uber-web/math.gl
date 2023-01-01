@@ -43,7 +43,13 @@
     {
       "title": "API Reference",
       "chapters": [
-        {
+        "title": "@math.gl/types",
+        "entries": [
+          {"entry": "modules/types/docs"},
+          {"entry": "modules/types/docs/api-reference/is-array"}
+        ]
+      },
+      {
           "title": "@math.gl/core",
           "entries": [
             {"entry": "modules/core/docs"},

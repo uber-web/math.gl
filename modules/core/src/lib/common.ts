@@ -1,6 +1,6 @@
-// Copyright (c) 2017 Uber Technologies, Inc.
-// MIT License
-import {NumericArray} from '@math.gl/types';
+// math.gl, MIT license
+
+import type {NumericArray} from '@math.gl/types';
 
 import type MathArray from '../classes/base/math-array';
 
@@ -50,8 +50,8 @@ export function formatValue(
 /**
  * Check if value is an "array"
  * Returns `true` if value is either an array or a typed array
- *
  * Note: returns `false` for `ArrayBuffer` and `DataView` instances
+ * @note isTypedArray and isNumericArray are often more useful in TypeScript
  */
 export function isArray(value: unknown): boolean {
   return Array.isArray(value) || (ArrayBuffer.isView(value) && !(value instanceof DataView));
