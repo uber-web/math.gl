@@ -1,3 +1,0 @@
-# getSunDirection
-
-> TBA

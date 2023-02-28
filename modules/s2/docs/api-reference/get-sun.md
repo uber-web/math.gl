@@ -1,3 +1,0 @@
-# getSun
-
-> TBA
