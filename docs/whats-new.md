@@ -27,17 +27,25 @@
 
 ## v3.7 (In Development)
 
-**`@math.gl/types`
-
-- Add `isTypedArray()` and `isNumericArray()` utilities that both check values and return properly restricted types to help write strictly typed code (avoids the `DataView` issue with `ArrayBuffer.isView()`).
-
 **`@math.gl/geohash`** (NEW)
 
 - New module with math for the GeoHash DGGS (Discrete Global Grid System).
 
-**`@math.gl/geohash`** (NEW)
+**`@math.gl/s2`** (NEW MODULE)
+
+- New module that contains a lightweight implementation of the S2 DGGS (Discrete Global Grid System).
+
+**`@math.gl/quadkey`** (NEW)
 
 - New module with math for the quadkey DGGS (Discrete Global Grid System).
+
+**`@math.gl/core`
+
+- `config` is now truly global (stored on `globalThis`).
+
+**`@math.gl/types`
+
+- Add `isTypedArray()` and `isNumericArray()` utilities that both check values and return properly restricted types to help write strictly typed code (avoids the `DataView` issue with `ArrayBuffer.isView()`).
 
 ## v3.6
 
