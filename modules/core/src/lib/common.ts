@@ -29,6 +29,7 @@ const DEFAULT_CONFIG: Required<ConfigurationOptions> = {
 
 // We use a global field to store the config
 declare global {
+  // eslint-disable-next-line no-var
   var mathgl: {
     config: Required<ConfigurationOptions>
   };
