@@ -4,6 +4,9 @@ import type {NumericArray} from '@math.gl/types';
 
 import type MathArray from '../classes/base/math-array';
 
+const RADIANS_TO_DEGREES = (1 / Math.PI) * 180;
+const DEGREES_TO_RADIANS = (1 / 180) * Math.PI;
+
 export type ConfigurationOptions = {
   EPSILON: number;
   debug?: boolean;
@@ -14,20 +17,32 @@ export type ConfigurationOptions = {
   _cartographicRadians?: boolean;
 };
 
-const RADIANS_TO_DEGREES = (1 / Math.PI) * 180;
-const DEGREES_TO_RADIANS = (1 / 180) * Math.PI;
-
-// TODO - remove
-export const config: ConfigurationOptions = {
+const DEFAULT_CONFIG: Required<ConfigurationOptions> = {
   EPSILON: 1e-12,
   debug: false,
   precision: 4,
   printTypes: false,
   printDegrees: false,
-  printRowMajor: true
+  printRowMajor: true,
+  _cartographicRadians: false
 };
 
-export function configure(options?: Partial<ConfigurationOptions>): ConfigurationOptions {
+// We use a global field to store the config
+declare global {
+  // eslint-disable-next-line no-var
+  var mathgl: {
+    config: Required<ConfigurationOptions>;
+  };
+}
+
+// Configuration is truly global as of v3.6 to ensure single config even if multiple copies of math.gl
+// Multiple copies of config can be quite tricky to debug...
+globalThis.mathgl = globalThis.mathgl || {config: {...DEFAULT_CONFIG}};
+
+export const config = globalThis.mathgl.config;
+
+export function configure(options: Partial<ConfigurationOptions>): ConfigurationOptions {
+  // Only copy existing keys
   Object.assign(config, options);
   return config;
 }
