@@ -285,7 +285,7 @@ export default class Euler extends MathArray {
   // TODO - move to Quaternion
   getQuaternion(): Quaternion {
     const q = new Quaternion();
-    switch (this[4]) {
+    switch (this[3]) {
       case RotationOrder.XYZ:
         return q.rotateX(this[0]).rotateY(this[1]).rotateZ(this[2]);
       case RotationOrder.YXZ:
