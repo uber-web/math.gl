@@ -51,6 +51,8 @@
       "@math.gl/polygon/test/*": ["modules/polygon/test/*"],
       "@math.gl/proj4/*": ["modules/proj4/src/*"],
       "@math.gl/proj4/test/*": ["modules/proj4/test/*"],
+      "@math.gl/s2/*": ["modules/s2/src/*"],
+      "@math.gl/s2/test/*": ["modules/s2/test/*"],
       "@math.gl/sun/*": ["modules/sun/src/*"],
       "@math.gl/sun/test/*": ["modules/sun/test/*"],
       "@math.gl/types/*": ["modules/types/src/*"],
