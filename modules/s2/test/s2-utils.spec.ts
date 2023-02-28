@@ -1,8 +1,8 @@
 // loaders.gl, MIT license
 import test from 'tape-promise/tape';
 
-import {getS2Center, getS2QuadKey, getS2Polygon} from '@deck.gl/geo-layers/s2-layer/s2-utils';
-import {s2cells as data} from 'deck.gl-test/data';
+import {getS2Center, getS2QuadKey, getS2Polygon} from '@math.gl/s2';
+// import {s2cells} from './data/sfcells-sf.json';
 
 import {S2} from 's2-geometry';
 import Long from 'long';

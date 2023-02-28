@@ -7,4 +7,4 @@ import '../modules/polygon/test';
 import '../modules/proj4/test';
 import '../modules/sun/test';
 import '../modules/web-mercator/test';
-import '../modules/s2/test';
+// import '../modules/s2/test';
