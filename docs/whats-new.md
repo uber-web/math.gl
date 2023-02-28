@@ -31,6 +31,10 @@
 
 - Add `isTypedArray()` and `isNumericArray()` utilities that both check values and return properly restricted types to help write strictly typed code (avoids the `DataView` issue with `ArrayBuffer.isView()`).
 
+**`@math.gl/s2`** (NEW MODULE)
+
+- New module that contains a lightweight implementation of the S2 DGGS (Discrete Global Grid System).
+
 ## v3.6
 
 Target Release Date: Q4, 2021
