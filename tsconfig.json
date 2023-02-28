@@ -68,13 +68,12 @@
   },
   "include":[
     "modules/*/src",
-    "modules/culling/test",
-    "modules/geoid/test",
-    "modules/geospatial/test",
-    "modules/proj4/test",
-    "modules/sun/test"
+    "modules/*/test"
   ],
   "exclude":[
+    "modules/core/test",
+    "modules/polygon/test",
+    "modules/web-mercator/test",
     "test/apps/**/*",
     "node_modules",
     "**/dist/**/*",

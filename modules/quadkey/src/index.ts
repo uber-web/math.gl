@@ -1,3 +1,3 @@
 // math.gl, MIT license
 
-export {quadkeyToWorldBounds, getQuadkeyPolygon} from './quadkey';
+export {quadkeyToWorldBounds, getQuadkeyBoundary, getQuadkeyBoundaryFlat} from './quadkey';

@@ -18,12 +18,15 @@
   "references": [
     {"path": "modules/core"},
     {"path": "modules/culling"},
+    {"path": "modules/geohash"},
     {"path": "modules/geoid"},
     {"path": "modules/geospatial"},
     {"path": "modules/main"},
     {"path": "modules/polygon"},
     {"path": "modules/proj4"},
+    {"path": "modules/s2"},
     {"path": "modules/sun"},
+    {"path": "modules/quadkey"},
     {"path": "modules/web-mercator"}
   ],
   "include": [

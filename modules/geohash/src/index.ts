@@ -1,1 +1,1 @@
-export {getGeohashBounds, getGeohashPolygon} from './geohash';
+export {getGeohashLngLat, getGeohashBoundary, getGeohashBoundaryFlat} from './geohash';

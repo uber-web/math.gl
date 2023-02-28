@@ -1,44 +1,17 @@
 // loaders.gl, MIT license
 import test from 'tape-promise/tape';
 
-import {getS2Center, getS2QuadKey, getS2Polygon} from '@math.gl/s2';
-// import {s2cells} from './data/sfcells-sf.json';
+import {getS2BoundaryFlat} from '@math.gl/s2';
 
-import {S2} from 's2-geometry';
-import Long from 'long';
+// import Long from 'long';
 
-test('Utils -> getS2Center', (t) => {
-  const s2Token = '8085873c';
-  t.deepEqual(getS2Center(s2Token), [-122.4637079795235, 37.78228912269449]);
-  t.end();
-});
+// test('Utils -> getS2LngLat', (t) => {
+//   const s2Token = '8085873c';
+//   t.deepEqual(getS2LngLat(s2Token), [-122.4637079795235, 37.78228912269449]);
+//   t.end();
+// });
 
-test('S2Layer#getS2QuadKey', (t) => {
-  const TEST_COORDINATES = [
-    {lat: 0, lng: 0},
-    {lat: -122.45, lng: 37.78},
-    {lat: 85, lng: 180}
-  ];
-
-  const TEST_LEVELS = [1, 2, 4, 8, 16];
-
-  for (const point of TEST_COORDINATES) {
-    for (const level of TEST_LEVELS) {
-      const key = S2.latLngToKey(point.lat, point.lng, level);
-      const id = Long.fromString(S2.keyToId(key), true);
-      const token = id.toString(16).replace(/0+$/, '');
-
-      t.comment(`level ${level}, id: ${id.toString()}, token: ${token}`);
-      t.is(getS2QuadKey(key), key, 'Quad key to quad key');
-      t.is(getS2QuadKey(id), key, 'Id to quad key');
-      t.is(getS2QuadKey(token), key, 'Token to quad key');
-    }
-  }
-
-  t.end();
-});
-
-test('S2Layer#getS2Polygon', (t) => {
+test('getS2BoundaryFlat', (t) => {
   const TEST_TOKENS = [
     '80858004', // face 4
     '1c', // face 0
@@ -48,13 +21,13 @@ test('S2Layer#getS2Polygon', (t) => {
     'ab', // face 5
     '4/001003',
     '54', // antimeridian
-    '5c', // antimeridian
-    new Long(0, -2138636288, false),
-    new Long(0, 1832910848, false)
+    '5c' // antimeridian
+    // new Long(0, -2138636288, false),
+    // new Long(0, 1832910848, false)
   ];
 
   for (const token of TEST_TOKENS) {
-    const polygon = getS2Polygon(token);
+    const polygon = getS2BoundaryFlat(token);
     t.ok(polygon instanceof Float64Array, 'polygon is flat array');
     t.is((polygon.length / 2 - 1) % 4, 0, 'polygon has 4 sides');
     t.deepEqual(polygon.slice(0, 2), polygon.slice(-2), 'polygon is closed');

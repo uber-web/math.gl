@@ -1,5 +1,5 @@
 import test from 'tape-promise/tape';
-import {getGeohashPolygon, getGeohashBounds} from '@math.gl/geohash';
+import {getGeohashBoundary, getGeohashBoundaryFlat} from '@math.gl/geohash';
 
 const TEST_DATA = [
   {
@@ -16,21 +16,21 @@ const TEST_DATA = [
   }
 ];
 
-test('geohash#getGeohashBounds', (t) => {
-  for (const {geohash, expectedBounds} of TEST_DATA) {
-    const bounds = getGeohashBounds(geohash);
-    t.deepEquals(bounds, expectedBounds, 'Geohash bounds calculated');
+test('geohash#getGeohashBoundary', (t) => {
+  for (const {geohash} of TEST_DATA) {
+    const polygon = getGeohashBoundary(geohash);
+    t.ok(polygon instanceof Array, 'polygon is flat array');
+    t.is(polygon.length / 2 - 1, 4, 'polygon has 4 sides');
+    t.deepEqual(polygon.slice(0, 2), polygon.slice(-2), 'polygon is closed');
   }
 
   t.end();
 });
 
-test('geohash#getGeohashPolygon', (t) => {
-  for (const {geohash} of TEST_DATA) {
-    const polygon = getGeohashPolygon(geohash);
-    t.ok(polygon instanceof Array, 'polygon is flat array');
-    t.is(polygon.length / 2 - 1, 4, 'polygon has 4 sides');
-    t.deepEqual(polygon.slice(0, 2), polygon.slice(-2), 'polygon is closed');
+test('geohash#getGeohashBounds', (t) => {
+  for (const {geohash, expectedBounds} of TEST_DATA) {
+    const bounds = getGeohashBoundaryFlat(geohash);
+    t.deepEquals(bounds, expectedBounds, 'Geohash bounds calculated');
   }
 
   t.end();

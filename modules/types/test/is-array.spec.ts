@@ -1,6 +1,6 @@
 // math.gl, MIT license
 
-import test, {Test} from 'tape-promise/tape';
+import test from 'tape-promise/tape';
 import {isTypedArray, isNumericArray} from '@math.gl/types';
 
 const TEST_CASES: {value: unknown; isTypedArray: boolean; isNumericArray: boolean}[] = [
