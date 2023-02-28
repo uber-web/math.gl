@@ -25,7 +25,7 @@ const TEST_DATA = [
   }
 ];
 
-test('quadkey#quadkeyToWorldBounds', t => {
+test('quadkey#quadkeyToWorldBounds', (t) => {
   for (const {quadkey, expectedBounds} of TEST_DATA) {
     const bounds = quadkeyToWorldBounds(quadkey);
     t.deepEquals(bounds, expectedBounds, 'Quadkey bounds calculated');
@@ -34,7 +34,7 @@ test('quadkey#quadkeyToWorldBounds', t => {
   t.end();
 });
 
-test('quadkey#getQuadkeyPolygon', t => {
+test('quadkey#getQuadkeyPolygon', (t) => {
   for (const {quadkey} of TEST_DATA) {
     const polygon = getQuadkeyPolygon(quadkey);
     t.ok(polygon instanceof Array, 'polygon is flat array');

@@ -1,6 +1,6 @@
 // math.gl, MIT license
 
-/** eslint-disable max-depth */
+/* eslint-disable max-depth */
 
 const BASE32_CODES = '0123456789bcdefghjkmnpqrstuvwxyz';
 const BASE32_CODES_DICT: Record<string, number> = {};

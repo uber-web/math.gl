@@ -16,7 +16,7 @@ const TEST_DATA = [
   }
 ];
 
-test('geohash#getGeohashBounds', t => {
+test('geohash#getGeohashBounds', (t) => {
   for (const {geohash, expectedBounds} of TEST_DATA) {
     const bounds = getGeohashBounds(geohash);
     t.deepEquals(bounds, expectedBounds, 'Geohash bounds calculated');
@@ -25,7 +25,7 @@ test('geohash#getGeohashBounds', t => {
   t.end();
 });
 
-test('geohash#getGeohashPolygon', t => {
+test('geohash#getGeohashPolygon', (t) => {
   for (const {geohash} of TEST_DATA) {
     const polygon = getGeohashPolygon(geohash);
     t.ok(polygon instanceof Array, 'polygon is flat array');
