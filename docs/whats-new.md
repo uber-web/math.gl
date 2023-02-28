@@ -27,6 +27,10 @@
 
 ## v3.7 (In Development)
 
+**`@math.gl/core`
+
+- `config` is now truly global (stored on `globalThis`).
+
 **`@math.gl/types`
 
 - Add `isTypedArray()` and `isNumericArray()` utilities that both check values and return properly restricted types to help write strictly typed code (avoids the `DataView` issue with `ArrayBuffer.isView()`).

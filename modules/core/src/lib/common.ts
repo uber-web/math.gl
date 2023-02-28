@@ -31,10 +31,10 @@ const DEFAULT_CONFIG: Required<ConfigurationOptions> = {
 declare global {
   // eslint-disable-next-line no-var
   var mathgl: {
-    config: Required<ConfigurationOptions>
+    config: Required<ConfigurationOptions>;
   };
 }
-  
+
 // Configuration is truly global as of v3.6 to ensure single config even if multiple copies of math.gl
 // Multiple copies of config can be quite tricky to debug...
 globalThis.mathgl = globalThis.mathgl || {config: {...DEFAULT_CONFIG}};
