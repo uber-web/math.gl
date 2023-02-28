@@ -43,6 +43,8 @@
       "@math.gl/core/test/*": ["modules/core/test/*"],
       "@math.gl/culling/*": ["modules/culling/src/*"],
       "@math.gl/culling/test/*": ["modules/culling/test/*"],
+      "@math.gl/geohash/*": ["modules/geohash/src/*"],
+      "@math.gl/geohash/test/*": ["modules/geohash/test/*"],
       "@math.gl/geoid/*": ["modules/geoid/src/*"],
       "@math.gl/geoid/test/*": ["modules/geoid/test/*"],
       "@math.gl/geospatial/*": ["modules/geospatial/src/*"],
@@ -55,6 +57,8 @@
       "@math.gl/sun/test/*": ["modules/sun/test/*"],
       "@math.gl/types/*": ["modules/types/src/*"],
       "@math.gl/types/test/*": ["modules/types/test/*"],
+      "@math.gl/quadkey/*": ["modules/quadkey/src/*"],
+      "@math.gl/quadkey/test/*": ["modules/quadkey/test/*"],
       "@math.gl/web-mercator/*": ["modules/web-mercator/src/*"],
       "@math.gl/web-mercator/test/*": ["modules/web-mercator/test/*"],
       "test/*": ["test/*"]

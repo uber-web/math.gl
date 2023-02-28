@@ -31,6 +31,14 @@
 
 - Add `isTypedArray()` and `isNumericArray()` utilities that both check values and return properly restricted types to help write strictly typed code (avoids the `DataView` issue with `ArrayBuffer.isView()`).
 
+**`@math.gl/geohash`** (NEW)
+
+- New module with math for the GeoHash DGGS (Discrete Global Grid System).
+
+**`@math.gl/geohash`** (NEW)
+
+- New module with math for the quadkey DGGS (Discrete Global Grid System).
+
 ## v3.6
 
 Target Release Date: Q4, 2021
