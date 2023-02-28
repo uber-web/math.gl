@@ -1,0 +1,32 @@
+{
+  "name": "@math.gl/s2",
+  "description": "A minimal S2 DGGS (Discrete Global Grid System) implementation",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "version": "3.6.3",
+  "keywords": [
+    "javascript",
+    "math",
+    "geospatial",
+    "sun",
+    "suncalc",
+    "solar"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/uber-web/math.gl.git"
+  },
+  "types": "dist/index.d.ts",
+  "main": "dist/es5/index.js",
+  "module": "dist/esm/index.js",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "dependencies": {
+    "@babel/runtime": "^7.12.0",
+    "long": "^5.2.1"
+  }
+}
