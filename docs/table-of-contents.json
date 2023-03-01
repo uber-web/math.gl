@@ -37,19 +37,26 @@
             {"entry": "modules/web-mercator/docs/developer-guide/about-coordinates"},
             {"entry": "modules/web-mercator/docs/developer-guide/offset-projection-accuracy"}
           ]
+        },
+        {
+          "title": "DGGS Math",
+          "entries": [
+            {"entry": "docs/developer-guide/dggs"}
+          ]
         }
       ]
     },
     {
       "title": "API Reference",
       "chapters": [
-        "title": "@math.gl/types",
-        "entries": [
-          {"entry": "modules/types/docs"},
-          {"entry": "modules/types/docs/api-reference/is-array"}
-        ]
-      },
-      {
+        {
+          "title": "@math.gl/types",
+          "entries": [
+            {"entry": "modules/types/docs"},
+            {"entry": "modules/types/docs/api-reference/is-array"}
+          ]
+        },
+        {
           "title": "@math.gl/core",
           "entries": [
             {"entry": "modules/core/docs"},
@@ -129,6 +136,27 @@
             {"entry": "modules/web-mercator/docs"},
             {"entry": "modules/web-mercator/docs/api-reference/web-mercator-utils"},
             {"entry": "modules/web-mercator/docs/api-reference/web-mercator-viewport"}
+          ]
+        },
+        {
+          "title": "@math.gl/geohash",
+          "entries": [
+            {"entry": "modules/geohash/docs"},
+            {"entry": "modules/geohash/docs/api-reference/geohash"}
+          ]
+        },
+        {
+          "title": "@math.gl/quadkey",
+          "entries": [
+            {"entry": "modules/quadkey/docs"},
+            {"entry": "modules/quadkey/docs/api-reference/quadkey"}
+          ]
+        },
+        {
+          "title": "@math.gl/s2",
+          "entries": [
+            {"entry": "modules/s2/docs"},
+            {"entry": "modules/s2/docs/api-reference/s2"}
           ]
         }
       ]

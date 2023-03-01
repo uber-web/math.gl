@@ -7,6 +7,8 @@ node_modules/
 coverage/
 .nyc_output/
 
+.docusaurus
+
 npm-debug.log
 */**/yarn.lock
 yarn-error.log
