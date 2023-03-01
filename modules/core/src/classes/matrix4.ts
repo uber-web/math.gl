@@ -2,7 +2,7 @@
 // MIT License
 
 import {NumericArray} from '@math.gl/types';
-import Matrix from './base/matrix';
+import {Matrix} from './base/matrix';
 import {checkVector} from '../lib/validators';
 
 /* eslint-disable camelcase */
@@ -43,7 +43,7 @@ const DEFAULT_FAR = 500;
 const IDENTITY_MATRIX = Object.freeze([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
 
 /** 4x4 matrix */
-export default class Matrix4 extends Matrix {
+export class Matrix4 extends Matrix {
   static get IDENTITY(): Readonly<Matrix4> {
     return getIdentityMatrix();
   }

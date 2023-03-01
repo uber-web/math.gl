@@ -9,7 +9,7 @@ const boundingSphere = new BoundingSphere();
 const transform = new Matrix4();
 
 // eslint-disable-next-line
-export default function cullingBench(suite, addReferenceBenchmarks) {
+export function cullingBench(suite, addReferenceBenchmarks) {
   suite
     .group('BoundingSphere')
     .add('BoundingSphere#new()', () => new BoundingSphere())

@@ -1,9 +1,9 @@
 // Copyright (c) 2017 Uber Technologies, Inc.
 // MIT License
 import {NumericArray} from '@math.gl/types';
-import MathArray from './base/math-array';
+import {MathArray} from './base/math-array';
 import {checkNumber, checkVector} from '../lib/validators';
-import Vector4 from './vector4';
+import {Vector4} from './vector4';
 // @ts-ignore gl-matrix types...
 import * as quat from 'gl-matrix/quat';
 // @ts-ignore gl-matrix types...
@@ -11,7 +11,7 @@ import * as vec4 from 'gl-matrix/vec4';
 
 const IDENTITY_QUATERNION = [0, 0, 0, 1] as const;
 
-export default class Quaternion extends MathArray {
+export class Quaternion extends MathArray {
   constructor(x: number | Readonly<NumericArray> = 0, y = 0, z = 0, w = 1) {
     // PERF NOTE: initialize elements as double precision numbers
     super(-0, -0, -0, -0);

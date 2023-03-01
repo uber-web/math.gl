@@ -90,7 +90,7 @@ class XYZVectorBitwiseOr {
 
 // COMBINED BENCH
 
-export default function javascriptBench(suite, addReferenceBenchmarks) {
+export function javascriptBench(suite, addReferenceBenchmarks) {
   if (addReferenceBenchmarks) {
     suite
       .group('Class/Array inheritance construction cost')

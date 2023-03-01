@@ -2,7 +2,7 @@
 // MIT License
 // Adaptation of THREE.js Spherical class, under MIT license
 import {NumericArray} from '@math.gl/types';
-import Vector3 from './vector3';
+import {Vector3} from './vector3';
 import {formatValue, equals, config} from '../lib/common';
 import {degrees, radians, clamp} from '../lib/common';
 // @ts-ignore gl-matrix types...
@@ -31,7 +31,7 @@ const EARTH_RADIUS_METERS = 6371000;
  * The equator starts at positive z.
  * @link https://en.wikipedia.org/wiki/Spherical_coordinate_system
  */
-export default class SphericalCoordinates {
+export class SphericalCoordinates {
   phi: number;
   theta: number;
   radius: number;

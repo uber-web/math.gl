@@ -4,7 +4,7 @@
 // Copyright (c) Charles Karney (2009-2018) <charles@karney.com> and licensed
 // under the MIT/X11 License.
 
-import Geoid from './geoid';
+import {Geoid} from './geoid';
 
 const ENDL = 10;
 const PIXEL_MAX = 65535;

@@ -1,6 +1,6 @@
 // Copyright (c) 2017 Uber Technologies, Inc.
 // MIT License
-import Vector from './base/vector';
+import {Vector} from './base/vector';
 import {config, isArray} from '../lib/common';
 import {checkNumber} from '../lib/validators';
 // @ts-ignore gl-matrix types...
@@ -13,7 +13,7 @@ import {NumericArray} from '@math.gl/types';
  * Two-element vector class.
  * Subclass of Array<number>
  */
-export default class Vector2 extends Vector {
+export class Vector2 extends Vector {
   // Creates a new, empty vec2
   constructor(x: number | Readonly<NumericArray> = 0, y: number = 0) {
     // PERF NOTE: initialize elements as double precision numbers
@@ -52,7 +52,7 @@ export default class Vector2 extends Vector {
     return this.check();
   }
 
-  toObject(object: {x?: number; y?: number}): {x: number; y: number} {
+  override toObject(object: {x?: number; y?: number}): {x: number; y: number} {
     object.x = this[0];
     object.y = this[1];
     return object as {x: number; y: number};

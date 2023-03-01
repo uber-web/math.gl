@@ -2,7 +2,7 @@
 // See LICENSE.md and https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md
 
 import {Vector3} from '@math.gl/core';
-import BoundingSphere from '../bounding-volumes/bounding-sphere';
+import {BoundingSphere} from '../bounding-volumes/bounding-sphere';
 
 /* eslint-disable */
 const fromPointsXMin = new Vector3();
@@ -30,7 +30,7 @@ const fromPointsNaiveCenterScratch = new Vector3();
  * @param result Optional object onto which to store the result.
  * @returns The modified result parameter or a new `BoundingSphere` instance if not provided.
  */
-export default function makeBoundingSphereFromPoints(
+export function makeBoundingSphereFromPoints(
   positions: number[][],
   result: BoundingSphere = new BoundingSphere()
 ): BoundingSphere {

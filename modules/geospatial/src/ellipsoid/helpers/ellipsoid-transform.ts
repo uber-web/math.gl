@@ -1,6 +1,6 @@
 import {NumericArray, Vector3, assert, equals as equalsEpsilon} from '@math.gl/core';
 
-import type Ellipsoid from '../ellipsoid';
+import type {Ellipsoid} from '../ellipsoid';
 
 const EPSILON14 = 1e-14;
 
@@ -76,7 +76,7 @@ const scratchVector3 = new Vector3();
 // Computes a 4x4 transformation matrix from a reference frame
 // centered at the provided origin to the provided ellipsoid's fixed reference frame.
 // eslint-disable-next-line max-statements, max-params, complexity
-export default function localFrameToFixedFrame(
+export function localFrameToFixedFrame(
   ellipsoid: Ellipsoid,
   firstAxis: AxisDirection,
   secondAxis: AxisDirection,

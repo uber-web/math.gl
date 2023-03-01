@@ -31,7 +31,7 @@ const objectVector = new ObjectVector();
 const vector = new Vector3();
 const vector3 = new Vector3();
 
-export default function geospatialBench(suite: Bench, addReferenceBenchmarks?: boolean): Bench {
+export function geospatialBench(suite: Bench, addReferenceBenchmarks?: boolean): Bench {
   suite
     .group('Cartographic Type Conversion Cost')
     .add('fromCartographic#Vector3', () => fromCartographic(vector3, vector))

@@ -26,7 +26,7 @@ const float32Array = new Float32Array([1, 0, 0]);
 const float64Array = new Float64Array([1, 0, 0]);
 const vector3 = new Vector3();
 
-export default function commonBench(suite, addReferenceBenchmarks) {
+export function commonBench(suite, addReferenceBenchmarks) {
   suite
     .group('@math.gl/core: Global Functions')
     .add('isArray(Vector3)', () => isArray(vector3))

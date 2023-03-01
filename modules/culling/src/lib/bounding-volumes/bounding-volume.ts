@@ -1,5 +1,5 @@
 // import {INTERSECTION} from '../../constants';
-import Plane from '../plane';
+import {Plane} from '../plane';
 
 /**
  * Common interface for BoundingVolumes

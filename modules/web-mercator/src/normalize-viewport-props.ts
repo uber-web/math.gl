@@ -20,7 +20,7 @@ export type ViewportProps = {
  * @param props
  */
 // eslint-disable-next-line complexity
-export default function normalizeViewportProps(props: ViewportProps): ViewportProps {
+export function normalizeViewportProps(props: ViewportProps): ViewportProps {
   const {width, height, pitch = 0} = props;
   let {longitude, latitude, zoom, bearing = 0} = props;
 

@@ -6,8 +6,8 @@
 // - Documentation has not been ported
 
 import {assert, Matrix4, NumericArray, Vector2} from '@math.gl/core';
-import PerspectiveOffCenterFrustum from './perspective-off-center-frustum';
-import CullingVolume from './culling-volume';
+import {PerspectiveOffCenterFrustum} from './perspective-off-center-frustum';
+import {CullingVolume} from './culling-volume';
 
 const defined = (val: unknown) => val !== null && typeof val !== 'undefined';
 
@@ -44,7 +44,7 @@ type PerspectiveFrustumOptions = {
  *
  * @see PerspectiveOffCenterFrustum
  */
-export default class PerspectiveFrustum {
+export class PerspectiveFrustum {
   private _offCenterFrustum = new PerspectiveOffCenterFrustum();
   /**
    * The angle of the field of view (FOV), in radians.  This angle will be used

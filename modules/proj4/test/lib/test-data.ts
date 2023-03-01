@@ -1,7 +1,7 @@
 // This file is derived from  https://github.com/proj4js
 // under this permissive license: https://github.com/proj4js/proj4js/blob/master/LICENSE.md
 
-export default [
+export const testPoints = [
   {
     code: 'testmerc',
     xy: [-45007.0787624, 4151725.59875],

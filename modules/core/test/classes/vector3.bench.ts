@@ -38,7 +38,7 @@ const objectVector = new ObjectVector();
 const arrayVector = new Vector3();
 const vector3 = new Vector3();
 
-export default function vector3Bench(suite, addReferenceBenchmarks) {
+export function vector3Bench(suite, addReferenceBenchmarks) {
   suite
     .group('@math.gl/core: Vector3')
     .add('Vector3#new()', () => new Vector3(1, 2, 3))

@@ -1,7 +1,7 @@
 // Copyright (c) 2017 Uber Technologies, Inc.
 // MIT License
 import {NumericArray} from '@math.gl/types';
-import Vector from './base/vector';
+import {Vector} from './base/vector';
 import {config, isArray} from '../lib/common';
 import {checkNumber} from '../lib/validators';
 // @ts-ignore gl-matrix types
@@ -17,7 +17,7 @@ let ZERO: Vector3;
  * Three-element vector class.
  * Subclass of Array<number>
  */
-export default class Vector3 extends Vector {
+export class Vector3 extends Vector {
   static get ZERO(): Vector3 {
     if (!ZERO) {
       ZERO = new Vector3(0, 0, 0);
@@ -77,7 +77,11 @@ export default class Vector3 extends Vector {
     return this.check();
   }
 
-  toObject(object: {x?: number; y?: number; z?: number}): {x: number; y: number; z: number} {
+  override toObject(object: {x?: number; y?: number; z?: number}): {
+    x: number;
+    y: number;
+    z: number;
+  } {
     object.x = this[0];
     object.y = this[1];
     object.z = this[2];

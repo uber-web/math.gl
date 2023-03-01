@@ -4,9 +4,9 @@
 /* eslint-disable */
 import {Vector3, assert} from '@math.gl/core';
 import {INTERSECTION} from '../constants';
-import Plane from './plane';
+import {Plane} from './plane';
 import type {BoundingVolume} from './bounding-volumes/bounding-volume';
-import type BoundingSphere from './bounding-volumes/bounding-sphere';
+import type {BoundingSphere} from './bounding-volumes/bounding-sphere';
 
 // X, Y, Z Unit vectors
 const faces = [new Vector3([1, 0, 0]), new Vector3([0, 1, 0]), new Vector3([0, 0, 1])];
@@ -16,7 +16,7 @@ const scratchPlaneNormal = new Vector3();
 // const scratchPlane = new Plane(new Vector3(1.0, 0.0, 0.0), 0.0);
 
 /** A culling volume defined by planes. */
-export default class CullingVolume {
+export class CullingVolume {
   /**
    * For plane masks (as used in {@link CullingVolume#computeVisibilityWithPlaneMask}), this special value
    * represents the case where the object bounding volume is entirely outside the culling volume.

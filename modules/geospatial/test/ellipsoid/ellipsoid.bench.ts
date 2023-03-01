@@ -18,7 +18,7 @@ const origin = new Vector3(1.0, 0.0, 0.0);
 // const northPole = new Vector3(0.0, 0.0, 1.0);
 const resultMatrix = new Matrix4();
 
-export default function ellipsoidBench(suite) {
+export function ellipsoidBench(suite) {
   // const spaceCartesian = new Vector3(4582719.8827300891, -4582719.8827300882, 1725510.4250797231);
 
   suite

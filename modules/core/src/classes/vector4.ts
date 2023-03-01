@@ -7,11 +7,11 @@ import * as vec4 from 'gl-matrix/vec3';
 /* eslint-disable camelcase */
 import {vec4_transformMat2, vec4_transformMat3} from '../lib/gl-matrix-extras';
 
-import Vector from './base/vector';
+import {Vector} from './base/vector';
 import {config, isArray} from '../lib/common';
 import {checkNumber} from '../lib/validators';
 
-import type Matrix4 from './matrix4';
+import type {Matrix4} from './matrix4';
 
 let ZERO: Vector4;
 
@@ -19,7 +19,7 @@ let ZERO: Vector4;
  * Four-element vector class.
  * Subclass of Array<number>
  */
-export default class Vector4 extends Vector {
+export class Vector4 extends Vector {
   static get ZERO(): Vector4 {
     if (!ZERO) {
       ZERO = new Vector4(0, 0, 0, 0);
@@ -78,7 +78,7 @@ export default class Vector4 extends Vector {
     return this;
   }
 
-  toObject(object: {x?: number; y?: number; z?: number; w?: number}): {
+  override toObject(object: {x?: number; y?: number; z?: number; w?: number}): {
     x: number;
     y: number;
     z: number;

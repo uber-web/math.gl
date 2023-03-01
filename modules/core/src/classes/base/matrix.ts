@@ -1,12 +1,12 @@
 // Copyright (c) 2017 Uber Technologies, Inc.
 // MIT License
 import {NumericArray} from '@math.gl/types';
-import MathArray from './math-array';
+import {MathArray} from './math-array';
 import {checkNumber} from '../../lib/validators';
 import {config} from '../../lib/common';
 
 /** Base class for matrices */
-export default abstract class Matrix extends MathArray {
+export abstract class Matrix extends MathArray {
   abstract get RANK(): number;
 
   // fromObject(object) {

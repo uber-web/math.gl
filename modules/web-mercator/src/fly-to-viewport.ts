@@ -24,7 +24,7 @@ export type FlytoTransitionOptions = {
  * It implements “Smooth and efficient zooming and panning.” algorithm by
  * "Jarke J. van Wijk and Wim A.A. Nuij"
  */
-export default function flyToViewport(
+export function flyToViewport(
   startProps: ViewportProps,
   endProps: ViewportProps,
   t: number,
