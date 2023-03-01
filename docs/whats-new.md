@@ -1,23 +1,43 @@
 # What's New
 
-<table style="border: 0;" align="center">
+<table style={{border: 0, align: "center"}}>
   <tbody>
     <tr>
       <td>
         <center>
-          <img style="height:200px" src="https://raw.github.com/uber-web/math.gl/master/modules/geoid/docs/images/Earth_Gravitational_Model_1996.png" />
+          <img style={{height: 200}} src="https://raw.github.com/uber-web/math.gl/master/docs/images/dggs/s2.png" />
+          <p><b>v3.7</b> <i><a target="_blank" href="https://math.gl/docs/modules/s2">S2 (DGGS)</a></i></p>
+        </center>
+      </td>
+      <td>
+        <center>
+          <img style={{height: 200}} src="https://raw.github.com/uber-web/math.gl/master/docs/images/dggs/geohash.png" />
+          <p><b>v3.7</b> <i><a target="_blank" href="https://math.gl/docs/modules/geohash">GeoHash (DGGS)</a></i></p>
+        </center>
+      </td>
+      <td>
+        <center>
+          <img style={{height: 200}} src="https://raw.github.com/uber-web/math.gl/master/docs/images/dggs/quadkey.png" />
+          <p><b>v3.7</b> <i><a target="_blank" href="https://math.gl/docs/modules/quadkey">Quadkey (DGGS)</a></i></p>
+        </center>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <center>
+          <img style={{height: 200}} src="https://raw.github.com/uber-web/math.gl/master/docs/modules/geoid/images/Earth_Gravitational_Model_1996.png" />
           <p><b>v3.4</b> <i><a target="_blank" href="https://math.gl/modules/geoid/docs">Geoid (Earth Gravity Model)</a></i></p>
         </center>
       </td>
       <td>
         <center>
-          <img style="height:200px" src="https://raw.github.com/uber-web/math.gl/master/docs/images/ts-logo-256.png" />
+          <img sstyle={{height: 200}} src="https://raw.github.com/uber-web/math.gl/master/docs/images/ts-logo-256.png" />
           <p><b>v3.2</b> <i>TypeScript</i></p>
         </center>
       </td>
       <td>
         <center>
-          <img style="height:200px; max-width:200px;" src="https://raw.github.com/uber-web/math.gl/master/modules/geospatial/docs/images/WGS84_mean_Earth_radius.svg" />
+          <img style={{height: 200, maxWidth: 200}} src="https://raw.github.com/uber-web/math.gl/master/docs/modules/geospatial/images/WGS84_mean_Earth_radius.svg" />
           <p><b>v3.0</b> <i><a target="_blank" href="https://math.gl/modules/geospatial/docs">WGS84 & Ellipsoid</a></i></p>
         </center>
       </td>
@@ -26,6 +46,11 @@
 </table>
 
 ## v3.7 (In Development)
+
+Target Release Date: March, 2023
+
+- Three new modules for working with DGGS (Discrete Global Grid System) math.
+- Node.js v18 is now officially supported.
 
 **`@math.gl/geohash`** (NEW)
 
@@ -39,13 +64,13 @@
 
 - New module with math for the quadkey DGGS (Discrete Global Grid System).
 
-**`@math.gl/core`
+**`@math.gl/core`**
 
 - `config` is now truly global (stored on `globalThis`).
 
-**`@math.gl/types`
+**`@math.gl/types`**
 
-- Add `isTypedArray()` and `isNumericArray()` utilities that both check values and return properly restricted types to help write strictly typed code (avoids the `DataView` issue with `ArrayBuffer.isView()`).
+- New `isTypedArray()` and `isNumericArray()` utilities that check values and return properly restricted types to help write clean TypeScript code (e.g. avoids the `DataView` case when using `ArrayBuffer.isView()`).
 
 ## v3.6
 

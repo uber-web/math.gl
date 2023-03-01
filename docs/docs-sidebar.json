@@ -1,0 +1,190 @@
+[
+  {
+    "type": "category",
+    "label": "Overview",
+    "items": [
+      "README",
+      "whats-new",
+      "upgrade-guide",
+      "roadmap"
+    ]
+  },
+  {
+    "type": "category",
+    "label": "Developer Guide",
+    "items": [
+      {
+        "type": "category",
+        "label": "Basics",
+        "items": [
+          "developer-guide/get-started",
+          "modules/core/developer-guide/debugging",
+          "modules/core/developer-guide/floating-point",
+          "modules/core/developer-guide/performance",
+          "modules/core/developer-guide/external-frameworks"
+        ]
+      },
+      {
+        "type": "category",
+        "label": "3D Math",
+        "items": [
+          "modules/core/developer-guide/transformations",
+          "modules/core/developer-guide/view-and-projection"
+        ]
+      },
+      {
+        "type": "category",
+        "label": "Geospatial Math",
+        "items": [
+          "developer-guide/geospatial-models",
+          "modules/web-mercator/developer-guide/about-coordinates",
+          "modules/web-mercator/developer-guide/offset-projection-accuracy"
+        ]
+      },
+      {
+        "type": "category",
+        "label": "DGGS Math",
+        "items": [
+          "developer-guide/dggs"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "category",
+    "label": "API Reference",
+    "items": [
+      {
+        "type": "category",
+        "label": "@math.gl/types",
+        "items": [
+          "modules/types/README",
+          "modules/types/api-reference/array-types"
+        ]
+      },
+      {
+        "type": "category",
+        "label": "@math.gl/core",
+        "items": [
+          "modules/core/README",
+          "modules/core/api-reference/euler",
+          "modules/core/api-reference/math-array",
+          "modules/core/api-reference/matrix",
+          "modules/core/api-reference/matrix3",
+          "modules/core/api-reference/matrix4",
+          "modules/core/api-reference/pose",
+          "modules/core/api-reference/quaternion",
+          "modules/core/api-reference/spherical-coordinates",
+          "modules/core/api-reference/utilities",
+          "modules/core/api-reference/vector",
+          "modules/core/api-reference/vector2",
+          "modules/core/api-reference/vector3",
+          "modules/core/api-reference/vector4"
+        ]
+      },
+      {
+        "type": "category",
+        "label": "@math.gl/culling",
+        "items": [
+          "modules/culling/README",
+          "modules/culling/api-reference/axis-aligned-bounding-box",
+          "modules/culling/api-reference/bounding-sphere",
+          "modules/culling/api-reference/bounding-volume",
+          "modules/culling/api-reference/culling-volume",
+          "modules/culling/api-reference/oriented-bounding-box",
+          "modules/culling/api-reference/plane"
+        ]
+      },
+      {
+        "type": "category",
+        "label": "@math.gl/geoid",
+        "items": [
+          "modules/geoid/README",
+          "modules/geoid/api-reference/geoid",
+          "modules/geoid/api-reference/parse-pgm"
+        ]
+      },
+      {
+        "type": "category",
+        "label": "@math.gl/geospatial",
+        "items": [
+          "modules/geospatial/README",
+          "modules/geospatial/api-reference/ellipsoid",
+          "modules/geospatial/api-reference/helpers"
+        ]
+      },
+      {
+        "type": "category",
+        "label": "@math.gl/polygon",
+        "items": [
+          "modules/polygon/api-reference/clip-polygon",
+          "modules/polygon/api-reference/clip-polyline",
+          "modules/polygon/api-reference/cut-polygon-by-grid",
+          "modules/polygon/api-reference/cut-polyline-by-grid",
+          "modules/polygon/api-reference/cut-polygon-by-mercator-bounds",
+          "modules/polygon/api-reference/cut-polyline-by-mercator-bounds",
+          "modules/polygon/api-reference/polygon"
+        ]
+      },
+      {
+        "type": "category",
+        "label": "@math.gl/proj4",
+        "items": [
+          "modules/proj4/README",
+          "modules/proj4/api-reference/proj4-projection"
+        ]
+      },
+      {
+        "type": "category",
+        "label": "@math.gl/sun",
+        "items": [
+          "modules/sun/README",
+          "modules/sun/api-reference/get-sun",
+          "modules/sun/api-reference/get-sun-direction"
+        ]
+      },
+      {
+        "type": "category",
+        "label": "@math.gl/web-mercator",
+        "items": [
+          "modules/web-mercator/README",
+          "modules/web-mercator/api-reference/web-mercator-utils",
+          "modules/web-mercator/api-reference/web-mercator-viewport"
+        ]
+      },
+      {
+        "type": "category",
+        "label": "@math.gl/geohash",
+        "items": [
+          "modules/geohash/README",
+          "modules/geohash/api-reference/geohash"
+        ]
+      },
+      {
+        "type": "category",
+        "label": "@math.gl/quadkey",
+        "items": [
+          "modules/quadkey/README",
+          "modules/quadkey/api-reference/quadkey"
+        ]
+      },
+      {
+        "type": "category",
+        "label": "@math.gl/s2",
+        "items": [
+          "modules/s2/README",
+          "modules/s2/api-reference/s2"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "category",
+    "label": "Concepts",
+    "items": [
+      "modules/core/concepts/homogeneous-coordinates",
+      "modules/core/concepts/coordinate-systems",
+      "modules/core/concepts/rotations"
+    ]
+  }
+]
