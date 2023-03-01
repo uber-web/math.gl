@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 import {lerp as vec2_lerp} from 'gl-matrix/vec2';
-import type WebMercatorViewport from './web-mercator-viewport';
+import type {WebMercatorViewport} from './web-mercator-viewport';
 import {worldToLngLat} from './web-mercator-utils';
 import {transformVector} from './math-utils';
 
@@ -11,7 +11,7 @@ const DEGREES_TO_RADIANS = Math.PI / 180;
  * @param {WebMercatorViewport} viewport
  * @param {Number} z - elevation in meters
  */
-export default function getBounds(viewport: WebMercatorViewport, z: number = 0): number[][] {
+export function getBounds(viewport: WebMercatorViewport, z: number = 0): number[][] {
   // eslint-disable-next-line @typescript-eslint/unbound-method
   const {width, height, unproject} = viewport;
   const unprojectOps = {targetZ: z};

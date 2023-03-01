@@ -7,7 +7,7 @@ import {Proj4Projection} from '@math.gl/proj4';
 import {_MathUtils} from '@math.gl/core';
 import {tapeEqualsEpsilon} from 'test/utils/tape-assertions';
 
-import testPoints from './test-data';
+import {testPoints} from './test-data';
 
 // You can do this in the grunt config for each mocha task, see the `options` config
 // Start the main app logic.

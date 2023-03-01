@@ -24,7 +24,7 @@ const array = [0, 0, 0, 0];
 const float32Array = new Float32Array([0, 0, 0, 0]);
 const vector4 = new Vector4();
 
-export default function vector4Bench(suite, addReferenceBenchmarks) {
+export function vector4Bench(suite, addReferenceBenchmarks) {
   suite
     .group('@math.gl/core: Vector4')
     .add('Vector4#new()', () => new Vector4(1, 2, 3, 4))

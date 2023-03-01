@@ -10,8 +10,8 @@ import {WGS84_RADIUS_X, WGS84_RADIUS_Y, WGS84_RADIUS_Z} from '../constants';
 import {fromCartographicToRadians, toCartographicFromRadians} from '../type-utils';
 
 import type {AxisDirection} from './helpers/ellipsoid-transform';
-import localFrameToFixedFrame from './helpers/ellipsoid-transform';
-import scaleToGeodeticSurface from './helpers/scale-to-geodetic-surface';
+import {localFrameToFixedFrame} from './helpers/ellipsoid-transform';
+import {scaleToGeodeticSurface} from './helpers/scale-to-geodetic-surface';
 
 const scratchVector = new Vector3();
 const scratchNormal = new Vector3();
@@ -25,7 +25,7 @@ const scratchCartesian = new Vector3();
  * `(x / a)^2 + (y / b)^2 + (z / c)^2 = 1`.  Primarily used
  * to represent the shape of planetary bodies.
  */
-export default class Ellipsoid {
+export class Ellipsoid {
   /** An Ellipsoid instance initialized to the WGS84 standard. */
   static readonly WGS84: Ellipsoid = new Ellipsoid(WGS84_RADIUS_X, WGS84_RADIUS_Y, WGS84_RADIUS_Z);
 

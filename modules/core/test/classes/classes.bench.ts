@@ -25,7 +25,7 @@ configure({debug: false});
 const mathglArray = new Matrix4();
 const mathglVector4 = new Vector4();
 
-export default function classesBench(suite, addReferenceBenchmarks) {
+export function classesBench(suite, addReferenceBenchmarks) {
   suite
     // add tests
     .group('@math.gl/core: Object Construction Summary')

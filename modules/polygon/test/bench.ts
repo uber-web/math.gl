@@ -20,7 +20,7 @@ function nextWinding() {
   return winding;
 }
 
-export default function polygonBench(suite, addReferenceBenchmarks) {
+export function polygonBench(suite, addReferenceBenchmarks) {
   suite
     .group('Polygon')
     .add('Polygon#new()', () => new Polygon(polygonSmall))

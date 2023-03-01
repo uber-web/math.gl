@@ -27,7 +27,7 @@ import vector3Bench from './classes/vector3.bench';
 import vector4Bench from './classes/vector4.bench';
 import matrix4Bench from './classes/matrix4.bench';
 
-export default function coreBench(suite, addReferenceBenchmarks) {
+export function coreBench(suite, addReferenceBenchmarks) {
   // classesBench(suite, addReferenceBenchmarks);
   commonBench(suite, addReferenceBenchmarks);
   javascriptBench(suite, addReferenceBenchmarks);

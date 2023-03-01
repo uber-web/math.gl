@@ -1,7 +1,7 @@
 // Copyright (c) 2017 Uber Technologies, Inc.
 // MIT License
-import MathArray from './base/math-array';
-import Quaternion from './quaternion';
+import {MathArray} from './base/math-array';
+import {Quaternion} from './quaternion';
 import {NumericArray} from '@math.gl/types';
 
 import {clamp} from '../lib/common';
@@ -20,7 +20,7 @@ enum RotationOrder {
   XYZ = 5
 }
 
-export default class Euler extends MathArray {
+export class Euler extends MathArray {
   // Constants
   static get ZYX(): RotationOrder {
     return RotationOrder.ZYX;

@@ -2,7 +2,7 @@
 // MIT License
 
 import {NumericArray} from '@math.gl/types';
-import Matrix from './base/matrix';
+import {Matrix} from './base/matrix';
 import {checkVector} from '../lib/validators';
 /* eslint-disable camelcase */
 import {vec4_transformMat3} from '../lib/gl-matrix-extras';
@@ -27,7 +27,7 @@ enum INDICES {
 
 const IDENTITY_MATRIX = Object.freeze([1, 0, 0, 0, 1, 0, 0, 0, 1]);
 
-export default class Matrix3 extends Matrix {
+export class Matrix3 extends Matrix {
   static get IDENTITY(): Readonly<Matrix3> {
     return getIdentityMatrix();
   }

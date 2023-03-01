@@ -19,7 +19,7 @@ export type PolygonOptions = {
   isClosed?: boolean;
 };
 
-export default class Polygon {
+export class Polygon {
   points: NumericArray | number[][];
   isFlatArray: boolean;
   options: PolygonOptions;

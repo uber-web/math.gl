@@ -3,8 +3,8 @@
 
 import {Vector3, Matrix3, Matrix4, Quaternion, NumericArray} from '@math.gl/core';
 import type {BoundingVolume} from './bounding-volume';
-import BoundingSphere from './bounding-sphere';
-import type Plane from '../plane';
+import {BoundingSphere} from './bounding-sphere';
+import type {Plane} from '../plane';
 import {INTERSECTION} from '../../constants';
 
 const scratchVector3 = new Vector3();
@@ -32,7 +32,7 @@ const MATRIX3 = {
  * It can provide a tighter bounding volume than `BoundingSphere` or
  * `AxisAlignedBoundingBox` in many cases.
  */
-export default class OrientedBoundingBox implements BoundingVolume {
+export class OrientedBoundingBox implements BoundingVolume {
   center: Vector3;
   halfAxes: Matrix3;
 

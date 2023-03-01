@@ -96,7 +96,7 @@ export type GeoidProps = {
  *
  * The implementation is ported from GeographicLib-1.50.1
  */
-export default class Geoid {
+export class Geoid {
   private _v00: number = 0;
   private _v01: number = 0;
   private _v10: number = 0;

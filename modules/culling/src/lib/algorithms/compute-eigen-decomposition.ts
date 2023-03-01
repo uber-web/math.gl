@@ -45,7 +45,7 @@ export type EigenDecomposition = {
  * const v = result.unitary.getColumn(0, new Vector3());          // first eigenvector
  * const c = v.multiplyByScalar(lambda);                          // equal to v.transformByMatrix3(a)
  */
-export default function computeEigenDecomposition(
+export function computeEigenDecomposition(
   matrix: number[],
   // @ts-expect-error accept empty object type
   result: EigenDecomposition = {}

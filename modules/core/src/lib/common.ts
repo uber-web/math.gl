@@ -2,7 +2,7 @@
 
 import type {NumericArray} from '@math.gl/types';
 
-import type MathArray from '../classes/base/math-array';
+import type {MathArray} from '../classes/base/math-array';
 
 const RADIANS_TO_DEGREES = (1 / Math.PI) * 180;
 const DEGREES_TO_RADIANS = (1 / 180) * Math.PI;

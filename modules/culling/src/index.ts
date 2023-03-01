@@ -3,18 +3,18 @@
 
 export {INTERSECTION} from './constants';
 
-export {default as AxisAlignedBoundingBox} from './lib/bounding-volumes/axis-aligned-bounding-box';
-export {default as BoundingSphere} from './lib/bounding-volumes/bounding-sphere';
-export {default as OrientedBoundingBox} from './lib/bounding-volumes/oriented-bounding-box';
-export {default as CullingVolume} from './lib/culling-volume';
-export {default as Plane} from './lib/plane';
+export {AxisAlignedBoundingBox} from './lib/bounding-volumes/axis-aligned-bounding-box';
+export {BoundingSphere} from './lib/bounding-volumes/bounding-sphere';
+export {OrientedBoundingBox} from './lib/bounding-volumes/oriented-bounding-box';
+export {CullingVolume} from './lib/culling-volume';
+export {Plane} from './lib/plane';
 
-export {default as _PerspectiveOffCenterFrustum} from './lib/perspective-off-center-frustum';
-export {default as _PerspectiveFrustum} from './lib/perspective-frustum';
+export {PerspectiveOffCenterFrustum as _PerspectiveOffCenterFrustum} from './lib/perspective-off-center-frustum';
+export {PerspectiveFrustum as _PerspectiveFrustum} from './lib/perspective-frustum';
 
-export {default as makeBoundingSphereFromPoints} from './lib/algorithms/bounding-sphere-from-points';
+export {makeBoundingSphereFromPoints} from './lib/algorithms/bounding-sphere-from-points';
 export {
   makeAxisAlignedBoundingBoxFromPoints,
   makeOrientedBoundingBoxFromPoints
 } from './lib/algorithms/bounding-box-from-points';
-export {default as computeEigenDecomposition} from './lib/algorithms/compute-eigen-decomposition';
+export {computeEigenDecomposition} from './lib/algorithms/compute-eigen-decomposition';

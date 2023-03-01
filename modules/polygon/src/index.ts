@@ -1,4 +1,4 @@
-export {default as Polygon} from './polygon';
+export {Polygon} from './polygon';
 
 export {
   getPolygonSignedArea,
@@ -16,5 +16,5 @@ export {cutPolygonByGrid, cutPolylineByGrid} from './cut-by-grid';
 
 export {cutPolylineByMercatorBounds, cutPolygonByMercatorBounds} from './cut-by-mercator-bounds';
 
-// DEPRECATED
-export {default as _Polygon} from './polygon';
+/** @deprecated */
+export {Polygon as _Polygon} from './polygon';

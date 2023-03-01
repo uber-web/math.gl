@@ -8,7 +8,7 @@ const scratchPosition = new Vector3();
 const scratchNormal = new Vector3();
 
 // A plane in Hessian Normal Form
-export default class Plane {
+export class Plane {
   readonly normal: Vector3;
   distance: number;
 

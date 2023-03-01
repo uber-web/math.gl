@@ -69,7 +69,7 @@ const dirVector4 = new Vector4(0, 0, 0, 0);
 const pointVector4 = new Vector4(0, 0, 0, 1);
 const vector3 = [0, 0, 0];
 
-export default function matrix4Bench(suite, addReferenceBenchmarks) {
+export function matrix4Bench(suite, addReferenceBenchmarks) {
   suite
     // add tests
     .group('@math.gl/core: Matrix4 constructors')

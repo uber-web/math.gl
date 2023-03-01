@@ -1,12 +1,12 @@
 // Copyright (c) 2017 Uber Technologies, Inc.
 // MIT License
 import {NumericArray} from '@math.gl/types';
-import MathArray from './math-array';
+import {MathArray} from './math-array';
 import {checkNumber} from '../../lib/validators';
-import assert from '../../lib/assert';
+import {assert} from '../../lib/assert';
 
 /** Base class for vectors with at least 2 elements */
-export default abstract class Vector extends MathArray {
+export abstract class Vector extends MathArray {
   // ACCESSORS
 
   get x(): number {

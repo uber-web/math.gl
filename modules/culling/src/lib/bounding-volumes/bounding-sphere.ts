@@ -7,13 +7,13 @@ import * as mat4 from 'gl-matrix/mat4';
 
 import {INTERSECTION} from '../../constants';
 import {BoundingVolume} from './bounding-volume';
-import Plane from '../plane';
+import {Plane} from '../plane';
 
 const scratchVector = new Vector3();
 const scratchVector2 = new Vector3();
 
 /** A BoundingSphere */
-export default class BoundingSphere implements BoundingVolume {
+export class BoundingSphere implements BoundingVolume {
   center: Vector3;
   radius: number;
 

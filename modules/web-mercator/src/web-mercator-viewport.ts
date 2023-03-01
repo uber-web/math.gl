@@ -15,8 +15,8 @@ import {
   getViewMatrix,
   DistanceScales
 } from './web-mercator-utils';
-import fitBounds from './fit-bounds';
-import getBounds from './get-bounds';
+import {fitBounds} from './fit-bounds';
+import {getBounds} from './get-bounds';
 import type {FitBoundsOptions} from './fit-bounds';
 
 import * as mat4 from 'gl-matrix/mat4';
@@ -70,7 +70,7 @@ export type WebMercatorViewportProps = {
  * Note: Instances are immutable in the sense that they only have accessors.
  * A new viewport instance should be created if any parameters have changed.
  */
-export default class WebMercatorViewport {
+export class WebMercatorViewport {
   readonly latitude: number;
   readonly longitude: number;
   readonly zoom: number;

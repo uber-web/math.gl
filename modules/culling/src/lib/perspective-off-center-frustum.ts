@@ -6,8 +6,8 @@
 // - Documentation has not been ported
 
 import {Vector3, Vector2, Matrix4, assert, NumericArray} from '@math.gl/core';
-import CullingVolume from './culling-volume';
-import Plane from './plane';
+import {CullingVolume} from './culling-volume';
+import {Plane} from './plane';
 
 const scratchPlaneUpVector = new Vector3();
 const scratchPlaneRightVector = new Vector3();
@@ -24,7 +24,7 @@ type PerspectiveOffCenterFrustumOptions = {
   far?: number;
 };
 
-export default class PerspectiveOffCenterFrustum {
+export class PerspectiveOffCenterFrustum {
   /**
    * Defines the left clipping plane.
    * @type {Number}

@@ -1,8 +1,8 @@
 // Copyright (c) 2017 Uber Technologies, Inc.
 // MIT License
-import Matrix4 from './matrix4';
-import Vector3 from './vector3';
-import Euler from './euler';
+import {Matrix4} from './matrix4';
+import {Vector3} from './vector3';
+import {Euler} from './euler';
 import {NumericArray} from '@math.gl/types';
 
 type PoseOptions = {
@@ -16,7 +16,7 @@ type PoseOptions = {
   yaw?: number;
 };
 
-export default class Pose {
+export class Pose {
   readonly position: Vector3;
   readonly orientation: Euler;
 

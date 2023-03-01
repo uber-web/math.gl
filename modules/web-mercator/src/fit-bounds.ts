@@ -1,4 +1,4 @@
-import assert from './assert';
+import {assert} from './assert';
 import {log2, clamp} from './math-utils';
 import {MAX_LATITUDE, lngLatToWorld, worldToLngLat} from './web-mercator-utils';
 
@@ -53,7 +53,7 @@ type ViewportProps = {
  * @param options fit bounds parameters
  * @returns - latitude, longitude and zoom
  */
-export default function fitBounds(options: FitBoundsOptions): ViewportProps {
+export function fitBounds(options: FitBoundsOptions): ViewportProps {
   const {
     width,
     height,

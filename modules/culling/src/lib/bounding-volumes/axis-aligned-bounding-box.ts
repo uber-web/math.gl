@@ -1,6 +1,6 @@
 import {BoundingVolume} from './bounding-volume';
 import {Vector3} from '@math.gl/core';
-import Plane from '../plane';
+import {Plane} from '../plane';
 import {INTERSECTION} from '../../constants';
 
 const scratchVector = new Vector3();
@@ -12,7 +12,7 @@ const scratchNormal = new Vector3();
  * @see BoundingRectangle
  * @see OrientedBoundingBox
  */
-export default class AxisAlignedBoundingBox implements BoundingVolume {
+export class AxisAlignedBoundingBox implements BoundingVolume {
   /** The center point of the bounding box. */
   readonly center: Vector3;
   /** The positive half diagonal of the bounding box. */

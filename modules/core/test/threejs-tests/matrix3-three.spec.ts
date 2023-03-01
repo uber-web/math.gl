@@ -28,8 +28,8 @@
 /* eslint-disable quotes, no-var */
 import test from 'tape-promise/tape';
 
-import Matrix3 from 'math.gl/matrix3';
-import Matrix4 from 'math.gl/matrix4';
+import {Matrix3} from 'math.gl/matrix3';
+import {Matrix4} from 'math.gl/matrix4';
 
 function matrixEquals3(a, b, tolerance) {
   tolerance = tolerance || 0.0001;

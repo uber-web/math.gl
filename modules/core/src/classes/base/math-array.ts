@@ -3,7 +3,7 @@ import {NumericArray} from '@math.gl/types';
 import {ConfigurationOptions, config, formatValue, equals, isArray} from '../../lib/common';
 
 /** Base class for vectors and matrices */
-export default abstract class MathArray extends Array<number> {
+export abstract class MathArray extends Array<number> {
   /** Number of elements (values) in this array */
   abstract get ELEMENTS(): number;
 
@@ -37,6 +37,10 @@ export default abstract class MathArray extends Array<number> {
       targetArray[offset + i] = this[i];
     }
     return targetArray;
+  }
+
+  toObject(targetObject: Record<string, unknown>): Record<string, unknown> {
+    return targetObject;
   }
 
   from(arrayOrObject: Readonly<NumericArray> | Record<string, unknown>): this {

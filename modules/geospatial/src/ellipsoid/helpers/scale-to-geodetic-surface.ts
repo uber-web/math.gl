@@ -1,6 +1,6 @@
 /* eslint-disable */
 import {Vector3, _MathUtils} from '@math.gl/core';
-import type Ellipsoid from '../ellipsoid';
+import type {Ellipsoid} from '../ellipsoid';
 
 const scratchVector = new Vector3();
 const scaleToGeodeticSurfaceIntersection = new Vector3();
@@ -9,7 +9,7 @@ const scaleToGeodeticSurfaceGradient = new Vector3();
 // Scales the provided Cartesian position along the geodetic surface normal
 // so that it is on the surface of this ellipsoid.  If the position is
 // at the center of the ellipsoid, this function returns undefined.
-export default function scaleToGeodeticSurface(
+export function scaleToGeodeticSurface(
   cartesian: number[],
   ellipsoid: Ellipsoid,
   result: number[] = []
