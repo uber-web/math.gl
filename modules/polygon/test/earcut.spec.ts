@@ -57,12 +57,12 @@ test('projection', function (t) {
 
 async function openFile(filePath) {
   let data = null;
-  if (typeof fetch !== 'undefined') {
-    const request = await fetch(filePath);
-    data = await request.json();
-  } else if (fs) {
+  if (fs && 'promises' in fs) {
     data = await fs.promises.readFile(filePath);
     data = JSON.parse(data.toString());
+  } else if (typeof fetch !== 'undefined') {
+    const request = await fetch(filePath);
+    data = await request.json();
   }
   return data;
 }
