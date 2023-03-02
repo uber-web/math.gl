@@ -1,6 +1,6 @@
 # Matrix
 
-`Matrix` is a base class for [`Matrix3`](./docs/api-reference/vector3) and [`Matrix4`](./docs/api-reference/vector4), providing common methods to those classes.
+`Matrix` is a base class for [`Matrix3`](./docs/modules/core/api-reference/vector3) and [`Matrix4`](./docs/modules/core/api-reference/vector4), providing common methods to those classes.
 
 ## Methods
 

@@ -53,7 +53,7 @@ const vector4 = transform.transformDirection([0, 1, 2, 1]);
 
 ## Inheritance
 
-`class Matrix4 extends` [`Matrix`](/modules/core/docs/api-reference/matrix) `extends` [`MathArray`](modules/core/docs/api-reference/math-array) `extends` [`Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)`
+`class Matrix4 extends` [`Matrix`](/docs/modules/core/api-reference/matrix) `extends` [`MathArray`](/docs/modules/core/api-reference/math-array) `extends` [`Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)`
 
 Many basic methods are inherited:
 

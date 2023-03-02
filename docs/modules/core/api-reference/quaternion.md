@@ -20,7 +20,7 @@ Gets or sets element 0, 1, 2 or 3 respectively
 
 ## Methods
 
-Many of the most commonly used methods are inherited from [`MathArray`](./docs/api-reference/math-array.md):
+Many of the most commonly used methods are inherited from [`MathArray`](./math-array.md):
 
 - `quaternion.clone()`
 - `quaternion.copy(array)`

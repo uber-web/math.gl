@@ -41,7 +41,7 @@ const w = v.scale([1, -1, 1]); // Flip y component
 
 ## Inheritance
 
-`Vector3` extends [`Vector`](./docs/api-reference/vector) extends [`MathArray`](./docs/api-reference/math-array) extends [`Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)
+`Vector3` extends [`Vector`](/docs/modules/core/api-reference/vector) extends [`MathArray`](/docs/modules/core/api-reference/math-array) extends [`Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)
 
 ## Members
 
@@ -51,7 +51,7 @@ Gets or sets element 0, 1 or 2 respectively
 
 ## Methods
 
-Many of the most commonly used `Vector3` methods are inherited from [`MathArray`](./docs/api-reference/math-array.md):
+Many of the most commonly used `Vector3` methods are inherited from [`MathArray`](./math-array.md):
 
 - `Vector3.clone()`
 - `Vector3.copy(array)`
