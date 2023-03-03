@@ -11,7 +11,7 @@ const vector = new Vector2(1, 1);
 
 ## Inheritance
 
-`Vector2` extends [`Vector`](./docs/api-reference/vector) extends [`MathArray`](./docs/api-reference/math-array) extends [`Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)
+`Vector2` extends [`Vector`](/docs/modules/core/api-reference/vector) extends [`MathArray`](/docs/modules/core/api-reference/math-array) extends [`Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)
 
 Many commonly used `Vector2` methods are inherited from `Vector` and `MathArray`:
 

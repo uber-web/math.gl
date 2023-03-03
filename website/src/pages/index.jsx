@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Layout from '@theme/Layout';
 
 // import HeroExample from '../examples/home-demo';
-const HeroExample = <div></div>
+const HeroExample = ({children}) => <div>{children}</div>;
 
 const FeatureImage = styled.div`
 position: absolute;
@@ -72,53 +72,33 @@ export default function IndexPage() {
           <FeatureImage src={`${baseUrl}images/maps.jpg`}  />
           <TextContainer>
             <h2>
-              deck.gl is a WebGL-powered framework for visual exploratory
-              data analysis of large datasets.
+              A collection of math modules for Geospatial and 3D use cases.
             </h2>
             <hr className="short" />
 
             <h3>
               <img src={`${baseUrl}images/icon-layers.svg`} />
-              A Layered Approach to Data Visualization
+              Toolbox of 3D math modules
             </h3>
-            <p>
-            deck.gl allows complex visualizations to be constructed by
-            composing existing layers, and makes it easy to package and
-            share new visualizations as reusable layers. We already offer
-            a <a href={`${baseUrl}docs/api-reference/layers`}>catalog of proven layers</a> and
-            we have many more in the works.
-            </p>
+            <p></p>
 
             <h3>
               <img src={`${baseUrl}images/icon-high-precision.svg`} />
-              High-Precision Computations in the GPU
+              Matrices and vectors, bounding boxes, frustum culling etc
             </h3>
-            <p>
-            By emulating 64 bit floating point computations in the GPU,
-            deck.gl renders datasets with unparalleled accuracy and
-            performance.
-            </p>
+            <p></p>
+            
+            <h3>
+            <img src={`${baseUrl}images/icon-basemap.webp`} />
+              Geospatial reprojection, gravity models, solar position, etc
+            </h3>
+            <p></p>
 
             <h3>
-              <img src={`${baseUrl}images/icon-react.svg`} />
-              React Friendly
+            <img src={`${baseUrl}images/icon-react.svg`} />
+              Strict TypeScript and run-time checks that detect bad data
             </h3>
-            <p>
-            deck.gl APIs are designed to reflect the reactive programming
-            paradigm. Whether using Vanilla JS or the React interface,
-            it can handle efficient WebGL rendering under heavy data load.
-            </p>
-
-            <h3>
-              <img src={`${baseUrl}images/icon-basemap.webp`} />
-              Integration with Base Map Providers
-            </h3>
-            <p>
-              While deck.gl works standalone without a base map, it plays nicely with your
-              favorite base map providers such as Google Maps, Mapbox, ArcGIS and more.
-              Where the base map library permits, deck.gl may interleave with 3D map layers
-              to create seamless visualizations.
-            </p>
+            <p></p>
 
           </TextContainer>
         </div>

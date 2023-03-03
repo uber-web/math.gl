@@ -25,7 +25,7 @@ const box = makeAxisAlignedBoundingBoxFromPoints([
 
 ## Inheritance
 
-`class AxisAlignedBoundingBox implements` [`BoundingVolume`](/modules/culling/docs/api-reference/bounding-volume).
+`class AxisAlignedBoundingBox implements` [`BoundingVolume`](./bounding-volume).
 
 ## Global Functions
 

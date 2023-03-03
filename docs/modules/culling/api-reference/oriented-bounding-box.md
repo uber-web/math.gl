@@ -42,7 +42,7 @@ const box = makeOrientedBoundingBoxFromPoints([
 
 ## Inheritance
 
-`class OrientedBoundingBox implements` [`BoundingVolume`](/modules/culling/docs/api-reference/bounding-volume).
+`class OrientedBoundingBox implements` [`BoundingVolume`](./bounding-volume).
 
 ## Global Functions
 

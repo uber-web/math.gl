@@ -43,7 +43,7 @@ const vector3 = transform.transformDirection([1, 2, 1]);
 
 ## Methods
 
-Many of the most commonly used methods are inherited from [`MathArray`](./docs/api-reference/math-array.md):
+Many of the most commonly used methods are inherited from [`MathArray`](./math-array.md):
 
 - `matrix3.clone()`
 - `matrix3.copy(array)`

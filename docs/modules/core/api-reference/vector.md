@@ -1,6 +1,6 @@
 # Vector
 
-`Vector` is a base class for [`Vector2`](./docs/api-reference/vector2), [`Vector3`](./docs/api-reference/vector3) and [`Vector4`](./docs/api-reference/vector4), providing common methods to those classes.
+`Vector` is a base class for [`Vector2`](/docs/modules/core/api-reference/vector2), [`Vector3`](/docs/modules/core/api-reference/vector3) and [`Vector4`](/docs/modules/core/api-reference/vector4), providing common methods to those classes.
 
 ## Inheritance
 

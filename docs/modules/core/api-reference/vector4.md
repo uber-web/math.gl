@@ -23,7 +23,7 @@ const point = new Vector4(0, 0, 0, 1);
 
 ## Inheritance
 
-`Vector4` extends [`Vector`](./docs/api-reference/vector) extends [`MathArray`](./docs/api-reference/math-array) extends [`Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)
+`Vector4` extends [`Vector`](./vector) extends [`MathArray`](./math-array) extends [`Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)
 
 ## Members
 
@@ -33,7 +33,7 @@ Gets or sets element 0, 1, 2 or 3 respectively
 
 ## Methods
 
-Many of the most commonly used `Vector2` methods are inherited from [`MathArray`](./docs/api-reference/math-array.md):
+Many of the most commonly used `Vector2` methods are inherited from [`MathArray`](./math-array):
 
 - `Vector4.clone()`
 - `Vector4.copy(array)`

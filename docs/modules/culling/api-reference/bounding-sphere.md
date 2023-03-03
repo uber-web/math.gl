@@ -27,7 +27,7 @@ spheres.sort(
 
 ## Inheritance
 
-`class BoundingSphere implements` [`BoundingVolume`](/modules/culling/docs/api-reference/bounding-volume).
+`class BoundingSphere implements` [`BoundingVolume`](./bounding-volume).
 
 ## Global Functions
 
