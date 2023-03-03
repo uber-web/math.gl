@@ -1,5 +1,9 @@
-import {getS2CellFromToken, get2dRegionFromS2Cell} from './s2-utils-ext';
+// math.gl, MIT license
+
 import {Vector3} from '@math.gl/core';
+import {getS2Cell} from '../s2geometry/s2-cell-utils';
+import {getS2Region} from './s2-to-region';
+import {getS2IndexFromToken} from '../s2-token-functions';
 
 // import {OrientedBoundingBox, makeOrientedBoundingBoxFromPoints} from '@math.gl/culling';
 // import {Ellipsoid} from '@math.gl/geospatial';
@@ -17,15 +21,16 @@ export type S2HeightInfo = {
  * @param [result] Optional object onto which to store the result.
  * @returns The modified result parameter or a new `OrientedBoundingBox` instance if not provided.
  */
-export function getOrientedBoundingBoxCornerPoints(
-  token: string, // This can be an S2 key or token
+export function getS2OrientedBoundingBoxCornerPoints(
+  s2token: string, // This can be an S2 key or token
   heighInfo?: S2HeightInfo
 ): Vector3[] {
   const min: number = heighInfo?.minimumHeight || 0;
   const max: number = heighInfo?.maximumHeight || 0;
 
-  const s2cell = getS2CellFromToken(token);
-  const region = get2dRegionFromS2Cell(s2cell);
+  const s2index = getS2IndexFromToken(s2token);
+  const s2cell = getS2Cell(s2index);
+  const region = getS2Region(s2cell);
 
   // region is {lngWest, latSouth, lngEast, latNorth} in degrees
   const W = region[0];

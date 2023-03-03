@@ -13,7 +13,33 @@ const MAX_LAT = 90;
 const MIN_LON = -180;
 const MAX_LON = 180;
 
-// Adapted from ngeohash decode_bbox
+/** Return center lng,lat of geohash cell */
+export function getGeohashLngLat(geohash: string): number[] {
+  const [s, w, n, e] = getGeohashBounds(geohash);
+  return [(e + w) / 2, (n + s) / 2];
+}
+
+/** Return boundary polygon of geohash cell as lng,lat array */
+export function getGeohashBoundary(geohash: string): number[][] {
+  const [s, w, n, e] = getGeohashBounds(geohash);
+  return [
+    [e, n],
+    [e, s],
+    [w, s],
+    [w, n],
+    [e, n]
+  ];
+}
+
+/** Return boundary polygon of geohash cell as flat array */
+export function getGeohashBoundaryFlat(geohash: string): number[] {
+  const [s, w, n, e] = getGeohashBounds(geohash);
+  return [e, n, e, s, w, s, w, n, e, n];
+}
+
+/**
+ * @note Adapted from ngeohash decode_bbox
+ */
 export function getGeohashBounds(geohash: string): number[] {
   let isLon = true;
   let maxLat = MAX_LAT;
@@ -49,10 +75,4 @@ export function getGeohashBounds(geohash: string): number[] {
   }
 
   return [minLat, minLon, maxLat, maxLon];
-}
-
-export function getGeohashPolygon(geohash: string): number[] {
-  const [s, w, n, e] = getGeohashBounds(geohash);
-
-  return [e, n, e, s, w, s, w, n, e, n];
 }

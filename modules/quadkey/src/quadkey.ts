@@ -4,6 +4,33 @@ import {worldToLngLat} from '@math.gl/web-mercator';
 
 const TILE_SIZE = 512;
 
+export function getQuadkeyLngLat(quadkey: string): number[] {
+  const [topLeft, bottomRight] = quadkeyToWorldBounds(quadkey);
+  const [w, n] = worldToLngLat(topLeft);
+  const [e, s] = worldToLngLat(bottomRight);
+  return [(e + w) / 2, (s + n) / 2];
+}
+
+export function getQuadkeyBoundary(quadkey: string): number[][] {
+  const [topLeft, bottomRight] = quadkeyToWorldBounds(quadkey);
+  const [w, n] = worldToLngLat(topLeft);
+  const [e, s] = worldToLngLat(bottomRight);
+  return [
+    [e, n],
+    [e, s],
+    [w, s],
+    [w, n],
+    [e, n]
+  ];
+}
+
+export function getQuadkeyBoundaryFlat(quadkey: string): number[] {
+  const [topLeft, bottomRight] = quadkeyToWorldBounds(quadkey);
+  const [w, n] = worldToLngLat(topLeft);
+  const [e, s] = worldToLngLat(bottomRight);
+  return [e, n, e, s, w, s, w, n, e, n];
+}
+
 export function quadkeyToWorldBounds(quadkey: string): [number[], number[]] {
   let x = 0;
   let y = 0;
@@ -20,11 +47,4 @@ export function quadkeyToWorldBounds(quadkey: string): [number[], number[]] {
     [x / scale, TILE_SIZE - y / scale],
     [(x + 0.99) / scale, TILE_SIZE - (y + 0.99) / scale]
   ];
-}
-
-export function getQuadkeyPolygon(quadkey: string): number[] {
-  const [topLeft, bottomRight] = quadkeyToWorldBounds(quadkey);
-  const [w, n] = worldToLngLat(topLeft);
-  const [e, s] = worldToLngLat(bottomRight);
-  return [e, n, e, s, w, s, w, n, e, n];
 }

@@ -16,10 +16,10 @@ npm install @math.gl/quadkey
 
 Get a polygon representing the outline of a specific 
 ```js
-import {getGeohashPolygon} from '@math.gl/quadkey';
-const polygon = getGeohashPolygon(geohash);
+import {getQuadkeyLngLat} from '@math.gl/quadkey';
+const center = getQuadkeyLngLat(quadkey);
 ```
 
 ## Attribution
 
-This module is a fork of @mourner's [SunCalc](https://github.com/mourner/suncalc) under BSD 2-clause license.
+

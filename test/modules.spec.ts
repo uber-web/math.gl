@@ -9,5 +9,5 @@ import '../modules/sun/test';
 import '../modules/web-mercator/test';
 
 import '../modules/geohash/test';
-// import '../modules/s2/test';
 import '../modules/quadkey/test';
+import '../modules/s2/test';
