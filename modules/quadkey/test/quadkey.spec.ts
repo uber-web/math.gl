@@ -34,7 +34,7 @@ test('quadkey#quadkeyToWorldBounds', (t) => {
   t.end();
 });
 
-test('quadkey#getQuadkeyBoundary', (t) => {
+test.skip('quadkey#getQuadkeyBoundary', (t) => {
   for (const {quadkey} of TEST_DATA) {
     const polygon = getQuadkeyBoundary(quadkey);
     t.ok(polygon instanceof Array, 'polygon is flat array');

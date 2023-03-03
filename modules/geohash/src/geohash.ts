@@ -40,7 +40,7 @@ export function getGeohashBoundaryFlat(geohash: string): number[] {
 /**
  * @note Adapted from ngeohash decode_bbox
  */
-function getGeohashBounds(geohash: string): number[] {
+export function getGeohashBounds(geohash: string): number[] {
   let isLon = true;
   let maxLat = MAX_LAT;
   let minLat = MIN_LAT;
