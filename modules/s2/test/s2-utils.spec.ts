@@ -5,6 +5,7 @@ import {getS2BoundaryFlat} from '@math.gl/s2';
 
 // import Long from 'long';
 
+// TODO - restore test
 // test('Utils -> getS2LngLat', (t) => {
 //   const s2Token = '8085873c';
 //   t.deepEqual(getS2LngLat(s2Token), [-122.4637079795235, 37.78228912269449]);
@@ -38,6 +39,7 @@ test('getS2BoundaryFlat', (t) => {
       minLng = Math.min(minLng, polygon[i]);
       maxLng = Math.max(maxLng, polygon[i]);
     }
+    // TODO - restore test
     // t.ok(maxLng - minLng < 180, 'longitude is adjusted cross the antimeridian');
   }
 

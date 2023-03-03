@@ -6,6 +6,7 @@ import {_toHilbertQuadKey as toHilbertQuadKey} from '@math.gl/s2';
 import {S2} from 's2-geometry';
 import Long from 'long';
 
+// TODO - restore test
 test.skip('S2#toHilbertQuadkey', (t) => {
   const TEST_COORDINATES = [
     {lat: 0, lng: 0},
