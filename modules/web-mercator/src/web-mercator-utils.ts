@@ -331,7 +331,9 @@ export function getProjectionParameters(options: {
   const horizonDistance = cameraToSeaLevelDistance * 10;
 
   // Calculate z value of the farthest fragment that should be rendered.
-  const farZ = Math.min(furthestDistance * farZMultiplier, horizonDistance);
+  // Add a bit extra to avoid precision problems when a fragment's distance is exactly `furthestDistance`
+  // 3.x backward compatibility: should produce mapbox equivalent when farZMultiplier=1.01
+  const farZ = Math.min(furthestDistance * 1.01, horizonDistance) * (farZMultiplier / 1.01);
 
   return {
     fov: fovRadians,
@@ -344,10 +346,6 @@ export function getProjectionParameters(options: {
 
 /**
  * CALCULATE PROJECTION MATRIX: PROJECTS FROM CAMERA (VIEW) SPACE TO CLIPSPACE
- *
- * To match mapbox's z buffer:
- *  - \<= 0.28: nearZMultiplier: 0.1, farZmultiplier: 1
- *  - \>= 0.29: nearZMultiplier: 1 / height, farZMultiplier: 1.01
  *
  * @param options Viewport options
  * @param options.width Width of "viewport" or window
