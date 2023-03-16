@@ -1,33 +1,30 @@
 // loaders.gl, MIT license
 
-// s2-geometry is a pure JavaScript port of Google/Niantic's S2 Geometry library
-// which is perfect since it works in the browser.
-
 import Long from 'long';
 
-// const MAXIMUM_TOKEN_LENGTH = 16;
-
-// INDEX CALCULATIONS
+const MAXIMUM_TOKEN_LENGTH = 16;
 
 /**
- * Given an S2 token (String) this function convert the token to 64 bit id (Index)
- * 'X' is the empty cell
- * https://github.com/google/s2-geometry-library-java/blob/c04b68bf3197a9c34082327eeb3aec7ab7c85da1/src/com/google/common/geometry/S2CellId.java#L439
+ * Convert the S2 token to the S2 cell ID
+ * @param token {string} A string that is the cell's hex token. Zero cell ID is represented as 'X'.
+ * @returns {Long} Cell id that is a 64-bit encoding of a face and a Hilbert curve parameter on that face.
+ * See {@link https://github.com/google/s2-geometry-library-java/blob/c04b68bf3197a9c34082327eeb3aec7ab7c85da1/src/com/google/common/geometry/S2CellId.java#L439} for more information
  */
-export function getS2IndexFromToken(token: string): Long {
+export function getS2CellIdFromToken(token: string): Long {
   if (token === 'X') {
     token = '';
   }
-  // pad token with zeros to make the length 16
-  const paddedToken = token.padEnd(16, '0');
-  return Long.fromString(paddedToken, true, 16);
+  // pad token with zeros to make the length 16 that is defined in MAXIMUM_TOKEN_LENGTH
+  const paddedToken = token.padEnd(MAXIMUM_TOKEN_LENGTH, '0');
+  return Long.fromString(paddedToken, true, 16); // Hex base
 }
 
 /**
- * Convert a 64 bit number to a string token
- * 'X' is the empty cell
+ * Convert the S2 cell ID to the S2 token
+ * @param cellId {Long} A 64-bit encoding of a face and a Hilbert curve parameter on that face.
+ * @returns {string} A string that is the cell's hex token. Zero cell ID is represented as 'X'.
  */
-export function getS2TokenFromIndex(cellId: Long): string {
+export function getS2TokenFromCellId(cellId: Long): string {
   if (cellId.isZero()) {
     return 'X';
   }
@@ -44,17 +41,26 @@ export function getS2TokenFromIndex(cellId: Long): string {
   return zeroString + hexString;
 }
 
-export function getS2ChildIndex(s2Index: Long, index: number): Long {
+/**
+ * Get one of four S2 cell's children.
+ * @param cellId {Long} A 64-bit encoding of a face and a Hilbert curve parameter on that face.
+ * The cell must NOT be a leaf one. So, the cell's level is in the range [0-29].
+ * @param index {number} Child index defines one of four S2 cell's children. Must be in the range [0-3].
+ * @returns The ID of the cell's child.
+ */
+export function getS2ChildCellId(cellId: Long, index: number): Long {
   // Shift sentinel bit 2 positions to the right.
-  const newLsb = lsb(s2Index).shiftRightUnsigned(2);
+  const newLsb = lsb(cellId).shiftRightUnsigned(2);
   // Insert child index before the sentinel bit.
-  const childCellId: Long = s2Index.add(Long.fromNumber(2 * index + 1 - 4).multiply(newLsb));
+  const childCellId: Long = cellId.add(Long.fromNumber(2 * index + 1 - 4).multiply(newLsb));
   return childCellId;
 }
 
 /**
- * Return the lowest-numbered bit that is on for this cell id
+ * Return the lowest-numbered bit that is on for this cell id.
  * @private
+ * @param cellId {Long} Cell id.
+ * @returns {Long} The lowest-numbered bit that is on for this cell id.
  */
 function lsb(cellId: Long): Long {
   return cellId.and(cellId.not().add(1)); // eslint-disable-line

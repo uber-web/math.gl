@@ -1,27 +1,17 @@
-// math.gl, MIT license
-
-import Long from 'long';
+import type {S2Cell} from '../s2geometry/s2-geometry';
 import {IJToST, STToUV, FaceUVToXYZ, XYZToLngLat} from '../s2geometry/s2-geometry';
-import {getS2Cell} from '../s2geometry/s2-cell-utils';
 
 const MAX_RESOLUTION = 100;
 
-export function getS2GeoBounds(s2Index: Long): Float64Array {
-  const s2Cell = getS2Cell(s2Index);
-  return getS2GeoBoundsFromCell(s2Cell);
-}
-
-/* getGeoBounds */
+/**
+ * Get a polygon with corner coordinates for an S2 cell
+ * @param s2cell {S2Cell} S2 cell
+ * @return {Float64Array} - a simple polygon in flat array format: [lng0, lat0, lng1, lat1, ...]
+ *   - the polygon is closed, i.e. last coordinate is a copy of the first coordinate
+ */
 // eslint-disable-next-line max-statements
-export function getS2GeoBoundsFromCell({
-  face,
-  ij,
-  level
-}: {
-  face: number;
-  ij: [number, number];
-  level: number;
-}): Float64Array {
+export function getS2BoundaryFlatFromS2Cell(s2cell: S2Cell): Float64Array {
+  const {face, ij, level} = s2cell;
   const offsets = [
     [0, 0],
     [0, 1],
@@ -57,9 +47,11 @@ export function getS2GeoBoundsFromCell({
       const lngLat = XYZToLngLat(xyz);
 
       // Adjust longitude for Web Mercator projection
+
       if (Math.abs(lngLat[1]) > 89.999) {
         lngLat[0] = prevLng;
       }
+
       const deltaLng = lngLat[0] - prevLng;
       lngLat[0] += deltaLng > 180 ? -360 : deltaLng < -180 ? 360 : 0;
 

@@ -17,26 +17,32 @@ const MAX_LEVEL = 30;
 const POS_BITS = 2 * MAX_LEVEL + 1; // 61 (60 bits of data, 1 bit lsb marker)
 const RADIAN_TO_DEGREE = 180 / Math.PI;
 
+/**
+ * An object describing the S2 cell
+ * @param face {number} Selects one of the six cube faces. The value is in the range [0..5]
+ * @param ij {[number, number]} “i” and “j” are integers in the range [0..2**30-1] that identify the cell.
+ * @param level {number} The number of times the cell has been subdivided (starting with a face cell). The value is in the range [0..30]
+ */
 export type S2Cell = {
   face: number;
   ij: [number, number];
   level: number;
 };
 
-/*
-  Original function taken from deck.gl doesn't support the case of (face <= 5)
-  It's fixed here.
-*/
-export function fromHilbertQuadKey(hilbertQuadkey: string): S2Cell {
-  const parts = hilbertQuadkey.split('/');
-  const face = parseInt(parts[0], 10);
-  const position = parts[1];
-  /*
-    Fix for the case of level==0 that corresponds to (face <= 5)
-    const maxLevel = position.length;
-    let level;
-  */
-  const maxLevel = face > 5 ? position.length : 0;
+/**
+ * Return the S2Cell
+ * @param hilbertQuadkey {string} A string that is the Hilbert quad key (containing /)
+ * @returns {@link S2Cell}
+ */
+// eslint-disable-next-line max-statements
+export function getS2CellFromQuadKey(hilbertQuadkey: string): S2Cell {
+  if (hilbertQuadkey.length === 0) {
+    return null;
+  }
+  const parts: string[] = hilbertQuadkey.split('/');
+  const face: number = parseInt(parts[0], 10); // face is in the range [0..5]
+  const position: string = parts[1]; // position is in the range [0..4**30-1]
+  const maxLevel: number = position.length;
   let level = 0;
 
   const point = [0, 0] as [number, number];
@@ -71,8 +77,23 @@ export function fromHilbertQuadKey(hilbertQuadkey: string): S2Cell {
   return {face, ij: point, level};
 }
 
-export function toHilbertQuadkey(id: Long): string {
-  let bin = id.toString(2);
+/**
+ * Convets S2 cell ID to the Hilbert quad key
+ * @param cellId {Long} Cell id that is a 64-bit encoding of a face and a Hilbert curve parameter on that face
+ * @returns {string} the Hilbert quad key (containing /) as a string in the format 'face/pos', where
+ *  - face is a 10-base representation of the face number
+ *  - pos is a 4-base representation of the position along the Hilbert curve. For example,
+ *    pos == '13' means the following:
+ *       The face is divided two times. After the first time the child cell with position 1 will be selected.
+ *       Then, this cell will be divided the second time, and the child cell with position 3 will be selected.
+ */
+export function getS2QuadkeyFromCellId(cellId: Long): string {
+  if (cellId.isZero()) {
+    // Invalid token
+    return '';
+  }
+
+  let bin = cellId.toString(2);
 
   while (bin.length < FACE_BITS + POS_BITS) {
     // eslint-disable-next-line prefer-template
@@ -81,7 +102,6 @@ export function toHilbertQuadkey(id: Long): string {
 
   // MUST come AFTER binstr has been left-padded with '0's
   const lsbIndex = bin.lastIndexOf('1');
-  // substr(start, len)
   // substring(start, end) // includes start, does not include end
   const faceB = bin.substring(0, 3);
   // posB will always be a multiple of 2 (or it's invalid)
@@ -92,12 +112,10 @@ export function toHilbertQuadkey(id: Long): string {
 
   /*
     Here is a fix for the case when posB is an empty string that causes an exception in Long.fromString
-
-    let posS = Long.fromString(posB, true, 2).toString(4);
   */
-  let posS = '0';
+  let posS = '';
   if (levelN !== 0) {
-    // posB is not an empty string< because levelN!==0
+    // posB is not an empty string, because levelN !== 0
     posS = Long.fromString(posB, true, 2).toString(4);
 
     while (posS.length < levelN) {
@@ -105,18 +123,91 @@ export function toHilbertQuadkey(id: Long): string {
       posS = '0' + posS;
     }
   }
-  // Note, posS will be "0" for the level==0
+  // Note, posS will be "" for the level==0, which corresponds to the full face.
+  // Example: Full face 0 (No subdivision, so level==0): Returns "0/"
   // TODO: Is it ok?
 
   return `${faceS}/${posS}`;
 }
 
+/**
+ * Convets S2 the Hilbert quad key to cell ID.
+ * @param quadkey {string} The Hilbert quad key (containing /) as a string in the format 'face/pos'
+ * @returns {Long} Cell id that is a 64-bit encoding of a face and a Hilbert curve parameter on that face
+ */
+/* eslint complexity: ["error", { "max": 14 }] */
+export function getS2CellIdFromQuadkey(hilbertQuadkey: string): Long {
+  if (hilbertQuadkey.length === 0) {
+    return null;
+  }
+
+  if (hilbertQuadkey.indexOf('/') !== 1) {
+    throw new Error(`Invalid Hilbert quad key ${hilbertQuadkey}`);
+  }
+
+  let idS = '';
+
+  const faceS = hilbertQuadkey[0];
+  switch (faceS) {
+    case '0':
+      idS += '000';
+      break;
+    case '1':
+      idS += '001';
+      break;
+    case '2':
+      idS += '010';
+      break;
+    case '3':
+      idS += '011';
+      break;
+    case '4':
+      idS += '100';
+      break;
+    case '5':
+      idS += '101';
+      break;
+    default:
+      throw new Error(`Invalid Hilbert quad key ${hilbertQuadkey}`);
+  }
+
+  const maxLevel: number = hilbertQuadkey.length;
+  // Don't convert position to Long, because it can contain leading zeros, which makes you handle it later.
+
+  for (let i = 2; i < maxLevel; i++) {
+    // The first char is a face, the second char is '/'
+    const p = hilbertQuadkey[i];
+    switch (p) {
+      case '0':
+        idS += '00';
+        break;
+      case '1':
+        idS += '01';
+        break;
+      case '2':
+        idS += '10';
+        break;
+      case '3':
+        idS += '11';
+        break;
+      default:
+        throw new Error(`Invalid Hilbert quad key ${hilbertQuadkey}`);
+    }
+  }
+  // Append the sentinel bit
+  idS += '1';
+
+  const paddedId = idS.padEnd(64, '0');
+  const id = Long.fromString(paddedId, true, 2);
+  return id;
+}
+
 export function IJToST(
   ij: [number, number],
-  order: number,
+  level: number,
   offsets: [number, number]
 ): [number, number] {
-  const maxSize = 1 << order;
+  const maxSize = 1 << level;
 
   return [(ij[0] + offsets[0]) / maxSize, (ij[1] + offsets[1]) / maxSize];
 }
@@ -169,4 +260,41 @@ function rotateAndFlipQuadrant(n: number, point: [number, number], rx: number, r
     point[0] = point[1];
     point[1] = x;
   }
+}
+
+/**
+ * Retrieve S2 geometry center
+ * @param s2cell {S2Cell} S2 cell
+ * @returns {[number, number]} Longitude and Latitude coordinates of the S2 cell's center
+ */
+export function getS2LngLatFromS2Cell(s2Cell: S2Cell): [number, number] {
+  const st = IJToST(s2Cell.ij, s2Cell.level, [0.5, 0.5]);
+  const uv = STToUV(st);
+  const xyz = FaceUVToXYZ(s2Cell.face, uv);
+
+  return XYZToLngLat(xyz);
+}
+
+/**
+ * Return longitude and latitude of four corners of the cell.
+ * @param s2Cell {S2Cell} S2 cell
+ * @returns {Array<[number, number]>} Array of longitude and latitude pairs (in degrees) for four corners of the cell.
+ */
+export function getCornerLngLats(s2Cell: S2Cell): Array<[number, number]> {
+  const result = [];
+  const offsets: Array<[number, number]> = [
+    [0.0, 0.0],
+    [0.0, 1.0],
+    [1.0, 1.0],
+    [1.0, 0.0]
+  ];
+
+  for (let i = 0; i < 4; i++) {
+    const st = IJToST(s2Cell.ij, s2Cell.level, offsets[i]);
+    const uv = STToUV(st);
+    const xyz = FaceUVToXYZ(s2Cell.face, uv);
+
+    result.push(XYZToLngLat(xyz));
+  }
+  return result;
 }
