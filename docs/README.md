@@ -1,22 +1,28 @@
 # Introduction
 
-Welcome to math.gl! math.gl is JavaScript math library focused on **geospatial** and **3D** use cases, designed as a composable, **modular toolbox**. math.gl provides a core module with classic vector and matrix classes, and a suite of optional modules implementing various aspects of geospatial and 3D math.
+Welcome to math.gl! math.gl is JavaScript (TypeScript) math library focused on **geospatial** and **3D** use cases. Designed as a composable, **modular toolbox**. math.gl provides a core module with classic vector and matrix classes, and a suite of optional modules implementing various aspects of geospatial and 3D math.
 
-While the math.gl is highly **optimized for use with the WebGL and WebGPU APIs**, math.gl itself has no WebGL dependencies.
+While math.gl is highly **optimized for use with the WebGL and WebGPU APIs**, it has no WebGL dependencies and is designed to be usable in any application.
+
+## Features
+
+- **3D math** - Basic vectors and matrices, as well as 3D primitives and culling: **`@math.gl/types`**, **`@math.gl/core`**, **`@math.gl/culling`**
+- **Geospatial projections** - Support for a variety of geospatial projections **`@math.gl/geospatial`**, **`@math.gl/geoid`**, **`@math.gl/proj4`**, **`@math.gl/web-mercator`**
+- **Geospatial utilities** - Cutting polygons and calculating sun position and direction **`@math.gl/polygon`**,  **`@math.gl/sun`**
+- **Discrete Global Grids** - Standardized interfaces to a number of the major discrete global grids. **`@math.gl/geohash`**, **`@math.gl/quadkey`**, **`@math.gl/s2`**
 
 ## Modules
 
 math.gl is a toolbox that offers a suite of composable modules.
 
-| **Core math libraries**                             | Module <span style={{width: 300}} /> | Description                                        |
-| --------------------------------------------------- | ------------------------------------ | -------------------------------------------------- |
-|                                                     |                                      |                                                    |
-|                                                     | **`@math.gl/types`**                 | Basic math type helpers (`NumericArray` etc)       |
-| ![core](./images/core.png 'core')                   | **`@math.gl/core`**                  | 3D math classes (vectors, matrices, etc)           |
-| ![culling](./images/culling.png 'culling')          | **`@math.gl/culling`**               | Bounding volumes and intersection testing.         |
+| **Core math libraries**                    | Module <span style={{width: 300}} /> | Description                                  |
+| ------------------------------------------ | ------------------------------------ | -------------------------------------------- |
+|                                            | **`@math.gl/types`**                 | Basic math type helpers (`NumericArray` etc) |
+| ![core](./images/core.png 'core')          | **`@math.gl/core`**                  | 3D math classes (vectors, matrices, etc)     |
+| ![culling](./images/culling.png 'culling') | **`@math.gl/culling`**               | Bounding volumes and intersection testing.   |
 
 | **Geospatial math libraries**                       | Module <span style={{width: 300}} /> | Description                                        |
-| --------------------------------------------------- | ---------------------------          | -------------------------------------------------- |
+| --------------------------------------------------- | ------------------------------------ | -------------------------------------------------- |
 | ![geospatial](./images/geospatial.svg 'geospatial') | **`@math.gl/geospatial`**            | Ellipsoidal math for WGS84 coordinates.            |
 | ![geoid](./images/geoid.png 'geoid')                | **`@math.gl/geoid`**                 | Earth Gravity Model support .                      |
 |                                                     | **`@math.gl/polygon`**               | Polygon math, including geospatial cutting etc.    |
@@ -24,12 +30,12 @@ math.gl is a toolbox that offers a suite of composable modules.
 |                                                     | **`@math.gl/sun`**                   | Solar position / direction from position and time. |
 |                                                     | **`@math.gl/web-mercator`**          | Supports 3D Web Mercator (spherical) projections.  |
 
-| **DGGS (Discrete global grid support) libraries**                        | Module <span style={{width: 300}} /> | Description                                        |
-| --------------------------------------------------- | ---------------------------          | -------------------------------------------------- |
-|   |                                      |                                                    |
-| ![geohash](./images/dggs/geohash.png 'geohash')     | **`@math.gl/geohash`**               | Get geometry of GeoHash tokens.                    |
-| ![quadkey](./images/dggs/quadkey.png 'quadkey')     | **`@math.gl/quadkey`**               | Get geometry of QuadKey tokens                     |
-| ![s2](./images/dggs/s2.png 's2')                    | **`@math.gl/s2`**                    | Get geometry of S2 tokens.                         |
+| **DGGS (Discrete global grid support) libraries** | Module <span style={{width: 300}} /> | Description                     |
+| ------------------------------------------------- | ------------------------------------ | ------------------------------- |
+|                                                   |                                      |                                 |
+| ![geohash](./images/dggs/geohash.png 'geohash')   | **`@math.gl/geohash`**               | Get geometry of GeoHash tokens. |
+| ![quadkey](./images/dggs/quadkey.png 'quadkey')   | **`@math.gl/quadkey`**               | Get geometry of QuadKey tokens  |
+| ![s2](./images/dggs/s2.png 's2')                  | **`@math.gl/s2`**                    | Get geometry of S2 tokens.      |
 
 <br/>
 In addition, math.gl provides a few deprecated legacy modules, to avoid breaking older applications.

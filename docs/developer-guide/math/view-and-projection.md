@@ -1,10 +1,10 @@
-## View and Projection Matrices
+# View and Projection Matrices
 
-One of the major functions of any 3D math library is to let applications create view and projection matrices to enable positioning of the viewer in a 3D world and projection of a field-of-view onto a flat "screen".
-
-## View and Projection Matrices
+One of the major functions of any 3D math library is to let applications create view and projection matrices to enable positioning of the viewer in a 3D world and projection of 3D geometries via a field-of-view onto a flat "screen".
 
 To set up a 4x4 view projection matrix you need a view matrix (specifying the position, direction and orientation of the camera) and a projection matrix (specifying the characteristics of the camera such as its field of view etc).
+
+## View Matrices
 
 The purpose of the view matrix is to translate and rotate your world coordinates so that the eye is located in the origin `[0, 0, 0]`, looking down the positive `Z` axis, rotated so that the right direction is `up`. This is called the "view coordinate system".
 
@@ -22,7 +22,11 @@ Normally positions are transformed by the view matrix. If doing work (e.g. light
 
 ## Projection Matrices
 
-Projection matrices typically show everything inside a frustum (truncated pyramid) or a cube in the view space. Their job is to "scale" or "skew" the geometry inside this virtual shape into the clipspace cube, which is the coordinate system the GPU takes as input.
+A perspective projection typically shows everything inside a frustum (truncated pyramid) or a cube in the view space. Their job is to "scale" or "skew" the geometry inside this virtual shape into the clipspace cube, which is the coordinate system the GPU takes as input.
+
+This projection matrices map your geometry into a "normalized box" where `x` and `y` values of `-1` and `1` represent the bounds of your screen or frame buffer.
+
+Projection matrices can also be ortographic, meaning that 3D objects are mapped via parallel lines onto the screen, rather than via a frustum.
 
 ### Perspective Projection Matrix
 
@@ -30,7 +34,7 @@ To create a projection matrix use:
 
 - `Matrix4.perspective({fov, aspect, near, far})`
 
-### Creating an Orthographic Projection Matrix
+### Orthographic Projection Matrix
 
 math.gl provides the traditional function create an orhtographic projection matrix by providing the "box" extents:
 
@@ -46,7 +50,7 @@ In applications it is not unusual to want to offer both perspective and orthogra
 
 ## About Projection Matrices
 
-An ortograhic projection matrix essentially just scales your view to show everything within a box. As can be seen in the matrix below, it just centers your view between the bounds of the box, and scales your positions so that the box limits fall on -1 and +1 in each direction. It also does an inversion of the X and Y coordinates.
+An ortograhic projection matrix scales your view to show everything within a box. As can be seen in the matrix below, it centers your view between the bounds of the box, and scales your positions so that the box limits fall on -1 and +1 in each direction. It also does an inversion of the X and Y coordinates.
 
 <math display="block">
   <mrow>
@@ -119,4 +123,4 @@ TBA
 
 ## Remarks
 
-- As always, matrices are presented here in row major notation, however math.gl stores them internally in column major format to match WebGL requirements.
+- As always, matrices are presented here in row major notation, however math.gl stores them internally in column major format to match WebGL conventions.

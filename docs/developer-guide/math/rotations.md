@@ -1,18 +1,6 @@
 # 3D Rotations
 
-> This article is a work in progress.
-
-math.gl provides a "standard 3D library complement" of mathematical classes for handling rotations in 2D and 3D, such as classes for manipulating `Euler` angles and `Quaternion`s. As in any 3D math library, the key goals are enabling applications to easily and intuitively specify (parametrize) rotations, combine them with other rotations and other transformations, and ultimately transform points with the rotations or resulting transformations.
-
-While math.gl is intended to help programmers' implement the typical 3D application's rotation functionality with a minimum amount of knowledge, and does not even attempt to support rotations in more than 3 dimensions, it should be pointed out that the mathematical treatment of rotations can be very complicated. For some context on this see the background section at the end of this article.
-
-### Properties of 3D Rotations
-
-- In contrast to 2D rotations, 3D rotations are not order-independent, meaning that applying the same two rotations in different order will often yield different results.
-- However, by [Euler's Rotation Theorem](https://en.wikipedia.org/wiki/Euler%27s_rotation_theorem), two 3D rotations around the origin can always be expressed as (combined into) another single 3D rotation around the origin.
-- A 3D rotation requires a minimum of three values to be fully specified (and even then can require careful definitions of which conventions are used).
-
-Also, a simple observation: Rotations around arbitrary points can be treated as rotations around the origin simply by applying a translation before the rotation, and the inverse translation after the rotation. Therefore, for simplicity, this discussion focuses solely on rotations around the origin.
+The math.gl core module aims to provide the standard "3D math library" arsenal of mathematical tools. This includes tools for handling rotations in 2D and 3D via `Euler` angles, `Quaternion`s and 4x4 matrix operations. As in any 3D math library, the key goals are enabling applications to easily and intuitively specify (parametrize) rotations, combine them with other rotations and other transformations, and ultimately transform points with the rotations or resulting transformations.
 
 ## Parametrizing 3D Rotations
 
@@ -43,7 +31,7 @@ Because of the variability, a good approach is often to be extremely careful whe
 
 ### Unit Quaternions
 
-"Unit quaternions" are normally the best representation for "manipulation" of 3D rotations. Manpulation here mainly refers to the "composition" or "addition" and interpolation of rotations.
+"Unit quaternions" are normally the best representation for "manipulation" of 3D rotations. Manipulation here mainly refers to the "composition" or "addition" and interpolation of rotations.
 
 Note that unit quaternions are simply quaternions of norm (or length) equal to `1`, and while a general quaternion (as the name suggests) contains four components, a unit quaternion needs only three values to be fully specified.
 
@@ -55,7 +43,9 @@ Interpolation of quaternions is done using Spherical Linear intERPolation (aka S
 
 ## Rotation Matrices
 
-When combining rotations with other transformations (translations, scalings, projections etc), 4x4 matrices are the representation of choice.
+Rotations around arbitrary points can be treated as rotations around the origin simply by applying a translation before the rotation, and the inverse translation after the rotation. 
+
+Thus, when combining rotations with other transformations (translations, scalings, projections etc), 4x4 matrices are the representation of choice.
 
 ## Properties of Rotation Matrices
 
@@ -109,22 +99,23 @@ Calculate the quaternion that represents the rotation you want to apply (e.g. mo
 
 ## Background: Rotations are Complicated
 
-If you are new to working with rotations and the amount of complications outlined in this article seem overwhelming, take some comfort in the fact that rotations in three and higher dimensional spaces are indeed quite complicated to treat mathematically.
+If you are new to working with 3D rotations it can be good to have an awareness of how they differ mathematically from 2D rotations
 
-As an example, several fundamental properties of rotations are highly dependent on the number of dimensions involved. To help the reader who has not worked extensively with rotations build some "intuition" for the fact that 3D rotations are non-trivial, the following summary shows how the nice, structured properties of 2D rotations gradually disappear as the number of dimensions increase:
-
-- In two dimensions, rotations are highly structured and intuitive:
+In two dimensions, rotations represent a highly structured and intuitive set of operations:
   - A series of 2D rotations can be applied in any order (they commute).
+  - The combination of two 2D rotations can always be expressed as another single rotation (simply by taking the sum of the angles of the two rotations).
   - Any 2D rotation can be fully parametrized by a single value (the "angle").
-    The combination of two 2D rotations can always be expressed as another single rotation (simply by taking the sum of the angles of the two rotations).
-- In three dimensions rotation start to loose some structure:
-  _ In 3D, rotations are no longer order-independent (they are not commutative), meaning that applying the same two rotations in different order will often yield different results.
-  _ However, by [Euler's Rotation Theorem](https://en.wikipedia.org/wiki/Euler%27s_rotation_theorem), two 3D rotations around the origin can still always be expressed as (combined into) another single 3D rotation around the origin. \* Also, a 3D rotation requires not two, but a minimum of three values to be fully specified.
-- To give some contrast, in four and higher dimensions:
-  - Naturally, rotations still no longer commutative.
-  - And worse: Euler's Rotation Theorem no longer holds. There are now two different types of basic rotations, and the combination of two rotations will in general not result in another "rotation", but another, more complex transformation.
-  - In addition, the number of parameters (degrees of freedom) required to fully specify a rotation grows with mind-boggling rapidity, as 2^(n-1) - 1, meaning that e.g. a "21 dimensional rotation" would require over one million values to be fully specified!
 
+However, in three dimensions, rotations start to loose some "structure":
+  - In 3D, rotations are no longer order-independent (they are not commutative), meaning that applying the same two rotations in different order will often yield different results.
+  - However, by [Euler's Rotation Theorem](https://en.wikipedia.org/wiki/Euler%27s_rotation_theorem), two 3D rotations around the origin can still always be expressed as (combined into) another single 3D rotation around the origin. 
+  - Also, a 3D rotation requires not two, but three values to be fully specified.
+
+While math.gl does not support rotations in four and higher dimensions, it should be no surprised that rotations continue to "loose structure" as the number of dimensions increase:
+  - Higher dimension rotations are also not commutative.
+  - Euler's Rotation Theorem no longer holds. There are now two different "types" of basic rotations, and the combination of two rotations will in general not even result in another "rotation", but another, more complex transformation.
+  - In addition, the number of parameters (degrees of freedom) required to fully specify a rotation grows with mind-boggling rapidity, as `2^(n-1) - 1`, (meaning that e.g. a "21 dimensional rotation" would require over one million values to be fully specified).
+  
 ## Background: More on Euler Angles
 
 [Euler angle values](https://en.wikipedia.org/wiki/Euler_angles)
@@ -138,4 +129,4 @@ As an example, several fundamental properties of rotations are highly dependent 
 ## Remarks
 
 - In this article, the word "axes" represents the plural of a (coordinate) "axis" (normally, the word "axes" refers to the X, Y and Z coordinate axes).
-- **Note** that one of the most efficient way to specify rotations is to use the Euler-Rodrigues parameters, which has some of the quaternion representation without requiring the introduction of quaternion algebra. math.gl does not directly support this representation though although the vector/angle can easily be converted.
+- **Note** that one of the most efficient way to specify rotations is to use the Euler-Rodrigues parameters, which has some of the quaternion representation without requiring the introduction of quaternion algebra. math.gl does not directly support this representation although the vector/angle can easily be converted.
