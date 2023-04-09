@@ -26,12 +26,12 @@
         "type": "category",
         "label": "3D Math",
         "items": [
-          "developer-guide/core/transformations",
-          "developer-guide/core/view-and-projection",
-          "developer-guide/core/homogeneous-coordinates",
-          "developer-guide/core/coordinate-systems",
-          "developer-guide/core/rotations",
-          "developer-guide/core/floating-point"
+          "developer-guide/math/transformations",
+          "developer-guide/math/view-and-projection",
+          "developer-guide/math/homogeneous-coordinates",
+          "developer-guide/math/coordinate-systems",
+          "developer-guide/math/rotations",
+          "developer-guide/math/floating-point"
         ]
       },
       {
@@ -40,14 +40,8 @@
         "items": [
           "developer-guide/geospatial/geospatial-models",
           "developer-guide/geospatial/dggs",
-          "developer-guide/web-mercator/about-coordinates",
-          "developer-guide/web-mercator/offset-projection-accuracy"
-        ]
-      },
-      {
-        "type": "category",
-        "label": "DGGS Math",
-        "items": [
+          "developer-guide/geospatial/web-mercator-coordinates",
+          "developer-guide/geospatial/web-mercator-offset-accuracy"
         ]
       }
     ]
