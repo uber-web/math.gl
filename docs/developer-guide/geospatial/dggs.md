@@ -33,3 +33,34 @@ Rather than expose the original function names as in the existing JavaScript lib
 | Get cell center        | `getS2LngLat`       | `getQuadKeyLngLat`       | `getGeoHashLngLat`       | `getH3LngLat`       |
 | Get cell boundary      | `getS2Boundary`     | `getQuadKeyBoundary`     | `getGeoHashBoundary`     | `getH3Boundary`     |
 | Get cell boundary flat | `getS2BoundaryFlat` | `getQuadKeyBoundaryFlat` | `getGeoHashBoundaryFlat` | `getH3BoundaryFlat` |
+
+## Comparison of DGGS Systems
+
+### H3
+
+H3, initally developed at Uber, is now widely used across the geospatial indusry. 
+While not directly supported by math.gl, is in fact the DGGS we would recommend for most applications.
+
+- Extensive, optimized, evolving API.
+- Superb cross-language support.
+- Equal distance between neighboring cells
+- Similar size between all cells.
+- K-ring formation for filtering and convolutions
+
+Downsides:
+- More complex projection math.
+
+### GeoHash
+
+Geohash is common choice  open source word http://en.wikipedia.org/wiki/Geohash
+
+Good cross-language support.
+
+### QuadKey
+
+Bing Maps uses a [quadkey](http://msdn.microsoft.com/en-us/library/bb259689.aspx.) structure as their tiling scheme. Here is an overview of the concept 
+
+- Quadtrees are more predictable in that each level spans a square (at least in terms of coordinates), whereas in geohash representation sometimes squares sometimes rectangles are spanned.
+
+### Other systems
+

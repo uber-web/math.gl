@@ -203,6 +203,7 @@ export class Matrix4 extends Matrix {
    * @param object
    * @returns self
    */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   fromObject(object: {[key: string]: any}): this {
     return this.check();
   }

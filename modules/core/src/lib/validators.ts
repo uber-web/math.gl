@@ -35,7 +35,7 @@ export function validateVector(v: NumberArray, length: number): boolean {
 
 export function checkNumber(value: unknown): number {
   if (!Number.isFinite(value)) {
-    throw new Error(`Invalid number ${value}`);
+    throw new Error(`Invalid number ${JSON.stringify(value)}`);
   }
   return value as number;
 }

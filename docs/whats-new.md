@@ -51,6 +51,7 @@ Target Release Date: March, 2023
 
 - Three new modules for working with DGGS (Discrete Global Grid System) math.
 - Node.js v18 is now officially supported.
+- Typescript v5 now used
 
 **`@math.gl/geohash`** (NEW MODULE)
 

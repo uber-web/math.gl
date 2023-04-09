@@ -56,7 +56,10 @@ export abstract class Matrix extends MathArray {
   getColumn<NumArrayT>(columnIndex: number, result: NumArrayT): NumArrayT;
   getColumn(columnIndex: number): number[];
 
-  getColumn(columnIndex: number, result: number[] = new Array(this.RANK).fill(-0)): number[] {
+  getColumn(
+    columnIndex: number,
+    result: number[] = new Array<number>(this.RANK).fill(-0)
+  ): number[] {
     const firstIndex = columnIndex * this.RANK;
     for (let i = 0; i < this.RANK; ++i) {
       result[i] = this[firstIndex + i];

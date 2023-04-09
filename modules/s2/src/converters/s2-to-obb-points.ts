@@ -1,6 +1,5 @@
 // math.gl, MIT license
 
-import {Vector3} from '@math.gl/core';
 import {getS2Cell} from '../s2geometry/s2-cell-utils';
 import {getS2Region} from './s2-to-region';
 import {getS2IndexFromToken} from '../s2-token-functions';
@@ -24,7 +23,7 @@ export type S2HeightInfo = {
 export function getS2OrientedBoundingBoxCornerPoints(
   s2token: string, // This can be an S2 key or token
   heighInfo?: S2HeightInfo
-): Vector3[] {
+): number[][] {
   const min: number = heighInfo?.minimumHeight || 0;
   const max: number = heighInfo?.maximumHeight || 0;
 
@@ -38,17 +37,17 @@ export function getS2OrientedBoundingBoxCornerPoints(
   const E = region[2];
   const N = region[3];
 
-  const points: Vector3[] = [];
+  const points: number[][] = [];
 
-  points.push(new Vector3(W, N, min));
-  points.push(new Vector3(E, N, min));
-  points.push(new Vector3(E, S, min));
-  points.push(new Vector3(W, S, min));
+  points.push([W, N, min]);
+  points.push([E, N, min]);
+  points.push([E, S, min]);
+  points.push([W, S, min]);
 
-  points.push(new Vector3(W, N, max));
-  points.push(new Vector3(E, N, max));
-  points.push(new Vector3(E, S, max));
-  points.push(new Vector3(W, S, max));
+  points.push([W, N, max]);
+  points.push([E, N, max]);
+  points.push([E, S, max]);
+  points.push([W, S, max]);
 
   return points;
 }

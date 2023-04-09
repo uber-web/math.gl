@@ -291,7 +291,8 @@ function round(value: number): number {
 // If the array has a clone function, calls it, otherwise returns a copy
 function duplicateArray(array: NumericArray): NumericArray {
   // @ts-expect-error We check for math.gl class methods
-  return array.clone ? array.clone() : (new Array(array.length) as number[]);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+  return array.clone ? (array.clone() as NumericArray) : (new Array(array.length) as number[]);
 }
 
 // If the argument value is an array, applies the func element wise,
