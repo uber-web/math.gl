@@ -89,12 +89,14 @@ export class Matrix3 extends Matrix {
    * @param object
    * @returns self
    */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   fromObject(object: {[key: string]: any}): this {
     return this.check();
   }
 
-  // Calculates a 3x3 matrix from the given quaternion
-  // q quat  Quaternion to create matrix from
+  /** Calculates a 3x3 matrix from the given quaternion
+   * q quat  Quaternion to create matrix from
+   */
   fromQuaternion(q: Readonly<NumericArray>): this {
     mat3.fromQuat(this, q);
     return this.check();

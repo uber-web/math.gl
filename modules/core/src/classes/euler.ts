@@ -92,6 +92,7 @@ export class Euler extends MathArray {
     return this.set(roll, pitch, yaw, Euler.RollPitchYaw);
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   fromObject(object: Record<string, unknown>): this {
     throw new Error('not implemented');
     //  return this.set(object.x, object.y, object.z, object.order);
