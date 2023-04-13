@@ -8,13 +8,26 @@ import {checkVector} from '../lib/validators';
 /* eslint-disable camelcase */
 import {vec2_transformMat4AsVector, vec3_transformMat4AsVector} from '../lib/gl-matrix-extras';
 // @ts-ignore gl-matrix types...
-import * as mat4 from 'gl-matrix/mat4';
-// @ts-ignore gl-matrix types...
-import * as vec2 from 'gl-matrix/vec2';
-// @ts-ignore gl-matrix types...
-import * as vec3 from 'gl-matrix/vec3';
-// @ts-ignore gl-matrix types...
-import * as vec4 from 'gl-matrix/vec4';
+import {
+  fromQuat as mat4_fromQuat,
+  frustum as mat4_frustum,
+  lookAt as mat4_lookAt,
+  ortho as mat4_ortho,
+  perspective as mat4_perspective,
+  determinant as mat4_determinant,
+  transpose as mat4_transpose,
+  invert as mat4_invert,
+  multiply as mat4_multiply,
+  rotateX as mat4_rotateX,
+  rotateY as mat4_rotateY,
+  rotateZ as mat4_rotateZ,
+  rotate as mat4_rotate,
+  scale as mat4_scale,
+  translate as mat4_translate
+} from '../gl-matrix/mat4';
+import {transformMat4 as vec2_transformMat4} from '../gl-matrix/vec2';
+import {transformMat4 as vec3_transformMat4} from '../gl-matrix/vec3';
+import {transformMat4 as vec4_transformMat4} from '../gl-matrix/vec3';
 
 enum INDICES {
   COL0ROW0 = 0,
@@ -214,7 +227,7 @@ export class Matrix4 extends Matrix {
    * @returns self
    */
   fromQuaternion(quaternion: Readonly<NumericArray>): this {
-    mat4.fromQuat(this, quaternion);
+    mat4_fromQuat(this, quaternion);
     return this.check();
   }
 
@@ -240,7 +253,7 @@ export class Matrix4 extends Matrix {
     if (far === Infinity) {
       computeInfinitePerspectiveOffCenter(this, left, right, bottom, top, near);
     } else {
-      mat4.frustum(this, left, right, bottom, top, near, far);
+      mat4_frustum(this, left, right, bottom, top, near, far);
     }
     return this.check();
   }
@@ -259,7 +272,7 @@ export class Matrix4 extends Matrix {
     up?: Readonly<NumericArray>;
   }): this {
     const {eye, center = [0, 0, 0], up = [0, 1, 0]} = view;
-    mat4.lookAt(this, eye, center, up);
+    mat4_lookAt(this, eye, center, up);
     return this.check();
   }
 
@@ -283,7 +296,7 @@ export class Matrix4 extends Matrix {
     far?: number;
   }): this {
     const {left, right, bottom, top, near = DEFAULT_NEAR, far = DEFAULT_FAR} = view;
-    mat4.ortho(this, left, right, bottom, top, near, far);
+    mat4_ortho(this, left, right, bottom, top, near, far);
     return this.check();
   }
 
@@ -339,14 +352,14 @@ export class Matrix4 extends Matrix {
   perspective(view: {fovy: number; aspect?: number; near?: number; far?: number}): this {
     const {fovy = (45 * Math.PI) / 180, aspect = 1, near = 0.1, far = 500} = view;
     checkRadians(fovy);
-    mat4.perspective(this, fovy, aspect, near, far);
+    mat4_perspective(this, fovy, aspect, near, far);
     return this.check();
   }
 
   // Accessors
 
   determinant(): number {
-    return mat4.determinant(this);
+    return mat4_determinant(this);
   }
 
   /**
@@ -438,38 +451,38 @@ export class Matrix4 extends Matrix {
   // Modifiers
 
   transpose(): this {
-    mat4.transpose(this, this);
+    mat4_transpose(this, this);
     return this.check();
   }
 
   invert(): this {
-    mat4.invert(this, this);
+    mat4_invert(this, this);
     return this.check();
   }
 
   // Operations
 
   multiplyLeft(a: Readonly<NumericArray>): this {
-    mat4.multiply(this, a, this);
+    mat4_multiply(this, a, this);
     return this.check();
   }
 
   multiplyRight(a: Readonly<NumericArray>): this {
-    mat4.multiply(this, this, a);
+    mat4_multiply(this, this, a);
     return this.check();
   }
 
   // Rotates a matrix by the given angle around the X axis
   rotateX(radians: number): this {
-    mat4.rotateX(this, this, radians);
-    // mat4.rotate(this, this, radians, [1, 0, 0]);
+    mat4_rotateX(this, this, radians);
+    // mat4_rotate(this, this, radians, [1, 0, 0]);
     return this.check();
   }
 
   // Rotates a matrix by the given angle around the Y axis.
   rotateY(radians: number): this {
-    mat4.rotateY(this, this, radians);
-    // mat4.rotate(this, this, radians, [0, 1, 0]);
+    mat4_rotateY(this, this, radians);
+    // mat4_rotate(this, this, radians, [0, 1, 0]);
     return this.check();
   }
 
@@ -479,8 +492,8 @@ export class Matrix4 extends Matrix {
    * @returns self
    */
   rotateZ(radians: number): this {
-    mat4.rotateZ(this, this, radians);
-    // mat4.rotate(this, this, radians, [0, 0, 1]);
+    mat4_rotateZ(this, this, radians);
+    // mat4_rotate(this, this, radians, [0, 0, 1]);
     return this.check();
   }
 
@@ -500,7 +513,7 @@ export class Matrix4 extends Matrix {
    * @returns self
    */
   rotateAxis(radians: number, axis: Readonly<NumericArray>): this {
-    mat4.rotate(this, this, radians, axis);
+    mat4_rotate(this, this, radians, axis);
     return this.check();
   }
 
@@ -510,7 +523,7 @@ export class Matrix4 extends Matrix {
    * @returns self
    */
   override scale(factor: number | Readonly<NumericArray>): this {
-    mat4.scale(this, this, Array.isArray(factor) ? factor : [factor, factor, factor]);
+    mat4_scale(this, this, Array.isArray(factor) ? factor : [factor, factor, factor]);
     return this.check();
   }
 
@@ -520,7 +533,7 @@ export class Matrix4 extends Matrix {
    * @returns self
    */
   translate(vector: Readonly<NumericArray>): this {
-    mat4.translate(this, this, vector);
+    mat4_translate(this, this, vector);
     return this.check();
   }
 
@@ -534,7 +547,7 @@ export class Matrix4 extends Matrix {
    */
   transform(vector: Readonly<NumericArray>, result?: NumericArray): NumericArray {
     if (vector.length === 4) {
-      result = vec4.transformMat4(result || [-0, -0, -0, -0], vector, this);
+      result = vec4_transformMat4(result || [-0, -0, -0, -0], vector, this) as NumericArray;
       checkVector(result, 4);
       return result;
     }
@@ -552,10 +565,10 @@ export class Matrix4 extends Matrix {
     let out: NumericArray;
     switch (length) {
       case 2:
-        out = vec2.transformMat4(result || [-0, -0], vector, this);
+        out = vec2_transformMat4(result || [-0, -0], vector, this) as NumericArray;
         break;
       case 3:
-        out = vec3.transformMat4(result || [-0, -0, -0], vector, this);
+        out = vec3_transformMat4(result || [-0, -0, -0], vector, this) as NumericArray;
         break;
       default:
         throw new Error('Illegal vector');
