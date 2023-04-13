@@ -4,14 +4,21 @@
 import {NumericArray} from '@math.gl/types';
 import {Matrix} from './base/matrix';
 import {checkVector} from '../lib/validators';
-/* eslint-disable camelcase */
+
 import {vec4_transformMat3} from '../lib/gl-matrix-extras';
-// @ts-ignore gl-matrix types...
-import * as mat3 from 'gl-matrix/mat3';
-// @ts-ignore gl-matrix types...
-import * as vec2 from 'gl-matrix/vec2';
-// @ts-ignore gl-matrix types...
-import * as vec3 from 'gl-matrix/vec3';
+
+import {
+  fromQuat as mat3_fromQuat,
+  determinant as mat3_determinant,
+  transpose as mat3_transpose,
+  invert as mat3_invert,
+  multiply as mat3_multiply,
+  rotate as mat3_rotate,
+  scale as mat3_scale,
+  translate as mat3_translate
+} from '../gl-matrix/mat3';
+import {transformMat3 as vec2_transformMat3} from '../gl-matrix/vec2';
+import {transformMat3 as vec3_transformMat3} from '../gl-matrix/vec3';
 
 enum INDICES {
   COL0ROW0 = 0,
@@ -98,7 +105,7 @@ export class Matrix3 extends Matrix {
    * q quat  Quaternion to create matrix from
    */
   fromQuaternion(q: Readonly<NumericArray>): this {
-    mat3.fromQuat(this, q);
+    mat3_fromQuat(this, q);
     return this.check();
   }
 
@@ -159,48 +166,48 @@ export class Matrix3 extends Matrix {
   // Accessors
 
   determinant(): number {
-    return mat3.determinant(this);
+    return mat3_determinant(this);
   }
 
   // Modifiers
   transpose(): this {
-    mat3.transpose(this, this);
+    mat3_transpose(this, this);
     return this.check();
   }
 
   /** Invert a matrix. Note that this can fail if the matrix is not invertible */
   invert(): this {
-    mat3.invert(this, this);
+    mat3_invert(this, this);
     return this.check();
   }
 
   // Operations
   multiplyLeft(a: NumericArray): this {
-    mat3.multiply(this, a, this);
+    mat3_multiply(this, a, this);
     return this.check();
   }
 
   multiplyRight(a: NumericArray): this {
-    mat3.multiply(this, this, a);
+    mat3_multiply(this, this, a);
     return this.check();
   }
 
   rotate(radians: number): NumericArray {
-    mat3.rotate(this, this, radians);
+    mat3_rotate(this, this, radians);
     return this.check();
   }
 
   override scale(factor: NumericArray | number): this {
     if (Array.isArray(factor)) {
-      mat3.scale(this, this, factor);
+      mat3_scale(this, this, factor);
     } else {
-      mat3.scale(this, this, [factor as number, factor as number]);
+      mat3_scale(this, this, [factor as number, factor as number]);
     }
     return this.check();
   }
 
   translate(vec: NumericArray): this {
-    mat3.translate(this, this, vec);
+    mat3_translate(this, this, vec);
     return this.check();
   }
 
@@ -209,10 +216,10 @@ export class Matrix3 extends Matrix {
     let out: NumericArray;
     switch (vector.length) {
       case 2:
-        out = vec2.transformMat3(result || [-0, -0], vector, this);
+        out = vec2_transformMat3(result || [-0, -0], vector, this) as NumericArray;
         break;
       case 3:
-        out = vec3.transformMat3(result || [-0, -0, -0], vector, this);
+        out = vec3_transformMat3(result || [-0, -0, -0], vector, this) as NumericArray;
         break;
       case 4:
         out = vec4_transformMat3(result || [-0, -0, -0, -0], vector, this);

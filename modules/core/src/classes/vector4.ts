@@ -2,9 +2,11 @@
 // MIT License
 
 import {NumericArray} from '@math.gl/types';
-// @ts-ignore gl-matrix types...
-import * as vec4 from 'gl-matrix/vec3';
 /* eslint-disable camelcase */
+import {
+  transformMat4 as vec4_transformMat4,
+  transformQuat as vec4_transformQuat
+} from '../gl-matrix/vec3';
 import {vec4_transformMat2, vec4_transformMat3} from '../lib/gl-matrix-extras';
 
 import {Vector} from './base/vector';
@@ -116,7 +118,7 @@ export class Vector4 extends Vector {
   }
 
   transform(matrix4: Readonly<NumericArray>): this {
-    vec4.transformMat4(this, this, matrix4);
+    vec4_transformMat4(this, this, matrix4);
     return this.check();
   }
 
@@ -131,7 +133,7 @@ export class Vector4 extends Vector {
   }
 
   transformByQuaternion(quaternion: Readonly<NumericArray>): this {
-    vec4.transformQuat(this, this, quaternion);
+    vec4_transformQuat(this, this, quaternion);
     return this.check();
   }
 

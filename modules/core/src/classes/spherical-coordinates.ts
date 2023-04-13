@@ -6,7 +6,7 @@ import {Vector3} from './vector3';
 import {formatValue, equals, config} from '../lib/common';
 import {degrees, radians, clamp} from '../lib/common';
 // @ts-ignore gl-matrix types...
-import * as vec3 from 'gl-matrix/vec3';
+import * as vec3 from '../gl-matrix/vec3';
 
 type SphericalCoordinatesOptions = {
   phi?: number;

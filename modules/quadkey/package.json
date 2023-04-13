@@ -2,6 +2,7 @@
   "name": "@math.gl/quadkey",
   "description": "Math for the quadkey DGGS (Discrete Global Grid System)",
   "license": "MIT",
+  "type": "module",
   "publishConfig": {
     "access": "public"
   },

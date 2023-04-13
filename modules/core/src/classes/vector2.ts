@@ -3,9 +3,12 @@
 import {Vector} from './base/vector';
 import {config, isArray} from '../lib/common';
 import {checkNumber} from '../lib/validators';
-// @ts-ignore gl-matrix types...
-import * as vec2 from 'gl-matrix/vec2';
-/* eslint-disable camelcase */
+import {
+  transformMat4 as vec2_transformMat4,
+  transformMat3 as vec2_transformMat3,
+  transformMat2d as vec2_transformMat2d,
+  transformMat2 as vec2_transformMat2
+} from '../gl-matrix/vec2';
 import {vec2_transformMat4AsVector} from '../lib/gl-matrix-extras';
 import {NumericArray} from '@math.gl/types';
 
@@ -97,7 +100,7 @@ export class Vector2 extends Vector {
    * @returns
    */
   transformAsPoint(matrix4: Readonly<NumericArray>): this {
-    vec2.transformMat4(this, this, matrix4);
+    vec2_transformMat4(this, this, matrix4);
     return this.check();
   }
 
@@ -112,17 +115,17 @@ export class Vector2 extends Vector {
   }
 
   transformByMatrix3(matrix3: Readonly<NumericArray>): this {
-    vec2.transformMat3(this, this, matrix3);
+    vec2_transformMat3(this, this, matrix3);
     return this.check();
   }
 
   transformByMatrix2x3(matrix2x3: Readonly<NumericArray>): this {
-    vec2.transformMat2d(this, this, matrix2x3);
+    vec2_transformMat2d(this, this, matrix2x3);
     return this.check();
   }
 
   transformByMatrix2(matrix2: Readonly<NumericArray>): this {
-    vec2.transformMat2(this, this, matrix2);
+    vec2_transformMat2(this, this, matrix2);
     return this.check();
   }
 }

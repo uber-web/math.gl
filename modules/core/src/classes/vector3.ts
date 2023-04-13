@@ -5,7 +5,16 @@ import {Vector} from './base/vector';
 import {config, isArray} from '../lib/common';
 import {checkNumber} from '../lib/validators';
 // @ts-ignore gl-matrix types
-import * as vec3 from 'gl-matrix/vec3';
+import {
+  angle as vec3_angle,
+  cross as vec3_cross,
+  rotateX as vec3_rotateX,
+  rotateY as vec3_rotateY,
+  rotateZ as vec3_rotateZ,
+  transformMat4 as vec3_transformMat4,
+  transformMat3 as vec3_transformMat3,
+  transformQuat as vec3_transformQuat
+} from '../gl-matrix/vec3';
 /* eslint-disable camelcase */
 import {vec3_transformMat2, vec3_transformMat4AsVector} from '../lib/gl-matrix-extras';
 
@@ -103,28 +112,28 @@ export class Vector3 extends Vector {
   // ACCESSORS
 
   angle(vector: Readonly<NumericArray>): number {
-    return vec3.angle(this, vector);
+    return vec3_angle(this, vector);
   }
 
   // MODIFIERS
 
   cross(vector: Readonly<NumericArray>): this {
-    vec3.cross(this, this, vector);
+    vec3_cross(this, this, vector);
     return this.check();
   }
 
   rotateX({radians, origin = ORIGIN}: {radians: number; origin?: Readonly<NumericArray>}): this {
-    vec3.rotateX(this, this, origin, radians);
+    vec3_rotateX(this, this, origin, radians);
     return this.check();
   }
 
   rotateY({radians, origin = ORIGIN}: {radians: number; origin?: Readonly<NumericArray>}): this {
-    vec3.rotateY(this, this, origin, radians);
+    vec3_rotateY(this, this, origin, radians);
     return this.check();
   }
 
   rotateZ({radians, origin = ORIGIN}: {radians: number; origin?: Readonly<NumericArray>}): this {
-    vec3.rotateZ(this, this, origin, radians);
+    vec3_rotateZ(this, this, origin, radians);
     return this.check();
   }
 
@@ -137,7 +146,7 @@ export class Vector3 extends Vector {
 
   // transforms as point (4th component is implicitly 1)
   transformAsPoint(matrix4: Readonly<NumericArray>): this {
-    vec3.transformMat4(this, this, matrix4);
+    vec3_transformMat4(this, this, matrix4);
     return this.check();
   }
 
@@ -148,7 +157,7 @@ export class Vector3 extends Vector {
   }
 
   transformByMatrix3(matrix3: Readonly<NumericArray>): this {
-    vec3.transformMat3(this, this, matrix3);
+    vec3_transformMat3(this, this, matrix3);
     return this.check();
   }
 
@@ -158,7 +167,7 @@ export class Vector3 extends Vector {
   }
 
   transformByQuaternion(quaternion: Readonly<NumericArray>): this {
-    vec3.transformQuat(this, this, quaternion);
+    vec3_transformQuat(this, this, quaternion);
     return this.check();
   }
 }

@@ -21,7 +21,7 @@
 
     "strict": false,
 
-    "noImplicitAny": true, // covered by strict
+    "noImplicitAny": false, // covered by strict
     "noImplicitThis": true, // covered by strict
     "strictBindCallApply": true, // covered by strict
     "strictFunctionTypes": true, // covered by strict
