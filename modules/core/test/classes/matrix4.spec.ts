@@ -533,7 +533,7 @@ test('Matrix4.rotateXYZ', (t) => {
   t.end();
 });
 
-test.only('Matrix4#transform', (t) => {
+test('Matrix4#transform', (t) => {
   const matrix = new Matrix4().translate([1, 2, 3]).scale([2, 2, 2]);
 
   const TEST_CASES = [

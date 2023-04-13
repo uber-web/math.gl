@@ -1,8 +1,17 @@
 # CHANGELOG
 
+4.0 track:
+- Experiment with type: module
+
+## 4.0.0-alpha.2
+
+- chore(core): Fork gl-matrix (#333)
+- chore: Bump dev tools (#316)
+
 ## 4.0.0-alpha.1
 
-Experiment with type: module
+- chore: Bump lerna.json to 4.0.0-alpha.0
+- chore: switch to pure ES module (v4.0) (#315)
 
 ## 3.6.3
 
