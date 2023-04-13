@@ -2,6 +2,7 @@
   "name": "@math.gl/geohash",
   "description": "Math for the GeoHash DGGS (Discrete Global Grid System)",
   "license": "MIT",
+  "type": "module",
   "publishConfig": {
     "access": "public"
   },
