@@ -18,7 +18,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 import {NumberArray} from '@math.gl/types';
-import {config} from './common';
 
 export function validateVector(v: NumberArray, length: number): boolean {
   if (v.length !== length) {
@@ -34,7 +33,9 @@ export function validateVector(v: NumberArray, length: number): boolean {
 }
 
 export function checkNumber(value: unknown): number {
-  if (!Number.isFinite(value)) {
+  // @ts-expect-error
+  const nodebug = globalThis.mathgl?.nodebug;
+  if (!nodebug && !Number.isFinite(value)) {
     throw new Error(`Invalid number ${JSON.stringify(value)}`);
   }
   return value as number;
@@ -45,7 +46,9 @@ export function checkVector<T extends NumberArray>(
   length: number,
   callerName: string = ''
 ): T {
-  if (config.debug && !validateVector(v, length)) {
+  // @ts-expect-error
+  const nodebug = globalThis.mathgl?.nodebug;
+  if (!nodebug && !validateVector(v, length)) {
     throw new Error(`math.gl: ${callerName} some fields set to invalid numbers'`);
   }
   return v;

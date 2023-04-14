@@ -1,6 +1,6 @@
 // math.gl, MIT License
 import {NumericArray} from '@math.gl/types';
-import {ConfigurationOptions, config, formatValue, equals, isArray} from '../../lib/common';
+import {FormatOptions, formatValue, equals, isArray} from '../../lib/common';
 
 /** Base class for vectors and matrices */
 export abstract class MathArray extends Array<number> {
@@ -69,11 +69,11 @@ export abstract class MathArray extends Array<number> {
   }
 
   override toString(): string {
-    return this.formatString(config);
+    return this.formatString();
   }
 
   /** Formats string according to options */
-  formatString(opts: ConfigurationOptions): string {
+  formatString(opts?: FormatOptions): string {
     let string = '';
     for (let i = 0; i < this.ELEMENTS; ++i) {
       string += (i > 0 ? ', ' : '') + formatValue(this[i], opts);
@@ -200,7 +200,7 @@ export abstract class MathArray extends Array<number> {
 
   /** Throws an error if array length is incorrect or contains illegal values */
   check(): this {
-    if (config.debug && !this.validate()) {
+    if (!this.validate()) {
       throw new Error(`math.gl: ${this.constructor.name} some fields set to invalid numbers'`);
     }
     return this;

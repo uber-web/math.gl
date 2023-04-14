@@ -2,7 +2,7 @@
 // MIT License
 import {NumericArray} from '@math.gl/types';
 import {Vector} from './base/vector';
-import {config, isArray} from '../lib/common';
+import {isArray} from '../lib/common';
 import {checkNumber} from '../lib/validators';
 // @ts-ignore gl-matrix types
 import {
@@ -48,11 +48,9 @@ export class Vector3 extends Vector {
       this.copy(x as NumericArray);
     } else {
       // this.set(x, y, z);
-      if (config.debug) {
-        checkNumber(x);
-        checkNumber(y);
-        checkNumber(z);
-      }
+      checkNumber(x);
+      checkNumber(y);
+      checkNumber(z);
       // @ts-expect-error TS2412: Property '0' of type 'number | [number, number, number]' is not assignable to numeric index type 'number'
       this[0] = x;
       this[1] = y;
@@ -75,11 +73,9 @@ export class Vector3 extends Vector {
   }
 
   fromObject(object: {x: number; y: number; z: number}): this {
-    if (config.debug) {
-      checkNumber(object.x);
-      checkNumber(object.y);
-      checkNumber(object.z);
-    }
+    checkNumber(object.x);
+    checkNumber(object.y);
+    checkNumber(object.z);
     this[0] = object.x;
     this[1] = object.y;
     this[2] = object.z;

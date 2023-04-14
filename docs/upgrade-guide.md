@@ -1,5 +1,12 @@
 # Upgrade Guide
 
+## Upgrading to v4.0
+
+Global config has been removed. Supply parameters to each call as needed.
+This means that `config`, `configure` and `withEpsilon` functions have also been removed.
+
+Debug mode can still be deactivated by setting `globalThis.mathgl.nodebug = true;`
+
 ## Upgrading to v3.6
 
 In version 3.6 the entire math.gl code base was converted to typescript (`.ts`).

@@ -6,24 +6,11 @@ Since math.gl uses gl-matrix functions under the hood, math.gl's performance is 
 
 In cases where javascript math calculations are performance critical, you can always use gl-matrix operations directly. See (./docs/get-started/using-with-gl-matrix.md). Essentially, since all math.gl classes inherit from `Array`s they work directly as arguments to gl-matrix functions, no copying necessary.
 
-## Disabling Debug Checks
-
-If debug mode has been turned on, math.gl checks that objects after every operation. Enabling the checks has a modest impact on performance.
+math.gl checks that objects contain valid nubmer after every operation. The checks has a modest impact on performance (less than 5% per  measurements).
 
 ```js
-import {configure, Vector2} from '@math.gl/core';
-configure({debug: false});
-let vector = new Vector2(NaN, NaN); // Initializes an "invalid" vector
-
-configure({debug: true});
-let vector = new Vector2(NaN, NaN); // Now throws an error. The check
-```
-
-Verifying that error checks are not turned on.
-
-```js
-import {configure} from '@math.gl/core';
-console.log('Debug status', configure().debug);
+import {Vector2} from '@math.gl/core';
+let vector = new Vector2(NaN, NaN); // Now throws an error. The check detects NaN
 ```
 
 ## Minimizing Object Creation

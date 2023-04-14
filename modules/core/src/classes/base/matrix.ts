@@ -1,9 +1,9 @@
 // Copyright (c) 2017 Uber Technologies, Inc.
 // MIT License
 import {NumericArray} from '@math.gl/types';
+import {DEFAULT_FORMAT_OPTIONS} from '../../lib/common';
 import {MathArray} from './math-array';
 import {checkNumber} from '../../lib/validators';
-import {config} from '../../lib/common';
 
 /** Base class for matrices */
 export abstract class Matrix extends MathArray {
@@ -21,8 +21,9 @@ export abstract class Matrix extends MathArray {
 
   // TODO better override formatString?
   override toString(): string {
+    const printOptions = DEFAULT_FORMAT_OPTIONS;
     let string = '[';
-    if (config.printRowMajor) {
+    if (printOptions.printRowMajor) {
       string += 'row-major:';
       for (let row = 0; row < this.RANK; ++row) {
         for (let col = 0; col < this.RANK; ++col) {

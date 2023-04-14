@@ -13,7 +13,7 @@ TBA:
 
 Generating a string representation of a math.gl object with desired precision and formatting.
 
-Every math.gl object has a `formatString({...opts})` method that allows you to stringify an object with special options set. Each object also defines the built-in JavaScript function `toString()` to call `formatString()` with the global printing options in the math.gl `config` object.
+Every math.gl object has a `formatString({...opts})` method that allows you to stringify an object with special options set. Each object also defines the built-in JavaScript function `toString()` to call `formatString()`.
 
 - `toString` and `formatString` methods print with controllable precision
 

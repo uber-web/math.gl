@@ -45,6 +45,12 @@
   </tbody>
 </table>
 
+## v4.0 (In Development)
+
+**`@math.gl/core`
+
+- The global settings `config` object has been removed.
+
 ## v3.7 (In Development)
 
 Target Release Date: March, 2023

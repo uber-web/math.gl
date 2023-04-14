@@ -10,7 +10,7 @@ import {
 import {vec4_transformMat2, vec4_transformMat3} from '../lib/gl-matrix-extras';
 
 import {Vector} from './base/vector';
-import {config, isArray} from '../lib/common';
+import {isArray} from '../lib/common';
 import {checkNumber} from '../lib/validators';
 
 import type {Matrix4} from './matrix4';
@@ -37,12 +37,10 @@ export class Vector4 extends Vector {
       this.copy(x as Readonly<NumericArray>);
     } else {
       // this.set(x, y, z, w);
-      if (config.debug) {
-        checkNumber(x);
-        checkNumber(y);
-        checkNumber(z);
-        checkNumber(w);
-      }
+      checkNumber(x);
+      checkNumber(y);
+      checkNumber(z);
+      checkNumber(w);
       this[0] = x as number;
       this[1] = y;
       this[2] = z;
@@ -67,12 +65,10 @@ export class Vector4 extends Vector {
   }
 
   fromObject(object: {x: number; y: number; z: number; w: number}): this {
-    if (config.debug) {
-      checkNumber(object.x);
-      checkNumber(object.y);
-      checkNumber(object.z);
-      checkNumber(object.w);
-    }
+    checkNumber(object.x);
+    checkNumber(object.y);
+    checkNumber(object.z);
+    checkNumber(object.w);
     this[0] = object.x;
     this[1] = object.y;
     this[2] = object.z;

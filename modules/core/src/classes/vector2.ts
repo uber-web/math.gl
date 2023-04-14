@@ -1,7 +1,7 @@
 // Copyright (c) 2017 Uber Technologies, Inc.
 // MIT License
 import {Vector} from './base/vector';
-import {config, isArray} from '../lib/common';
+import {isArray} from '../lib/common';
 import {checkNumber} from '../lib/validators';
 import {
   transformMat4 as vec2_transformMat4,
@@ -24,10 +24,8 @@ export class Vector2 extends Vector {
     if (isArray(x) && arguments.length === 1) {
       this.copy(x as Readonly<NumericArray>);
     } else {
-      if (config.debug) {
-        checkNumber(x);
-        checkNumber(y);
-      }
+      checkNumber(x);
+      checkNumber(y);
       this[0] = x as number;
       this[1] = y;
     }
@@ -46,10 +44,8 @@ export class Vector2 extends Vector {
   }
 
   fromObject(object: {x: number; y: number}): this {
-    if (config.debug) {
-      checkNumber(object.x);
-      checkNumber(object.y);
-    }
+    checkNumber(object.x);
+    checkNumber(object.y);
     this[0] = object.x;
     this[1] = object.y;
     return this.check();

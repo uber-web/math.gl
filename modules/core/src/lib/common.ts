@@ -7,45 +7,23 @@ import type {MathArray} from '../classes/base/math-array';
 const RADIANS_TO_DEGREES = (1 / Math.PI) * 180;
 const DEGREES_TO_RADIANS = (1 / 180) * Math.PI;
 
-export type ConfigurationOptions = {
-  EPSILON: number;
-  debug?: boolean;
-  precision: number;
+/** Options for formatting / printing math.gl objects */
+export type FormatOptions = {
+  precision?: number;
   printTypes?: boolean;
   printDegrees?: boolean;
   printRowMajor?: boolean;
-  _cartographicRadians?: boolean;
 };
 
-const DEFAULT_CONFIG: Required<ConfigurationOptions> = {
-  EPSILON: 1e-12,
-  debug: false,
+/** Default EPSILON */
+export const EPSILON = 1e-12;
+
+export const DEFAULT_FORMAT_OPTIONS: Required<FormatOptions> = {
   precision: 4,
   printTypes: false,
   printDegrees: false,
-  printRowMajor: true,
-  _cartographicRadians: false
+  printRowMajor: true
 };
-
-// We use a global field to store the config
-declare global {
-  // eslint-disable-next-line no-var
-  var mathgl: {
-    config: Required<ConfigurationOptions>;
-  };
-}
-
-// Configuration is truly global as of v3.6 to ensure single config even if multiple copies of math.gl
-// Multiple copies of config can be quite tricky to debug...
-globalThis.mathgl = globalThis.mathgl || {config: {...DEFAULT_CONFIG}};
-
-export const config = globalThis.mathgl.config;
-
-export function configure(options: Partial<ConfigurationOptions>): ConfigurationOptions {
-  // Only copy existing keys
-  Object.assign(config, options);
-  return config;
-}
 
 /**
  * Formats a value into a string
@@ -53,10 +31,8 @@ export function configure(options: Partial<ConfigurationOptions>): Configuration
  * @param param1
  * @returns
  */
-export function formatValue(
-  value: number,
-  {precision = config.precision}: {precision?: number} = {}
-): string {
+export function formatValue(value: number, formatOptions?: FormatOptions): string {
+  const precision = formatOptions?.precision ?? DEFAULT_FORMAT_OPTIONS.precision;
   value = round(value);
   // get rid of trailing zeros
   return `${parseFloat(value.toPrecision(precision))}`;
@@ -206,40 +182,32 @@ export function lerp(
  * @param epsilon
  * @returns
  */
-export function equals(a: any, b: any, epsilon?: number): boolean {
-  const oldEpsilon = config.EPSILON;
-  if (epsilon) {
-    config.EPSILON = epsilon;
+export function equals(a: any, b: any, epsilon: number = EPSILON): boolean {
+  if (a === b) {
+    return true;
   }
-  try {
-    if (a === b) {
-      return true;
+  if (isArray(a) && isArray(b)) {
+    if (a.length !== b.length) {
+      return false;
     }
-    if (isArray(a) && isArray(b)) {
-      if (a.length !== b.length) {
+    for (let i = 0; i < a.length; ++i) {
+      // eslint-disable-next-line max-depth
+      if (!equals(a[i], b[i])) {
         return false;
       }
-      for (let i = 0; i < a.length; ++i) {
-        // eslint-disable-next-line max-depth
-        if (!equals(a[i], b[i])) {
-          return false;
-        }
-      }
-      return true;
     }
-    if (a && a.equals) {
-      return a.equals(b);
-    }
-    if (b && b.equals) {
-      return b.equals(a);
-    }
-    if (typeof a === 'number' && typeof b === 'number') {
-      return Math.abs(a - b) <= config.EPSILON * Math.max(1, Math.abs(a), Math.abs(b));
-    }
-    return false;
-  } finally {
-    config.EPSILON = oldEpsilon;
+    return true;
   }
+  if (a && a.equals) {
+    return a.equals(b);
+  }
+  if (b && b.equals) {
+    return b.equals(a);
+  }
+  if (typeof a === 'number' && typeof b === 'number') {
+    return Math.abs(a - b) <= epsilon * Math.max(1, Math.abs(a), Math.abs(b));
+  }
+  return false;
 }
 
 export function exactEquals(a: any, b: any): boolean {
@@ -270,22 +238,10 @@ export function exactEquals(a: any, b: any): boolean {
 
 /* eslint-enable */
 
-export function withEpsilon<T>(epsilon: number, func: () => T): T {
-  const oldPrecision = config.EPSILON;
-  config.EPSILON = epsilon;
-  let value: T;
-  try {
-    value = func();
-  } finally {
-    config.EPSILON = oldPrecision;
-  }
-  return value;
-}
-
 // HELPERS
 
-function round(value: number): number {
-  return Math.round(value / config.EPSILON) * config.EPSILON;
+function round(value: number, epsilon = EPSILON): number {
+  return Math.round(value / epsilon) * epsilon;
 }
 
 // If the array has a clone function, calls it, otherwise returns a copy

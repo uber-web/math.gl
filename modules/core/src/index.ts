@@ -24,9 +24,6 @@ export * as _MathUtils from './lib/math-utils';
 export {assert} from './lib/assert';
 
 export {
-  // math.gl global utility methods
-  config,
-  configure,
   formatValue,
   isArray,
   clone,
@@ -44,8 +41,7 @@ export {
   acos,
   atan,
   clamp,
-  lerp,
-  withEpsilon
+  lerp
 } from './lib/common';
 
 // DEPRECATED

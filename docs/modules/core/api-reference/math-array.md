@@ -47,13 +47,13 @@ const w = v.scale([1, -1, 1]); // Flip y component
 
 ### toString
 
-Calls `formatString` with the global math.gl config.
+Calls `formatString` with default print settings.
 
 `array.toString()`
 
 ### formatString
 
-`array.formatString(config)`
+`array.formatString(printSettings)`
 
 ### toArray
 
@@ -101,8 +101,8 @@ Returns `false` if any value fails `Number.isFinite` test.
 
 ### check
 
-If `config.debug` is true, validates the `MathArray` and throws an error if it does not contains valid values.
+Validates the `MathArray` and throws an error if it does not contains valid values.
 
 `array.check(array = this)`
 
-Mote: This method is called by all mutating methods.
+Mote: This method is called by all mutating methods and normally does not need to be called.

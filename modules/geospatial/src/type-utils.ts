@@ -2,7 +2,7 @@
 // See LICENSE.md and https://github.com/AnalyticalGraphicsInc/cesium/blob/master/LICENSE.md
 
 import type {NumericArray} from '@math.gl/core';
-import {Vector3, toRadians, toDegrees, config} from '@math.gl/core';
+import {Vector3, toRadians, toDegrees} from '@math.gl/core';
 import {WGS84_CONSTANTS} from './constants';
 
 type LngLatHeightObject = {
@@ -64,7 +64,8 @@ export function fromCartographicToRadians(
   cartographic: Readonly<Cartographic>,
   vector = [] as number[]
 ): number[] {
-  return fromCartographic(cartographic, vector, config._cartographicRadians ? identity : toRadians);
+  const _cartographicRadians = false;
+  return fromCartographic(cartographic, vector, _cartographicRadians ? identity : toRadians);
 }
 
 export function fromCartographicToDegrees(
@@ -79,7 +80,8 @@ export function fromCartographicToDegrees(
   cartographic: Readonly<Cartographic>,
   vector = [] as number[]
 ): number[] {
-  return fromCartographic(cartographic, vector, config._cartographicRadians ? toDegrees : identity);
+  const _cartographicRadians = false;
+  return fromCartographic(cartographic, vector, _cartographicRadians ? toDegrees : identity);
 }
 
 export function toCartographic<T extends Cartographic>(
@@ -107,14 +109,16 @@ export function toCartographicFromRadians<T extends Cartographic>(
   vector: Readonly<NumericArray>,
   cartographic: T
 ): T {
-  return toCartographic(vector, cartographic, config._cartographicRadians ? identity : toDegrees);
+  const _cartographicRadians = false;
+  return toCartographic(vector, cartographic, _cartographicRadians ? identity : toDegrees);
 }
 
 export function toCartographicFromDegrees<T extends Cartographic>(
   vector: Readonly<NumericArray>,
   cartographic: T
 ): T {
-  return toCartographic(vector, cartographic, config._cartographicRadians ? toRadians : identity);
+  const _cartographicRadians = false;
+  return toCartographic(vector, cartographic, _cartographicRadians ? toRadians : identity);
 }
 
 // Estimates if a vector is close to the surface of the WGS84 Ellipsoid
@@ -131,7 +135,6 @@ export function isWGS84(vector: Readonly<NumericArray>): boolean {
 }
 
 /*
-
 export function fromCartographic(cartographic: Cartographic, result?: number[]): number[];
 export function fromCartographic(cartographic: Cartographic, result: TypedArray): TypedArray;
 export function fromCartographicToRadians(cartographic: Cartographic, result?: number[]): number[];

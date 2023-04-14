@@ -5,24 +5,10 @@ GLSL math function equivalents. Work on both single values and vectors.
 ## Usage
 
 ```js
-import {config, equals} from '@math.gl/core';
-```
-
-Setting configuration
-
-```js
-import {config} from '@math.gl/core';
-config.EPSILON = 1e-12;
-config.debug = true;
-config.printRowMajor = true;
-config.precision = 4;
+import {equals} from '@math.gl/core';
 ```
 
 ## Functions
-
-### configure
-
-`configure(options)`
 
 ### checkNumber
 
@@ -30,7 +16,7 @@ config.precision = 4;
 
 ### formatValue
 
-`formatValue(value, precision = config.precision || 4)`
+`formatValue(value, precision = 4)`
 
 ### isArray
 
@@ -58,10 +44,10 @@ Works on single values and vectors
 
 ### equals
 
-`equals(a, b, epsilon)`
+`equals(a, b, epsilon = DEFAULT_EPSILON)`
 
 - Works on single values and vectors
-- Numeric values need to be closer than `config.EPSILON`
+- Numeric values need to be closer than `epsilon`
 - Objects will be compared with their `.equals()` method if present.
 
 ### exactEquals
@@ -123,7 +109,3 @@ GLSL equivalent: Works on single values and vectors
 ### clamp
 
 `clamp(value, min, max)`
-
-## Remarks
-
-- When setting global configs, you may need to consider the order of code loadint when using `imports` and `requires`

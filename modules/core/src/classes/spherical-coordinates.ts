@@ -3,7 +3,7 @@
 // Adaptation of THREE.js Spherical class, under MIT license
 import {NumericArray} from '@math.gl/types';
 import {Vector3} from './vector3';
-import {formatValue, equals, config} from '../lib/common';
+import {formatValue, equals} from '../lib/common';
 import {degrees, radians, clamp} from '../lib/common';
 // @ts-ignore gl-matrix types...
 import * as vec3 from '../gl-matrix/vec3';
@@ -83,12 +83,12 @@ export class SphericalCoordinates {
   }
 
   toString(): string {
-    return this.formatString(config);
+    return this.formatString();
   }
 
-  formatString({printTypes = false}: FormatOptions): string {
+  formatString(options?: FormatOptions): string {
     const f = formatValue;
-    return `${printTypes ? 'Spherical' : ''}\
+    return `${options?.printTypes ? 'Spherical' : ''}\
 [rho:${f(this.radius)},theta:${f(this.theta)},phi:${f(this.phi)}]`;
   }
 
