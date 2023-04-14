@@ -29,7 +29,7 @@
     "@turf/destination": "^6.0.1",
     "@types/tape-promise": "^4.0.1",
     "babel-plugin-transform-builtin-extend": "^1.1.2",
-    "ocular-dev-tools": "2.0.0-alpha.5",
+    "ocular-dev-tools": "2.0.0-alpha.9",
     "pre-commit": "^1.2.2"
   },
   "resolutions_notes": [
