@@ -27,7 +27,7 @@ import {
 } from '../gl-matrix/mat4';
 import {transformMat4 as vec2_transformMat4} from '../gl-matrix/vec2';
 import {transformMat4 as vec3_transformMat4} from '../gl-matrix/vec3';
-import {transformMat4 as vec4_transformMat4} from '../gl-matrix/vec3';
+import {transformMat4 as vec4_transformMat4} from '../gl-matrix/vec4';
 
 enum INDICES {
   COL0ROW0 = 0,
