@@ -4,6 +4,10 @@
 - ES Modules (type: module)
 - gl-matrix fork
 
+## 4.0.0-alpha.3
+
+- fix(core): Fix gl-matrix imports (#334)
+
 ## 4.0.0-alpha.2
 
 - chore(core): Fork gl-matrix (#333)
