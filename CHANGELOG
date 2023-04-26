@@ -4,6 +4,10 @@
 - ES Modules (type: module)
 - gl-matrix fork
 
+## 4.0.0-alpha.4
+
+- fix(4.0) add exports field to ES module package.json (#335)
+
 ## 4.0.0-alpha.3
 
 - fix(core): Fix gl-matrix imports (#334)
