@@ -3,6 +3,8 @@
 
 import {NumericArray} from '@math.gl/types';
 import {Matrix} from './base/matrix';
+import {Matrix3} from './matrix3';
+import {Vector3} from './vector3';
 import {checkVector} from '../lib/validators';
 
 /* eslint-disable camelcase */
@@ -355,7 +357,9 @@ export class Matrix4 extends Matrix {
    * @param result
    * @returns self
    */
-  getScale(result: NumericArray = [-0, -0, -0]): NumericArray {
+  getScale(): Vector3;
+  getScale<T extends NumericArray>(result: T): T;
+  getScale(result = new Vector3()): Vector3 {
     // explicit is faster than hypot...
     result[0] = Math.sqrt(this[0] * this[0] + this[1] * this[1] + this[2] * this[2]);
     result[1] = Math.sqrt(this[4] * this[4] + this[5] * this[5] + this[6] * this[6]);
@@ -371,7 +375,9 @@ export class Matrix4 extends Matrix {
    * @param result
    * @returns self
    */
-  getTranslation(result: NumericArray = [-0, -0, -0]): NumericArray {
+  getTranslation(): Vector3;
+  getTranslation<T extends NumericArray>(result: T): T;
+  getTranslation(result = new Vector3()): Vector3 {
     result[0] = this[12];
     result[1] = this[13];
     result[2] = this[14];
@@ -384,8 +390,9 @@ export class Matrix4 extends Matrix {
    * @param scaleResult
    * @returns self
    */
-  getRotation(result?: NumericArray, scaleResult?: NumericArray): NumericArray {
-    result = result || [-0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0];
+  getRotation(scaleResult?: NumericArray): Matrix4;
+  getRotation<T extends NumericArray>(result: T, scaleResult?: NumericArray): T;
+  getRotation(result = new Matrix4(), scaleResult?: NumericArray): Matrix4 {
     scaleResult = scaleResult || [-0, -0, -0];
     const scale = this.getScale(scaleResult);
     const inverseScale0 = 1 / scale[0];
@@ -416,8 +423,9 @@ export class Matrix4 extends Matrix {
    * @param scaleResult
    * @returns self
    */
-  getRotationMatrix3(result?: NumericArray, scaleResult?: NumericArray): NumericArray {
-    result = result || [-0, -0, -0, -0, -0, -0, -0, -0, -0];
+  getRotationMatrix3(scaleResult?: NumericArray): Matrix3;
+  getRotationMatrix3<T extends NumericArray>(result: T, scaleResult?: NumericArray): T;
+  getRotationMatrix3(result = new Matrix3(), scaleResult?: NumericArray): Matrix3 {
     scaleResult = scaleResult || [-0, -0, -0];
     const scale = this.getScale(scaleResult);
     const inverseScale0 = 1 / scale[0];
