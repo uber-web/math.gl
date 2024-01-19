@@ -219,6 +219,20 @@ export class Matrix4 extends Matrix {
   }
 
   /**
+   * Calculates a 4x4 matrix from the given translation and quaternion
+   * @param translation Vector3 to create matrix from
+   * @param quaternion Quaternion to create matrix from
+   * @returns self
+   */
+  fromTranslationQuaternion(
+    translation: Readonly<NumericArray>,
+    quaternion: Readonly<NumericArray>
+  ): this {
+    mat4.fromRotationTranslation(this, quaternion, translation);
+    return this.check();
+  }
+
+  /**
    * Generates a frustum matrix with the given bounds
    * @param view.left - Left bound of the frustum
    * @param view.right - Right bound of the frustum

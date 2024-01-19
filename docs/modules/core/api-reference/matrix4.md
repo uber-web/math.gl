@@ -99,6 +99,15 @@ Sets the matrix to a transformation corresponding to the rotations represented b
 
 - `quaternion` (`Quaternion`) - the quaternion to create matrix from
 
+##### fromTranslationQuaternion(translation: Vector3, quaternion: Quaternion): this
+
+Sets the matrix to a transformation corresponding to the translation and rotations represented by the given parameters.
+
+`matrix4.fromTranslationQuaternion(translation, quaternion)`
+
+- `translation` (`Vector3`) - the translation to create matrix from
+- `quaternion` (`Quaternion`) - the quaternion to create matrix from
+
 ##### frustum(options: {left: number, right: number, bottom: number, top: number, near: number, far: number}): this
 
 Generates a frustum matrix with the given bounds. The frustum far plane can be infinite.
