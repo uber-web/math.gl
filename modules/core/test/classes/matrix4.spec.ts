@@ -2,7 +2,8 @@
 // MIT License
 
 /* eslint-disable max-statements */
-import {Matrix4, Vector3, config, configure} from '@math.gl/core';
+import {Matrix4, Matrix3, Quaternion, Vector3, config, configure} from '@math.gl/core';
+import {vec3, quat} from 'gl-matrix';
 import test from 'tape-promise/tape';
 import {tapeEquals, tapeEqualsEpsilon} from 'test/utils/tape-assertions';
 
@@ -43,7 +44,16 @@ test('Matrix4#fromQuaternion', (t) => {
 });
 
 test('Matrix4#fromTranslationQuaternion', (t) => {
-  tapeEquals(t, new Matrix4().fromTranslationQuaternion([0, 0, 0], [0, 0, 0, 1]), IDENTITY_MATRIX);
+  const translation = new Vector3(vec3.random([-0, -0, -0], 100 * Math.random()));
+  const quaternion = new Quaternion(quat.random([-0, -0, -0, -0]));
+
+  tapeEquals(
+    t,
+    new Matrix4().fromTranslationQuaternion(translation, quaternion),
+    new Matrix4()
+      .fromQuaternion(quaternion)
+      .multiplyLeft(new Matrix4().identity().translate(translation))
+  );
   t.end();
 });
 
@@ -164,6 +174,18 @@ test('Matrix4#getScale', (t) => {
   t.end();
 });
 
+test('Matrix4#getScaleAsVector3', (t) => {
+  const INPUT = INDICES_MATRIX;
+  const RESULT = new Vector3([3.7416573867739413, 10.488088481701515, 17.37814719698276]);
+
+  const scale = new Matrix4(INPUT).getScale(new Vector3());
+
+  tapeEquals(t, scale instanceof Vector3, true);
+  tapeEquals(t, scale, RESULT, 'getScale gave the right result');
+
+  t.end();
+});
+
 test('Matrix4#getRotation', (t) => {
   const INPUT = INDICES_MATRIX;
   const RESULT = [
@@ -173,6 +195,21 @@ test('Matrix4#getRotation', (t) => {
   ];
 
   const m = new Matrix4(INPUT).getRotation([...INDICES_MATRIX]);
+  tapeEquals(t, m, RESULT, 'getRotation gave the right result');
+
+  t.end();
+});
+
+test('Matrix4#getRotationAsMatrix4', (t) => {
+  const INPUT = INDICES_MATRIX;
+  const RESULT = new Matrix4([
+    0.2672612419124244, 0.19069251784911848, 0.17263060129453078, 0, 1.3363062095621219,
+    0.5720775535473555, 0.4028047363539052, 0, 2.4053511772118195, 0.9534625892455924,
+    0.6329788714132796, 0, 0, 0, 0, 1
+  ]);
+
+  const m = new Matrix4(INPUT).getRotation(new Matrix4(), [...INDICES_MATRIX]);
+  tapeEquals(t, m instanceof Matrix4, true);
   tapeEquals(t, m, RESULT, 'getRotation gave the right result');
 
   t.end();
@@ -192,11 +229,37 @@ test('Matrix4#getRotationMatrix3', (t) => {
   t.end();
 });
 
+test('Matrix4#getRotationMatrix3AsMatrix3', (t) => {
+  const INPUT = INDICES_MATRIX;
+  const RESULT = new Matrix3([
+    0.2672612419124244, 0.19069251784911848, 0.17263060129453078, 1.3363062095621219,
+    0.5720775535473555, 0.4028047363539052, 2.4053511772118195, 0.9534625892455924,
+    0.6329788714132796
+  ]);
+
+  const m = new Matrix4(INPUT).getRotationMatrix3(new Matrix3(), [...INDICES_MATRIX.slice(0, 9)]);
+  tapeEquals(t, m instanceof Matrix3, true);
+  tapeEquals(t, m, RESULT, 'getRotationMatrix3 gave the right result');
+
+  t.end();
+});
+
 test('Matrix4#getTranslation', (t) => {
   const INPUT = INDICES_MATRIX;
   const RESULT = [13, 14, 15];
 
   const m = new Matrix4(INPUT).getTranslation([0, 0, 0]);
+  tapeEquals(t, m, RESULT, 'getTranslation gave the right result');
+
+  t.end();
+});
+
+test('Matrix4#getTranslationAsVector3', (t) => {
+  const INPUT = INDICES_MATRIX;
+  const RESULT = new Vector3([13, 14, 15]);
+
+  const m = new Matrix4(INPUT).getTranslation(new Vector3());
+  tapeEquals(t, m instanceof Vector3, true);
   tapeEquals(t, m, RESULT, 'getTranslation gave the right result');
 
   t.end();
