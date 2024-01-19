@@ -42,6 +42,11 @@ test('Matrix4#fromQuaternion', (t) => {
   t.end();
 });
 
+test('Matrix4#fromTranslationQuaternion', (t) => {
+  tapeEquals(t, new Matrix4().fromTranslationQuaternion([0, 0, 0], [0, 0, 0, 1]), IDENTITY_MATRIX);
+  t.end();
+});
+
 test('Matrix4#from', (t) => {
   tapeEquals(t, new Matrix4().from(INDICES_MATRIX), INDICES_MATRIX);
   // tapeEquals(t, new Matrix4().from({x: 1, y: 2, z: 3, w: 4}), [1, 2, 3, 4]);
