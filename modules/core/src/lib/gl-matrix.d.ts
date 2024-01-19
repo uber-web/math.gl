@@ -154,6 +154,11 @@ declare module 'gl-matrix/mat3' {
 declare module 'gl-matrix/mat4' {
   function determinant(a: Readonly<NumericArray>): number;
   function fromQuat<T extends NumericArray>(out: T, q: Readonly<NumericArray>): T;
+  function fromRotationTranslation<T extends NumericArray>(
+    out: T,
+    q: Readonly<NumericArray>,
+    v: Readonly<NumericArray>
+  ): T;
   function transpose<T extends NumericArray>(out: T, a: Readonly<NumericArray>): T;
   function invert<T extends NumericArray>(out: T, a: Readonly<NumericArray>): T;
   function getRotation<T extends NumericArray>(out: T, mat: Readonly<NumericArray>): T;

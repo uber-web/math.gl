@@ -219,6 +219,20 @@ export class Matrix4 extends Matrix {
   }
 
   /**
+   * Calculates a 4x4 matrix from the given translation and quaternion
+   * @param translation Vector3 to create matrix from
+   * @param quaternion Quaternion to create matrix from
+   * @returns self
+   */
+  fromTranslationQuaternion(
+    translation: Readonly<NumericArray>,
+    quaternion: Readonly<NumericArray>
+  ): this {
+    mat4.fromRotationTranslation(this, quaternion, translation);
+    return this.check();
+  }
+
+  /**
    * Generates a frustum matrix with the given bounds
    * @param view.left - Left bound of the frustum
    * @param view.right - Right bound of the frustum
@@ -355,7 +369,9 @@ export class Matrix4 extends Matrix {
    * @param result
    * @returns self
    */
-  getScale(result: NumericArray = [-0, -0, -0]): NumericArray {
+  getScale(): NumericArray;
+  getScale<T extends NumericArray>(result: T): T;
+  getScale(result = [-0, -0, -0]): NumericArray {
     // explicit is faster than hypot...
     result[0] = Math.sqrt(this[0] * this[0] + this[1] * this[1] + this[2] * this[2]);
     result[1] = Math.sqrt(this[4] * this[4] + this[5] * this[5] + this[6] * this[6]);
@@ -371,7 +387,9 @@ export class Matrix4 extends Matrix {
    * @param result
    * @returns self
    */
-  getTranslation(result: NumericArray = [-0, -0, -0]): NumericArray {
+  getTranslation(): NumericArray;
+  getTranslation<T extends NumericArray>(result: T): T;
+  getTranslation(result = [-0, -0, -0]): NumericArray {
     result[0] = this[12];
     result[1] = this[13];
     result[2] = this[14];
@@ -384,8 +402,12 @@ export class Matrix4 extends Matrix {
    * @param scaleResult
    * @returns self
    */
-  getRotation(result?: NumericArray, scaleResult?: NumericArray): NumericArray {
-    result = result || [-0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0];
+  getRotation(scaleResult?: NumericArray): NumericArray;
+  getRotation<T extends NumericArray>(result: T, scaleResult?: NumericArray): T;
+  getRotation(
+    result = [-0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0, -0],
+    scaleResult?: NumericArray
+  ): NumericArray {
     scaleResult = scaleResult || [-0, -0, -0];
     const scale = this.getScale(scaleResult);
     const inverseScale0 = 1 / scale[0];
@@ -416,8 +438,12 @@ export class Matrix4 extends Matrix {
    * @param scaleResult
    * @returns self
    */
-  getRotationMatrix3(result?: NumericArray, scaleResult?: NumericArray): NumericArray {
-    result = result || [-0, -0, -0, -0, -0, -0, -0, -0, -0];
+  getRotationMatrix3(scaleResult?: NumericArray): NumericArray;
+  getRotationMatrix3<T extends NumericArray>(result: T, scaleResult?: NumericArray): T;
+  getRotationMatrix3(
+    result = [-0, -0, -0, -0, -0, -0, -0, -0, -0],
+    scaleResult?: NumericArray
+  ): NumericArray {
     scaleResult = scaleResult || [-0, -0, -0];
     const scale = this.getScale(scaleResult);
     const inverseScale0 = 1 / scale[0];
